@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div id="app">
-      <main-comp/>
+      <main-comp class="mt-100p"/>
     </div>
   </v-app>
 </template>
@@ -21,3 +21,9 @@ export default {
   }),
 };
 </script>
+
+<style>
+  .mt-100p {
+    margin-top: 100px;
+  }
+</style>

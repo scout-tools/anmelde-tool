@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Main from '../views/Main.vue';
+import Overview from '../views/overview/Overview.vue';
 
 Vue.use(VueRouter);
 
@@ -9,6 +10,11 @@ const routes = [
     path: '/',
     name: 'Main',
     component: Main,
+  },
+  {
+    path: '/overview',
+    name: 'Overview',
+    component: Overview,
   },
   {
     path: '/login',

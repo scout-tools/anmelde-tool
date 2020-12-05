@@ -1,5 +1,5 @@
 <template>
-  <v-container class="max-width-class" mt-100p pa-0>
+  <v-container class="max-width-class" pa-0>
     <v-card>
       <v-toolbar dark color="primary">
         <v-toolbar-title>
@@ -27,7 +27,7 @@
           <v-spacer/>
           <v-btn
             large
-            @click="login">
+            @click="onLoginClick">
             Einloggen
           </v-btn>
         </v-container>
@@ -36,7 +36,7 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                {{ 'Die Mail wurde erfolgreich an XY@ab.de versendet. Bitte guck in dein Postach' }}
+                {{ 'Die Mail wurde erfolgreich an X@b.de versendet. Bitte guck in dein Postfach' }}
               </v-col>
             </v-row>
           </v-container>
@@ -83,10 +83,10 @@ export default {
   methods: {
     onEmailTypInEmailField(event) { // eslint-disable-line
       if (event.code === 'Enter') {
-        this.login();
+        this.onLoginClick();
       }
     },
-    login() {
+    onLoginClick() {
       const me = this; // eslint-disable-line
       axios.post(`${this.API_URL}api/token/`, this.data)
         .then((response) => {
@@ -113,7 +113,5 @@ export default {
 </script>
 
 <style scoped>
-  .mt-100p {
-    margin-top: 100px;
-  }
+
 </style>
