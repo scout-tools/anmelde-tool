@@ -4,14 +4,14 @@
     :items="getItems"
     :items-per-page="5"
   >
-    <!--<template v-slot:item.action="{ item }">
+    <template v-slot:item.action="{ item }">
       <v-icon
         class="mr-2"
         @click="show(item)"
       >
         mdi-eye
       </v-icon>
-    </template>-->
+    </template>
   </v-data-table>
 </template>
 
@@ -21,46 +21,35 @@ import axios from 'axios';
 export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
-    messages: [],
+    items: [],
     headers: [
       { text: 'Id', value: 'id' },
       { text: 'Fahrt/Lager', value: 'name' },
       { text: 'Beschreibung', value: 'description' },
-      // { text: 'Actions', value: 'action', sortable: false },
-    ],
-    examples: [
-      { id: 1, name: 'Ringlager', description: 'ganz toll' },
+      { text: 'Actions', value: 'action', sortable: false },
     ],
   }),
 
   computed: {
     getItems() {
       // this.messages.forEach((value) => console.log(value));
-      return this.messages;
+      return this.items;
     },
   },
   methods: {
-    onRefreshMessages() {
-      this.messages = [];
-      this.getMessages();
-    },
-    getMessages() {
+    getData() {
       const path = `${this.API_URL}basic/event/`;
       axios.get(path)
         .then((res) => {
-          this.showSuccess = true;
-          this.messages = res.data;
+          this.items = res.data;
         })
         .catch(() => {
-          this.showError = true;
+          console.log('Fehler');
         });
     },
   },
   created() {
-    this.getMessages();
-  },
-  mounted() {
-    this.getMessages();
+    this.getData();
   },
 };
 </script>
