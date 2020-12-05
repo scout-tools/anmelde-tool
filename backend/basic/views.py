@@ -1,7 +1,6 @@
 # views.py
 from django.db.models.functions import ExtractWeek, ExtractYear
 from rest_framework import pagination, viewsets, mixins, generics, filters
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Event
 from .serializers import EventSerializer
