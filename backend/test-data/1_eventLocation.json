@@ -1,0 +1,39 @@
+[
+    {
+        "model": "basic.eventLocation",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "name": "Max Hof",
+            "description": "",
+            "city": "BSA",
+            "zipCode": "12345",
+            "address": "Dönerstr. 88"
+        
+        }
+    },
+    {
+        "model": "basic.eventLocation",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "name": "Brexbachtal",
+            "description": "",
+            "city": "BSA",
+            "zipCode": "12345",
+            "address": "Dönerstr. 7"
+        }
+    },
+    {
+        "model": "basic.eventLocation",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "name": "Hoffeld",
+            "description": "",
+            "city": "ABC",
+            "zipCode": "11111",
+            "address": "Dönerstr. 4"
+        }
+    }
+]
