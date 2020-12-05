@@ -48,3 +48,5 @@ class Event(models.Model):
     startTime = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     endTime = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     registrationDeadline = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    registrationStart = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    participationFee = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)

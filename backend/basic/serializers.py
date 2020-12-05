@@ -11,6 +11,13 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'name',
             'description',
+            'location',
+            'ageGroups',
+            'contact',
+            'startTime,'
+            'endTime',
+            'registrationDeadline',
+            'participationFee',
         )
 
 
