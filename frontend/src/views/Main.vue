@@ -7,6 +7,16 @@
     >
       <span>Menu</span>
       <v-spacer/>
+      <v-btn
+        class="mx-2"
+        fab
+        dark
+        color="indigo"
+      >
+        <v-icon dark>
+          mdi-plus
+        </v-icon>
+      </v-btn>
       <v-btn outlined dark to="/login">
         Login
       </v-btn>
