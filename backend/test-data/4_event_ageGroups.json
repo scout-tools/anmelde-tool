@@ -1,0 +1,20 @@
+[
+    {
+        "model": "basic.event_ageGroups",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "event_id": 1,
+            "agegroup_id": 1
+        }
+    },
+    {
+        "model": "basic.event_ageGroups",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "event_id": 2,
+            "agegroup_id": 2
+        }
+    }
+]

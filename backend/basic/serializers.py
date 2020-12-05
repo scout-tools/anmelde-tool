@@ -1,6 +1,6 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Event
+from .models import Event, AgeGroup, EventLocation, EventContact
 
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
@@ -11,4 +11,40 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'name',
             'description',
+        )
+
+
+class AgeGroupSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = AgeGroup
+        fields = (
+            'id',
+            'name',
+            'description',
+        )
+
+
+class EventLocationSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = EventLocation
+        fields = (
+            'id',
+            'name',
+            'description',
+            'city',
+            'zipCode',
+            'address',
+        )
+
+
+class EventContactSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = EventContact
+        fields = (
+            'id',
+            'name',
+            'emailAddress',
         )

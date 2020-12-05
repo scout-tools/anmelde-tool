@@ -1,0 +1,29 @@
+[
+    {
+        "model": "basic.ageGroup",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "name": "Wölflinge",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.ageGroup",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "name": "Pfadfinder",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.ageGroup",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "name": "Rover",
+            "description": ""
+        }
+    }
+]
