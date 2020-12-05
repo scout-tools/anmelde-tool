@@ -1,13 +1,36 @@
 <template>
+  <v-btn
+    class="mx-2"
+    fab
+    dark
+    color="indigo"
+  >
+    <v-icon dark>
+      mdi-plus
+    </v-icon>
+  </v-btn>
+</template>
+<template>
   <v-data-table
     :headers="headers"
     :items="examples"
     :items-per-page="5"
     class="elevation-1"
-  ></v-data-table>
+  >
+    <template v-slot:item.action="{ item }">
+      <v-icon
+        class="mr-2"
+        @click="show(item)"
+      >
+        mdi-eye
+      </v-icon>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -19,7 +42,7 @@ export default {
           value: 'name',
         },
         { text: 'Beschreibung', value: 'description' },
-        { text: 'Actions', value: 'fat' },
+        { text: 'Actions', value: 'action' },
       ],
       examples: [
         {
@@ -36,6 +59,23 @@ export default {
         },
       ],
     };
+  },
+
+  methods: {
+    getMessages() {
+      const path = `${this.API_URL}basic/message?&timestamp=${new Date().getTime()}`;
+      axios.get(path)
+        .then((res) => {
+          this.showSuccess = true;
+          this.messages = res.data;
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+    show(item) {
+      this.$refs.messageModal.show(item);
+    },
   },
 };
 </script>
