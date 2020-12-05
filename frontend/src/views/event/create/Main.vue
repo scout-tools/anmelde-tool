@@ -101,56 +101,6 @@ export default {
     },
 
     finish() {
-      /*
-         const dataStep1 = this.$refs.step1.getData();
-         const dataStep2 = this.$refs.step2.getData();
-         const dataStep3 = this.$refs.step3.getData();
-         const dataStep4 = this.$refs.step4.getData();
-         const dataStep5 = this.$refs.step5.getData();
-         const dataStep6 = this.$refs.step6.getData();
-         const dataStep7 = this.$refs.step7.getData();
-         if (this.isCreate) {
-           axios.post(`${this.API_URL}basic/event/`, {
-             title: dataStep1.title,
-             description: dataStep2.description,
-             tags: this.getUrlTagList(dataStep5.tags.concat(dataStep6.selectedMandatoryFilter)),
-             material: this.convertMaterialArray(dataStep3.material),
-             costsRating: dataStep4.costsRating,
-             executionTimeRating: dataStep4.executionTimeRating,
-             isPrepairationNeeded: dataStep4.isPrepairationNeeded,
-             isActive: dataStep7.isActive,
-             createdBy: dataStep7.createdBy,
-             createdByEmail: dataStep7.createdByEmail,
-           })
-             .then(() => {
-               this.$router.push({ name: 'overview', params: { showSuccess: true } });
-             })
-             .catch(() => {
-               this.showError = true;
-             });
-         } else if (this.isUpdate) {
-           axios.put(`${this.API_URL}basic/event/${this.getId}/`, {
-             id: this.data.id,
-             title: dataStep3.title,
-             description: dataStep2.description,
-             tags: this.getUrlTagList(dataStep5.tags.concat(dataStep6.selectedMandatoryFilter)),
-             material: this.convertMaterialArray(dataStep3.material),
-             costsRating: dataStep4.costsRating,
-             executionTimeRating: dataStep5.executionTimeRating,
-             isPrepairationNeeded: dataStep6.isPrepairationNeeded,
-             isActive: dataStep7.isActive,
-             createdBy: dataStep7.createdBy,
-             createdByEmail: dataStep7.createdByEmail,
-           })
-             .then(() => {
-               this.$router.push({ name: 'overview' });
-               this.$emit('dialogClose');
-               this.showSuccess = true;
-             })
-             .catch(() => {
-               this.showError = true;
-             });
-         } */
     },
   },
 };

@@ -72,12 +72,7 @@ export default {
   }),
   computed: {
     emailError() {
-      return '';
-      // const errors = [];
-      // if (!this.$v.email.$dirty) return errors;
-      // !this.$v.email.email && errors.push("Bitte prüfe die Adresse nochmal");
-      // !this.$v.email.required && errors.push("Dies ist ein Pflichtfeld");
-      // return errors;
+      return [];
     },
   },
   methods: {
