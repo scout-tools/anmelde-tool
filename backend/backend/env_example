@@ -1,0 +1,8 @@
+DEBUG=on
+SECRET_KEY=test
+EMAIL_USE_TLS = off
+EMAIL_USE_SSL = on
+EMAIL_HOST = mail.server
+EMAIL_HOST_USER = example@example.de
+EMAIL_HOST_PASSWORD = 1234
+EMAIL_PORT = 465
