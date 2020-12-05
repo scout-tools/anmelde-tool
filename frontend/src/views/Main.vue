@@ -11,13 +11,19 @@
         Login
       </v-btn>
     </v-app-bar>
+    <overview-card/>
     <router-view/>
   </v-app>
 </template>
 
 <script>
+import OverviewCard from './overview/Overview.vue';
+
 export default {
   name: 'Main',
+  components: {
+    OverviewCard,
+  },
 };
 </script>
 
