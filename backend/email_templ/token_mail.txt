@@ -5,14 +5,19 @@
         <mj-image src="https://bdp-dpv.de/wp-content/uploads/2020/11/Website-Logo.png" alt="" align="center" border="none" width="300px" padding-left="0px" padding-right="0px" padding-bottom="10px" padding-top="10px"></mj-image>
       </mj-column>
     </mj-section>
-    <mj-section background-color="#8D230F" padding-bottom="0px" padding-top="0">
+    <mj-section background-color="#E6E6E6" padding-bottom="0px" padding-top="0">
       <mj-column width="100%">
-        <mj-text align="center" font-size="13px" color="#ABCDEA" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">HEY
-          <p style="font-size:18px; color:white">[[FirstName]]</p>
+        <mj-text align="center" font-size="13px" color="#6E6E6E" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">HEY
+          <p style="font-size:18px; color:black">[[FirstName+++]]</p>
         </mj-text>
       </mj-column>
     </mj-section>
-    <mj-section background-color="#C99E10" padding-bottom="5px" padding-top="0">
+    <mj-section background-color="#E6E6E6" padding-bottom="20px" padding-top="20px">
+      <mj-column width="100%">
+        <mj-image src="https://bundesfahrt.de/wp-content/uploads/2020/11/cropped-IMG_6035-scaled-2.jpg" alt="" align="center" border="none" width="600%" padding-left="0px" padding-right="0px" padding-bottom="10px" padding-top="10px"></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#E6E6E6" padding-bottom="5px" padding-top="0">
       <mj-column width="100%">
         <mj-text align="center" color="#1E434C" font-size="13px" font-family="Helvetica" padding-left="25px" padding-right="25px" padding-bottom="28px" padding-top="28px"><span style="font-size:20px; font-weight:bold">Wir freuen uns sehr, dass du dich angemeldet hast.</span>
           <br/>
@@ -25,15 +30,15 @@
     </mj-section>
       </mj-column>
     </mj-section>
-    <mj-section background-color="#9B4F0F" padding-bottom="20px" padding-top="20px">
+    <mj-section background-color="#E6E6E6" padding-bottom="20px" padding-top="20px">
       <mj-column width="50%">
-        <mj-button background-color="#1E434C" color="#FFF" font-size="14px" align="center" font-weight="bold" border="none" padding="15px 30px" border-radius="10px" href="https://mjml.io" font-family="Helvetica" padding-left="25px" padding-right="25px" padding-bottom="10px">Klicke hier um dich anzumelden</mj-button>
+        <mj-button background-color="#1E434C" color="#FFF" font-size="14px" align="center" font-weight="bold" border="none" padding="15px 30px" border-radius="10px" href="https://mjml.io+++" font-family="Helvetica" padding-left="25px" padding-right="25px" padding-bottom="10px">Klicke hier um dich anzumelden</mj-button>
       </mj-column>
     </mj-section>
-    <mj-section background-color="#9B4F0F" padding-bottom="5px" padding-top="0">
+    <mj-section background-color="#E6E6E6" padding-bottom="5px" padding-top="0">
       <mj-column width="100%">
         <mj-divider border-color="#ffffff" border-width="2px" border-style="solid" padding-left="20px" padding-right="20px" padding-bottom="0px" padding-top="0"></mj-divider>
-        <mj-text align="center" color="#FFF" font-size="15px" font-family="Helvetica" padding-left="25px" padding-right="25px" padding-bottom="20px" padding-top="20px">Gut Pfad!
+        <mj-text align="center" color="#1E434C" font-size="15px" font-family="Helvetica" padding-left="25px" padding-right="25px" padding-bottom="20px" padding-top="20px">Gut Pfad!
           </mj-text>
       </mj-column>
     </mj-section>
