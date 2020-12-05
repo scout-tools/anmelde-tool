@@ -3,25 +3,26 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.conf import settings
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.template.loader import get_template
+from django.template import Context
 
 url = getattr(settings, 'FRONT_URL', '')
-sender = getattr(settings, 'EMAIL_HOST_USER')
+sender = f'BdP DPV Aktion <{getattr(settings, "EMAIL_HOST_USER" )}>'
 
 
 def send_register_mail(user, key):
-    body = """
-    Hello %s
-    Confirmation Mail: %s
-    You can see more details in this link: %s/account-confirm-email/%s <br><br>
-    Thank you <br><br>
-    <p>
-    """ % (user.first_name, user.email, url, key)
+    context = {'username': user.username, 'mail': user.email, 'website': url, 'token': key}
 
+    plain_renderend = render_to_string('token_mail.txt', context)
+    html_rendered = render_to_string('token_mail.html', context)
+
+    print(key)
     subject = "Registeration Confirmation Mail"
     recipients = [user.email]
 
     try:
-        send_email(body, subject, recipients, 'html')
+        send_email(plain_renderend, html_rendered, subject, recipients)
         return "Email Is Sent"
     except Exception as e:
         print("Email not sent ", e)
@@ -41,11 +42,12 @@ def send_reset_password_email(user):
         print("Email not sent ", e)
 
 
-def send_email(body, subject, recipients, body_type='plain'):
+def send_email(body_plain, body_html, subject, recipients):
     send_mail(
         subject,
-        body,
+        body_plain,
         sender,
         recipients,
         fail_silently=False,
+        html_message=body_html,
     )

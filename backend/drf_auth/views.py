@@ -8,10 +8,9 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets, permissions, generics, views, exceptions
 
 from rest_auth.registration.views import RegisterView
-from allauth.account import app_settings as allauth_settings
 from allauth.account.models import EmailAddress, EmailConfirmationHMAC
 
-from rest_auth.app_settings import (UserDetailsSerializer, PasswordResetConfirmSerializer, create_token)
+from rest_auth.app_settings import UserDetailsSerializer, PasswordResetConfirmSerializer, create_token
 from rest_auth.utils import jwt_encode
 from rest_auth.registration.views import VerifyEmailView
 from rest_auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetConfirmView
@@ -26,14 +25,9 @@ sensitive_post_parameters_m = method_decorator(
 
 
 class RegisterUserView(RegisterView):
-    def __init__(self):
-        # self.token = ''
-        # self.request = None
-        # self.serializer = None
-        pass
-
     def perform_create(self, serializer):
         user = serializer.save(self.request)
+
         if getattr(settings, 'REST_USE_JWT', False):
             self.token = jwt_encode(user)
         else:
