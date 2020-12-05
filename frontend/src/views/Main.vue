@@ -10,8 +10,8 @@
       <v-btn
         class="mx-2"
         fab
-        dark
-        color="indigo"
+        light
+        color="yellow"
       >
         <v-icon dark>
           mdi-plus

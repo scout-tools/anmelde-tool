@@ -1,4 +1,7 @@
 <template>
+  <v-container>
+    <v-row justify="center">
+      <v-flex ma-3 lg7>
   <v-data-table
     :headers="headers"
     :items="getItems"
@@ -13,12 +16,22 @@
       </v-icon>
     </template>
   </v-data-table>
+  <ViewMessageDialog
+    ref="messageModal"
+  />
+      </v-flex>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import axios from 'axios';
+import ViewMessageDialog from './ViewMessageDialog.vue';
 
 export default {
+  components: {
+    ViewMessageDialog,
+  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     items: [],
@@ -46,6 +59,9 @@ export default {
         .catch(() => {
           console.log('Fehler');
         });
+    },
+    show(item) {
+      this.$refs.messageModal.show(item);
     },
   },
   created() {
