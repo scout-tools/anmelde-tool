@@ -1,6 +1,6 @@
 <template>
   <v-form
-    ref="formNameBeschreibung"
+    ref="formNameDescription"
     v-model="valid"
   >
     <v-container>
@@ -23,76 +23,74 @@
         <v-text-field
           outlined
           autofocus
-          :counter="40"
-          :rules="rules.title"
+          :counter="20"
+          :rules="rules.name"
           label="Name der Aktion"
-          v-model="data.title"
+          v-model="data.name"
+          required>
+        </v-text-field>
+      </v-row>
+      <v-row class="ma-4">
+        <v-text-field
+          outlined
+          :counter="100"
+          :rules="rules.description"
+          label="Beschreibung der Aktion"
+          v-model="data.description"
           required>
         </v-text-field>
       </v-row>
 
       <v-divider class="my-2"/>
 
-      <prev-next-buttons :position="position" @nextStep="nextStep()" @prevStep="prevStep"/>
+      <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
+                         @prevStep="prevStep" @submitStep="submitStep()"/>
     </v-container>
   </v-form>
 </template>
 
 <script>
-import PrevNextButtons from '../components/PrevNextButtonsSteps.vue';
+import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  props: ['position'],
+  props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
-    dialog: false,
     valid: true,
     data: {
-      title: '',
-      materialArray: [],
-      isPrepairationNeeded: false,
+      name: '',
+      description: '',
     },
     rules: {
-      title: [
-        (v) => !!v || 'Überschrift ist erforderlich.',
-        (v) => (v && v.length >= 10) || 'Die Überschrift ist zu kurz.',
-        (v) => (v && v.length <= 40) || 'Die Überschtift ist zu lang.',
+      name: [
+        (v) => !!v || 'Titel ist erforderlich.',
+        (v) => (v && v.length <= 20) || 'Der Titel ist zu lang.',
+      ],
+      description: [
+        (v) => !!v || 'Beschreibung ist erforderlich.',
+        (v) => (v && v.length <= 100) || 'Die Beschreibung ist zu lang.',
       ],
     },
   }),
-
-  computed: {
-    isCreate() {
-      return !this.$route.params.id;
-    },
-    isUpdate() {
-      return !!this.$route.params.id;
-    },
-  },
-
-  created() {
-    if (this.$route.params.id) {
-      this.data = this.$route.params;
-    }
-  },
-
   methods: {
     prevStep() {
       this.$emit('prevStep');
     },
     nextStep() {
-      if (!this.$refs.formNameBeschreibung.validate()) {
+      if (!this.$refs.formNameDescription.validate()) {
         return;
       }
       this.$emit('nextStep');
     },
+    submitStep() {
+      if (!this.$refs.formNameDescription.validate()) {
+        return;
+      }
+      this.$emit('submit');
+    },
   },
 };
 </script>
-
-<style scoped>
-
-</style>
