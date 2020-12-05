@@ -9,7 +9,6 @@ class Event(models.Model):
         verbose_name='ID')
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=100, blank=True)
-    caro = models.CharField(max_length=100, blank=True)
 
 
 class AgeGroup(models.Model):

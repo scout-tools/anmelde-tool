@@ -11,5 +11,4 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'name',
             'description',
-            'caro'
         )
