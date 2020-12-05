@@ -3,16 +3,15 @@
     :headers="headers"
     :items="getItems"
     :items-per-page="5"
-    class="elevation-1"
   >
-    <template v-slot:item.action="{ item }">
+    <!--<template v-slot:item.action="{ item }">
       <v-icon
         class="mr-2"
         @click="show(item)"
       >
         mdi-eye
       </v-icon>
-    </template>
+    </template>-->
   </v-data-table>
 </template>
 
@@ -24,37 +23,27 @@ export default {
     API_URL: process.env.VUE_APP_API,
     messages: [],
     headers: [
-      {
-        text: 'Fahrt/Lager',
-        align: 'start',
-        sortable: false,
-        value: 'name',
-      },
+      { text: 'Id', value: 'id' },
+      { text: 'Fahrt/Lager', value: 'name' },
       { text: 'Beschreibung', value: 'description' },
-      { text: 'Actions', value: 'action' },
+      // { text: 'Actions', value: 'action', sortable: false },
     ],
     examples: [
-      {
-        name: 'Ringfahrt',
-        description: 'Dies ist eine Ringfahrt.',
-      },
-      {
-        name: 'Ringfahrt2',
-        description: 'Dies ist eine Ringfahrt2.',
-      },
-      {
-        name: 'Ringfahrt3',
-        description: 'Dies ist eine Ringfahrt3.',
-      },
+      { id: 1, name: 'Ringlager', description: 'ganz toll' },
     ],
   }),
 
   computed: {
     getItems() {
+      // this.messages.forEach((value) => console.log(value));
       return this.messages;
     },
   },
   methods: {
+    onRefreshMessages() {
+      this.messages = [];
+      this.getMessages();
+    },
     getMessages() {
       const path = `${this.API_URL}basic/event/`;
       axios.get(path)
@@ -66,16 +55,12 @@ export default {
           this.showError = true;
         });
     },
-    onRefreshMessages() {
-      this.messages = [];
-      this.getMessages();
-    },
-    show(item) {
-      this.$refs.messageModal.show(item);
-    },
   },
-  beforeMount() {
-    this.onRefreshMessages();
+  created() {
+    this.getMessages();
+  },
+  mounted() {
+    this.getMessages();
   },
 };
 </script>
