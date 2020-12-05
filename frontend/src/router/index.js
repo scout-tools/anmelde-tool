@@ -16,9 +16,9 @@ const routes = [
     component: () => import('../views/login/Login.vue'),
   },
   {
-    path: '/aktion/erstellen',
+    path: '/event/erstellen',
     name: 'AktionErstellen',
-    component: () => import('../views/aktion/create/Main.vue'),
+    component: () => import('../views/event/create/Main.vue'),
   },
 ];
 
