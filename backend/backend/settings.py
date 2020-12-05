@@ -45,13 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'basic.apps.BasicConfig',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'rest_auth',
-    'rest_auth.registration',
-    'rest_framework',
-    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -133,22 +126,11 @@ STATIC_URL = '/static/'
 
 SITE_ID = 1
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ]
-}
-
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 EMAIL_HOST = env('EMAIL_HOST')
