@@ -9,6 +9,7 @@ verify_ssl = true
 Django = "~=3.1.4"
 django-allauth = "*"
 django-rest-auth = "*"
+django-environ = "*"
 
 [requires]
 python_version = "3.8"
