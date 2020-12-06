@@ -13,6 +13,9 @@ export default new Vuex.Store({
     getUsername(state) {
       return state.currentUser;
     },
+    isAuthenticated(state) {
+      return !!state.accessToken;
+    },
   },
   mutations: {
     setTokens(state, access, refresh) {

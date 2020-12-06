@@ -13,7 +13,7 @@ class EventSerializer(serializers.ModelSerializer):
             'description',
             'location',
             'ageGroups',
-            'contact',
+            'contacts',
             'startTime',
             'endTime',
             'registrationDeadline',

@@ -3,7 +3,7 @@
     <v-card>
       <v-toolbar dark color="primary">
         <v-toolbar-title>
-          {{ 'Header' }}
+          {{ 'Bitte gebe deine E-Mail Adresse ein.' }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -26,9 +26,8 @@
         <v-container>
           <v-spacer/>
           <v-btn
-            large
             @click="onLoginClick">
-            Einloggen
+            Sende mir meinen Zugangslink per Mail
           </v-btn>
         </v-container>
         </div>
@@ -36,13 +35,23 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                {{ 'Die Mail wurde erfolgreich an X@b.de versendet. Bitte guck in dein Postfach' }}
+                {{ 'Die Mail wurde erfolgreich an' }}
+                {{ data.email }}
+                {{ 'versendet. Bitte guck in dein Postfach' }}
               </v-col>
             </v-row>
           </v-container>
         </div>
       </v-card-text>
     </v-card>
+    <v-snackbar
+      v-model="showSuccess"
+      color="success"
+      y='top'
+      :timeout="timeout"
+    >
+      Du hast eine E-Mail bekommen.
+    </v-snackbar>
     <v-snackbar
       v-model="showError"
       color="error"
@@ -62,6 +71,7 @@ export default {
   name: 'Login',
   data: () => ({
     showError: false,
+    showSuccess: false,
     emailSend: false,
     timeout: 3000,
     responseObj: null,
@@ -83,19 +93,19 @@ export default {
     },
     onLoginClick() {
       const me = this; // eslint-disable-line
-      axios.post(`${this.API_URL}api/token/`, this.data)
+      axios.post(`${this.API_URL}auth/register/`, this.data)
         .then((response) => {
-          this.$store.commit('setTokens', response.data.access, response.data.refresh);
           this.emailSend = true;
-          this.onSuccessfulLogin();
+          this.onSuccessfulLogin(response);
         })
         .catch((error) => {
-          this.responseObj = error.response.data.detail;
+          debugger;
+          this.responseObj = error.response.data[0]; // eslint-disable-line
           this.showError = true;
         });
     },
     onSuccessfulLogin() {
-      this.$store.commit('setCurrentUser', this.data.username);
+      this.showSuccess = true;
     },
   },
   validators: {

@@ -6,4 +6,4 @@ EMAIL_HOST = mail.server
 EMAIL_HOST_USER = example@example.de
 EMAIL_HOST_PASSWORD = 1234
 EMAIL_PORT = 465
-FRONT_URL=http://localhost:8000/auth
+FRONT_URL=http://localhost:8080
