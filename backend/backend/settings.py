@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'basic.apps.BasicConfig',
     'rest_framework.authtoken',
+    'anmeldung_auth'
 ]
 
 MIDDLEWARE = [
@@ -159,9 +160,6 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
 EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL')
@@ -172,10 +170,6 @@ EMAIL_PORT = env('EMAIL_PORT')
 FRONT_URL = env.str('FRONT_URL')
 
 REST_USE_JWT = True
-SITE_ID = 1
-
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_EMAIL_REQUIRED = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -193,13 +187,10 @@ SIMPLE_JWT = {
     'VERIFYING_KEY': None,
     'AUDIENCE': None,
     'ISSUER': None,
-
     'AUTH_HEADER_TYPES': ('Bearer',),
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
-
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
-
     'JTI_CLAIM': 'jti',
 }

@@ -12,7 +12,7 @@ sender = f'BdP DPV Aktion <{getattr(settings, "EMAIL_HOST_USER")}>'
 
 
 def send_register_mail(user):
-    context = {'username': user.username, 'mail': user.email, 'website': url, 'password': 'HagiIstDerCoolste'}
+    context = {'user': user.username, 'mail': user.email, 'website': url, 'password': 'HagiIstDerCoolste'}
 
     plain_renderend = render_to_string('token_mail/token_mail.txt', context)
     html_rendered = render_to_string('token_mail/token_mail.html', context)
@@ -28,7 +28,6 @@ def send_register_mail(user):
 
 
 def send_login_mail(user):
-    print(user)
     context = {'user': user['username'], 'mail': user['email'], 'website': url, 'password': user['password']}
 
     plain_renderend = render_to_string('token_mail/token_mail.txt', context)

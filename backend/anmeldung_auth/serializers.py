@@ -1,17 +1,14 @@
-from rest_framework import serializers
-from rest_framework.permissions import IsAuthenticated
-from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import make_password  # Register serializer
-
+from rest_framework import serializers, status, exceptions
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+import datetime as dt
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('email', 'password', 'first_name', 'last_name')
         extra_kwargs = {
-            'password': {'write_only': True,'required':False},
+            'password': {'write_only': True, 'required': False},
             'email': {'required': True},
             'username': {'required': False},
             'first_name': {'required': False},
@@ -67,3 +64,28 @@ class OneClickLoginSerializer(serializers.ModelSerializer):
             return validated_data
         else:
             raise serializers.ValidationError(u'User "%s" does not exist.' % validated_data['email'])
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        credentials = {
+            'username': '',
+            'password': attrs.get("password")
+        }
+
+        user_obj = User.objects.filter(email=attrs.get("username")).first() or User.objects.filter(
+            username=attrs.get("username")).first()
+
+        if user_obj:
+            credentials['username'] = user_obj.username
+
+            if not user_obj.is_superuser and not user_obj.is_staff:
+                if dt.datetime.now(dt.timezone.utc) - user_obj.userextended.password_date > dt.timedelta(days=1):
+                    raise ServiceUnavailableError()
+
+        return super().validate(credentials)
+
+
+class ServiceUnavailableError(exceptions.APIException):
+    status_code = status.HTTP_418_IM_A_TEAPOT
+    default_detail = "Password expired, please get a new one"

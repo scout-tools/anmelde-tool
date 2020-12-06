@@ -1,9 +1,8 @@
-from rest_framework import generics, permissions, mixins
+from rest_framework import generics
 from rest_framework.response import Response
-from .serializers import RegisterSerializer, UserSerializer, OneClickLoginSerializer
-from django.contrib.auth.models import User
-from rest_framework import mixins, viewsets
+from rest_framework_simplejwt.views import TokenObtainPairView
 from .email import send_register_mail, send_login_mail
+from .serializers import RegisterSerializer, OneClickLoginSerializer, MyTokenObtainPairSerializer
 
 
 # Register API
@@ -31,3 +30,8 @@ class OneClickView(generics.UpdateAPIView):
         return Response({
             "message": "Login email sent",
         })
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
