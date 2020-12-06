@@ -8,17 +8,16 @@ from django.template.loader import get_template
 from django.template import Context
 
 url = getattr(settings, 'FRONT_URL', '')
-sender = f'BdP DPV Aktion <{getattr(settings, "EMAIL_HOST_USER" )}>'
+sender = f'BdP DPV Aktion <{getattr(settings, "EMAIL_HOST_USER")}>'
 
 
-def send_register_mail(user, key):
-    context = {'username': user.username, 'mail': user.email, 'website': url, 'token': key}
+def send_register_mail(user):
+    context = {'username': user.username, 'mail': user.email, 'website': url, 'password': 'HagiIstDerCoolste'}
 
-    plain_renderend = render_to_string('token_mail.txt', context)
-    html_rendered = render_to_string('token_mail.html', context)
+    plain_renderend = render_to_string('token_mail/token_mail.txt', context)
+    html_rendered = render_to_string('token_mail/token_mail.html', context)
 
-    print(key)
-    subject = "Registeration Confirmation Mail"
+    subject = "Willkommen bei der BdP DPV Aktion"
     recipients = [user.email]
 
     try:
@@ -28,15 +27,18 @@ def send_register_mail(user, key):
         print("Email not sent ", e)
 
 
-def send_reset_password_email(user):
-    body = """
-    hello %s,
-    Reset Mail Link : %s/%s/%s
-    """ % (user.username, url, urlsafe_base64_encode(force_bytes(user.pk)), default_token_generator.make_token(user))
-    subject = "Reset password Mail"
-    recipients = [user.email]
+def send_login_mail(user):
+    print(user)
+    context = {'user': user['username'], 'mail': user['email'], 'website': url, 'password': user['password']}
+
+    plain_renderend = render_to_string('token_mail/token_mail.txt', context)
+    html_rendered = render_to_string('token_mail/token_mail.html', context)
+
+    subject = "Willkommen bei der BdP DPV Aktion"
+    recipients = [user['email']]
+
     try:
-        send_email(body, subject, recipients, 'html')
+        send_email(plain_renderend, html_rendered, subject, recipients)
         return "Email Is Sent"
     except Exception as e:
         print("Email not sent ", e)

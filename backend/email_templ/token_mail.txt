@@ -1,7 +1,0 @@
-Hello {{ username }},
-Confirmation Mail: {{ mail }}
-You can see more details in this link: {{ website }}/account-confirm-email/{{ token }}
-Thank you and greetings from
-
-The coolest team in the world
-

@@ -12,6 +12,6 @@ Mit deiner Email Adresse kannst du dich immer wieder anmelden, falls du Änderun
 
 Der Link ist nur 24h gültig. Falls er schon abgelaufen ist, kannst du dir hier einen neuen zusenden lassen.
 
-Klicke hier um dich anzumelden [{{ website }}/account-confirm-email/{{ token }}]
+Klicke hier um dich anzumelden [{{ website }}//api/token?login={{ user }}&password={{ password }}]
 
 Gut Pfad!
