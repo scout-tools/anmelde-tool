@@ -1,9 +1,9 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Event, AgeGroup, EventLocation, EventContact
+from .models import Event, AgeGroup, EventLocation, EventContact, ScoutHerarchy
 
 
-class EventSerializer(serializers.HyperlinkedModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
@@ -14,7 +14,7 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
             'location',
             'ageGroups',
             'contact',
-            'startTime,'
+            'startTime',
             'endTime',
             'registrationDeadline',
             'participationFee',
@@ -54,4 +54,17 @@ class EventContactSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'name',
             'emailAddress',
+        )
+
+
+class ScoutHerarchySerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = ScoutHerarchy
+        fields = (
+            'level',
+            'name',
+            'city',
+            'zipCode',
+            'parent'
         )

@@ -10,7 +10,9 @@
             "contact_id": 1,
             "startTime": "2019-01-26 12:06:28.796728",
             "endTime": "2019-12-26 12:06:28.796728",
-            "registrationDeadline": "2019-12-26 12:06:28.796728"
+            "registrationDeadline": "2019-12-26 12:06:28.796728",
+            "registrationStart": "2019-12-26 12:06:28.796728",
+            "participationFee": 20.00
         }
     },
     {
@@ -24,7 +26,9 @@
             "contact_id": 1,
             "startTime": "2019-01-26 12:06:28.796728",
             "endTime": "2019-12-26 12:06:28.796728",
-            "registrationDeadline": "2019-12-26 12:06:28.796728"
+            "registrationDeadline": "2019-12-26 12:06:28.796728",
+            "registrationStart": "2019-12-26 12:06:28.796728",
+            "participationFee": 20.00
         }
     },
     {
@@ -38,7 +42,9 @@
             "contact_id": 1,
             "startTime": "2019-01-26 12:06:28.796728",
             "endTime": "2019-12-26 12:06:28.796728",
-            "registrationDeadline": "2019-12-26 12:06:28.796728"
+            "registrationDeadline": "2019-12-26 12:06:28.796728",
+            "registrationStart": "2019-12-26 12:06:28.796728",
+            "participationFee": 20.00
         }
     }
 ]
