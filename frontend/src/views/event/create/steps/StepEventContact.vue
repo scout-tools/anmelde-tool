@@ -45,6 +45,7 @@ import { email, required } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
+  name: 'StepEventContact',
   mixins: [validationMixin],
   props: ['position', 'maxPos'],
   components: {
@@ -93,6 +94,11 @@ export default {
         return;
       }
       this.$emit('submit');
+    },
+    getData() {
+      return {
+        contact_id: 1,
+      };
     },
   },
 };

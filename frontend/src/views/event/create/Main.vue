@@ -32,7 +32,7 @@
             >
               <component
                 :is="step"
-                :ref="step"
+                :ref="step.name"
                 :data="data"
                 :position="index+1"
                 :max-pos="steps.length"
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 
 import StepNameDescription from './steps/StepNameDescription.vue';
 import StepLocation from './steps/StepLocation.vue';
@@ -99,8 +99,26 @@ export default {
     prevStep() {
       this.currentStep -= 1;
     },
+    async finish() {
+      const dataNameDescription = this.$refs.StepNameDescription[0].getData();
+      const dataStartEndDeadline = this.$refs.StepStartEndDeadline[0].getData();
+      const dataStepLocation = this.$refs.StepLocation[0].getData();
+      const dataStepAgeGroup = this.$refs.StepAgeGroup[0].getData();
+      const dataStepEventContact = this.$refs.StepEventContact[0].getData();
 
-    finish() {
+      const data = {
+        name: dataNameDescription.name,
+        description: dataNameDescription.description,
+        location: dataStepLocation.location_id,
+        ageGroups: dataStepAgeGroup.ageGroups,
+        contact: dataStepEventContact.contact_id,
+        startTime: dataStartEndDeadline.startTime,
+        endTime: dataStartEndDeadline.endTime,
+        registrationDeadline: dataStartEndDeadline.deadline,
+      };
+
+      const result = await axios.post(`${this.API_URL}basic/event/`, data);
+      console.log(result);
     },
   },
 };

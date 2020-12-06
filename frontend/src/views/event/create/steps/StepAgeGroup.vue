@@ -34,6 +34,7 @@
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
+  name: 'StepAgeGroup',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
@@ -87,7 +88,7 @@ export default {
   },
   methods: {
     validate() {
-      this.valid = this.selectedAgeGroups > 0;
+      this.valid = this.selectedAgeGroups.length > 0;
     },
     prevStep() {
       this.$emit('prevStep');
@@ -99,10 +100,15 @@ export default {
       this.$emit('nextStep');
     },
     submitStep() {
-      if (!this.$refs.formAgeGroup.validate()) {
+      if (!this.valid) {
         return;
       }
       this.$emit('submit');
+    },
+    getData() {
+      return {
+        ageGroups: this.selectedAgeGroups,
+      };
     },
   },
 };

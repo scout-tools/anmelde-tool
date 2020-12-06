@@ -46,6 +46,7 @@
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
+  name: 'StepStartEndDeadline',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
@@ -62,6 +63,7 @@ export default {
   methods: {
     validate() {
       this.valid = !!this.data.startTime && !!this.data.endTime && !!this.data.deadline;
+      this.valid = true;
     },
     prevStep() {
       this.$emit('prevStep');
@@ -78,6 +80,13 @@ export default {
         return;
       }
       this.$emit('submit');
+    },
+    getData() {
+      return {
+        startTime: this.data.startTime,
+        endTime: this.data.endTime,
+        deadline: this.data.deadline,
+      };
     },
   },
 };

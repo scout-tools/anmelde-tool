@@ -24,6 +24,7 @@
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
+  name: 'StepLocation',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
@@ -49,6 +50,11 @@ export default {
         return;
       }
       this.$emit('submit');
+    },
+    getData() {
+      return {
+        location_id: '1',
+      };
     },
   },
 };
