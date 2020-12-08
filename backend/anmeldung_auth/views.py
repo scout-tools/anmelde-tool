@@ -34,4 +34,3 @@ class OneClickView(generics.UpdateAPIView):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-

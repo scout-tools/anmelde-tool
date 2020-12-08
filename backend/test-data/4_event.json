@@ -5,7 +5,7 @@
         "fields": {
             "id": 1,
             "name": "Ringlager 2018",
-            "description": "",
+            "description": "Das Pfingstlager vom Ring Rhein Lippe im Jahr 2018 zum Thema Römer",
             "location_id": 1,
             "contacts": [1],
             "startTime": "2019-01-26 12:06:28.796728",
@@ -20,9 +20,9 @@
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Ringlager 2019",
-            "description": "",
-            "location_id": 1,
+            "name": "Sommerfahrt 2019",
+            "description": "Die Sommerfahrt vom Stamm Hratuga nach Litauen",
+            "location_id": 2,
             "contacts": [1],
             "startTime": "2019-01-26 12:06:28.796728",
             "endTime": "2019-12-26 12:06:28.796728",
@@ -36,15 +36,31 @@
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "Ringlager 2020",
-            "description": "",
-            "location_id": 1,
+            "name": "DPV Gold Radio",
+            "description": "Ein Radioprogramm zum 25 Jährige Jubiläum vom DPV",
+            "location_id": 3,
             "contacts": [1],
             "startTime": "2019-01-26 12:06:28.796728",
             "endTime": "2019-12-26 12:06:28.796728",
             "registrationDeadline": "2019-12-26 12:06:28.796728",
             "registrationStart": "2019-12-26 12:06:28.796728",
             "participationFee": 20.00
+        }
+    },
+    {
+        "model": "basic.event",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "name": "BdP-DPV Aktion",
+            "description": "Deutschlandweites Geländespiel",
+            "location_id": 3,
+            "contacts": [1],
+            "startTime": "2021-09-17 18:00:00.000000",
+            "endTime": "2021-09-19 13:00:00.000000",
+            "registrationDeadline": "2021-05-01 00:00:00.000000",
+            "registrationStart": "2021-02-01 00:00:00.000000",
+            "participationFee": 10.00
         }
     }
 ]

@@ -1,7 +1,9 @@
+from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
 from rest_framework import serializers, status, exceptions
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 import datetime as dt
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,16 +28,17 @@ class RegisterSerializer(serializers.ModelSerializer):
             attrs['password'] = "HagiIstDerCoolste"
         return attrs
 
-    def create(self, validated_data):
-        if not User.objects.filter(email=validated_data['email']).exists():
-            user = User.objects.create_user(validated_data['username'],
-                                            email=validated_data['email'],
-                                            password=validated_data['password'],
-                                            first_name=validated_data['first_name'],
-                                            last_name=validated_data['last_name'])
+    def create(self, data):
+        if not User.objects.filter(email=data['email']).exists():
+            user = User.objects.create_user(data['username'],
+                                            email=data['email'],
+                                            password=data['password'],
+                                            first_name=data['first_name'],
+                                            last_name=data['last_name'])
             return user
         else:
-            raise serializers.ValidationError(u'User "%s" is already in use.' % validated_data['email'])
+            raise serializers.ValidationError(
+                u'User "%s" is already in use.' % data['email'])
 
 
 # User serializer
@@ -63,7 +66,8 @@ class OneClickLoginSerializer(serializers.ModelSerializer):
             validated_data['username'] = user.username
             return validated_data
         else:
-            raise serializers.ValidationError(u'User "%s" does not exist.' % validated_data['email'])
+            raise serializers.ValidationError(
+                u'User "%s" does not exist.' % validated_data['email'])
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -73,17 +77,31 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             'password': attrs.get("password")
         }
 
-        user_obj = User.objects.filter(email=attrs.get("username")).first() or User.objects.filter(
-            username=attrs.get("username")).first()
+        user_obj = User.objects.filter(
+            email=attrs.get("username")).first() or User.objects.filter(
+                username=attrs.get("username")).first()
 
         if user_obj:
             credentials['username'] = user_obj.username
 
             if not user_obj.is_superuser and not user_obj.is_staff:
-                if dt.datetime.now(dt.timezone.utc) - user_obj.userextended.password_date > dt.timedelta(days=1):
+                now = dt.datetime.now(dt.timezone.utc)
+                password_date = user_obj.userextended.password_date
+                if now - password_date > dt.timedelta(days=1):
                     raise ServiceUnavailableError()
 
         return super().validate(credentials)
+
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        token['user'] = user.username
+        token['email'] = user.email
+        token['groups'] = [x.as_dict() for x in user.groups.all()]
+        token['is_staff'] = user.is_staff
+
+        return token
 
 
 class ServiceUnavailableError(exceptions.APIException):

@@ -2,13 +2,18 @@
   <v-app>
     <v-app-bar app color="primary" dark>
       <v-btn icon @click="$router.push({ name: 'login' });">
-        <v-icon>mdi-home</v-icon>
+        <v-icon
+          large
+        >
+          mdi-home
+        </v-icon>
       </v-btn>
       <v-toolbar-title>BdP-DPV-Anmelde Tool</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-btn
         icon
+        large
         v-if="isAuthenticated"
         @click="$router.push({ name: 'eventOverview' })"
       >
@@ -17,6 +22,7 @@
 
       <v-btn
         icon
+        large
         v-if="isAuthenticated"
         @click="$router.push({ name: 'createEvent' })"
       >
@@ -24,6 +30,22 @@
       </v-btn>
 
       <v-spacer />
+      <v-toolbar-title
+        v-if="isAuthenticated">
+        {{ 'Hallo, ' + this.userName }}
+      </v-toolbar-title>
+
+      <v-btn
+        icon
+        large
+        class="mx-5"
+        v-if="isAuthenticated"
+        @click="$router.push({ name: 'createEvent' })"
+      >
+        <v-icon>mdi-tools
+        </v-icon>
+      </v-btn>
+
       <v-btn v-if="isAuthenticated" outlined dark @click="onLogoutClicked">
         Logout
       </v-btn>
@@ -55,7 +77,14 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Main',
   computed: {
-    ...mapGetters(['isAuthenticated']),
+    ...mapGetters([
+      'isAuthenticated',
+      'getJwtData',
+    ]),
+    userName() {
+      console.log(this.getJwtData);
+      return this.getJwtData.user;
+    },
   },
   data: () => ({
     links: ['Hauptseite', 'Impressum', 'Kontakt'],
