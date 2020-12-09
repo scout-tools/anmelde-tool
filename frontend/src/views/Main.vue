@@ -1,17 +1,17 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-btn icon @click="$router.push({ name: 'login' });">
         <v-icon
+          class="mx-4"
           large
         >
-          mdi-home
+          mdi-emoticon
         </v-icon>
-      </v-btn>
       <v-toolbar-title>BdP-DPV-Anmelde Tool</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-btn
+        class="mx-3"
         icon
         large
         v-if="isAuthenticated"
@@ -21,12 +21,23 @@
       </v-btn>
 
       <v-btn
+        class="mx-3"
         icon
         large
         v-if="isAuthenticated"
         @click="$router.push({ name: 'createEvent' })"
       >
         <v-icon>mdi-calendar-plus</v-icon>
+      </v-btn>
+
+      <v-btn
+        class="mx-3"
+        icon
+        large
+        v-if="isAuthenticated"
+        @click="$router.push({ name: 'statisticOverview' })"
+      >
+        <v-icon>mdi-chart-bar</v-icon>
       </v-btn>
 
       <v-spacer />
@@ -40,7 +51,7 @@
         large
         class="mx-5"
         v-if="isAuthenticated"
-        @click="$router.push({ name: 'createEvent' })"
+        @click="$router.push({ name: 'settingsUser' })"
       >
         <v-icon>mdi-tools
         </v-icon>

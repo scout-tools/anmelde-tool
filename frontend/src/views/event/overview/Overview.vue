@@ -11,14 +11,12 @@
         <v-row>
           <v-col cols="5" class="ma-3">
             <v-switch
-              v-model="ex11"
               label="Alte Aktionen"
               color="blue"
             ></v-switch>
           </v-col>
           <v-col cols="5" class="ma-3">
             <v-switch
-              v-model="ex11"
               label="Zukunfte Aktionen"
               color="green"
               hide-details

@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import CheckTokenMain from '@/views/login/CheckToken.vue';
 import EventOverview from '@/views/event/overview/Overview.vue';
+import SettingsUser from '@/views/settings/user/Main.vue';
+import StatisticOverview from '@/views/statistic/overview/Main.vue';
 
 Vue.use(VueRouter);
 
@@ -25,6 +27,16 @@ const routes = [
     path: '/event/overview',
     name: 'eventOverview',
     component: EventOverview,
+  },
+  {
+    path: '/settings/user',
+    name: 'settingsUser',
+    component: SettingsUser,
+  },
+  {
+    path: '/statistic/overview',
+    name: 'statisticOverview',
+    component: StatisticOverview,
   },
 ];
 
