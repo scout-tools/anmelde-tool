@@ -1,9 +1,9 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Event, AgeGroup, EventLocation, EventContact
+from .models import Event, AgeGroup, EventLocation, Person, ScoutHerarchy, Registration
 
 
-class EventSerializer(serializers.HyperlinkedModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
@@ -13,15 +13,15 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
             'description',
             'location',
             'ageGroups',
-            'contact',
-            'startTime,'
+            'contacts',
+            'startTime',
             'endTime',
             'registrationDeadline',
             'participationFee',
         )
 
 
-class AgeGroupSerializer(serializers.HyperlinkedModelSerializer):
+class AgeGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AgeGroup
@@ -32,7 +32,7 @@ class AgeGroupSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class EventLocationSerializer(serializers.HyperlinkedModelSerializer):
+class EventLocationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EventLocation
@@ -46,12 +46,40 @@ class EventLocationSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class EventContactSerializer(serializers.HyperlinkedModelSerializer):
+class PersonSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = EventContact
+        model = Person
         fields = (
             'id',
             'name',
             'emailAddress',
+            'scoutOrganisation',
+            'mobileNumber'
+        )
+
+
+class ScoutHerarchySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ScoutHerarchy
+        fields = (
+            'id',
+            'level',
+            'name',
+            'city',
+            'zipCode',
+            'parent'
+        )
+
+
+class RegistrationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Registration
+        fields = (
+            'id',
+            'scoutOrganisation',
+            'numberOfParticipants',
+            'responsiblePerson'
         )

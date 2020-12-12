@@ -2,8 +2,8 @@
 from django.db.models.functions import ExtractWeek, ExtractYear
 from rest_framework import pagination, viewsets, mixins, generics, filters
 
-from .models import Event, AgeGroup, EventLocation, EventContact
-from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, EventContactSerializer
+from .models import Event, AgeGroup, EventLocation, Person, ScoutHerarchy, Registration
+from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, PersonSerializer, ScoutHerarchySerializer, RegistrationSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -21,6 +21,16 @@ class EventLocationViewSet(viewsets.ModelViewSet):
     serializer_class = EventLocationSerializer
 
 
-class EventContactViewSet(viewsets.ModelViewSet):
-    queryset = EventContact.objects.all()
-    serializer_class = EventContactSerializer
+class PersonViewSet(viewsets.ModelViewSet):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+
+
+class ScoutHerarchyViewSet(viewsets.ModelViewSet):
+    queryset = ScoutHerarchy.objects.all()
+    serializer_class = ScoutHerarchySerializer
+
+
+class RegistrationViewSet(viewsets.ModelViewSet):
+    queryset = Registration.objects.all()
+    serializer_class = RegistrationSerializer

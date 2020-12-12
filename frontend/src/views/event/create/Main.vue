@@ -3,10 +3,11 @@
     <v-row justify="center">
       <v-flex
         ma-3
-        lg7
+        lg9
       >
         <v-stepper
           alt-labels
+          vertical
           v-model="currentStep"
         >
           <v-stepper-header>

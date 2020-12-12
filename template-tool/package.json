@@ -1,0 +1,17 @@
+{
+  "name": "template-tool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "html-to-text": "^6.0.0",
+    "mjml": "^4.7.1"
+  },
+  "type": "module"
+}
