@@ -4,7 +4,7 @@
     v-model="valid"
   >
     <v-container>
-      <v-row class="mt-6 ml-2">
+      <v-row class="mt-6">
       <span class="subtitle-1">
         Für welche Zielgruppe(n) ist deine Aktion?
       </span>

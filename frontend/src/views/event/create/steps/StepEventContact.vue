@@ -4,7 +4,7 @@
     v-model="valid"
   >
     <v-container>
-      <v-row class="mt-6 ml-2">
+      <v-row class="mt-6">
       <span class="subtitle-1">
         Trage hier deine Kontaktdaten als Ansprechpartner ein.
       </span>

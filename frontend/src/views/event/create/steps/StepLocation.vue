@@ -4,13 +4,13 @@
     v-model="valid"
   >
     <v-container>
-      <v-row class="mt-6 ml-4">
+      <v-row class="mt-6">
         <span class="subtitle-1">
-          Trage hier den Namen von dem Ort ein. <br>
+          Trage hier den Namen von dem Ort ein.
         </span>
       </v-row>
-      <v-row class="ma-4">
-        <b>TODO</b>
+      <v-row>
+
       </v-row>
 
       <v-divider class="my-2"/>
