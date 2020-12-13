@@ -6,43 +6,39 @@
         lg9
       >
         <v-stepper
-          alt-labels
-          vertical
           v-model="currentStep"
+          vertical
         >
-          <v-stepper-header>
-            <template v-for="index in steps.length">
-              <v-stepper-step
-                :key="`${index}-step`"
-                :complete="currentStep > index"
-                :step="index"
-              >
-                {{ headerStep[index-1] }}
-              </v-stepper-step>
-
-              <v-divider
-                v-if="index !== index"
-                :key="index"
-              ></v-divider>
-            </template>
-          </v-stepper-header>
-
-          <v-stepper-items v-for="(step, index) in steps" :key="index">
-            <v-stepper-content
+          <template v-for="(step, index) in steps">
+            <v-stepper-step
+              :key="`stepper-${index}`"
+              :complete="currentStep > index+1"
               :step="index+1"
             >
-              <component
-                :is="step"
-                :ref="step.name"
-                :data="data"
-                :position="index+1"
-                :max-pos="steps.length"
-                @prevStep="prevStep()"
-                @nextStep="nextStep()"
-                @submit="finish()"
-              />
-            </v-stepper-content>
-          </v-stepper-items>
+              {{ headerStep[index] }}
+            </v-stepper-step>
+
+            <v-divider
+              :key="index"
+            ></v-divider>
+
+            <v-stepper-items :key="`stepper-items-${index}`">
+              <v-stepper-content
+                :step="index+1"
+              >
+                <component
+                  :is="step"
+                  :ref="step.name"
+                  :data="data"
+                  :position="index+1"
+                  :max-pos="steps.length"
+                  @prevStep="prevStep()"
+                  @nextStep="nextStep()"
+                  @submit="finish()"
+                />
+              </v-stepper-content>
+            </v-stepper-items>
+          </template>
         </v-stepper>
       </v-flex>
     </v-row>

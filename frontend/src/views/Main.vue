@@ -1,12 +1,12 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-        <v-icon
-          class="mx-4"
-          large
-        >
-          mdi-emoticon
-        </v-icon>
+      <v-icon
+        class="mx-4"
+        large
+      >
+        mdi-emoticon
+      </v-icon>
       <v-toolbar-title>BdP-DPV-Anmelde Tool</v-toolbar-title>
       <v-spacer></v-spacer>
 
