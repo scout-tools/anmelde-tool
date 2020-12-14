@@ -9,6 +9,7 @@ phases:
     commands:
       - echo "Before running tests"
       - cd backend/
+      - pip install -r requirements.txt
   build:
     commands:
       - echo "Running all unit tests"
