@@ -2,6 +2,8 @@ branch-defaults:
   default:
     environment: anmelde-tool-dev
     group_suffix: null
+  deploy_backend:
+    environment: anmelde-tool-dev
 global:
   application_name: anmelde-tool
   branch: null
