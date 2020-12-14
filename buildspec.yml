@@ -8,7 +8,7 @@ phases:
   pre_build:
     commands:
       - echo "Before running tests"
-      - sudo cd backend/
+      - cd backend/
   build:
     commands:
       - echo "Running all unit tests"
