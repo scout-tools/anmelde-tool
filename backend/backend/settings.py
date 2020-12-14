@@ -39,6 +39,9 @@ ALLOWED_HOSTS = [
     'localhost',
     'anmelde-tool-dev.eu-central-1.elasticbeanstalk.com',
     'api.myhagemann.de',
+    '172.31.24.203',
+    '172.31.9.217'
+
 ]
 
 CORS_ALLOW_CREDENTIALS = True
