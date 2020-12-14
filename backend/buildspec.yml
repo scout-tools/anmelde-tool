@@ -1,0 +1,21 @@
+version: 0.2
+
+env:
+  variables:
+    FRONT_URL: 'http://localhost:8000/'
+
+phases:
+  pre_build:
+    commands:
+      - echo "Before running tests"
+      - sudo cd backend/
+  build:
+    commands:
+      - echo "Running all unit tests"
+      - python manage.py test
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - '**/*'
