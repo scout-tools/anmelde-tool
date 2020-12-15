@@ -24,7 +24,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # reading .env file
 environ.Env.read_env()
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -38,11 +37,8 @@ ALLOWED_HOSTS = [
     '83.169.2.26',
     '127.0.0.1',
     'localhost',
-    'anmelde-tool-dev.eu-central-1.elasticbeanstalk.com',
+    'anmelde-tool.eu-central-1.elasticbeanstalk.com',
     'api.myhagemann.de',
-    '172.31.24.203',
-    '172.31.9.217'
-
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -62,7 +58,8 @@ INSTALLED_APPS = [
     'basic.apps.BasicConfig',
     'rest_framework.authtoken',
     'anmeldung_auth',
-    'storages'
+    'storages',
+    'ebhealthcheck.apps.EBHealthCheckConfig',
 ]
 
 MIDDLEWARE = [
@@ -101,7 +98,8 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-
+for k, v in sorted(env.ENVIRON.items()):
+    print(k + ':', v)
 # if env.bool('USE_RDS_DB'):
 DATABASES = {
     'default': {
