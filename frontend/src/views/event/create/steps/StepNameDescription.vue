@@ -4,44 +4,43 @@
     v-model="valid"
   >
     <v-container>
-      <v-row class="mt-6 ml-2">
+      <v-row class="mt-2">
       <span class="text-left subtitle-1">
-        Willkommen bei der <b> Aktionserstellung </b>. <br>
-        <br>
+        <p>
+        Willkommen bei der <b> Aktionserstellung </b>.
+        </p>
         Viele Pfadfinder freuen sich
-        schon auf deine Aktion. Im folgenden führen wir dich durch XX kleine
+        schon auf deine Aktion. Im folgenden führen wir dich durch {{ maxPos }} kleine
         Schritte. Viel Spaß!
       </span>
       </v-row>
-      <v-divider class="text-left ma-5"/>
-      <v-row class="mt-6 ml-2">
+      <v-divider class="text-left my-2"/>
+      <v-row class="mb-6">
       <span class="subtitle-1">
         Gib deiner Aktion eine passende Überschrift.
       </span>
       </v-row>
-      <v-row class="ma-4">
+      <v-row>
         <v-text-field
-          outlined
+          v-model="data.name"
           autofocus
           :counter="20"
-          :rules="rules.name"
+          :error-messages="nameErrors"
           label="Name der Aktion"
-          v-model="data.name"
           required>
         </v-text-field>
       </v-row>
-      <v-row class="ma-4">
+      <v-row>
         <v-text-field
-          outlined
-          :counter="100"
-          :rules="rules.description"
-          label="Beschreibung der Aktion"
           v-model="data.description"
+          :counter="100"
+          :error-messages="descriptionErrors"
+          label="Beschreibung der Aktion"
           required>
         </v-text-field>
       </v-row>
 
-      <v-divider class="my-2"/>
+      <v-divider class="my-3"/>
 
       <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
                          @prevStep="prevStep" @submitStep="submitStep()"/>
@@ -50,9 +49,11 @@
 </template>
 
 <script>
+import { required, maxLength } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
+  name: 'StepNameDescription',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
@@ -64,32 +65,71 @@ export default {
       name: '',
       description: '',
     },
-    rules: {
-      name: [
-        (v) => !!v || 'Titel ist erforderlich.',
-        (v) => (v && v.length <= 20) || 'Der Titel ist zu lang.',
-      ],
-      description: [
-        (v) => !!v || 'Beschreibung ist erforderlich.',
-        (v) => (v && v.length <= 100) || 'Die Beschreibung ist zu lang.',
-      ],
-    },
   }),
+  validations: {
+    data: {
+      name: {
+        required,
+        maxLength: maxLength(20),
+      },
+      description: {
+        required,
+        maxLength: maxLength(100),
+      },
+    },
+  },
+  computed: {
+    nameErrors() {
+      const errors = [];
+      if (!this.$v.data.name.$dirty) return errors;
+      if (!this.$v.data.name.required) {
+        errors.push('Name is required.');
+      }
+      if (!this.$v.data.name.maxLength) {
+        errors.push('Name must be at most 20 characters long');
+      }
+      return errors;
+    },
+    descriptionErrors() {
+      const errors = [];
+      if (!this.$v.data.description.$dirty) return errors;
+      if (!this.$v.data.description.required) {
+        errors.push('description is required.');
+      }
+      if (!this.$v.data.description.maxLength) {
+        errors.push('description must be at most 100 characters long');
+      }
+      return errors;
+    },
+  },
   methods: {
+    validate() {
+      this.$v.$touch();
+      console.log(!this.$v.$error);
+      this.valid = !this.$v.$error;
+    },
     prevStep() {
       this.$emit('prevStep');
     },
     nextStep() {
-      if (!this.$refs.formNameDescription.validate()) {
+      this.validate();
+      if (!this.valid) {
         return;
       }
       this.$emit('nextStep');
     },
     submitStep() {
-      if (!this.$refs.formNameDescription.validate()) {
+      this.validate();
+      if (!this.valid) {
         return;
       }
       this.$emit('submit');
+    },
+    getData() {
+      return {
+        name: this.data.name,
+        description: this.data.description,
+      };
     },
   },
 };
