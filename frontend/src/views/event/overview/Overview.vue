@@ -33,7 +33,7 @@
         v-for="(item, index) in getItems"
       >
       <v-list-item
-        :key="item.name"
+        :key="item.name + item.id"
       >
         <v-list-item-avatar>
           <v-icon color="green">mdi-tent</v-icon>
@@ -82,7 +82,6 @@ export default {
 
   computed: {
     getItems() {
-      // this.messages.forEach((value) => console.log(value));
       return this.items;
     },
   },
