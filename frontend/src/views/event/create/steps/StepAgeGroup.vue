@@ -4,20 +4,21 @@
     v-model="valid"
   >
     <v-container>
-      <v-row class="mt-6 ml-2">
+      <v-row class="mt-6">
       <span class="subtitle-1">
         Für welche Zielgruppe(n) ist deine Aktion?
       </span>
       </v-row>
-      <v-row class="ma-4">
+      <v-row>
         <v-select
           v-model="selectedAgeGroups"
-          :items="getItems"
+          :items="items"
+          :error-messages="selectedAgeGroupsErrors"
           item-text="name"
           item-value="id"
           label="Zielgruppe(n) wählen"
           multiple
-          outlined
+          required
           @input="validate()"
         />
       </v-row>
@@ -25,85 +26,80 @@
       <v-divider class="my-2"/>
 
       <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
-                         @prevStep="prevStep" @submitStep="submitStep()"/>
+                         @prevStep="prevStep()" @submitStep="submitStep()"/>
     </v-container>
   </v-form>
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators';
+import axios from 'axios';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
+  name: 'StepAgeGroup',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
   },
   data: () => ({
+    items: [],
     selectedAgeGroups: [],
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    data: {
-      name: '',
-      description: '',
-    },
   }),
+  validations: {
+    selectedAgeGroups: {
+      required,
+    },
+  },
   computed: {
     getItems() {
-      // TODO replace with HTTP
-      return [
-        {
-          model: 'basic.ageGroup',
-          pk: 1,
-          fields: {
-            id: 1,
-            name: 'Wölflinge',
-            description: '',
-          },
-        },
-        {
-          model: 'basic.ageGroup',
-          pk: 2,
-          fields: {
-            id: 2,
-            name: 'Pfadfinder',
-            description: '',
-          },
-        },
-        {
-          model: 'basic.ageGroup',
-          pk: 3,
-          fields: {
-            id: 3,
-            name: 'Rover',
-            description: '',
-          },
-        },
-      ].map((group) => ({
-        id: group.fields.id,
-        name: group.fields.name,
-        description: group.fields.description,
-      }));
+      return this.items;
+    },
+    selectedAgeGroupsErrors() {
+      const errors = [];
+      if (!this.$v.selectedAgeGroups.$dirty) return errors;
+      if (!this.$v.selectedAgeGroups.required) {
+        errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
+      }
+      return errors;
     },
   },
   methods: {
     validate() {
-      this.valid = this.selectedAgeGroups > 0;
+      this.$v.$touch();
+      this.valid = !this.$v.$error;
     },
     prevStep() {
       this.$emit('prevStep');
     },
     nextStep() {
+      this.validate();
       if (!this.valid) {
         return;
       }
       this.$emit('nextStep');
     },
     submitStep() {
-      if (!this.$refs.formAgeGroup.validate()) {
+      this.validate();
+      if (!this.valid) {
         return;
       }
       this.$emit('submit');
     },
+    async getAgeGroups() {
+      const result = await axios.get(`${this.API_URL}basic/age-group/`);
+      this.items = result.data;
+    },
+    getData() {
+      return {
+        ageGroups: this.selectedAgeGroups,
+      };
+    },
+  },
+  created() {
+    this.getAgeGroups();
   },
 };
 </script>
