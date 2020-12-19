@@ -105,11 +105,11 @@ export default {
       this.$store.commit('clearTokens');
       this.$router.push({ name: 'login' });
     },
-    getHerarchy() {
-      const path = `${process.env.VUE_APP_API}basic/scout-herarchy/`;
+    getHierarchy() {
+      const path = `${process.env.VUE_APP_API}basic/scout-hierarchy/`;
       axios.get(path)
         .then((res) => {
-          this.$store.commit('setHerarchy', res.data);
+          this.$store.commit('setHierarchy', res.data);
         })
         .catch(() => {
           this.showError = true;
@@ -117,7 +117,7 @@ export default {
     },
   },
   created() {
-    this.getHerarchy();
+    this.getHierarchy();
   },
 
 };

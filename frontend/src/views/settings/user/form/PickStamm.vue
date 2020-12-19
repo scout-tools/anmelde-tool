@@ -24,7 +24,7 @@
       ></v-text-field>
         <v-treeview
           :active.sync="active"
-          :items="herarchyNested"
+          :items="hierarchyNested"
           :open.sync="open"
           activatable
           :search="search"
@@ -143,16 +143,16 @@ export default {
     },
     ...mapGetters([
       'isAuthenticated',
-      'herarchy',
+      'hierarchy',
     ]),
     selected() {
       if (!this.active.length) return undefined;
       const id = this.active[0];
-      if (!(this.herarchy.find((user) => user.id === id).level === 5)) return undefined;
-      return this.herarchy.find((user) => user.id === id);
+      if (!(this.hierarchy.find((user) => user.id === id).level === 5)) return undefined;
+      return this.hierarchy.find((user) => user.id === id);
     },
-    herarchyNested() {
-      return this.nest(this.herarchy);
+    hierarchyNested() {
+      return this.nest(this.hierarchy);
     },
   },
 

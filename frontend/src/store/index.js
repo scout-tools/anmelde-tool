@@ -10,7 +10,7 @@ export default new Vuex.Store({
   state: {
     accessToken: null,
     refreshToken: null,
-    herarchy: [],
+    hierarchy: [],
   },
   getters: {
     getJwtData(state) {
@@ -19,8 +19,8 @@ export default new Vuex.Store({
     isAuthenticated(state) {
       return !!state.accessToken;
     },
-    herarchy(state) {
-      return state.herarchy;
+    hierarchy(state) {
+      return state.hierarchy;
     },
   },
   mutations: {
@@ -34,8 +34,8 @@ export default new Vuex.Store({
       state.originalAccessToken = null;
       state.originalRefreshToken = null;
     },
-    setHerarchy(state, newHerarchy) {
-      state.herarchy = newHerarchy;
+    setHierarchy(state, newHierarchy) {
+      state.hierarchy = newHierarchy;
     },
   },
   actions: {

@@ -101,13 +101,13 @@ export default {
     ...mapGetters([
       'isAuthenticated',
       'getJwtData',
-      'herarchy',
+      'hierarchy',
     ]),
     email() {
       return this.getJwtData.email;
     },
     getStammName() {
-      const obj = this.herarchy.find((user) => user.id === this.items.scoutOrganisation);
+      const obj = this.hierarchy.find((user) => user.id === this.items.scoutOrganisation);
       if (obj && obj.name) {
         return obj.name;
       }
