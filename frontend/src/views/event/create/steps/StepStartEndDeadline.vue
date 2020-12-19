@@ -34,18 +34,8 @@
             range
           />
           <v-spacer/>
-          <v-btn
-            color="primary"
-            @click="dialog.dateRange = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            color="primary"
-            @click="$refs.dateRangeDialog.save(data.dateRange)"
-          >
-            OK
-          </v-btn>
+          <dialog-buttons @cancel="dialog.dateRange = false"
+                          @ok="$refs.dateRangeDialog.save(data.dateRange)"/>
         </v-dialog>
       </v-row>
       <v-row>
@@ -58,7 +48,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               v-model="data.startTime"
-              :disabled="sortedDateRangeString === ''"
+              :disabled="!dataRangeIsFilled"
               label="Wähle die Lagereröffnung"
               prepend-icon="mdi-clock-time-four-outline"
               readonly
@@ -76,18 +66,8 @@
             scrollable
           />
           <v-spacer/>
-          <v-btn
-            color="primary"
-            @click="dialog.startTime = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            color="primary"
-            @click="$refs.startTimeDialog.save(data.startTime)"
-          >
-            OK
-          </v-btn>
+          <dialog-buttons @cancel="dialog.startTime = false"
+                          @ok="$refs.startTimeDialog.save(data.startTime)"/>
         </v-dialog>
       </v-row>
       <v-row>
@@ -100,7 +80,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               v-model="data.endTime"
-              :disabled="sortedDateRangeString === ''"
+              :disabled="!dataRangeIsFilled"
               label="Wähle die Abschlussrunde"
               prepend-icon="mdi-clock-time-four-outline"
               readonly
@@ -118,18 +98,8 @@
             scrollable
           />
           <v-spacer/>
-          <v-btn
-            color="primary"
-            @click="dialog.endTime = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            color="primary"
-            @click="$refs.endTimeDialog.save(data.endTime)"
-          >
-            OK
-          </v-btn>
+          <dialog-buttons @cancel="dialog.endTime = false"
+                          @ok="$refs.endTimeDialog.save(data.endTime)"/>
         </v-dialog>
       </v-row>
       <v-row>
@@ -156,18 +126,8 @@
             v-model="data.deadlineDate"
           />
           <v-spacer/>
-          <v-btn
-            color="primary"
-            @click="dialog.deadlineDate = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            color="primary"
-            @click="$refs.deadlineDateDialog.save(data.deadlineDate)"
-          >
-            OK
-          </v-btn>
+          <dialog-buttons @cancel="dialog.deadlineDate = false"
+                          @ok="$refs.deadlineDateDialog.save(data.deadlineDate)"/>
         </v-dialog>
       </v-row>
       <v-row>
@@ -180,7 +140,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               v-model="data.deadlineTime"
-              :disabled="deadlineDateString === ''"
+              :disabled="!deadlineIsFilled"
               label="Wähle die Deadline Zeit"
               prepend-icon="mdi-clock-time-four-outline"
               readonly
@@ -198,18 +158,8 @@
             scrollable
           />
           <v-spacer/>
-          <v-btn
-            color="primary"
-            @click="dialog.deadlineTime = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            color="primary"
-            @click="$refs.deadlineTimeDialog.save(data.deadlineTime)"
-          >
-            OK
-          </v-btn>
+          <dialog-buttons @cancel="dialog.deadlineTime = false"
+                          @ok="$refs.deadlineTimeDialog.save(data.deadlineTime)"/>
         </v-dialog>
       </v-row>
 
@@ -224,11 +174,13 @@
 import { required } from 'vuelidate/lib/validators';
 import moment from 'moment';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import DialogButtons from '../components/button/dialogButtons.vue';
 
 export default {
   name: 'StepStartEndDeadline',
   props: ['position', 'maxPos'],
   components: {
+    DialogButtons,
     PrevNextButtons,
   },
   data: () => ({
@@ -288,6 +240,12 @@ export default {
         default:
           return '';
       }
+    },
+    dataRangeIsFilled() {
+      return this.sortedDateRange.length > 0;
+    },
+    deadlineIsFilled() {
+      return this.data.deadlineDate !== '';
     },
     deadlineDateString() {
       const dateFormat = 'DD.MM.YYYY';
