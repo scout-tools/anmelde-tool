@@ -164,7 +164,7 @@ class Participants(TimeStampMixin):
         Registration, on_delete=models.PROTECT, null=True, blank=True)
 
 
-class MeetHabit(models.Model):
+class MeatHabit(models.Model):
     id = models.AutoField(
         auto_created=True,
         primary_key=True,
@@ -182,8 +182,8 @@ class SpecialHabit(models.Model):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    meetHabit = models.ForeignKey(
-        MeetHabit, on_delete=models.PROTECT, null=True, blank=True)
+    meatHabit = models.ForeignKey(
+        MeatHabit, on_delete=models.PROTECT, null=True, blank=True)
     numberLactose = models.IntegerField(blank=True, null=True)
     numberGluten = models.IntegerField(blank=True, null=True)
     numberEier = models.IntegerField(blank=True, null=True)
