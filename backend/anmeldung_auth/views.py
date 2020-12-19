@@ -1,8 +1,9 @@
-from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework import pagination, viewsets, mixins, generics, filters
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .email import send_register_mail, send_login_mail
-from .serializers import RegisterSerializer, OneClickLoginSerializer, MyTokenObtainPairSerializer
+from .serializers import RegisterSerializer, OneClickLoginSerializer, MyTokenObtainPairSerializer, UserExtendedSerializer
+from .models import UserExtended
 
 
 # Register API
@@ -34,3 +35,8 @@ class OneClickView(generics.UpdateAPIView):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+
+class UserExtendedViewSet(viewsets.ModelViewSet):
+    queryset = UserExtended.objects.all()
+    serializer_class = UserExtendedSerializer

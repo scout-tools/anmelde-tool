@@ -1,0 +1,107 @@
+[
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "level_id": 3,
+            "name": "BdP"
+        }
+    },
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "level_id": 3,
+            "name": "BP-Mosaik"
+        }
+    },
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "level_id": 3,
+            "name": "PB-Nordlicht"
+        }
+    },
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "level_id": 3,
+            "name": "PB-Nord"
+        }
+    },
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 5,
+        "fields": {
+            "id": 5,
+            "level_id": 3,
+            "name": "BP-Horizonte"
+        }
+    },
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 6,
+        "fields": {
+            "id": 6,
+            "level_id": 4, 
+            "name": "Ring Rhein Lippe",
+            "parent": 2
+        }
+    },
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "level_id": 5, 
+            "name": "Stamm Hratuga",
+            "parent": 6
+        }
+    },
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 8,
+        "fields": {
+            "id": 8,
+            "level_id": 5, 
+            "name": "Stamm Mittelerde",
+            "parent": 6
+        }
+    },
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 9,
+        "fields": {
+            "id": 9,
+            "level_id": 4, 
+            "name": "Ring Bayern",
+            "parent": 2
+        }
+    },
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 10,
+        "fields": {
+            "id": 10,
+            "level_id": 5, 
+            "name": "Stamm Schwarze Löwen",
+            "parent": 9
+        }
+    },
+    {
+        "model": "basic.scoutHerarchy",
+        "pk": 11,
+        "fields": {
+            "id": 11,
+            "level_id": 5, 
+            "name": "Stamm Raubvögel",
+            "parent": 9
+        }
+    }
+]

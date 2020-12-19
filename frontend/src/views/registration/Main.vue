@@ -43,12 +43,6 @@
               </v-col>
             </v-row>
             <v-row>
-              <pick-stamm-form
-                ref="pickStamm"
-                @sendIdToParent="tranferId"
-              />
-            </v-row>
-            <v-row>
               <v-col
                 cols="12"
                 sm="6"
@@ -59,12 +53,6 @@
                   v-model="getStammName"
                   label="Stamm">
                 </v-text-field>
-              </v-col>
-              <v-col>
-                <v-btn color="success" outlined tile @click="onPickStammClick()">
-                    <v-icon left>mdi-pencil</v-icon>
-                    Stamm bearbeiten
-                </v-btn>
               </v-col>
             </v-row>
           </v-container>
@@ -83,16 +71,6 @@
                 Änderungen speichern
             </v-btn>
               </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-            <v-btn dark color="red">
-                <v-icon left>mdi-delete</v-icon>
-                Account Daten löschen
-            </v-btn>
-              </v-col>
             </v-row>
           </v-container>
         </v-card-actions>
@@ -108,12 +86,7 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 
-import PickStammForm from './form/PickStamm.vue';
-
 export default {
-  components: {
-    PickStammForm,
-  },
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
@@ -145,7 +118,6 @@ export default {
   },
   methods: {
     tranferId(id) {
-      console.log(id);
       this.items.scoutOrganisation = id;
     },
     onPickStammClick() {

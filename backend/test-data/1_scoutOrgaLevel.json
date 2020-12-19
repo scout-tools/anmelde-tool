@@ -1,0 +1,38 @@
+[
+    {
+        "model": "basic.ScoutOrgaLevel",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "name": "Bund",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.ScoutOrgaLevel",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "name": "Ring/Regional",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.ScoutOrgaLevel",
+        "pk": 5,
+        "fields": {
+            "id": 5,
+            "name": "Stamm",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.ScoutOrgaLevel",
+        "pk": 6,
+        "fields": {
+            "id": 6,
+            "name": "Gruppe",
+            "description": ""
+        }
+    }
+]

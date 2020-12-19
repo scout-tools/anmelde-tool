@@ -1,5 +1,6 @@
 from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
+from .models import UserExtended
 from rest_framework import serializers, status, exceptions
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 import datetime as dt
@@ -45,6 +46,12 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+        fields = '__all__'
+
+
+class UserExtendedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserExtended
         fields = '__all__'
 
 
@@ -96,6 +103,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
+        token['user_id'] = user.id
         token['user'] = user.username
         token['email'] = user.email
         token['groups'] = [x.as_dict() for x in user.groups.all()]

@@ -50,7 +50,7 @@
               </v-list-item-content>
 
         <v-list-item-action>
-          <v-btn icon>
+          <v-btn icon @click="onRegistrationClicked">
             <v-icon color="primary">mdi-account-multiple-plus</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -106,6 +106,9 @@ export default {
     },
     show(item) {
       this.$refs.messageModal.show(item);
+    },
+    onRegistrationClicked() {
+      this.$router.push({ name: 'registrationForm' });
     },
   },
   created() {

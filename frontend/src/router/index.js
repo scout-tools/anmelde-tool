@@ -4,6 +4,7 @@ import CheckTokenMain from '@/views/login/CheckToken.vue';
 import EventOverview from '@/views/event/overview/Overview.vue';
 import SettingsUser from '@/views/settings/user/Main.vue';
 import StatisticOverview from '@/views/statistic/overview/Main.vue';
+import RegistrationForm from '@/views/registration/Main.vue';
 
 Vue.use(VueRouter);
 
@@ -37,6 +38,11 @@ const routes = [
     path: '/statistic/overview',
     name: 'statisticOverview',
     component: StatisticOverview,
+  },
+  {
+    path: '/registration/form',
+    name: 'registrationForm',
+    component: RegistrationForm,
   },
 ];
 
