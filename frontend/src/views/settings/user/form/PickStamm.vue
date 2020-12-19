@@ -147,9 +147,6 @@ export default {
     ]),
     selected() {
       if (!this.active.length) return undefined;
-      // if (this.propId && this.propId === this.active[0]) {
-      //   return this.herarchy.find((user) => user.id === this.propId);
-      // }
       const id = this.active[0];
       if (!(this.herarchy.find((user) => user.id === id).level === 5)) return undefined;
       return this.herarchy.find((user) => user.id === id);
