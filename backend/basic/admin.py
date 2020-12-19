@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, AgeGroup, EventLocation, ScoutHerarchy, Registration, ZipCode
+from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode
 
 
 admin.site.register(Event)
@@ -9,7 +9,7 @@ admin.site.register(Registration)
 admin.site.register(ZipCode)
 
 
-@admin.register(ScoutHerarchy)
-class ScoutHerarchyAdmin(admin.ModelAdmin):
+@admin.register(ScoutHierarchy)
+class ScoutHierarchyAdmin(admin.ModelAdmin):
     list_display = ('name', 'level', 'zipCode', 'parent', 'level')
     list_filter = ('parent', 'level')

@@ -1,6 +1,6 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Event, AgeGroup, EventLocation, ScoutHerarchy, Registration, ZipCode
+from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -24,10 +24,10 @@ class EventLocationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ScoutHerarchySerializer(serializers.ModelSerializer):
+class ScoutHierarchySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = ScoutHerarchy
+        model = ScoutHierarchy
         fields = '__all__'
 
 

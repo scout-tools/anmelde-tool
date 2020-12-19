@@ -78,7 +78,7 @@ class ScoutOrgaLevel(TimeStampMixin):
         return self.__str__()
 
 
-class ScoutHerarchy(TimeStampMixin):
+class ScoutHierarchy(TimeStampMixin):
     id = models.AutoField(
         auto_created=True,
         primary_key=True,
@@ -92,7 +92,7 @@ class ScoutHerarchy(TimeStampMixin):
     parent = models.ForeignKey(
         'self', null=True,
         on_delete=models.PROTECT,
-        related_name='scoutherarchy',
+        related_name='scouthierarchy',
         blank=True
     )
 
@@ -145,7 +145,7 @@ class Registration(TimeStampMixin):
         serialize=False,
         verbose_name='ID')
     scoutOrganisation = models.ForeignKey(
-        ScoutHerarchy, on_delete=models.PROTECT, null=True, blank=True)
+        ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
     responsiblePersons = models.ManyToManyField(User, default='')
     isUserConfirmed = models.BooleanField(default=0)
     isAccepted = models.BooleanField(default=0)

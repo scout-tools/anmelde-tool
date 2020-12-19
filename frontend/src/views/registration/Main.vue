@@ -96,7 +96,6 @@ export default {
   },
   computed: {
     getItems() {
-      // this.messages.forEach((value) => console.log(value));
       return this.items;
     },
     ...mapGetters([
@@ -108,7 +107,6 @@ export default {
       return this.getJwtData.email;
     },
     getStammName() {
-      console.log(this.items.scoutOrganisation);
       const obj = this.herarchy.find((user) => user.id === this.items.scoutOrganisation);
       if (obj && obj.name) {
         return obj.name;

@@ -1,6 +1,6 @@
 [
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 1,
         "fields": {
             "id": 1,
@@ -9,7 +9,7 @@
         }
     },
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 2,
         "fields": {
             "id": 2,
@@ -18,7 +18,7 @@
         }
     },
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 3,
         "fields": {
             "id": 3,
@@ -27,7 +27,7 @@
         }
     },
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 4,
         "fields": {
             "id": 4,
@@ -36,7 +36,7 @@
         }
     },
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 5,
         "fields": {
             "id": 5,
@@ -45,7 +45,7 @@
         }
     },
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 6,
         "fields": {
             "id": 6,
@@ -55,7 +55,7 @@
         }
     },
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 7,
         "fields": {
             "id": 7,
@@ -65,7 +65,7 @@
         }
     },
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 8,
         "fields": {
             "id": 8,
@@ -75,7 +75,7 @@
         }
     },
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 9,
         "fields": {
             "id": 9,
@@ -85,7 +85,7 @@
         }
     },
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 10,
         "fields": {
             "id": 10,
@@ -95,7 +95,7 @@
         }
     },
     {
-        "model": "basic.scoutHerarchy",
+        "model": "basic.scoutHierarchy",
         "pk": 11,
         "fields": {
             "id": 11,

@@ -94,7 +94,6 @@ export default {
       'getJwtData',
     ]),
     userName() {
-      console.log(this.getJwtData);
       return this.getJwtData.user;
     },
   },

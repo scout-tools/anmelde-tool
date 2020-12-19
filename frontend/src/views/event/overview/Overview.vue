@@ -82,7 +82,6 @@ export default {
 
   computed: {
     getItems() {
-      // this.messages.forEach((value) => console.log(value));
       return this.items;
     },
   },

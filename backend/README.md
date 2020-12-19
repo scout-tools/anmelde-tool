@@ -11,7 +11,7 @@
 
 `python manage.py migrate`
 
-`python manage.py add_superusers`
+`python manage.py add_users`
 
 `python manage.py loaddata test-data/*.json`
 
