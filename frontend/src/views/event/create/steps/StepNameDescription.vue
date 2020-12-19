@@ -23,7 +23,6 @@
       <v-row>
         <v-text-field
           v-model="data.name"
-          outlined
           autofocus
           :counter="20"
           :error-messages="nameErrors"
@@ -34,7 +33,6 @@
       <v-row>
         <v-text-field
           v-model="data.description"
-          outlined
           :counter="100"
           :error-messages="descriptionErrors"
           label="Beschreibung der Aktion"

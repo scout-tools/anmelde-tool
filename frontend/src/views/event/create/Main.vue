@@ -1,10 +1,6 @@
 <template>
-  <v-container>
+  <v-card max-width="600" class="mx-auto">
     <v-row justify="center">
-      <v-flex
-        ma-3
-        lg9
-      >
         <v-stepper
           v-model="currentStep"
           vertical
@@ -29,19 +25,25 @@
                 <component
                   :is="step"
                   :ref="step.name"
-                  :data="data"
                   :position="index+1"
                   :max-pos="steps.length"
                   @prevStep="prevStep()"
                   @nextStep="nextStep()"
-                  @submit="finish()"
+                  @submit="onCreateEventClick()"
                 />
               </v-stepper-content>
             </v-stepper-items>
           </template>
         </v-stepper>
-      </v-flex>
     </v-row>
+    <v-snackbar
+      v-model="showSuccess"
+      color="success"
+      y="top"
+      :timeout="timeout"
+    >
+      {{ 'Die Aktion wurde erfolgreich angelegt.' }}
+    </v-snackbar>
     <v-snackbar
       v-model="showError"
       color="error"
@@ -50,7 +52,7 @@
     >
       {{ 'Fehler beim Speichern der Aktion' }}
     </v-snackbar>
-  </v-container>
+  </v-card>
 </template>
 
 <script>
@@ -85,7 +87,9 @@ export default {
         'Zielgruppe',
         'Kontaktdaten',
       ],
-      data: [],
+      data: {
+        event: {},
+      },
     };
   },
 
@@ -96,26 +100,43 @@ export default {
     prevStep() {
       this.currentStep -= 1;
     },
-    async finish() {
+    onCreateEventClick() {
+      this.handleCreateEventRequest();
+    },
+    onSuccessfulCreateEvent() {
+      setTimeout(() => this.$router.push({ name: 'eventOverview' }), 2000);
+    },
+    callCreateEventPost() {
+      return axios.post(`${this.API_URL}basic/event/`, this.data.event);
+    },
+    formatCreateEventRequestData() {
       const dataNameDescription = this.$refs.StepNameDescription[0].getData();
       const dataStartEndDeadline = this.$refs.StepStartEndDeadline[0].getData();
       const dataStepLocation = this.$refs.StepLocation[0].getData();
       const dataStepAgeGroup = this.$refs.StepAgeGroup[0].getData();
       const dataStepEventContact = this.$refs.StepEventContact[0].getData();
 
-      const data = {
+      this.data.event = {
         name: dataNameDescription.name,
         description: dataNameDescription.description,
-        location: dataStepLocation.location_id,
+        location: dataStepLocation.location,
         ageGroups: dataStepAgeGroup.ageGroups,
-        contact: dataStepEventContact.contact_id,
+        contact: dataStepEventContact.contacts,
         startTime: dataStartEndDeadline.startTime,
         endTime: dataStartEndDeadline.endTime,
-        registrationDeadline: dataStartEndDeadline.deadline,
+        registrationDeadline: dataStartEndDeadline.registrationDeadline,
       };
-
-      const result = await axios.post(`${this.API_URL}basic/event/`, data);
-      console.log(result);
+    },
+    async handleCreateEventRequest() {
+      try {
+        this.formatCreateEventRequestData();
+        await this.callCreateEventPost();
+        this.showSuccess = true;
+        this.onSuccessfulCreateEvent();
+      } catch (e) {
+        console.log(e);
+        this.showError = true;
+      }
     },
   },
 };

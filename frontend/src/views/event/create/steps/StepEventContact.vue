@@ -6,29 +6,20 @@
     <v-container>
       <v-row class="mt-6">
       <span class="subtitle-1">
-        Trage hier deine Kontaktdaten als Ansprechpartner ein.
+        Trage hier die E-Mail-Adressen der verantwortlichen Kontaktpersonen als Ansprechpartner ein.
       </span>
       </v-row>
-      <v-row class="ma-4">
-        <v-text-field
-          outlined
+      <v-row>
+        <v-combobox
+          :error-messages="selectedContacts"
           autofocus
-          :counter="30"
-          :rules="rules.name"
-          label="Name"
-          v-model="data.name"
-          required>
-        </v-text-field>
-      </v-row>
-      <v-row class="ma-4">
-        <v-text-field
-          outlined
-          :error-messages="emailError"
-          :rules="rules.email"
-          label="E-Mail-Adresse"
-          v-model="data.email"
-          required>
-        </v-text-field>
+          v-model="contacts"
+          label="verantwortliche Kontaktpersonen"
+          multiple
+          required
+          deletable-chips
+          chips
+        />
       </v-row>
 
       <v-divider class="my-2"/>
@@ -40,13 +31,11 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate';
-import { email, required } from 'vuelidate/lib/validators';
+import { required, email } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepEventContact',
-  mixins: [validationMixin],
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
@@ -54,50 +43,54 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    data: {
-      name: '',
-      email: '',
-    },
-    validators: {
-      email: {
-        required,
+    contacts: [],
+  }),
+  validations: {
+    contacts: {
+      required,
+      $each: {
         email,
       },
     },
-    rules: {
-      name: [
-        (v) => !!v || 'Name ist erforderlich.',
-        (v) => (v && v.length <= 30) || 'Der Name ist zu lang.',
-      ],
-      email: [
-        (v) => !!v || 'E-Mail-Adresse ist erforderlich.',
-      ],
-    },
-  }),
+  },
   computed: {
-    emailError() {
-      return []; // TODO EMail validierung
+    selectedContacts() {
+      const errors = [];
+      if (!this.$v.contacts.$dirty) return errors;
+      if (!this.$v.contacts.required) {
+        errors.push('Es muss mindestens ein Ansprechpartner angegeben werden.');
+      }
+      if (this.$v.contacts.$each.$anyError) {
+        errors.push('Es müssen gültige E-Mail-Adressen angegeben werden.');
+      }
+      return errors;
     },
   },
   methods: {
+    validate() {
+      this.$v.contacts.$touch();
+      this.valid = !this.$v.contacts.$anyError;
+    },
     prevStep() {
       this.$emit('prevStep');
     },
     nextStep() {
-      if (!this.$refs.formEventContact.validate()) {
+      this.validate();
+      if (!this.valid) {
         return;
       }
       this.$emit('nextStep');
     },
     submitStep() {
-      if (!this.$refs.formEventContact.validate()) {
+      this.validate();
+      if (!this.valid) {
         return;
       }
       this.$emit('submit');
     },
     getData() {
       return {
-        contact_id: 1,
+        contacts: this.contacts,
       };
     },
   },

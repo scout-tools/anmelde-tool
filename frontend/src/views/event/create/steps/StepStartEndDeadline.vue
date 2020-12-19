@@ -9,7 +9,7 @@
         Zeitraum der Aktion.
       </span>
       </v-row>
-      <v-row class="ma-4">
+      <v-row>
         <v-dialog
           ref="dateRangeDialog"
           v-model="dialog.dateRange"
@@ -18,7 +18,7 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              v-model="sortedDateRange"
+              v-model="sortedDateRangeString"
               label="Wähle den Aktionszeitraum"
               prepend-icon="mdi-clock-time-four-outline"
               readonly
@@ -29,10 +29,8 @@
             ></v-text-field>
           </template>
           <v-date-picker
-            v-if="dialog.dateRange"
             v-model="data.dateRange"
             no-title
-            locale="de-DE"
             range
           />
           <v-spacer/>
@@ -50,7 +48,7 @@
           </v-btn>
         </v-dialog>
       </v-row>
-      <v-row class="ma-4" v-if="data.dateRange.length > 0">
+      <v-row>
         <v-dialog
           ref="startTimeDialog"
           v-model="dialog.startTime"
@@ -60,6 +58,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               v-model="data.startTime"
+              :disabled="sortedDateRangeString === ''"
               label="Wähle die Lagereröffnung"
               prepend-icon="mdi-clock-time-four-outline"
               readonly
@@ -70,7 +69,7 @@
             ></v-text-field>
           </template>
           <v-time-picker
-            v-if="dialog.startTime"
+            :disabled="!dialog.startTime"
             v-model="data.startTime"
             format="24hr"
             range
@@ -91,7 +90,7 @@
           </v-btn>
         </v-dialog>
       </v-row>
-      <v-row class="ma-4" v-if="data.dateRange.length > 0">
+      <v-row>
         <v-dialog
           ref="endTimeDialog"
           v-model="dialog.endTime"
@@ -101,6 +100,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               v-model="data.endTime"
+              :disabled="sortedDateRangeString === ''"
               label="Wähle die Abschlussrunde"
               prepend-icon="mdi-clock-time-four-outline"
               readonly
@@ -132,7 +132,7 @@
           </v-btn>
         </v-dialog>
       </v-row>
-      <v-row class="ma-4">
+      <v-row>
         <v-dialog
           ref="deadlineDateDialog"
           v-model="dialog.deadlineDate"
@@ -141,7 +141,7 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              v-model="data.deadlineDate"
+              v-model="deadlineDateString"
               label="Wähle die Deadline"
               prepend-icon="mdi-clock-time-four-outline"
               readonly
@@ -154,7 +154,6 @@
           <v-date-picker
             v-if="dialog.deadlineDate"
             v-model="data.deadlineDate"
-            locale="de-DE"
           />
           <v-spacer/>
           <v-btn
@@ -171,7 +170,7 @@
           </v-btn>
         </v-dialog>
       </v-row>
-      <v-row class="ma-4" v-if="data.deadlineDate.length > 0">
+      <v-row>
         <v-dialog
           ref="deadlineTimeDialog"
           v-model="dialog.deadlineTime"
@@ -181,6 +180,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               v-model="data.deadlineTime"
+              :disabled="deadlineDateString === ''"
               label="Wähle die Deadline Zeit"
               prepend-icon="mdi-clock-time-four-outline"
               readonly
@@ -213,7 +213,7 @@
         </v-dialog>
       </v-row>
 
-      <v-divider class="my-2" v-if="false"/>
+      <v-divider class="my-2"/>
       <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
                          @prevStep="prevStep" @submitStep="submitStep()"/>
     </v-container>
@@ -222,6 +222,7 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators';
+import moment from 'moment';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
@@ -269,27 +270,31 @@ export default {
   },
   computed: {
     sortedDateRange() {
-      const dateRangeCopy = Array.from(this.data.dateRange);
-      return dateRangeCopy.sort((date1, date2) => new Date(date1) - new Date(date2));
-    },
-    sortedAndParsedDateRange() {
-      return this.sortedDateRange.map((date) => new Date(date));
-    },
-    startDate() {
-      if (this.sortedAndParsedDateRange.length < 1) {
-        return '';
+      const rangeArray = Array.from(this.data.dateRange);
+      if (rangeArray[0] === rangeArray[1]) {
+        rangeArray.pop();
+        return rangeArray;
       }
-      return this.sortedAndParsedDateRange[0].toLocaleDateString();
+      return rangeArray.sort((date1, date2) => new Date(date1) - new Date(date2));
     },
-    endDate() {
-      switch (this.sortedAndParsedDateRange.length) {
+    sortedDateRangeString() {
+      const dateFormat = 'DD.MM.YYYY';
+      const range = this.sortedDateRange;
+      switch (range.length) {
         case 1:
-          return this.sortedAndParsedDateRange[0].toLocaleDateString();
+          return `${moment(range[0]).format(dateFormat)}`;
         case 2:
-          return this.sortedAndParsedDateRange[1].toLocaleDateString();
+          return `${moment(range[0]).format(dateFormat)} - ${moment(range[1]).format(dateFormat)}`;
         default:
           return '';
       }
+    },
+    deadlineDateString() {
+      const dateFormat = 'DD.MM.YYYY';
+      if (this.data.deadlineDate === '') {
+        return '';
+      }
+      return `${moment(this.data.deadlineDate).format(dateFormat)}`;
     },
     dateRangeErrors() {
       const errors = [];
@@ -356,9 +361,9 @@ export default {
     },
     getData() {
       return {
-        // startTime: this.data.startTime,
-        // endTime: this.data.endTime,
-        // deadline: this.data.deadlineDate,
+        startTime: moment(`${this.sortedDateRange[0]} ${this.data.startTime}`),
+        endTime: moment(`${this.sortedDateRange[1]} ${this.data.endTime}`),
+        registrationDeadline: moment(`${this.data.deadlineDate} ${this.data.deadlineTime}`),
       };
     },
   },
