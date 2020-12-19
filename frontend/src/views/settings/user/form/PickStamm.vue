@@ -164,7 +164,6 @@ export default {
         if (!parent) {
           nested.push(array[i]);
         } else {
-          // You'll want to replace this with a more efficient search
           for (let j = 0; j < array.length; j++) { // eslint-disable-line
             if (array[j].id === parent) {
               array[j].children = array[j].children || []; // eslint-disable-line
