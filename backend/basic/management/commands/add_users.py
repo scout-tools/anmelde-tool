@@ -10,7 +10,8 @@ class Command(BaseCommand):
         UserModel = get_user_model()
 
         if not UserModel.objects.filter(username='robert@hratuga.de').exists():
-            user_1 = UserModel.objects.create_user('robert@hratuga.de', password='robert')
+            user_1 = UserModel.objects.create_user(
+                'robert@hratuga.de', password='robert')
             user_1.is_superuser = True
             user_1.is_staff = True
             user_1.save()
