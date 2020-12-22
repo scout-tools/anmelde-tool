@@ -103,11 +103,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        token['user_id'] = user.id
-        token['user'] = user.username
+        token['userId'] = user.id
         token['email'] = user.email
         token['groups'] = [x.as_dict() for x in user.groups.all()]
-        token['is_staff'] = user.is_staff
+        token['isStaff'] = user.is_staff
 
         return token
 

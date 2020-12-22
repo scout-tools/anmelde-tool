@@ -6,11 +6,11 @@
             "id": 1,
             "name": "Ringlager 2018",
             "description": "Das Pfingstlager vom Ring Rhein Lippe im Jahr 2018 zum Thema Römer",
-            "startTime": "2019-01-26 12:06:28.796728",
-            "endTime": "2019-12-26 12:06:28.796728",
-            "registrationDeadline": "2019-12-26 12:06:28.796728",
-            "registrationStart": "2019-12-26 12:06:28.796728",
-            "participationFee": 20.00
+            "start_time": "2019-01-26 12:06:28.796728",
+            "end_time": "2019-12-26 12:06:28.796728",
+            "registration_deadline": "2019-12-26 12:06:28.796728",
+            "registration_start": "2019-12-26 12:06:28.796728",
+            "participation_fee": 20.00
         }
     },
     {
@@ -20,11 +20,11 @@
             "id": 2,
             "name": "Sommerfahrt 2019",
             "description": "Die Sommerfahrt vom Stamm Hratuga nach Litauen",
-            "startTime": "2019-01-26 12:06:28.796728",
-            "endTime": "2019-12-26 12:06:28.796728",
-            "registrationDeadline": "2019-12-26 12:06:28.796728",
-            "registrationStart": "2019-12-26 12:06:28.796728",
-            "participationFee": 20.00
+            "start_time": "2019-01-26 12:06:28.796728",
+            "end_time": "2019-12-26 12:06:28.796728",
+            "registration_deadline": "2019-12-26 12:06:28.796728",
+            "registration_start": "2019-12-26 12:06:28.796728",
+            "participation_fee": 20.00
         }
     },
     {
@@ -34,11 +34,11 @@
             "id": 3,
             "name": "DPV Gold Radio",
             "description": "Ein Radioprogramm zum 25 Jährige Jubiläum vom DPV",
-            "startTime": "2019-01-26 12:06:28.796728",
-            "endTime": "2019-12-26 12:06:28.796728",
-            "registrationDeadline": "2019-12-26 12:06:28.796728",
-            "registrationStart": "2019-12-26 12:06:28.796728",
-            "participationFee": 20.00
+            "start_time": "2019-01-26 12:06:28.796728",
+            "end_time": "2019-12-26 12:06:28.796728",
+            "registration_deadline": "2019-12-26 12:06:28.796728",
+            "registration_start": "2019-12-26 12:06:28.796728",
+            "participation_fee": 20.00
         }
     },
     {
@@ -48,11 +48,11 @@
             "id": 4,
             "name": "BdP-DPV Aktion",
             "description": "Deutschlandweites Geländespiel",
-            "startTime": "2021-09-17 18:00:00.000000",
-            "endTime": "2021-09-19 13:00:00.000000",
-            "registrationDeadline": "2021-05-01 00:00:00.000000",
-            "registrationStart": "2021-02-01 00:00:00.000000",
-            "participationFee": 10.00
+            "start_time": "2021-09-17 18:00:00.000000",
+            "end_time": "2021-09-19 13:00:00.000000",
+            "registration_deadline": "2021-05-01 00:00:00.000000",
+            "registration_start": "2021-02-01 00:00:00.000000",
+            "participation_fee": 10.00
         }
     }
 ]

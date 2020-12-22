@@ -8,10 +8,10 @@ from django.dispatch import receiver
 class UserExtended(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     password_date = models.DateTimeField(auto_now=True)
-    scoutOrganisation = models.ForeignKey(
+    scout_organisation = models.ForeignKey(
         ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
-    mobileNumber = models.CharField(max_length=20, blank=True)
-    scoutName = models.CharField(max_length=20, blank=True)
+    mobile_mumber = models.CharField(max_length=20, blank=True)
+    scout_name = models.CharField(max_length=20, blank=True)
 
 
 @receiver(post_save, sender=User)

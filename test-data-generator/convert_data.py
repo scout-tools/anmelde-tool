@@ -15,7 +15,7 @@ for i, event in enumerate(input_file, start=1):
         "fields": {}
     })
 
-    result[i-1]['fields']['zipCode'] = event['zipCode'].zfill(5)
+    result[i-1]['fields']['zip_code'] = event['zipCode'].zfill(5)
     result[i-1]['fields']['city'] = event['city']
     result[i-1]['fields']['lon'] = event['lon']
     result[i-1]['fields']['lat'] = event['lat']

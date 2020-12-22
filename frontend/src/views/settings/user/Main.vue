@@ -153,7 +153,7 @@ export default {
       this.$router.push({ name: 'eventOverview' });
     },
     getData() {
-      const path = `${this.API_URL}auth/data/userextended/${this.getJwtData.user_id}/`;
+      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
       axios.get(path)
         .then((res) => {
           this.items = res.data;
@@ -163,8 +163,8 @@ export default {
         });
     },
     saveUserData() {
-      axios.put(`${this.API_URL}auth/data/userextended/${this.getJwtData.user_id}/`, {
-        user: this.getJwtData.user_id,
+      axios.put(`${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`, {
+        user: this.getJwtData.userId,
         scoutOrganisation: this.items.scoutOrganisation,
         mobileNumber: this.items.mobileNumber,
         scoutName: this.items.scoutName,

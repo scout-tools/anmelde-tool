@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework import pagination, viewsets, mixins, generics, filters
+from rest_framework import viewsets, generics
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .email import send_register_mail, send_login_mail
 from .serializers import RegisterSerializer, OneClickLoginSerializer, MyTokenObtainPairSerializer, UserExtendedSerializer

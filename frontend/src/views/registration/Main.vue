@@ -16,29 +16,9 @@
                 md="4"
               >
                 <v-text-field
-                  v-model="items.scoutName"
-                  label="Pfadfindername">
-                </v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
                   disabled
-                  v-model="email"
-                  label="Email Address">
-                </v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  v-model="items.mobileNumber"
-                  label="Handynummer">
+                  v-model="items.scoutName"
+                  label="Name des Verantwortlichen">
                 </v-text-field>
               </v-col>
             </v-row>
@@ -57,7 +37,6 @@
             </v-row>
           </v-container>
         </v-card-text>
-
         <v-card-actions>
           <v-container>
             <v-row>
@@ -126,7 +105,7 @@ export default {
       this.$router.push({ name: 'eventOverview' });
     },
     getData() {
-      const path = `${this.API_URL}auth/data/userextended/${this.getJwtData.user_id}/`;
+      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
       axios.get(path)
         .then((res) => {
           this.items = res.data;
@@ -136,8 +115,8 @@ export default {
         });
     },
     saveUserData() {
-      axios.put(`${this.API_URL}auth/data/userextended/${this.getJwtData.user_id}/`, {
-        user: this.getJwtData.user_id,
+      axios.put(`${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`, {
+        user: this.getJwtData.userId,
         scoutOrganisation: this.items.scoutOrganisation,
         mobileNumber: this.items.mobileNumber,
         scoutName: this.items.scoutName,

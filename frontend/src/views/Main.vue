@@ -94,7 +94,7 @@ export default {
       'getJwtData',
     ]),
     userName() {
-      return this.getJwtData.user;
+      return this.getJwtData.email;
     },
   },
   data: () => ({

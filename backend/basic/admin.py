@@ -11,5 +11,5 @@ admin.site.register(ZipCode)
 
 @admin.register(ScoutHierarchy)
 class ScoutHierarchyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'level', 'zipCode', 'parent', 'level')
+    list_display = ('name', 'level', 'zip_code', 'parent', 'level')
     list_filter = ('parent', 'level')

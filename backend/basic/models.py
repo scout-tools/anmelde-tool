@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from rest_framework.renderers import JSONRenderer
 
 
 class TimeStampMixin(models.Model):
@@ -16,7 +17,7 @@ class ZipCode(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    zipCode = models.CharField(max_length=5, blank=True)
+    zip_code = models.CharField(max_length=5, blank=True)
     city = models.CharField(max_length=30, blank=True)
     lat = models.DecimalField(
         max_digits=20, decimal_places=15, default=0.000)
@@ -33,11 +34,11 @@ class EventLocation(TimeStampMixin):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=20, blank=True)
-    zipCode = models.ForeignKey(
+    zip_code = models.ForeignKey(
         ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     address = models.CharField(max_length=30, blank=True)
-    contactEmail = models.CharField(max_length=30, blank=True)
-    contactPhone = models.CharField(max_length=30, blank=True)
+    contact_email = models.CharField(max_length=30, blank=True)
+    contact_phone = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
         return self.name
@@ -87,7 +88,7 @@ class ScoutHierarchy(TimeStampMixin):
     level = models.ForeignKey(
         ScoutOrgaLevel, on_delete=models.PROTECT, null=True, blank=True)
     name = models.CharField(max_length=30, blank=True)
-    zipCode = models.ForeignKey(
+    zip_code = models.ForeignKey(
         ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     parent = models.ForeignKey(
         'self', null=True,
@@ -113,23 +114,26 @@ class Event(TimeStampMixin):
     description = models.CharField(max_length=100, blank=True)
     location = models.ForeignKey(
         EventLocation, on_delete=models.PROTECT, null=True, blank=True)
-    ageGroups = models.ManyToManyField(AgeGroup, blank=True)
+    age_groups = models.ManyToManyField(AgeGroup, blank=True)
     contacts = models.ManyToManyField(User, blank=True)
-    startTime = models.DateTimeField(
+    start_time = models.DateTimeField(
         auto_now=False, auto_now_add=False, null=True, blank=True)
-    endTime = models.DateTimeField(
+    end_time = models.DateTimeField(
         auto_now=False, auto_now_add=False, null=True, blank=True)
-    registrationDeadline = models.DateTimeField(
+    registration_deadline = models.DateTimeField(
         auto_now=False, auto_now_add=False, null=True, blank=True)
-    registrationStart = models.DateTimeField(
+    registration_start = models.DateTimeField(
         auto_now=False, auto_now_add=False, null=True, blank=True)
-    participationFee = models.DecimalField(
+    participation_fee = models.DecimalField(
         max_digits=5, decimal_places=2, default=0.00)
-    minHelper = models.IntegerField(blank=True, null=True)
-    minParticipation = models.IntegerField(blank=True, null=True)
-    maxParticipation = models.IntegerField(blank=True, null=True)
-    isPublic = models.BooleanField(default=0)
-    isActive = models.BooleanField(default=0)
+    min_helper = models.IntegerField(blank=True, null=True)
+    min_participation = models.IntegerField(blank=True, null=True)
+    max_participation = models.IntegerField(blank=True, null=True)
+    invitation_code = models.CharField(max_length=6, blank=True)
+    max_scout_orga_level = models.IntegerField(blank=True, null=True)
+    min_scout_orga_level = models.IntegerField(blank=True, null=True)
+    is_public = models.BooleanField(default=0)
+    is_active = models.BooleanField(default=0)
 
     def __str__(self):
         return self.name
@@ -144,11 +148,11 @@ class Registration(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    scoutOrganisation = models.ForeignKey(
+    scout_organisation = models.ForeignKey(
         ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
-    responsiblePersons = models.ManyToManyField(User, default='')
-    isUserConfirmed = models.BooleanField(default=0)
-    isAccepted = models.BooleanField(default=0)
+    responsible_persons = models.ManyToManyField(User, default='')
+    is_user_confirmed = models.BooleanField(default=0)
+    is_accepted = models.BooleanField(default=0)
 
 
 class Participants(TimeStampMixin):
@@ -157,8 +161,8 @@ class Participants(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    numberOfPersons = models.IntegerField(blank=True, null=True)
-    ageGroup = models.ForeignKey(
+    number_of_persons = models.IntegerField(blank=True, null=True)
+    age_group = models.ForeignKey(
         AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
     registration = models.ForeignKey(
         Registration, on_delete=models.PROTECT, null=True, blank=True)
@@ -170,8 +174,8 @@ class MeatHabit(models.Model):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    numberVegan = models.IntegerField(blank=True, null=True)
-    numberVegetarian = models.IntegerField(blank=True, null=True)
+    number_vegan = models.IntegerField(blank=True, null=True)
+    number_vegetarian = models.IntegerField(blank=True, null=True)
     participants = models.ForeignKey(
         Participants, on_delete=models.PROTECT, null=True, blank=True)
 
@@ -182,10 +186,10 @@ class SpecialHabit(models.Model):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    meatHabit = models.ForeignKey(
+    meat_habit = models.ForeignKey(
         MeatHabit, on_delete=models.PROTECT, null=True, blank=True)
-    numberLactose = models.IntegerField(blank=True, null=True)
-    numberGluten = models.IntegerField(blank=True, null=True)
-    numberEier = models.IntegerField(blank=True, null=True)
-    numberNuesse = models.IntegerField(blank=True, null=True)
-    numberHuelsenfruechte = models.IntegerField(blank=True, null=True)
+    number_lactose = models.IntegerField(blank=True, null=True)
+    number_gluten = models.IntegerField(blank=True, null=True)
+    number_eier = models.IntegerField(blank=True, null=True)
+    number_nuesse = models.IntegerField(blank=True, null=True)
+    number_huelsenfruechte = models.IntegerField(blank=True, null=True)

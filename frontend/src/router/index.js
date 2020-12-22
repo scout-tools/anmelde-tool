@@ -40,9 +40,10 @@ const routes = [
     component: StatisticOverview,
   },
   {
-    path: '/registration/form',
+    path: '/registration/form/:id',
     name: 'registrationForm',
     component: RegistrationForm,
+    props: true,
   },
 ];
 

@@ -1,6 +1,24 @@
 [
     {
         "model": "basic.ScoutOrgaLevel",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "name": "Pfadfinder",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.ScoutOrgaLevel",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "name": "Verband",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.ScoutOrgaLevel",
         "pk": 3,
         "fields": {
             "id": 3,
@@ -32,6 +50,15 @@
         "fields": {
             "id": 6,
             "name": "Gruppe",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.ScoutOrgaLevel",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "name": "Person",
             "description": ""
         }
     }
