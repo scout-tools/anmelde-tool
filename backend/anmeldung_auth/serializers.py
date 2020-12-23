@@ -103,10 +103,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        token['userId'] = user.id
+        token['userId'] = user.id  # transforded to camelCase for frontend
         token['email'] = user.email
         token['groups'] = [x.as_dict() for x in user.groups.all()]
-        token['isStaff'] = user.is_staff
+
+        token['isStaff'] = user.is_staff  # transforded to camelCase for frontend
 
         return token
 
