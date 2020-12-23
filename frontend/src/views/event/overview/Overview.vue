@@ -50,9 +50,15 @@
               </v-list-item-content>
 
         <v-list-item-action>
-          <v-btn icon>
-            <v-icon color="primary">mdi-account-multiple-plus</v-icon>
-          </v-btn>
+            <router-link
+              :to="{ name: 'registrationForm',
+              params: { id: item.id } }"
+              class="no-underline"
+            >
+              <v-btn icon>
+                <v-icon color="primary">mdi-account-multiple-plus</v-icon>
+              </v-btn>
+            </router-link>
         </v-list-item-action>
       </v-list-item>
           <v-divider
@@ -82,7 +88,6 @@ export default {
 
   computed: {
     getItems() {
-      // this.messages.forEach((value) => console.log(value));
       return this.items;
     },
   },
@@ -106,6 +111,9 @@ export default {
     },
     show(item) {
       this.$refs.messageModal.show(item);
+    },
+    onRegistrationClicked() {
+      this.$router.push({ name: 'registrationForm' });
     },
   },
   created() {

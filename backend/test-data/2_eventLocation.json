@@ -7,7 +7,6 @@
             "name": "Max Hof",
             "description": "",
             "city": "BSA",
-            "zipCode": "12345",
             "address": "Dönerstr. 88"
         
         }
@@ -20,7 +19,6 @@
             "name": "Brexbachtal",
             "description": "",
             "city": "BSA",
-            "zipCode": "12345",
             "address": "Dönerstr. 7"
         }
     },
@@ -32,7 +30,6 @@
             "name": "Hoffeld",
             "description": "",
             "city": "ABC",
-            "zipCode": "11111",
             "address": "Dönerstr. 4"
         }
     }

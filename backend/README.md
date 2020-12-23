@@ -1,13 +1,24 @@
-`pipenv shell`
+# create venv
+`virtualenv venv`
 
-`pipenv install`
+# activate venv
+`source venv/bin/activate`
 
-`python manage.py createsuperuser`
-
-`python manage.py loaddata test-data/*.json`
+# install
+`pip install -r /path/to/requirements.txt`
 
 `python manage.py makemigrations`
 
 `python manage.py migrate`
 
+`python manage.py add_users`
+
+`python manage.py loaddata test-data/*.json`
+
 `python manage.py runserver`
+
+# deactivate venv
+`deactivate`
+
+# PostGres for MacOS
+`brew install postgresql`

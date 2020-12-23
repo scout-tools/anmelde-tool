@@ -75,7 +75,7 @@
           {{ link }}
         </v-btn>
         <v-col class="primary lighten py-4 text-center white--text" cols="12">
-          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+          {{ new Date().getFullYear() }} — <strong>Anmelde-Tool</strong>
         </v-col>
       </v-row>
     </v-footer>
@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -93,8 +94,7 @@ export default {
       'getJwtData',
     ]),
     userName() {
-      console.log(this.getJwtData);
-      return this.getJwtData.user;
+      return this.getJwtData.email;
     },
   },
   data: () => ({
@@ -105,7 +105,21 @@ export default {
       this.$store.commit('clearTokens');
       this.$router.push({ name: 'login' });
     },
+    getHierarchy() {
+      const path = `${process.env.VUE_APP_API}basic/scout-hierarchy/`;
+      axios.get(path)
+        .then((res) => {
+          this.$store.commit('setHierarchy', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
   },
+  created() {
+    this.getHierarchy();
+  },
+
 };
 </script>
 

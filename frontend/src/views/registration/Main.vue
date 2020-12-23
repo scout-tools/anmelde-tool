@@ -16,37 +16,11 @@
                 md="4"
               >
                 <v-text-field
-                  v-model="items.scoutName"
-                  label="Pfadfindername">
-                </v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
                   disabled
-                  v-model="email"
-                  label="Email Address">
+                  v-model="items.scoutName"
+                  label="Name des Verantwortlichen">
                 </v-text-field>
               </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  v-model="items.mobileNumber"
-                  label="Handynummer">
-                </v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <pick-stamm-form
-                ref="pickStamm"
-                @sendIdToParent="tranferId"
-              />
             </v-row>
             <v-row>
               <v-col
@@ -60,16 +34,9 @@
                   label="Stamm">
                 </v-text-field>
               </v-col>
-              <v-col>
-                <v-btn color="success" outlined tile @click="onPickStammClick()">
-                    <v-icon left>mdi-pencil</v-icon>
-                    Stamm bearbeiten
-                </v-btn>
-              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
-
         <v-card-actions>
           <v-container>
             <v-row>
@@ -81,16 +48,6 @@
             <v-btn color="success" @click="onSaveClicked">
                 <v-icon left dark>mdi-check</v-icon>
                 Änderungen speichern
-            </v-btn>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-            <v-btn dark color="red">
-                <v-icon left>mdi-delete</v-icon>
-                Account Daten löschen
             </v-btn>
               </v-col>
             </v-row>
@@ -108,12 +65,7 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 
-import PickStammForm from './form/PickStamm.vue';
-
 export default {
-  components: {
-    PickStammForm,
-  },
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
