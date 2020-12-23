@@ -34,8 +34,8 @@
             range
           />
           <v-spacer/>
-          <dialog-buttons @cancel="dialog.dateRange = false"
-                          @ok="$refs.dateRangeDialog.save(data.dateRange)"/>
+          <picker-dialog-buttons @cancel="dialog.dateRange = false"
+                                 @ok="$refs.dateRangeDialog.save(data.dateRange)"/>
         </v-dialog>
       </v-row>
       <v-row>
@@ -66,7 +66,7 @@
             scrollable
           />
           <v-spacer/>
-          <dialog-buttons @cancel="dialog.startTime = false"
+          <picker-dialog-buttons @cancel="dialog.startTime = false"
                           @ok="$refs.startTimeDialog.save(data.startTime)"/>
         </v-dialog>
       </v-row>
@@ -98,7 +98,7 @@
             scrollable
           />
           <v-spacer/>
-          <dialog-buttons @cancel="dialog.endTime = false"
+          <picker-dialog-buttons @cancel="dialog.endTime = false"
                           @ok="$refs.endTimeDialog.save(data.endTime)"/>
         </v-dialog>
       </v-row>
@@ -126,7 +126,7 @@
             v-model="data.deadlineDate"
           />
           <v-spacer/>
-          <dialog-buttons @cancel="dialog.deadlineDate = false"
+          <picker-dialog-buttons @cancel="dialog.deadlineDate = false"
                           @ok="$refs.deadlineDateDialog.save(data.deadlineDate)"/>
         </v-dialog>
       </v-row>
@@ -158,7 +158,7 @@
             scrollable
           />
           <v-spacer/>
-          <dialog-buttons @cancel="dialog.deadlineTime = false"
+          <picker-dialog-buttons @cancel="dialog.deadlineTime = false"
                           @ok="$refs.deadlineTimeDialog.save(data.deadlineTime)"/>
         </v-dialog>
       </v-row>
@@ -174,13 +174,13 @@
 import { required } from 'vuelidate/lib/validators';
 import moment from 'moment';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
-import DialogButtons from '../components/button/dialogButtons.vue';
+import PickerDialogButtons from '../components/button/PickerDialogButtons.vue';
 
 export default {
   name: 'StepStartEndDeadline',
   props: ['position', 'maxPos'],
   components: {
-    DialogButtons,
+    PickerDialogButtons,
     PrevNextButtons,
   },
   data: () => ({

@@ -23,11 +23,12 @@
       <v-row>
         <v-text-field
           v-model="data.name"
-          autofocus
           :counter="20"
           :error-messages="nameErrors"
           label="Name der Aktion"
-          required>
+          required
+          @input="$v.data.name.$touch()"
+          @blur="$v.data.name.$touch()"> <!-- TODO: Blur oder Autofocus => Prio? -->
         </v-text-field>
       </v-row>
       <v-row>
@@ -36,7 +37,9 @@
           :counter="100"
           :error-messages="descriptionErrors"
           label="Beschreibung der Aktion"
-          required>
+          required
+          @input="$v.data.description.$touch()"
+          @blur="$v.data.description.$touch()">
         </v-text-field>
       </v-row>
 
@@ -105,7 +108,6 @@ export default {
   methods: {
     validate() {
       this.$v.$touch();
-      console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
     },
     prevStep() {
