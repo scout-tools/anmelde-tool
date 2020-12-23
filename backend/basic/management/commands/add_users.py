@@ -51,27 +51,27 @@ class Command(BaseCommand):
             user_5.is_staff = False
             user_5.save()
 
-        # lagerleitung
+        # dpv_lagerleitung
         user = User.objects.get(username='joto@dpbm.de')
-        new_group = Group.objects.get_or_create(name='lagerleitung')
+        new_group = Group.objects.get_or_create(name='dpv_lagerleitung')
         user.groups.add(new_group[0].id)
 
-        # kueche
+        # dpv_kueche
         user = User.objects.get(username='caro@mittelerde.de')
-        new_group = Group.objects.get_or_create(name='kueche')
+        new_group = Group.objects.get_or_create(name='dpv_kueche')
         user.groups.add(new_group[0].id)
 
-        # kasse
+        # dpv_kasse
         user = User.objects.get(username='many@dpv.de')
-        new_group = Group.objects.get_or_create(name='kasse')
+        new_group = Group.objects.get_or_create(name='dpv_kasse')
         user.groups.add(new_group[0].id)
 
-        # logistic
+        # dpv_logistic
         user = User.objects.get(username='many@dpv.de')
-        new_group = Group.objects.get_or_create(name='logistic')
+        new_group = Group.objects.get_or_create(name='dpv_logistic')
         user.groups.add(new_group[0].id)
 
-        # social_media
+        # dpv_social_media
         user = User.objects.get(username='kai@dpv.de')
-        new_group = Group.objects.get_or_create(name='social_media')
+        new_group = Group.objects.get_or_create(name='dpv_social_media')
         user.groups.add(new_group[0].id)

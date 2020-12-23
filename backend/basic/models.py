@@ -133,7 +133,8 @@ class Event(TimeStampMixin):
     max_scout_orga_level = models.IntegerField(blank=True, null=True)
     min_scout_orga_level = models.IntegerField(blank=True, null=True)
     is_public = models.BooleanField(default=0)
-    is_active = models.BooleanField(default=0)
+    # ToDo: add pdf attatchment
+    # ToDo: add html description
 
     def __str__(self):
         return self.name
