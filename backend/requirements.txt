@@ -16,7 +16,7 @@ djangorestframework-simplejwt==4.6.0
 environ==1.0
 idna==2.10
 jmespath==0.10.0
-psycopg2==2.8.6
+psycopg2-binary==2.8.6
 pycparser==2.20
 PyJWT==1.7.1
 python-dateutil==2.8.1
