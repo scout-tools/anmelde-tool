@@ -1,117 +1,102 @@
 <template>
-<v-container>
-  <v-row justify="center">
-    <v-dialog v-model="dialog" transition="dialog-top-transition"
-    persistent max-width="600px">
-  <v-card
-    class="mx-auto"
-    width="800"
-  >
-    <v-card-title class="primary white--text headline">
-      Stämme
-    </v-card-title>
-    <v-row
-      class="pa-4"
-      justify="space-between"
-    >
-      <v-col cols="5">
-      <v-text-field
-        v-model="search"
-        label="Suche einen Stamm"
-        flat
-        clearable
-        clear-icon="mdi-close-circle-outline"
-      ></v-text-field>
-        <v-treeview
-          :active.sync="active"
-          :items="hierarchyNested"
-          :open.sync="open"
-          activatable
-          :search="search"
-          color="warning"
-          open-on-click
-          transition
+  <v-container>
+    <v-row justify="center">
+      <v-dialog
+        v-model="dialog"
+        transition="dialog-top-transition"
+        fullscreen
+        hide-overlay
+      >
+        <v-card>
+       <v-toolbar
+          dark
+          color="primary"
         >
-          <template v-slot:prepend="{ item }">
-            <v-icon v-if="!item.children">
-              mdi-account-group
-            </v-icon>
-            <v-icon v-else>
-              mdi-family-tree
-            </v-icon>
-          </template>
-        </v-treeview>
-      </v-col>
-
-      <v-divider vertical></v-divider>
-
-      <v-col
-        class="d-flex text-center"
-      >
-        <v-scroll-y-transition mode="out-in">
-          <div
-            v-if="!selected"
-            class="title grey--text text--lighten-1 font-weight-light"
-            style="align-self: center;"
+          <v-btn
+            icon
+            dark
+            @click="cancel"
           >
-            Wähle einen Stamm
-          </div>
-          <v-card
-            v-else
-            :key="selected.id"
-            class="pt-6 mx-auto"
-            flat
-            max-width="400"
-          >
-            <v-card-text>
-              <h3 class="headline mb-2">
-                {{ selected.name }}
-              </h3>
-              <div class="blue--text mb-2">
-                {{ selected.email }}
-              </div>
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-row
-              class="text-left"
-              tag="v-card-text"
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Wähle deinen Stamm aus</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+           <v-btn
+              :disabled="!selected"
+              class="white--text"
+              color="green darken-1"
+              depressed
+              @click="onTakeStammClicked"
             >
-              <v-col
-                class="text-right mr-4 mb-2"
-                tag="strong"
-                cols="5"
+              Das ist mein Stamm
+              <v-icon right> mdi-content-save </v-icon>
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+          <v-row class="pa-4" justify="space-between">
+            <v-col cols="5">
+              <v-text-field
+                v-model="search"
+                label="Suche einen Stamm"
+                flat
+                clearable
+                clear-icon="mdi-close-circle-outline"
+              ></v-text-field>
+              <v-treeview
+                :active.sync="active"
+                :items="hierarchyNested"
+                :open.sync="open"
+                activatable
+                :search="search"
+                color="warning"
+                open-on-click
+                transition
               >
-                Postleitzahl:
-              </v-col>
-              <v-col>
-                {{ selected.zipCode }}
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-scroll-y-transition>
-      </v-col>
+              </v-treeview>
+            </v-col>
+
+            <v-divider vertical></v-divider>
+
+            <v-col class="d-flex text-center">
+              <v-scroll-y-transition mode="out-in">
+                <div
+                  v-if="!selected"
+                  class="title grey--text text--lighten-1 font-weight-light"
+                >
+                  Wähle einen Stamm
+                </div>
+                <v-card
+                  v-else
+                  :key="selected.id"
+                  class="mx-auto"
+                  flat
+                >
+                  <v-card-text>
+                    <h3 class="headline mb-2">
+                      {{ selected.name }}
+                    </h3>
+                    <div class="blue--text mb-2">
+                      {{ selected.email }}
+                    </div>
+                  </v-card-text>
+                  <v-divider></v-divider>
+                  <v-row class="text-left" tag="v-card-text">
+                    <v-col class="text-right mr-4 mb-2" tag="strong" cols="5">
+                      Postleitzahl:
+                    </v-col>
+                    <v-col>
+                      {{ selected.zipCode }}
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-scroll-y-transition>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-dialog>
     </v-row>
-    <v-card-actions>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        :disabled="!selected"
-        class="white--text"
-        color="green darken-1"
-        depressed
-        @click="onTakeStammClicked"
-      >
-        Diesen Stamm übernehmen
-        <v-icon right>
-          mdi-content-save
-        </v-icon>
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-    </v-dialog>
-  </v-row>
-</v-container>
+  </v-container>
 </template>
 
 <script>
@@ -141,10 +126,7 @@ export default {
         ? (item, search, textKey) => item[textKey].indexOf(search) > -1
         : undefined;
     },
-    ...mapGetters([
-      'isAuthenticated',
-      'hierarchy',
-    ]),
+    ...mapGetters(['isAuthenticated', 'hierarchy']),
     selected() {
       if (!this.active.length) return undefined;
       const id = this.active[0];
@@ -157,22 +139,23 @@ export default {
   },
 
   methods: {
-    nest(array) {
+    nest(inputArray) {
       const nested = [];
-      for (let i = 0; i < array.length; i++) { // eslint-disable-line
-        var parent = array[i].parent; // eslint-disable-line
+      inputArray.forEach((item) => { // eslint-disable-line
+        var parent = item.parent; // eslint-disable-line
         if (!parent) {
-          nested.push(array[i]);
+          nested.push(item);
         } else {
-          for (let j = 0; j < array.length; j++) { // eslint-disable-line
-            if (array[j].id === parent) {
-              array[j].children = array[j].children || []; // eslint-disable-line
-              array[j].children.push(array[i]);
-              break;
+          inputArray.forEach((item_2) => { // eslint-disable-line
+            if (item_2.id === parent) {
+              item_2.children = item_2.children || []; // eslint-disable-line
+              if (!(item_2.children.filter((x) => x.id === item.id).length)) {
+                item_2.children.push(item);
+              }
             }
-          }
+          });
         }
-      }
+      });
       return nested;
     },
     show(id) {
@@ -181,7 +164,6 @@ export default {
     },
     cancel() {
       this.dialog = false;
-      this.$emit('dialogClose');
     },
     onTakeStammClicked() {
       this.$emit('sendIdToParent', this.active[0]);
@@ -191,6 +173,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

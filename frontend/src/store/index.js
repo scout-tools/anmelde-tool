@@ -11,6 +11,7 @@ export default new Vuex.Store({
     accessToken: null,
     refreshToken: null,
     hierarchy: [],
+    ageGroupMapping: [],
   },
   getters: {
     getJwtData(state) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     hierarchy(state) {
       return state.hierarchy;
     },
+    ageGroupMapping(state) {
+      return state.ageGroupMapping;
+    },
   },
   mutations: {
     setTokens(state, access, refresh) {
@@ -31,11 +35,12 @@ export default new Vuex.Store({
     clearTokens(state) {
       state.accessToken = null;
       state.refreshToken = null;
-      state.originalAccessToken = null;
-      state.originalRefreshToken = null;
     },
     setHierarchy(state, newHierarchy) {
       state.hierarchy = newHierarchy;
+    },
+    setAgeGroupMapping(state, newAgeGroup) {
+      state.ageGroupMapping = newAgeGroup;
     },
   },
   actions: {

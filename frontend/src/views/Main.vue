@@ -1,13 +1,8 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-icon
-        class="mx-4"
-        large
-      >
-        mdi-emoticon
-      </v-icon>
-      <v-toolbar-title>BdP-DPV-Anmelde Tool</v-toolbar-title>
+      <v-icon class="mx-4" large> mdi-emoticon </v-icon>
+      <v-toolbar-title>Anmelde Tool</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-btn
@@ -24,7 +19,7 @@
         class="mx-3"
         icon
         large
-        v-if="isAuthenticated"
+        v-if="isAuthenticated && !isSimpleUser"
         @click="$router.push({ name: 'createEvent' })"
       >
         <v-icon>mdi-calendar-plus</v-icon>
@@ -34,17 +29,13 @@
         class="mx-3"
         icon
         large
-        v-if="isAuthenticated"
+        v-if="isAuthenticated && !isSimpleUser"
         @click="$router.push({ name: 'statisticOverview' })"
       >
         <v-icon>mdi-chart-bar</v-icon>
       </v-btn>
 
       <v-spacer />
-      <v-toolbar-title
-        v-if="isAuthenticated">
-        {{ 'Hallo, ' + this.userName }}
-      </v-toolbar-title>
 
       <v-btn
         icon
@@ -53,8 +44,7 @@
         v-if="isAuthenticated"
         @click="$router.push({ name: 'settingsUser' })"
       >
-        <v-icon>mdi-tools
-        </v-icon>
+        <v-icon>mdi-tools </v-icon>
       </v-btn>
 
       <v-btn v-if="isAuthenticated" outlined dark @click="onLogoutClicked">
@@ -64,14 +54,7 @@
     <router-view />
     <v-footer color="primary lighten-1" padless absolute>
       <v-row justify="center" no-gutters>
-        <v-btn
-          v-for="link in links"
-          :key="link"
-          color="white"
-          text
-          rounded
-          class="my-2"
-        >
+        <v-btn v-for="link in links" :key="link" color="white" text rounded class="my-2">
           {{ link }}
         </v-btn>
         <v-col class="primary lighten py-4 text-center white--text" cols="12">
@@ -89,12 +72,15 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Main',
   computed: {
-    ...mapGetters([
-      'isAuthenticated',
-      'getJwtData',
-    ]),
+    ...mapGetters(['isAuthenticated', 'getJwtData']),
     userName() {
       return this.getJwtData.email;
+    },
+    isSimpleUser() {
+      if (this.getJwtData) {
+        return !(this.getJwtData.groups.length || this.getJwtData.isStaff);
+      }
+      return true;
     },
   },
   data: () => ({
@@ -107,9 +93,21 @@ export default {
     },
     getHierarchy() {
       const path = `${process.env.VUE_APP_API}basic/scout-hierarchy/`;
-      axios.get(path)
+      axios
+        .get(path)
         .then((res) => {
           this.$store.commit('setHierarchy', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+    getAgeGroup() {
+      const path = `${process.env.VUE_APP_API}basic/age-group/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setAgeGroupMapping', res.data);
         })
         .catch(() => {
           this.showError = true;
@@ -118,10 +116,9 @@ export default {
   },
   created() {
     this.getHierarchy();
+    this.getAgeGroup();
   },
-
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
