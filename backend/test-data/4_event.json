@@ -4,13 +4,13 @@
         "pk": 1,
         "fields": {
             "id": 1,
-            "name": "Ringlager 2018",
-            "description": "Das Pfingstlager vom Ring Rhein Lippe im Jahr 2018 zum Thema Römer",
-            "start_time": "2019-01-26 12:06:28.796728",
-            "end_time": "2019-12-26 12:06:28.796728",
-            "registration_deadline": "2019-12-26 12:06:28.796728",
-            "registration_start": "2019-12-26 12:06:28.796728",
-            "participation_fee": 20.00
+            "name": "Bundesfahrt 2021",
+            "description": "DPBM Bundesfahrt nach Norddeutschland",
+            "start_time": "2019-08-01 11:00:00.796728",
+            "end_time": "2019-08-05 11:00:00.796728",
+            "registration_deadline": "2021-03-01 0:00:00.796728",
+            "registration_start": "2020-02-01 00:00:00.796728",
+            "participation_fee": 70.00
         }
     },
     {
@@ -18,13 +18,13 @@
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Sommerfahrt 2019",
-            "description": "Die Sommerfahrt vom Stamm Hratuga nach Litauen",
-            "start_time": "2019-01-26 12:06:28.796728",
-            "end_time": "2019-12-26 12:06:28.796728",
-            "registration_deadline": "2019-12-26 12:06:28.796728",
-            "registration_start": "2019-12-26 12:06:28.796728",
-            "participation_fee": 20.00
+            "name": "Saints Way 2021",
+            "description": "60 km Wanderung",
+            "start_time": "2021-08-01 6:00:00.796728",
+            "end_time": "2019-08-01 20:00:00.796728",
+            "registration_deadline": "2021-07-01 00:00:00.796728",
+            "registration_start": "2021-01-01 00:00:00.796728",
+            "participation_fee": 0.00
         }
     },
     {
@@ -32,13 +32,13 @@
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "DPV Gold Radio",
-            "description": "Ein Radioprogramm zum 25 Jährige Jubiläum vom DPV",
-            "start_time": "2019-01-26 12:06:28.796728",
-            "end_time": "2019-12-26 12:06:28.796728",
-            "registration_deadline": "2019-12-26 12:06:28.796728",
-            "registration_start": "2019-12-26 12:06:28.796728",
-            "participation_fee": 20.00
+            "name": "Kaperfahrt",
+            "description": "Bundesmeutenaktion",
+            "start_time": "2021-07-26 11:00:00.796728",
+            "end_time": "2021-08-01 11:00:00.796728",
+            "registration_deadline": "2021-03-01 0:00:00.796728",
+            "registration_start": "2020-02-01 00:00:00.796728",
+            "participation_fee": 40.00
         }
     },
     {

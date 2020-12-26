@@ -24,6 +24,12 @@ class ZipCode(TimeStampMixin):
     lon = models.DecimalField(
         max_digits=20, decimal_places=15, default=0.000)
 
+    def __str__(self):
+        return self.zip_code + ' - ' + self.city
+
+    def __repr__(self):
+        return self.__str__()
+
 
 class EventLocation(TimeStampMixin):
     id = models.AutoField(
@@ -151,8 +157,11 @@ class Registration(TimeStampMixin):
         verbose_name='ID')
     scout_organisation = models.ForeignKey(
         ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
-    responsible_persons = models.ManyToManyField(User, default='')
-    is_user_confirmed = models.BooleanField(default=0)
+    responsible_persons = models.ForeignKey(
+        User, on_delete=models.PROTECT, null=True, blank=True)
+    event = models.ForeignKey(
+        Event, on_delete=models.PROTECT, null=True, blank=True)
+    is_confirmed = models.BooleanField(default=0)
     is_accepted = models.BooleanField(default=0)
 
 
