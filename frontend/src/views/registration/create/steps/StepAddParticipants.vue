@@ -32,7 +32,6 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 
-// import { required } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
