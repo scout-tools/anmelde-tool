@@ -1,16 +1,13 @@
 <template>
-  <div class="about">
-    <h1>Das ist die Karten Seite</h1>
-    <GChart
-      :settings="{
-        packages: ['corechart', 'geochart'],
+  <GChart
+    :settings="{
+        packages: ['corechart'],
         mapsApiKey: 'AIzaSyA8b79CjjX-C9VgxMBF2aTs9fOI-UBT850'
       }"
-      type="GeoChart"
-      :data="chartData"
-      :options="chartOptions"
-    />
-  </div>
+    type="SteppedAreaChart"
+    :data="chartData"
+    :options="chartOptions"
+  />
 </template>
 
 <script>
@@ -21,6 +18,7 @@ import axios from 'axios';
 Vue.use(VueGoogleCharts);
 
 export default {
+  name: 'RegistrationStackedChart',
   components: {
     GChart,
   },
@@ -28,47 +26,52 @@ export default {
     return {
       API_URL: process.env.VUE_APP_API,
       chartData: [
-        ['Laz', 'Long', 'Name', 'Bund', 'Gruppen', {role: 'tooltip', p: {html: true}}],
-        [52.520008, 13.404954, 'Berlin', 1, 4, '<h3>TEST</h3> 4t34t 4hreg '],
-        [53.551085, 9.993682, 'Hamburg', 2, 6, 'efeg'],
-        [53.551185, 9.393682, 'Lüneburg', 1, 1, 'eqpm'],
+        ['date', 'number'],
+        [new Date(2020, 9, 4), 100],
+        [new Date(2020, 9, 5), 200],
+        [new Date(2020, 9, 12), 250],
+        [new Date(2020, 9, 13), 300],
+        [new Date(2020, 9, 19), 300],
+        [new Date(2020, 9, 23), 300],
+        [new Date(2020, 9, 24), 500],
+        [new Date(2020, 9, 30), 1000],
       ],
       chartOptions: {
-        region: 'DE',
-        displayMode: 'markers',
-        colorAxis: {colors: ['blue', 'red']},
-        resolution: 'provinces',
-        tooltip: {
-          isHtml: false,
-        },
-        height: 500,
-        legend: false,
+        title: 'Anmedlungen',
+        isStacked: true,
+        width: 800,
+        height: 600,
+        legend: {position: 'right', maxLines: 3},
+        vAxis: {minValue: 0},
       },
     };
   },
   mounted() {
     const jsonData = this.getTestData();
-    console.log(this.chartData);
     this.chartData = this.json_to_chart_data(jsonData);
+    console.log(this.chartData);
   },
   methods: {
     json_to_chart_data(jsonData) {
       const chartData = [];
       const buende = [];
-      chartData.push(['Laz', 'Long', 'Name', 'Bund', 'TN', {role: 'tooltip', p: {html: false}}]);
       jsonData.registrations.forEach((regis) => {
         if (buende.indexOf(regis.bund) === -1) buende.push(regis.bund);
       });
+      chartData.push(['date'].concat(buende));
       jsonData.registrations.forEach((regis) => {
-        chartData.push([
-          regis.laz,
-          regis.long,
-          regis.name,
-          buende.indexOf(regis.bund),
-          regis.tn_count,
-          `TN: ${regis.tn_count}\n Bund: ${regis.bund}`]);
+        // eslint-disable-next-line no-param-reassign
+        regis.date = new Date(regis.date);
       });
-      console.log(buende);
+      jsonData.registrations.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+      const buendeCount = new Array(buende.length).fill(0);
+      jsonData.registrations.forEach((regis) => {
+        buendeCount[buende.indexOf(regis.bund)] += regis.tn_count;
+        chartData.push([
+          regis.date,
+        ].concat(buendeCount));
+      });
       return chartData;
     },
     getTestData() {
@@ -80,6 +83,7 @@ export default {
             tn_count: 200,
             long: 9.993682,
             laz: 53.551085,
+            date: new Date(2020, 2, 22).toString(),
           },
           {
             bund: 'PB-Nordlicht',
@@ -87,6 +91,7 @@ export default {
             tn_count: 20,
             long: 10.4115179,
             laz: 53.2464214,
+            date: new Date(2020, 2, 23).toString(),
           },
           {
             bund: 'PB-Nord',
@@ -94,6 +99,7 @@ export default {
             tn_count: 30,
             long: 9.993682,
             laz: 53.551085,
+            date: new Date(2020, 3, 4).toString(),
           },
           {
             bund: 'Andere Pfadis',
@@ -101,6 +107,7 @@ export default {
             tn_count: 150,
             long: 13.404954,
             laz: 52.520007,
+            date: new Date(2020, 3, 20).toString(),
           },
         ],
       };
