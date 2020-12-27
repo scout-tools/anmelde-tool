@@ -1,16 +1,15 @@
 <template>
-  <div class="about">
-    <h1>Das ist die Karten Seite</h1>
-    <GChart
-      :settings="{
-        packages: ['corechart', 'geochart'],
-        mapsApiKey: 'AIzaSyA8b79CjjX-C9VgxMBF2aTs9fOI-UBT850',
+  <GChart
+    :settings="{
+        packages: ['corechart', 'calendar'],
+        mapsApiKey: 'AIzaSyA8b79CjjX-C9VgxMBF2aTs9fOI-UBT850'
       }"
-      type="GeoChart"
-      :data="chartData"
-      :options="chartOptions"
-    />
-  </div>
+    type="Calendar"
+    :data="chartData"
+    :options="chartOptions"
+    :events="chartEvents"
+    ref="gChart"
+  />
 </template>
 
 <script>
@@ -21,6 +20,7 @@ import axios from 'axios';
 Vue.use(VueGoogleCharts);
 
 export default {
+  name: 'RegistrationCalender',
   components: {
     GChart,
   },
@@ -28,28 +28,29 @@ export default {
     return {
       API_URL: process.env.VUE_APP_API,
       chartData: [
-        [
-          'Laz',
-          'Long',
-          'Name',
-          'Bund',
-          'Gruppen',
-          { role: 'tooltip', p: { html: true } },
-        ],
-        [52.520008, 13.404954, 'Berlin', 1, 4, '<h3>TEST</h3> 4t34t 4hreg '],
-        [53.551085, 9.993682, 'Hamburg', 2, 6, 'efeg'],
-        [53.551185, 9.393682, 'Lüneburg', 1, 1, 'eqpm'],
+        ['date', 'number'],
+        [new Date(2013, 9, 4), 38177],
+        [new Date(2013, 9, 5), 38705],
+        [new Date(2013, 9, 12), 38210],
+        [new Date(2013, 9, 13), 38029],
+        [new Date(2013, 9, 19), 38823],
+        [new Date(2013, 9, 23), 38345],
+        [new Date(2013, 9, 24), 38436],
+        [new Date(2013, 9, 30), 38447],
       ],
       chartOptions: {
-        region: 'DE',
-        displayMode: 'markers',
         colorAxis: { colors: ['blue', 'red'] },
-        resolution: 'provinces',
-        tooltip: {
-          isHtml: false,
+        title: 'Anmeldungen',
+        height: 350,
+
+      },
+      chartEvents: {
+        select: () => {
+          const table = this.$refs.gChart.chartObject;
+          const selection = table.getSelection();
+          const onSelectionMeaasge = selection.length !== 0 ? 'row was selected' : 'row was diselected';
+          alert(onSelectionMeaasge);
         },
-        height: 500,
-        legend: false,
       },
     };
   },
@@ -62,25 +63,11 @@ export default {
     json_to_chart_data(jsonData) {
       const chartData = [];
       const buende = [];
-      chartData.push([
-        'Laz',
-        'Long',
-        'Name',
-        'Bund',
-        'TN',
-        { role: 'tooltip', p: { html: false } },
-      ]);
-      jsonData.registrations.forEach((regis) => {
-        if (buende.indexOf(regis.bund) === -1) buende.push(regis.bund);
-      });
+      chartData.push(['date', 'number']);
       jsonData.registrations.forEach((regis) => {
         chartData.push([
-          regis.laz,
-          regis.long,
-          regis.name,
-          buende.indexOf(regis.bund),
+          new Date(regis.date),
           regis.tn_count,
-          `TN: ${regis.tn_count}\n Bund: ${regis.bund}`,
         ]);
       });
       console.log(buende);
@@ -95,6 +82,7 @@ export default {
             tn_count: 200,
             long: 9.993682,
             laz: 53.551085,
+            date: new Date(2020, 2, 22).toString(),
           },
           {
             bund: 'PB-Nordlicht',
@@ -102,6 +90,7 @@ export default {
             tn_count: 20,
             long: 10.4115179,
             laz: 53.2464214,
+            date: new Date(2020, 2, 23).toString(),
           },
           {
             bund: 'PB-Nord',
@@ -109,6 +98,7 @@ export default {
             tn_count: 30,
             long: 9.993682,
             laz: 53.551085,
+            date: new Date(2020, 3, 4).toString(),
           },
           {
             bund: 'Andere Pfadis',
@@ -116,6 +106,7 @@ export default {
             tn_count: 150,
             long: 13.404954,
             laz: 52.520007,
+            date: new Date(2020, 3, 20).toString(),
           },
         ],
       };
@@ -123,8 +114,7 @@ export default {
     },
     getData() {
       const path = `${this.API_URL}basic/statistic/map/22`;
-      axios
-        .get(path)
+      axios.get(path)
         .then((res) => {
           this.chartData = res.data;
         })
