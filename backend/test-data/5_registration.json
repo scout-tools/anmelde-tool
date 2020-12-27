@@ -1,0 +1,32 @@
+[
+    {
+        "model": "basic.registration",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "scout_organisation_id": 10,
+            "is_accepted": 0,
+            "is_confirmed": 0
+        }
+    },
+    {
+        "model": "basic.registration",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "scout_organisation_id": 8,
+            "is_accepted": 0,
+            "is_confirmed": 0
+        }
+    },
+    {
+        "model": "basic.registration",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "scout_organisation_id": 7,
+            "is_accepted": 0,
+            "is_confirmed": 0
+        }
+    }
+]

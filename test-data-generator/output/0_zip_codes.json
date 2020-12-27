@@ -1,9 +1,9 @@
 [
     {
         "model": "basic.ZipCode",
-        "pk": 1,
+        "pk": 2,
         "fields": {
-            "id": 1,
+            "id": 2,
             "zip_code": "78267",
             "city": "Aach",
             "lon": "8.863226244902151",
@@ -12,9 +12,9 @@
     },
     {
         "model": "basic.ZipCode",
-        "pk": 2,
+        "pk": 3,
         "fields": {
-            "id": 2,
+            "id": 3,
             "zip_code": "54298",
             "city": "Aach",
             "lon": "6.58668785193422",
@@ -14488,6 +14488,17 @@
     },
     {
         "model": "basic.ZipCode",
+        "pk": 1319,
+        "fields": {
+            "id": 1319,
+            "zip_code": "39628",
+            "city": "Bismark (Altmark)",
+            "lon": "",
+            "lat": ""
+        }
+    },
+    {
+        "model": "basic.ZipCode",
         "pk": 1320,
         "fields": {
             "id": 1320,
@@ -22899,6 +22910,17 @@
             "city": "Coswig",
             "lon": "13.580926302194",
             "lat": "51.1387586054451"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 2085,
+        "fields": {
+            "id": 2085,
+            "zip_code": "06868",
+            "city": "Coswig (Anhalt)",
+            "lon": "",
+            "lat": ""
         }
     },
     {
@@ -33529,6 +33551,17 @@
     },
     {
         "model": "basic.ZipCode",
+        "pk": 3052,
+        "fields": {
+            "id": 3052,
+            "zip_code": "99090",
+            "city": "Erfurt",
+            "lon": "",
+            "lat": ""
+        }
+    },
+    {
+        "model": "basic.ZipCode",
         "pk": 3053,
         "fields": {
             "id": 3053,
@@ -33558,6 +33591,17 @@
             "city": "Erfurt",
             "lon": "10.9911059778828",
             "lat": "50.9424321244745"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 3056,
+        "fields": {
+            "id": 3056,
+            "zip_code": "99095",
+            "city": "Erfurt",
+            "lon": "",
+            "lat": ""
         }
     },
     {
@@ -37507,6 +37551,17 @@
             "city": "Frankfurt am Main",
             "lon": "8.68388595191705",
             "lat": "50.1119739847457"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 3416,
+        "fields": {
+            "id": 3416,
+            "zip_code": "60312",
+            "city": "Frankfurt am Main",
+            "lon": "",
+            "lat": ""
         }
     },
     {
@@ -41632,6 +41687,17 @@
             "city": "Geratal",
             "lon": "10.7887634366092",
             "lat": "50.7508111910755"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 3792,
+        "fields": {
+            "id": 3792,
+            "zip_code": "99331",
+            "city": "Geratal",
+            "lon": "",
+            "lat": ""
         }
     },
     {
@@ -47477,6 +47543,17 @@
     },
     {
         "model": "basic.ZipCode",
+        "pk": 4324,
+        "fields": {
+            "id": 4324,
+            "zip_code": "08344",
+            "city": "Gr\u00fcnhain-Beierfeld",
+            "lon": "",
+            "lat": ""
+        }
+    },
+    {
+        "model": "basic.ZipCode",
         "pk": 4325,
         "fields": {
             "id": 4325,
@@ -51147,6 +51224,17 @@
             "city": "Handeloh",
             "lon": "9.841541249870211",
             "lat": "53.2504086567774"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 4659,
+        "fields": {
+            "id": 4659,
+            "zip_code": "24976",
+            "city": "Handewitt",
+            "lon": "",
+            "lat": ""
         }
     },
     {
@@ -59555,6 +59643,17 @@
     },
     {
         "model": "basic.ZipCode",
+        "pk": 5424,
+        "fields": {
+            "id": 5424,
+            "zip_code": "99820",
+            "city": "H\u00f6rselberg-Hainich",
+            "lon": "",
+            "lat": ""
+        }
+    },
+    {
+        "model": "basic.ZipCode",
         "pk": 5425,
         "fields": {
             "id": 5425,
@@ -60926,6 +61025,17 @@
             "city": "Ilmenau",
             "lon": "10.899584563431402",
             "lat": "50.6939623823295"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 5550,
+        "fields": {
+            "id": 5550,
+            "zip_code": "98694",
+            "city": "Ilmenau",
+            "lon": "",
+            "lat": ""
         }
     },
     {
@@ -71501,6 +71611,17 @@
     },
     {
         "model": "basic.ZipCode",
+        "pk": 6512,
+        "fields": {
+            "id": 6512,
+            "zip_code": "99707",
+            "city": "Kyffh\u00e4userland",
+            "lon": "",
+            "lat": ""
+        }
+    },
+    {
+        "model": "basic.ZipCode",
         "pk": 6513,
         "fields": {
             "id": 6513,
@@ -72432,6 +72553,17 @@
             "city": "Langene\u00df",
             "lon": "8.62561443623992",
             "lat": "54.6499319923439"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 6598,
+        "fields": {
+            "id": 6598,
+            "zip_code": "25867",
+            "city": "Langene\u00df",
+            "lon": "",
+            "lat": ""
         }
     },
     {
@@ -83575,6 +83707,17 @@
             "city": "M\u00f6ckm\u00fchl",
             "lon": "9.353811163572368",
             "lat": "49.32603952568579"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 7612,
+        "fields": {
+            "id": 7612,
+            "zip_code": "04862",
+            "city": "Mockrehna",
+            "lon": "",
+            "lat": ""
         }
     },
     {
@@ -95576,6 +95719,17 @@
             "city": "Oberw\u00f6rresbach",
             "lon": "7.29000966521117",
             "lat": "49.7703057787484"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 8704,
+        "fields": {
+            "id": 8704,
+            "zip_code": "64760",
+            "city": "Oberzent",
+            "lon": "",
+            "lat": ""
         }
     },
     {
@@ -107636,6 +107790,17 @@
     },
     {
         "model": "basic.ZipCode",
+        "pk": 9801,
+        "fields": {
+            "id": 9801,
+            "zip_code": "98630",
+            "city": "R\u00f6mhild",
+            "lon": "",
+            "lat": ""
+        }
+    },
+    {
+        "model": "basic.ZipCode",
         "pk": 9802,
         "fields": {
             "id": 9802,
@@ -115596,6 +115761,17 @@
             "city": "Schwenningen",
             "lon": "8.99071375303531",
             "lat": "48.1127845452631"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 10526,
+        "fields": {
+            "id": 10526,
+            "zip_code": "24222",
+            "city": "Schwentinental",
+            "lon": "",
+            "lat": ""
         }
     },
     {
@@ -139723,6 +139899,17 @@
     },
     {
         "model": "basic.ZipCode",
+        "pk": 12720,
+        "fields": {
+            "id": 12720,
+            "zip_code": "27639",
+            "city": "Wurster Nordseek\u00fcste",
+            "lon": "",
+            "lat": ""
+        }
+    },
+    {
+        "model": "basic.ZipCode",
         "pk": 12721,
         "fields": {
             "id": 12721,
@@ -140324,6 +140511,17 @@
             "city": "Zeitlofs",
             "lon": "9.716593540686599",
             "lat": "50.2563534016901"
+        }
+    },
+    {
+        "model": "basic.ZipCode",
+        "pk": 12776,
+        "fields": {
+            "id": 12776,
+            "zip_code": "06711",
+            "city": "Zeitz",
+            "lon": "",
+            "lat": ""
         }
     },
     {

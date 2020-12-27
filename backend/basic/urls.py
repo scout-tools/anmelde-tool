@@ -9,6 +9,7 @@ router.register(r'age-group', views.AgeGroupViewSet)
 router.register(r'event-location', views.EventLocationViewSet)
 router.register(r'scout-hierarchy', views.ScoutHierarchyViewSet)
 router.register(r'registration', views.RegistrationViewSet)
+router.register(r'participants', views.ParticipantsViewSet)
 router.register(r'zip-code', views.ZipCodeViewSet)
 
 # Wire up our API using automatic URL routing.

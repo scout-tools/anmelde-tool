@@ -51,6 +51,15 @@ class Command(BaseCommand):
             user_5.is_staff = False
             user_5.save()
 
+        if not UserModel.objects.filter(username='dummy@dpv.de').exists():
+            user_6 = UserModel.objects.create(
+                username='dummy@dpv.de', password='testuser123')
+            user_6.is_superuser = False
+            user_6.is_staff = False
+            user_6.save()
+
+        print('user created')
+
         # dpv_lagerleitung
         user = User.objects.get(username='joto@dpbm.de')
         new_group = Group.objects.get_or_create(name='dpv_lagerleitung')
@@ -75,3 +84,5 @@ class Command(BaseCommand):
         user = User.objects.get(username='kai@dpv.de')
         new_group = Group.objects.get_or_create(name='dpv_social_media')
         user.groups.add(new_group[0].id)
+
+        print('groups created')
