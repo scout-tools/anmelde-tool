@@ -4,7 +4,7 @@
     <GChart
       :settings="{
         packages: ['corechart', 'geochart'],
-        mapsApiKey: 'AIzaSyA8b79CjjX-C9VgxMBF2aTs9fOI-UBT850'
+        mapsApiKey: 'AIzaSyA8b79CjjX-C9VgxMBF2aTs9fOI-UBT850',
       }"
       type="GeoChart"
       :data="chartData"
@@ -15,7 +15,7 @@
 
 <script>
 import Vue from 'vue';
-import VueGoogleCharts, {GChart} from 'vue-google-charts';
+import VueGoogleCharts, { GChart } from 'vue-google-charts';
 import axios from 'axios';
 
 Vue.use(VueGoogleCharts);
@@ -28,7 +28,14 @@ export default {
     return {
       API_URL: process.env.VUE_APP_API,
       chartData: [
-        ['Laz', 'Long', 'Name', 'Bund', 'Gruppen', {role: 'tooltip', p: {html: true}}],
+        [
+          'Laz',
+          'Long',
+          'Name',
+          'Bund',
+          'Gruppen',
+          { role: 'tooltip', p: { html: true } },
+        ],
         [52.520008, 13.404954, 'Berlin', 1, 4, '<h3>TEST</h3> 4t34t 4hreg '],
         [53.551085, 9.993682, 'Hamburg', 2, 6, 'efeg'],
         [53.551185, 9.393682, 'Lüneburg', 1, 1, 'eqpm'],
@@ -36,7 +43,7 @@ export default {
       chartOptions: {
         region: 'DE',
         displayMode: 'markers',
-        colorAxis: {colors: ['blue', 'red']},
+        colorAxis: { colors: ['blue', 'red'] },
         resolution: 'provinces',
         tooltip: {
           isHtml: false,
@@ -55,7 +62,14 @@ export default {
     json_to_chart_data(jsonData) {
       const chartData = [];
       const buende = [];
-      chartData.push(['Laz', 'Long', 'Name', 'Bund', 'TN', {role: 'tooltip', p: {html: false}}]);
+      chartData.push([
+        'Laz',
+        'Long',
+        'Name',
+        'Bund',
+        'TN',
+        { role: 'tooltip', p: { html: false } },
+      ]);
       jsonData.registrations.forEach((regis) => {
         if (buende.indexOf(regis.bund) === -1) buende.push(regis.bund);
       });
@@ -66,7 +80,8 @@ export default {
           regis.name,
           buende.indexOf(regis.bund),
           regis.tn_count,
-          `TN: ${regis.tn_count}\n Bund: ${regis.bund}`]);
+          `TN: ${regis.tn_count}\n Bund: ${regis.bund}`,
+        ]);
       });
       console.log(buende);
       return chartData;
@@ -108,7 +123,8 @@ export default {
     },
     getData() {
       const path = `${this.API_URL}basic/statistic/map/22`;
-      axios.get(path)
+      axios
+        .get(path)
         .then((res) => {
           this.chartData = res.data;
         })

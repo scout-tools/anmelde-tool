@@ -14,7 +14,7 @@
 
 <script>
 import Vue from 'vue';
-import VueGoogleCharts, {GChart} from 'vue-google-charts';
+import VueGoogleCharts, { GChart } from 'vue-google-charts';
 import axios from 'axios';
 
 Vue.use(VueGoogleCharts);
@@ -39,7 +39,7 @@ export default {
         [new Date(2013, 9, 30), 38447],
       ],
       chartOptions: {
-        colorAxis: {colors: ['blue', 'red']},
+        colorAxis: { colors: ['blue', 'red'] },
         title: 'Anmeldungen',
         height: 350,
 

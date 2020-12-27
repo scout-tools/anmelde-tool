@@ -1,9 +1,9 @@
 <template>
   <GChart
     :settings="{
-        packages: ['corechart'],
-        mapsApiKey: 'AIzaSyA8b79CjjX-C9VgxMBF2aTs9fOI-UBT850'
-      }"
+      packages: ['corechart'],
+      mapsApiKey: 'AIzaSyA8b79CjjX-C9VgxMBF2aTs9fOI-UBT850',
+    }"
     type="SteppedAreaChart"
     :data="chartData"
     :options="chartOptions"
@@ -12,7 +12,7 @@
 
 <script>
 import Vue from 'vue';
-import VueGoogleCharts, {GChart} from 'vue-google-charts';
+import VueGoogleCharts, { GChart } from 'vue-google-charts';
 import axios from 'axios';
 
 Vue.use(VueGoogleCharts);
@@ -41,8 +41,8 @@ export default {
         isStacked: true,
         width: 800,
         height: 600,
-        legend: {position: 'right', maxLines: 3},
-        vAxis: {minValue: 0},
+        legend: { position: 'right', maxLines: 3 },
+        vAxis: { minValue: 0 },
       },
     };
   },
@@ -68,9 +68,7 @@ export default {
       const buendeCount = new Array(buende.length).fill(0);
       jsonData.registrations.forEach((regis) => {
         buendeCount[buende.indexOf(regis.bund)] += regis.tn_count;
-        chartData.push([
-          regis.date,
-        ].concat(buendeCount));
+        chartData.push([regis.date].concat(buendeCount));
       });
       return chartData;
     },
@@ -115,7 +113,8 @@ export default {
     },
     getData() {
       const path = `${this.API_URL}basic/statistic/map/22`;
-      axios.get(path)
+      axios
+        .get(path)
         .then((res) => {
           this.chartData = res.data;
         })
