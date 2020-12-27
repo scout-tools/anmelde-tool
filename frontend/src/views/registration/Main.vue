@@ -106,7 +106,6 @@ export default {
           event: eventId,
         })
         .then((response) => {
-          console.log(response.data);
           this.$router.push({
             name: 'registrationCreate',
             params: {
