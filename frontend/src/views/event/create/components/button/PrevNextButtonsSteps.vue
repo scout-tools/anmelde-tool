@@ -29,7 +29,3 @@ export default {
   props: ['position', 'maxPos'],
 };
 </script>
-
-<style scoped>
-
-</style>

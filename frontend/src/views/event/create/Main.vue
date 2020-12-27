@@ -14,9 +14,7 @@
             {{ headerSteps[index] }}
           </v-stepper-step>
 
-          <v-divider
-            :key="index"
-          ></v-divider>
+          <v-divider :key="index"/>
 
           <v-stepper-items :key="`stepper-items-${index}`">
             <v-stepper-content
@@ -63,6 +61,8 @@ import StepLocation from './steps/StepLocation.vue';
 import StepAgeGroup from './steps/StepAgeGroup.vue';
 import StepEventContact from './steps/StepEventContact.vue';
 import StepStartEndDeadline from './steps/StepStartEndDeadline.vue';
+import StepParticipationFee from './steps/StepParticipationFee.vue';
+import StepInvitationCode from './steps/StepInvitationCode.vue';
 
 export default {
   components: {
@@ -71,6 +71,8 @@ export default {
     StepAgeGroup,
     StepEventContact,
     StepStartEndDeadline,
+    StepParticipationFee,
+    StepInvitationCode,
   },
   data() {
     return {
@@ -88,17 +90,21 @@ export default {
     steps() {
       return [
         StepNameDescription,
+        StepInvitationCode,
         StepStartEndDeadline,
         StepLocation,
+        StepParticipationFee,
         StepAgeGroup,
         StepEventContact,
       ];
     },
     headerSteps() {
       return [
-        'Beschreibung',
+        'Aktionsbeschreibung',
+        'Verifizierungscode',
         'Daten und Uhrzeit',
         'Ort',
+        'Teilnehmerbeitrag',
         'Zielgruppe',
         'Kontaktdaten',
       ];
@@ -118,6 +124,7 @@ export default {
       setTimeout(() => this.$router.push({ name: 'eventOverview' }), 2000);
     },
     callCreateEventPost() {
+      console.log(this.data.event);
       return axios.post(`${this.API_URL}basic/event/`, this.data.event);
     },
     formatCreateEventRequestData() {
@@ -126,6 +133,8 @@ export default {
       const dataStepLocation = this.$refs.StepLocation[0].getData();
       const dataStepAgeGroup = this.$refs.StepAgeGroup[0].getData();
       const dataStepEventContact = this.$refs.StepEventContact[0].getData();
+      const dataStepInvitationCode = this.$refs.StepInvitationCode[0].getData();
+      const dataStepParticipationFee = this.$refs.StepParticipationFee[0].getData();
 
       this.data.event = {
         name: dataNameDescription.name,
@@ -136,6 +145,8 @@ export default {
         startTime: dataStartEndDeadline.startTime,
         endTime: dataStartEndDeadline.endTime,
         registrationDeadline: dataStartEndDeadline.registrationDeadline,
+        participationFee: dataStepParticipationFee.participationFee,
+        invitationCode: dataStepInvitationCode.invitationCode,
       };
     },
     async handleCreateEventRequest() {
