@@ -26,7 +26,7 @@
               :error-messages="dateRangeErrors"
               v-bind="attrs"
               v-on="on"
-            ></v-text-field>
+            />
           </template>
           <v-date-picker
             v-model="data.dateRange"
@@ -56,7 +56,7 @@
               :error-messages="startTimeErrors"
               v-bind="attrs"
               v-on="on"
-            ></v-text-field>
+            />
           </template>
           <v-time-picker
             :disabled="!dialog.startTime"
@@ -88,7 +88,7 @@
               :error-messages="endTimeErrors"
               v-bind="attrs"
               v-on="on"
-            ></v-text-field>
+            />
           </template>
           <v-time-picker
             v-if="dialog.endTime"
@@ -119,7 +119,7 @@
               :error-messages="deadlineDateErrors"
               v-bind="attrs"
               v-on="on"
-            ></v-text-field>
+            />
           </template>
           <v-date-picker
             v-if="dialog.deadlineDate"
@@ -148,7 +148,7 @@
               :error-messages="deadlineTimeErrors"
               v-bind="attrs"
               v-on="on"
-            ></v-text-field>
+            />
           </template>
           <v-time-picker
             v-if="dialog.deadlineTime"
@@ -165,7 +165,7 @@
 
       <v-divider class="my-2"/>
       <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
-                         @prevStep="prevStep" @submitStep="submitStep()"/>
+                         @prevStep="prevStep()" @submitStep="submitStep()"/>
     </v-container>
   </v-form>
 </template>

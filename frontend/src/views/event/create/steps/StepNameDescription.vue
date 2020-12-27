@@ -28,8 +28,7 @@
           label="Name der Aktion"
           required
           @input="$v.data.name.$touch()"
-          @blur="$v.data.name.$touch()"> <!-- TODO: Blur oder Autofocus => Prio? -->
-        </v-text-field>
+          @blur="$v.data.name.$touch()"/>
       </v-row>
       <v-row>
         <v-text-field
@@ -39,14 +38,13 @@
           label="Beschreibung der Aktion"
           required
           @input="$v.data.description.$touch()"
-          @blur="$v.data.description.$touch()">
-        </v-text-field>
+          @blur="$v.data.description.$touch()"/>
       </v-row>
 
       <v-divider class="my-3"/>
 
       <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
-                         @prevStep="prevStep" @submitStep="submitStep()"/>
+                         @prevStep="prevStep()" @submitStep="submitStep()"/>
     </v-container>
   </v-form>
 </template>

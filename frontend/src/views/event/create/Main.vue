@@ -14,9 +14,7 @@
             {{ headerSteps[index] }}
           </v-stepper-step>
 
-          <v-divider
-            :key="index"
-          ></v-divider>
+          <v-divider :key="index"/>
 
           <v-stepper-items :key="`stepper-items-${index}`">
             <v-stepper-content

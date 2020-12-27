@@ -25,8 +25,7 @@
                 label="Name"
                 required
                 @input="$v.data.name.$touch()"
-                @blur="$v.data.name.$touch()">
-              </v-text-field>
+                @blur="$v.data.name.$touch()"/>
             </v-row>
             <v-row>
               <v-text-field
@@ -36,8 +35,7 @@
                 label="Beschreibung"
                 required
                 @input="$v.data.description.$touch()"
-                @blur="$v.data.description.$touch()">
-              </v-text-field>
+                @blur="$v.data.description.$touch()"/>
             </v-row>
             <v-row>
               <v-text-field
@@ -47,8 +45,7 @@
                 label="Straße und Hausnummer"
                 required
                 @input="$v.data.address.$touch()"
-                @blur="$v.data.address.$touch()">
-              </v-text-field>
+                @blur="$v.data.address.$touch()"/>
             </v-row>
             <v-row>
               <v-text-field
@@ -57,8 +54,7 @@
                 :error-messages="zipCodeErrors"
                 label="Postleitzahl"
                 required
-                @blur="$v.data.zipCode.$touch()">
-              </v-text-field>
+                @blur="$v.data.zipCode.$touch()"/>
             </v-row>
             <v-row>
               <v-text-field
@@ -68,10 +64,8 @@
                 label="Stadt"
                 required
                 @input="$v.data.name.$touch()"
-                @blur="$v.data.name.$touch()">
-              </v-text-field>
+                @blur="$v.data.name.$touch()"/>
             </v-row>
-<!--            <v-spacer class="my-3"/>-->
           </v-container>
         </v-form>
       </v-card-text>

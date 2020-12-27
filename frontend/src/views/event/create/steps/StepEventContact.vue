@@ -30,7 +30,7 @@
       <v-divider class="my-2"/>
 
       <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
-                         @prevStep="prevStep" @submitStep="submitStep()"/>
+                         @prevStep="prevStep()" @submitStep="submitStep()"/>
     </v-container>
   </v-form>
 </template>

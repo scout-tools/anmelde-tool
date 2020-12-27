@@ -19,7 +19,7 @@
           label="Veranstaltungsort wählen"
           required
           @input="validate()"
-        /> <!-- TODO: Neuen Ort autom. anwählen => immer letzter? -->
+        />
       </v-row>
       <v-row>
         <p class="mr-4">
@@ -35,7 +35,7 @@
       </v-row>
       <v-divider class="my-4"/>
       <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
-                         @prevStep="prevStep" @submitStep="submitStep()"/>
+                         @prevStep="prevStep()" @submitStep="submitStep()"/>
     </v-container>
   </v-form>
 </template>
@@ -98,8 +98,6 @@ export default {
       this.$emit('submit');
     },
     async getEvents() {
-      // TODO Caching Problem lösen!
-      // const path = `${this.API_URL}basic/message?&timestamp=${new Date().getTime()}`;
       const url = `${this.API_URL}basic/event-location/`;
       const result = await axios.get(url);
       this.items = result.data;

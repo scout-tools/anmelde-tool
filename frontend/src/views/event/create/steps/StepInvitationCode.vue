@@ -19,14 +19,13 @@
           :error-messages="invitationCodeErrors"
           label="Verifizierungscode"
           required
-          @blur="$v.data.invitationCode.$touch()">
-        </v-text-field>
+          @blur="$v.data.invitationCode.$touch()"/>
       </v-row>
 
       <v-divider class="my-3"/>
 
       <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
-                         @prevStep="prevStep" @submitStep="submitStep()"/>
+                         @prevStep="prevStep()" @submitStep="submitStep()"/>
     </v-container>
   </v-form>
 </template>
@@ -62,7 +61,6 @@ export default {
     invitationCodeErrors() {
       const errors = [];
       if (!this.$v.data.invitationCode.$dirty) return errors;
-      // TODO Umlaute und ß funktionieren nicht => erstmal ignorieren?
       if (!this.$v.data.invitationCode.alphaNum) {
         errors.push('Der Einladungscode muss aus Zahlen und Buchstaben bestehen,');
       }
@@ -102,7 +100,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-
-</style>
