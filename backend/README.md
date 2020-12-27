@@ -1,3 +1,6 @@
+# go to backend folder
+`cd backend/`
+
 # create venv
 `virtualenv venv`
 
@@ -5,7 +8,7 @@
 `source venv/bin/activate`
 
 # install
-`pip install -r /path/to/requirements.txt`
+`pip install -r requirements.txt`
 
 `python manage.py makemigrations`
 
