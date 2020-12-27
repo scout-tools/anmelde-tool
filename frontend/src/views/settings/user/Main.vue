@@ -50,6 +50,7 @@
                       Änderungen speichern
                     </v-btn>
                   </v-col>
+                  <!-- TODO: add user-delete service and activate button -->
                   <!-- <v-col cols="12" sm="6" md="4">
                     <v-btn dark color="red">
                       <v-icon left>mdi-delete</v-icon>

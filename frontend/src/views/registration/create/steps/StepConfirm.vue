@@ -11,7 +11,7 @@
       <v-row>
         <v-checkbox
           v-model="data.checkbox1"
-          :label="`Ich habe meine Daten überrüft und melde meinen Stamm verbindlich zum Lager an`"
+          :label="`Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zum Lager an`"
         >
         </v-checkbox>
       </v-row>
