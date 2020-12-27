@@ -84,6 +84,7 @@ export default {
     },
   },
   data: () => ({
+    API_URL: process.env.VUE_APP_API,
     links: ['Hauptseite', 'Impressum', 'Kontakt'],
   }),
   methods: {
@@ -103,7 +104,7 @@ export default {
         });
     },
     getAgeGroup() {
-      const path = `${process.env.VUE_APP_API}basic/age-group/`;
+      const path = `${this.API_URL}basic/age-group/`;
       axios
         .get(path)
         .then((res) => {
