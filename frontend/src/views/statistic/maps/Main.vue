@@ -1,6 +1,5 @@
 <template>
   <div class="about">
-    <h1>Das ist die Karten Seite</h1>
     <GChart
       :settings="{
         packages: ['corechart', 'geochart'],

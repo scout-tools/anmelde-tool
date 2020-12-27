@@ -1,6 +1,5 @@
 <template>
   <div class="about">
-    <h1>Das ist die Seite mit der Anmeldungen</h1>
     <RegistrationCalender></RegistrationCalender>
     <RegistrationLineChart></RegistrationLineChart>
     <RegistrationStackedChart></RegistrationStackedChart>
