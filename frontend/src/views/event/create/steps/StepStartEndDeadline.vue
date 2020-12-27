@@ -4,7 +4,7 @@
     v-model="valid"
   >
     <v-container>
-      <v-row class="mt-6">
+      <v-row class="my-6">
       <span class="subtitle-1">
         Zeitraum der Aktion.
       </span>
@@ -188,10 +188,10 @@ export default {
     valid: true,
     data: {
       dateRange: [],
-      startTime: '',
-      endTime: '',
+      startTime: '18:00',
+      endTime: '13:00',
       deadlineDate: '',
-      deadlineTime: '',
+      deadlineTime: '00:00',
     },
     dialog: {
       dateRange: false,
