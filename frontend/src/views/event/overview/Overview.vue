@@ -4,7 +4,6 @@
       <v-card-title class="text-center justify-center py-6">
         Zu diesen Veranstaltungen kannst du dich Anmelden:
       </v-card-title>
-
       <v-list subheader two-line>
         <v-subheader inset
           >Hier kannst du alle deine aktuell Buchbaren Veranstaltungen sehen</v-subheader
@@ -15,7 +14,6 @@
               <v-icon color="black">
                 mdi-account-group</v-icon>
             </v-list-item-avatar>
-
             <v-list-item-content>
               <v-list-item-title v-text="item.name"></v-list-item-title>
 

@@ -23,12 +23,12 @@
       <v-row>
         <v-text-field
           v-model="data.name"
-          autofocus
           :counter="20"
           :error-messages="nameErrors"
           label="Name der Aktion"
-          required>
-        </v-text-field>
+          required
+          @input="$v.data.name.$touch()"
+          @blur="$v.data.name.$touch()"/>
       </v-row>
       <v-row>
         <v-text-field
@@ -36,14 +36,15 @@
           :counter="100"
           :error-messages="descriptionErrors"
           label="Beschreibung der Aktion"
-          required>
-        </v-text-field>
+          required
+          @input="$v.data.description.$touch()"
+          @blur="$v.data.description.$touch()"/>
       </v-row>
 
       <v-divider class="my-3"/>
 
       <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
-                         @prevStep="prevStep" @submitStep="submitStep()"/>
+                         @prevStep="prevStep()" @submitStep="submitStep()"/>
     </v-container>
   </v-form>
 </template>
@@ -105,7 +106,6 @@ export default {
   methods: {
     validate() {
       this.$v.$touch();
-      console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
     },
     prevStep() {

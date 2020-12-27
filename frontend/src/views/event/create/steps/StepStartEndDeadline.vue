@@ -4,7 +4,7 @@
     v-model="valid"
   >
     <v-container>
-      <v-row class="mt-6">
+      <v-row class="my-6">
       <span class="subtitle-1">
         Zeitraum der Aktion.
       </span>
@@ -26,7 +26,7 @@
               :error-messages="dateRangeErrors"
               v-bind="attrs"
               v-on="on"
-            ></v-text-field>
+            />
           </template>
           <v-date-picker
             v-model="data.dateRange"
@@ -34,8 +34,8 @@
             range
           />
           <v-spacer/>
-          <dialog-buttons @cancel="dialog.dateRange = false"
-                          @ok="$refs.dateRangeDialog.save(data.dateRange)"/>
+          <picker-dialog-buttons @cancel="dialog.dateRange = false"
+                                 @ok="$refs.dateRangeDialog.save(data.dateRange)"/>
         </v-dialog>
       </v-row>
       <v-row>
@@ -56,7 +56,7 @@
               :error-messages="startTimeErrors"
               v-bind="attrs"
               v-on="on"
-            ></v-text-field>
+            />
           </template>
           <v-time-picker
             :disabled="!dialog.startTime"
@@ -66,7 +66,7 @@
             scrollable
           />
           <v-spacer/>
-          <dialog-buttons @cancel="dialog.startTime = false"
+          <picker-dialog-buttons @cancel="dialog.startTime = false"
                           @ok="$refs.startTimeDialog.save(data.startTime)"/>
         </v-dialog>
       </v-row>
@@ -88,7 +88,7 @@
               :error-messages="endTimeErrors"
               v-bind="attrs"
               v-on="on"
-            ></v-text-field>
+            />
           </template>
           <v-time-picker
             v-if="dialog.endTime"
@@ -98,7 +98,7 @@
             scrollable
           />
           <v-spacer/>
-          <dialog-buttons @cancel="dialog.endTime = false"
+          <picker-dialog-buttons @cancel="dialog.endTime = false"
                           @ok="$refs.endTimeDialog.save(data.endTime)"/>
         </v-dialog>
       </v-row>
@@ -119,14 +119,14 @@
               :error-messages="deadlineDateErrors"
               v-bind="attrs"
               v-on="on"
-            ></v-text-field>
+            />
           </template>
           <v-date-picker
             v-if="dialog.deadlineDate"
             v-model="data.deadlineDate"
           />
           <v-spacer/>
-          <dialog-buttons @cancel="dialog.deadlineDate = false"
+          <picker-dialog-buttons @cancel="dialog.deadlineDate = false"
                           @ok="$refs.deadlineDateDialog.save(data.deadlineDate)"/>
         </v-dialog>
       </v-row>
@@ -148,7 +148,7 @@
               :error-messages="deadlineTimeErrors"
               v-bind="attrs"
               v-on="on"
-            ></v-text-field>
+            />
           </template>
           <v-time-picker
             v-if="dialog.deadlineTime"
@@ -158,14 +158,14 @@
             scrollable
           />
           <v-spacer/>
-          <dialog-buttons @cancel="dialog.deadlineTime = false"
+          <picker-dialog-buttons @cancel="dialog.deadlineTime = false"
                           @ok="$refs.deadlineTimeDialog.save(data.deadlineTime)"/>
         </v-dialog>
       </v-row>
 
       <v-divider class="my-2"/>
       <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
-                         @prevStep="prevStep" @submitStep="submitStep()"/>
+                         @prevStep="prevStep()" @submitStep="submitStep()"/>
     </v-container>
   </v-form>
 </template>
@@ -174,13 +174,13 @@
 import { required } from 'vuelidate/lib/validators';
 import moment from 'moment';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
-import DialogButtons from '../components/button/dialogButtons.vue';
+import PickerDialogButtons from '../components/button/PickerDialogButtons.vue';
 
 export default {
   name: 'StepStartEndDeadline',
   props: ['position', 'maxPos'],
   components: {
-    DialogButtons,
+    PickerDialogButtons,
     PrevNextButtons,
   },
   data: () => ({
@@ -188,10 +188,10 @@ export default {
     valid: true,
     data: {
       dateRange: [],
-      startTime: '',
-      endTime: '',
+      startTime: '18:00',
+      endTime: '13:00',
       deadlineDate: '',
-      deadlineTime: '',
+      deadlineTime: '00:00',
     },
     dialog: {
       dateRange: false,
