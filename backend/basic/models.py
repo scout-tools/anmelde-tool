@@ -37,12 +37,11 @@ class EventLocation(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=60)
     description = models.CharField(max_length=100, blank=True)
-    city = models.CharField(max_length=20, blank=True)
-    zip_code = models.ForeignKey(
-        ZipCode, on_delete=models.PROTECT, null=True, blank=True)
-    address = models.CharField(max_length=30, blank=True)
+    city = models.CharField(max_length=60, blank=True)
+    zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
+    address = models.CharField(max_length=60, blank=True)
     contact_email = models.CharField(max_length=30, blank=True)
     contact_phone = models.CharField(max_length=30, blank=True)
 
@@ -91,11 +90,9 @@ class ScoutHierarchy(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    level = models.ForeignKey(
-        ScoutOrgaLevel, on_delete=models.PROTECT, null=True, blank=True)
-    name = models.CharField(max_length=30, blank=True)
-    zip_code = models.ForeignKey(
-        ZipCode, on_delete=models.PROTECT, null=True, blank=True)
+    level = models.ForeignKey(ScoutOrgaLevel, on_delete=models.PROTECT, null=True, blank=True)
+    name = models.CharField(max_length=60, blank=True)
+    zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     parent = models.ForeignKey(
         'self', null=True,
         on_delete=models.PROTECT,
