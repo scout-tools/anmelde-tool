@@ -6,7 +6,7 @@
       </v-card-title>
       <v-list subheader two-line>
         <v-subheader inset
-          >Hier kannst du alle deine aktuell Buchbaren Veranstaltungen sehen</v-subheader
+          >Hier kannst du alle deine aktuell buchbaren Veranstaltungen sehen</v-subheader
         >
         <template v-for="(item, index) in getItems">
           <v-list-item :key="item.name">
