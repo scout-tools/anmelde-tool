@@ -41,8 +41,8 @@ export default {
         isStacked: true,
         width: 800,
         height: 600,
-        legend: { position: 'right', maxLines: 3 },
-        vAxis: { minValue: 0 },
+        legend: {position: 'right', maxLines: 3},
+        vAxis: {minValue: 0},
       },
     };
   },
@@ -50,6 +50,9 @@ export default {
     EventBus.$on('newParticipantsData', (participantsData) => {
       this.chartData = this.json_to_chart_data(participantsData);
     });
+  },
+  beforeDestroy() {
+    EventBus.$off('newParticipantsData');
   },
   methods: {
     json_to_chart_data(jsonData) {

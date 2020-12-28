@@ -59,6 +59,9 @@ export default {
       this.chartData = this.json_to_chart_data(participantsData);
     });
   },
+  beforeDestroy() {
+    EventBus.$off('newParticipantsData');
+  },
   methods: {
     json_to_chart_data(jsonData) {
       const chartData = [];

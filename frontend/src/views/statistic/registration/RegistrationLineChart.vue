@@ -41,8 +41,8 @@ export default {
         curveType: 'function',
         width: 800,
         height: 600,
-        legend: { position: 'right' },
-        vAxis: { minValue: 0 },
+        legend: {position: 'right'},
+        vAxis: {minValue: 0},
       },
     };
   },
@@ -50,6 +50,9 @@ export default {
     EventBus.$on('newParticipantsData', (participantsData) => {
       this.chartData = this.json_to_chart_data(participantsData);
     });
+  },
+  beforeDestroy() {
+    EventBus.$off('newParticipantsData');
   },
   methods: {
     json_to_chart_data(jsonData) {

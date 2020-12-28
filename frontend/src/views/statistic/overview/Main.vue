@@ -67,8 +67,8 @@ import axios from 'axios';
 import MapsMain from '@/views/statistic/maps/Main.vue';
 import RegistrationMain from '@/views/statistic/registration/Main.vue';
 import DiagrammsMain from '@/views/statistic/diagramms/Main.vue';
-// eslint-disable-next-line import/extensions,import/no-cycle
-import {EventBus} from '../../../main.js';
+// eslint-disable-next-line import/no-cycle
+import {EventBus} from '@/main';
 
 export default {
   components: {
@@ -126,6 +126,9 @@ export default {
       }
     });
     this.getData();
+  },
+  beforeDestroy() {
+    EventBus.$off('requestNewParticipantsData');
   },
 };
 </script>

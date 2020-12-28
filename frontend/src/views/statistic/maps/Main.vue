@@ -58,6 +58,9 @@ export default {
     });
     EventBus.$emit('requestNewParticipantsData', this.participantsData);
   },
+  beforeDestroy() {
+    EventBus.$off('newParticipantsData');
+  },
   methods: {
     json_to_chart_data(jsonData) {
       const chartData = [];
