@@ -29,4 +29,4 @@ s3transfer==0.3.3
 six==1.15.0
 sqlparse==0.4.1
 urllib3==1.26.2
-drf-extensions
+git+git://github.com/chibisov/drf-extensions.git@8001a440c7322be26bbe2d16f3a334a8b0b5860b
