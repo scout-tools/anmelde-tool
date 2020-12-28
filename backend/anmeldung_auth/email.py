@@ -11,24 +11,10 @@ url = getattr(settings, 'FRONT_URL', '')
 sender = f'BdP DPV Aktion <{getattr(settings, "EMAIL_HOST_USER")}>'
 
 
-def send_register_mail(user):
-    context = {'user': user.username, 'mail': user.email, 'website': url, 'password': 'HagiIstDerCoolste'}
-
-    plain_renderend = render_to_string('token_mail/token_mail.txt', context)
-    html_rendered = render_to_string('token_mail/token_mail.html', context)
-
-    subject = "Willkommen bei der BdP DPV Aktion"
-    recipients = [user.email]
-
-    try:
-        send_email(plain_renderend, html_rendered, subject, recipients)
-        return "Email Is Sent"
-    except Exception as e:
-        print("Email not sent ", e)
-
-
-def send_login_mail(user):
-    context = {'user': user['username'], 'mail': user['email'], 'website': url, 'password': user['password']}
+def send_auth_mail(user):
+    print(user)
+    context = {'user': user['user'], 'username': user['username'], 'mail': user['email'], 'website': url,
+               'password': user['password']}
 
     plain_renderend = render_to_string('token_mail/token_mail.txt', context)
     html_rendered = render_to_string('token_mail/token_mail.html', context)
