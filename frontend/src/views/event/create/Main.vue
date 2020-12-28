@@ -56,6 +56,7 @@
 <script>
 import axios from 'axios';
 
+import StepTravelMethod from './steps/StepTravelMethod.vue';
 import StepNameDescription from './steps/StepNameDescription.vue';
 import StepLocation from './steps/StepLocation.vue';
 import StepAgeGroup from './steps/StepAgeGroup.vue';
@@ -69,6 +70,7 @@ export default {
     StepNameDescription,
     StepLocation,
     StepAgeGroup,
+    StepTravelMethod,
     StepEventContact,
     StepStartEndDeadline,
     StepParticipationFee,
@@ -95,6 +97,7 @@ export default {
         StepLocation,
         StepParticipationFee,
         StepAgeGroup,
+        StepTravelMethod,
         StepEventContact,
       ];
     },
@@ -106,6 +109,7 @@ export default {
         'Ort',
         'Teilnehmerbeitrag',
         'Zielgruppe',
+        'Reisemethode',
         'Kontaktdaten',
       ];
     },
@@ -132,6 +136,7 @@ export default {
       const dataStartEndDeadline = this.$refs.StepStartEndDeadline[0].getData();
       const dataStepLocation = this.$refs.StepLocation[0].getData();
       const dataStepAgeGroup = this.$refs.StepAgeGroup[0].getData();
+      const dataStepTravelMethod = this.$refs.StepTravelMethod[0].getData();
       const dataStepEventContact = this.$refs.StepEventContact[0].getData();
       const dataStepInvitationCode = this.$refs.StepInvitationCode[0].getData();
       const dataStepParticipationFee = this.$refs.StepParticipationFee[0].getData();
@@ -141,6 +146,7 @@ export default {
         description: dataNameDescription.description,
         location: dataStepLocation.location,
         ageGroups: dataStepAgeGroup.ageGroups,
+        travelMethod: dataStepTravelMethod.travelMethod,
         contact: dataStepEventContact.contacts,
         startTime: dataStartEndDeadline.startTime,
         endTime: dataStartEndDeadline.endTime,
