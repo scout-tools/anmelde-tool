@@ -53,7 +53,6 @@ export default {
   },
   methods: {
     onButtonClick() {
-      const me = this;
       axios
         .post(`${this.API_URL}auth/token/`, {
           username: this.$route.query.username,
