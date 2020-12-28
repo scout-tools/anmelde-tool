@@ -53,9 +53,9 @@ export default {
   },
   methods: {
     onButtonClick() {
-      const me = this; // eslint-disable-line
+      const me = this;
       axios
-        .post(`${this.API_URL}api/token/`, {
+        .post(`${this.API_URL}auth/token/`, {
           username: this.$route.query.username,
           password: this.$route.query.password,
         })
