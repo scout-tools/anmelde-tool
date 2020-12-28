@@ -39,34 +39,13 @@ class ZipCodeViewSet(viewsets.ModelViewSet):
     serializer_class = ZipCodeSerializer
 
 
-def get_bund_name(scout_organisation):
-    if scout_organisation.level_id > 3:
-        return get_bund_name(scout_organisation.parent)
-    elif scout_organisation.level_id < 3:
-        raise Exception("To low value")
-    else:
-        return scout_organisation.name
-
-
 class ParticipantsViewSet(viewsets.ModelViewSet):
-    queryset = Participants.objects.all()
     serializer_class = ParticipantsSerializer
 
-    def list(self, request, event_pk=None):
-        registrations = Registration.objects.all().filter(event_id=event_pk)
-        data = []
-        for reg in registrations:
-            participants = reg.participants_set.all()
-            for participant in participants:
-                participant_data = self.serializer_class(participant).data
-                bund_name = get_bund_name(reg.scout_organisation)
-                participant_data["bund"] = bund_name
-                participant_data["name"] = reg.scout_organisation.name
-                if reg.scout_organisation.zip_code is not None:
-                    participant_data["lat"] = reg.scout_organisation.zip_code.lat
-                    participant_data["lon"] = reg.scout_organisation.zip_code.lon
-                else:
-                    participant_data["lat"] = 51.165691
-                    participant_data["lon"] = 10.451526
-                data.append(participant_data)
-        return Response(data)
+    def get_queryset(self):
+        event_id = self.kwargs.get("event_pk", None)
+        if event_id is not None:
+            queryset = Participants.objects.filter(registration__event_id=event_id)
+        else:
+            queryset = Participants.objects.all()
+        return queryset
