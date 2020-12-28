@@ -12,7 +12,6 @@ sender = f'BdP DPV Aktion <{getattr(settings, "EMAIL_HOST_USER")}>'
 
 
 def send_auth_mail(user):
-    print(user)
     context = {'user': user['user'], 'username': user['username'], 'mail': user['email'], 'website': url,
                'password': user['password']}
 

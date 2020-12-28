@@ -54,6 +54,7 @@ class AuthSerializer(serializers.ModelSerializer):
 
             data['newly_registered'] = True
             data['username'] = data['email'].split('@', 1)[0]
+            data['user'] = user.email
         else:
             user.set_password(data['password'])
             data['username'] = user.userextended.scout_name
