@@ -69,6 +69,22 @@ class AgeGroup(TimeStampMixin):
         return self.__str__()
 
 
+class Role(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.__str__()
+
+
 class ScoutOrgaLevel(TimeStampMixin):
     id = models.AutoField(
         auto_created=True,
@@ -165,7 +181,7 @@ class Registration(TimeStampMixin):
     is_accepted = models.BooleanField(default=0)
 
 
-class Participants(TimeStampMixin):
+class Participant(TimeStampMixin):
     id = models.AutoField(
         auto_created=True,
         primary_key=True,
@@ -176,6 +192,22 @@ class Participants(TimeStampMixin):
         AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
     registration = models.ForeignKey(
         Registration, on_delete=models.PROTECT, null=True, blank=True)
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
+
+
+class ParticipantRole(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    participant = models.ForeignKey(
+        Participant, on_delete=models.PROTECT, null=True, blank=True)
+    event = models.ForeignKey(
+        Event, on_delete=models.PROTECT, null=True, blank=True)
+    role = models.ForeignKey(
+        Role, on_delete=models.PROTECT, null=True, blank=True)
 
 
 class MeatHabit(models.Model):
@@ -186,8 +218,8 @@ class MeatHabit(models.Model):
         verbose_name='ID')
     number_vegan = models.IntegerField(blank=True, null=True)
     number_vegetarian = models.IntegerField(blank=True, null=True)
-    participants = models.ForeignKey(
-        Participants, on_delete=models.PROTECT, null=True, blank=True)
+    participant = models.ForeignKey(
+        Participant, on_delete=models.PROTECT, null=True, blank=True)
 
 
 class SpecialHabit(models.Model):
@@ -203,3 +235,31 @@ class SpecialHabit(models.Model):
     number_eier = models.IntegerField(blank=True, null=True)
     number_nuesse = models.IntegerField(blank=True, null=True)
     number_huelsenfruechte = models.IntegerField(blank=True, null=True)
+
+
+class MethodOfTravel(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    registration = models.ForeignKey(
+        Registration, on_delete=models.PROTECT, null=True, blank=True)
+    number_fuss = models.IntegerField(blank=True, null=True)
+    number_wasserweg = models.IntegerField(blank=True, null=True)
+    number_oepnv = models.IntegerField(blank=True, null=True)
+    number_reisebus = models.IntegerField(blank=True, null=True)
+    number_auto = models.IntegerField(blank=True, null=True)
+
+
+class Tent(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    registration = models.ForeignKey(
+        Registration, on_delete=models.PROTECT, null=True, blank=True)
+    tent_type = models.IntegerField(blank=True, null=True)
+    used_by_scout_groups = models.ManyToManyField(ScoutHierarchy, blank=True)
+

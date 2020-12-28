@@ -1,0 +1,38 @@
+[
+    {
+        "model": "basic.role",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "name": "Teilnehmer",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "name": "Gruppenführer",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "name": "Freie Helfer",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "name": "Küchenhelfer",
+            "description": ""
+        }
+    }
+]
