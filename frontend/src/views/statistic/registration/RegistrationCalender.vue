@@ -14,8 +14,8 @@
 
 <script>
 import Vue from 'vue';
-import VueGoogleCharts, { GChart } from 'vue-google-charts';
-import axios from 'axios';
+import VueGoogleCharts, {GChart} from 'vue-google-charts';
+import {EventBus} from '@/main';
 
 Vue.use(VueGoogleCharts);
 
@@ -55,31 +55,21 @@ export default {
     };
   },
   mounted() {
-    this.getData();
+    EventBus.$on('newParticipantsData', (participantsData) => {
+      this.chartData = this.json_to_chart_data(participantsData);
+    });
   },
   methods: {
     json_to_chart_data(jsonData) {
       const chartData = [];
-      const buende = [];
       chartData.push(['date', 'number']);
-      jsonData.registrations.forEach((regis) => {
+      jsonData.forEach((regis) => {
         chartData.push([
-          new Date(regis.create_at),
-          regis.number_of_persons,
+          new Date(regis.createdAt),
+          regis.numberOfPersons,
         ]);
       });
-      console.log(buende);
       return chartData;
-    },
-    getData() {
-      const path = `${this.API_URL}basic/event/1/participants`;
-      axios.get(path)
-        .then((res) => {
-          this.chartData = this.json_to_chart_data(res.data);
-        })
-        .catch(() => {
-          console.log('Fehler');
-        });
     },
   },
 };

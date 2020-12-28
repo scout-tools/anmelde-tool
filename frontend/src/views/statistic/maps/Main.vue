@@ -14,8 +14,8 @@
 
 <script>
 import Vue from 'vue';
-import VueGoogleCharts, { GChart } from 'vue-google-charts';
-import axios from 'axios';
+import VueGoogleCharts, {GChart} from 'vue-google-charts';
+import {EventBus} from '@/main';
 
 Vue.use(VueGoogleCharts);
 
@@ -53,9 +53,10 @@ export default {
     };
   },
   mounted() {
-    const jsonData = this.getTestData();
-    console.log(this.chartData);
-    this.chartData = this.json_to_chart_data(jsonData);
+    EventBus.$on('newParticipantsData', (participantsData) => {
+      this.chartData = this.json_to_chart_data(participantsData);
+    });
+    EventBus.$emit('requestNewParticipantsData', this.participantsData);
   },
   methods: {
     json_to_chart_data(jsonData) {
@@ -69,67 +70,20 @@ export default {
         'TN',
         { role: 'tooltip', p: { html: false } },
       ]);
-      jsonData.registrations.forEach((regis) => {
+      jsonData.forEach((regis) => {
         if (buende.indexOf(regis.bund) === -1) buende.push(regis.bund);
       });
-      jsonData.registrations.forEach((regis) => {
+      jsonData.forEach((regis) => {
         chartData.push([
-          regis.laz,
-          regis.long,
+          regis.lat,
+          regis.lon,
           regis.name,
           buende.indexOf(regis.bund),
-          regis.tn_count,
-          `TN: ${regis.tn_count}\n Bund: ${regis.bund}`,
+          regis.numberOfPersons,
+          `TN: ${regis.numberOfPersons}\n Bund: ${regis.bund}`,
         ]);
       });
-      console.log(buende);
       return chartData;
-    },
-    getTestData() {
-      const data = {
-        registrations: [
-          {
-            bund: 'PB-Nordlicht',
-            name: 'Ambronen',
-            tn_count: 200,
-            long: 9.993682,
-            laz: 53.551085,
-          },
-          {
-            bund: 'PB-Nordlicht',
-            name: 'Anduril',
-            tn_count: 20,
-            long: 10.4115179,
-            laz: 53.2464214,
-          },
-          {
-            bund: 'PB-Nord',
-            name: 'Ambronen',
-            tn_count: 30,
-            long: 9.993682,
-            laz: 53.551085,
-          },
-          {
-            bund: 'Andere Pfadis',
-            name: 'Heruler',
-            tn_count: 150,
-            long: 13.404954,
-            laz: 52.520007,
-          },
-        ],
-      };
-      return data;
-    },
-    getData() {
-      const path = `${this.API_URL}basic/statistic/map/22`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.chartData = res.data;
-        })
-        .catch(() => {
-          console.log('Fehler');
-        });
     },
   },
 };

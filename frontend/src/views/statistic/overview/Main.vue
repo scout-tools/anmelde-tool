@@ -12,6 +12,7 @@
                   v-model="selected"
                   item-value="id"
                   item-text="name"
+                  @change="changedEvent"
                 ></v-select>
               </v-col>
             </v-row>
@@ -66,6 +67,8 @@ import axios from 'axios';
 import MapsMain from '@/views/statistic/maps/Main.vue';
 import RegistrationMain from '@/views/statistic/registration/Main.vue';
 import DiagrammsMain from '@/views/statistic/diagramms/Main.vue';
+// eslint-disable-next-line import/extensions,import/no-cycle
+import {EventBus} from '../../../main.js';
 
 export default {
   components: {
@@ -88,6 +91,11 @@ export default {
     },
   },
   methods: {
+    changedEvent() {
+      if (typeof this.selected === 'number') {
+        this.getParticipantsData(this.selected);
+      }
+    },
     getData() {
       const path = `${process.env.VUE_APP_API}basic/event/`;
       axios
@@ -99,8 +107,24 @@ export default {
           console.log('Fehler');
         });
     },
+    getParticipantsData(eventId) {
+      const path = `${process.env.VUE_APP_API}basic/event/${eventId}/participants/`;
+      axios.get(path)
+        .then((res) => {
+          this.participantsData = res.data;
+          EventBus.$emit('newParticipantsData', this.participantsData);
+        })
+        .catch(() => {
+          console.log('Fehler');
+        });
+    },
   },
   created() {
+    EventBus.$on('requestNewParticipantsData', () => {
+      if (typeof this.selected === 'number') {
+        this.getParticipantsData(this.selected);
+      }
+    });
     this.getData();
   },
 };

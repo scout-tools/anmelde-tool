@@ -15,6 +15,9 @@ Vue.use(Vuelidate);
 Vue.use(VueJwtDecode);
 Vue.use(VuetifyMoney);
 
+// eslint-disable-next-line import/prefer-default-export
+export const EventBus = new Vue();
+
 new Vue({
   router,
   store,
