@@ -13,6 +13,7 @@ django-filter==2.4.0
 django-storages==1.10.1
 djangorestframework==3.12.2
 djangorestframework-simplejwt==4.6.0
+djangorestframework-camel-case
 environ==1.0
 idna==2.10
 jmespath==0.10.0
