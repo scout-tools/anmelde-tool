@@ -6,7 +6,9 @@
             "id": 1,
             "scout_organisation_id": 10,
             "is_accepted": 0,
-            "is_confirmed": 0
+            "is_confirmed": 0,
+            "event_id": 1,
+            "created_at": "2020-12-28 17:17:58.124440"
         }
     },
     {
@@ -16,7 +18,9 @@
             "id": 2,
             "scout_organisation_id": 8,
             "is_accepted": 0,
-            "is_confirmed": 0
+            "is_confirmed": 0,
+            "event_id": 1,
+            "created_at": "2020-12-29 17:17:58.124440"
         }
     },
     {
@@ -26,7 +30,9 @@
             "id": 3,
             "scout_organisation_id": 7,
             "is_accepted": 0,
-            "is_confirmed": 0
+            "is_confirmed": 0,
+            "event_id": 1,
+            "created_at": "2020-12-26 17:17:58.124440"
         }
     }
 ]
