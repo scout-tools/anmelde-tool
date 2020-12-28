@@ -1,85 +1,52 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Event, AgeGroup, EventLocation, Person, ScoutHerarchy, Registration
+from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, Participants
 
 
 class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = (
-            'id',
-            'name',
-            'description',
-            'location',
-            'ageGroups',
-            'contacts',
-            'startTime',
-            'endTime',
-            'registrationDeadline',
-            'participationFee',
-        )
+        fields = '__all__'
 
 
 class AgeGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AgeGroup
-        fields = (
-            'id',
-            'name',
-            'description',
-        )
+        fields = '__all__'
 
 
 class EventLocationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EventLocation
-        fields = (
-            'id',
-            'name',
-            'description',
-            'city',
-            'zipCode',
-            'address',
-        )
+        fields = '__all__'
 
 
-class PersonSerializer(serializers.ModelSerializer):
+class ScoutHierarchySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Person
-        fields = (
-            'id',
-            'name',
-            'emailAddress',
-            'scoutOrganisation',
-            'mobileNumber'
-        )
-
-
-class ScoutHerarchySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ScoutHerarchy
-        fields = (
-            'id',
-            'level',
-            'name',
-            'city',
-            'zipCode',
-            'parent'
-        )
+        model = ScoutHierarchy
+        fields = '__all__'
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Registration
-        fields = (
-            'id',
-            'scoutOrganisation',
-            'numberOfParticipants',
-            'responsiblePerson'
-        )
+        fields = '__all__'
+
+
+class ZipCodeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ZipCode
+        fields = '__all__'
+
+
+class ParticipantsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Participants
+        fields = '__all__'

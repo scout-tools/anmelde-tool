@@ -6,8 +6,8 @@
       </v-card-title>
 
       <v-tabs v-model="tab" background-color="transparent" grow>
-        <v-tab> Mit E-Mail </v-tab>
-        <v-tab> Mit Passwort </v-tab>
+        <v-tab>Teilnehmer</v-tab>
+        <v-tab>Lagerleitung</v-tab>
       </v-tabs>
 
       <v-tabs-items v-model="tab">

@@ -7,9 +7,10 @@ router = routers.DefaultRouter()
 router.register(r'event', views.EventViewSet)
 router.register(r'age-group', views.AgeGroupViewSet)
 router.register(r'event-location', views.EventLocationViewSet)
-router.register(r'person', views.PersonViewSet)
-router.register(r'scout-herarchy', views.ScoutHerarchyViewSet)
+router.register(r'scout-hierarchy', views.ScoutHierarchyViewSet)
 router.register(r'registration', views.RegistrationViewSet)
+router.register(r'participants', views.ParticipantsViewSet)
+router.register(r'zip-code', views.ZipCodeViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

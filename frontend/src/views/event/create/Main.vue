@@ -1,51 +1,47 @@
 <template>
-  <v-container>
+  <v-card max-width="600" class="mx-auto">
     <v-row justify="center">
-      <v-flex
-        ma-3
-        lg9
+      <v-stepper
+        v-model="currentStep"
+        vertical
       >
-        <v-stepper
-          alt-labels
-          vertical
-          v-model="currentStep"
-        >
-          <v-stepper-header>
-            <template v-for="index in steps.length">
-              <v-stepper-step
-                :key="`${index}-step`"
-                :complete="currentStep > index"
-                :step="index"
-              >
-                {{ headerStep[index-1] }}
-              </v-stepper-step>
+        <template v-for="(step, index) in steps">
+          <v-stepper-step
+            :key="`stepper-${index}`"
+            :complete="currentStep > index+1"
+            :step="index+1"
+          >
+            {{ headerSteps[index] }}
+          </v-stepper-step>
 
-              <v-divider
-                v-if="index !== index"
-                :key="index"
-              ></v-divider>
-            </template>
-          </v-stepper-header>
+          <v-divider :key="index"/>
 
-          <v-stepper-items v-for="(step, index) in steps" :key="index">
+          <v-stepper-items :key="`stepper-items-${index}`">
             <v-stepper-content
               :step="index+1"
             >
               <component
                 :is="step"
-                :ref="step"
-                :data="data"
+                :ref="step.name"
                 :position="index+1"
                 :max-pos="steps.length"
                 @prevStep="prevStep()"
                 @nextStep="nextStep()"
-                @submit="finish()"
+                @submit="onCreateEventClick()"
               />
             </v-stepper-content>
           </v-stepper-items>
-        </v-stepper>
-      </v-flex>
+        </template>
+      </v-stepper>
     </v-row>
+    <v-snackbar
+      v-model="showSuccess"
+      color="success"
+      y="top"
+      :timeout="timeout"
+    >
+      {{ 'Die Aktion wurde erfolgreich angelegt.' }}
+    </v-snackbar>
     <v-snackbar
       v-model="showError"
       color="error"
@@ -54,17 +50,19 @@
     >
       {{ 'Fehler beim Speichern der Aktion' }}
     </v-snackbar>
-  </v-container>
+  </v-card>
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 
 import StepNameDescription from './steps/StepNameDescription.vue';
 import StepLocation from './steps/StepLocation.vue';
 import StepAgeGroup from './steps/StepAgeGroup.vue';
 import StepEventContact from './steps/StepEventContact.vue';
 import StepStartEndDeadline from './steps/StepStartEndDeadline.vue';
+import StepParticipationFee from './steps/StepParticipationFee.vue';
+import StepInvitationCode from './steps/StepInvitationCode.vue';
 
 export default {
   components: {
@@ -73,26 +71,45 @@ export default {
     StepAgeGroup,
     StepEventContact,
     StepStartEndDeadline,
+    StepParticipationFee,
+    StepInvitationCode,
   },
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
       currentStep: 1,
-      steps: [StepNameDescription, StepStartEndDeadline, StepLocation, StepAgeGroup, StepEventContact], // eslint-disable-line max-len
       showError: false,
       showSuccess: false,
       timeout: 7000,
-      headerStep: [
-        'Beschreibung',
-        'Daten und Uhrzeit',
-        'Ort',
-        'Zielgruppe',
-        'Kontaktdaten',
-      ],
-      data: [],
+      data: {
+        event: {},
+      },
     };
   },
-
+  computed: {
+    steps() {
+      return [
+        StepNameDescription,
+        StepInvitationCode,
+        StepStartEndDeadline,
+        StepLocation,
+        StepParticipationFee,
+        StepAgeGroup,
+        StepEventContact,
+      ];
+    },
+    headerSteps() {
+      return [
+        'Aktionsbeschreibung',
+        'Verifizierungscode',
+        'Daten und Uhrzeit',
+        'Ort',
+        'Teilnehmerbeitrag',
+        'Zielgruppe',
+        'Kontaktdaten',
+      ];
+    },
+  },
   methods: {
     nextStep() {
       this.currentStep += 1;
@@ -100,8 +117,48 @@ export default {
     prevStep() {
       this.currentStep -= 1;
     },
+    onCreateEventClick() {
+      this.handleCreateEventRequest();
+    },
+    onSuccessfulCreateEvent() {
+      setTimeout(() => this.$router.push({ name: 'eventOverview' }), 2000);
+    },
+    callCreateEventPost() {
+      console.log(this.data.event);
+      return axios.post(`${this.API_URL}basic/event/`, this.data.event);
+    },
+    formatCreateEventRequestData() {
+      const dataNameDescription = this.$refs.StepNameDescription[0].getData();
+      const dataStartEndDeadline = this.$refs.StepStartEndDeadline[0].getData();
+      const dataStepLocation = this.$refs.StepLocation[0].getData();
+      const dataStepAgeGroup = this.$refs.StepAgeGroup[0].getData();
+      const dataStepEventContact = this.$refs.StepEventContact[0].getData();
+      const dataStepInvitationCode = this.$refs.StepInvitationCode[0].getData();
+      const dataStepParticipationFee = this.$refs.StepParticipationFee[0].getData();
 
-    finish() {
+      this.data.event = {
+        name: dataNameDescription.name,
+        description: dataNameDescription.description,
+        location: dataStepLocation.location,
+        ageGroups: dataStepAgeGroup.ageGroups,
+        contact: dataStepEventContact.contacts,
+        startTime: dataStartEndDeadline.startTime,
+        endTime: dataStartEndDeadline.endTime,
+        registrationDeadline: dataStartEndDeadline.registrationDeadline,
+        participationFee: dataStepParticipationFee.participationFee,
+        invitationCode: dataStepInvitationCode.invitationCode,
+      };
+    },
+    async handleCreateEventRequest() {
+      try {
+        this.formatCreateEventRequestData();
+        await this.callCreateEventPost();
+        this.showSuccess = true;
+        this.onSuccessfulCreateEvent();
+      } catch (e) {
+        console.log(e);
+        this.showError = true;
+      }
     },
   },
 };

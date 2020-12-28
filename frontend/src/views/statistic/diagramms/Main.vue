@@ -1,5 +1,5 @@
 <template>
   <div class="about">
-    <h1>Das ist die Seite mit der Diagramme</h1>
+    <h2>Hier kannst du dir alle Diagramme wünschen... :)</h2>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <v-row class="ma-3" justify="center">
+  <v-row justify="center">
     <v-btn
       v-if="position > 1"
       class="mr-5"
@@ -29,7 +29,3 @@ export default {
   props: ['position', 'maxPos'],
 };
 </script>
-
-<style scoped>
-
-</style>
