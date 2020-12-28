@@ -14,8 +14,8 @@
 
 <script>
 import Vue from 'vue';
-import VueGoogleCharts, {GChart} from 'vue-google-charts';
-import {EventBus} from '@/main';
+import VueGoogleCharts, { GChart } from 'vue-google-charts';
+import { EventBus } from '@/main';
 
 Vue.use(VueGoogleCharts);
 

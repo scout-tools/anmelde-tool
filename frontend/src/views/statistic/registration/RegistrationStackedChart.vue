@@ -12,8 +12,8 @@
 
 <script>
 import Vue from 'vue';
-import VueGoogleCharts, {GChart} from 'vue-google-charts';
-import {EventBus} from '@/main';
+import VueGoogleCharts, { GChart } from 'vue-google-charts';
+import { EventBus } from '@/main';
 
 Vue.use(VueGoogleCharts);
 
@@ -41,8 +41,8 @@ export default {
         isStacked: true,
         width: 800,
         height: 600,
-        legend: {position: 'right', maxLines: 3},
-        vAxis: {minValue: 0},
+        legend: { position: 'right', maxLines: 3 },
+        vAxis: { minValue: 0 },
       },
     };
   },

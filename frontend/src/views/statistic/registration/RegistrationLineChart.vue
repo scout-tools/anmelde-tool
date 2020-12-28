@@ -12,8 +12,8 @@
 
 <script>
 import Vue from 'vue';
-import VueGoogleCharts, {GChart} from 'vue-google-charts';
-import {EventBus} from '@/main';
+import VueGoogleCharts, { GChart } from 'vue-google-charts';
+import { EventBus } from '@/main';
 
 Vue.use(VueGoogleCharts);
 
@@ -41,8 +41,8 @@ export default {
         curveType: 'function',
         width: 800,
         height: 600,
-        legend: {position: 'right'},
-        vAxis: {minValue: 0},
+        legend: { position: 'right' },
+        vAxis: { minValue: 0 },
       },
     };
   },
