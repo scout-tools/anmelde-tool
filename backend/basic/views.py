@@ -61,7 +61,11 @@ class ParticipantsViewSet(viewsets.ModelViewSet):
                 participant_data = self.serializer_class(participant).data
                 bund_name = get_bund_name(reg.scout_organisation)
                 participant_data["bund"] = bund_name
-                participant_data["lat"] = reg.scout_organisation.zip_code.lat
-                participant_data["lon"] = reg.scout_organisation.zip_code.lon
+                if reg.scout_organisation.zip_code is not None:
+                    participant_data["lat"] = reg.scout_organisation.zip_code.lat
+                    participant_data["lon"] = reg.scout_organisation.zip_code.lon
+                else:
+                    participant_data["lat"] = 0
+                    participant_data["lon"] = 0
                 data.append(participant_data)
         return Response(data)

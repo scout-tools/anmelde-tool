@@ -55,9 +55,7 @@ export default {
     };
   },
   mounted() {
-    const jsonData = this.getTestData();
-    console.log(this.chartData);
-    this.chartData = this.json_to_chart_data(jsonData);
+    this.getData();
   },
   methods: {
     json_to_chart_data(jsonData) {
@@ -66,57 +64,18 @@ export default {
       chartData.push(['date', 'number']);
       jsonData.registrations.forEach((regis) => {
         chartData.push([
-          new Date(regis.date),
-          regis.tn_count,
+          new Date(regis.create_at),
+          regis.number_of_persons,
         ]);
       });
       console.log(buende);
       return chartData;
     },
-    getTestData() {
-      const data = {
-        registrations: [
-          {
-            bund: 'PB-Nordlicht',
-            name: 'Ambronen',
-            tn_count: 200,
-            long: 9.993682,
-            laz: 53.551085,
-            date: new Date(2020, 2, 22).toString(),
-          },
-          {
-            bund: 'PB-Nordlicht',
-            name: 'Anduril',
-            tn_count: 20,
-            long: 10.4115179,
-            laz: 53.2464214,
-            date: new Date(2020, 2, 23).toString(),
-          },
-          {
-            bund: 'PB-Nord',
-            name: 'Ambronen',
-            tn_count: 30,
-            long: 9.993682,
-            laz: 53.551085,
-            date: new Date(2020, 3, 4).toString(),
-          },
-          {
-            bund: 'Andere Pfadis',
-            name: 'Heruler',
-            tn_count: 150,
-            long: 13.404954,
-            laz: 52.520007,
-            date: new Date(2020, 3, 20).toString(),
-          },
-        ],
-      };
-      return data;
-    },
     getData() {
-      const path = `${this.API_URL}basic/statistic/map/22`;
+      const path = `${this.API_URL}basic/event/1/participants`;
       axios.get(path)
         .then((res) => {
-          this.chartData = res.data;
+          this.chartData = this.json_to_chart_data(res.data);
         })
         .catch(() => {
           console.log('Fehler');
