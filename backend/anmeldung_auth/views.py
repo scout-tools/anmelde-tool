@@ -1,37 +1,29 @@
 from rest_framework.response import Response
 from rest_framework import viewsets, generics
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .email import send_register_mail, send_login_mail
-from .serializers import RegisterSerializer, OneClickLoginSerializer, MyTokenObtainPairSerializer, UserExtendedSerializer
+from .email import send_auth_mail
+from .serializers import MyTokenObtainPairSerializer, UserExtendedSerializer, AuthSerializer
 from .models import UserExtended
 
 
 # Register API
-class RegisterView(generics.UpdateAPIView):
-    serializer_class = RegisterSerializer
+class AuthenticateView(generics.UpdateAPIView):
+    serializer_class = AuthSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        send_register_mail(user)
-        return Response({
-            "message": "User Created Successfully.",
-        })
+        send_auth_mail(user)
 
-
-class OneClickView(generics.UpdateAPIView):
-    serializer_class = OneClickLoginSerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        send_login_mail(user)
-        return Response({
-            "message": "Login email sent",
-        })
-
+        if user['newly_registered']:
+            return Response({
+                "message": "User Created Successfully and login email sent.",
+            })
+        else:
+            return Response({
+                "message": "Login email sent",
+            })
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
