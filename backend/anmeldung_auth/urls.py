@@ -9,6 +9,6 @@ router.register(r'user-extended', views.UserExtendedViewSet)
 
 urlpatterns = [
     path('data/', include(router.urls)),
-    path('authenticate/', views.AuthenticateView.as_view()),
+    path('login/', views.AuthenticateView.as_view()),
     path('token/', TokenObtainPairView.as_view(serializer_class=views.MyTokenObtainPairSerializer))
 ]
