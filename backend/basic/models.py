@@ -18,7 +18,7 @@ class ZipCode(TimeStampMixin):
         serialize=False,
         verbose_name='ID')
     zip_code = models.CharField(max_length=5, blank=True)
-    city = models.CharField(max_length=30, blank=True)
+    city = models.CharField(max_length=60, blank=True)
     lat = models.DecimalField(
         max_digits=20, decimal_places=15, default=0.000)
     lon = models.DecimalField(
