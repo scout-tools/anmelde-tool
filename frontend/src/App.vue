@@ -23,7 +23,4 @@ export default {
 </script>
 
 <style>
-  .mt-100p {
-    margin-top: 100px;
-  }
 </style>
