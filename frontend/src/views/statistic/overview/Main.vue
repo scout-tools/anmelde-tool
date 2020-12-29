@@ -67,8 +67,7 @@ import axios from 'axios';
 import MapsMain from '@/views/statistic/maps/Main.vue';
 import RegistrationMain from '@/views/statistic/registration/Main.vue';
 import DiagrammsMain from '@/views/statistic/diagramms/Main.vue';
-// eslint-disable-next-line import/no-cycle
-import { EventBus } from '@/main';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -76,19 +75,18 @@ export default {
     RegistrationMain,
     DiagrammsMain,
   },
-  data() {
-    return {
-      tab: null,
-      text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      items: null,
-      selected: null,
-    };
-  },
   computed: {
+    ...mapGetters(['currentEventParticipants']),
     getItems() {
       return this.items;
     },
+  },
+  data() {
+    return {
+      tab: null,
+      items: null,
+      selected: null,
+    };
   },
   methods: {
     changedEvent() {
@@ -111,8 +109,7 @@ export default {
       const path = `${process.env.VUE_APP_API}basic/event/${eventId}/participants/`;
       axios.get(path)
         .then((res) => {
-          this.participantsData = res.data;
-          EventBus.$emit('newParticipantsData', this.participantsData);
+          this.$store.commit('setCurrentEventParticipants', res.data);
         })
         .catch(() => {
           console.log('Fehler');
@@ -120,15 +117,7 @@ export default {
     },
   },
   created() {
-    EventBus.$on('requestNewParticipantsData', () => {
-      if (typeof this.selected === 'number') {
-        this.getParticipantsData(this.selected);
-      }
-    });
     this.getData();
-  },
-  beforeDestroy() {
-    EventBus.$off('requestNewParticipantsData');
   },
 };
 </script>

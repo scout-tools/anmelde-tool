@@ -11,31 +11,14 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import VueGoogleCharts, { GChart } from 'vue-google-charts';
-import { EventBus } from '@/main';
-
-Vue.use(VueGoogleCharts);
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'RegistrationStackedChart',
-  components: {
-    GChart,
-  },
+
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
-      chartData: [
-        ['date', 'number'],
-        [new Date(2020, 9, 4), 100],
-        [new Date(2020, 9, 5), 200],
-        [new Date(2020, 9, 12), 250],
-        [new Date(2020, 9, 13), 300],
-        [new Date(2020, 9, 19), 300],
-        [new Date(2020, 9, 23), 300],
-        [new Date(2020, 9, 24), 500],
-        [new Date(2020, 9, 30), 1000],
-      ],
       chartOptions: {
         title: 'Anmedlungen',
         isStacked: true,
@@ -46,13 +29,11 @@ export default {
       },
     };
   },
-  mounted() {
-    EventBus.$on('newParticipantsData', (participantsData) => {
-      this.chartData = this.json_to_chart_data(participantsData);
-    });
-  },
-  beforeDestroy() {
-    EventBus.$off('newParticipantsData');
+  computed: {
+    ...mapGetters(['currentEventParticipants']),
+    chartData() {
+      return this.json_to_chart_data(this.currentEventParticipants);
+    },
   },
   methods: {
     json_to_chart_data(jsonData) {

@@ -13,31 +13,13 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import VueGoogleCharts, { GChart } from 'vue-google-charts';
-import { EventBus } from '@/main';
-
-Vue.use(VueGoogleCharts);
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'RegistrationCalender',
-  components: {
-    GChart,
-  },
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
-      chartData: [
-        ['date', 'number'],
-        [new Date(2013, 9, 4), 38177],
-        [new Date(2013, 9, 5), 38705],
-        [new Date(2013, 9, 12), 38210],
-        [new Date(2013, 9, 13), 38029],
-        [new Date(2013, 9, 19), 38823],
-        [new Date(2013, 9, 23), 38345],
-        [new Date(2013, 9, 24), 38436],
-        [new Date(2013, 9, 30), 38447],
-      ],
       chartOptions: {
         colorAxis: { colors: ['blue', 'red'] },
         title: 'Anmeldungen',
@@ -48,20 +30,20 @@ export default {
         select: () => {
           const table = this.$refs.gChart.chartObject;
           const selection = table.getSelection();
-          const onSelectionMeaasge = selection.length !== 0 ? 'row was selected' : 'row was diselected';
-          alert(onSelectionMeaasge);
+          const onSelectionMessage = selection.length !== 0 ? 'row was selected' : 'row was diselected';
+          alert(onSelectionMessage);
         },
       },
     };
   },
-  mounted() {
-    EventBus.$on('newParticipantsData', (participantsData) => {
-      this.chartData = this.json_to_chart_data(participantsData);
-    });
+
+  computed: {
+    ...mapGetters(['currentEventParticipants']),
+    chartData() {
+      return this.json_to_chart_data(this.currentEventParticipants);
+    },
   },
-  beforeDestroy() {
-    EventBus.$off('newParticipantsData');
-  },
+
   methods: {
     json_to_chart_data(jsonData) {
       const chartData = [];
