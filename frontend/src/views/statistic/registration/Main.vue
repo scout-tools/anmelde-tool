@@ -1,21 +1,21 @@
 <template>
-  <div class="about">
-    <RegistrationCalender></RegistrationCalender>
-    <RegistrationLineChart></RegistrationLineChart>
-    <RegistrationStackedChart></RegistrationStackedChart>
+  <div>
+    <registration-calender/>
+    <registration-line-chart/>
+    <registration-stacked-chart/>
   </div>
 </template>
 
 <script>
-import RegistrationCalender from '@/views/statistic/registration/RegistrationCalender.vue';
-import RegistrationLineChart from '@/views/statistic/registration/RegistrationLineChart.vue';
-import RegistrationStackedChart from '@/views/statistic/registration/RegistrationStackedChart.vue';
+import RegistrationCalender from './RegistrationCalender.vue';
+import RegistrationLineChart from './RegistrationLineChart.vue';
+import RegistrationStackedChart from './RegistrationStackedChart.vue';
 
 export default {
   components: {
-    RegistrationCalender,
     RegistrationLineChart,
     RegistrationStackedChart,
+    RegistrationCalender,
   },
 };
 </script>

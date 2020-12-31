@@ -1,9 +1,9 @@
 <template>
   <GChart
     :settings="{
-        packages: ['corechart', 'line'],
-        mapsApiKey: 'AIzaSyA8b79CjjX-C9VgxMBF2aTs9fOI-UBT850'
-      }"
+      packages: ['corechart', 'line'],
+      mapsApiKey: 'AIzaSyA8b79CjjX-C9VgxMBF2aTs9fOI-UBT850'
+    }"
     type="LineChart"
     :data="chartData"
     :options="chartOptions"
