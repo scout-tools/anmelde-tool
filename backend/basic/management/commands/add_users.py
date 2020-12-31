@@ -19,8 +19,8 @@ class Command(BaseCommand):
         if not UserModel.objects.filter(username='joto@dpbm.de').exists():
             user_2 = UserModel.objects.create(
                 username='joto@dpbm.de', password='joto')
-            user_2.is_superuser = False
-            user_2.is_staff = False
+            user_2.is_superuser = True
+            user_2.is_staff = True
             user_2.save()
 
         if not UserModel.objects.filter(username='daniel@hratuga.de').exists():
@@ -37,11 +37,11 @@ class Command(BaseCommand):
             user_4.is_staff = False
             user_4.save()
 
-        if not UserModel.objects.filter(username='many@dpv.de').exists():
+        if not UserModel.objects.filter(username='many@dpv-online.de').exists():
             user_5 = UserModel.objects.create(
                 username='many@dpv.de', password='many')
-            user_5.is_superuser = False
-            user_5.is_staff = False
+            user_5.is_superuser = True
+            user_5.is_staff = True
             user_5.save()
 
         if not UserModel.objects.filter(username='kai@dpv.de').exists():
@@ -57,6 +57,13 @@ class Command(BaseCommand):
             user_6.is_superuser = False
             user_6.is_staff = False
             user_6.save()
+
+        if not UserModel.objects.filter(username='hagi@hratuga.de').exists():
+            user_7 = UserModel.objects.create(
+                username='hagi@hratuga.de', password='hagi')
+            user_7.is_superuser = True
+            user_7.is_staff = True
+            user_7.save()
 
         print('user created')
 
