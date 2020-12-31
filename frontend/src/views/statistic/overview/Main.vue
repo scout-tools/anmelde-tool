@@ -12,6 +12,7 @@
                   v-model="selected"
                   item-value="id"
                   item-text="name"
+                  @change="changedEvent"
                 ></v-select>
               </v-col>
             </v-row>
@@ -66,6 +67,7 @@ import axios from 'axios';
 import MapsMain from '@/views/statistic/maps/Main.vue';
 import RegistrationMain from '@/views/statistic/registration/Main.vue';
 import DiagrammsMain from '@/views/statistic/diagramms/Main.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -73,27 +75,41 @@ export default {
     RegistrationMain,
     DiagrammsMain,
   },
-  data() {
-    return {
-      tab: null,
-      text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      items: null,
-      selected: null,
-    };
-  },
   computed: {
+    ...mapGetters(['currentEventParticipants']),
     getItems() {
       return this.items;
     },
   },
+  data() {
+    return {
+      tab: null,
+      items: null,
+      selected: null,
+    };
+  },
   methods: {
+    changedEvent() {
+      if (typeof this.selected === 'number') {
+        this.getParticipantsData(this.selected);
+      }
+    },
     getData() {
       const path = `${process.env.VUE_APP_API}basic/event/`;
       axios
         .get(path)
         .then((res) => {
           this.items = res.data;
+        })
+        .catch(() => {
+          console.log('Fehler');
+        });
+    },
+    getParticipantsData(eventId) {
+      const path = `${process.env.VUE_APP_API}basic/event/${eventId}/participants/`;
+      axios.get(path)
+        .then((res) => {
+          this.$store.commit('setCurrentEventParticipants', res.data);
         })
         .catch(() => {
           console.log('Fehler');
