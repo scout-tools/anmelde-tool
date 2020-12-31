@@ -21,7 +21,6 @@ export default {
       chartOptions: {
         colorAxis: { colors: ['blue', 'red'] },
         title: 'Anmeldungen',
-        height: 350,
 
       },
       chartEvents: {
@@ -44,15 +43,15 @@ export default {
 
   methods: {
     json_to_chart_data(jsonData) {
-      const chartData = [];
-      chartData.push(['date', 'number']);
+      const returnData = [];
+      returnData.push(['date', 'number']);
       jsonData.forEach((regis) => {
-        chartData.push([
+        returnData.push([
           new Date(regis.createdAt),
           regis.numberOfPersons,
         ]);
       });
-      return chartData;
+      return returnData;
     },
   },
 };

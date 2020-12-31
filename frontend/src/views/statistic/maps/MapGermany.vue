@@ -40,9 +40,9 @@ export default {
   },
   methods: {
     json_to_chart_data(jsonData) {
-      const chartData = [];
+      const returnData = [];
       const buende = [];
-      chartData.push([
+      returnData.push([
         'Lat',
         'Lon',
         'Name',
@@ -54,7 +54,7 @@ export default {
         if (buende.indexOf(regis.bund) === -1) buende.push(regis.bund);
       });
       jsonData.forEach((regis) => {
-        chartData.push([
+        returnData.push([
           regis.lat,
           regis.lon,
           regis.name,
@@ -63,7 +63,7 @@ export default {
           `TN: ${regis.numberOfPersons}\n Bund: ${regis.bund}`,
         ]);
       });
-      return chartData;
+      return returnData;
     },
   },
 };

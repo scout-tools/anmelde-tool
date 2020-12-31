@@ -5,40 +5,45 @@
         color="primary"
         @click="$router.push({ name: 'landing' })"
       >
-        <v-icon class="mx-4" large> mdi-emoticon </v-icon>
-        <v-toolbar-title>Anmelde Tool</v-toolbar-title>
+        <v-icon large> mdi-emoticon </v-icon>
+        <v-toolbar-title
+          v-if="!$vuetify.breakpoint.mobile"
+        >Anmelde Tool</v-toolbar-title>
       </v-btn>
-      <v-spacer></v-spacer>
+      <v-spacer v-if="!$vuetify.breakpoint.mobile"></v-spacer>
 
-      <v-btn
-        class="mx-3"
-        icon
-        large
-        v-if="isAuthenticated"
-        @click="$router.push({ name: 'eventOverview' })"
-      >
-        <v-icon>mdi-view-list</v-icon>
-      </v-btn>
+            <v-tabs
+              background-color="primary"
+              centered
+              dark
+              icons-and-text
+            >
+              <v-tabs-slider></v-tabs-slider>
 
-      <v-btn
-        class="mx-3"
-        icon
-        large
-        v-if="isAuthenticated && !isSimpleUser"
-        @click="$router.push({ name: 'createEvent' })"
-      >
-        <v-icon>mdi-calendar-plus</v-icon>
-      </v-btn>
+              <v-tab
+                v-if="isAuthenticated"
+                @click="$router.push({ name: 'eventOverview' })"
+              >
+                Lager
+                <v-icon>mdi-view-list</v-icon>
+              </v-tab>
 
-      <v-btn
-        class="mx-3"
-        icon
-        large
-        v-if="isAuthenticated && !isSimpleUser"
-        @click="$router.push({ name: 'statisticOverview' })"
-      >
-        <v-icon>mdi-chart-bar</v-icon>
-      </v-btn>
+              <v-tab
+                v-if="isAuthenticated && !isSimpleUser"
+                @click="$router.push({ name: 'createEvent' })"
+              >
+                Neu
+                <v-icon>mdi-calendar-plus</v-icon>
+              </v-tab>
+
+              <v-tab
+                v-if="isAuthenticated && !isSimpleUser"
+                @click="$router.push({ name: 'statisticOverview' })"
+              >
+                Zahlen
+                <v-icon>mdi-chart-bar</v-icon>
+              </v-tab>
+            </v-tabs>
 
       <v-spacer />
 
@@ -53,17 +58,11 @@
       </v-btn>
 
       <v-btn v-if="isAuthenticated" outlined dark @click="onLogoutClicked">
-        <v-icon left>
+        <v-icon :left="!$vuetify.breakpoint.mobile">
           mdi-logout-variant
         </v-icon>
-        Logout
+        {{ logoutText}}
       </v-btn>
-      <!-- <v-btn v-else outlined dark @click="$router.push({ name: 'loginInterals' })">
-        <v-icon left>
-          mdi-login-variant
-        </v-icon>
-        Login
-      </v-btn> -->
     </v-app-bar>
 </template>
 
@@ -86,14 +85,17 @@ export default {
       }
       return true;
     },
+    logoutText() {
+      if (this.$vuetify.breakpoint.mobile) {
+        return '';
+      }
+      return 'Logout';
+    },
   },
   methods: {
     onLogoutClicked() {
       this.$store.commit('clearTokens');
       this.$router.push({ name: 'login-internals' });
-    },
-    onLoginClicked() {
-      debugger;
     },
   },
 };

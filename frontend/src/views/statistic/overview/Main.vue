@@ -91,7 +91,7 @@ export default {
   data() {
     return {
       tab: null,
-      items: null,
+      items: [],
       selected: null,
     };
   },

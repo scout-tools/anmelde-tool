@@ -19,11 +19,10 @@ export default {
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
+      chartData: [],
       chartOptions: {
         title: 'Anmedlungen',
         isStacked: true,
-        width: 800,
-        height: 600,
         legend: { position: 'right', maxLines: 3 },
         vAxis: { minValue: 0 },
       },
@@ -31,13 +30,18 @@ export default {
   },
   computed: {
     ...mapGetters(['currentEventParticipants']),
-    chartData() {
-      return this.json_to_chart_data(this.currentEventParticipants);
+  },
+  created() {
+    this.debouncedGetAnswer = this._.debounce(this.json_to_chart_data, 500);
+  },
+  watch: {
+    currentEventParticipants() {
+      this.debouncedGetAnswer();
     },
   },
   methods: {
-    json_to_chart_data(jsonData) {
-      debugger;
+    json_to_chart_data() {
+      const jsonData = this.currentEventParticipants;
       const chartData = [];
       const buende = [];
       jsonData.forEach((regis) => {
@@ -55,7 +59,7 @@ export default {
         buendeCount[buende.indexOf(regis.bund)] += regis.numberOfPersons;
         chartData.push([regis.createdAt].concat(buendeCount));
       });
-      return chartData;
+      this.chartData = chartData;
     },
   },
 };

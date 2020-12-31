@@ -1,6 +1,12 @@
 <template>
-    <v-parallax :src="imageLink.main">
-        <v-card max-width="90%"
+    <div class="bg" :style="{
+      'background-image': 'url(' + require('@/assets/2018-05-Führungstippel-63_klein.jpg') + ')'
+    }">
+<v-container fill-height fluid>
+  <v-row align="center"
+      justify="center">
+      <v-col>
+        <v-card max-width="500"
           min-width="350px"
           class="mx-auto my-12"
           color="rgb(255, 255, 255, 0.8)"
@@ -41,7 +47,10 @@
             </v-container>
           </v-card-text>
         </v-card>
-    </v-parallax>
+</v-col>
+  </v-row>
+</v-container>
+    </div>
 </template>
 
 <script>
@@ -160,5 +169,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+  .bg {
+    /* The image used */
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 </style>

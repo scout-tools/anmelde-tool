@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="600" class="mx-auto">
+  <v-card max-width="600" class="mx-auto top-margin">
     <v-row justify="center">
       <v-stepper v-model="currentStep" vertical>
         <template v-for="(step, index) in steps">

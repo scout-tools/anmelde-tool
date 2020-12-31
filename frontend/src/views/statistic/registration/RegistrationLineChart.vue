@@ -22,8 +22,6 @@ export default {
       chartOptions: {
         title: 'Anmedlungen',
         curveType: 'function',
-        width: 800,
-        height: 600,
         legend: { position: 'right' },
         vAxis: { minValue: 0 },
       },
@@ -37,8 +35,8 @@ export default {
   },
   methods: {
     json_to_chart_data(jsonData) {
-      const chartData = [];
-      chartData.push(['date', 'number']);
+      const returnData = [];
+      returnData.push(['date', 'number']);
       jsonData.forEach((regis) => {
         // eslint-disable-next-line no-param-reassign
         regis.createdAt = new Date(regis.createdAt);
@@ -48,12 +46,12 @@ export default {
       let count = 0;
       jsonData.forEach((regis) => {
         count += regis.numberOfPersons;
-        chartData.push([
+        returnData.push([
           regis.createdAt,
           count,
         ]);
       });
-      return chartData;
+      return returnData;
     },
   },
 };

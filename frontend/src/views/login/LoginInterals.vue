@@ -1,6 +1,12 @@
 <template>
-  <v-parallax :src="imageLink.main">
-    <v-card max-width="90%"
+    <div class="bg" :style="{
+      'background-image': 'url(' + require('@/assets/2018-05-Führungstippel-63_klein.jpg') + ')'
+    }">
+<v-container fill-height fluid>
+  <v-row align="center"
+      justify="center">
+      <v-col>
+    <v-card max-width="500px"
       min-width="350px"
       class="mx-auto my-12"
       color="rgb(255, 255, 255, 0.8)"
@@ -35,13 +41,16 @@
         </v-container>
       </v-card-text>
     </v-card>
+      </v-col>
+  </v-row>
+</v-container>
     <v-snackbar v-model="showSuccess" color="success" y="top" :timeout="timeout">
       Du hast eine E-Mail bekommen.
     </v-snackbar>
     <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
       {{ responseObj }}
     </v-snackbar>
-    </v-parallax>
+    </div>
 </template>
 
 <script>
