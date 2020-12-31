@@ -7,7 +7,7 @@
       >
         <img
           src="@/assets/logo_bdp_dpv.svg"
-          width="60"
+          height="40"
           alt="Logo"
           class="logo-img mx-2"
         />

@@ -15,7 +15,9 @@ export default {
   components: {
     MainComp,
   },
-
+  created() {
+    document.title = 'Anmelde-Tool für Pfadfinder';
+  },
   data: () => ({
     //
   }),
