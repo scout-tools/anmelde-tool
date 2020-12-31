@@ -17,8 +17,9 @@
             Einfach. Schnell. Übersichtlich
           </div>
           <v-btn
+            class="mt-10"
             color="primary"
-            large
+            x-large
             @click="$router.push({ name: 'loginParticipants' })"
           >
             <v-icon left>mdi-calendar-plus</v-icon>

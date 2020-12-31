@@ -58,12 +58,12 @@
         </v-icon>
         Logout
       </v-btn>
-      <v-btn v-else outlined dark @click="$router.push({ name: 'loginInterals' })">
+      <!-- <v-btn v-else outlined dark @click="$router.push({ name: 'loginInterals' })">
         <v-icon left>
           mdi-login-variant
         </v-icon>
         Login
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
 </template>
 

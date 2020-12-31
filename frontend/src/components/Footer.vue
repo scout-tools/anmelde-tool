@@ -16,7 +16,7 @@
 <script>
 export default {
   data: () => ({
-    links: ['Impressum', 'Kontakt'],
+    links: ['Impressum', 'Kontakt', 'Planungsjurte'],
   }),
 };
 </script>
