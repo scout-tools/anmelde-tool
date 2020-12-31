@@ -5,7 +5,12 @@
         color="primary"
         @click="$router.push({ name: 'landing' })"
       >
-        <v-icon large> mdi-emoticon </v-icon>
+        <img
+          src="@/assets/logo_bdp_dpv.svg"
+          width="60"
+          alt="Logo"
+          class="logo-img mx-2"
+        />
         <v-toolbar-title
           v-if="!$vuetify.breakpoint.mobile"
         >Anmelde Tool</v-toolbar-title>

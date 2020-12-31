@@ -33,7 +33,7 @@
       <v-container>
         <v-layout column align-center justify-center class="white--text">
           <v-flex xs12 class="text-xs-center">
-            <img height="200px" :src="imageLink.logo" />
+            <img height="200px" src="@/assets/logo_bdp_dpv_color.png"/>
           </v-flex>
         </v-layout>
       </v-container>
