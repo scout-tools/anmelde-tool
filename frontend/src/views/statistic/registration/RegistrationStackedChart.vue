@@ -37,6 +37,7 @@ export default {
   },
   methods: {
     json_to_chart_data(jsonData) {
+      debugger;
       const chartData = [];
       const buende = [];
       jsonData.forEach((regis) => {

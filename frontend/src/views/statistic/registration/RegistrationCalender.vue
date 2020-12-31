@@ -8,7 +8,6 @@
     :data="chartData"
     :options="chartOptions"
     :events="chartEvents"
-    ref="gChart"
   />
 </template>
 
@@ -19,7 +18,6 @@ export default {
   name: 'RegistrationCalender',
   data() {
     return {
-      API_URL: process.env.VUE_APP_API,
       chartOptions: {
         colorAxis: { colors: ['blue', 'red'] },
         title: 'Anmeldungen',
@@ -31,7 +29,7 @@ export default {
           const table = this.$refs.gChart.chartObject;
           const selection = table.getSelection();
           const onSelectionMessage = selection.length !== 0 ? 'row was selected' : 'row was diselected';
-          alert(onSelectionMessage);
+          console.log(onSelectionMessage);
         },
       },
     };
