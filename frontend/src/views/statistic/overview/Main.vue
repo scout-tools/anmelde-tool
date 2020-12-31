@@ -43,14 +43,19 @@
                 Diagramme
                 <v-icon>mdi-chart-line</v-icon>
               </v-tab>
+              <v-tab href="#tab-4">
+                Küche
+                <v-icon>mdi-silverware-fork-knife</v-icon>
+              </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-              <v-tab-item v-for="i in 3" :key="i" :value="'tab-' + i">
+              <v-tab-item v-for="i in 4" :key="i" :value="'tab-' + i">
                 <v-card-text>
                   <registration-main v-if="i === 1" />
                   <maps-main v-if="i === 2" />
                   <diagramms-main v-if="i === 3" />
+                  <kitchen-main v-if="i === 4" />
                 </v-card-text>
               </v-tab-item>
             </v-tabs-items>
@@ -67,6 +72,7 @@ import axios from 'axios';
 import MapsMain from '@/views/statistic/maps/Main.vue';
 import RegistrationMain from '@/views/statistic/registration/Main.vue';
 import DiagrammsMain from '@/views/statistic/diagramms/Main.vue';
+import KitchenMain from '@/views/statistic/kitchen/Main.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -74,6 +80,7 @@ export default {
     MapsMain,
     RegistrationMain,
     DiagrammsMain,
+    KitchenMain,
   },
   computed: {
     ...mapGetters(['currentEventParticipants']),
