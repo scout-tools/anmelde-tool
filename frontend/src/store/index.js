@@ -12,6 +12,7 @@ export default new Vuex.Store({
     refreshToken: null,
     hierarchy: [],
     ageGroupMapping: [],
+    currentEventParticipants: [],
   },
   getters: {
     getJwtData(state) {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
     },
     ageGroupMapping(state) {
       return state.ageGroupMapping;
+    },
+    currentEventParticipants(state) {
+      return state.currentEventParticipants;
     },
   },
   mutations: {
@@ -41,6 +45,9 @@ export default new Vuex.Store({
     },
     setAgeGroupMapping(state, newAgeGroup) {
       state.ageGroupMapping = newAgeGroup;
+    },
+    setCurrentEventParticipants(state, newData) {
+      state.currentEventParticipants = newData;
     },
   },
   actions: {
