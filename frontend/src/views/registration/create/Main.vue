@@ -42,14 +42,12 @@
 <script>
 import axios from 'axios';
 
-import StepAddParticipants from './steps/StepAddParticipants.vue';
-import StepConsent from './steps/StepConsent.vue';
+import StepAddParticipants from './steps/StepAddParticipantsSingle.vue';
 import StepConfirm from './steps/StepConfirm.vue';
 import StepFood from './steps/StepFood.vue';
 
 export default {
   components: {
-    StepConsent,
     StepAddParticipants,
     StepFood,
     StepConfirm,
@@ -69,14 +67,13 @@ export default {
   computed: {
     steps() {
       return [
-        StepConsent,
         StepAddParticipants,
         StepFood,
         StepConfirm,
       ];
     },
     headerSteps() {
-      return ['Einwilligung', 'Teilnehmer', 'Essen', 'Bestätigung'];
+      return ['Teilnehmer', 'Essen', 'Bestätigung'];
     },
   },
   methods: {

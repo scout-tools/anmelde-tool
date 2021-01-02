@@ -47,7 +47,14 @@ class ZipCodeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ParticipantsSerializer2(serializers.ModelSerializer):
+class ParticipantSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Participant
+        fields = '__all__'
+
+
+class ParticipantSerializer2(serializers.ModelSerializer):
     lon = serializers.SerializerMethodField('get_lon')
     lat = serializers.SerializerMethodField('get_lat')
     name = serializers.SerializerMethodField('get_name')
@@ -61,24 +68,24 @@ class ParticipantsSerializer2(serializers.ModelSerializer):
         else:
             return scout_organisation.name
 
-    def get_lon(self, par: Participants):
+    def get_lon(self, par: Participant):
         if par.registration.scout_organisation.zip_code is not None:
             lon = par.registration.scout_organisation.zip_code.lon
         else:
             lon = 10.451526
         return lon
 
-    def get_lat(self, par: Participants):
+    def get_lat(self, par: Participant):
         if par.registration.scout_organisation.zip_code is not None:
             lat = par.registration.scout_organisation.zip_code.lat
         else:
             lat = 51.165691
         return lat
 
-    def get_bund(self, par: Participants):
+    def get_bund(self, par: Participant):
         return self.get_bund_name(par.registration.scout_organisation)
 
-    def get_name(self, par: Participants):
+    def get_name(self, par: Participant):
         return par.registration.scout_organisation.name
 
     class Meta:

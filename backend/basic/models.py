@@ -229,7 +229,6 @@ class ParticipantRole(TimeStampMixin):
 
 
 class EatHabitType(models.Model):
-<<<<<<< Updated upstream
     id = models.AutoField(
         auto_created=True,
         primary_key=True,

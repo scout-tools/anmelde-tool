@@ -12,10 +12,10 @@ router.register(r'event-location', views.EventLocationViewSet)
 router.register(r'scout-hierarchy', views.ScoutHierarchyViewSet)
 router.register(r'registration', views.RegistrationViewSet)
 router.register(r'zip-code', views.ZipCodeViewSet)
-router.register(r'participant', views.ParticipantsViewSet)
+router.register(r'participant', views.ParticipantViewSet)
 
 event_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
-event_router.register(r'participants', views.ParticipantsViewSet2, basename='event-participants')
+event_router.register(r'participants', views.ParticipantViewSet2, basename='event-participants')
 
 router.register(r'zip-code', views.ZipCodeViewSet)
 router.register(r'participant-extended', views.ParticipantExtendedViewSet)

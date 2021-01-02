@@ -9,7 +9,7 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration
         ScoutOrgaLevel, ParticipantExtended, EatHabitType, EatHabit, TravelType, TentType
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer,\
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantSerializer,\
-    ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer
+    ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer, ParticipantSerializer2
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -68,7 +68,7 @@ class TentViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantViewSet2(viewsets.ModelViewSet):
-    serializer_class = ParticipantsSerializer2
+    serializer_class = ParticipantSerializer2
 
     def get_queryset(self):
         event_id = self.kwargs.get("event_pk", None)
