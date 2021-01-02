@@ -52,14 +52,5 @@
             "name": "Gruppe",
             "description": ""
         }
-    },
-    {
-        "model": "basic.ScoutOrgaLevel",
-        "pk": 7,
-        "fields": {
-            "id": 7,
-            "name": "Person",
-            "description": ""
-        }
     }
 ]

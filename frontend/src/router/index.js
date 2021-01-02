@@ -6,14 +6,30 @@ import SettingsUser from '@/views/settings/user/Main.vue';
 import StatisticOverview from '@/views/statistic/overview/Main.vue';
 import RegistrationForm from '@/views/registration/Main.vue';
 import RegistrationCreate from '@/views/registration/create/Main.vue';
+import LandingPage from '@/views/landingPage/Main.vue';
+import CreateEvent from '@/views/event/create/Main.vue';
+import LoginParticipantsMain from '@/views/login/LoginParticipants.vue';
+import LoginInteralsMain from '@/views/login/LoginInterals.vue';
+import Impressum from '@/views/impressum/Main.vue';
+import Contact from '@/views/contact/Main.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'login',
-    component: () => import('../views/login/Login.vue'),
+    name: 'landing',
+    component: LandingPage,
+  },
+  {
+    path: '/login-participants',
+    name: 'loginParticipants',
+    component: LoginParticipantsMain,
+  },
+  {
+    path: '/login-interals',
+    name: 'loginInterals',
+    component: LoginInteralsMain,
   },
   {
     path: '/check-token',
@@ -23,7 +39,7 @@ const routes = [
   {
     path: '/event/create',
     name: 'createEvent',
-    component: () => import('../views/event/create/Main.vue'),
+    component: CreateEvent,
   },
   {
     path: '/event/overview',
@@ -51,6 +67,16 @@ const routes = [
     name: 'registrationCreate',
     component: RegistrationCreate,
     props: true,
+  },
+  {
+    path: '/impressum',
+    name: 'impressum',
+    component: Impressum,
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: Contact,
   },
 ];
 

@@ -7,17 +7,16 @@
       <v-row class="mt-6">
       <span class="subtitle-1">
         {{'Trage hier die E-Mail-Adressen der verantwortlichen Kontaktpersonen' +
-          ' als Ansprechpartner ein oder wähle E-Mail-Adressen aus der Liste aus.' }}
+          ' als Ansprechpartner ein.' }}
         <br>
         <i>{{' (Jede geschriebene E-Mail-Adresse muss mit Enter bestätigt werden!)'}}</i>
       </span>
       </v-row>
       <v-row>
         <v-combobox
-          :error-messages="selectedContacts"
+          :error-messages="contactsErrors"
           autofocus
           v-model="contacts"
-          :items="items"
           label="verantwortliche Kontaktpersonen"
           multiple
           required
@@ -36,7 +35,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { required, email } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
@@ -50,7 +48,6 @@ export default {
     API_URL: process.env.VUE_APP_API,
     valid: true,
     contacts: [],
-    items: [],
   }),
   validations: {
     contacts: {
@@ -61,7 +58,7 @@ export default {
     },
   },
   computed: {
-    selectedContacts() {
+    contactsErrors() {
       const errors = [];
       if (!this.$v.contacts.$dirty) return errors;
       if (!this.$v.contacts.required) {
@@ -100,18 +97,6 @@ export default {
         contacts: this.contacts,
       };
     },
-    async getContacts() {
-      const url = `${this.API_URL}basic/person/`;
-      const result = await axios.get(url);
-      this.items = result.data;
-      this.formatContacts();
-    },
-    formatContacts() {
-      this.items = this.items.map((contact) => contact.emailAddress);
-    },
-  },
-  created() {
-    this.getContacts();
   },
 };
 </script>

@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'anmeldung_auth',
     'storages',
     'ebhealthcheck.apps.EBHealthCheckConfig',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

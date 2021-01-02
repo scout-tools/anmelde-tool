@@ -15,7 +15,9 @@ export default {
   components: {
     MainComp,
   },
-
+  created() {
+    document.title = 'Anmelde-Tool für Pfadfinder';
+  },
   data: () => ({
     //
   }),
@@ -23,7 +25,7 @@ export default {
 </script>
 
 <style>
-  .mt-100p {
-    margin-top: 100px;
-  }
+.top-margin {
+  margin-top: 70px !important;
+}
 </style>

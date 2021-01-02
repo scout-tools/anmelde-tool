@@ -1,9 +1,12 @@
 # views.py
+from itertools import chain
+from rest_framework.response import Response
 from django.db.models.functions import ExtractWeek, ExtractYear
 from rest_framework import pagination, viewsets, mixins, generics, filters
 
-from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, Participant, ParticipantRole, Role, MethodOfTravel, Tent
-from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantSerializer, ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer
+from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, Participant
+from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, ScoutHierarchySerializer, \
+    RegistrationSerializer, ZipCodeSerializer, ParticipantsSerializer, ParticipantsSerializer2
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -36,7 +39,7 @@ class ZipCodeViewSet(viewsets.ModelViewSet):
     serializer_class = ZipCodeSerializer
 
 
-class ParticipantsViewSet(viewsets.ModelViewSet):
+class ParticipantViewSet(viewsets.ModelViewSet):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
 
@@ -59,3 +62,17 @@ class MethodOfTravelViewSet(viewsets.ModelViewSet):
 class TentViewSet(viewsets.ModelViewSet):
     queryset = Tent.objects.all()
     serializer_class = TentSerializer
+    queryset = Participants.objects.all()
+    serializer_class = ParticipantsSerializer2
+
+
+class ParticipantViewSet2(viewsets.ModelViewSet):
+    serializer_class = ParticipantsSerializer2
+
+    def get_queryset(self):
+        event_id = self.kwargs.get("event_pk", None)
+        if event_id is not None:
+            queryset = Participant.objects.filter(registration__event_id=event_id)
+        else:
+            queryset = Participant.objects.all()
+        return queryset

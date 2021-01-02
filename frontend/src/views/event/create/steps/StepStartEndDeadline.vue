@@ -183,24 +183,26 @@ export default {
     PickerDialogButtons,
     PrevNextButtons,
   },
-  data: () => ({
-    API_URL: process.env.VUE_APP_API,
-    valid: true,
-    data: {
-      dateRange: [],
-      startTime: '18:00',
-      endTime: '13:00',
-      deadlineDate: '',
-      deadlineTime: '00:00',
-    },
-    dialog: {
-      dateRange: false,
-      startTime: false,
-      endTime: false,
-      deadlineDate: false,
-      deadlineTime: false,
-    },
-  }),
+  data() {
+    return {
+      API_URL: process.env.VUE_APP_API,
+      valid: true,
+      data: {
+        dateRange: [],
+        startTime: '18:00',
+        endTime: '13:00',
+        deadlineDate: '',
+        deadlineTime: '00:00',
+      },
+      dialog: {
+        dateRange: false,
+        startTime: false,
+        endTime: false,
+        deadlineDate: false,
+        deadlineTime: false,
+      },
+    };
+  },
   validations: {
     sortedDateRange: {
       required,
@@ -214,6 +216,9 @@ export default {
       },
       deadlineDate: {
         required,
+        function(value) {
+          return new Date(value) - new Date(this.sortedDateRange[0]) < 0;
+        },
       },
       deadlineTime: {
         required,
@@ -283,6 +288,9 @@ export default {
       if (!this.$v.data.deadlineDate.$dirty) return errors;
       if (!this.$v.data.deadlineDate.required) {
         errors.push('Eine Deadline muss eingetragen werden.');
+      }
+      if (this.$v.data.deadlineDate.$invalid) {
+        errors.push('Gib ein Datum vor dem Starttermin ein.');
       }
       return errors;
     },

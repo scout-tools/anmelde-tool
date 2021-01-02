@@ -1,12 +1,12 @@
 <template>
   <div>
-    <v-card v-if="hasSetExtendedUserInfos" max-width="600" class="mx-auto">
+    <v-card v-if="hasSetExtendedUserInfos" max-width="600" class="mx-auto top-margin">
       <v-card-title class="text-center justify-center py-6">
         Zu diesen Veranstaltungen kannst du dich Anmelden:
       </v-card-title>
       <v-list subheader two-line>
         <v-subheader inset
-          >Hier kannst du alle deine aktuell Buchbaren Veranstaltungen sehen</v-subheader
+          >Hier kannst du alle deine aktuell buchbaren Veranstaltungen sehen</v-subheader
         >
         <template v-for="(item, index) in getItems">
           <v-list-item :key="item.name">

@@ -69,6 +69,7 @@
                 <v-card
                   v-else
                   :key="selected.id"
+                  min-width="300"
                   class="mx-auto"
                   flat
                 >
@@ -81,12 +82,20 @@
                     </div>
                   </v-card-text>
                   <v-divider></v-divider>
-                  <v-row class="text-left" tag="v-card-text">
-                    <v-col class="text-right mr-4 mb-2" tag="strong" cols="5">
+                  <v-row>
+                    <v-col cols="6">
                       Postleitzahl:
                     </v-col>
-                    <v-col>
-                      {{ selected.zipCode }}
+                    <v-col cols="6">
+                      {{ zipCodeObject.zipCode }}
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="6">
+                      Stadt:
+                    </v-col>
+                    <v-col cols="6">
+                      {{ zipCodeObject.city }}
                     </v-col>
                   </v-row>
                 </v-card>
@@ -100,7 +109,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -168,6 +177,23 @@ export default {
     onTakeStammClicked() {
       this.$emit('sendIdToParent', this.active[0]);
       this.dialog = false;
+    },
+    async loadZipCodeData(id) {
+      const url = `${this.API_URL}basic/zip-code/${id}/`;
+      const response = await axios.get(url);
+      return response.data;
+    },
+  },
+  asyncComputed: {
+    zipCodeObject() {
+      if (this.active && this.active.length) {
+        if (!this.active.length) return undefined;
+        const id = this.active[0];
+        if (!(this.hierarchy.find((user) => user.id === id).level === 5)) return undefined;
+        const zipCodeId = this.hierarchy.find((user) => user.id === id).zipCode;
+        return this.loadZipCodeData(zipCodeId);
+      }
+      return [];
     },
   },
 };

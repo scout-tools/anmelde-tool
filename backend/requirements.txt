@@ -9,11 +9,12 @@ defusedxml==0.6.0
 Django==3.1.4
 django-cors-headers==3.5.0
 django-ebhealthcheck==1.0.1
+django-extensions==3.1.0
 django-filter==2.4.0
 django-storages==1.10.1
 djangorestframework==3.12.2
+djangorestframework-camel-case==1.2.0
 djangorestframework-simplejwt==4.6.0
-djangorestframework-camel-case
 environ==1.0
 idna==2.10
 jmespath==0.10.0
@@ -29,3 +30,4 @@ s3transfer==0.3.3
 six==1.15.0
 sqlparse==0.4.1
 urllib3==1.26.2
+drf-nested-routers==0.92.5
