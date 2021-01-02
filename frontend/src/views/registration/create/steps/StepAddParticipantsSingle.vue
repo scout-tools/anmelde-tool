@@ -1,38 +1,44 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
     <v-container>
-  <v-card
-    class="mx-auto"
-    max-width="300"
-    tile
-  >
     <v-btn
       color="success"
       @click="newUser"
     >
-      Neuer Teilnehmer
+      <v-icon left>
+        mdi-plus
+      </v-icon>
+      Neuen Teilnehmer hinzufügen
     </v-btn>
-    <v-list dense>
-      <v-subheader>REPORTS</v-subheader>
+    <v-list>
+      <v-subheader>Teilnehmer</v-subheader>
       <v-list-item-group
-        v-model="selectedItem"
         color="primary"
       >
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
         >
-          <v-list-item-icon>
-            <v-icon v-text="item.icon"></v-icon>
-          </v-list-item-icon>
+        <v-list-item-avatar>
+          <v-icon
+          color="black"
+            dark
+            v-text="item.icon"
+          ></v-icon>
+        </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title v-text="item.text"></v-list-item-title>
           </v-list-item-content>
+        <v-list-item-action>
+          <v-btn dense icon>
+            <v-icon color="grey lighten-1">mdi-information</v-icon>
+          </v-btn>
+        </v-list-item-action>
         </v-list-item>
+
       </v-list-item-group>
     </v-list>
-  </v-card>
-
+      <v-divider class="my-3" />
       <prev-next-buttons
         :position="position"
         :max-pos="maxPos"
@@ -102,7 +108,7 @@ export default {
         return;
       }
 
-      this.addParticipants();
+      this.$emit('nextStep');
     },
     submitStep() {
       this.validate();
