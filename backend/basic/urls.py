@@ -12,9 +12,10 @@ router.register(r'event-location', views.EventLocationViewSet)
 router.register(r'scout-hierarchy', views.ScoutHierarchyViewSet)
 router.register(r'registration', views.RegistrationViewSet)
 router.register(r'zip-code', views.ZipCodeViewSet)
+router.register(r'participant', views.ParticipantsViewSet)
 
 event_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
-event_router.register(r'participants', views.ParticipantsViewSet, basename='event-participants')
+event_router.register(r'participants', views.ParticipantsViewSet2, basename='event-participants')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

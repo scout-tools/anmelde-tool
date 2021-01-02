@@ -91,7 +91,7 @@ export default {
     addParticipants() {
       const promises = [];
       const registrationId = this.$route.params.id;
-      const myUrl = `${this.API_URL}basic/participants/`;
+      const myUrl = `${this.API_URL}basic/participant/`;
       const valueArray = Object.values(this.data);
       Object.keys(this.data).forEach((element, index) => {
         const paramsData = {

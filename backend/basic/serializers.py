@@ -47,7 +47,7 @@ class ZipCodeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ParticipantsSerializer(serializers.ModelSerializer):
+class ParticipantsSerializer2(serializers.ModelSerializer):
     lon = serializers.SerializerMethodField('get_lon')
     lat = serializers.SerializerMethodField('get_lat')
     name = serializers.SerializerMethodField('get_name')
@@ -81,6 +81,12 @@ class ParticipantsSerializer(serializers.ModelSerializer):
     def get_name(self, par: Participants):
         return par.registration.scout_organisation.name
 
+    class Meta:
+        model = Participants
+        fields = '__all__'
+
+
+class ParticipantsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participants
         fields = '__all__'

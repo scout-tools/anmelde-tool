@@ -58,7 +58,7 @@
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
                     <div class="headline text-xs-center">
-                        <v-icon x-large>mdi-baby-carriage</v-icon>
+                        <v-icon color="orange" x-large>mdi-baby-carriage</v-icon>
                         Einfach
                     </div>
                   </v-card-title>
@@ -73,7 +73,7 @@
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
                     <div class="headline">
-                        <v-icon x-large>mdi-beaker-check</v-icon>
+                        <v-icon color="green" x-large>mdi-beaker-check</v-icon>
                         Vollständig
                     </div>
                   </v-card-title>
@@ -89,7 +89,7 @@
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
                     <div class="headline text-xs-center">
-                        <v-icon x-large>mdi-shield-lock</v-icon>
+                        <v-icon color="red" x-large>mdi-shield-lock</v-icon>
                         Datenschutz</div>
                   </v-card-title>
                   <v-card-text>

@@ -6,7 +6,7 @@ from rest_framework import pagination, viewsets, mixins, generics, filters
 
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, Participants
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, ScoutHierarchySerializer, \
-    RegistrationSerializer, ZipCodeSerializer, ParticipantsSerializer
+    RegistrationSerializer, ZipCodeSerializer, ParticipantsSerializer, ParticipantsSerializer2
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -40,7 +40,12 @@ class ZipCodeViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantsViewSet(viewsets.ModelViewSet):
-    serializer_class = ParticipantsSerializer
+    queryset = Participants.objects.all()
+    serializer_class = ParticipantsSerializer2
+
+
+class ParticipantsViewSet2(viewsets.ModelViewSet):
+    serializer_class = ParticipantsSerializer2
 
     def get_queryset(self):
         event_id = self.kwargs.get("event_pk", None)
