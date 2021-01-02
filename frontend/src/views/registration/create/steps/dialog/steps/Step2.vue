@@ -1,64 +1,50 @@
 <template>
         <v-card>
       <v-card-title>
-        {{ 'Neuen Ort anlegen:' }}
+        {{ 'Fragen bezogen auf die Essgewohnheit:' }}
       </v-card-title>
       <v-card-subtitle>
-        {{ 'Der neue Ort kann gleich direkt ausgewählt werden' }}
+        {{ 'Vorname und Nachname' }}
       </v-card-subtitle>
       <v-card-text class="pb-0">
         <v-divider/>
         <v-form v-model="valid">
           <v-container>
             <v-row>
-              <v-text-field
-                v-model="data.name"
-                autofocus
-                :counter="20"
-                :error-messages="nameErrors"
-                label="Name"
-                required
-                @input="$v.data.name.$touch()"
-                @blur="$v.data.name.$touch()"/>
+              <v-row class="mt-6">
+                <span class="subtitle-1">
+                  Welche Essgewohnheiten hat der/die Teilnehmer*in? Vegetarisch, Vegan...
+                </span>
+              </v-row>
+              <v-row>
+                <v-select
+                  v-model="data.selectedHabit"
+                  :items="data.habits"
+                  item-text="name"
+                  item-value="id"
+                  label="Essgewohnheit wählen"
+                  required
+                  @input="validate()"
+                />
+              </v-row>
             </v-row>
             <v-row>
-              <v-text-field
-                v-model="data.description"
-                :counter="100"
-                :error-messages="descriptionErrors"
-                label="Beschreibung"
-                required
-                @input="$v.data.description.$touch()"
-                @blur="$v.data.description.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.address"
-                :counter="30"
-                :error-messages="addressErrors"
-                label="Straße und Hausnummer"
-                required
-                @input="$v.data.address.$touch()"
-                @blur="$v.data.address.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.zipCode"
-                :counter="5"
-                :error-messages="zipCodeErrors"
-                label="Postleitzahl"
-                required
-                @blur="$v.data.zipCode.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.city"
-                :counter="20"
-                :error-messages="cityErrors"
-                label="Stadt"
-                required
-                @input="$v.data.name.$touch()"
-                @blur="$v.data.name.$touch()"/>
+              <v-row class="mt-6">
+                <span class="subtitle-1">
+                  Welche Allergien hat der/die Teilnehmer*in?
+                </span>
+              </v-row>
+              <v-row>
+                <v-select
+                  v-model="data.selectedAllergies"
+                  :items="data.allergies"
+                  item-text="name"
+                  item-value="id"
+                  label="Allergien wählen"
+                  multiple
+                  @input="validate()"
+                />
+              </v-row>
             </v-row>
           </v-container>
         </v-form>
@@ -67,9 +53,6 @@
 </template>
 
 <script>
-import {
-  required, maxLength, minLength, numeric,
-} from 'vuelidate/lib/validators';
 import axios from 'axios';
 
 export default {
@@ -81,97 +64,18 @@ export default {
     active: false,
     valid: true,
     data: {
-      name: '',
-      description: '',
-      address: '',
-      city: '',
-      zipCode: '',
+      habits: ['fleisch', 'vegetarisch', 'vegan'],
+      allergies: ['laktose', 'glucose'],
+      selectedHabit: 'fleisch',
+      selectedAllergies: [],
     },
     showError: false,
     showSuccess: false,
     timeout: 7000,
   }),
   validations: {
-    data: {
-      name: {
-        required,
-        maxLength: maxLength(20),
-      },
-      description: {
-        maxLength: maxLength(100),
-      },
-      address: {
-        required,
-        maxLength: maxLength(30),
-      },
-      city: {
-        required,
-        maxLength: maxLength(20),
-      },
-      zipCode: {
-        required,
-        numeric,
-        minLength: minLength(5),
-        maxLength: maxLength(5),
-      },
-    },
   },
   computed: {
-    nameErrors() {
-      const errors = [];
-      if (!this.$v.data.name.$dirty) return errors;
-      if (!this.$v.data.name.required) {
-        errors.push('Name is required.');
-      }
-      if (!this.$v.data.name.maxLength) {
-        errors.push('Name must be at most 20 characters long');
-      }
-      return errors;
-    },
-    descriptionErrors() {
-      const errors = [];
-      if (!this.$v.data.description.$dirty) return errors;
-      if (!this.$v.data.description.maxLength) {
-        errors.push('description must be at most 100 characters long');
-      }
-      return errors;
-    },
-    addressErrors() {
-      const errors = [];
-      if (!this.$v.data.address.$dirty) return errors;
-      if (!this.$v.data.address.required) {
-        errors.push('Adresse is required.');
-      }
-      if (!this.$v.data.address.maxLength) {
-        errors.push('Adresse must be at most 20 characters long');
-      }
-      return errors;
-    },
-    cityErrors() {
-      const errors = [];
-      if (!this.$v.data.city.$dirty) return errors;
-      if (!this.$v.data.city.required) {
-        errors.push('Stadt is required.');
-      }
-      if (!this.$v.data.city.maxLength) {
-        errors.push('Stadt must be at most 30 characters long');
-      }
-      return errors;
-    },
-    zipCodeErrors() {
-      const errors = [];
-      if (!this.$v.data.zipCode.$dirty) return errors;
-      if (!this.$v.data.zipCode.required) {
-        errors.push('PLZ is required.');
-      }
-      if (!this.$v.data.zipCode.numeric) {
-        errors.push('PLZ muss eine Zahl sein.');
-      }
-      if (!this.$v.data.zipCode.minLength || !this.$v.data.zipCode.maxLength) {
-        errors.push('PLZ muss eine 5-stellige Zahl sein.');
-      }
-      return errors;
-    },
   },
   methods: {
     onClickOk() {

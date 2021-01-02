@@ -1,10 +1,10 @@
 <template>
         <v-card>
       <v-card-title>
-        {{ 'Neuen Ort anlegen:' }}
+        {{ 'Neuen Teilnehmer anlegen:' }}
       </v-card-title>
       <v-card-subtitle>
-        {{ 'Der neue Ort kann gleich direkt ausgewählt werden' }}
+        {{ 'Personenbezogenedaten' }}
       </v-card-subtitle>
       <v-card-text class="pb-0">
         <v-divider/>
@@ -12,24 +12,78 @@
           <v-container>
             <v-row>
               <v-text-field
-                v-model="data.name"
+                v-model="data.firstName"
                 autofocus
                 :counter="20"
-                :error-messages="nameErrors"
-                label="Name"
+                :error-messages="firstNameErrors"
+                label="Vorname"
                 required
-                @input="$v.data.name.$touch()"
-                @blur="$v.data.name.$touch()"/>
+                @input="$v.data.firstName.$touch()"
+                @blur="$v.data.firstName.$touch()"/>
             </v-row>
             <v-row>
               <v-text-field
-                v-model="data.description"
-                :counter="100"
-                :error-messages="descriptionErrors"
-                label="Beschreibung"
+                v-model="data.lastName"
+                :counter="20"
+                :error-messages="lastNameErrors"
+                label="Nachname"
                 required
-                @input="$v.data.description.$touch()"
-                @blur="$v.data.description.$touch()"/>
+                @input="$v.data.lastName.$touch()"
+                @blur="$v.data.lastName.$touch()"/>
+            </v-row>
+            <v-row>
+              <v-row>
+                <v-dialog
+                  ref="dateBirthDialog"
+                  v-model="dialog.dateBirth"
+                  :return-value.sync="data.dateBirth"
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="dateBirthString"
+                      label="Wähle das Geburtsdatum"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      readonly
+                      required
+                      :error-messages="dateBirthErrors"
+                      v-bind="attrs"
+                      v-on="on"
+                    />
+                  </template>
+                  <v-date-picker
+                    v-if="dialog.dateBirth"
+                    v-model="data.dateBirth"
+                  />
+                  <v-spacer/>
+                  <v-card tile>
+                    <v-card-actions>
+                      <v-container class="py-0 px-1">
+                        <v-row>
+                          <v-col>
+                            <v-btn
+                              color="primary"
+                              @click="dialog.dateBirth = false"
+                              width="100%"
+                            >
+                              Cancel
+                            </v-btn>
+                          </v-col>
+                          <v-col>
+                            <v-btn
+                              color="primary"
+                              @click="$refs.dateBirthDialog.save(data.dateBirth)"
+                              width="100%"
+                            >
+                              OK
+                            </v-btn>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-row>
             </v-row>
             <v-row>
               <v-text-field
@@ -57,8 +111,8 @@
                 :error-messages="cityErrors"
                 label="Stadt"
                 required
-                @input="$v.data.name.$touch()"
-                @blur="$v.data.name.$touch()"/>
+                @input="$v.data.city.$touch()"
+                @blur="$v.data.city.$touch()"/>
             </v-row>
           </v-container>
         </v-form>
@@ -71,6 +125,7 @@ import {
   required, maxLength, minLength, numeric,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
+import moment from 'moment';
 
 export default {
   props: ['isOpen'],
@@ -81,11 +136,15 @@ export default {
     active: false,
     valid: true,
     data: {
-      name: '',
-      description: '',
+      firstName: '',
+      lastName: '',
       address: '',
       city: '',
-      zipCode: 4,
+      zipCode: '',
+      dateBirth: '',
+    },
+    dialog: {
+      dateBirth: false,
     },
     showError: false,
     showSuccess: false,
@@ -93,12 +152,17 @@ export default {
   }),
   validations: {
     data: {
-      name: {
+      firstName: {
         required,
         maxLength: maxLength(20),
       },
-      description: {
-        maxLength: maxLength(100),
+      lastName: {
+        required,
+        maxLength: maxLength(20),
+      },
+      dateBirth: {
+        required,
+        maxLength: maxLength(10),
       },
       address: {
         required,
@@ -117,24 +181,45 @@ export default {
     },
   },
   computed: {
-    nameErrors() {
+    firstNameErrors() {
       const errors = [];
-      if (!this.$v.data.name.$dirty) return errors;
-      if (!this.$v.data.name.required) {
+      if (!this.$v.data.firstName.$dirty) return errors;
+      if (!this.$v.data.firstName.required) {
         errors.push('Name is required.');
       }
-      if (!this.$v.data.name.maxLength) {
+      if (!this.$v.data.firstName.maxLength) {
         errors.push('Name must be at most 20 characters long');
       }
       return errors;
     },
-    descriptionErrors() {
+    lastNameErrors() {
       const errors = [];
-      if (!this.$v.data.description.$dirty) return errors;
-      if (!this.$v.data.description.maxLength) {
-        errors.push('description must be at most 100 characters long');
+      if (!this.$v.data.lastName.$dirty) return errors;
+      if (!this.$v.data.lastName.required) {
+        errors.push('Name is required.');
+      }
+      if (!this.$v.data.lastName.maxLength) {
+        errors.push('Name must be at most 20 characters long');
       }
       return errors;
+    },
+    dateBirthErrors() {
+      const errors = [];
+      if (!this.$v.data.dateBirth.$dirty) return errors;
+      if (!this.$v.data.dateBirth.required) {
+        errors.push('Geburtstag is required.');
+      }
+      if (!this.$v.data.dateBirth.maxLength) {
+        errors.push('Geburtstag must be at most 10 characters long');
+      }
+      return errors;
+    },
+    dateBirthString() {
+      const dateFormat = 'DD.MM.YYYY';
+      if (this.data.dateBirth === '') {
+        return '';
+      }
+      return `${moment(this.data.dateBirth).format(dateFormat)}`;
     },
     addressErrors() {
       const errors = [];
