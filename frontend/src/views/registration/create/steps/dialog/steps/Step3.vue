@@ -1,81 +1,21 @@
 <template>
-        <v-card>
-      <v-card-title>
-        {{ 'Neuen Ort anlegen:' }}
-      </v-card-title>
-      <v-card-subtitle>
-        {{ 'Der neue Ort kann gleich direkt ausgewählt werden' }}
-      </v-card-subtitle>
-      <v-card-text class="pb-0">
-        <v-divider/>
-        <v-form v-model="valid">
-          <v-container>
-            <v-row>
-              <v-text-field
-                v-model="data.name"
-                autofocus
-                :counter="20"
-                :error-messages="nameErrors"
-                label="Name"
-                required
-                @input="$v.data.name.$touch()"
-                @blur="$v.data.name.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.description"
-                :counter="100"
-                :error-messages="descriptionErrors"
-                label="Beschreibung"
-                required
-                @input="$v.data.description.$touch()"
-                @blur="$v.data.description.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.address"
-                :counter="30"
-                :error-messages="addressErrors"
-                label="Straße und Hausnummer"
-                required
-                @input="$v.data.address.$touch()"
-                @blur="$v.data.address.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.zipCode"
-                :counter="5"
-                :error-messages="zipCodeErrors"
-                label="Postleitzahl"
-                required
-                @blur="$v.data.zipCode.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.city"
-                :counter="20"
-                :error-messages="cityErrors"
-                label="Stadt"
-                required
-                @input="$v.data.name.$touch()"
-                @blur="$v.data.name.$touch()"/>
-            </v-row>
-          </v-container>
-        </v-form>
-      </v-card-text>
-    </v-card>
+  <v-container>
+    <v-form v-model="valid"> </v-form>
+  </v-container>
 </template>
 
 <script>
 import {
-  required, maxLength, minLength, numeric,
+  required,
+  maxLength,
+  minLength,
+  numeric,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
 
 export default {
   props: ['isOpen'],
-  components: {
-  },
+  components: {},
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,

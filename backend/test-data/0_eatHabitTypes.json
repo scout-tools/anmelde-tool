@@ -1,0 +1,65 @@
+[
+    {
+        "model": "basic.eatHabitType",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "name": "Kein Fleisch",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.eatHabitType",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "name": "Keine Tierprodukte",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.eatHabitType",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "name": "Kein Gluten",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.eatHabitType",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "name": "Keine Hülsenfrüchte",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.eatHabitType",
+        "pk": 5,
+        "fields": {
+            "id": 5,
+            "name": "Kein Laktose",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.eatHabitType",
+        "pk": 6,
+        "fields": {
+            "id": 6,
+            "name": "Keine Eier",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.eatHabitType",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "name": "Keine Nüße",
+            "description": ""
+        }
+    }
+]

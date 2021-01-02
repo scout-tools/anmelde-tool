@@ -49,7 +49,7 @@ export default {
   }),
   validations: {},
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchy', 'ageGroupMapping']),
+    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),
     total() {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },

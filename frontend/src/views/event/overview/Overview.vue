@@ -94,7 +94,7 @@ export default {
         dateFormat,
       )}`;
     },
-    getData() {
+    getEvent() {
       const path = `${this.API_URL}basic/event/`;
       axios
         .get(path)
@@ -104,9 +104,12 @@ export default {
         .catch(() => {
           console.log('Fehler');
         });
-      const userExtendedPath = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
+    },
+
+    getUserExtended() {
+      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
       axios
-        .get(userExtendedPath)
+        .get(path)
         .then((res) => {
           this.userExtendedItems = res.data;
         })
@@ -114,6 +117,100 @@ export default {
           console.log('Fehler');
         });
     },
+
+    getRoleMapping() {
+      const path = `${this.API_URL}basic/role/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setRoleMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+
+    getScoutOrgaLevelMapping() {
+      const path = `${this.API_URL}basic/scout-orga-level/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setScoutOrgaLevelMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+
+    getParticipantRoleMapping() {
+      const path = `${this.API_URL}basic/participant-role/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setParticipantRoleMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+
+    getEatHabitTypeMapping() {
+      const path = `${this.API_URL}basic/eat-habit-type/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setEatHabitTypeMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+
+    getTravelTypeMapping() {
+      const path = `${this.API_URL}basic/travel-type/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setTravelTypeTypeMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+    getHierarchyMapping() {
+      const path = `${process.env.VUE_APP_API}basic/scout-hierarchy/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setHierarchyMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+    getAgeGroupMapping() {
+      const path = `${this.API_URL}basic/age-group/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setAgeGroupMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+    getTentTypeMapping() {
+      const path = `${this.API_URL}basic/tent-type/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setTentTypeMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+
     show(item) {
       this.$refs.messageModal.show(item);
     },
@@ -122,7 +219,15 @@ export default {
     },
   },
   created() {
-    this.getData();
+    this.getEvent();
+    this.getUserExtended();
+    this.getScoutOrgaLevelMapping();
+    this.getParticipantRoleMapping();
+    this.getEatHabitTypeMapping();
+    this.getTravelTypeMapping();
+    this.getHierarchyMapping();
+    this.getAgeGroupMapping();
+    this.getTentTypeMapping();
   },
 };
 </script>

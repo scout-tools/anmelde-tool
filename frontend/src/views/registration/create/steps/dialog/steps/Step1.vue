@@ -1,136 +1,138 @@
 <template>
-        <v-card>
-      <v-card-title>
-        {{ 'Neuen Teilnehmer anlegen:' }}
-      </v-card-title>
-      <v-card-subtitle>
-        {{ 'Personenbezogenedaten' }}
-      </v-card-subtitle>
-      <v-card-text class="pb-0">
-        <v-divider/>
-        <v-form v-model="valid">
-          <v-container>
-            <v-row>
+  <v-container>
+    <v-form v-model="valid">
+      <v-row>
+        <v-col cols="12" sm="6" md="4">
+          <v-combobox
+            v-model="select"
+            :items="items"
+            label="Gruppe"
+          />
+      </v-col>
+        <v-col cols="12" sm="6" md="4">
+        <v-text-field
+          v-model="data.firstName"
+          autofocus
+          :counter="20"
+          :error-messages="firstNameErrors"
+          label="Vorname"
+          required
+          @input="$v.data.firstName.$touch()"
+          @blur="$v.data.firstName.$touch()"
+        />
+      </v-col>
+        <v-col cols="12" sm="6" md="4">
+        <v-text-field
+          v-model="data.lastName"
+          :counter="20"
+          :error-messages="lastNameErrors"
+          label="Nachname"
+          required
+          @input="$v.data.lastName.$touch()"
+          @blur="$v.data.lastName.$touch()"
+        />
+      </v-col>
+        <v-col cols="12" sm="6" md="4">
+        <v-row>
+          <v-dialog
+            ref="dateBirthDialog"
+            v-model="dialog.dateBirth"
+            :return-value.sync="data.dateBirth"
+            width="290px"
+          >
+            <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                v-model="data.firstName"
-                autofocus
-                :counter="20"
-                :error-messages="firstNameErrors"
-                label="Vorname"
+                v-model="dateBirthString"
+                label="Wähle das Geburtsdatum"
+                prepend-icon="mdi-clock-time-four-outline"
+                readonly
                 required
-                @input="$v.data.firstName.$touch()"
-                @blur="$v.data.firstName.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.lastName"
-                :counter="20"
-                :error-messages="lastNameErrors"
-                label="Nachname"
-                required
-                @input="$v.data.lastName.$touch()"
-                @blur="$v.data.lastName.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-row>
-                <v-dialog
-                  ref="dateBirthDialog"
-                  v-model="dialog.dateBirth"
-                  :return-value.sync="data.dateBirth"
-                  width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="dateBirthString"
-                      label="Wähle das Geburtsdatum"
-                      prepend-icon="mdi-clock-time-four-outline"
-                      readonly
-                      required
-                      :error-messages="dateBirthErrors"
-                      v-bind="attrs"
-                      v-on="on"
-                    />
-                  </template>
-                  <v-date-picker
-                    v-if="dialog.dateBirth"
-                    v-model="data.dateBirth"
-                  />
-                  <v-spacer/>
-                  <v-card tile>
-                    <v-card-actions>
-                      <v-container class="py-0 px-1">
-                        <v-row>
-                          <v-col>
-                            <v-btn
-                              color="primary"
-                              @click="dialog.dateBirth = false"
-                              width="100%"
-                            >
-                              Cancel
-                            </v-btn>
-                          </v-col>
-                          <v-col>
-                            <v-btn
-                              color="primary"
-                              @click="$refs.dateBirthDialog.save(data.dateBirth)"
-                              width="100%"
-                            >
-                              OK
-                            </v-btn>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </v-row>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.address"
-                :counter="30"
-                :error-messages="addressErrors"
-                label="Straße und Hausnummer"
-                required
-                @input="$v.data.address.$touch()"
-                @blur="$v.data.address.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.zipCode"
-                :counter="5"
-                :error-messages="zipCodeErrors"
-                label="Postleitzahl"
-                required
-                @blur="$v.data.zipCode.$touch()"/>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="data.city"
-                :counter="20"
-                :error-messages="cityErrors"
-                label="Stadt"
-                required
-                @input="$v.data.city.$touch()"
-                @blur="$v.data.city.$touch()"/>
-            </v-row>
-          </v-container>
-        </v-form>
-      </v-card-text>
-    </v-card>
+                :error-messages="dateBirthErrors"
+                v-bind="attrs"
+                v-on="on"
+              />
+            </template>
+            <v-date-picker v-if="dialog.dateBirth" v-model="data.dateBirth" />
+            <v-spacer />
+            <v-card tile>
+              <v-card-actions>
+                <v-container class="py-0 px-1">
+                  <v-row>
+                    <v-col>
+                      <v-btn
+                        color="primary"
+                        @click="dialog.dateBirth = false"
+                        width="100%"
+                      >
+                        Abbrechen
+                      </v-btn>
+                    </v-col>
+                    <v-col>
+                      <v-btn
+                        color="primary"
+                        @click="$refs.dateBirthDialog.save(data.dateBirth)"
+                        width="100%"
+                      >
+                        OK
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </v-col>
+        <v-col cols="12" sm="6" md="4">
+        <v-text-field
+          v-model="data.address"
+          :counter="30"
+          :error-messages="addressErrors"
+          label="Straße und Hausnummer"
+          required
+          @input="$v.data.address.$touch()"
+          @blur="$v.data.address.$touch()"
+        />
+      </v-col>
+        <v-col cols="12" sm="6" md="4">
+        <v-text-field
+          v-model="data.zipCode"
+          :counter="5"
+          :error-messages="zipCodeErrors"
+          label="Postleitzahl"
+          required
+          @blur="$v.data.zipCode.$touch()"
+        />
+      </v-col>
+        <v-col cols="12" sm="6" md="4">
+        <v-text-field
+          v-model="data.city"
+          :counter="20"
+          :error-messages="cityErrors"
+          label="Stadt"
+          required
+          @input="$v.data.city.$touch()"
+          @blur="$v.data.city.$touch()"
+        />
+      </v-col>
+      </v-row>
+    </v-form>
+  </v-container>
 </template>
 
 <script>
 import {
-  required, maxLength, minLength, numeric,
+  required,
+  maxLength,
+  minLength,
+  numeric,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import moment from 'moment';
 
 export default {
   props: ['isOpen'],
-  components: {
-  },
+  components: {},
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,

@@ -88,12 +88,12 @@ export default {
     getItems() {
       return this.items;
     },
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchy']),
+    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
     email() {
       return this.getJwtData.email;
     },
     getStammName() {
-      const obj = this.hierarchy.find((user) => user.id === this.items.scoutOrganisation);
+      const obj = this.hierarchyMapping.find((user) => user.id === this.items.scoutOrganisation);
       if (obj && obj.name) {
         return obj.name;
       }

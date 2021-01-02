@@ -5,97 +5,70 @@
     transition="dialog-top-transition"
     fullscreen
   >
-<v-card>
-  <v-stepper v-model="e1">
-    <v-stepper-header>
-      <v-stepper-step
-        :complete="e1 > 1"
-        step="1"
-      >
-      Persönliches
-      </v-stepper-step>
-
-      <v-divider></v-divider>
-
-      <v-stepper-step
-        :complete="e1 > 2"
-        step="2"
-      >
-        Essen
-      </v-stepper-step>
-
-      <v-divider></v-divider>
-
-      <v-stepper-step step="3">
-        Teilnahme
-      </v-stepper-step>
-    </v-stepper-header>
-
-    <v-stepper-items>
-      <v-stepper-content step="1">
-        <step-1/>
-
-        <v-btn
-          @click="active = false"
-          text>
-          Abbrechen
+    <v-card>
+      <v-toolbar dark color="primary">
+        <v-btn icon dark @click="active = false">
+          <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-btn
-          color="primary"
-          @click="e1 = 2"
-        >
-          Weiter
-        </v-btn>
-      </v-stepper-content>
+        <v-toolbar-title>Neuen Teilnehmer hinzufügen</v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+      <v-stepper v-model="e1" fullscreen>
+        <v-stepper-header>
+          <v-stepper-step :complete="e1 > 1" step="1">
+            Persönliches
+          </v-stepper-step>
 
-      <v-stepper-content step="2">
-        <step-2/>
+          <v-divider></v-divider>
 
-        <v-btn text
-          @click="e1 = 1"
-        >
-          Zurück
-        </v-btn>
-        <v-btn
-          color="primary"
-          @click="e1 = 3"
-        >
-          Weiter
-        </v-btn>
-      </v-stepper-content>
+          <v-stepper-step :complete="e1 > 2" step="2"> Essen </v-stepper-step>
 
-      <v-stepper-content step="3">
-        <step-3/>
+          <v-divider></v-divider>
 
-        <v-btn
-          @click="e1 = 2"
-          text>
-          Zurück
-        </v-btn>
-        <v-btn
-          color="primary"
-          @click="active = false"
-        >
-          Speichern
-        </v-btn>
-      </v-stepper-content>
-    </v-stepper-items>
-  </v-stepper>
-</v-card>
-    <v-snackbar
-      v-model="showError"
-      color="error"
-      y='top'
-      :timeout="timeout"
-    >
-      {{ 'Fehler beim Erstellen des Ortes' }}
-    </v-snackbar>
+          <v-stepper-step step="3"> Teilnahme </v-stepper-step>
+        </v-stepper-header>
+
+        <v-stepper-items class="fullscreen">
+          <v-stepper-content step="1">
+            <v-container>
+              <step-1 />
+              <v-divider class="my-4"/>
+              <v-btn color="primary" @click="e1 = 2"> Weiter </v-btn>
+            </v-container>
+          </v-stepper-content>
+
+          <v-stepper-content step="2">
+            <v-container>
+              <step-2 />
+              <v-divider class="my-4"/>
+              <v-btn text @click="e1 = 1"> Zurück </v-btn>
+              <v-btn color="primary" @click="e1 = 3"> Weiter </v-btn>
+            </v-container>
+          </v-stepper-content>
+
+          <v-stepper-content step="3">
+            <v-container>
+              <step-3 />
+              <v-divider class="my-4"/>
+              <v-btn @click="e1 = 2" text> Zurück </v-btn>
+              <v-btn color="primary" @click="active = false"> Speichern </v-btn>
+            </v-container>
+          </v-stepper-content>
+        </v-stepper-items>
+      </v-stepper>
+      <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
+        {{ 'Fehler beim Erstellen des Ortes' }}
+      </v-snackbar>
+    </v-card>
   </v-dialog>
 </template>
 
 <script>
 import {
-  required, maxLength, minLength, numeric,
+  required,
+  maxLength,
+  minLength,
+  numeric,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import Step1 from './steps/Step1.vue';
@@ -247,3 +220,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.fullscreen {
+  height: 100% !important;
+}
+</style>

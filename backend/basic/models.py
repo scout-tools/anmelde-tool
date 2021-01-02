@@ -228,7 +228,7 @@ class ParticipantRole(TimeStampMixin):
         Role, on_delete=models.PROTECT, null=True, blank=True)
 
 
-class EatHabitType(models.Model):
+class EatHabitType(TimeStampMixin):
     id = models.AutoField(
         auto_created=True,
         primary_key=True,
@@ -254,6 +254,7 @@ class EatHabit(models.Model):
         EatHabitType, on_delete=models.PROTECT, null=True, blank=True)
     participant = models.ForeignKey(
         Participant, on_delete=models.PROTECT, null=True, blank=True)
+    number_of_persons = models.IntegerField(blank=True, null=True)
 
 
 class TravelType(TimeStampMixin):

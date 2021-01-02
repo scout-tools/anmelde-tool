@@ -1,37 +1,46 @@
 [
     {
-        "model": "basic.role",
+        "model": "basic.travelType",
         "pk": 1,
         "fields": {
             "id": 1,
-            "name": "Kein Teilnahmer",
+            "name": "Reisebus",
             "description": ""
         }
     },
     {
-        "model": "basic.role",
+        "model": "basic.travelType",
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Teilnahmer",
+            "name": "PKW",
             "description": ""
         }
     },
     {
-        "model": "basic.role",
+        "model": "basic.travelType",
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "Gruppenführer",
+            "name": "ÖPNV",
             "description": ""
         }
     },
     {
-        "model": "basic.role",
+        "model": "basic.travelType",
         "pk": 4,
         "fields": {
             "id": 4,
-            "name": "Freie Helfer",
+            "name": "zu Fuß",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.travelType",
+        "pk": 5,
+        "fields": {
+            "id": 5,
+            "name": "zu Fuß",
             "description": ""
         }
     }

@@ -2,14 +2,18 @@
 from itertools import chain
 from rest_framework.response import Response
 from django.db.models.functions import ExtractWeek, ExtractYear
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import pagination, viewsets, mixins, generics, filters
+
 
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration,\
         ZipCode, Participant, ParticipantRole, Role, MethodOfTravel, Tent,\
         ScoutOrgaLevel, ParticipantExtended, EatHabitType, EatHabit, TravelType, TentType
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer,\
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantSerializer,\
-    ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer, ParticipantSerializer2
+    ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer,\
+    ParticipantSerializer2, ScoutOrgaLevelSerializer, ParticipantExtendedSerializer,\
+    EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, TentTypeSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -40,6 +44,8 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 class ZipCodeViewSet(viewsets.ModelViewSet):
     queryset = ZipCode.objects.all()
     serializer_class = ZipCodeSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['zip_code']
 
 
 class ParticipantViewSet(viewsets.ModelViewSet):
@@ -80,30 +86,30 @@ class ParticipantViewSet2(viewsets.ModelViewSet):
 
 
 class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
-    queryset = Tent.objects.all()
-    serializer_class = ScoutOrgaLevel
+    queryset = ScoutOrgaLevel.objects.all()
+    serializer_class = ScoutOrgaLevelSerializer
 
 
 class ParticipantExtendedViewSet(viewsets.ModelViewSet):
-    queryset = Tent.objects.all()
-    serializer_class = ParticipantExtended
+    queryset = ParticipantExtended.objects.all()
+    serializer_class = ParticipantExtendedSerializer
 
 
 class EatHabitTypeViewSet(viewsets.ModelViewSet):
-    queryset = Tent.objects.all()
-    serializer_class = EatHabitType
+    queryset = EatHabitType.objects.all()
+    serializer_class = EatHabitTypeSerializer
 
 
 class EatHabitViewSet(viewsets.ModelViewSet):
-    queryset = Tent.objects.all()
-    serializer_class = EatHabit
+    queryset = EatHabit.objects.all()
+    serializer_class = EatHabitSerializer
 
 
 class TravelTypeViewSet(viewsets.ModelViewSet):
-    queryset = Tent.objects.all()
-    serializer_class = TravelType
+    queryset = TravelType.objects.all()
+    serializer_class = TravelTypeSerializer
 
 
 class TentTypeViewSet(viewsets.ModelViewSet):
-    queryset = Tent.objects.all()
-    serializer_class = TentType
+    queryset = TentType.objects.all()
+    serializer_class = TentTypeSerializer
