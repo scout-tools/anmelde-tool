@@ -51,7 +51,9 @@
       <v-stepper-content step="2">
         <step-2/>
 
-        <v-btn text>
+        <v-btn text
+          @click="e1 = 1"
+        >
           Zurück
         </v-btn>
         <v-btn
