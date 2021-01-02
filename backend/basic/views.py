@@ -4,9 +4,12 @@ from rest_framework.response import Response
 from django.db.models.functions import ExtractWeek, ExtractYear
 from rest_framework import pagination, viewsets, mixins, generics, filters
 
-from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, Participant
-from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, ScoutHierarchySerializer, \
-    RegistrationSerializer, ZipCodeSerializer, ParticipantsSerializer, ParticipantsSerializer2
+from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration,\
+        ZipCode, Participant, ParticipantRole, Role, MethodOfTravel, Tent,\
+        ScoutOrgaLevel, ParticipantExtended, EatHabitType, EatHabit, TravelType, TentType
+from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer,\
+    ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantSerializer,\
+    ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -62,8 +65,6 @@ class MethodOfTravelViewSet(viewsets.ModelViewSet):
 class TentViewSet(viewsets.ModelViewSet):
     queryset = Tent.objects.all()
     serializer_class = TentSerializer
-    queryset = Participants.objects.all()
-    serializer_class = ParticipantsSerializer2
 
 
 class ParticipantViewSet2(viewsets.ModelViewSet):
@@ -76,3 +77,33 @@ class ParticipantViewSet2(viewsets.ModelViewSet):
         else:
             queryset = Participant.objects.all()
         return queryset
+
+
+class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
+    queryset = Tent.objects.all()
+    serializer_class = ScoutOrgaLevel
+
+
+class ParticipantExtendedViewSet(viewsets.ModelViewSet):
+    queryset = Tent.objects.all()
+    serializer_class = ParticipantExtended
+
+
+class EatHabitTypeViewSet(viewsets.ModelViewSet):
+    queryset = Tent.objects.all()
+    serializer_class = EatHabitType
+
+
+class EatHabitViewSet(viewsets.ModelViewSet):
+    queryset = Tent.objects.all()
+    serializer_class = EatHabit
+
+
+class TravelTypeViewSet(viewsets.ModelViewSet):
+    queryset = Tent.objects.all()
+    serializer_class = TravelType
+
+
+class TentTypeViewSet(viewsets.ModelViewSet):
+    queryset = Tent.objects.all()
+    serializer_class = TentType

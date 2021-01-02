@@ -1,6 +1,8 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, Participant, ParticipantRole, Role, MethodOfTravel, Tent
+from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode,\
+    Participant, ParticipantRole, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantExtended,\
+    EatHabitType, EatHabit, TravelType, TentType
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -112,7 +114,43 @@ class TentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ParticipantsSerializer(serializers.ModelSerializer):
+class ScoutOrgaLevelSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Participants
+        model = ScoutOrgaLevel
+        fields = '__all__'
+
+
+class ParticipantExtendedSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ParticipantExtended
+        fields = '__all__'
+
+
+class EatHabitTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = EatHabitType
+        fields = '__all__'
+
+
+class EatHabitSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = EatHabit
+        fields = '__all__'
+
+
+class TravelTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TravelType
+        fields = '__all__'
+
+
+class TentTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TentType
         fields = '__all__'
