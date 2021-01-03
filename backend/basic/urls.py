@@ -17,7 +17,6 @@ router.register(r'participant', views.ParticipantViewSet)
 event_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
 event_router.register(r'participants', views.ParticipantViewSet2, basename='event-participants')
 
-router.register(r'zip-code', views.ZipCodeViewSet)
 router.register(r'participant-extended', views.ParticipantExtendedViewSet)
 router.register(r'participant-role', views.ParticipantRoleViewSet)
 router.register(r'eat-habit-type', views.EatHabitTypeViewSet)

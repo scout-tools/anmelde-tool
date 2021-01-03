@@ -5,7 +5,8 @@
         "fields": {
             "id": 1,
             "name": "Kein Fleisch",
-            "description": ""
+            "description": "",
+            "is_custom": 0
         }
     },
     {
@@ -14,7 +15,8 @@
         "fields": {
             "id": 2,
             "name": "Keine Tierprodukte",
-            "description": ""
+            "description": "",
+            "is_custom": 0
         }
     },
     {
@@ -23,7 +25,8 @@
         "fields": {
             "id": 3,
             "name": "Kein Gluten",
-            "description": ""
+            "description": "",
+            "is_custom": 0
         }
     },
     {
@@ -32,7 +35,8 @@
         "fields": {
             "id": 4,
             "name": "Keine Hülsenfrüchte",
-            "description": ""
+            "description": "",
+            "is_custom": 0
         }
     },
     {
@@ -41,7 +45,8 @@
         "fields": {
             "id": 5,
             "name": "Kein Laktose",
-            "description": ""
+            "description": "",
+            "is_custom": 0
         }
     },
     {
@@ -50,7 +55,8 @@
         "fields": {
             "id": 6,
             "name": "Keine Eier",
-            "description": ""
+            "description": "",
+            "is_custom": 0
         }
     },
     {
@@ -59,7 +65,8 @@
         "fields": {
             "id": 7,
             "name": "Keine Nüße",
-            "description": ""
+            "description": "",
+            "is_custom": 0
         }
     }
 ]

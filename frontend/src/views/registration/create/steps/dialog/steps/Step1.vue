@@ -4,15 +4,17 @@
       <v-row>
         <v-col cols="12" sm="6" md="4">
           <v-combobox
-            v-model="select"
+            v-model="data.group"
             :items="items"
+            item-text="name"
+            item-value="id"
+            autofocus
             label="Gruppe"
           />
       </v-col>
         <v-col cols="12" sm="6" md="4">
         <v-text-field
           v-model="data.firstName"
-          autofocus
           :counter="20"
           :error-messages="firstNameErrors"
           label="Vorname"
@@ -95,25 +97,7 @@
         />
       </v-col>
         <v-col cols="12" sm="6" md="4">
-        <v-text-field
-          v-model="data.zipCode"
-          :counter="5"
-          :error-messages="zipCodeErrors"
-          label="Postleitzahl"
-          required
-          @blur="$v.data.zipCode.$touch()"
-        />
-      </v-col>
-        <v-col cols="12" sm="6" md="4">
-        <v-text-field
-          v-model="data.city"
-          :counter="20"
-          :error-messages="cityErrors"
-          label="Stadt"
-          required
-          @input="$v.data.city.$touch()"
-          @blur="$v.data.city.$touch()"
-        />
+          <zip-code-field/>
       </v-col>
       </v-row>
     </v-form>
@@ -130,9 +114,13 @@ import {
 import axios from 'axios';
 import moment from 'moment';
 
+import ZipCodeField from '@/components/field/ZipCodeField.vue';
+
 export default {
   props: ['isOpen'],
-  components: {},
+  components: {
+    ZipCodeField,
+  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
@@ -145,6 +133,13 @@ export default {
       zipCode: '',
       dateBirth: '',
     },
+    items: [{
+      id: 1,
+      name: 'Bären',
+    }, {
+      id: 2,
+      name: 'Döner',
+    }],
     dialog: {
       dateBirth: false,
     },
