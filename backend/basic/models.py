@@ -107,6 +107,16 @@ class ScoutHierarchy(TimeStampMixin):
         return self.__str__()
 
 
+class EventTag(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=100, blank=True)
+
+
 class Event(TimeStampMixin):
     id = models.AutoField(
         auto_created=True,
@@ -118,7 +128,7 @@ class Event(TimeStampMixin):
     location = models.ForeignKey(
         EventLocation, on_delete=models.PROTECT, null=True, blank=True)
     age_groups = models.ManyToManyField(AgeGroup, blank=True)
-    contacts = models.ManyToManyField(User, blank=True)
+    event_tags = models.ManyToManyField(EventTag, blank=True)
     start_time = models.DateTimeField(
         auto_now=False, auto_now_add=False, null=True, blank=True)
     end_time = models.DateTimeField(
@@ -133,8 +143,7 @@ class Event(TimeStampMixin):
     min_participation = models.IntegerField(blank=True, null=True)
     max_participation = models.IntegerField(blank=True, null=True)
     invitation_code = models.CharField(max_length=6, blank=True)
-    max_scout_orga_level = models.IntegerField(blank=True, null=True)
-    min_scout_orga_level = models.IntegerField(blank=True, null=True)
+    max_scout_orga_level = models.ForeignKey(ScoutOrgaLevel, on_delete=models.PROTECT, null=True, blank=True)
     is_public = models.BooleanField(default=0)
     # ToDo: add pdf attatchment
     # ToDo: add html description
@@ -144,6 +153,33 @@ class Event(TimeStampMixin):
 
     def __repr__(self):
         return self.__str__()
+
+
+class EventRole(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.__str__()
+
+
+class EventRoleMapping(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    eventRole = models.ForeignKey(EventRole, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
 
 class Registration(TimeStampMixin):

@@ -1,6 +1,6 @@
 [
     {
-        "model": "basic.participants",
+        "model": "basic.Participants",
         "pk": 1,
         "fields": {
             "id": 1,
@@ -11,7 +11,7 @@
         }
     },
     {
-        "model": "basic.participants",
+        "model": "basic.Participants",
         "pk": 2,
         "fields": {
             "id": 2,
@@ -22,7 +22,7 @@
         }
     },
     {
-        "model": "basic.participants",
+        "model": "basic.Participants",
         "pk": 3,
         "fields": {
             "id": 3,
@@ -33,7 +33,7 @@
         }
     },
     {
-        "model": "basic.participants",
+        "model": "basic.Participants",
         "pk": 4,
         "fields": {
             "id": 4,

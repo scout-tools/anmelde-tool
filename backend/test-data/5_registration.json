@@ -1,0 +1,29 @@
+[
+    {
+        "model": "basic.Registration",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "scout_organisation": 16,
+            "event": 1
+        }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "scout_organisation": 17,
+            "event": 1
+        }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "scout_organisation": 18,
+            "event": 1
+        }
+    }
+]
