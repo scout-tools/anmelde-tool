@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="top-margin">
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>

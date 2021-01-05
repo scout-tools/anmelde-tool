@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card v-if="hasSetExtendedUserInfos" max-width="600" class="mx-auto">
+    <v-card v-if="hasSetExtendedUserInfos" max-width="600" class="mx-auto top-margin">
       <v-card-title class="text-center justify-center py-6">
         Zu diesen Veranstaltungen kannst du dich Anmelden:
       </v-card-title>

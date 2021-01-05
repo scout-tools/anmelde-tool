@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="600" class="mx-auto">
+  <v-card class="mx-auto top-margin">
     <v-row justify="center">
       <v-stepper v-model="currentStep" vertical>
         <template v-for="(step, index) in steps">
@@ -45,11 +45,13 @@ import axios from 'axios';
 import StepAddParticipants from './steps/StepAddParticipants.vue';
 import StepConsent from './steps/StepConsent.vue';
 import StepConfirm from './steps/StepConfirm.vue';
+import StepFood from './steps/StepFood.vue';
 
 export default {
   components: {
     StepConsent,
     StepAddParticipants,
+    StepFood,
     StepConfirm,
   },
   data() {
@@ -69,11 +71,12 @@ export default {
       return [
         StepConsent,
         StepAddParticipants,
+        StepFood,
         StepConfirm,
       ];
     },
     headerSteps() {
-      return ['Einwilligung', 'Teilnehmer', 'Bestätigung'];
+      return ['Einwilligung', 'Teilnehmer', 'Essen', 'Bestätigung'];
     },
   },
   methods: {
@@ -84,7 +87,7 @@ export default {
       this.currentStep -= 1;
     },
     onRegistrationConfirmed() {
-      // onRegistrationConfirmed
+      this.$router.push({ name: 'eventOverview' });
     },
     callConfirmRegistration() {
       return axios.post(`${process.env.VUE_APP_API}basic/event/`, this.data.event);
