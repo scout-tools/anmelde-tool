@@ -136,6 +136,7 @@ class Event(TimeStampMixin):
     max_scout_orga_level = models.IntegerField(blank=True, null=True)
     min_scout_orga_level = models.IntegerField(blank=True, null=True)
     is_public = models.BooleanField(default=0)
+
     # ToDo: add pdf attatchment
     # ToDo: add html description
 
@@ -147,17 +148,10 @@ class Event(TimeStampMixin):
 
 
 class Registration(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
-    scout_organisation = models.ForeignKey(
-        ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
-    responsible_persons = models.ForeignKey(
-        User, on_delete=models.PROTECT, null=True, blank=True)
-    event = models.ForeignKey(
-        Event, on_delete=models.PROTECT, null=True, blank=True)
+    id = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+    scout_organisation = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
+    responsible_persons = models.ManyToManyField(User, null=True, blank=True)
+    event = models.ForeignKey(Event, on_delete=models.PROTECT, null=True, blank=True)
     is_confirmed = models.BooleanField(default=0)
     is_accepted = models.BooleanField(default=0)
 
@@ -169,10 +163,8 @@ class Participants(TimeStampMixin):
         serialize=False,
         verbose_name='ID')
     number_of_persons = models.IntegerField(blank=True, null=True)
-    age_group = models.ForeignKey(
-        AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
-    registration = models.ForeignKey(
-        Registration, on_delete=models.PROTECT, null=True, blank=True)
+    age_group = models.ForeignKey(AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
+    registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
 
 
 class MeatHabit(models.Model):

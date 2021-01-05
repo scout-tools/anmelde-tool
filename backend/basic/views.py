@@ -1,12 +1,10 @@
 # views.py
-from itertools import chain
-from rest_framework.response import Response
-from django.db.models.functions import ExtractWeek, ExtractYear
-from rest_framework import pagination, viewsets, mixins, generics, filters
-
+from rest_framework import viewsets
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, Participants
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, ScoutHierarchySerializer, \
-    RegistrationSerializer, ZipCodeSerializer, ParticipantsSerializer, ParticipantsSerializer2
+    RegistrationSerializer, ZipCodeSerializer, ParticipantsSerializer2
+from django.contrib.auth.models import User
+from Helper.user_creation import CreateUserExternally
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -32,6 +30,15 @@ class ScoutHierarchyViewSet(viewsets.ModelViewSet):
 class RegistrationViewSet(viewsets.ModelViewSet):
     queryset = Registration.objects.all()
     serializer_class = RegistrationSerializer
+
+    def create(self, request, *args, **kwargs):
+        emails = request.data['responsible_persons']
+        for user_email in emails:
+            user = User.objects.filter(username=user_email).first()
+            if user is None:
+                CreateUserExternally(user_email)
+        # TODO: Add email notification for adding a helper
+        return super().create(request, *args, **kwargs)
 
 
 class ZipCodeViewSet(viewsets.ModelViewSet):
