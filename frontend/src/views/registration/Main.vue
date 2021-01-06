@@ -101,7 +101,7 @@ export default {
       const eventId = this.$route.params.id;
       axios
         .post(`${this.API_URL}basic/registration/`, {
-          responsiblePersons: this.getJwtData.userId,
+          responsiblePersons: [this.getJwtData.email],
           scoutOrganisation: this.items.scoutOrganisation,
           event: eventId,
         })
