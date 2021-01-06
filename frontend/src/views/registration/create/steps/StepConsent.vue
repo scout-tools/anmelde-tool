@@ -4,8 +4,13 @@
       <v-row class="mt-2">
         <span class="text-left subtitle-1">
           <p>
-            Ich möchte mich zur Fahrt xxx anmelden.
-            Ich bin von meinem Stamm bevollmächtigt ihn hier verbindlich Anmelden zu dürfen.
+            Ich möchte mich zur <b>{{ currentEvent.name }}</b> anmelden. <br> <br>
+
+            Ich melde hiermit folgende Organsition <b> {{ myStamm }} </b> an. <br> <br>
+
+            Ich bin zukünfig der Ansprechpartner und bin unter meiner E-Mail Adresse: <br> <br>
+            <b>{{ myEmail }} </b> <br> <br>
+            zu erreichen.
           </p>
         </span>
       </v-row>
@@ -32,12 +37,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import { required } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
-  props: ['position', 'maxPos'],
+  props: ['position', 'maxPos', 'currentEvent', 'currentRegistration'],
   components: {
     PrevNextButtons,
   },
@@ -59,6 +66,15 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['isAuthenticated', 'hierarchyMapping', 'getJwtData']),
+    myStamm() {
+      return this.hierarchyMapping.find(
+        (user) => user.id === this.currentRegistration.scoutOrganisation,
+      ).name;
+    },
+    myEmail() {
+      return this.getJwtData.email;
+    },
   },
   methods: {
     validate() {

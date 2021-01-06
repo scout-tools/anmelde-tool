@@ -39,6 +39,16 @@
             </v-row>
             <v-row>
               <v-text-field
+                v-model="data.capacity"
+                :counter="100"
+                :error-messages="capacityError"
+                label="Schafkapazität (unter Corona Bedinungen)"
+                required
+                @input="$v.data.capacity.$touch()"
+                @blur="$v.data.capacity.$touch()"/>
+            </v-row>
+            <v-row>
+              <v-text-field
                 v-model="data.address"
                 :counter="30"
                 :error-messages="addressErrors"
@@ -58,13 +68,28 @@
             </v-row>
             <v-row>
               <v-text-field
-                v-model="data.city"
-                :counter="20"
-                :error-messages="cityErrors"
-                label="Stadt"
+                v-model="data.contactName"
+                :counter="5"
+                :error-messages="contactNameErrors"
+                label="Name des Kontakts"
                 required
-                @input="$v.data.name.$touch()"
-                @blur="$v.data.name.$touch()"/>
+                @blur="$v.data.contactName.$touch()"/>
+            </v-row>
+            <v-row>
+              <v-text-field
+                v-model="data.contactEmail"
+                :counter="5"
+                :error-messages="contactEmailErrors"
+                label="E-Mail des Kontakts"
+                @blur="$v.data.contactEmail.$touch()"/>
+            </v-row>
+            <v-row>
+              <v-text-field
+                v-model="data.contactPhone"
+                :counter="5"
+                :error-messages="contactPhoneErros"
+                label="Telefonnummer des Kontakts"
+                @blur="$v.data.contactPhone.$touch()"/>
             </v-row>
           </v-container>
         </v-form>
@@ -105,8 +130,11 @@ export default {
       name: '',
       description: '',
       address: '',
-      city: '',
       zipCode: '',
+      contactName: '',
+      contactEmail: '',
+      contactPhone: '',
+      capacity: '',
     },
     showError: false,
     showSuccess: false,
@@ -125,15 +153,21 @@ export default {
         required,
         maxLength: maxLength(30),
       },
-      city: {
-        required,
-        maxLength: maxLength(20),
-      },
       zipCode: {
         required,
         numeric,
         minLength: minLength(5),
         maxLength: maxLength(5),
+      },
+      contactName: {
+        required,
+        maxLength: maxLength(30),
+      },
+      contactEmail: {
+        maxLength: maxLength(30),
+      },
+      contactPhone: {
+        maxLength: maxLength(30),
       },
     },
   },

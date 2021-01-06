@@ -2,16 +2,16 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container>
       <v-row class="mt-2">
-        <span class="text-left subtitle-1">
+        <!-- <span class="text-left subtitle-1">
           <p><b>Zusammenfassung</b></p>
             Ich habe folgende Daten eingefügt:
-        </span>
+        </span> -->
       </v-row>
-      <v-divider class="text-left my-2" />
+      <!-- <v-divider class="text-left my-2" /> -->
       <v-row>
         <v-checkbox
           v-model="data.checkbox1"
-          :label="`Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zum Lager an`"
+          :label="`Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zum Lager an.`"
         >
         </v-checkbox>
       </v-row>

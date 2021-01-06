@@ -3,7 +3,10 @@
     <v-container>
       <v-divider class="text-left my-2" />
       <v-row class="mb-6">
-        <span class="subtitle-1"> Gebe die Anzahl der Teilnehmer an.</span>
+        <span class="subtitle-1"> Gebe die Anzahl der Teilnehmer an. </span>
+      </v-row>
+      <v-row class="mb-6">
+        <span class="subtitle-2"> Du kannst diese Zahlen bis zum 1.April noch ändern.</span>
       </v-row>
       <template v-for="(item, index) in getActiveAgeGroups">
         <v-row :key="`agegroup-${index}`">
@@ -31,6 +34,7 @@
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import { required, minLength, minValue } from 'vuelidate/lib/validators';
 
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
@@ -47,7 +51,15 @@ export default {
     data: {
     },
   }),
-  validations: {},
+  validations: {
+    data: {
+      required,
+      minLength: minLength(1),
+      $each: {
+        minValue: minValue(1),
+      },
+    },
+  },
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),
     total() {
@@ -66,6 +78,9 @@ export default {
     },
   },
   methods: {
+    greaterThanZero(value) {
+      return value > 0;
+    },
     validate() {
       this.$v.$touch();
       this.valid = !this.$v.$error;
