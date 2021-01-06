@@ -303,7 +303,6 @@ class EatHabit(models.Model):
         Participant, on_delete=models.PROTECT, null=True, blank=True)
     number_of_persons = models.IntegerField(blank=True, null=True)
 
-
     def __str__(self):
         return self.name
 
