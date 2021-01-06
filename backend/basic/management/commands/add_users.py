@@ -81,42 +81,41 @@ class Command(BaseCommand):
 
         if not UserModel.objects.filter(username='hagi@superadmin.de').exists():
             user = UserModel.objects.create(
-                username='hagi@superadmin.de', password='hagi')
+                username='hagi@superadmin.de', password='hagi1234')
             user.is_superuser = True
             user.is_staff = True
             user.save()
 
         if not UserModel.objects.filter(username='hagi-kasse@bundesfahrt.de').exists():
-            user = UserModel.objects.create(
-                username='hagi-kasse@bundesfahrt.de', password='hagi')
+            user = UserModel.objects.create(username='hagi-kasse@bundesfahrt.de', password='hagi1234')
             user.is_superuser = False
             user.is_staff = True
             user.save()
 
         if not UserModel.objects.filter(username='hagi-lagerleitung@bundesfahrt.de').exists():
             user = UserModel.objects.create(
-                username='hagi-lagerleitung@bundesfahrt.de', password='hagi')
+                username='hagi-lagerleitung@bundesfahrt.de', password='hagi1234')
             user.is_superuser = False
             user.is_staff = True
             user.save()
 
         if not UserModel.objects.filter(username='hagi-lagerleitung@dpv.de').exists():
             user = UserModel.objects.create(
-                username='hagi-lagerleitung@dpv.de', password='hagi')
+                username='hagi-lagerleitung@dpv.de', password='hagi1234')
             user.is_superuser = False
             user.is_staff = True
             user.save()
 
         if not UserModel.objects.filter(username='hagi-kueche@dpv.de').exists():
             user = UserModel.objects.create(
-                username='hagi-kueche@dpv.de', password='hagi')
+                username='hagi-kueche@dpv.de', password='hagi1234')
             user.is_superuser = False
             user.is_staff = True
             user.save()
 
         if not UserModel.objects.filter(username='hagi-kueche@keinerechte.de').exists():
             user = UserModel.objects.create(
-                username='hagi-kueche@keinerechte.de', password='hagi')
+                username='hagi-kueche@keinerechte.de', password='hagi1234')
             user.is_superuser = False
             user.is_staff = True
             user.save()

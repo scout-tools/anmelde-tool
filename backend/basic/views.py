@@ -1,27 +1,31 @@
 # views.py
-from itertools import chain
-from rest_framework.response import Response
-from django.db.models.functions import ExtractWeek, ExtractYear
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import pagination, viewsets, mixins, generics, filters
 from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
 
 from helper.user_creation import CreateUserExternally
 
+from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
+    ZipCode, Participant, ParticipantRole, Role, MethodOfTravel, Tent, \
+    ScoutOrgaLevel, ParticipantExtended, EatHabitType, EatHabit, TravelType, TentType
 
-from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration,\
-        ZipCode, Participant, ParticipantRole, Role, MethodOfTravel, Tent,\
-        ScoutOrgaLevel, ParticipantExtended, EatHabitType, EatHabit, TravelType, TentType
-from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer,\
-    ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantSerializer,\
-    ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer,\
-    ParticipantSerializer2, ScoutOrgaLevelSerializer, ParticipantExtendedSerializer,\
-    EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, TentTypeSerializer
+from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
+    ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantSerializer, \
+    ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
+    ParticipantSerializer2, ScoutOrgaLevelSerializer, ParticipantExtendedSerializer, \
+    EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, TentTypeSerializer, EventOverviewSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+
+
+class EventOverviewViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Event.objects.all()
+    serializer_class = EventOverviewSerializer
 
 
 class AgeGroupViewSet(viewsets.ModelViewSet):
