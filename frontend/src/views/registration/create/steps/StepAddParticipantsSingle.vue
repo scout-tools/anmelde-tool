@@ -1,22 +1,44 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
     <v-container>
-      <v-divider class="text-left my-2" />
-      <v-row class="mb-6">
-        <span class="subtitle-1"> Gebe die Anzahl der Teilnehmer an.</span>
-      </v-row>
-      <template v-for="(item, index) in getActiveAgeGroups">
-        <v-row :key="`agegroup-${index}`">
-          <v-text-field v-model="data[item.id]" :label="`Anzahl ${item.name}`" required>
-          </v-text-field>
-        </v-row>
-      </template>
-      <v-divider class="my-3" />
-      <v-row class="mb-6">
-        <span class="subtitle-1">Du hast Ingesamt {{ total }} Teilnehmer angemeldet</span>
-      </v-row>
-      <v-divider class="my-3" />
+    <v-btn
+      color="success"
+      @click="newUser"
+    >
+      <v-icon left>
+        mdi-plus
+      </v-icon>
+      Neuen Teilnehmer hinzufügen
+    </v-btn>
+    <v-list>
+      <v-subheader>Teilnehmer</v-subheader>
+      <v-list-item-group
+        color="primary"
+      >
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+        >
+        <v-list-item-avatar>
+          <v-icon
+          color="black"
+            dark
+            v-text="item.icon"
+          ></v-icon>
+        </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.text"></v-list-item-title>
+          </v-list-item-content>
+        <v-list-item-action>
+          <v-btn dense icon>
+            <v-icon color="grey lighten-1">mdi-information</v-icon>
+          </v-btn>
+        </v-list-item-action>
+        </v-list-item>
 
+      </v-list-item-group>
+    </v-list>
+      <v-divider class="my-3" />
       <prev-next-buttons
         :position="position"
         :max-pos="maxPos"
@@ -25,6 +47,7 @@
         @submitStep="submitStep()"
       />
     </v-container>
+    <create-single-person-dialog ref="createSinglePersonDialog"/>
   </v-form>
 </template>
 
@@ -33,19 +56,25 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import CreateSinglePersonDialog from './dialog/CreateSinglePersonDialog.vue';
 
 export default {
   name: 'StepNameDescription',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,
+    CreateSinglePersonDialog,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: false,
-    data: {
-    },
+    selectedItem: 1,
+    items: [
+      { text: 'Thea', icon: 'mdi-account' },
+      { text: 'Robert', icon: 'mdi-account' },
+      { text: 'Alina', icon: 'mdi-account' },
+    ],
   }),
   validations: {},
   computed: {
@@ -79,7 +108,7 @@ export default {
         return;
       }
 
-      this.addParticipants();
+      this.$emit('nextStep');
     },
     submitStep() {
       this.validate();
@@ -105,6 +134,9 @@ export default {
       Promise.all(promises).then(() => {
         this.$emit('nextStep');
       });
+    },
+    newUser() {
+      this.$refs.createSinglePersonDialog.openDialog();
     },
   },
 };

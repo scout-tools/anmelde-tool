@@ -48,6 +48,6 @@
   },
   "prettier": {
     "singleQuote": true,
-    "trailingComma": "es6"
+    "trailingComma": "all"
   }
 }

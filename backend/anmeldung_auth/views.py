@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import viewsets, generics
 from rest_framework_simplejwt.views import TokenObtainPairView
-from Helper.email import send_auth_mail
+from helper.email import send_auth_mail
 from .serializers import MyTokenObtainPairSerializer, UserExtendedSerializer, AuthSerializer
 from .models import UserExtended
 

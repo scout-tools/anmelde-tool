@@ -135,15 +135,15 @@ export default {
         ? (item, search, textKey) => item[textKey].indexOf(search) > -1
         : undefined;
     },
-    ...mapGetters(['isAuthenticated', 'hierarchy']),
+    ...mapGetters(['isAuthenticated', 'hierarchyMapping']),
     selected() {
       if (!this.active.length) return undefined;
       const id = this.active[0];
-      if (!(this.hierarchy.find((user) => user.id === id).level === 5)) return undefined;
-      return this.hierarchy.find((user) => user.id === id);
+      if (!(this.hierarchyMapping.find((user) => user.id === id).level === 5)) return undefined;
+      return this.hierarchyMapping.find((user) => user.id === id);
     },
     hierarchyNested() {
-      return this.nest(this.hierarchy);
+      return this.nest(this.hierarchyMapping);
     },
   },
 
@@ -189,8 +189,8 @@ export default {
       if (this.active && this.active.length) {
         if (!this.active.length) return undefined;
         const id = this.active[0];
-        if (!(this.hierarchy.find((user) => user.id === id).level === 5)) return undefined;
-        const zipCodeId = this.hierarchy.find((user) => user.id === id).zipCode;
+        if (!(this.hierarchyMapping.find((user) => user.id === id).level === 5)) return undefined;
+        const zipCodeId = this.hierarchyMapping.find((user) => user.id === id).zipCode;
         return this.loadZipCodeData(zipCodeId);
       }
       return [];

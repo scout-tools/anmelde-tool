@@ -1,0 +1,47 @@
+[
+    {
+        "model": "basic.travelType",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "name": "Reisebus",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.travelType",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "name": "PKW",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.travelType",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "name": "ÖPNV",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.travelType",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "name": "zu Fuß",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.travelType",
+        "pk": 5,
+        "fields": {
+            "id": 5,
+            "name": "zu Fuß",
+            "description": ""
+        }
+    }
+]

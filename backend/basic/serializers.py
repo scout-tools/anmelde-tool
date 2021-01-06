@@ -1,8 +1,10 @@
 # serializers.py
 from rest_framework import serializers
+from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode,\
+    Participant, ParticipantRole, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantExtended,\
+    EatHabitType, EatHabit, TravelType, TentType
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
-from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, Participants
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -48,7 +50,14 @@ class ZipCodeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ParticipantsSerializer2(serializers.ModelSerializer):
+class ParticipantSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Participant
+        fields = '__all__'
+
+
+class ParticipantSerializer2(serializers.ModelSerializer):
     lon = serializers.SerializerMethodField('get_lon')
     lat = serializers.SerializerMethodField('get_lat')
     name = serializers.SerializerMethodField('get_name')
@@ -62,32 +71,96 @@ class ParticipantsSerializer2(serializers.ModelSerializer):
         else:
             return scout_organisation.name
 
-    def get_lon(self, par: Participants):
+    def get_lon(self, par: Participant):
         if par.registration.scout_organisation.zip_code is not None:
             lon = par.registration.scout_organisation.zip_code.lon
         else:
             lon = 10.451526
         return lon
 
-    def get_lat(self, par: Participants):
+    def get_lat(self, par: Participant):
         if par.registration.scout_organisation.zip_code is not None:
             lat = par.registration.scout_organisation.zip_code.lat
         else:
             lat = 51.165691
         return lat
 
-    def get_bund(self, par: Participants):
+    def get_bund(self, par: Participant):
         return self.get_bund_name(par.registration.scout_organisation)
 
-    def get_name(self, par: Participants):
+    def get_name(self, par: Participant):
         return par.registration.scout_organisation.name
 
     class Meta:
-        model = Participants
+        model = Participant
         fields = '__all__'
 
 
-class ParticipantsSerializer(serializers.ModelSerializer):
+class ParticipantRoleSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Participants
+        model = ParticipantRole
+        fields = '__all__'
+
+
+class RoleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Role
+        fields = '__all__'
+
+
+class MethodOfTravelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MethodOfTravel
+        fields = '__all__'
+
+
+class TentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tent
+        fields = '__all__'
+
+
+class ScoutOrgaLevelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ScoutOrgaLevel
+        fields = '__all__'
+
+
+class ParticipantExtendedSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ParticipantExtended
+        fields = '__all__'
+
+
+class EatHabitTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = EatHabitType
+        fields = '__all__'
+
+
+class EatHabitSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = EatHabit
+        fields = '__all__'
+
+
+class TravelTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TravelType
+        fields = '__all__'
+
+
+class TentTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TentType
         fields = '__all__'

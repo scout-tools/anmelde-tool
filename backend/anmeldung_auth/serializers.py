@@ -3,7 +3,7 @@ from .models import UserExtended
 from rest_framework import serializers, status, exceptions
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 import datetime as dt
-from Helper.user_creation import login_or_create_user
+from helper.user_creation import login_or_create_user
 
 
 # User serializer

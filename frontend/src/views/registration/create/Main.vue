@@ -42,17 +42,19 @@
 <script>
 import axios from 'axios';
 
+import StepAddParticipantsSingle from './steps/StepAddParticipantsSingle.vue';
 import StepAddParticipants from './steps/StepAddParticipants.vue';
-import StepConsent from './steps/StepConsent.vue';
 import StepConfirm from './steps/StepConfirm.vue';
+import StepConsent from './steps/StepConsent.vue';
 import StepFood from './steps/StepFood.vue';
 
 export default {
   components: {
-    StepConsent,
+    StepAddParticipantsSingle,
     StepAddParticipants,
     StepFood,
     StepConfirm,
+    StepConsent,
   },
   data() {
     return {
@@ -76,7 +78,7 @@ export default {
         && this.currentEvent.eventTags.includes(1)) {
         return [
           StepConsent,
-          StepFood,
+          StepAddParticipantsSingle,
           StepConfirm,
         ];
       }
@@ -98,7 +100,7 @@ export default {
       ];
     },
     headerSteps() {
-      return ['Einwilligung', 'Teilnehmer', 'Essen', 'Bestätigung'];
+      return ['Teilnehmer', 'Essen', 'Bestätigung'];
     },
   },
   methods: {

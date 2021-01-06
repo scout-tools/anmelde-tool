@@ -25,14 +25,5 @@
             "name": "Rover",
             "description": ""
         }
-    },
-    {
-        "model": "basic.ageGroup",
-        "pk": 4,
-        "fields": {
-            "id": 4,
-            "name": "Altrover",
-            "description": ""
-        }
     }
 ]

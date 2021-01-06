@@ -1,0 +1,20 @@
+[
+    {
+        "model": "basic.tentType",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "name": "Kothe",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.tentType",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "name": "Jurte",
+            "description": ""
+        }
+    }
+]
