@@ -33,7 +33,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
         if roles:
             return roles
         else:
-            return {}
+            return []
 
 
 class AgeGroupSerializer(serializers.ModelSerializer):
