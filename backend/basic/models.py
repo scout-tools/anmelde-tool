@@ -31,6 +31,22 @@ class ZipCode(TimeStampMixin):
         return self.__str__()
 
 
+class EventLocationType(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.__str__()
+
+
 class EventLocation(TimeStampMixin):
     id = models.AutoField(
         auto_created=True,
@@ -39,11 +55,14 @@ class EventLocation(TimeStampMixin):
         verbose_name='ID')
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=200, blank=True)
+    location_type = models.ForeignKey(EventLocationType, on_delete=models.PROTECT, null=True, blank=True)
     zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     address = models.CharField(max_length=60, blank=True)
     contact_name = models.CharField(max_length=30, blank=True)
     contact_email = models.CharField(max_length=30, blank=True)
     contact_phone = models.CharField(max_length=30, blank=True)
+    is_public = models.BooleanField(default=0)
+    capacity = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name

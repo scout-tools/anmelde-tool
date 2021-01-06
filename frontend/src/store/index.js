@@ -19,8 +19,12 @@ export default new Vuex.Store({
     travelTypeTypeMapping: [],
     tentTypeMapping: [],
     currentEventParticipants: [],
+    dpvAddedLocation: false,
   },
   getters: {
+    dpvAddedLocation(state) {
+      return state.dpvAddedLocation;
+    },
     getJwtData(state) {
       return VueJwtDecode.decode(state.accessToken);
     },

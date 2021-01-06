@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "id": 1,
-            "event_id": 4,
+            "event_id": 1,
             "agegroup_id": 1
         }
     },

@@ -20,6 +20,7 @@
                 :ref="step.name"
                 :position="index + 1"
                 :max-pos="steps.length"
+                :currentRegistration="currentRegistration"
                 :currentEvent="currentEvent"
                 @prevStep="prevStep()"
                 @nextStep="nextStep()"
@@ -47,6 +48,8 @@ import StepAddParticipants from './steps/StepAddParticipants.vue';
 import StepConfirm from './steps/StepConfirm.vue';
 import StepConsent from './steps/StepConsent.vue';
 import StepFood from './steps/StepFood.vue';
+import StepBdpDpvLocation from './steps/StepBdpDpvLocation.vue';
+import StepBdpDpVPreferences from './steps/StepBdpDpVPreferences.vue';
 
 export default {
   components: {
@@ -63,6 +66,7 @@ export default {
       showSuccess: false,
       timeout: 7000,
       currentEvent: [],
+      currentRegistration: [],
       data: {
         event: {
           responsiblePersons: ['robert@hratuga.de'],
@@ -89,6 +93,8 @@ export default {
         return [
           StepConsent,
           StepAddParticipants,
+          StepBdpDpvLocation,
+          StepBdpDpVPreferences,
           StepConfirm,
         ];
       }
@@ -136,7 +142,7 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          console.log(res);
+          this.currentRegistration = res.data;
           this.getEvent(res.data.event);
         })
         .catch(() => {
