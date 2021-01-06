@@ -1,6 +1,6 @@
 [
     {
-        "model": "basic.eatHabitType",
+        "model": "basic.EatHabitType",
         "pk": 1,
         "fields": {
             "id": 1,
@@ -10,7 +10,7 @@
         }
     },
     {
-        "model": "basic.eatHabitType",
+        "model": "basic.EatHabitType",
         "pk": 2,
         "fields": {
             "id": 2,
@@ -20,7 +20,7 @@
         }
     },
     {
-        "model": "basic.eatHabitType",
+        "model": "basic.EatHabitType",
         "pk": 3,
         "fields": {
             "id": 3,
@@ -30,7 +30,7 @@
         }
     },
     {
-        "model": "basic.eatHabitType",
+        "model": "basic.EatHabitType",
         "pk": 4,
         "fields": {
             "id": 4,
@@ -40,7 +40,7 @@
         }
     },
     {
-        "model": "basic.eatHabitType",
+        "model": "basic.EatHabitType",
         "pk": 5,
         "fields": {
             "id": 5,
@@ -50,7 +50,7 @@
         }
     },
     {
-        "model": "basic.eatHabitType",
+        "model": "basic.EatHabitType",
         "pk": 6,
         "fields": {
             "id": 6,
@@ -60,7 +60,7 @@
         }
     },
     {
-        "model": "basic.eatHabitType",
+        "model": "basic.EatHabitType",
         "pk": 7,
         "fields": {
             "id": 7,

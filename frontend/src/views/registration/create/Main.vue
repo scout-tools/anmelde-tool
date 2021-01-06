@@ -8,7 +8,7 @@
             :complete="currentStep > index + 1"
             :step="index + 1"
           >
-            {{ headerSteps[index] }}
+            {{ `${index + 1} Schritt`  }}
           </v-stepper-step>
 
           <v-divider :key="index"></v-divider>
@@ -42,15 +42,19 @@
 <script>
 import axios from 'axios';
 
-import StepAddParticipants from './steps/StepAddParticipantsSingle.vue';
+import StepAddParticipantsSingle from './steps/StepAddParticipantsSingle.vue';
+import StepAddParticipants from './steps/StepAddParticipants.vue';
 import StepConfirm from './steps/StepConfirm.vue';
+import StepConsent from './steps/StepConsent.vue';
 import StepFood from './steps/StepFood.vue';
 
 export default {
   components: {
+    StepAddParticipantsSingle,
     StepAddParticipants,
     StepFood,
     StepConfirm,
+    StepConsent,
   },
   data() {
     return {
@@ -60,13 +64,36 @@ export default {
       timeout: 7000,
       currentEvent: [],
       data: {
-        event: {},
+        event: {
+          responsiblePersons: ['robert@hratuga.de'],
+        },
       },
     };
   },
   computed: {
     steps() {
+      // Bundesfahrt
+      if (this.currentEvent
+        && this.currentEvent.eventTags
+        && this.currentEvent.eventTags.includes(1)) {
+        return [
+          StepConsent,
+          StepAddParticipantsSingle,
+          StepConfirm,
+        ];
+      }
+      // BdP-DPV
+      if (this.currentEvent
+        && this.currentEvent.eventTags
+        && this.currentEvent.eventTags.includes(2)) {
+        return [
+          StepConsent,
+          StepAddParticipants,
+          StepConfirm,
+        ];
+      }
       return [
+        StepConsent,
         StepAddParticipants,
         StepFood,
         StepConfirm,
@@ -87,10 +114,14 @@ export default {
       this.$router.push({ name: 'eventOverview' });
     },
     callConfirmRegistration() {
-      return axios.post(`${process.env.VUE_APP_API}basic/event/`, this.data.event);
+      return axios.post(`${process.env.VUE_APP_API}basic/event/`, {
+        responsiblePersons: ['robert@hratuga.de'],
+        event: 1,
+        scoutOrganisation: 39,
+      });
     },
-    getEvent() {
-      const path = `${process.env.VUE_APP_API}basic/event/${this.$route.params.event}/`;
+    getEvent(id) {
+      const path = `${process.env.VUE_APP_API}basic/event/${parseInt(id, 10)}/`;
       axios
         .get(path)
         .then((res) => {
@@ -100,9 +131,29 @@ export default {
           this.showError = true;
         });
     },
+    getRegistration() {
+      const path = `${process.env.VUE_APP_API}basic/registration/${this.$route.params.id}/`;
+      axios
+        .get(path)
+        .then((res) => {
+          console.log(res);
+          this.getEvent(res.data.event);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
+    loadData() {
+      if (!this.$route.params.event) {
+        this.getRegistration();
+      } else {
+        this.getEvent(this.$route.params.event);
+      }
+    },
   },
   created() {
-    this.getEvent();
+    this.loadData();
   },
+
 };
 </script>

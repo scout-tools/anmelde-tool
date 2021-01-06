@@ -39,8 +39,8 @@ class Command(BaseCommand):
 
         if not UserModel.objects.filter(username='many@dpv-online.de').exists():
             user_5 = UserModel.objects.create(
-                username='many@dpv.de', password='many')
-            user_5.is_superuser = True
+                username='many@dpvonline.de', password='many')
+            user_5.is_superuser = False
             user_5.is_staff = True
             user_5.save()
 
@@ -61,35 +61,64 @@ class Command(BaseCommand):
         if not UserModel.objects.filter(username='hagi@hratuga.de').exists():
             user_7 = UserModel.objects.create(
                 username='hagi@hratuga.de', password='hagi')
-            user_7.is_superuser = True
+            user_7.is_superuser = False
             user_7.is_staff = True
             user_7.save()
 
+        if not UserModel.objects.filter(username='tonibaer97@gmail.com').exists():
+            user_8 = UserModel.objects.create(
+                username='tonibaer97@gmail.com', password='toni')
+            user_8.is_superuser = False
+            user_8.is_staff = False
+            user_8.save()
+
+        if not UserModel.objects.filter(username='kethe@pbn.de').exists():
+            user = UserModel.objects.create(
+                username='kethe@pbn.de', password='kethe')
+            user.is_superuser = False
+            user.is_staff = False
+            user.save()
+
+        if not UserModel.objects.filter(username='hagi@superadmin.de').exists():
+            user = UserModel.objects.create(
+                username='hagi@superadmin.de', password='hagi')
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
+
+        if not UserModel.objects.filter(username='hagi-kasse@bundesfahrt.de').exists():
+            user = UserModel.objects.create(
+                username='hagi-kasse@bundesfahrt.de', password='hagi')
+            user.is_superuser = False
+            user.is_staff = True
+            user.save()
+
+        if not UserModel.objects.filter(username='hagi-lagerleitung@bundesfahrt.de').exists():
+            user = UserModel.objects.create(
+                username='hagi-lagerleitung@bundesfahrt.de', password='hagi')
+            user.is_superuser = False
+            user.is_staff = True
+            user.save()
+
+        if not UserModel.objects.filter(username='hagi-lagerleitung@dpv.de').exists():
+            user = UserModel.objects.create(
+                username='hagi-lagerleitung@dpv.de', password='hagi')
+            user.is_superuser = False
+            user.is_staff = True
+            user.save()
+
+        if not UserModel.objects.filter(username='hagi-kueche@dpv.de').exists():
+            user = UserModel.objects.create(
+                username='hagi-kueche@dpv.de', password='hagi')
+            user.is_superuser = False
+            user.is_staff = True
+            user.save()
+
+        if not UserModel.objects.filter(username='hagi-kueche@keinerechte.de').exists():
+            user = UserModel.objects.create(
+                username='hagi-kueche@keinerechte.de', password='hagi')
+            user.is_superuser = False
+            user.is_staff = True
+            user.save()
+
         print('user created')
-
-        # dpv_lagerleitung
-        user = User.objects.get(username='joto@dpbm.de')
-        new_group = Group.objects.get_or_create(name='dpv_lagerleitung')
-        user.groups.add(new_group[0].id)
-
-        # dpv_kueche
-        user = User.objects.get(username='caro@mittelerde.de')
-        new_group = Group.objects.get_or_create(name='dpv_kueche')
-        user.groups.add(new_group[0].id)
-
-        # dpv_kasse
-        user = User.objects.get(username='many@dpv.de')
-        new_group = Group.objects.get_or_create(name='dpv_kasse')
-        user.groups.add(new_group[0].id)
-
-        # dpv_logistic
-        user = User.objects.get(username='many@dpv.de')
-        new_group = Group.objects.get_or_create(name='dpv_logistic')
-        user.groups.add(new_group[0].id)
-
-        # dpv_social_media
-        user = User.objects.get(username='kai@dpv.de')
-        new_group = Group.objects.get_or_create(name='dpv_social_media')
-        user.groups.add(new_group[0].id)
-
-        print('groups created')

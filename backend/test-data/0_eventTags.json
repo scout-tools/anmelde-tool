@@ -1,0 +1,20 @@
+[
+    {
+        "model": "basic.EventTag",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "name": "Bundesfahrt",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.EventTag",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "name": "BdP-DPB-Aktion",
+            "description": ""
+        }
+    }
+]

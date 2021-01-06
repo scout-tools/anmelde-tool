@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from django.db.models.functions import ExtractWeek, ExtractYear
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import pagination, viewsets, mixins, generics, filters
+from django.contrib.auth.models import User
+
+from helper.user_creation import CreateUserExternally
 
 
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration,\
@@ -39,6 +42,15 @@ class ScoutHierarchyViewSet(viewsets.ModelViewSet):
 class RegistrationViewSet(viewsets.ModelViewSet):
     queryset = Registration.objects.all()
     serializer_class = RegistrationSerializer
+
+    def create(self, request, *args, **kwargs):
+        emails = request.data['responsible_persons']
+        for user_email in emails:
+            user = User.objects.filter(username=user_email).first()
+            if user is None:
+                CreateUserExternally(user_email)
+        # TODO: Add email notification for adding a helper
+        return super().create(request, *args, **kwargs)
 
 
 class ZipCodeViewSet(viewsets.ModelViewSet):

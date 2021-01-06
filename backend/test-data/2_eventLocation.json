@@ -6,7 +6,6 @@
             "id": 1,
             "name": "Max Hof",
             "description": "",
-            "city": "BSA",
             "address": "Dönerstr. 88"
         
         }
@@ -18,7 +17,6 @@
             "id": 2,
             "name": "Brexbachtal",
             "description": "",
-            "city": "BSA",
             "address": "Dönerstr. 7"
         }
     },
@@ -29,7 +27,6 @@
             "id": 3,
             "name": "Hoffeld",
             "description": "",
-            "city": "ABC",
             "address": "Dönerstr. 4"
         }
     }

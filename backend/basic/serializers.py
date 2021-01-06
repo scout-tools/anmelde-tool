@@ -3,37 +3,41 @@ from rest_framework import serializers
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode,\
     Participant, ParticipantRole, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantExtended,\
     EatHabitType, EatHabit, TravelType, TentType
+from rest_framework.fields import Field
+from django.contrib.auth.models import User
 
 
 class EventSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Event
         fields = '__all__'
 
 
 class AgeGroupSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = AgeGroup
         fields = '__all__'
 
 
 class EventLocationSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = EventLocation
         fields = '__all__'
 
 
 class ScoutHierarchySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ScoutHierarchy
         fields = '__all__'
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    responsible_persons = serializers.SlugRelatedField(
+        many=True,
+        read_only=False,
+        queryset=User.objects.all(),
+        slug_field='username'
+    )
 
     class Meta:
         model = Registration
@@ -41,7 +45,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 class ZipCodeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ZipCode
         fields = '__all__'

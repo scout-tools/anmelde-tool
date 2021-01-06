@@ -1,0 +1,46 @@
+[
+    {
+        "model": "basic.Participant",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "number_of_persons": 4,
+            "registration_id": 2,
+            "age_group_id": 1,
+            "created_at": "2020-12-20 17:17:58.124440"
+        }
+    },
+    {
+        "model": "basic.Participant",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "number_of_persons": 200,
+            "registration_id": 2,
+            "age_group_id": 3,
+            "created_at": "2020-12-23 17:17:58.124440"
+        }
+    },
+    {
+        "model": "basic.Participant",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "number_of_persons": 50,
+            "registration_id": 3,
+            "age_group_id": 1,
+            "created_at": "2020-12-25 17:17:58.124440"
+        }
+    },
+    {
+        "model": "basic.Participant",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "number_of_persons": 33,
+            "registration_id": 3,
+            "age_group_id": 3,
+            "created_at": "2020-12-27 17:17:58.124440"
+        }
+    }
+]
