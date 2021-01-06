@@ -102,6 +102,9 @@ export default new Vuex.Store({
     apiIsDown(state, status) {
       state.apiIsDown = status;
     },
+    setDpvAddedLocation(state, newData) {
+      state.dpvAddedLocation = newData;
+    },
   },
   actions: {
   },

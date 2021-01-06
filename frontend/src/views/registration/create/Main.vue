@@ -58,6 +58,8 @@ export default {
     StepFood,
     StepConfirm,
     StepConsent,
+    StepBdpDpvLocation,
+    StepBdpDpVPreferences,
   },
   data() {
     return {
