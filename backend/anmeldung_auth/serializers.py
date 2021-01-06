@@ -1,9 +1,9 @@
-from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
 from .models import UserExtended
 from rest_framework import serializers, status, exceptions
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 import datetime as dt
+from Helper.user_creation import login_or_create_user
 
 
 # User serializer
@@ -44,25 +44,10 @@ class AuthSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, data):
-        user = User.objects.filter(email=data['email']).first()
-        if user is None:
-            user = User.objects.create_user(data['email'],
-                                            email=data['email'],
-                                            password=data['password'],
-                                            first_name=data['first_name'],
-                                            last_name=data['last_name'])
-
-            data['newly_registered'] = True
-            data['username'] = data['email'].split('@', 1)[0]
-            data['user'] = user.email
-        else:
-            user.set_password(data['password'])
-            data['username'] = user.userextended.scout_name
-            data['user'] = user.email
-            data['newly_registered'] = False
-            user.save()
-
+        data = login_or_create_user(data)
         return data
+
+
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
