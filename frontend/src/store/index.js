@@ -20,6 +20,7 @@ export default new Vuex.Store({
     tentTypeMapping: [],
     currentEventParticipants: [],
     dpvAddedLocation: false,
+    apiIsDown: false,
   },
   getters: {
     dpvAddedLocation(state) {
@@ -58,6 +59,9 @@ export default new Vuex.Store({
     tentTypeMapping(state) {
       return state.tentTypeMapping;
     },
+    apiIsDown(state) {
+      return state.apiIsDown;
+    },
   },
   mutations: {
     setTokens(state, access, refresh) {
@@ -94,6 +98,9 @@ export default new Vuex.Store({
     },
     setTentTypeMapping(state, newData) {
       state.tentTypeMapping = newData;
+    },
+    apiIsDown(state, status) {
+      state.apiIsDown = status;
     },
   },
   actions: {
