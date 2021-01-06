@@ -1,7 +1,7 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode,\
-    Participant, ParticipantRole, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantExtended,\
+from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, \
+    Participant, ParticipantRole, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantExtended, \
     EatHabitType, EatHabit, TravelType, TentType
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
@@ -11,6 +11,29 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'
+
+
+class EventOverviewSerializer(serializers.ModelSerializer):
+    participant_role = serializers.SerializerMethodField('get_event_role')
+
+    class Meta:
+        model = Event
+        fields = (
+            'id',
+            'name',
+            'description',
+            'event_tags',
+            'start_time',
+            'end_time',
+            'participant_role'
+        )
+
+    def get_event_role(self, obj):
+        roles = obj.eventrolemapping_set.filter(user=self.context['request'].user).values_list('eventRole_id', flat=True)
+        if roles:
+            return roles
+        else:
+            return []
 
 
 class AgeGroupSerializer(serializers.ModelSerializer):
@@ -51,7 +74,6 @@ class ZipCodeSerializer(serializers.ModelSerializer):
 
 
 class ParticipantSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Participant
         fields = '__all__'
@@ -97,70 +119,60 @@ class ParticipantSerializer2(serializers.ModelSerializer):
 
 
 class ParticipantRoleSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ParticipantRole
         fields = '__all__'
 
 
 class RoleSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Role
         fields = '__all__'
 
 
 class MethodOfTravelSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = MethodOfTravel
         fields = '__all__'
 
 
 class TentSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Tent
         fields = '__all__'
 
 
 class ScoutOrgaLevelSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ScoutOrgaLevel
         fields = '__all__'
 
 
 class ParticipantExtendedSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ParticipantExtended
         fields = '__all__'
 
 
 class EatHabitTypeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = EatHabitType
         fields = '__all__'
 
 
 class EatHabitSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = EatHabit
         fields = '__all__'
 
 
 class TravelTypeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = TravelType
         fields = '__all__'
 
 
 class TentTypeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = TentType
         fields = '__all__'
