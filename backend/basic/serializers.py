@@ -29,7 +29,8 @@ class EventOverviewSerializer(serializers.ModelSerializer):
         )
 
     def get_event_role(self, obj):
-        roles = obj.eventrolemapping_set.filter(user=self.context['request'].user).values_list('eventRole_id', flat=True)
+        roles = obj.eventrolemapping_set.filter(user=self.context['request'].user).values_list('eventRole_id',
+                                                                                               flat=True)
         if roles:
             return roles
         else:

@@ -234,12 +234,9 @@ class Participant(TimeStampMixin):
         serialize=False,
         verbose_name='ID')
     number_of_persons = models.IntegerField(blank=True, null=True)
-    age_group = models.ForeignKey(
-        AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
-    registration = models.ForeignKey(
-        Registration, on_delete=models.PROTECT, null=True, blank=True)
-    scout_group = models.ForeignKey(
-        ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
+    age_group = models.ForeignKey(AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
+    registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
+    scout_group = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
 
 
 class ParticipantExtended(TimeStampMixin):

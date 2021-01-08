@@ -37,3 +37,4 @@ def CreateUserExternally(email):
             'email': email,
             'password': password}
     send_external_registration_mail(data)
+

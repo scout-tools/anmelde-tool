@@ -1,10 +1,10 @@
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import viewsets, generics
 from rest_framework_simplejwt.views import TokenObtainPairView
-from helper.email import send_auth_mail
 from .serializers import MyTokenObtainPairSerializer, UserExtendedSerializer, AuthSerializer
 from .models import UserExtended
-
+from rest_framework.permissions import IsAuthenticated
 
 # Register API
 class AuthenticateView(generics.UpdateAPIView):
@@ -30,5 +30,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
 class UserExtendedViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = UserExtended.objects.all()
     serializer_class = UserExtendedSerializer

@@ -7,24 +7,22 @@ from helper.user_creation import login_or_create_user
 
 
 # User serializer
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
-
-
 class UserExtendedSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserExtended
-        fields = '__all__'
+        fields = (
+            'mobileMumber',
+            'scoutName',
+            'scoutOrganisation',
+        )
 
 
+# Authentication serialzer
 class AuthSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'password', 'first_name', 'last_name')
+        fields = ('email', 'first_name', 'last_name')
         extra_kwargs = {
-            'password': {'write_only': True, 'required': False},
             'email': {'required': True},
             'username': {'required': False},
             'first_name': {'required': False},
@@ -34,20 +32,17 @@ class AuthSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         attrs['email'] = attrs['email'].lower()
         attrs['username'] = attrs['email']
+        attrs['password'] = User.objects.make_random_password()
 
         if 'first_name' not in attrs:
             attrs['first_name'] = ''
         if 'last_name' not in attrs:
             attrs['last_name'] = ''
-        if 'password' not in attrs:
-            attrs['password'] = User.objects.make_random_password()
         return attrs
 
     def create(self, data):
         data = login_or_create_user(data)
         return data
-
-
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
