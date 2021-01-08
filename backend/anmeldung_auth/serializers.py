@@ -11,9 +11,9 @@ class UserExtendedSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserExtended
         fields = (
-            'mobileMumber',
-            'scoutName',
-            'scoutOrganisation',
+            'mobile_number',
+            'scout_name',
+            'scout_organisation',
         )
 
 

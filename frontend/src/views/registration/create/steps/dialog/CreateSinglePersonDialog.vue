@@ -32,25 +32,8 @@
           <v-stepper-content step="1">
             <v-container>
               <step-1 />
-              <v-divider class="my-4"/>
-              <v-btn color="primary" @click="e1 = 2"> Weiter </v-btn>
-            </v-container>
-          </v-stepper-content>
-
-          <v-stepper-content step="2">
-            <v-container>
               <step-2 />
               <v-divider class="my-4"/>
-              <v-btn text @click="e1 = 1"> Zurück </v-btn>
-              <v-btn color="primary" @click="e1 = 3"> Weiter </v-btn>
-            </v-container>
-          </v-stepper-content>
-
-          <v-stepper-content step="3">
-            <v-container>
-              <step-3 />
-              <v-divider class="my-4"/>
-              <v-btn @click="e1 = 2" text> Zurück </v-btn>
               <v-btn color="primary" @click="active = false"> Speichern </v-btn>
             </v-container>
           </v-stepper-content>
@@ -73,14 +56,12 @@ import {
 import axios from 'axios';
 import Step1 from './steps/Step1.vue';
 import Step2 from './steps/Step2.vue';
-import Step3 from './steps/Step3.vue';
 
 export default {
   props: ['isOpen'],
   components: {
     Step1,
     Step2,
-    Step3,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,

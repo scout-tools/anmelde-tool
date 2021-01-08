@@ -172,6 +172,18 @@ export default {
     },
   },
   computed: {
+    capacityError() {
+      return '123';
+    },
+    contactNameErrors() {
+      return '123';
+    },
+    contactPhoneErros() {
+      return '123';
+    },
+    contactEmailErrors() {
+      return '123';
+    },
     nameErrors() {
       const errors = [];
       if (!this.$v.data.name.$dirty) return errors;

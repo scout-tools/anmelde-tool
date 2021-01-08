@@ -10,7 +10,7 @@ class UserExtended(models.Model):
     password_date = models.DateTimeField(auto_now=True)
     scout_organisation = models.ForeignKey(
         ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
-    mobile_mumber = models.CharField(max_length=20, blank=True)
+    mobile_number = models.CharField(max_length=20, blank=True)
     scout_name = models.CharField(max_length=20, blank=True)
 
 

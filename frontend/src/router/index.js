@@ -52,9 +52,10 @@ const routes = [
     component: SettingsUser,
   },
   {
-    path: '/statistic/overview',
+    path: '/statistic/:id',
     name: 'statisticOverview',
     component: StatisticOverview,
+    props: true,
   },
   {
     path: '/registration/form/:id',

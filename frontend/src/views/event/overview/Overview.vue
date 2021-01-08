@@ -29,8 +29,21 @@
                 style="text-decoration: none"
               >
                 <v-btn icon>
-                  <v-icon fab large color="primary">
+                  <v-icon fab color="primary">
                     mdi-account-multiple-plus
+                  </v-icon>
+                </v-btn>
+              </router-link>
+            </v-list-item-action>
+            <v-list-item-action>
+              <router-link
+                :to="{ name: 'statisticOverview', params: { id: item.id } }"
+                style="text-decoration: none"
+                v-if="!isSimpleUser || item.participantRole.length"
+              >
+                <v-btn icon>
+                  <v-icon fab color="primary">
+                    mdi-chart-bar
                   </v-icon>
                 </v-btn>
               </router-link>
@@ -83,6 +96,12 @@ export default {
       }
       return false;
     },
+    isSimpleUser() {
+      if (this.getJwtData) {
+        return !(this.getJwtData.groups.length || this.getJwtData.isStaff);
+      }
+      return true;
+    },
   },
   methods: {
     getText(item) {
@@ -95,7 +114,7 @@ export default {
       )}`;
     },
     getEvent() {
-      const path = `${this.API_URL}basic/event/`;
+      const path = `${this.API_URL}basic/event-overview/`;
       axios
         .get(path)
         .then((res) => {
@@ -107,7 +126,7 @@ export default {
     },
 
     getUserExtended() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
+      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/?&timestamp=${new Date().getTime()}`;
       axios
         .get(path)
         .then((res) => {
@@ -218,7 +237,7 @@ export default {
       this.$router.push({ name: 'registrationForm' });
     },
   },
-  created() {
+  mounted() {
     this.getEvent();
     this.getUserExtended();
     this.getScoutOrgaLevelMapping();

@@ -68,9 +68,12 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'hierarchyMapping', 'getJwtData']),
     myStamm() {
-      return this.hierarchyMapping.find(
-        (user) => user.id === this.currentRegistration.scoutOrganisation,
-      ).name;
+      if (this.currentRegistration && this.currentRegistration.scoutOrganisation) {
+        return this.hierarchyMapping.find(
+          (user) => user.id === this.currentRegistration.scoutOrganisation,
+        ).name;
+      }
+      return 'Keine Name';
     },
     myEmail() {
       return this.getJwtData.email;
@@ -97,6 +100,7 @@ export default {
       if (!this.valid) {
         return;
       }
+      debugger;
       this.$emit('submit');
     },
     getData() {

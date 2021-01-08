@@ -30,13 +30,11 @@ export default {
         height: 500,
         legend: false,
       },
+      chartData: [],
     };
   },
   computed: {
     ...mapGetters(['currentEventParticipants']),
-    chartData() {
-      return this.json_to_chart_data(this.currentEventParticipants);
-    },
   },
   methods: {
     json_to_chart_data(jsonData) {
@@ -65,6 +63,12 @@ export default {
       });
       return returnData;
     },
+    getData() {
+      this.chartData = this.json_to_chart_data(this.currentEventParticipants);
+    },
+  },
+  created() {
+    this.getData();
   },
 };
 </script>

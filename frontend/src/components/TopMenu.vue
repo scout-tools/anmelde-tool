@@ -29,7 +29,7 @@
                 v-if="isAuthenticated"
                 @click="$router.push({ name: 'eventOverview' })"
               >
-                Lager
+                Anmeldungen
                 <v-icon>mdi-view-list</v-icon>
               </v-tab>
 
@@ -39,14 +39,6 @@
               >
                 Neu
                 <v-icon>mdi-calendar-plus</v-icon>
-              </v-tab>
-
-              <v-tab
-                v-if="isAuthenticated && !isSimpleUser"
-                @click="$router.push({ name: 'statisticOverview' })"
-              >
-                Zahlen
-                <v-icon>mdi-chart-bar</v-icon>
               </v-tab>
             </v-tabs>
 
@@ -100,7 +92,7 @@ export default {
   methods: {
     onLogoutClicked() {
       this.$store.commit('clearTokens');
-      this.$router.push({ name: 'login-internals' });
+      this.$router.push({ name: 'landing' });
     },
   },
 };

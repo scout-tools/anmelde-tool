@@ -41,6 +41,13 @@
         </v-layout>
       </v-flex>
     </v-row>
+    <v-snackbar
+      v-model="showError"
+      color="error"
+      y='top'
+    >
+      {{ 'Der Code ist falsch' }}
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -55,6 +62,7 @@ export default {
       loading: false,
       items: [],
       reg_id: null,
+      showError: false,
     };
   },
   computed: {
@@ -71,6 +79,12 @@ export default {
         return obj.name;
       }
       return 'Kein Stamm';
+    },
+    getCodeParam() {
+      if (this.items.invitationCode) {
+        return this.items.invitationCode;
+      }
+      return '';
     },
   },
   methods: {
@@ -100,7 +114,7 @@ export default {
     createRegestration() {
       const eventId = this.$route.params.id;
       axios
-        .post(`${this.API_URL}basic/registration/`, {
+        .post(`${this.API_URL}basic/registration/?code=${this.getCodeParam}`, {
           responsiblePersons: [this.getJwtData.email],
           scoutOrganisation: this.items.scoutOrganisation,
           event: eventId,
@@ -115,6 +129,7 @@ export default {
           });
         })
         .catch(() => {
+          this.showError = true;
           console.log('Fehler');
         });
     },

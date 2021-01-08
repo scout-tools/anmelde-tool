@@ -1,23 +1,9 @@
 <template>
-  <v-container>
+  <v-container class="mt-10">
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
-          <v-container fluid class="ma-6">
-            <v-row align="center">
-              <v-col class="d-flex" cols="12" sm="6">
-                <v-select
-                  :items="getItems"
-                  label="Wähle eine Veranstaltung aus..."
-                  v-model="selected"
-                  item-value="id"
-                  item-text="name"
-                  @change="changedEvent"
-                ></v-select>
-              </v-col>
-            </v-row>
-          </v-container>
-          <v-card v-if="selected">
+          <v-card>
             <v-tabs
               v-model="tab"
               background-color="primary"
@@ -25,7 +11,6 @@
               centered
               dark
               icons-and-text
-              :disabled="!items"
             >
               <v-tabs-slider></v-tabs-slider>
 
@@ -84,36 +69,19 @@ export default {
   },
   computed: {
     ...mapGetters(['currentEventParticipants']),
-    getItems() {
-      return this.items;
+    eventId() {
+      return this.$route.params.id;
     },
   },
   data() {
     return {
       tab: null,
-      items: [],
       selected: null,
     };
   },
-  methods: {
-    changedEvent() {
-      if (typeof this.selected === 'number') {
-        this.getParticipantsData(this.selected);
-      }
-    },
-    getData() {
-      const path = `${process.env.VUE_APP_API}basic/event/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.items = res.data;
-        })
-        .catch(() => {
-          console.log('Fehler');
-        });
-    },
-    getParticipantsData(eventId) {
-      const path = `${process.env.VUE_APP_API}basic/event/${eventId}/participants/`;
+  asyncComputed: {
+    async getParticipantsData() {
+      const path = `${process.env.VUE_APP_API}basic/event/${this.eventId}/participants/`;
       axios.get(path)
         .then((res) => {
           this.$store.commit('setCurrentEventParticipants', res.data);
@@ -122,9 +90,6 @@ export default {
           console.log('Fehler');
         });
     },
-  },
-  created() {
-    this.getData();
   },
 };
 </script>

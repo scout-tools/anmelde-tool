@@ -19,6 +19,7 @@ export default {
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
+      chartData: [],
       chartOptions: {
         title: 'Anmedlungen',
         curveType: 'function',
@@ -29,9 +30,6 @@ export default {
   },
   computed: {
     ...mapGetters(['currentEventParticipants']),
-    chartData() {
-      return this.json_to_chart_data(this.currentEventParticipants);
-    },
   },
   methods: {
     json_to_chart_data(jsonData) {
@@ -53,6 +51,12 @@ export default {
       });
       return returnData;
     },
+    getData() {
+      this.chartData = this.json_to_chart_data(this.currentEventParticipants);
+    },
+  },
+  created() {
+    this.getData();
   },
 };
 </script>
