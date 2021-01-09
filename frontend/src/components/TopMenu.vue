@@ -1,20 +1,13 @@
 <template>
     <v-app-bar app color="primary" dark>
-      <v-btn
-        depressed
-        color="primary"
-        @click="$router.push({ name: 'landing' })"
-      >
+     <router-link to="/">
         <img
           src="@/assets/logo_bdp_dpv.svg"
           height="40"
           alt="Logo"
           class="logo-img mx-2"
         />
-        <v-toolbar-title
-          v-if="!$vuetify.breakpoint.mobile"
-        >Anmelde Tool</v-toolbar-title>
-      </v-btn>
+      </router-link>
       <v-spacer v-if="!$vuetify.breakpoint.mobile"></v-spacer>
 
             <v-tabs
