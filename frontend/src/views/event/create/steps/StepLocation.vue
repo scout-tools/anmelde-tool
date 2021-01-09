@@ -98,7 +98,7 @@ export default {
       this.$emit('submit');
     },
     async getEvents() {
-      const url = `${this.API_URL}basic/event-location/`;
+      const url = `${this.API_URL}basic/event-location/?&timestamp=${new Date().getTime()}`;
       const result = await axios.get(url);
       this.items = result.data;
       this.formatLocationPreview();

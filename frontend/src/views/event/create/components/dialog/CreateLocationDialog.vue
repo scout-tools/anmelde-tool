@@ -50,7 +50,6 @@
             <v-row>
               <v-text-field
                 v-model="data.address"
-                :counter="30"
                 :error-messages="addressErrors"
                 label="Straße und Hausnummer"
                 required
@@ -58,8 +57,7 @@
                 @blur="$v.data.address.$touch()"/>
             </v-row>
             <v-row>
-              <v-text-field
-                v-model="data.zipCode"
+              <zip-code-field
                 :counter="5"
                 :error-messages="zipCodeErrors"
                 label="Postleitzahl"
@@ -69,16 +67,13 @@
             <v-row>
               <v-text-field
                 v-model="data.contactName"
-                :counter="5"
                 :error-messages="contactNameErrors"
                 label="Name des Kontakts"
-                required
                 @blur="$v.data.contactName.$touch()"/>
             </v-row>
             <v-row>
               <v-text-field
                 v-model="data.contactEmail"
-                :counter="5"
                 :error-messages="contactEmailErrors"
                 label="E-Mail des Kontakts"
                 @blur="$v.data.contactEmail.$touch()"/>
@@ -86,7 +81,6 @@
             <v-row>
               <v-text-field
                 v-model="data.contactPhone"
-                :counter="5"
                 :error-messages="contactPhoneErros"
                 label="Telefonnummer des Kontakts"
                 @blur="$v.data.contactPhone.$touch()"/>
@@ -114,6 +108,7 @@
 import {
   required, maxLength, minLength, numeric,
 } from 'vuelidate/lib/validators';
+import ZipCodeField from '@/components/field/ZipCodeField.vue';
 import axios from 'axios';
 import DialogButtons from '../button/dialogButtons.vue';
 
@@ -121,6 +116,7 @@ export default {
   props: ['isOpen'],
   components: {
     DialogButtons,
+    ZipCodeField,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
@@ -130,11 +126,11 @@ export default {
       name: '',
       description: '',
       address: '',
-      zipCode: '',
+      zipCode: 6,
       contactName: '',
       contactEmail: '',
       contactPhone: '',
-      capacity: '',
+      capacity: 4,
     },
     showError: false,
     showSuccess: false,
@@ -144,6 +140,7 @@ export default {
     data: {
       name: {
         required,
+        minLength: minLength(4),
         maxLength: maxLength(20),
       },
       description: {
@@ -156,11 +153,8 @@ export default {
       zipCode: {
         required,
         numeric,
-        minLength: minLength(5),
-        maxLength: maxLength(5),
       },
       contactName: {
-        required,
         maxLength: maxLength(30),
       },
       contactEmail: {
@@ -173,16 +167,16 @@ export default {
   },
   computed: {
     capacityError() {
-      return '123';
+      return [];
     },
     contactNameErrors() {
-      return '123';
+      return [];
     },
     contactPhoneErros() {
-      return '123';
+      return [];
     },
     contactEmailErrors() {
-      return '123';
+      return [];
     },
     nameErrors() {
       const errors = [];
