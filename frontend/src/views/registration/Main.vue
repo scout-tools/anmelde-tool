@@ -8,11 +8,19 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field disabled v-model="items.scoutName" label="Mein Name">
+                    <v-text-field
+                      disabled
+                      v-model="items.scoutName"
+                      label="Mein Name"
+                    >
                     </v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field disabled v-model="getStammName" label="Mein Stamm">
+                    <v-text-field
+                      disabled
+                      v-model="getStammName"
+                      label="Mein Stamm"
+                    >
                     </v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
@@ -41,11 +49,7 @@
         </v-layout>
       </v-flex>
     </v-row>
-    <v-snackbar
-      v-model="showError"
-      color="error"
-      y='top'
-    >
+    <v-snackbar v-model="showError" color="error" y="top">
       {{ 'Der Code ist falsch' }}
     </v-snackbar>
   </v-container>
@@ -74,7 +78,9 @@ export default {
       return this.getJwtData.email;
     },
     getStammName() {
-      const obj = this.hierarchyMapping.find((user) => user.id === this.items.scoutOrganisation);
+      const obj = this.hierarchyMapping.find(
+        (user) => user.id === this.items.scoutOrganisation,
+      );
       if (obj && obj.name) {
         return obj.name;
       }
