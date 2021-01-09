@@ -105,4 +105,16 @@ class Command(BaseCommand):
             user.is_staff = True
             user.save()
 
+        if not UserModel.objects.filter(username='ingo@lagerleitung.de').exists():
+            user = UserModel.objects.create_user('ingo@lagerleitung.de', password='ingo1234')
+            user.is_superuser = False
+            user.is_staff = True
+            user.save()
+
+        if not UserModel.objects.filter(username='ingo@admin.de').exists():
+            user = UserModel.objects.create_user('ingo@admin.de', password='ingo1234')
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
+
         print('user created')

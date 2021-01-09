@@ -31,7 +31,7 @@
           </v-list-item-content>
         <v-list-item-action>
           <v-btn dense icon>
-            <v-icon color="grey lighten-1">mdi-information</v-icon>
+            <v-icon color="grey lighten-1">mdi-pencil</v-icon>
           </v-btn>
         </v-list-item-action>
         </v-list-item>

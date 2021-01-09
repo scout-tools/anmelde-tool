@@ -467,33 +467,11 @@
   },
   {
     "model": "basic.scoutHierarchy",
-    "pk": 46,
-    "fields": {
-      "id": 46,
-      "name": "Stamm Landsknechte",
-      "zip_code": 8288,
-      "parent_id": 10,
-      "level_id": 5
-    }
-  },
-  {
-    "model": "basic.scoutHierarchy",
     "pk": 47,
     "fields": {
       "id": 47,
       "name": "Stamm Silberf\u00fcchse",
       "zip_code": 3076,
-      "parent_id": 10,
-      "level_id": 5
-    }
-  },
-  {
-    "model": "basic.scoutHierarchy",
-    "pk": 48,
-    "fields": {
-      "id": 48,
-      "name": "Stamm Steinadler",
-      "zip_code": 10998,
       "parent_id": 10,
       "level_id": 5
     }
@@ -515,7 +493,7 @@
     "fields": {
       "id": 50,
       "name": "Stamm Schwarze L\u00f6wen",
-      "zip_code": 7809,
+      "zip_code": 7854,
       "parent_id": 10,
       "level_id": 5
     }
