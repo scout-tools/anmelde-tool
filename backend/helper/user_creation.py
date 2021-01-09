@@ -25,7 +25,7 @@ def login_or_create_user(data):
         data['newly_registered'] = False
         user.save()
 
-    send_auth_mail(user)
+    send_auth_mail(data)
     return data
 
 
