@@ -16,7 +16,9 @@
 
 `python manage.py add_users`
 
-`python manage.py loaddata test-data/*.json`
+Mac, Linux: `python manage.py loaddata test-data/*.json`
+
+Windows: `python manage.py add_fixtures test-data`
 
 `python manage.py runserver`
 
