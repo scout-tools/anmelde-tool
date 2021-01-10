@@ -26,7 +26,7 @@
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
                       v-model="items.invitationCode"
-                      label="Einladungscode vom Veranstalter"
+                      label="Code aus der Einladung"
                     >
                     </v-text-field>
                   </v-col>

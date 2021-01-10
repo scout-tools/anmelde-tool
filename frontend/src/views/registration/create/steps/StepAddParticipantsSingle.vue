@@ -2,6 +2,7 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container class="pa-5">
     <v-btn
+      class="mx-3"
       color="success"
       @click="newUser"
     >
@@ -10,8 +11,8 @@
       </v-icon>
       Neuen Teilnehmer hinzufügen
     </v-btn>
-    <v-space class="mx-3"/>
     <v-btn
+      class="mx-3"
       color="primary"
       @click="openExcelDialog"
     >

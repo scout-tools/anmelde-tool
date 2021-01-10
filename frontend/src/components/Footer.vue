@@ -25,6 +25,15 @@
           text
           rounded
           class="my-2"
+          @click="$router.push({ name: 'contact' })"
+        >
+          Datenschutz
+        </v-btn>
+        <v-btn
+          color="white"
+          text
+          rounded
+          class="my-2"
           @click="$router.push({ name: 'loginInterals' })"
         >
           Planungsjurte
