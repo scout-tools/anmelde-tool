@@ -69,6 +69,7 @@ export default {
       showError: false,
     };
   },
+  props: ['scoutOrganisation'],
   computed: {
     getItems() {
       return this.items;
@@ -79,7 +80,7 @@ export default {
     },
     getStammName() {
       const obj = this.hierarchyMapping.find(
-        (user) => user.id === this.items.scoutOrganisation,
+        (user) => user.id === this.scoutOrganisation,
       );
       if (obj && obj.name) {
         return obj.name;
@@ -131,6 +132,7 @@ export default {
             params: {
               id: response.data.id,
               event: response.data.event,
+              scoutOrganisation: this.items.scoutOrganisation,
             },
           });
         })

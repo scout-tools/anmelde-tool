@@ -21,6 +21,7 @@
                 :position="index + 1"
                 :max-pos="steps.length"
                 :currentRegistration="currentRegistration"
+                :scoutOrganisation="scoutOrganisation"
                 :currentEvent="currentEvent"
                 @prevStep="prevStep()"
                 @nextStep="nextStep()"
@@ -61,6 +62,7 @@ export default {
     StepBdpDpvLocation,
     StepBdpDpVPreferences,
   },
+  props: ['scoutOrganisation'],
   data() {
     return {
       currentStep: 1,

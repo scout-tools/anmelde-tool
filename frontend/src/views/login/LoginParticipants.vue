@@ -16,11 +16,11 @@
             color="rgb(255, 255, 255, 0.8)"
           >
             <v-card-title class="text-center justify-center py-6">
-              Einloggen
+              Ich möchte mich einloggen
             </v-card-title>
 
             <v-card-text class="mt-5">
-              <v-container v-if="!emailSend">
+              <v-container v-if="!emailSend && !isEmailFieldIsLoading">
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
@@ -40,7 +40,15 @@
                   Absenden
                 </v-btn>
               </v-container>
-              <v-container v-else>
+
+              <v-container class="text-center" v-if="isEmailFieldIsLoading">
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
+              </v-container>
+
+              <v-container v-if="emailSend">
                 <v-row>
                   <v-col cols="12">
                     {{ 'Du hast eine E-Mail auf deine Adresse' }}
@@ -48,6 +56,16 @@
                     {{
                       'erhalten. Bitte guck in dein Postfach und benutze den Link zum einloggen'
                     }}
+                  </v-col>
+                </v-row>
+                  <v-row>
+                  <v-col>
+                    <v-btn color="primary" @click="emailSend = false">
+                      <v-icon>
+                        mdi-refresh
+                      </v-icon>
+                      Mit einer anderen E-Mail einloggen
+                    </v-btn>
                   </v-col>
                 </v-row>
               </v-container>
@@ -115,54 +133,23 @@ export default {
       this.handleLoginRequest();
     },
 
-    onPasswordLoginClick() {
+    handleEmailLoginRequest() {},
+
+    handleLoginRequest() {
       this.isEmailFieldIsLoading = true;
-      this.handlePasswordLoginRequest();
-    },
 
-    async handleEmailLoginRequest() {
-      try {
-        const response = await this.callRegisterPost();
-        this.emailSend = true;
-        this.onSuccessfulEmailSent(response);
-        this.isEmailFieldIsLoading = false;
-      } catch (error) {
-        this.responseObj = error.response.data[0]; // eslint-disable-line
-        this.showError = true;
-        this.isEmailFieldIsLoading = false;
-      }
-    },
-
-    async handlePasswordLoginRequest() {
-      try {
-        const response = await this.callTokenPost();
-        this.$store.commit(
-          'setTokens',
-          response.data.access,
-          response.data.refresh,
-        );
-        this.onSuccessfulLogin();
-      } catch (error) {
-        this.responseObj = error.response.data.detail; // eslint-disable-line
-        this.showError = true;
-      }
-    },
-
-    async handleLoginRequest() {
-      try {
-        const response = await this.callLoginPost();
-        if (response.data.message === 'Login email sent') {
-          this.isEmailFieldIsLoading = false;
+      this.callLoginPost()
+        .then(() => {
           this.emailSend = true;
-        }
-      } catch (error) {
-        if (error.response.status === 500) {
-          this.handleEmailLoginRequest();
-        } else {
+        })
+        .catch(() => {
+          debugger;
+
           this.showError = true;
-        }
-        this.isEmailFieldIsLoading = false;
-      }
+        })
+        .then(() => {
+          this.isEmailFieldIsLoading = false;
+        });
     },
     onSuccessfulEmailSent() {
       this.showSuccess = true;

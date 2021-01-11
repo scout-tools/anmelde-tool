@@ -73,7 +73,6 @@ export default {
         });
     },
     onSuccessfulLogin() {
-      this.$store.commit('setCurrentUser', this.data.username);
       this.$router.push({ name: 'eventOverview' });
     },
   },

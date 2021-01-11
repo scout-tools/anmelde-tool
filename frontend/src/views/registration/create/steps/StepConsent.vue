@@ -4,22 +4,25 @@
       <v-row class="mt-2">
         <span class="text-left subtitle-1">
           <p>
-            Ich möchte mich zur <b>{{ currentEvent.name }}</b> anmelden. <br> <br>
+            Ich möchte mich zur <b>{{ currentEvent.name }}</b> anmelden. <br />
+            <br />
 
-            Ich melde hiermit folgende Organsition <b> {{ myStamm }} </b> an. <br> <br>
+            Ich melde hiermit folgende Organsition <b> {{ myStamm }} </b> an.
+            <br />
+            <br />
 
-            Ich bin zukünfig der Ansprechpartner und bin unter meiner E-Mail Adresse: <br> <br>
-            <b>{{ myEmail }} </b> <br> <br>
+            Ich bin zukünfig der Ansprechpartner und bin unter meiner E-Mail
+            Adresse: <br />
+            <br />
+            <b>{{ myEmail }} </b> <br />
+            <br />
             zu erreichen.
           </p>
         </span>
       </v-row>
       <v-divider class="text-left my-2" />
       <v-row>
-        <v-checkbox
-          v-model="data.checkbox1"
-          :label="`Ich Stimme zu`"
-        >
+        <v-checkbox v-model="data.checkbox1" :label="`Ich Stimme zu`">
         </v-checkbox>
       </v-row>
 
@@ -44,7 +47,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
-  props: ['position', 'maxPos', 'currentEvent', 'currentRegistration'],
+  props: ['position', 'maxPos', 'currentEvent', 'currentRegistration', 'scoutOrganisation'],
   components: {
     PrevNextButtons,
   },
@@ -68,9 +71,10 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'hierarchyMapping', 'getJwtData']),
     myStamm() {
-      if (this.currentRegistration && this.currentRegistration.scoutOrganisation) {
+      debugger;
+      if (this.scoutOrganisation) {
         return this.hierarchyMapping.find(
-          (user) => user.id === this.currentRegistration.scoutOrganisation,
+          (user) => user.id === this.scoutOrganisation,
         ).name;
       }
       return 'Keine Name';
