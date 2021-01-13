@@ -12,6 +12,17 @@
                 >Hier kannst du alle deine aktuell buchbaren Lagern
                 sehen</v-subheader
               >
+
+              <v-btn
+                class="ma-6"
+                color="success"
+                v-if="isAuthenticated && !isSimpleUser"
+                @click="$router.push({ name: 'createEvent' })"
+              >
+                <v-icon left>mdi-calendar-plus</v-icon>
+                Neues Lager
+              </v-btn>
+
               <template v-for="(item, index) in getItems">
                 <v-list-item :key="item.name">
                   <v-list-item-avatar>
