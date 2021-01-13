@@ -26,7 +26,7 @@
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
                       v-model="items.invitationCode"
-                      label="Einladungscode vom Veranstalter"
+                      label="Code aus der Einladung"
                     >
                     </v-text-field>
                   </v-col>
@@ -69,6 +69,7 @@ export default {
       showError: false,
     };
   },
+  props: ['scoutOrganisation'],
   computed: {
     getItems() {
       return this.items;
@@ -79,7 +80,7 @@ export default {
     },
     getStammName() {
       const obj = this.hierarchyMapping.find(
-        (user) => user.id === this.items.scoutOrganisation,
+        (user) => user.id === this.scoutOrganisation,
       );
       if (obj && obj.name) {
         return obj.name;
@@ -131,6 +132,7 @@ export default {
             params: {
               id: response.data.id,
               event: response.data.event,
+              scoutOrganisation: this.items.scoutOrganisation,
             },
           });
         })

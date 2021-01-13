@@ -23,7 +23,7 @@
             @click="$router.push({ name: 'loginParticipants' })"
           >
             <v-icon left>mdi-calendar-plus</v-icon>
-            Zur Anmeldung
+            Zu einem Lager Anmelden
           </v-btn>
         </v-layout>
       </v-parallax>

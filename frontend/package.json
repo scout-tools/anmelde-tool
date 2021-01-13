@@ -25,7 +25,8 @@
     "vuetify": "^2.2.11",
     "vuetify-money": "^1.1.0",
     "vuex": "^3.4.0",
-    "vuex-persistedstate": "^4.0.0-beta.1"
+    "vuex-persistedstate": "^4.0.0-beta.1",
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

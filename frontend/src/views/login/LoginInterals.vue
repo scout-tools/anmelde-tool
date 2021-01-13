@@ -13,40 +13,81 @@
             max-width="500px"
             min-width="350px"
             class="mx-auto my-12"
-            color="rgb(255, 255, 255, 0.8)"
+            color="rgb(255, 255, 255, 0.9)"
           >
             <v-card-title class="text-center justify-center py-6">
-              Anmelden
+              Planungsjurte
             </v-card-title>
             <v-card-text class="mt-5">
-              <v-container v-if="!emailSend">
-                <v-row>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="E-Mail"
-                      :error-messages="emailError"
-                      type="email"
-                      v-model="data_password.username"
-                      required
-                    >
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Passwort"
-                      type="password"
-                      v-model="data_password.password"
-                      v-on:keyup="onEmailTypInEmailField"
-                      required
-                    >
-                    </v-text-field>
-                  </v-col>
-                </v-row>
-                <v-spacer />
-                <v-btn color="primary" @click="onPasswordLoginClick">
-                  Einloggen
-                </v-btn>
-              </v-container>
+              <v-subheader>
+                Hier kannst du dich einloggen falls du bereits Zugangsdaten
+                bekommen hast.
+              </v-subheader>
+              <v-form>
+                <v-container v-if="!emailSend">
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="username"
+                        label="Deine E-Mail Adresse"
+                        prepend-icon="mdi-email"
+                        :error-messages="emailError"
+                        v-on:keyup="onEmailTypeInEmailField"
+                      >
+                        <template slot="append">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                color="success"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                mdi-help-circle-outline
+                              </v-icon>
+                            </template>
+                            <span>
+                              {{ tooltip.username }}
+                            </span>
+                          </v-tooltip>
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="password"
+                        label="Dein Passwort"
+                        prepend-icon="mdi-lock"
+                        :error-messages="passwordError"
+                        v-on:keyup="onEmailTypeInEmailField"
+                        type="password"
+                      >
+                        <template slot="append">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                color="success"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                mdi-help-circle-outline
+                              </v-icon>
+                            </template>
+                            <span>
+                              {{ tooltip.password }}
+                            </span>
+                          </v-tooltip>
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-spacer />
+                  <v-btn color="primary" @click="onPasswordLoginClick">
+                    Einloggen
+                  </v-btn>
+                </v-container>
+              </v-form>
             </v-card-text>
           </v-card>
         </v-col>
@@ -68,10 +109,12 @@
 
 <script>
 import axios from 'axios';
+import { validationMixin } from 'vuelidate';
 import { email, required } from 'vuelidate/lib/validators';
 
 export default {
   name: 'Login',
+  mixins: [validationMixin],
   data: () => ({
     showError: false,
     showSuccess: false,
@@ -80,12 +123,11 @@ export default {
     responseObj: null,
     API_URL: process.env.VUE_APP_API,
     isEmailFieldIsLoading: false,
-    data_email: {
-      email: '',
-    },
-    data_password: {
-      username: '',
-      password: '',
+    username: '',
+    password: '',
+    tooltip: {
+      username: 'Dieser Name wird dazu verwendet um deinen.',
+      password: 'Für die Kommunikation mit dem Tool.',
     },
     tab: null,
     imageLink: {
@@ -98,24 +140,48 @@ export default {
         'https://firebasestorage.googleapis.com/v0/b/endorfinevue.appspot.com/o/assets%2Fo-NIGHTCLUB-facebook.jpg?alt=media&token=cefc5c4c-9714-41da-9c22-f63caf5e89a4',
     },
   }),
+  validations: {
+    username: {
+      required,
+      email,
+    },
+    password: {
+      required,
+    },
+  },
   computed: {
     emailError() {
-      return [];
+      const errors = [];
+      if (!this.$v.username.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.username.required && errors.push('E-mail ist erforderlich');
+
+      // eslint-disable-next-line
+      !this.$v.username.email && errors.push('Ist keine echte E-Mail-Adresse');
+      return errors;
+    },
+    passwordError() {
+      const errors = [];
+      if (!this.$v.password.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.password.required && errors.push('Password ist erforderlich');
+
+      return errors;
     },
   },
   methods: {
-    onEmailTypInEmailField() {},
-
-    callRegisterPost() {
-      return axios.post(`${this.API_URL}auth/register/`, this.data_email);
+    onEmailTypeInEmailField(e) {
+      if (e.keyCode === 13) {
+        this.onPasswordLoginClick();
+      }
+      this.log += e.key;
     },
 
     callTokenPost() {
-      return axios.post(`${this.API_URL}auth/token/`, this.data_password);
-    },
-
-    callLoginPost() {
-      return axios.post(`${this.API_URL}auth/login/`, this.data_email);
+      return axios.post(`${this.API_URL}auth/token/`, {
+        username: this.username,
+        password: this.password,
+      });
     },
 
     onEmailLoginClick() {
@@ -123,21 +189,12 @@ export default {
     },
 
     onPasswordLoginClick() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
       this.isEmailFieldIsLoading = true;
       this.handlePasswordLoginRequest();
-    },
-
-    async handleEmailLoginRequest() {
-      try {
-        const response = await this.callRegisterPost();
-        this.emailSend = true;
-        this.onSuccessfulEmailSent(response);
-        this.isEmailFieldIsLoading = false;
-      } catch (error) {
-        this.responseObj = error.response.data[0]; // eslint-disable-line
-        this.showError = true;
-        this.isEmailFieldIsLoading = false;
-      }
     },
 
     async handlePasswordLoginRequest() {
@@ -155,33 +212,11 @@ export default {
       }
     },
 
-    async handleLoginRequest() {
-      try {
-        const response = await this.callLoginPost();
-        if (response.data.message === 'Login email sent') {
-          this.isEmailFieldIsLoading = false;
-          this.emailSend = true;
-        }
-      } catch (error) {
-        if (error.response.status === 500) {
-          this.handleEmailLoginRequest();
-        } else {
-          this.showError = true;
-        }
-        this.isEmailFieldIsLoading = false;
-      }
-    },
     onSuccessfulEmailSent() {
       this.showSuccess = true;
     },
     onSuccessfulLogin() {
       this.$router.push({ name: 'eventOverview' });
-    },
-  },
-  validators: {
-    email: {
-      email,
-      required,
     },
   },
 };

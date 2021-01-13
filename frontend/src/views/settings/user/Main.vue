@@ -1,113 +1,287 @@
 <template>
-  <v-container class="top-margin">
-    <v-row justify="center">
-      <v-flex ma-3 lg9>
-        <v-layout column>
-          <v-card>
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="items.scoutName" label="Pfadfindername">
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field disabled v-model="email" label="Email Address">
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="items.mobileNumber" label="Handynummer">
-                    </v-text-field>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <pick-stamm-form
-                    ref="pickStamm"
-                    @sendIdToParent="tranferId"
-                  />
-                </v-row>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field disabled v-model="getStammName" label="Stamm">
-                    </v-text-field>
-                  </v-col>
-                  <v-col>
-                    <v-btn color="success" outlined tile @click="onPickStammClick()">
-                      <v-icon left>mdi-pencil</v-icon>
-                      Stamm bearbeiten
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
+  <v-form ref="settingsUser">
+    <v-container class="top-margin">
+      <v-row justify="center">
+        <v-flex ma-3 lg9>
+          <v-layout column>
+            <v-card>
+              <v-card-title class="text-center justify-center py-6">
+                Hier kannst du deine persönlichen Einstellungen Account
+                anpassen.
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-subheader class="ma-5">
+                    Bitte trag hier die Daten ein die das Anmeldetool aus. Diese
+                    Daten werden teilweise später in Anwendungen gebraucht.
+                    Diese Daten sind für die Administratoren und für die
+                    Lagerleitung nach deiner explizieten Anmeldung sichtbar.
+                  </v-subheader>
+                  <v-row>
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        v-model="scoutName"
+                        label="Pfadfindername*"
+                        prepend-icon="mdi-account-circle"
+                        @change="updateData"
+                        :error-messages="scoutNameErrors"
+                      >
+                        <template slot="append">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                color="success"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                mdi-help-circle-outline
+                              </v-icon>
+                            </template>
+                            <span>
+                              {{ tooltip.scoutName }}
+                            </span>
+                          </v-tooltip>
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        v-model="email"
+                        label="Email Address*"
+                        prepend-icon="mdi-email"
+                      >
+                        <template slot="append">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                color="success"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                mdi-help-circle-outline
+                              </v-icon>
+                            </template>
+                            <span>
+                              {{ tooltip.email }}
+                            </span>
+                          </v-tooltip>
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        v-model="getStammName"
+                        label="Mein Stamm*"
+                        prepend-icon="mdi-account-group"
+                        :error-messages="stammErrors"
+                      >
+                        <template slot="append">
+                          <v-btn icon @click="onPickStammClick">
+                            <v-icon>mdi-pencil</v-icon>
+                          </v-btn>
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                color="success"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                mdi-help-circle-outline
+                              </v-icon>
+                            </template>
+                            <span>
+                              {{ tooltip.scoutOrganisation }}
+                            </span>
+                          </v-tooltip>
+                        </template>
+                      </v-text-field>
+                      <pick-stamm-form
+                        ref="pickStamm"
+                        @sendIdToParent="tranferId"
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        v-model="mobileNumber"
+                        label="Handynummer"
+                        prepend-icon="mdi-cellphone-android"
+                        @change="updateData"
+                        :error-messages="mobileNumberErrors"
+                      >
+                        <template slot="append">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                color="success"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                mdi-help-circle-outline
+                              </v-icon>
+                            </template>
+                            <span>
+                              {{ tooltip.mobileNumber }}
+                            </span>
+                          </v-tooltip>
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-checkbox
+                        v-model="checkbox"
+                        label="Ich habe die Datenschutzerklärung gelesen und akzeptiert!"
+                        required
+                        :error-messages="checkboxErrors"
+                      ></v-checkbox>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
 
-            <v-card-actions>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-btn color="success" @click="onSaveClicked">
-                      <v-icon left dark>mdi-check</v-icon>
-                      Änderungen speichern
-                    </v-btn>
-                  </v-col>
-                  <!-- TODO: add user-delete service and activate button -->
-                  <!-- <v-col cols="12" sm="6" md="4">
+              <v-card-actions>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-btn color="success" @click="onSaveClicked">
+                        <v-icon left dark>mdi-check</v-icon>
+                        Änderungen speichern
+                      </v-btn>
+                    </v-col>
+                    <!-- TODO: add user-delete service and activate button -->
+                    <v-col cols="12" sm="6" md="4">
                     <v-btn dark color="red">
                       <v-icon left>mdi-delete</v-icon>
-                      Account Daten löschen
+                      Meine persönlichen Daten löschen
                     </v-btn>
-                  </v-col> -->
-                </v-row>
-              </v-container>
-            </v-card-actions>
-          </v-card>
-        </v-layout>
-      </v-flex>
-    </v-row>
-  </v-container>
+                  </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-actions>
+            </v-card>
+          </v-layout>
+        </v-flex>
+      </v-row>
+    </v-container>
+  </v-form>
 </template>
 
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import { validationMixin } from 'vuelidate';
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 
 import PickStammForm from './form/PickStamm.vue';
 
 export default {
+  mixins: [validationMixin],
   components: {
     PickStammForm,
+  },
+  validations: {
+    scoutOrganisation: {
+      required,
+    },
+    mobileNumber: {
+      minLength: minLength(10),
+      maxLength: maxLength(10),
+    },
+    scoutName: {
+      required,
+      maxLength: maxLength(20),
+    },
+    checkbox: {
+      checked(val) {
+        return val;
+      },
+    },
   },
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
       loading: false,
-      items: [],
+      tooltip: {
+        scoutName: 'Dieser Name wird dazu verwendet um deinen.',
+        email: 'Für die Kommunikation mit dem Tool.',
+        mobileNumber: 'Freiwillig',
+        scoutOrganisation: 'Blub',
+      },
+      user: null,
+      scoutOrganisation: null,
+      mobileNumber: '',
+      scoutName: null,
+      checkbox: false,
     };
   },
   computed: {
-    getItems() {
-      return this.items;
-    },
     ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
     email() {
       return this.getJwtData.email;
     },
     getStammName() {
-      const obj = this.hierarchyMapping.find((user) => user.id === this.items.scoutOrganisation);
+      const obj = this.hierarchyMapping.find(
+        (user) => user.id === this.scoutOrganisation,
+      );
       if (obj && obj.name) {
         return obj.name;
       }
       return 'Kein Stamm';
     },
+    checkboxErrors() {
+      const errors = [];
+      if (!this.$v.checkbox.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.checkbox.checked && errors.push('You must agree to continue!');
+      return errors;
+    },
+    mobileNumberErrors() {
+      const errors = [];
+      if (!this.$v.mobileNumber.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.mobileNumber.maxLength &&
+        errors.push('Name must be at most 10 characters long');
+      // eslint-disable-next-line
+      !this.$v.mobileNumber.minLength &&
+        errors.push('Name must be at most 10 characters long');
+      return errors;
+    },
+    scoutNameErrors() {
+      const errors = [];
+      if (!this.$v.scoutName.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.scoutName.maxLength &&
+        errors.push('Name must be at most 10 characters long');
+      // eslint-disable-next-line
+      !this.$v.scoutName.required && errors.push('Name is required.');
+      return errors;
+    },
+    stammErrors() {
+      const errors = [];
+      if (!this.$v.scoutOrganisation.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.scoutOrganisation.required && errors.push('E-mail is required');
+      return errors;
+    },
   },
   methods: {
+    updateData(type, data) {
+      this[type] = data;
+    },
     tranferId(id) {
-      this.items.scoutOrganisation = id;
+      this.scoutOrganisation = id;
     },
     onPickStammClick() {
-      this.$refs.pickStamm.show(this.items.scoutOrganisation);
+      this.$refs.pickStamm.show(this.scoutOrganisation);
     },
     onSaveClicked() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
       this.saveUserData();
       this.$router.push({ name: 'eventOverview' });
     },
@@ -116,7 +290,9 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.items = res.data;
+          this.scoutOrganisation = res.data.scoutOrganisation;
+          this.mobileNumber = res.data.mobileNumber;
+          this.scoutName = res.data.scoutName;
         })
         .catch(() => {
           console.log('Fehler');
@@ -124,12 +300,15 @@ export default {
     },
     saveUserData() {
       axios
-        .put(`${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`, {
-          user: this.getJwtData.userId,
-          scoutOrganisation: this.items.scoutOrganisation,
-          mobileNumber: this.items.mobileNumber,
-          scoutName: this.items.scoutName,
-        })
+        .put(
+          `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`,
+          {
+            user: this.getJwtData.userId,
+            scoutOrganisation: this.scoutOrganisation,
+            mobileNumber: this.mobileNumber,
+            scoutName: this.scoutName,
+          },
+        )
         .then(() => {
           this.showSuccess = true;
         })
