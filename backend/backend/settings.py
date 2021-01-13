@@ -37,7 +37,7 @@ ALLOWED_HOSTS = [
     '83.169.2.26',
     '127.0.0.1',
     'localhost',
-    'anmelde-tool.eu-central-1.elasticbeanstalk.com',
+    'anmelde-tool-backend-dev.eu-central-1.elasticbeanstalk.com',
     'api.myhagemann.de',
 ]
 
