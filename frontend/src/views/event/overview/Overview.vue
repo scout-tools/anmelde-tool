@@ -1,68 +1,102 @@
 <template>
-  <div>
-    <v-card v-if="hasSetExtendedUserInfos" max-width="600" class="mx-auto top-margin">
-      <v-card-title class="text-center justify-center py-6">
-        Zu diesen Veranstaltungen kannst du dich Anmelden:
-      </v-card-title>
-      <v-list subheader two-line>
-        <v-subheader inset
-          >Hier kannst du alle deine aktuell buchbaren Veranstaltungen sehen</v-subheader
-        >
-        <template v-for="(item, index) in getItems">
-          <v-list-item :key="item.name">
-            <v-list-item-avatar>
-              <v-icon color="black">
-                mdi-account-group</v-icon>
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.name"></v-list-item-title>
-
-              <v-list-item-subtitle class="text--primary">
-                {{ getText(item) }}
-              </v-list-item-subtitle>
-
-              <v-list-item-subtitle v-text="item.description"></v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-action>
-              <router-link
-                :to="{ name: 'registrationForm', params: { id: item.id } }"
-                style="text-decoration: none"
+  <v-container class="top-margin">
+    <v-row justify="center">
+      <v-flex ma-3 lg9>
+        <v-layout column>
+          <v-card v-if="hasSetExtendedUserInfos">
+            <v-card-title class="text-center justify-center py-6">
+              Zu diesen Lagern kannst du dich Anmelden:
+            </v-card-title>
+            <v-list subheader two-line>
+              <v-subheader inset
+                >Hier kannst du alle deine aktuell buchbaren Lagern
+                sehen</v-subheader
               >
-                <v-btn icon>
-                  <v-icon fab color="primary">
-                    mdi-account-multiple-plus
-                  </v-icon>
-                </v-btn>
-              </router-link>
-            </v-list-item-action>
-            <v-list-item-action>
-              <router-link
-                :to="{ name: 'statisticOverview', params: { id: item.id } }"
-                style="text-decoration: none"
-                v-if="!isSimpleUser || item.participantRole.length"
+
+              <v-btn
+                class="ma-6"
+                color="success"
+                v-if="isAuthenticated && !isSimpleUser"
+                @click="$router.push({ name: 'createEvent' })"
               >
-                <v-btn icon>
-                  <v-icon fab color="primary">
-                    mdi-chart-bar
-                  </v-icon>
-                </v-btn>
-              </router-link>
-            </v-list-item-action>
-          </v-list-item>
-          <v-divider v-if="index < getItems.length - 1" :key="index"></v-divider>
-        </template>
-      </v-list>
-    </v-card>
-    <v-card v-else max-width="600" class="mx-auto">
-      <v-card-title class="text-center justify-center py-6">
-        Bitte lege erst deinen Namen und deinen Stamm fest
-      </v-card-title>
-      <v-btn color="primary" class="ma-2" @click="$router.push({ name: 'settingsUser' })">
-        Daten hinzufügen
-        <v-icon right dark> mdi-tools </v-icon>
-      </v-btn>
-    </v-card>
-  </div>
+                <v-icon left>mdi-calendar-plus</v-icon>
+                Neues Lager
+              </v-btn>
+
+              <template v-for="(item, index) in getItems">
+                <v-list-item :key="item.name">
+                  <v-list-item-avatar>
+                    <v-icon color="black"> mdi-account-group</v-icon>
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.name"></v-list-item-title>
+
+                    <v-list-item-subtitle class="text--primary">
+                      {{ getText(item) }}
+                    </v-list-item-subtitle>
+
+                    <v-list-item-subtitle
+                      v-text="item.description"
+                    ></v-list-item-subtitle>
+                  </v-list-item-content>
+                  <v-list-item-action>
+                    <router-link
+                      :to="{
+                        name: 'registrationForm',
+                        params: { id: item.id },
+                      }"
+                      style="text-decoration: none"
+                    >
+                      <v-btn icon>
+                        <v-icon fab color="primary">
+                          mdi-account-multiple-plus
+                        </v-icon>
+                      </v-btn>
+                    </router-link>
+                  </v-list-item-action>
+                  <v-list-item-action>
+                    <router-link
+                      :to="{
+                        name: 'statisticOverview',
+                        params: { id: item.id },
+                      }"
+                      style="text-decoration: none"
+                      v-if="!isSimpleUser || item.participantRole.length"
+                    >
+                      <v-btn icon>
+                        <v-icon fab color="primary"> mdi-chart-bar </v-icon>
+                      </v-btn>
+                    </router-link>
+                  </v-list-item-action>
+                </v-list-item>
+                <v-divider
+                  v-if="index < getItems.length - 1"
+                  :key="index"
+                ></v-divider>
+              </template>
+            </v-list>
+          </v-card>
+          <v-card v-else>
+            <v-card-title class="text-center justify-center py-6">
+              Willkommen im Anmele-Tool
+            </v-card-title>
+            <v-subheader>
+              Bevor du dich anmelden kannst musst du deine persönlichen Daten
+              eingeben.
+            </v-subheader>
+            <v-btn
+              class="ma-5"
+              color="primary"
+              @click="$router.push({ name: 'settingsUser' })"
+            >
+              <v-icon left dark>mdi-tools</v-icon>
+              Zu den Benutzerdaten
+            </v-btn>
+          </v-card>
+        </v-layout>
+      </v-flex>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -91,7 +125,8 @@ export default {
     hasSetExtendedUserInfos() {
       if (this.userExtendedItems) {
         return (
-          this.userExtendedItems.scoutName && this.userExtendedItems.scoutOrganisation
+          this.userExtendedItems.scoutName
+          && this.userExtendedItems.scoutOrganisation
         );
       }
       return false;
@@ -109,9 +144,9 @@ export default {
       const endTime = new Date(item.endTime);
       const dateFormat = 'll';
 
-      return `${moment(startTime).format(dateFormat)} bis ${moment(endTime).format(
-        dateFormat,
-      )}`;
+      return `${moment(startTime).format(dateFormat)} bis ${moment(
+        endTime,
+      ).format(dateFormat)}`;
     },
     getEvent() {
       const path = `${this.API_URL}basic/event-overview/`;
@@ -126,7 +161,9 @@ export default {
     },
 
     getUserExtended() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/?&timestamp=${new Date().getTime()}`;
+      const path = `${this.API_URL}auth/data/user-extended/${
+        this.getJwtData.userId
+      }/?&timestamp=${new Date().getTime()}`;
       axios
         .get(path)
         .then((res) => {

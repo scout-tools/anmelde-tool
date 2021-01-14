@@ -18,6 +18,7 @@ import axios from 'axios';
 
 export default {
   data: () => ({
+    API_URL: process.env.VUE_APP_API,
     entries: [],
     isLoading: false,
     model: null,
@@ -43,8 +44,9 @@ export default {
       this.isLoading = true;
 
       // Lazily load input items
+      const path = `${this.API_URL}basic/zip-code/`;
       axios
-        .get('http://localhost:8000/basic/zip-code/')
+        .get(path)
         .then((res) => {
           this.count = res.data.length;
           this.entries = res.data;

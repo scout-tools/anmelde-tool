@@ -1,7 +1,8 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-    <v-container>
+    <v-container class="pa-5">
     <v-btn
+      class="mx-3"
       color="success"
       @click="newUser"
     >
@@ -9,6 +10,16 @@
         mdi-plus
       </v-icon>
       Neuen Teilnehmer hinzufügen
+    </v-btn>
+    <v-btn
+      class="mx-3"
+      color="primary"
+      @click="openExcelDialog"
+    >
+      <v-icon left>
+        mdi-plus
+      </v-icon>
+      Excel Datei hochladen
     </v-btn>
     <v-list>
       <v-subheader>Teilnehmer</v-subheader>
@@ -31,7 +42,7 @@
           </v-list-item-content>
         <v-list-item-action>
           <v-btn dense icon>
-            <v-icon color="grey lighten-1">mdi-information</v-icon>
+            <v-icon color="grey lighten-1">mdi-pencil</v-icon>
           </v-btn>
         </v-list-item-action>
         </v-list-item>
@@ -48,6 +59,7 @@
       />
     </v-container>
     <create-single-person-dialog ref="createSinglePersonDialog"/>
+    <upload-excel-file ref="uploadExcelFile"/>
   </v-form>
 </template>
 
@@ -57,6 +69,7 @@ import { mapGetters } from 'vuex';
 
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 import CreateSinglePersonDialog from './dialog/CreateSinglePersonDialog.vue';
+import UploadExcelFile from './dialog/UploadExcelFile.vue';
 
 export default {
   name: 'StepNameDescription',
@@ -64,6 +77,7 @@ export default {
   components: {
     PrevNextButtons,
     CreateSinglePersonDialog,
+    UploadExcelFile,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
@@ -137,6 +151,9 @@ export default {
     },
     newUser() {
       this.$refs.createSinglePersonDialog.openDialog();
+    },
+    openExcelDialog() {
+      this.$refs.uploadExcelFile.openDialog();
     },
   },
 };

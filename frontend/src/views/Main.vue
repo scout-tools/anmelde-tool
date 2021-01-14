@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <top-menu-main/>
+    <top-menu-main v-show="!isLoginOnly"/>
     <router-view />
-    <footer-main/>
+    <footer-main v-show="!isLoginOnly"/>
   </v-app>
 </template>
 
@@ -28,6 +28,9 @@ export default {
         return !(this.getJwtData.groups.length || this.getJwtData.isStaff);
       }
       return true;
+    },
+    isLoginOnly() {
+      return this.$router.history.current.query.header === 'no';
     },
   },
 };

@@ -1,59 +1,36 @@
 <template>
-    <v-app-bar app color="primary" dark>
-     <router-link to="/">
-        <img
-          src="@/assets/logo_bdp_dpv.svg"
-          height="40"
-          alt="Logo"
-          class="logo-img mx-2"
-        />
-      </router-link>
-      <v-spacer v-if="!$vuetify.breakpoint.mobile"></v-spacer>
+  <v-app-bar app color="primary" dark>
+    <v-tabs background-color="primary" centered dark icons-and-text>
+      <v-tab>
+        <router-link to="/">
+          <img
+            src="@/assets/logo_bdp_dpv.svg"
+            height="40"
+            alt="Logo"
+            class="logo-img mx-2"
+          />
+        </router-link>
+      </v-tab>
 
-            <v-tabs
-              background-color="primary"
-              centered
-              dark
-              icons-and-text
-            >
-              <v-tabs-slider></v-tabs-slider>
-
-              <v-tab
-                v-if="isAuthenticated"
-                @click="$router.push({ name: 'eventOverview' })"
-              >
-                Anmeldungen
-                <v-icon>mdi-view-list</v-icon>
-              </v-tab>
-
-              <v-tab
-                v-if="isAuthenticated && !isSimpleUser"
-                @click="$router.push({ name: 'createEvent' })"
-              >
-                Neu
-                <v-icon>mdi-calendar-plus</v-icon>
-              </v-tab>
-            </v-tabs>
-
-      <v-spacer />
-
-      <v-btn
-        icon
-        large
-        class="mx-5"
+      <v-spacer></v-spacer>
+      <v-tab
+        v-if="isAuthenticated"
+        @click="$router.push({ name: 'eventOverview' })"
+      >
+        Lager
+        <v-icon>mdi-view-list</v-icon>
+      </v-tab>
+      <v-spacer></v-spacer>
+      <v-tab
         v-if="isAuthenticated"
         @click="$router.push({ name: 'settingsUser' })"
       >
-        <v-icon>mdi-tools </v-icon>
-      </v-btn>
+        User
+        <v-icon>mdi-account-circle</v-icon>
 
-      <v-btn v-if="isAuthenticated" outlined dark @click="onLogoutClicked">
-        <v-icon :left="!$vuetify.breakpoint.mobile">
-          mdi-logout-variant
-        </v-icon>
-        {{ logoutText}}
-      </v-btn>
-    </v-app-bar>
+      </v-tab>
+    </v-tabs>
+  </v-app-bar>
 </template>
 
 <script>
@@ -62,8 +39,7 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'HelloWorld',
 
-  data: () => ({
-  }),
+  data: () => ({}),
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
     userName() {

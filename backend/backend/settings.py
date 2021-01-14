@@ -37,8 +37,9 @@ ALLOWED_HOSTS = [
     '83.169.2.26',
     '127.0.0.1',
     'localhost',
-    'anmelde-tool.eu-central-1.elasticbeanstalk.com',
-    'api.myhagemann.de',
+    'anmelde-tool-backend-dev.eu-central-1.elasticbeanstalk.com',
+    'dev.api.anmelde-tool.de',
+    'api.anmelde-tool.de'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -201,14 +202,15 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
-EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL')
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = env('EMAIL_PORT')
-FRONT_URL = env.str('FRONT_URL')
+if env.bool('USE_EMAIL'):
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
+    EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL')
+    EMAIL_HOST = env('EMAIL_HOST')
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+    EMAIL_PORT = env('EMAIL_PORT')
+    FRONT_URL = env.str('FRONT_URL')
 
 REST_USE_JWT = True
 

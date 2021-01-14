@@ -66,7 +66,7 @@ class Command(BaseCommand):
         if not UserModel.objects.filter(username='kethe@pbn.de').exists():
             user = UserModel.objects.create_user('kethe@pbn.de', password='kethe')
             user.is_superuser = False
-            user.is_staff = False
+            user.is_staff = True
             user.save()
 
         if not UserModel.objects.filter(username='hagi@superadmin.de').exists():
@@ -102,6 +102,18 @@ class Command(BaseCommand):
         if not UserModel.objects.filter(username='hagi-kueche@keinerechte.de').exists():
             user = UserModel.objects.create_user('hagi-kueche@keinerechte.de', password='hagi1234')
             user.is_superuser = False
+            user.is_staff = True
+            user.save()
+
+        if not UserModel.objects.filter(username='ingo@lagerleitung.de').exists():
+            user = UserModel.objects.create_user('ingo@lagerleitung.de', password='ingo1234')
+            user.is_superuser = False
+            user.is_staff = True
+            user.save()
+
+        if not UserModel.objects.filter(username='ingo@admin.de').exists():
+            user = UserModel.objects.create_user('ingo@admin.de', password='ingo1234')
+            user.is_superuser = True
             user.is_staff = True
             user.save()
 
