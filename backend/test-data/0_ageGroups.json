@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "id": 1,
-            "name": "Wölflinge",
+            "name": "11 Jahre oder Jünger",
             "description": ""
         }
     },
@@ -13,7 +13,7 @@
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Pfadfinder",
+            "name": "12-16 Jahre",
             "description": ""
         }
     },
@@ -22,7 +22,7 @@
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "Rover",
+            "name": "17 Jahre oder Älter",
             "description": ""
         }
     }
