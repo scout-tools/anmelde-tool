@@ -227,7 +227,7 @@ class Registration(TimeStampMixin):
     is_accepted = models.BooleanField(default=0)
 
 
-class Participant(TimeStampMixin):
+class ParticipantGroup(TimeStampMixin):
     id = models.AutoField(
         auto_created=True,
         primary_key=True,
@@ -236,17 +236,15 @@ class Participant(TimeStampMixin):
     number_of_persons = models.IntegerField(blank=True, null=True)
     age_group = models.ForeignKey(AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
-    scout_group = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
 
 
-class ParticipantExtended(TimeStampMixin):
+class ParticipantPersonal(TimeStampMixin):
     id = models.AutoField(
         auto_created=True,
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    participant = models.ForeignKey(
-        Participant, on_delete=models.PROTECT, null=True, blank=True)
+    registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     street = models.CharField(max_length=100, blank=True)
@@ -254,7 +252,9 @@ class ParticipantExtended(TimeStampMixin):
         ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     date_birth = models.DateField(
         auto_now=False, auto_now_add=False, null=True, blank=True)
+    scout_group = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
     is_group_leader = models.BooleanField(default=0)
+    age_group = models.ForeignKey(AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
 
 
 class ParticipantRole(TimeStampMixin):
@@ -263,8 +263,8 @@ class ParticipantRole(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    participant = models.ForeignKey(
-        Participant, on_delete=models.PROTECT, null=True, blank=True)
+    participant_group = models.ForeignKey(
+        ParticipantGroup, on_delete=models.PROTECT, null=True, blank=True)
     event = models.ForeignKey(
         Event, on_delete=models.PROTECT, null=True, blank=True)
     role = models.ForeignKey(
@@ -288,7 +288,7 @@ class EatHabitType(TimeStampMixin):
         return self.__str__()
 
 
-class EatHabit(models.Model):
+class EatHabitPersonal(models.Model):
     id = models.AutoField(
         auto_created=True,
         primary_key=True,
@@ -296,8 +296,26 @@ class EatHabit(models.Model):
         verbose_name='ID')
     eat_habit_type = models.ForeignKey(
         EatHabitType, on_delete=models.PROTECT, null=True, blank=True)
-    participant = models.ForeignKey(
-        Participant, on_delete=models.PROTECT, null=True, blank=True)
+    participantPersonal = models.ForeignKey(
+        ParticipantPersonal, on_delete=models.PROTECT, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.__str__()
+
+
+class EatHabitGroup(models.Model):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    eat_habit_type = models.ForeignKey(
+        EatHabitType, on_delete=models.PROTECT, null=True, blank=True)
+    participantGroup = models.ForeignKey(
+        ParticipantGroup, on_delete=models.PROTECT, null=True, blank=True)
     number_of_persons = models.IntegerField(blank=True, null=True)
 
     def __str__(self):

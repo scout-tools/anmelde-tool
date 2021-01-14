@@ -9,14 +9,16 @@ from rest_framework.permissions import IsAuthenticated
 from helper.user_creation import CreateUserExternally
 from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
-    ZipCode, Participant, ParticipantRole, Role, MethodOfTravel, Tent, \
-    ScoutOrgaLevel, ParticipantExtended, EatHabitType, EatHabit, TravelType, TentType
+    ZipCode, ParticipantGroup, ParticipantRole, Role, MethodOfTravel, Tent, \
+    ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabitPersonal, TravelType, \
+    TentType, EatHabitGroup
 
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
-    ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantSerializer, \
+    ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
-    ParticipantSerializer2, ScoutOrgaLevelSerializer, ParticipantExtendedSerializer, \
-    EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, TentTypeSerializer, EventOverviewSerializer
+    ParticipantSerializer2, ScoutOrgaLevelSerializer, ParticipantPersonalSerializer, \
+    EatHabitTypeSerializer, EatHabitGroupSerializer, TravelTypeSerializer, \
+    TentTypeSerializer, EventOverviewSerializer, EatHabitPersonalSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -77,6 +79,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 
         return super().create(request, *args, **kwargs)
 
+
 class ZipCodeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ZipCode.objects.all()
@@ -85,10 +88,10 @@ class ZipCodeViewSet(viewsets.ModelViewSet):
     filterset_fields = ['zip_code']
 
 
-class ParticipantViewSet(viewsets.ModelViewSet):
+class ParticipantGroupViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = Participant.objects.all()
-    serializer_class = ParticipantSerializer
+    queryset = ParticipantGroup.objects.all()
+    serializer_class = ParticipantGroupSerializer
 
 
 class ParticipantRoleViewSet(viewsets.ModelViewSet):
@@ -134,10 +137,10 @@ class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
     serializer_class = ScoutOrgaLevelSerializer
 
 
-class ParticipantExtendedViewSet(viewsets.ModelViewSet):
+class ParticipantPersonalViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = ParticipantExtended.objects.all()
-    serializer_class = ParticipantExtendedSerializer
+    queryset = ParticipantPersonal.objects.all()
+    serializer_class = ParticipantPersonalSerializer
 
 
 class EatHabitTypeViewSet(viewsets.ModelViewSet):
@@ -146,10 +149,16 @@ class EatHabitTypeViewSet(viewsets.ModelViewSet):
     serializer_class = EatHabitTypeSerializer
 
 
-class EatHabitViewSet(viewsets.ModelViewSet):
+class EatHabitPersonalViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = EatHabit.objects.all()
-    serializer_class = EatHabitSerializer
+    queryset = EatHabitPersonal.objects.all()
+    serializer_class = EatHabitPersonalSerializer
+
+
+class EatHabitGroupViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = EatHabitGroup.objects.all()
+    serializer_class = EatHabitGroupSerializer
 
 
 class TravelTypeViewSet(viewsets.ModelViewSet):

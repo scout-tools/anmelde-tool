@@ -1,8 +1,8 @@
 from django.contrib import admin
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy,\
-    Registration, ZipCode, Participant, ParticipantRole,\
-    Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantExtended,\
-    EatHabitType, EatHabit, TravelType, TentType, EventTag, EventRoleMapping,EventRole
+    Registration, ZipCode, ParticipantGroup, ParticipantRole,\
+    Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal,\
+    EatHabitType, EatHabitGroup, EatHabitPersonal, TravelType, TentType, EventTag, EventRoleMapping,EventRole
 
 
 admin.site.register(Event)
@@ -10,14 +10,15 @@ admin.site.register(AgeGroup)
 admin.site.register(EventLocation)
 admin.site.register(Registration)
 admin.site.register(ZipCode)
-admin.site.register(Participant)
+admin.site.register(ParticipantGroup)
 admin.site.register(ParticipantRole)
 admin.site.register(Role)
 admin.site.register(MethodOfTravel)
 admin.site.register(ScoutOrgaLevel)
-admin.site.register(ParticipantExtended)
+admin.site.register(ParticipantPersonal)
 admin.site.register(EatHabitType)
-admin.site.register(EatHabit)
+admin.site.register(EatHabitGroup)
+admin.site.register(EatHabitPersonal)
 admin.site.register(TravelType)
 admin.site.register(TentType)
 admin.site.register(Tent)

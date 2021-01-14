@@ -1,8 +1,8 @@
 # serializers.py
 from rest_framework import serializers
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, \
-    Participant, ParticipantRole, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantExtended, \
-    EatHabitType, EatHabit, TravelType, TentType
+    ParticipantGroup, ParticipantRole, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
+    EatHabitType, EatHabitPersonal, EatHabitGroup, TravelType, TentType
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
 
@@ -74,9 +74,9 @@ class ZipCodeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ParticipantSerializer(serializers.ModelSerializer):
+class ParticipantGroupSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Participant
+        model = ParticipantGroup
         fields = '__all__'
 
 
@@ -94,28 +94,28 @@ class ParticipantSerializer2(serializers.ModelSerializer):
         else:
             return scout_organisation.name
 
-    def get_lon(self, par: Participant):
+    def get_lon(self, par: ParticipantGroup):
         if par.registration.scout_organisation.zip_code is not None:
             lon = par.registration.scout_organisation.zip_code.lon
         else:
             lon = 10.451526
         return lon
 
-    def get_lat(self, par: Participant):
+    def get_lat(self, par: ParticipantGroup):
         if par.registration.scout_organisation.zip_code is not None:
             lat = par.registration.scout_organisation.zip_code.lat
         else:
             lat = 51.165691
         return lat
 
-    def get_bund(self, par: Participant):
+    def get_bund(self, par: ParticipantGroup):
         return self.get_bund_name(par.registration.scout_organisation)
 
-    def get_name(self, par: Participant):
+    def get_name(self, par: ParticipantGroup):
         return par.registration.scout_organisation.name
 
     class Meta:
-        model = Participant
+        model = ParticipantGroup
         fields = '__all__'
 
 
@@ -149,9 +149,9 @@ class ScoutOrgaLevelSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ParticipantExtendedSerializer(serializers.ModelSerializer):
+class ParticipantPersonalSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ParticipantExtended
+        model = ParticipantPersonal
         fields = '__all__'
 
 
@@ -161,9 +161,15 @@ class EatHabitTypeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EatHabitSerializer(serializers.ModelSerializer):
+class EatHabitGroupSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EatHabit
+        model = EatHabitGroup
+        fields = '__all__'
+
+
+class EatHabitPersonalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EatHabitPersonal
         fields = '__all__'
 
 
