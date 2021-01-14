@@ -112,11 +112,11 @@
               <v-text-field
                 v-model="data.street"
                 :counter="30"
-                :error-messages="addressErrors"
+                :error-messages="streetErrors"
                 label="Straße und Hausnummer"
                 required
-                @input="$v.data.address.$touch()"
-                @blur="$v.data.address.$touch()"
+                @input="$v.data.street.$touch()"
+                @blur="$v.data.street.$touch()"
               />
             </v-col>
             <v-col cols="12" sm="6" md="4">
@@ -141,7 +141,6 @@
           <v-divider class="my-3"/>
         </v-form>
       </v-container>
-      <step-2 />
       <v-divider class="my-4"/>
       <v-btn color="primary" @click="onClickOkay"> Speichern </v-btn>
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
@@ -211,7 +210,7 @@ export default {
         required,
         maxLength: maxLength(10),
       },
-      address: {
+      street: {
         required,
         maxLength: maxLength(30),
       },
@@ -268,13 +267,13 @@ export default {
       }
       return `${moment(this.data.dateBirth).format(dateFormat)}`;
     },
-    addressErrors() {
+    streetErrors() {
       const errors = [];
-      if (!this.$v.data.address.$dirty) return errors;
-      if (!this.$v.data.address.required) {
+      if (!this.$v.data.street.$dirty) return errors;
+      if (!this.$v.data.street.required) {
         errors.push('Adresse is required.');
       }
-      if (!this.$v.data.address.maxLength) {
+      if (!this.$v.data.street.maxLength) {
         errors.push('Adresse must be at most 20 characters long');
       }
       return errors;
@@ -329,7 +328,7 @@ export default {
     },
     onClickOkay() {
       this.validate();
-      if (true) {
+      if (this.valid) {
         try {
           this.callCreateParticipantPost();
           this.closeDialog();
