@@ -1,43 +1,73 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
     <v-container fluid>
-      <v-row align="center" v-for="(tent, index) in this.data.tents" :key="index">
+      <v-row align="center">
         <v-col cols="6">
           <v-subheader>
-            Zelttyp
+            {{this.reached()}} / {{this.data.maxNumber}}
           </v-subheader>
         </v-col>
+      </v-row>
+      <v-row align="center">
         <v-col cols="6">
-          <v-select
-            v-model="tent.selectedType"
-            :items="data.type"
-            item-text="state"
-            item-value="abbr"
-            label="Select"
-            persistent-hint
-            return-object
-            single-line
-          ></v-select>
+          <v-text-field
+            v-model="data.numberBus"
+            :error-messages="numberError"
+            label="Bus"
+            required
+            @input="$v.data.numberBus.$touch()"
+            @blur="$v.data.numberBus.$touch()"
+          />
         </v-col>
-        <v-col cols="12">
-          <v-combobox
-            v-model="tent.selectedGroup"
-            :items="data.groups"
-            label="Gruppe"
-            multiple
-            outlined
-            dense
-          ></v-combobox>
+        <v-col cols="6">
+          <v-text-field
+            v-model="data.numberCar"
+            :error-messages="numberError"
+            label="PKW"
+            required
+            @input="$v.data.numberCar.$touch()"
+            @blur="$v.data.numberCar.$touch()"
+          />
+        </v-col>
+        <v-col cols="6">
+          <v-text-field
+            v-model="data.numberPublic"
+            :error-messages="numberError"
+            label="OEPNV"
+            required
+            @input="$v.data.numberPublic.$touch()"
+            @blur="$v.data.numberPublic.$touch()"
+          />
+        </v-col>
+        <v-col cols="6">
+          <v-text-field
+            v-model="data.numberWalking"
+            :error-messages="numberError"
+            label="zu Fuss"
+            required
+            @input="$v.data.numberWalking.$touch()"
+            @blur="$v.data.numberWalking.$touch()"
+          />
+        </v-col>
+        <v-col cols="6">
+          <v-text-field
+            v-model="data.numberWater"
+            :error-messages="numberError"
+            label="Wasserweg"
+            required
+            @input="$v.data.numberWater.$touch()"
+            @blur="$v.data.numberWater.$touch()"
+          />
         </v-col>
       </v-row>
-      <v-row>
-        <v-col>
-          <v-btn
-            elevation="5" @click="this.addTent()"
-          >Nächstes Zelt
-          </v-btn>
-        </v-col>
-      </v-row>
+      <v-divider class="my-3" />
+      <prev-next-buttons
+        :position="position"
+        :max-pos="maxPos"
+        @nextStep="nextStep()"
+        @prevStep="prevStep"
+        @submitStep="submitStep()"
+      />
     </v-container>
   </v-form>
 </template>
@@ -45,21 +75,25 @@
 <script>
 import { mapGetters } from 'vuex';
 import { required, minLength, minValue } from 'vuelidate/lib/validators';
+import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
-  props: [],
-  components: {},
+  props: ['position', 'maxPos', 'currentEvent'],
+  components: {
+    PrevNextButtons,
+  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: false,
     data: {
-      type: ['Jurte', 'Kothe'],
-      groups: ['Baeren', 'Adler'],
-      tents: [
-        { i: 0, selectedType: '', selectedGroup: '' },
-      ],
+      maxNumber: 0,
+      numberBus: 0,
+      numberCar: 0,
+      numberPublic: 0,
+      numberWalking: 0,
+      numberWater: 0,
     },
   }),
   validations: {
@@ -78,9 +112,10 @@ export default {
     },
   },
   methods: {
-    addTent() {
-      this.data.tents.push({ i: 0, selectedType: '', selectedGroup: '' });
-      console.log(this.tents);
+    reached() {
+      // eslint-disable-next-line max-len
+      const sum = this.data.numberBus * 1 + this.data.numberCar * 1 + this.data.numberPublic * 1 + this.data.numberWalking * 1 + this.data.numberWater * 1;
+      return sum;
     },
     greaterThanZero(value) {
       return value > 0;

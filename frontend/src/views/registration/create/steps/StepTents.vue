@@ -38,6 +38,14 @@
           </v-btn>
         </v-col>
       </v-row>
+      <v-divider class="my-3" />
+      <prev-next-buttons
+        :position="position"
+        :max-pos="maxPos"
+        @nextStep="nextStep()"
+        @prevStep="prevStep"
+        @submitStep="submitStep()"
+      />
     </v-container>
   </v-form>
 </template>
@@ -45,11 +53,14 @@
 <script>
 import { mapGetters } from 'vuex';
 import { required, minLength, minValue } from 'vuelidate/lib/validators';
+import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
-  props: [],
-  components: {},
+  props: ['position', 'maxPos', 'currentEvent'],
+  components: {
+    PrevNextButtons,
+  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
@@ -92,12 +103,11 @@ export default {
       this.$emit('prevStep');
     },
     nextStep() {
-      this.validate();
+      /*  this.validate();
       if (!this.valid) {
         return;
-      }
-
-      this.addParticipants();
+      } */
+      this.$emit('nextStep');
     },
     submitStep() {
       this.validate();
