@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "id": 1,
-            "name": "Pfadfinder",
+            "name": "Lagerleitung",
             "description": ""
         }
     },
@@ -13,7 +13,7 @@
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Verband",
+            "name": "Kasse",
             "description": ""
         }
     },
@@ -22,7 +22,7 @@
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "Bund",
+            "name": "Küche",
             "description": ""
         }
     },
@@ -31,7 +31,7 @@
         "pk": 4,
         "fields": {
             "id": 4,
-            "name": "Ring/Regional",
+            "name": "Programm",
             "description": ""
         }
     },
@@ -40,7 +40,7 @@
         "pk": 5,
         "fields": {
             "id": 5,
-            "name": "Stamm",
+            "name": "Logistik",
             "description": ""
         }
     },
@@ -49,7 +49,7 @@
         "pk": 6,
         "fields": {
             "id": 6,
-            "name": "Gruppe",
+            "name": "Öffentlichkeit",
             "description": ""
         }
     }
