@@ -2,7 +2,7 @@
 from rest_framework import serializers
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, \
     ParticipantGroup, ParticipantRole, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
-    EatHabitType, EatHabitPersonal, EatHabitGroup, TravelType, TentType
+    EatHabitType, EatHabit, TravelType, TentType
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
 
@@ -161,15 +161,15 @@ class EatHabitTypeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EatHabitGroupSerializer(serializers.ModelSerializer):
+class EatHabitSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EatHabitGroup
+        model = EatHabit
         fields = '__all__'
 
 
-class EatHabitPersonalSerializer(serializers.ModelSerializer):
+class EatHabitSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EatHabitPersonal
+        model = EatHabit
         fields = '__all__'
 
 

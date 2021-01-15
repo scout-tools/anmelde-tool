@@ -2,7 +2,8 @@ from django.contrib import admin
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy,\
     Registration, ZipCode, ParticipantGroup, ParticipantRole,\
     Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal,\
-    EatHabitType, EatHabitGroup, EatHabitPersonal, TravelType, TentType, EventTag, EventRoleMapping,EventRole
+    EatHabitType, EatHabit, TravelType,\
+    TentType, EventTag, EventRoleMapping, EventRole
 
 
 admin.site.register(Event)
@@ -17,14 +18,14 @@ admin.site.register(MethodOfTravel)
 admin.site.register(ScoutOrgaLevel)
 admin.site.register(ParticipantPersonal)
 admin.site.register(EatHabitType)
-admin.site.register(EatHabitGroup)
-admin.site.register(EatHabitPersonal)
+admin.site.register(EatHabit)
 admin.site.register(TravelType)
 admin.site.register(TentType)
 admin.site.register(Tent)
 admin.site.register(EventTag)
 admin.site.register(EventRoleMapping)
 admin.site.register(EventRole)
+
 
 @admin.register(ScoutHierarchy)
 class ScoutHierarchyAdmin(admin.ModelAdmin):
