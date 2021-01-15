@@ -179,8 +179,6 @@ export default {
           this.emailSend = true;
         })
         .catch(() => {
-          debugger;
-
           this.showError = true;
         })
         .then(() => {
