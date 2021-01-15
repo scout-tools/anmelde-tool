@@ -88,7 +88,6 @@ export default {
   methods: {
     onFileChange(e) {
       this.getJsonFromFile(e).then((data) => {
-        debugger;
         this.jsonData = data;
       });
     },

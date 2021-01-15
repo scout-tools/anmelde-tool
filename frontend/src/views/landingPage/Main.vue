@@ -8,7 +8,7 @@
             class="white--text mb-2 display-1"
             style="font-weight: 900; text-shadow: 3px 2px #000000"
           >
-            Das Pfadfinder Anmelde-Tool
+            Das Pfadfinder_innen Anmelde-Tool
           </h1>
           <div
             class="white--text subheading mb-3"
@@ -63,7 +63,7 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Schneller und Einfacher gab es keine Anmeldung für ein Pfadfinderlager.
+                    Schneller und Einfacher gab es keine Anmeldung für ein Pfadfinder_innen Lager.
                     Einloggen innerhalb von Sekunden ohne ein extra Passwort und du wirst durch
                     den Anmeldeprozess begleitet
                   </v-card-text>
@@ -93,8 +93,9 @@
                         Datenschutz</div>
                   </v-card-title>
                   <v-card-text>
-                    Wir sorgen dafür, dass jeder nur die Daten sieht die
-                    er auch braucht. Persönliche Daten werden gelöscht
+                    Wir sorgen dafür, dass nur Personen die Daten
+                    sehen, die sie auch (wirklich) brauchen.
+                    Persönliche Daten werden gelöscht,
                     sobald sie nicht mehr gebraucht werden.
                   </v-card-text>
                 </v-card>

@@ -10,10 +10,16 @@
         <v-btn icon dark @click="active = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Neuen Teilnehmer hinzufügen</v-toolbar-title>
+        <v-toolbar-title>TeilnehmerInnen hinzufügen</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-container>
+        <v-subheader class="ma-5">
+          Bitte trag hier die Daten ein die das Anmeldetool aus. Diese Daten
+          werden teilweise später in Anwendungen gebraucht. Diese Daten sind für
+          die Administratoren und für die Lagerleitung nach deiner explizieten
+          Anmeldung sichtbar.
+        </v-subheader>
         <v-form v-model="valid">
           <v-row>
             <v-col cols="12" sm="6" md="4">
@@ -27,13 +33,10 @@
               />
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-checkbox
-                v-model="data.groupleader"
-                label="Gruppenführung"
-              />
+              <v-checkbox v-model="data.groupleader" label="Gruppenführung" />
             </v-col>
           </v-row>
-          <v-divider class="my-3"/>
+          <v-divider class="my-3" />
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
@@ -59,53 +62,7 @@
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-row>
-                <v-dialog
-                  ref="dateBirthDialog"
-                  v-model="dialog.dateBirth"
-                  :return-value.sync="data.dateBirth"
-                  width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="dateBirthString"
-                      label="Wähle das Geburtsdatum"
-                      prepend-icon="mdi-clock-time-four-outline"
-                      readonly
-                      required
-                      :error-messages="dateBirthErrors"
-                      v-bind="attrs"
-                      v-on="on"
-                    />
-                  </template>
-                  <v-date-picker v-if="dialog.dateBirth" v-model="data.dateBirth"/>
-                  <v-spacer/>
-                  <v-card tile>
-                    <v-card-actions>
-                      <v-container class="py-0 px-1">
-                        <v-row>
-                          <v-col>
-                            <v-btn
-                              color="primary"
-                              @click="dialog.dateBirth = false"
-                              width="100%"
-                            >
-                              Abbrechen
-                            </v-btn>
-                          </v-col>
-                          <v-col>
-                            <v-btn
-                              color="primary"
-                              @click="$refs.dateBirthDialog.save(data.dateBirth)"
-                              width="100%"
-                            >
-                              OK
-                            </v-btn>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+               <birthday-field/>
               </v-row>
             </v-col>
             <v-col cols="12" sm="6" md="4">
@@ -120,10 +77,13 @@
               />
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <zip-code-field/>
+              <zip-code-field />
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <eat-field />
             </v-col>
           </v-row>
-          <v-divider class="my-3"/>
+          <v-divider class="my-3" />
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-checkbox
@@ -138,11 +98,12 @@
               />
             </v-col>
           </v-row>
-          <v-divider class="my-3"/>
+          <v-divider class="my-3" />
+          <v-btn color="primary" @click="onClickOkay"> Speichern </v-btn>
         </v-form>
       </v-container>
-      <v-divider class="my-4"/>
-      <v-btn color="primary" @click="onClickOkay"> Speichern </v-btn>
+      <v-divider class="my-4" />
+
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
         {{ 'Fehler beim Erstellen des Ortes' }}
       </v-snackbar>
@@ -161,11 +122,15 @@ import axios from 'axios';
 import moment from 'moment';
 
 import ZipCodeField from '@/components/field/ZipCodeField.vue';
+import EatField from '@/components/field/EatField.vue';
+import BirthdayField from '@/components/field/BirthdayField.vue';
 
 export default {
   props: ['isOpen'],
   components: {
     ZipCodeField,
+    EatField,
+    BirthdayField,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
@@ -182,13 +147,16 @@ export default {
       kaperfahrt: false,
       mosaikersleben: true,
     },
-    items: [{
-      id: 1,
-      name: 'Bären',
-    }, {
-      id: 2,
-      name: 'Döner',
-    }],
+    items: [
+      {
+        id: 1,
+        name: 'Bären',
+      },
+      {
+        id: 2,
+        name: 'Döner',
+      },
+    ],
     dialog: {
       dateBirth: false,
     },

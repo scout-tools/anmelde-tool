@@ -9,7 +9,7 @@
       <v-icon left>
         mdi-plus
       </v-icon>
-      Neuen Teilnehmer hinzufügen
+       TeilnehmerInnen hinzufügen
     </v-btn>
     <v-btn
       class="mx-3"
@@ -22,7 +22,7 @@
       Excel Datei hochladen
     </v-btn>
     <v-list>
-      <v-subheader>Teilnehmer</v-subheader>
+      <v-subheader>TeilnehmerInnen</v-subheader>
       <v-list-item-group
         color="primary"
       >
@@ -73,6 +73,7 @@ import UploadExcelFile from './dialog/UploadExcelFile.vue';
 
 export default {
   name: 'StepNameDescription',
+  displayName: 'Einzel TeilnehmerInnnen',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,

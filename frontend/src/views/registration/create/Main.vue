@@ -8,7 +8,7 @@
             :complete="currentStep > index + 1"
             :step="index + 1"
           >
-            {{ `${index + 1} Schritt`  }}
+            {{ `${step.displayName}`  }}
           </v-stepper-step>
 
           <v-divider :key="index"></v-divider>
@@ -114,7 +114,7 @@ export default {
       ];
     },
     headerSteps() {
-      return ['Teilnehmer', 'Essen', 'Bestätigung'];
+      return ['TeilnehmerInnen', 'Essen', 'Bestätigung'];
     },
   },
   methods: {

@@ -35,6 +35,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
+  displayName: 'Zusammenfassung und Bestätigung',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
