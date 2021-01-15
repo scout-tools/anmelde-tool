@@ -215,7 +215,7 @@ class EventRoleMapping(TimeStampMixin):
         serialize=False,
         verbose_name='ID')
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
-    eventRole = models.ForeignKey(EventRole, on_delete=models.PROTECT)
+    event_role = models.ForeignKey(EventRole, on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
 
 
@@ -282,7 +282,7 @@ class ParticipantRole(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    participant = models.ForeignKey(Participant, on_delete=models.PROTECT, null=True, blank=True)
+    participant_personal = models.ForeignKey(ParticipantPersonal, on_delete=models.PROTECT, null=True, blank=True)
     event = models.ForeignKey(Event, on_delete=models.PROTECT, null=True, blank=True)
     role = models.ForeignKey(Role, on_delete=models.PROTECT, null=True, blank=True)
 
@@ -295,7 +295,7 @@ class EatHabit(models.Model):
         verbose_name='ID')
     eat_habit_type = models.ForeignKey(
         EatHabitType, on_delete=models.PROTECT, null=True, blank=True)
-    participantGroup = models.ForeignKey(
+    participant_group = models.ForeignKey(
         ParticipantGroup, on_delete=models.PROTECT, null=True, blank=True)
     number_of_persons = models.IntegerField(blank=True, null=True)
 
