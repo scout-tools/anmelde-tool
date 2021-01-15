@@ -57,6 +57,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
+  displayName: 'Zelte',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,

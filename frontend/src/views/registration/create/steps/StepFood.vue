@@ -5,10 +5,10 @@
         Wölflinge
       </v-tab>
       <v-tab>
-        Pfadfinder
+        Pfadfinder_innen
       </v-tab>
       <v-tab>
-        Rover
+        RoverInnen
       </v-tab>
       <v-tab>
         Alt-Rover
@@ -59,6 +59,7 @@ export default {
   props: ['position', 'maxPos'],
   data: () => ({
     valid: true,
+    displayName: 'Essen',
   }),
   validations: {},
   methods: {

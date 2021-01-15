@@ -19,7 +19,12 @@
               Einloggen
             </v-card-title>
             <v-card-text class="mt-5">
-              <v-subheader> Gebe hier deine E-Mail Adresse ein. </v-subheader>
+              <v-subheader
+                >Gebe hier deine E-Mail-Adresse an. Den Link zur Anmeldung und
+                den Aktionen bekommst du dann per Mail. Für ein erneutes
+                Einloggen benutze den Link aus der Mail oder gebe deine E-Mail
+                einfach erneut an.</v-subheader
+              >
               <v-container v-if="!emailSend && !isEmailFieldIsLoading">
                 <v-row>
                   <v-col cols="12">

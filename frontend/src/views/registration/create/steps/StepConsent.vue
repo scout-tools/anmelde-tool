@@ -47,6 +47,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
+  displayName: 'Einverständnis',
   props: ['position', 'maxPos', 'currentEvent', 'currentRegistration', 'scoutOrganisation'],
   components: {
     PrevNextButtons,
