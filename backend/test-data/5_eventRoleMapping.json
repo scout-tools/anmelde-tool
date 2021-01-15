@@ -5,7 +5,7 @@
         "fields": {
             "id": 1,
             "event": 1,
-            "eventRole": 1, 
+            "event_role": 1, 
             "user": 13
         }
     },
@@ -13,9 +13,9 @@
         "model": "basic.EventRoleMapping",
         "pk": 2,
         "fields": {
-            "id": 1,
+            "id": 2,
             "event": 1,
-            "eventRole": 2,
+            "event_role": 2,
             "user": 12
         }
     },
@@ -24,8 +24,8 @@
         "pk": 3,
         "fields": {
             "id": 3,
-            "event": 4,
-            "eventRole": 5,
+            "event": 1,
+            "event_role": 5,
             "user": 15
         }
     },
@@ -34,8 +34,8 @@
         "pk": 4,
         "fields": {
             "id": 4,
-            "event": 2,
-            "eventRole": 1,
+            "event": 1,
+            "event_role": 1,
             "user": 16
         }
     },
@@ -44,9 +44,9 @@
         "pk": 5,
         "fields": {
             "id": 5,
-            "event": 4,
-            "eventRole": 1,
-            "user": 16
+            "event": 1,
+            "event_role": 2,
+            "user": 17
         }
     }
 ]
