@@ -181,6 +181,7 @@ class Event(TimeStampMixin):
     invitation_code = models.CharField(max_length=6, blank=True)
     max_scout_orga_level = models.ForeignKey(ScoutOrgaLevel, on_delete=models.PROTECT, null=True, blank=True)
     is_public = models.BooleanField(default=0)
+
     # ToDo: add pdf attatchment
     # ToDo: add html description
 
@@ -245,15 +246,12 @@ class ParticipantExtended(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    participant = models.ForeignKey(
-        Participant, on_delete=models.PROTECT, null=True, blank=True)
+    participant = models.ForeignKey(Participant, on_delete=models.PROTECT, null=True, blank=True)
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     street = models.CharField(max_length=100, blank=True)
-    zip_code = models.ForeignKey(
-        ZipCode, on_delete=models.PROTECT, null=True, blank=True)
-    date_birth = models.DateField(
-        auto_now=False, auto_now_add=False, null=True, blank=True)
+    zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
+    date_birth = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
     is_group_leader = models.BooleanField(default=0)
 
 
@@ -263,12 +261,9 @@ class ParticipantRole(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    participant = models.ForeignKey(
-        Participant, on_delete=models.PROTECT, null=True, blank=True)
-    event = models.ForeignKey(
-        Event, on_delete=models.PROTECT, null=True, blank=True)
-    role = models.ForeignKey(
-        Role, on_delete=models.PROTECT, null=True, blank=True)
+    participant = models.ForeignKey(Participant, on_delete=models.PROTECT, null=True, blank=True)
+    event = models.ForeignKey(Event, on_delete=models.PROTECT, null=True, blank=True)
+    role = models.ForeignKey(Role, on_delete=models.PROTECT, null=True, blank=True)
 
 
 class EatHabitType(TimeStampMixin):
@@ -294,10 +289,8 @@ class EatHabit(models.Model):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    eat_habit_type = models.ForeignKey(
-        EatHabitType, on_delete=models.PROTECT, null=True, blank=True)
-    participant = models.ForeignKey(
-        Participant, on_delete=models.PROTECT, null=True, blank=True)
+    eat_habit_type = models.ForeignKey(EatHabitType, on_delete=models.PROTECT, null=True, blank=True)
+    participant = models.ForeignKey(Participant, on_delete=models.PROTECT, null=True, blank=True)
     number_of_persons = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
@@ -329,10 +322,8 @@ class MethodOfTravel(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    registration = models.ForeignKey(
-        Registration, on_delete=models.PROTECT, null=True, blank=True)
-    travel_type = models.ForeignKey(
-        TravelType, on_delete=models.PROTECT, null=True, blank=True)
+    registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
+    travel_type = models.ForeignKey(TravelType, on_delete=models.PROTECT, null=True, blank=True)
     number_of_persons = models.IntegerField(blank=True, null=True)
 
 
@@ -358,8 +349,6 @@ class Tent(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    registration = models.ForeignKey(
-        Registration, on_delete=models.PROTECT, null=True, blank=True)
-    tent_type = models.ForeignKey(
-        TentType, on_delete=models.PROTECT, null=True, blank=True)
+    registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
+    tent_type = models.ForeignKey(TentType, on_delete=models.PROTECT, null=True, blank=True)
     used_by_scout_groups = models.ManyToManyField(ScoutHierarchy, blank=True)

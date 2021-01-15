@@ -1,10 +1,12 @@
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, mixins, status
+from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import MyTokenObtainPairSerializer, UserExtendedSerializer, AuthSerializer
 from .models import UserExtended
 from rest_framework.permissions import IsAuthenticated
+
 
 # Register API
 class AuthenticateView(generics.UpdateAPIView):
@@ -29,7 +31,18 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-class UserExtendedViewSet(viewsets.ModelViewSet):
+class UserExtendedViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = UserExtended.objects.all()
-    serializer_class = UserExtendedSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        queryset = UserExtended.objects.get(user=request.user)
+        serializer = UserExtendedSerializer(queryset, many=False)
+        return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        queryset = UserExtended.objects.get(user=request.user)
+        serializer = UserExtendedSerializer(queryset, data=request.data, many=False)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
