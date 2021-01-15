@@ -1,33 +1,100 @@
 <template>
+  <v-form ref="settingsUser">
   <v-container class="top-margin">
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
           <v-card>
+              <v-card-title class="text-center justify-center py-6">
+                Hier kannst du deine persönlichen Einstellungen Account
+                anpassen.
+              </v-card-title>
             <v-card-text>
               <v-container>
+                  <v-subheader class="ma-5">
+                    Bitte trag hier die Daten ein die das Anmeldetool aus. Diese
+                    Daten werden teilweise später in Anwendungen gebraucht.
+                    Diese Daten sind für die Administratoren und für die
+                    Lagerleitung nach deiner explizieten Anmeldung sichtbar.
+                  </v-subheader>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      disabled
-                      v-model="items.scoutName"
-                      label="Mein Name"
+                      v-model="invitationCode"
+                      label="Code aus der Einladung"
+                      counter="6"
+                      prepend-icon="mdi-lock"
+                      :error-messages="invitationCodeErrors"
                     >
+                        <template slot="append">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                color="success"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                mdi-help-circle-outline
+                              </v-icon>
+                            </template>
+                            <span>
+                              {{ tooltip.invitationCode }}
+                            </span>
+                          </v-tooltip>
+                        </template>
                     </v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      disabled
-                      v-model="getStammName"
-                      label="Mein Stamm"
+                      readonly
+                      v-model="items.scoutName"
+                      label="Mein Name"
+                      prepend-icon="mdi-account-circle"
                     >
+                        <template slot="append">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                color="success"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                mdi-help-circle-outline
+                              </v-icon>
+                            </template>
+                            <span>
+                              {{ tooltip.scoutName }}
+                            </span>
+                          </v-tooltip>
+                        </template>
                     </v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="items.invitationCode"
-                      label="Code aus der Einladung"
+                      readonly
+                      v-model="getStammName"
+                      label="Mein Stamm"
+                      prepend-icon="mdi-account-group"
                     >
+                        <template slot="append">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                color="success"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                mdi-help-circle-outline
+                              </v-icon>
+                            </template>
+                            <span>
+                              {{ tooltip.stammName }}
+                            </span>
+                          </v-tooltip>
+                        </template>
                     </v-text-field>
                   </v-col>
                 </v-row>
@@ -39,7 +106,7 @@
                   <v-col cols="12" sm="6" md="4">
                     <v-btn color="success" @click="onSaveClicked">
                       <v-icon left dark>mdi-check</v-icon>
-                      Ich möchte den Anmeldeprozess jetzt starten
+                      Ich möchte meinen Stamm jetzt Anmelden
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -53,21 +120,38 @@
       {{ 'Der Code ist falsch' }}
     </v-snackbar>
   </v-container>
+  </v-form>
 </template>
 
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import { validationMixin } from 'vuelidate';
+import { required } from 'vuelidate/lib/validators';
 
 export default {
+  mixins: [validationMixin],
+
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
       loading: false,
-      items: [],
+      invitationCode: '',
+      scoutName: '',
       reg_id: null,
       showError: false,
+      items: {},
+      tooltip: {
+        email: '123',
+        scoutName: '456',
+        invitationCode: '678',
+      },
     };
+  },
+  validations: {
+    invitationCode: {
+      required,
+    },
   },
   props: ['scoutOrganisation'],
   computed: {
@@ -80,7 +164,7 @@ export default {
     },
     getStammName() {
       const obj = this.hierarchyMapping.find(
-        (user) => user.id === this.scoutOrganisation,
+        (user) => user.id === this.items.scoutOrganisation,
       );
       if (obj && obj.name) {
         return obj.name;
@@ -88,10 +172,17 @@ export default {
       return 'Kein Stamm';
     },
     getCodeParam() {
-      if (this.items.invitationCode) {
-        return this.items.invitationCode;
+      if (this.invitationCode) {
+        return this.invitationCode;
       }
       return '';
+    },
+    invitationCodeErrors() {
+      const errors = [];
+      if (!this.$v.invitationCode.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.invitationCode.required && errors.push('Der Einladungscode wurd benötigt');
+      return errors;
     },
   },
   methods: {
@@ -102,6 +193,10 @@ export default {
       this.$refs.pickStamm.show(this.items.scoutOrganisation);
     },
     onSaveClicked() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
       this.createRegestration();
     },
     getData() {

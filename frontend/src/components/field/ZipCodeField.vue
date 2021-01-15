@@ -10,7 +10,20 @@
     placeholder="Gebe die Postleitzahl aus"
     prepend-icon="mdi-city"
     return-object
-  ></v-autocomplete>
+  >
+    <template slot="append">
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon color="success" dark v-bind="attrs" v-on="on">
+            mdi-help-circle-outline
+          </v-icon>
+        </template>
+        <span>
+          {{ tooltip }}
+        </span>
+      </v-tooltip>
+    </template></v-autocomplete
+  >
 </template>
 
 <script>
@@ -23,6 +36,7 @@ export default {
     isLoading: false,
     model: null,
     search: null,
+    tooltip: 'Gebe die Postleitzahl passend zur Adresse ein.',
   }),
   methods: {
     customText: (item) => `${item.zipCode} — ${item.city}`,

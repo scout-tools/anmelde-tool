@@ -8,10 +8,10 @@
               Zu diesen Lagern kannst du dich Anmelden:
             </v-card-title>
             <v-list subheader two-line>
-              <v-subheader inset
-                >Hier kannst du alle deine aktuell buchbaren Lagern
-                sehen</v-subheader
-              >
+              <v-subheader inset>
+                Nicht lange zögern. Melde dich oder deine Gruppe zu einen dieser
+                Lager an.
+              </v-subheader>
 
               <v-btn
                 class="ma-6"
@@ -47,11 +47,16 @@
                       }"
                       style="text-decoration: none"
                     >
-                      <v-btn icon>
-                        <v-icon fab color="primary">
-                          mdi-account-multiple-plus
-                        </v-icon>
-                      </v-btn>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-bind="attrs" v-on="on">
+                            <v-icon fab color="primary">
+                              mdi-account-multiple-plus
+                            </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Lageranmeldung</span>
+                      </v-tooltip>
                     </router-link>
                   </v-list-item-action>
                   <v-list-item-action>
@@ -63,9 +68,16 @@
                       style="text-decoration: none"
                       v-if="!isSimpleUser || item.participantRole.length"
                     >
-                      <v-btn icon>
-                        <v-icon fab color="primary"> mdi-chart-bar </v-icon>
-                      </v-btn>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-bind="attrs" v-on="on">
+                            <v-icon fab color="primary">
+                              mdi-chart-bar
+                            </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Lagerstatistik</span>
+                      </v-tooltip>
                     </router-link>
                   </v-list-item-action>
                 </v-list-item>
@@ -125,8 +137,8 @@ export default {
     hasSetExtendedUserInfos() {
       if (this.userExtendedItems) {
         return (
-          this.userExtendedItems.scoutName
-          && this.userExtendedItems.scoutOrganisation
+          this.userExtendedItems.scoutName && // eslint-disable-line
+          this.userExtendedItems.scoutOrganisation
         );
       }
       return false;

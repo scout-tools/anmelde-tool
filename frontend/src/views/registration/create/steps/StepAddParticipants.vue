@@ -16,7 +16,7 @@
       </template>
       <v-divider class="my-3" />
       <v-row class="mb-6">
-        <span class="subtitle-1">Du hast Ingesamt {{ total }} Teilnehmer angemeldet</span>
+        <span class="subtitle-1">Du hast Ingesamt {{ total }} TeilnehmerInnen angemeldet</span>
       </v-row>
       <v-divider class="my-3" />
 
@@ -40,6 +40,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
+  displayName: 'TeilnehmerInnen Anzahl',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,

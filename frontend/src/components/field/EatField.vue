@@ -2,7 +2,7 @@
   <v-combobox
     v-model="model"
     :items="items"
-    label="Essen"
+    label="Essens Besonderheiten"
     item-text="name"
     item-value="id"
     prepend-icon="mdi-food"
@@ -10,7 +10,20 @@
     multiple
     clearable
     chips
-  ></v-combobox>
+  >
+    <template slot="append">
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon color="success" dark v-bind="attrs" v-on="on">
+            mdi-help-circle-outline
+          </v-icon>
+        </template>
+        <span>
+          {{ tooltip }}
+        </span>
+      </v-tooltip>
+    </template>
+  </v-combobox>
 </template>
 
 <script>
@@ -22,6 +35,7 @@ export default {
     isLoading: false,
     model: [],
     search: null,
+    tooptip: 'Bitte trage hier ein, auf welche Besonderheiten die Küche achten muss.',
   }),
   computed: {
     ...mapGetters(['eatHabitTypeMapping']),
