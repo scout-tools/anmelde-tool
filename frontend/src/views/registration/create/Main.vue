@@ -51,6 +51,8 @@ import StepConsent from './steps/StepConsent.vue';
 import StepFood from './steps/StepFood.vue';
 import StepBdpDpvLocation from './steps/StepBdpDpvLocation.vue';
 import StepBdpDpVPreferences from './steps/StepBdpDpVPreferences.vue';
+import StepTents from './steps/StepTents.vue';
+import StepTravel from './steps/StepTravel.vue';
 
 export default {
   components: {
@@ -87,6 +89,8 @@ export default {
         return [
           StepConsent,
           StepAddParticipantsSingle,
+          StepTents,
+          StepTravel,
           StepConfirm,
         ];
       }

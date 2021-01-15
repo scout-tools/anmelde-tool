@@ -13,32 +13,136 @@
         <v-toolbar-title>Neuen Teilnehmer hinzufügen</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <v-stepper v-model="e1" fullscreen>
-        <v-stepper-header>
-          <v-stepper-step :complete="e1 > 1" step="1">
-            Persönliches
-          </v-stepper-step>
-
-          <v-divider></v-divider>
-
-          <v-stepper-step :complete="e1 > 2" step="2"> Essen </v-stepper-step>
-
-          <v-divider></v-divider>
-
-          <v-stepper-step step="3"> Teilnahme </v-stepper-step>
-        </v-stepper-header>
-
-        <v-stepper-items class="fullscreen">
-          <v-stepper-content step="1">
-            <v-container>
-              <step-1 />
-              <step-2 />
-              <v-divider class="my-4"/>
-              <v-btn color="primary" @click="active = false"> Speichern </v-btn>
-            </v-container>
-          </v-stepper-content>
-        </v-stepper-items>
-      </v-stepper>
+      <v-container>
+        <v-form v-model="valid">
+          <v-row>
+            <v-col cols="12" sm="6" md="4">
+              <v-combobox
+                v-model="data.group"
+                :items="items"
+                item-text="name"
+                item-value="id"
+                autofocus
+                label="Gruppe"
+              />
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-checkbox
+                v-model="data.groupleader"
+                label="Gruppenführung"
+              />
+            </v-col>
+          </v-row>
+          <v-divider class="my-3"/>
+          <v-row>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="data.firstName"
+                :counter="20"
+                :error-messages="firstNameErrors"
+                label="Vorname"
+                required
+                @input="$v.data.firstName.$touch()"
+                @blur="$v.data.firstName.$touch()"
+              />
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="data.lastName"
+                :counter="20"
+                :error-messages="lastNameErrors"
+                label="Nachname"
+                required
+                @input="$v.data.lastName.$touch()"
+                @blur="$v.data.lastName.$touch()"
+              />
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-row>
+                <v-dialog
+                  ref="dateBirthDialog"
+                  v-model="dialog.dateBirth"
+                  :return-value.sync="data.dateBirth"
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="dateBirthString"
+                      label="Wähle das Geburtsdatum"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      readonly
+                      required
+                      :error-messages="dateBirthErrors"
+                      v-bind="attrs"
+                      v-on="on"
+                    />
+                  </template>
+                  <v-date-picker v-if="dialog.dateBirth" v-model="data.dateBirth"/>
+                  <v-spacer/>
+                  <v-card tile>
+                    <v-card-actions>
+                      <v-container class="py-0 px-1">
+                        <v-row>
+                          <v-col>
+                            <v-btn
+                              color="primary"
+                              @click="dialog.dateBirth = false"
+                              width="100%"
+                            >
+                              Abbrechen
+                            </v-btn>
+                          </v-col>
+                          <v-col>
+                            <v-btn
+                              color="primary"
+                              @click="$refs.dateBirthDialog.save(data.dateBirth)"
+                              width="100%"
+                            >
+                              OK
+                            </v-btn>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-row>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="data.street"
+                :counter="30"
+                :error-messages="streetErrors"
+                label="Straße und Hausnummer"
+                required
+                @input="$v.data.street.$touch()"
+                @blur="$v.data.street.$touch()"
+              />
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <zip-code-field/>
+            </v-col>
+          </v-row>
+          <v-divider class="my-3"/>
+          <v-row>
+            <v-col cols="12" sm="6" md="4">
+              <v-checkbox
+                v-model="data.mosaikersleben"
+                label="Nimmt an der Bundesfahrt teil"
+              />
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-checkbox
+                v-model="data.kaperfahrt"
+                label="Nimmt an der Kaperfahrt teil"
+              />
+            </v-col>
+          </v-row>
+          <v-divider class="my-3"/>
+        </v-form>
+      </v-container>
+      <v-divider class="my-4"/>
+      <v-btn color="primary" @click="onClickOkay"> Speichern </v-btn>
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
         {{ 'Fehler beim Erstellen des Ortes' }}
       </v-snackbar>
@@ -54,41 +158,59 @@ import {
   numeric,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
-import Step1 from './steps/Step1.vue';
-import Step2 from './steps/Step2.vue';
+import moment from 'moment';
+
+import ZipCodeField from '@/components/field/ZipCodeField.vue';
 
 export default {
   props: ['isOpen'],
   components: {
-    Step1,
-    Step2,
+    ZipCodeField,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
     valid: true,
     data: {
-      name: '',
-      description: '',
-      address: '',
+      firstName: '',
+      lastName: '',
+      street: '',
       city: '',
       zipCode: '',
+      dateBirth: '',
+      groupLeader: false,
+      kaperfahrt: false,
+      mosaikersleben: true,
     },
-    e1: 1,
+    items: [{
+      id: 1,
+      name: 'Bären',
+    }, {
+      id: 2,
+      name: 'Döner',
+    }],
+    dialog: {
+      dateBirth: false,
+    },
     showError: false,
     showSuccess: false,
     timeout: 7000,
   }),
   validations: {
     data: {
-      name: {
+      firstName: {
         required,
         maxLength: maxLength(20),
       },
-      description: {
-        maxLength: maxLength(100),
+      lastName: {
+        required,
+        maxLength: maxLength(20),
       },
-      address: {
+      dateBirth: {
+        required,
+        maxLength: maxLength(10),
+      },
+      street: {
         required,
         maxLength: maxLength(30),
       },
@@ -105,32 +227,53 @@ export default {
     },
   },
   computed: {
-    nameErrors() {
+    firstNameErrors() {
       const errors = [];
-      if (!this.$v.data.name.$dirty) return errors;
-      if (!this.$v.data.name.required) {
+      if (!this.$v.data.firstName.$dirty) return errors;
+      if (!this.$v.data.firstName.required) {
         errors.push('Name is required.');
       }
-      if (!this.$v.data.name.maxLength) {
+      if (!this.$v.data.firstName.maxLength) {
         errors.push('Name must be at most 20 characters long');
       }
       return errors;
     },
-    descriptionErrors() {
+    lastNameErrors() {
       const errors = [];
-      if (!this.$v.data.description.$dirty) return errors;
-      if (!this.$v.data.description.maxLength) {
-        errors.push('description must be at most 100 characters long');
+      if (!this.$v.data.lastName.$dirty) return errors;
+      if (!this.$v.data.lastName.required) {
+        errors.push('Name is required.');
+      }
+      if (!this.$v.data.lastName.maxLength) {
+        errors.push('Name must be at most 20 characters long');
       }
       return errors;
     },
-    addressErrors() {
+    dateBirthErrors() {
       const errors = [];
-      if (!this.$v.data.address.$dirty) return errors;
-      if (!this.$v.data.address.required) {
+      if (!this.$v.data.dateBirth.$dirty) return errors;
+      if (!this.$v.data.dateBirth.required) {
+        errors.push('Geburtstag is required.');
+      }
+      if (!this.$v.data.dateBirth.maxLength) {
+        errors.push('Geburtstag must be at most 10 characters long');
+      }
+      return errors;
+    },
+    dateBirthString() {
+      const dateFormat = 'DD.MM.YYYY';
+      if (this.data.dateBirth === '') {
+        return '';
+      }
+      return `${moment(this.data.dateBirth).format(dateFormat)}`;
+    },
+    streetErrors() {
+      const errors = [];
+      if (!this.$v.data.street.$dirty) return errors;
+      if (!this.$v.data.street.required) {
         errors.push('Adresse is required.');
       }
-      if (!this.$v.data.address.maxLength) {
+      if (!this.$v.data.street.maxLength) {
         errors.push('Adresse must be at most 20 characters long');
       }
       return errors;
@@ -187,7 +330,7 @@ export default {
       this.validate();
       if (this.valid) {
         try {
-          this.callCreateEventLocationPost();
+          this.callCreateParticipantPost();
           this.closeDialog();
         } catch (e) {
           console.log(e);
@@ -195,15 +338,12 @@ export default {
         }
       }
     },
-    async callCreateEventLocationPost() {
-      await axios.post(`${this.API_URL}basic/event-location/`, this.data);
+    async callCreateParticipantPost() {
+      await axios.post(`${this.API_URL}basic/participant-extended/`, this.data);
+    },
+    getData() {
+      return this.data;
     },
   },
 };
 </script>
-
-<style>
-.fullscreen {
-  height: 100% !important;
-}
-</style>
