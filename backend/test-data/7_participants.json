@@ -42,5 +42,55 @@
             "age_group_id": 3,
             "created_at": "2020-12-27 17:17:58.124440"
         }
+    },
+    {
+        "model": "basic.ParticipantGroup",
+        "pk": 5,
+        "fields": {
+            "id": 5,
+            "number_of_persons": 12,
+            "registration_id": 4,
+            "age_group_id": 2
+        }
+    },
+    {
+        "model": "basic.ParticipantGroup",
+        "pk": 6,
+        "fields": {
+            "id": 6,
+            "number_of_persons": 100,
+            "registration_id": 5,
+            "age_group_id": 1
+        }
+    },
+    {
+        "model": "basic.ParticipantGroup",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "number_of_persons": 100,
+            "registration_id": 5,
+            "age_group_id": 2
+        }
+    },
+    {
+        "model": "basic.ParticipantGroup",
+        "pk": 8,
+        "fields": {
+            "id": 8,
+            "number_of_persons": 140,
+            "registration_id": 5,
+            "age_group_id": 3
+        }
+    },
+    {
+        "model": "basic.ParticipantGroup",
+        "pk": 9,
+        "fields": {
+            "id": 9,
+            "number_of_persons": 1,
+            "registration_id": 6,
+            "age_group_id": 3
+        }
     }
 ]
