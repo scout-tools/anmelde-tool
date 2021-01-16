@@ -25,5 +25,32 @@
             "scout_organisation": 18,
             "event": 1
         }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "scout_organisation": 19,
+            "event": 4
+        }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 5,
+        "fields": {
+            "id": 5,
+            "scout_organisation": 70,
+            "event": 4
+        }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 6,
+        "fields": {
+            "id": 6,
+            "scout_organisation": 40,
+            "event": 4
+        }
     }
 ]
