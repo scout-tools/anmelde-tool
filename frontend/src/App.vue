@@ -16,7 +16,7 @@ export default {
     MainComp,
   },
   created() {
-    document.title = 'Anmelde-Tool für Pfadfinder';
+    document.title = 'Anmelde-Tool für Pfadfinder_innen';
   },
   data: () => ({
     //

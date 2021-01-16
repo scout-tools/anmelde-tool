@@ -47,6 +47,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
+  displayName: 'Einverständnis',
   props: ['position', 'maxPos', 'currentEvent', 'currentRegistration', 'scoutOrganisation'],
   components: {
     PrevNextButtons,
@@ -71,7 +72,6 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'hierarchyMapping', 'getJwtData']),
     myStamm() {
-      debugger;
       if (this.scoutOrganisation) {
         return this.hierarchyMapping.find(
           (user) => user.id === this.scoutOrganisation,
@@ -104,7 +104,6 @@ export default {
       if (!this.valid) {
         return;
       }
-      debugger;
       this.$emit('submit');
     },
     getData() {

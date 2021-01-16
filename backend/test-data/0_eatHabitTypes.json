@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "id": 1,
-            "name": "Kein Fleisch",
+            "name": "Kein Fleisch (Vegetarisch)",
             "description": "",
             "is_custom": 0
         }
@@ -14,7 +14,7 @@
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Keine Tierprodukte",
+            "name": "Keine Tierprodukte (Vegan)",
             "description": "",
             "is_custom": 0
         }

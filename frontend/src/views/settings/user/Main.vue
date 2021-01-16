@@ -12,10 +12,11 @@
               <v-card-text>
                 <v-container>
                   <v-subheader class="ma-5">
-                    Bitte trag hier die Daten ein die das Anmeldetool aus. Diese
-                    Daten werden teilweise später in Anwendungen gebraucht.
-                    Diese Daten sind für die Administratoren und für die
-                    Lagerleitung nach deiner explizieten Anmeldung sichtbar.
+                    Hier musst du paar persönlichen Daten angeben. Dein
+                    Stamm sowie dein Pfadfindername sind wichtig damit du dich
+                    bei Lagern anmelden kannst. Fülle die Felder deswegen
+                    unbedingt aus. Die Handynummer ist natürlich nur freiwillig
+                    und hilft ggf. dich zu kontaktieren.
                   </v-subheader>
                   <v-row>
                     <v-col cols="12" sm="6">
@@ -153,11 +154,11 @@
                     </v-col>
                     <!-- TODO: add user-delete service and activate button -->
                     <v-col cols="12" sm="6" md="4">
-                    <v-btn dark color="red">
-                      <v-icon left>mdi-delete</v-icon>
-                      Meine persönlichen Daten löschen
-                    </v-btn>
-                  </v-col>
+                      <v-btn dark color="red">
+                        <v-icon left>mdi-delete</v-icon>
+                        Meine persönlichen Daten löschen
+                      </v-btn>
+                    </v-col>
                   </v-row>
                 </v-container>
               </v-card-actions>
@@ -205,9 +206,10 @@ export default {
       API_URL: process.env.VUE_APP_API,
       loading: false,
       tooltip: {
-        scoutName: 'Dieser Name wird dazu verwendet um deinen.',
+        scoutName:
+          'Hier musst du deinen Fahrtennamen oder deinen Vornamen angeben. ',
         email: 'Für die Kommunikation mit dem Tool.',
-        mobileNumber: 'Freiwillig',
+        mobileNumber: 'Hier kannst du freiwillig deine Handynummer angeben. ',
         scoutOrganisation: 'Blub',
       },
       user: null,
