@@ -1,65 +1,24 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-    <v-container fluid>
-      <v-row align="center">
-        <v-col cols="6">
-          <v-subheader>
-            {{this.reached()}} / {{this.data.maxNumber}}
-          </v-subheader>
-        </v-col>
-      </v-row>
-      <v-row align="center">
-        <v-col cols="6">
-          <v-text-field
-            v-model="data.numberBus"
-            :error-messages="numberError"
-            label="Bus"
-            required
-            @input="$v.data.numberBus.$touch()"
-            @blur="$v.data.numberBus.$touch()"
-          />
-        </v-col>
-        <v-col cols="6">
-          <v-text-field
-            v-model="data.numberCar"
-            :error-messages="numberError"
-            label="PKW"
-            required
-            @input="$v.data.numberCar.$touch()"
-            @blur="$v.data.numberCar.$touch()"
-          />
-        </v-col>
-        <v-col cols="6">
-          <v-text-field
-            v-model="data.numberPublic"
-            :error-messages="numberError"
-            label="OEPNV"
-            required
-            @input="$v.data.numberPublic.$touch()"
-            @blur="$v.data.numberPublic.$touch()"
-          />
-        </v-col>
-        <v-col cols="6">
-          <v-text-field
-            v-model="data.numberWalking"
-            :error-messages="numberError"
-            label="zu Fuss"
-            required
-            @input="$v.data.numberWalking.$touch()"
-            @blur="$v.data.numberWalking.$touch()"
-          />
-        </v-col>
-        <v-col cols="6">
-          <v-text-field
-            v-model="data.numberWater"
-            :error-messages="numberError"
-            label="Wasserweg"
-            required
-            @input="$v.data.numberWater.$touch()"
-            @blur="$v.data.numberWater.$touch()"
-          />
-        </v-col>
-      </v-row>
+    <v-tabs vertical class="ma-10">
+      <v-tab>
+        Wölflinge
+      </v-tab>
+      <v-tab>
+        Pfadfinder_innen
+      </v-tab>
+
+      <v-tab-item>
+        <v-card flat>
+          <travel-picker/>
+        </v-card>
+      </v-tab-item>
+      <v-tab-item>
+        <v-card flat>
+          <travel-picker/>
+        </v-card>
+      </v-tab-item>
+    </v-tabs>
       <v-divider class="my-3" />
       <prev-next-buttons
         :position="position"
@@ -68,7 +27,6 @@
         @prevStep="prevStep"
         @submitStep="submitStep()"
       />
-    </v-container>
   </v-form>
 </template>
 
@@ -76,6 +34,7 @@
 import { mapGetters } from 'vuex';
 import { required, minLength, minValue } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import TravelPicker from '../components/TravelPicker.vue';
 
 export default {
   name: 'StepNameDescription',
@@ -83,13 +42,14 @@ export default {
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,
+    TravelPicker,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: false,
     data: {
-      maxNumber: 0,
+      maxNumber: 25,
       numberBus: 0,
       numberCar: 0,
       numberPublic: 0,
@@ -113,11 +73,6 @@ export default {
     },
   },
   methods: {
-    reached() {
-      // eslint-disable-next-line max-len
-      const sum = this.data.numberBus * 1 + this.data.numberCar * 1 + this.data.numberPublic * 1 + this.data.numberWalking * 1 + this.data.numberWater * 1;
-      return sum;
-    },
     greaterThanZero(value) {
       return value > 0;
     },

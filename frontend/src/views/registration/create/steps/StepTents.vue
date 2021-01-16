@@ -3,23 +3,18 @@
     <v-container fluid>
       <v-row align="center" v-for="(tent, index) in this.data.tents" :key="index">
         <v-col cols="6">
-          <v-subheader>
-            Zelttyp
-          </v-subheader>
-        </v-col>
-        <v-col cols="6">
           <v-select
             v-model="tent.selectedType"
             :items="data.type"
             item-text="state"
             item-value="abbr"
-            label="Select"
+            label="Zelt"
             persistent-hint
             return-object
-            single-line
+            prepend-icon="mdi-home"
           ></v-select>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="6">
           <v-combobox
             v-model="tent.selectedGroup"
             :items="data.groups"
@@ -27,6 +22,7 @@
             multiple
             outlined
             dense
+            prepend-icon="mdi-human-male-female"
           ></v-combobox>
         </v-col>
       </v-row>
