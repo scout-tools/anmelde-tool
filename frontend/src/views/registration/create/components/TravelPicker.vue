@@ -2,7 +2,7 @@
   <v-container fluid style="width:70%">
     <v-form v-model="valid">
       <v-card flat>
-        <v-text-field>{{info}}</v-text-field>
+        <v-text-field>Anreise</v-text-field>
         <v-row align="center">
           <v-col cols="12">
             <v-card-text>
@@ -73,6 +73,7 @@ import { mapGetters } from 'vuex';
 import { required, minLength, minValue } from 'vuelidate/lib/validators';
 
 export default {
+  props: ['title'],
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,

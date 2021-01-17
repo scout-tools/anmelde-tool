@@ -2,20 +2,24 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-tabs vertical class="ma-10">
       <v-tab>
-        Wölflinge
+        Kaperfahrt
       </v-tab>
       <v-tab>
-        Pfadfinder_innen
+        Mosaikersleben
       </v-tab>
 
       <v-tab-item>
         <v-card flat>
-          <travel-picker/>
+          <travel-picker
+            :title="Kaperfahrt"
+          />
         </v-card>
       </v-tab-item>
       <v-tab-item>
         <v-card flat>
-          <travel-picker/>
+          <travel-picker
+            :title="Mosaikersleben"
+          />
         </v-card>
       </v-tab-item>
     </v-tabs>
@@ -84,12 +88,7 @@ export default {
       this.$emit('prevStep');
     },
     nextStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-
-      this.addParticipants();
+      this.$emit('nextStep');
     },
     submitStep() {
       this.validate();
