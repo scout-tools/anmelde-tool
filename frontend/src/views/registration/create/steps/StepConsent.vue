@@ -4,25 +4,22 @@
       <v-row class="mt-2">
         <span class="text-left subtitle-1">
           <p>
-            Ich möchte mich zur <b>{{ currentEvent.name }}</b> anmelden. <br />
+            Hiermit melde ich meinen Stamm <b> {{ myStamm }} </b>
+            zum Lager <b> {{ currentEvent.name }} </b> an. <br />
             <br />
 
-            Ich melde hiermit folgende Organsition <b> {{ myStamm }} </b> an.
-            <br />
-            <br />
-
-            Ich bin zukünfig der Ansprechpartner und bin unter meiner E-Mail
-            Adresse: <br />
-            <br />
-            <b>{{ myEmail }} </b> <br />
-            <br />
-            zu erreichen.
+            Ich bin  der Ansprechpartner und unter der
+            <b>{{ myEmail }} </b>
+            zu erreichen. <br/>
+            <br/>
+            Bevor deine Anmeldung verbindlich ist, musst du im
+            im letztem Schritt noch einmal ausdrücklich zustimmen.
           </p>
         </span>
       </v-row>
       <v-divider class="text-left my-2" />
       <v-row>
-        <v-checkbox v-model="data.checkbox1" :label="`Ich Stimme zu`">
+        <v-checkbox v-model="data.checkbox1" :label="`Ich stimme zu.`">
         </v-checkbox>
       </v-row>
 
