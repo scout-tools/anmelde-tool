@@ -52,5 +52,14 @@
             "scout_organisation": 40,
             "event": 4
         }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "scout_organisation": 41,
+            "event": 4
+        }
     }
 ]
