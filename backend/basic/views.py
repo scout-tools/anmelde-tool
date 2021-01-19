@@ -2,9 +2,10 @@
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, mixins
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import GenericViewSet
 
 from helper.user_creation import CreateUserExternally
 from rest_framework.response import Response
@@ -16,9 +17,30 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
-    ParticipantSerializer2, ScoutOrgaLevelSerializer, ParticipantPersonalSerializer, \
+    EventParticipantsSerializer, ScoutOrgaLevelSerializer, ParticipantPersonalSerializer, \
     EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, \
-    TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer
+    TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
+    EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer
+
+from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
+    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission
+
+
+def get_dataset(kwargs, pk, dataset):
+    dataset_id = kwargs.get(pk, None)
+    print(dataset_id)
+    if dataset_id is not None:
+        return dataset.objects.filter(id=dataset_id)
+    else:
+        return Response('No dataset selected', status=status.HTTP_400_BAD_REQUEST)
+
+
+def get_event(kwargs):
+    event_id = kwargs.get("event_pk", None)
+    if event_id is not None:
+        return Event.objects.filter(id=event_id)
+    else:
+        return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -27,13 +49,13 @@ class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
 
 
-class EventOverviewViewSet(viewsets.ModelViewSet):
+class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventOverviewSerializer
 
 
-class AgeGroupViewSet(viewsets.ModelViewSet):
+class AgeGroupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = AgeGroup.objects.all()
     serializer_class = AgeGroupSerializer
@@ -45,7 +67,7 @@ class EventLocationViewSet(viewsets.ModelViewSet):
     serializer_class = EventLocationSerializer
 
 
-class ScoutHierarchyViewSet(viewsets.ModelViewSet):
+class ScoutHierarchyViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ScoutHierarchy.objects.all()
     serializer_class = ScoutHierarchySerializer
@@ -118,19 +140,6 @@ class TentViewSet(viewsets.ModelViewSet):
     serializer_class = TentSerializer
 
 
-class ParticipantViewSet2(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    serializer_class = ParticipantSerializer2
-
-    def get_queryset(self):
-        event_id = self.kwargs.get("event_pk", None)
-        if event_id is not None:
-            queryset = Participant.objects.filter(registration__event_id=event_id)
-        else:
-            queryset = Participant.objects.all()
-        return queryset
-
-
 class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ScoutOrgaLevel.objects.all()
@@ -141,6 +150,19 @@ class ParticipantPersonalViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
+
+    def create(self, request, *args, **kwargs):
+        # Check whether habit type exists
+        if 'eat_habit_type' in request.data:
+            print(request.data['eat_habit_type'])
+            habit_types = request.data['eat_habit_type']
+            for type in habit_types:
+                print(type)
+                if not EatHabitType.objects.filter(name__exact=type).exists():
+                    new_type = EatHabitType.objects.create(name=type)
+                    new_type.save()
+
+        return super().create(request, *args, **kwargs)
 
 
 class EatHabitTypeViewSet(viewsets.ModelViewSet):
@@ -154,14 +176,27 @@ class EatHabitViewSet(viewsets.ModelViewSet):
     queryset = EatHabit.objects.all()
     serializer_class = EatHabitSerializer
 
+    def create(self, request, *args, **kwargs):
+        # Check whether habit type exists
+        if 'eat_habit_type' in request.data:
+            print(request.data['eat_habit_type'])
+            habit_types = request.data['eat_habit_type']
+            for type in habit_types:
+                print(type)
+                if not EatHabitType.objects.filter(name__exact=type).exists():
+                    new_type = EatHabitType.objects.create(name=type)
+                    new_type.save()
 
-class TravelTypeViewSet(viewsets.ModelViewSet):
+        return super().create(request, *args, **kwargs)
+
+
+class TravelTypeViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = TravelType.objects.all()
     serializer_class = TravelTypeSerializer
 
 
-class TentTypeViewSet(viewsets.ModelViewSet):
+class TentTypeViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = TentType.objects.all()
     serializer_class = TentTypeSerializer
@@ -183,3 +218,55 @@ class EventCodeCheckerViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({'status': 'Code correct'}, status=status.HTTP_200_OK)
         else:
             raise PermissionDenied('wrong invitation code')
+
+
+class EventMasterViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated, IsEventMaster]
+    serializer_class = EventCashMasterSerializer
+
+    def get_queryset(self):
+        return get_event(self.kwargs)
+
+
+class EventCashMasterViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated, IsEventCashMaster]
+    serializer_class = EventCashMasterSerializer
+
+    def get_queryset(self):
+        return get_event(self.kwargs)
+
+
+class EventKitchenMasterViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated, IsKitchenMaster]
+    serializer_class = EventKitchenMasterSerializer
+
+    def get_queryset(self):
+        return get_event(self.kwargs)
+
+
+class EventProgramMasterViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated, IsProgramMaster]
+    serializer_class = EventProgramMasterSerializer
+
+    def get_queryset(self):
+        return get_event(self.kwargs)
+
+
+class EventParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = EventParticipantsSerializer
+
+    def get_queryset(self):
+        return get_event(self.kwargs)
+
+
+class RegistrationParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
+    serializer_class = RegistrationParticipantsSerializer
+
+    def get_queryset(self):
+        event_id = self.kwargs.get("registration_pk", None)
+        if event_id is not None:
+            return Registration.objects.filter(id=event_id)
+        else:
+            return Response('No registration selected', status=status.HTTP_400_BAD_REQUEST)

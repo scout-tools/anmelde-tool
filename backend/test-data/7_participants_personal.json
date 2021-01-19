@@ -1,0 +1,602 @@
+[
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 1,
+    "fields": {
+      "id": 1,
+      "registration_id": 7,
+      "first_name": "Philip",
+      "last_name": "Hagemann",
+      "street": "Dönerstraße 1",
+      "zip_code_id": 600,
+      "date_birth": "1993-08-01",
+      "scout_group_id": 1,
+      "is_group_leader": true,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 2,
+    "fields": {
+      "id": 2,
+      "registration_id": 7,
+      "first_name": "Daniel",
+      "last_name": "Hillebrand",
+      "street": "Dönerstraße 2",
+      "zip_code_id": 600,
+      "date_birth": "2000-06-28",
+      "scout_group_id": 1,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        4,
+        5
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 3,
+    "fields": {
+      "id": 3,
+      "registration_id": 7,
+      "first_name": "Robert",
+      "last_name": "Bagdahn",
+      "street": "Dönerstraße 999",
+      "zip_code_id": 666,
+      "date_birth": "1910-06-28",
+      "scout_group_id": 1,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        1,
+        3
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 4,
+    "fields": {
+      "id": 4,
+      "registration_id": 7,
+      "first_name": "Caroline",
+      "last_name": "Fantasiename",
+      "street": "Dönerstraße 33",
+      "zip_code_id": 10,
+      "date_birth": "1998-11-23",
+      "scout_group_id": 1,
+      "is_group_leader": false,
+      "age_group_id": 2,
+      "eat_habit_type": [
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 5,
+    "fields": {
+      "id": 5,
+      "registration_id": 7,
+      "first_name": "Paul",
+      "last_name": "Kruse",
+      "street": "Dönerstraße 45",
+      "zip_code_id": 788,
+      "date_birth": "2005-06-28",
+      "scout_group_id": 3,
+      "is_group_leader": false,
+      "age_group_id": 2,
+      "eat_habit_type": []
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 6,
+    "fields": {
+      "id": 6,
+      "registration_id": 7,
+      "first_name": "Käthe",
+      "last_name": "Blablub",
+      "street": "keine straße 4",
+      "zip_code_id": 10000,
+      "date_birth": "2010-06-28",
+      "scout_group_id": 3,
+      "is_group_leader": true,
+      "age_group_id": 3,
+      "eat_habit_type": []
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 7,
+    "fields": {
+      "id": 7,
+      "registration_id": 7,
+      "first_name": "Muh",
+      "last_name": "kuhfladen",
+      "street": "Am dorf 4",
+      "zip_code_id": 6528,
+      "date_birth": "1200-01-01",
+      "scout_group_id": 4,
+      "is_group_leader": true,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 8,
+    "fields": {
+      "id": 8,
+      "registration_id": 7,
+      "first_name": "Ziege",
+      "last_name": "Heinz",
+      "street": "An der Wiese 55",
+      "zip_code_id": 5555,
+      "date_birth": "2020-08-01",
+      "scout_group_id": 4,
+      "is_group_leader": false,
+      "age_group_id": 1,
+      "eat_habit_type": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 9,
+    "fields": {
+      "id": 9,
+      "registration_id": 7,
+      "first_name": "Peter",
+      "last_name": "Hase",
+      "street": "Im Bau 44",
+      "zip_code_id": 2389,
+      "date_birth": "2019-06-28",
+      "scout_group_id": 4,
+      "is_group_leader": false,
+      "age_group_id": 1,
+      "eat_habit_type": [
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 10,
+    "fields": {
+      "id": 10,
+      "registration_id": 7,
+      "first_name": "Piggy",
+      "last_name": "das Meerschweinchen",
+      "street": "Im Käfig 3",
+      "zip_code_id": 2222,
+      "date_birth": "2016-06-28",
+      "scout_group_id": 4,
+      "is_group_leader": false,
+      "age_group_id": 1,
+      "eat_habit_type": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 11,
+    "fields": {
+      "id": 11,
+      "registration_id": 7,
+      "first_name": "Robin",
+      "last_name": "Maulwurf",
+      "street": "Im Tunnel 2",
+      "zip_code_id": 12345,
+      "date_birth": "2010-01-28",
+      "scout_group_id": 4,
+      "is_group_leader": false,
+      "age_group_id": 2,
+      "eat_habit_type": [
+        4,
+        5
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 12,
+    "fields": {
+      "id": 12,
+      "registration_id": 7,
+      "first_name": "Gustav",
+      "last_name": "Schwein",
+      "street": "Stall 456",
+      "zip_code_id": 6542,
+      "date_birth": "2021-01-02",
+      "scout_group_id": 4,
+      "is_group_leader": false,
+      "age_group_id": 1,
+      "eat_habit_type": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 13,
+    "fields": {
+      "id": 13,
+      "registration_id": 7,
+      "first_name": "Harry",
+      "last_name": "Potter",
+      "street": "Legustenweg 43",
+      "zip_code_id": 9876,
+      "date_birth": "1986-07-14",
+      "scout_group_id": 5,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 14,
+    "fields": {
+      "id": 14,
+      "registration_id": 7,
+      "first_name": "Hermine",
+      "last_name": "Granger",
+      "street": "Mugelwelt",
+      "zip_code_id": 8765,
+      "date_birth": "1987-12-12",
+      "scout_group_id": 5,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 15,
+    "fields": {
+      "id": 15,
+      "registration_id": 7,
+      "first_name": "Ron",
+      "last_name": "Weasley",
+      "street": "Im Fuchsbau 1",
+      "zip_code_id": 5555,
+      "date_birth": "1987-03-15",
+      "scout_group_id": 5,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 16,
+    "fields": {
+      "id": 16,
+      "registration_id": 7,
+      "first_name": "Albus",
+      "last_name": "Dumbeldore",
+      "street": "Hogwarts",
+      "zip_code_id": 1,
+      "date_birth": "1810-03-26",
+      "scout_group_id": 5,
+      "is_group_leader": true,
+      "age_group_id": 3,
+      "eat_habit_type": [
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 17,
+    "fields": {
+      "id": 17,
+      "registration_id": 7,
+      "first_name": "Rubeus",
+      "last_name": "Hagrid",
+      "street": "Hagrids hütte",
+      "zip_code_id": 1,
+      "date_birth": "1890-06-28",
+      "scout_group_id": 5,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 18,
+    "fields": {
+      "id": 18,
+      "registration_id": 7,
+      "first_name": "Severus",
+      "last_name": "Snape",
+      "street": "Hogsmeade",
+      "zip_code_id": 32,
+      "date_birth": "1896-05-28",
+      "scout_group_id": 5,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 19,
+    "fields": {
+      "id": 19,
+      "registration_id": 7,
+      "first_name": "Madame",
+      "last_name": "Pomfrey",
+      "street": "Hogwarts",
+      "zip_code_id": 1,
+      "date_birth": "1875-08-28",
+      "scout_group_id": 5,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 20,
+    "fields": {
+      "id": 20,
+      "registration_id": 7,
+      "first_name": "Minerva",
+      "last_name": "McGonagall",
+      "street": "Hogwarts",
+      "zip_code_id": 666,
+      "date_birth": "1855-03-14",
+      "scout_group_id": 5,
+      "is_group_leader": true,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        4
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 21,
+    "fields": {
+      "id": 21,
+      "registration_id": 7,
+      "first_name": "Lord",
+      "last_name": "Voldemort",
+      "street": "Am Verlierertisch 666",
+      "zip_code_id": 666,
+      "date_birth": "0666-06-06",
+      "scout_group_id": 5,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 22,
+    "fields": {
+      "id": 22,
+      "registration_id": 7,
+      "first_name": "Gollum",
+      "last_name": "Gollum",
+      "street": "In der Finsternis 4, Mittelerde",
+      "zip_code_id": 1357,
+      "date_birth": "1324-09-28",
+      "scout_group_id": 6,
+      "is_group_leader": false,
+      "age_group_id": 1,
+      "eat_habit_type": [
+        5,
+        7
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 23,
+    "fields": {
+      "id": 23,
+      "registration_id": 7,
+      "first_name": "Aragon",
+      "last_name": "Elessar",
+      "street": "Thron 1, Gondor",
+      "zip_code_id": 4567,
+      "date_birth": "1254-06-28",
+      "scout_group_id": 6,
+      "is_group_leader": true,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        6
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 24,
+    "fields": {
+      "id": 24,
+      "registration_id": 7,
+      "first_name": "´Gandalf",
+      "last_name": "der Weiße",
+      "street": "Kutsche",
+      "zip_code_id": 963,
+      "date_birth": "1000-07-30",
+      "scout_group_id": 6,
+      "is_group_leader": true,
+      "age_group_id": 3,
+      "eat_habit_type": [
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 25,
+    "fields": {
+      "id": 25,
+      "registration_id": 7,
+      "first_name": "Legolas",
+      "last_name": "Thranduils Sohn",
+      "street": "Im Nördliches Düsterwald",
+      "zip_code_id": 666,
+      "date_birth": "1286-11-23",
+      "scout_group_id": 6,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        3,
+        4,
+        5
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 26,
+    "fields": {
+      "id": 26,
+      "registration_id": 7,
+      "first_name": "Frodo",
+      "last_name": "Beutlin",
+      "street": "Hobbingen 56",
+      "zip_code_id": 999,
+      "date_birth": "1232-11-23",
+      "scout_group_id": 6,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 27,
+    "fields": {
+      "id": 27,
+      "registration_id": 7,
+      "first_name": "Bilbo",
+      "last_name": "Beutlin",
+      "street": "Hobbingen 56",
+      "zip_code_id": 999,
+      "date_birth": "1133-11-23",
+      "scout_group_id": 6,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 28,
+    "fields": {
+      "id": 28,
+      "registration_id": 7,
+      "first_name": "Samweis",
+      "last_name": "Gamdschie",
+      "street": "Hobbingen 33",
+      "zip_code_id": 999,
+      "date_birth": "1145-06-23",
+      "scout_group_id": 6,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 28,
+    "fields": {
+      "id": 28,
+      "registration_id": 7,
+      "first_name": "Gimli",
+      "last_name": "Lord of the Glittering Caves",
+      "street": " Glittering Caves",
+      "zip_code_id": 464,
+      "date_birth": "1111-02-23",
+      "scout_group_id": 6,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 29,
+    "fields": {
+      "id": 29,
+      "registration_id": 7,
+      "first_name": "Boromir",
+      "last_name": "",
+      "street": "Osgiliath",
+      "zip_code_id": 11545,
+      "date_birth": "1299-11-23",
+      "scout_group_id": 6,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "basic.ParticipantPersonal",
+    "pk": 30,
+    "fields": {
+      "id": 30,
+      "registration_id": 7,
+      "first_name": "Faramir",
+      "last_name": "",
+      "street": "Osgiliath",
+      "zip_code_id": 11545,
+      "date_birth": "1296-11-23",
+      "scout_group_id": 6,
+      "is_group_leader": false,
+      "age_group_id": 3,
+      "eat_habit_type": [
+        4
+      ]
+    }
+  }
+]
