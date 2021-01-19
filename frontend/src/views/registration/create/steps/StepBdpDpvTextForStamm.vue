@@ -4,64 +4,10 @@
     class="px-0"
     fluid
   >
-    <v-radio-group
-        v-model="radioGroup">
-      <v-radio
-        label="Wir wollen bei uns in der Stadt bleiben"
-        value="1"
-      ></v-radio>
-      <v-radio
-        label="Wir wollen nicht bei uns in der Stadt bleiben."
-        value="2"
-      ></v-radio>
-      <v-radio
-        label="Uns ist beides recht."
-        value="22"
-      ></v-radio>
-
-    </v-radio-group>
-
-<v-expand-transition>
-  <v-container v-show="radioGroup === '1'">
-    <v-divider class="my-4"/>
-    <v-radio-group
-        v-model="radioGroup2">
-      <v-radio
-        v-show="dpvAddedLocation"
-        label="Wir wollen einen anderen Stamm zu uns einladen"
-        value="3"
-      ></v-radio>
-      <v-radio
-        v-show="dpvAddedLocation"
-        label="Wir wollen einen anderen Stamm in unserer Stadt besuchen (und stellen
-        unser Heim/ Lagerplatz anderen Stämmen zur Verfügung)"
-        value="5"
-      ></v-radio>
-      <v-radio
-        v-show="!dpvAddedLocation"
-        label="Wir wollen einen anderen Stamm in unserer Stadt besuchen."
-        value="5"
-      ></v-radio>
-    </v-radio-group>
-  </v-container>
-</v-expand-transition>
-
-<v-expand-transition>
-  <v-container v-show="radioGroup === '2'">
-    <v-divider class="my-4"/>
-    <v-radio-group
-        v-model="radioGroup2">
-      <v-radio
-        label="Wir fahren gern weit weg. "
-        value="3"
-      ></v-radio>
-      <v-radio
-        label="Wir möchten gern in der Nähe unserer Stadt bleiben. "
-        value="5"
-      ></v-radio>
-    </v-radio-group>
-  </v-container>
-</v-expand-transition>
+        <v-textarea
+          name="input-7-1"
+          label="Text für den Partnerstamm"
+        ></v-textarea>
 
 <v-expand-transition>
   <v-checkbox
@@ -91,7 +37,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
-  displayName: 'Beschreibung',
+  displayName: 'Nachricht an Partnerstamm',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
@@ -148,5 +94,4 @@ export default {
 </script>
 
 <style>
-
 </style>
