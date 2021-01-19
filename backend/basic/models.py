@@ -60,7 +60,8 @@ class EventLocation(TimeStampMixin):
     contact_email = models.CharField(max_length=30, blank=True)
     contact_phone = models.CharField(max_length=30, blank=True)
     is_public = models.BooleanField(default=0)
-    capacity = models.IntegerField(blank=True, null=True)
+    capacity_indoor = models.IntegerField(blank=True, null=True)
+    capacity_outdoor = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -77,6 +78,8 @@ class AgeGroup(TimeStampMixin):
         verbose_name='ID')
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=100, blank=True)
+    min_age = models.IntegerField(blank=True, null=True)
+    max_age = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name

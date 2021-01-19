@@ -1,31 +1,31 @@
 <template>
   <v-form ref="settingsUser">
-  <v-container class="top-margin">
-    <v-row justify="center">
-      <v-flex ma-3 lg9>
-        <v-layout column>
-          <v-card>
+    <v-container class="top-margin">
+      <v-row justify="center">
+        <v-flex ma-3 lg9>
+          <v-layout column>
+            <v-card>
               <v-card-title class="text-center justify-center py-6">
                 Hier kannst du deine persönlichen Einstellungen Account
                 anpassen.
               </v-card-title>
-            <v-card-text>
-              <v-container>
+              <v-card-text>
+                <v-container>
                   <v-subheader class="ma-5">
                     Bitte trag hier die Daten ein die das Anmeldetool aus. Diese
                     Daten werden teilweise später in Anwendungen gebraucht.
                     Diese Daten sind für die Administratoren und für die
                     Lagerleitung nach deiner explizieten Anmeldung sichtbar.
                   </v-subheader>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="invitationCode"
-                      label="Code aus der Einladung"
-                      counter="6"
-                      prepend-icon="mdi-lock"
-                      :error-messages="invitationCodeErrors"
-                    >
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="invitationCode"
+                        label="Code aus der Einladung"
+                        counter="6"
+                        prepend-icon="mdi-lock"
+                        :error-messages="invitationCodeErrors"
+                      >
                         <template slot="append">
                           <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
@@ -43,15 +43,16 @@
                             </span>
                           </v-tooltip>
                         </template>
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      readonly
-                      v-model="items.scoutName"
-                      label="Mein Name"
-                      prepend-icon="mdi-account-circle"
-                    >
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        readonly
+                        filled
+                        v-model="items.scoutName"
+                        label="Mein Name"
+                        prepend-icon="mdi-account-circle"
+                      >
                         <template slot="append">
                           <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
@@ -69,15 +70,16 @@
                             </span>
                           </v-tooltip>
                         </template>
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      readonly
-                      v-model="getStammName"
-                      label="Mein Stamm"
-                      prepend-icon="mdi-account-group"
-                    >
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        readonly
+                        filled
+                        v-model="getStammName"
+                        label="Mein Stamm"
+                        prepend-icon="mdi-account-group"
+                      >
                         <template slot="append">
                           <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
@@ -95,31 +97,31 @@
                             </span>
                           </v-tooltip>
                         </template>
-                    </v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-            <v-card-actions>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-btn color="success" @click="onSaveClicked">
-                      <v-icon left dark>mdi-check</v-icon>
-                      Ich möchte meinen Stamm jetzt Anmelden
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-actions>
-          </v-card>
-        </v-layout>
-      </v-flex>
-    </v-row>
-    <v-snackbar v-model="showError" color="error" y="top">
-      {{ 'Der Code ist falsch' }}
-    </v-snackbar>
-  </v-container>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-btn color="success" @click="onSaveClicked">
+                        <v-icon left dark>mdi-check</v-icon>
+                        Anmeldung starten
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-actions>
+            </v-card>
+          </v-layout>
+        </v-flex>
+      </v-row>
+      <v-snackbar v-model="showError" color="error" y="top">
+        {{ 'Der Code ist falsch' }}
+      </v-snackbar>
+    </v-container>
   </v-form>
 </template>
 
@@ -144,7 +146,8 @@ export default {
       tooltip: {
         email: '123',
         scoutName: '456',
-        invitationCode: '678',
+        invitationCode:
+          'Hast du keinen Code bekommen? Gucke nochmal in der Einladung. Falls du nichts findest melde dich bei der Lagerleitung',
       },
     };
   },
@@ -181,7 +184,8 @@ export default {
       const errors = [];
       if (!this.$v.invitationCode.$dirty) return errors;
       // eslint-disable-next-line
-      !this.$v.invitationCode.required && errors.push('Der Einladungscode wurd benötigt');
+      !this.$v.invitationCode.required &&
+        errors.push('Der Einladungscode wurd benötigt');
       return errors;
     },
   },

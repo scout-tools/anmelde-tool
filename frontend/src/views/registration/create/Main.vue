@@ -114,7 +114,7 @@ export default {
       ];
     },
     headerSteps() {
-      return ['TeilnehmerInnen', 'Essen', 'Bestätigung'];
+      return ['Teilnehmer_innen', 'Essen', 'Bestätigung'];
     },
   },
   methods: {

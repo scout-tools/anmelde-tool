@@ -156,7 +156,7 @@ export default {
       const endTime = new Date(item.endTime);
       const dateFormat = 'll';
 
-      return `${moment(startTime).format(dateFormat)} bis ${moment(
+      return `${moment(startTime).lang('de').format(dateFormat)} bis ${moment(
         endTime,
       ).format(dateFormat)}`;
     },

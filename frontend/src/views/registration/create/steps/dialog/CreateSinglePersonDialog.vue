@@ -10,7 +10,7 @@
         <v-btn icon dark @click="active = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>TeilnehmerInnen hinzufügen</v-toolbar-title>
+        <v-toolbar-title>Teilnehmer_innen hinzufügen</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-container>
