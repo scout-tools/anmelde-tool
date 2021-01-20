@@ -214,6 +214,7 @@ class Registration(TimeStampMixin):
     scout_organisation = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
     responsible_persons = models.ManyToManyField(User)
     event = models.ForeignKey(Event, on_delete=models.PROTECT, null=True, blank=True)
+    free_text = models.CharField(max_length=1000, blank=True)
     is_confirmed = models.BooleanField(default=0)
     is_accepted = models.BooleanField(default=0)
 
@@ -259,6 +260,7 @@ class ParticipantPersonal(TimeStampMixin):
     zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     date_birth = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
     scout_group = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
     is_group_leader = models.BooleanField(default=0)
     age_group = models.ForeignKey(AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
     eat_habit_type = models.ManyToManyField(EatHabitType, blank=True)
