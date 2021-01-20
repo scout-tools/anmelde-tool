@@ -11,14 +11,14 @@
       <v-tab-item>
         <v-card flat>
           <travel-picker
-            :title="Kaperfahrt"
+            title="Kaperfahrt"
           />
         </v-card>
       </v-tab-item>
       <v-tab-item>
         <v-card flat>
           <travel-picker
-            :title="Mosaikersleben"
+            title="Mosaikersleben"
           />
         </v-card>
       </v-tab-item>
