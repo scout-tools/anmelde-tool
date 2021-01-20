@@ -115,7 +115,6 @@
 import {
   required,
   maxLength,
-  minLength,
   numeric,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
@@ -176,22 +175,13 @@ export default {
         maxLength: maxLength(20),
       },
       dateBirth: {
-        required,
-        maxLength: maxLength(10),
       },
       street: {
         required,
         maxLength: maxLength(30),
       },
-      city: {
-        required,
-        maxLength: maxLength(20),
-      },
       zipCode: {
-        required,
         numeric,
-        minLength: minLength(5),
-        maxLength: maxLength(5),
       },
     },
   },
