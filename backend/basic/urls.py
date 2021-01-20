@@ -26,11 +26,24 @@ router.register(r'event-overview', views.EventOverviewViewSet)
 router.register(r'check-event', views.EventCodeCheckerViewSet, basename="event-code")
 
 event_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
-event_router.register(r'participants', views.ParticipantViewSet2, basename='event-participants')
+event_router.register(r'participants', views.EventParticipantsViewSet,
+                      basename='event-participants')
+event_router.register(r'eventmaster-overview', views.EventMasterViewSet,
+                      basename='event-eventmaster-overview')
+event_router.register(r'cash-eventmaster-overview', views.EventCashMasterViewSet,
+                      basename='cash-event-master-overview')
+event_router.register(r'kitchen-eventmaster-overview', views.EventKitchenMasterViewSet,
+                      basename='kitchen-event-master-overview')
+event_router.register(r'program-eventmaster-overview', views.EventProgramMasterViewSet,
+                      basename='program-event-master-overview')
+
+registration_router = routers.NestedSimpleRouter(router, r'registration', lookup='registration')
+registration_router.register(r'participants', views.RegistrationParticipantsViewSet, basename='participants')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('basic/', include(router.urls)),
     path('basic/', include(event_router.urls)),
+    path('basic/', include(registration_router.urls))
 ]

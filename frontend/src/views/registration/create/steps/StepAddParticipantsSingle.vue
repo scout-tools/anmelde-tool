@@ -9,7 +9,7 @@
       <v-icon left>
         mdi-plus
       </v-icon>
-       TeilnehmerInnen hinzufügen
+       Teilnehmer_innen hinzufügen
     </v-btn>
     <v-btn
       class="mx-3"
@@ -22,7 +22,7 @@
       Excel Datei hochladen
     </v-btn>
     <v-list>
-      <v-subheader>TeilnehmerInnen</v-subheader>
+      <v-subheader>Teilnehmer_innen</v-subheader>
       <v-list-item-group
         color="primary"
       >
@@ -73,7 +73,7 @@ import UploadExcelFile from './dialog/UploadExcelFile.vue';
 
 export default {
   name: 'StepNameDescription',
-  displayName: 'Einzel TeilnehmerInnnen',
+  displayName: 'Einzel Teilnehmer_innen',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,
@@ -135,7 +135,7 @@ export default {
     addParticipants() {
       const promises = [];
       const registrationId = this.$route.params.id;
-      const myUrl = `${this.API_URL}basic/participant/`;
+      const myUrl = `${this.API_URL}basic/participant-group/`;
       const valueArray = Object.values(this.data);
       Object.keys(this.data).forEach((element, index) => {
         const paramsData = {

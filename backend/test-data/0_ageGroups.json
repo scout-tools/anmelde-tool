@@ -4,7 +4,9 @@
         "pk": 1,
         "fields": {
             "id": 1,
-            "name": "11 Jahre oder Jünger",
+            "name": "10 Jahre oder Jünger",
+            "min_age": 6,
+            "max_age": 10,
             "description": ""
         }
     },
@@ -13,7 +15,9 @@
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "12-16 Jahre",
+            "name": "11-15 Jahre",
+            "min_age": 11,
+            "max_age": 15,
             "description": ""
         }
     },
@@ -22,7 +26,9 @@
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "17 Jahre oder Älter",
+            "name": "16 Jahre oder Älter",
+            "min_age": 16,
+            "max_age": 99,
             "description": ""
         }
     }

@@ -6,8 +6,8 @@
     :search-input.sync="search"
     :item-text="customText"
     item-value="id"
-    label="Postleitzahl"
-    placeholder="Gebe die Postleitzahl aus"
+    label="Stadt / Postleitzahl"
+    placeholder="Wähle Stadt oder Postleitzahl"
     prepend-icon="mdi-city"
     return-object
   >
@@ -36,7 +36,7 @@ export default {
     isLoading: false,
     model: null,
     search: null,
-    tooltip: 'Gebe die Postleitzahl passend zur Adresse ein.',
+    tooltip: 'Gebe die Stadt oder die Postleitzahl passend zur Adresse ein.',
   }),
   methods: {
     customText: (item) => `${item.zipCode} — ${item.city}`,

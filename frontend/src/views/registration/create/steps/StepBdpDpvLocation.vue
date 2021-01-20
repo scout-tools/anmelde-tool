@@ -1,55 +1,57 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-  <v-container
-    class="px-0"
-    fluid
-  >
-    <v-radio-group
-        v-model="radioGroup">
-      <v-radio
-        label="Wir haben kein Heim/ Lagerplatz, das für das Spiel genutzt werden kann"
-        value="2"
-      ></v-radio>
-      <v-radio
-        label="Wir haben ein Heim/Lagerplatz, das für das Spiel genutzt werden kann"
-        value="1"
-      ></v-radio>
+    <v-container class="px-0" fluid>
+      <v-expand-transition>
+        <v-container>
+          <span>
+            Unser Lagerplatz oder Heim hat eine Möglichkeit zum Kochen (Herd/
+            Feuerstelle) ausreichend Toiletten (Dixi/ WC) fließend Wasser.
+          </span>
+          <v-radio-group v-model="radioGroup">
+            <v-radio
+              label="Wir haben kein Heim/ Lagerplatz, das für das Spiel genutzt werden kann"
+              value="2"
+            ></v-radio>
+            <v-radio
+              label="Wir haben ein Heim/Lagerplatz, das für das Spiel genutzt werden kann"
+              value="1"
+            ></v-radio>
+          </v-radio-group>
+        </v-container>
+      </v-expand-transition>
 
-    </v-radio-group>
+      <v-expand-transition>
+        <v-container v-show="radioGroup === '1'">
+          <v-divider class="my-4" />
+          <span>
+            Unser Lagerplatz oder Heim hat eine Möglichkeit zum Kochen (Herd/
+            Feuerstelle) ausreichend Toiletten (Dixi/ WC) fließend Wasser.
+          </span>
+          <v-radio-group v-model="radioGroup2">
+            <v-radio
+              label="Wir haben einen Lagerplatz oder ein Haus, dass den Anforderungen enspricht"
+              value="3"
+            ></v-radio>
+            <v-radio
+              label="Leider entspricht unser Lagerplatz/Heim nicht den Anforderungen"
+              value="5"
+            ></v-radio>
+          </v-radio-group>
+        </v-container>
+      </v-expand-transition>
 
-<v-expand-transition>
-  <v-container v-show="radioGroup === '1'">
-    <v-divider class="my-4"/>
-    <span>
-      Unser Lagerplatz oder Heim hat eine Möglichkeit zum Kochen (Herd/ Feuerstelle)
-      ausreichend Toiletten (Dixi/ WC)
-      fließend Wasser.
-    </span>
-    <v-radio-group
-        v-model="radioGroup2">
-      <v-radio
-        label="Wir haben einen Lagerplatz oder ein Haus, dass den Anforderungen enspricht"
-        value="3"
-      ></v-radio>
-      <v-radio
-        label="Leider entspricht unser Lagerplatz/Heim nicht den Anforderungen"
-        value="5"
-      ></v-radio>
-    </v-radio-group>
-  </v-container>
-</v-expand-transition>
-
-<v-expand-transition>
-  <v-container v-show="radioGroup2 === '3'">
-    <v-divider class="my-3" />
-      <v-btn
-        color="secondary"
-        @click="newLocation()"
-      >
-        Platz oder Haus Hinzufügen
-      </v-btn>
-  </v-container>
-</v-expand-transition>
+      <v-expand-transition>
+        <v-container v-show="radioGroup2 === '3'">
+          <v-divider class="my-3" />
+          <span>
+            Unser Lagerplatz oder Heim hat eine Möglichkeit zum Kochen <br>
+            (Herd/Feuerstelle) ausreichend Toiletten (Dixi/ WC) fließend Wasser. <br> <br>
+          </span>
+          <v-btn color="primary" @click="newLocation()">
+            Platz oder Haus Hinzufügen
+          </v-btn>
+        </v-container>
+      </v-expand-transition>
       <v-divider class="my-3" />
 
       <prev-next-buttons
@@ -59,8 +61,8 @@
         @prevStep="prevStep"
         @submitStep="submitStep()"
       />
-  </v-container>
-  <create-location-dialog ref="newLocationDialog" @close="onCloseWindow()"/>
+    </v-container>
+    <create-location-dialog ref="newLocationDialog" @close="onCloseWindow()" />
   </v-form>
 </template>
 
@@ -130,5 +132,4 @@ export default {
 </script>
 
 <style>
-
 </style>

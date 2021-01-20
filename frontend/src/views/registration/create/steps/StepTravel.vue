@@ -75,6 +75,17 @@ export default {
     total() {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },
+    mobileNumberErrors() {
+      const errors = [];
+      if (!this.$v.mobileNumber.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.mobileNumber.maxLength &&
+        errors.push('Name must be at most 10 characters long');
+      // eslint-disable-next-line
+      !this.$v.mobileNumber.minLength &&
+        errors.push('Name must be at most 10 characters long');
+      return errors;
+    },
   },
   methods: {
     greaterThanZero(value) {

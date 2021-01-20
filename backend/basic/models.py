@@ -19,10 +19,8 @@ class ZipCode(TimeStampMixin):
         verbose_name='ID')
     zip_code = models.CharField(max_length=5, blank=True)
     city = models.CharField(max_length=60, blank=True)
-    lat = models.DecimalField(
-        max_digits=20, decimal_places=15, default=0.000)
-    lon = models.DecimalField(
-        max_digits=20, decimal_places=15, default=0.000)
+    lat = models.DecimalField(max_digits=20, decimal_places=15, default=0.000)
+    lon = models.DecimalField(max_digits=20, decimal_places=15, default=0.000)
 
     def __str__(self):
         return self.zip_code + ' - ' + self.city
@@ -62,7 +60,8 @@ class EventLocation(TimeStampMixin):
     contact_email = models.CharField(max_length=30, blank=True)
     contact_phone = models.CharField(max_length=30, blank=True)
     is_public = models.BooleanField(default=0)
-    capacity = models.IntegerField(blank=True, null=True)
+    capacity_indoor = models.IntegerField(blank=True, null=True)
+    capacity_outdoor = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -79,6 +78,8 @@ class AgeGroup(TimeStampMixin):
         verbose_name='ID')
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=100, blank=True)
+    min_age = models.IntegerField(blank=True, null=True)
+    max_age = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -129,12 +130,7 @@ class ScoutHierarchy(TimeStampMixin):
     level = models.ForeignKey(ScoutOrgaLevel, on_delete=models.PROTECT, null=True, blank=True)
     name = models.CharField(max_length=60, blank=True)
     zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
-    parent = models.ForeignKey(
-        'self', null=True,
-        on_delete=models.PROTECT,
-        related_name='scouthierarchy',
-        blank=True
-    )
+    parent = models.ForeignKey('self', null=True, on_delete=models.PROTECT, related_name='scouthierarchy', blank=True)
 
     def __str__(self):
         return "{} - {}".format(self.level, self.name)
@@ -161,20 +157,14 @@ class Event(TimeStampMixin):
         verbose_name='ID')
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=100, blank=True)
-    location = models.ForeignKey(
-        EventLocation, on_delete=models.PROTECT, null=True, blank=True)
+    location = models.ForeignKey(EventLocation, on_delete=models.PROTECT, null=True, blank=True)
     age_groups = models.ManyToManyField(AgeGroup, blank=True)
     event_tags = models.ManyToManyField(EventTag, blank=True)
-    start_time = models.DateTimeField(
-        auto_now=False, auto_now_add=False, null=True, blank=True)
-    end_time = models.DateTimeField(
-        auto_now=False, auto_now_add=False, null=True, blank=True)
-    registration_deadline = models.DateTimeField(
-        auto_now=False, auto_now_add=False, null=True, blank=True)
-    registration_start = models.DateTimeField(
-        auto_now=False, auto_now_add=False, null=True, blank=True)
-    participation_fee = models.DecimalField(
-        max_digits=5, decimal_places=2, default=0.00)
+    start_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    end_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    registration_deadline = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    registration_start = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    participation_fee = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     min_helper = models.IntegerField(blank=True, null=True)
     min_participation = models.IntegerField(blank=True, null=True)
     max_participation = models.IntegerField(blank=True, null=True)
@@ -245,7 +235,7 @@ class EatHabitType(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=40)
     description = models.CharField(max_length=100, blank=True)
     is_custom = models.BooleanField(default=1)
 
@@ -266,10 +256,8 @@ class ParticipantPersonal(TimeStampMixin):
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     street = models.CharField(max_length=100, blank=True)
-    zip_code = models.ForeignKey(
-        ZipCode, on_delete=models.PROTECT, null=True, blank=True)
-    date_birth = models.DateField(
-        auto_now=False, auto_now_add=False, null=True, blank=True)
+    zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
+    date_birth = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
     scout_group = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
     is_group_leader = models.BooleanField(default=0)
     age_group = models.ForeignKey(AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
@@ -293,10 +281,8 @@ class EatHabit(models.Model):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    eat_habit_type = models.ForeignKey(
-        EatHabitType, on_delete=models.PROTECT, null=True, blank=True)
-    participant_group = models.ForeignKey(
-        ParticipantGroup, on_delete=models.PROTECT, null=True, blank=True)
+    eat_habit_type = models.ForeignKey(EatHabitType, on_delete=models.PROTECT, null=True, blank=True)
+    participant_group = models.ForeignKey(ParticipantGroup, on_delete=models.PROTECT, null=True, blank=True)
     number_of_persons = models.IntegerField(blank=True, null=True)
 
     def __str__(self):

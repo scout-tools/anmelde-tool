@@ -53,6 +53,8 @@ import StepBdpDpvLocation from './steps/StepBdpDpvLocation.vue';
 import StepBdpDpVPreferences from './steps/StepBdpDpVPreferences.vue';
 import StepTents from './steps/StepTents.vue';
 import StepTravel from './steps/StepTravel.vue';
+import StepAddParticipantGroupRole from './steps/StepAddParticipantGroupRole.vue';
+import StepBdpDpvTextForStamm from './steps/StepBdpDpvTextForStamm.vue';
 
 export default {
   components: {
@@ -63,6 +65,7 @@ export default {
     StepConsent,
     StepBdpDpvLocation,
     StepBdpDpVPreferences,
+    StepBdpDpvTextForStamm,
   },
   props: ['scoutOrganisation'],
   data() {
@@ -101,8 +104,10 @@ export default {
         return [
           StepConsent,
           StepAddParticipants,
+          StepAddParticipantGroupRole,
           StepBdpDpvLocation,
           StepBdpDpVPreferences,
+          StepBdpDpvTextForStamm,
           StepConfirm,
         ];
       }
@@ -114,7 +119,7 @@ export default {
       ];
     },
     headerSteps() {
-      return ['TeilnehmerInnen', 'Essen', 'Bestätigung'];
+      return ['Teilnehmer_innen', 'Essen', 'Bestätigung'];
     },
   },
   methods: {

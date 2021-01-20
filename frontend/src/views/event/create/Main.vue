@@ -104,7 +104,7 @@ export default {
         'Verifizierungscode',
         'Daten und Uhrzeit',
         'Ort',
-        'TeilnehmerInnen Beitrag',
+        'Teilnehmer_innen Beitrag',
         'Zielgruppe',
         'Kontaktdaten',
       ];
