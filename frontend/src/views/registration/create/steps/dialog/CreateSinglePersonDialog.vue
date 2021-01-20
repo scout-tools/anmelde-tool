@@ -146,6 +146,7 @@ export default {
       groupLeader: false,
       kaperfahrt: false,
       mosaikersleben: true,
+      registration: 0,
     },
     items: [
       {
@@ -307,7 +308,8 @@ export default {
       }
     },
     async callCreateParticipantPost() {
-      await axios.post(`${this.API_URL}basic/participant-extended/`, this.data);
+      this.data.registration = this.$route.params.id;
+      await axios.post(`${this.API_URL}basic/participant-personal/`, this.data);
     },
     getData() {
       return this.data;
