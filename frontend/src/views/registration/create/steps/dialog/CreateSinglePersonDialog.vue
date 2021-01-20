@@ -141,11 +141,12 @@ export default {
       street: '',
       city: '',
       zipCode: '',
-      dateBirth: '',
+      dateBirth: '2010-01-01',
       groupLeader: false,
-      kaperfahrt: false,
-      mosaikersleben: true,
-      registration: 0,
+      kaperfahrt: null,
+      mosaikersleben: null,
+      registration: null,
+      eatHabitType: [],
     },
     items: [
       {
@@ -291,6 +292,7 @@ export default {
         try {
           this.callCreateParticipantPost();
           this.closeDialog();
+          this.$emit('refresh');
         } catch (e) {
           console.log(e);
           this.showError = true;

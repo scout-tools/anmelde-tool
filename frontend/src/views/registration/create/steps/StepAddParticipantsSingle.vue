@@ -27,18 +27,17 @@
         color="primary"
       >
         <v-list-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in items[0].participants"
           :key="i"
         >
         <v-list-item-avatar>
           <v-icon
           color="black"
             dark
-            v-text="item.icon"
-          ></v-icon>
+          >mdi-account</v-icon>
         </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title v-text="item.text"></v-list-item-title>
+            <v-list-item-title v-text="item.firstName"></v-list-item-title>
           </v-list-item-content>
         <v-list-item-action>
           <v-btn dense icon>
@@ -58,7 +57,7 @@
         @submitStep="submitStep()"
       />
     </v-container>
-    <create-single-person-dialog ref="createSinglePersonDialog"/>
+    <create-single-person-dialog ref="createSinglePersonDialog" @refresh="getParticipants()"/>
     <upload-excel-file ref="uploadExcelFile"/>
   </v-form>
 </template>
@@ -86,9 +85,7 @@ export default {
     isLoading: false,
     selectedItem: 1,
     items: [
-      { text: 'Thea', icon: 'mdi-account' },
-      { text: 'Robert', icon: 'mdi-account' },
-      { text: 'Alina', icon: 'mdi-account' },
+      { participants: [] },
     ],
   }),
   validations: {},
@@ -109,7 +106,20 @@ export default {
       return [];
     },
   },
+  created() {
+    this.getParticipants();
+  },
   methods: {
+    getParticipants() {
+      axios
+        .get(`${this.API_URL}basic/registration/${this.$route.params.id}/participants/`)
+        .then((res) => {
+          this.items = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     validate() {
       this.$v.$touch();
       this.valid = !this.$v.$error;
