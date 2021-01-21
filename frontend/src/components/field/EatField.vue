@@ -1,15 +1,15 @@
 <template>
-  <v-combobox
-    v-model="model"
-    :items="items"
+  <v-autocomplete
+    v-model="value"
+    :items="eatHabitTypeMapping"
     label="Essens Besonderheiten"
     item-text="name"
-    item-value="id"
+    item-value="name"
     prepend-icon="mdi-food"
-    return-object
     multiple
     clearable
     chips
+    @change="onInputchange"
   >
     <template slot="append">
       <v-tooltip bottom>
@@ -19,35 +19,42 @@
           </v-icon>
         </template>
         <span>
-          {{ tooltip }}
+          gallo
         </span>
       </v-tooltip>
     </template>
-  </v-combobox>
+  </v-autocomplete>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
 export default {
+  prop: ['value'],
+
   data: () => ({
     entries: [],
     isLoading: false,
-    model: [],
+    value: [],
     search: null,
     tooptip: 'Bitte trage hier ein, auf welche Besonderheiten die Küche achten muss.',
   }),
   computed: {
     ...mapGetters(['eatHabitTypeMapping']),
 
-    items() {
-      if (!this.model.filter((item) => item.id === 2).length) {
-        return this.eatHabitTypeMapping;
-      }
-      return this.eatHabitTypeMapping
-        .filter((item) => item.id !== 5)
-        .filter((item) => item.id !== 6)
-        .filter((item) => item.id !== 1);
+    // items() {
+    //   if (!this.model.filter((item) => item.id === 2).length) {
+    //     return this.eatHabitTypeMapping;
+    //   }
+    //   return this.eatHabitTypeMapping
+    //     .filter((item) => item.id !== 5)
+    //     .filter((item) => item.id !== 6)
+    //     .filter((item) => item.id !== 1);
+    // },
+  },
+  methods: {
+    onInputchange() {
+      this.$emit('input', this.value);
     },
   },
 };

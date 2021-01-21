@@ -23,17 +23,44 @@
         <v-form v-model="valid">
           <v-row>
             <v-col cols="12" sm="6" md="4">
-              <v-combobox
+              <v-select
                 v-model="data.group"
                 :items="items"
                 item-text="name"
-                item-value="id"
+                item-value="name"
                 autofocus
                 label="Gruppe"
-              />
+                prepend-icon="mdi-account-group"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Gallo' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-select>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-checkbox v-model="data.groupleader" label="Gruppenführung" />
+              <v-checkbox v-model="data.isGroupLeader" label="Gruppenführung">
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Gallo' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-checkbox>
             </v-col>
           </v-row>
           <v-divider class="my-3" />
@@ -45,9 +72,23 @@
                 :error-messages="firstNameErrors"
                 label="Vorname"
                 required
+                prepend-icon="mdi-card-account-details-outline"
                 @input="$v.data.firstName.$touch()"
                 @blur="$v.data.firstName.$touch()"
-              />
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Gallo' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
@@ -56,14 +97,26 @@
                 :error-messages="lastNameErrors"
                 label="Nachname"
                 required
+                prepend-icon="mdi-card-account-details-outline"
                 @input="$v.data.lastName.$touch()"
                 @blur="$v.data.lastName.$touch()"
-              />
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Gallo' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-row>
-               <birthday-field/>
-              </v-row>
+              <birthday-field v-model="data.dateBirth" />
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
@@ -71,31 +124,72 @@
                 :counter="30"
                 :error-messages="streetErrors"
                 label="Straße und Hausnummer"
+                prepend-icon="mdi-home"
                 required
                 @input="$v.data.street.$touch()"
                 @blur="$v.data.street.$touch()"
-              />
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Gallo' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <zip-code-field />
+              <zip-code-field v-model="data.zipCode" />
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <eat-field />
+              <eat-field v-model="data.eatHabitType" />
             </v-col>
           </v-row>
           <v-divider class="my-3" />
           <v-row>
-            <v-col cols="12" sm="6" md="4">
-              <v-checkbox
-                v-model="data.mosaikersleben"
-                label="Nimmt an der Bundesfahrt teil"
-              />
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-checkbox
-                v-model="data.kaperfahrt"
-                label="Nimmt an der Kaperfahrt teil"
-              />
+            <v-col cols="12" sm="6">
+              <v-radio-group row mandatory v-model="data.roles">
+                <v-radio value="Bundesfahrt">
+                  <template v-slot:label>
+                    <div>
+                      <strong class="primary--text">Nur Bundesfahrt</strong>
+                    </div>
+                  </template>
+                </v-radio>
+                <v-radio value="Kaperfahrt">
+                  <template v-slot:label>
+                    <div>
+                      <strong class="primary--text">Nur Kaperfahrt</strong>
+                    </div>
+                  </template>
+                </v-radio>
+                <v-radio value="both">
+                  <template v-slot:label>
+                    <div>
+                      <strong class="primary--text"
+                        >Bundesfahrt und Kaperfahrt</strong
+                      >
+                    </div>
+                  </template>
+                </v-radio>
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Gallo' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-radio-group>
             </v-col>
           </v-row>
           <v-divider class="my-3" />
@@ -112,11 +206,7 @@
 </template>
 
 <script>
-import {
-  required,
-  maxLength,
-  numeric,
-} from 'vuelidate/lib/validators';
+import { required, maxLength, numeric } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -139,14 +229,12 @@ export default {
       firstName: '',
       lastName: '',
       street: '',
-      city: '',
       zipCode: '',
       dateBirth: '2010-01-01',
-      groupLeader: false,
-      kaperfahrt: null,
-      mosaikersleben: null,
       registration: null,
       eatHabitType: [],
+      isGroupLeader: false,
+      roles: ['Bundesfahrt'],
     },
     items: [
       {
@@ -175,8 +263,7 @@ export default {
         required,
         maxLength: maxLength(20),
       },
-      dateBirth: {
-      },
+      dateBirth: {},
       street: {
         required,
         maxLength: maxLength(30),
@@ -301,6 +388,7 @@ export default {
     },
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
+      console.log(this.data);
       await axios.post(`${this.API_URL}basic/participant-personal/`, this.data);
     },
     getData() {
