@@ -29,7 +29,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'start_time',
             'end_time',
             'participant_role',
-            'is_registered'
+            'is_registered',
         )
 
     def get_event_role(self, obj):
@@ -41,8 +41,13 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             return []
 
     def get_is_registered(self, obj):
-        return obj.registration_set.filter(
-            scout_organisation=self.context['request'].user.userextended.scout_organisation).exists()
+        res = obj.registration_set.filter(
+            scout_organisation=self.context['request'].user.userextended.scout_organisation).values('is_confirmed',
+                                                                                                    'is_accepted')
+        if res:
+            return res
+        else:
+            return False
 
 
 class AgeGroupSerializer(serializers.ModelSerializer):
@@ -171,6 +176,13 @@ class ParticipantPersonalSerializer(serializers.ModelSerializer):
         many=True,
         read_only=False,
         queryset=EatHabitType.objects.all(),
+        slug_field='name'
+    )
+
+    scout_group = serializers.SlugRelatedField(
+        many=False,
+        read_only=False,
+        queryset=ScoutHierarchy.objects.filter(level=6),
         slug_field='name'
     )
 
