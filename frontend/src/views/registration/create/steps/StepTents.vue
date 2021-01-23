@@ -72,7 +72,6 @@ export default {
         { i: 0, selectedType: '', selectedGroups: [] },
       ],
     },
-    dto: { registration: 7, tentType: 1, usedByScoutGroups: [] },
   }),
   validations: {
     data: {
@@ -84,21 +83,16 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping', 'tentTypeMapping', 'scoutGroupMapping']),
+    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping', 'tentTypeMapping', 'scoutGroupMapping', 'registeredTents']),
     total() {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },
   },
   created() {
-    const savedTent = { selectedType: '', selectedGroups: [], i: 1 };
-    this.getTents().forEach((i, index) => {
-      console.log(`Type: ${i.tentType}ScoutGroups: ${i.usedByScoutGroups}`);
-      savedTent.selectedType = i.tentType;
-      savedTent.selectedGroups = i.usedByScoutGroups;
-      savedTent.i = index;
-      this.data.tents.add(savedTent);
-    });
     this.getGroups();
+    this.getTentTypes();
+    this.getTents();
+    this.convertSavedTents();
   },
   methods: {
     addTent() {
@@ -134,27 +128,40 @@ export default {
       dto.registration = this.$route.params.id;
       this.data.tents.forEach((i) => {
         dto.tentType = i.selectedType;
-        dto.usedByScoutGroups = i.selectedGroups;
+        i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group.id));
         axios.post(`${this.API_URL}basic/tent/`, dto);
       });
       return null;
     },
     getTents() {
-      let result = [];
       axios
         .get(`${this.API_URL}basic/tent/?&timestamp=${new Date().getTime()}`)
-        .then((res) => {
-          result = res.data;
-        })
+        .then((res) => this.$store.commit('setRegisteredTents', res.data))
         .catch((err) => {
           console.log(err);
         });
-      result.forEach((i) => {
-        console.log(`Reg: ${i.registration} Route: ${this.$route.params.id}`);
-      });
-      return result.filter((i) => {
-        console.log(`Reg: ${i.registration} Route: ${this.$route.params.id}`);
-        return i.registration === this.$route.params.id;
+    },
+    getTentTypes() {
+      axios
+        .get(`${this.API_URL}basic/tent-type/`)
+        .then((res) => this.$store.commit('setTentTypeMapping', res.data))
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    convertSavedTents() {
+      const savedTent = { selectedType: '', selectedGroups: [], i: 1 };
+      this.registeredTents.forEach((i, index) => {
+        if (parseInt(i.registration, 10) === parseInt(this.$route.params.id, 10)) {
+          console.log(`Type: ${i.tentType}ScoutGroups: ${i.usedByScoutGroups}`);
+          savedTent.selectedType = this.tentTypeMapping
+            .filter((type) => i.tentType === type.id)[0].name;
+          savedTent.selectedGroups = i.usedByScoutGroups;
+          savedTent.i = index;
+          this.data.tents.push(savedTent);
+        } else {
+          console.log('nothing');
+        }
       });
     },
     getGroups() {

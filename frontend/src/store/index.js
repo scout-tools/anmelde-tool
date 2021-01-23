@@ -17,11 +17,16 @@ export default new Vuex.Store({
     hierarchyMapping: [],
     eatHabitTypeMapping: [],
     travelTypeTypeMapping: [],
-    tentTypeMapping: [],
+    tentTypeMapping: [{
+      id: 1, name: 'Kothe',
+    }],
     currentEventParticipants: [],
     dpvAddedLocation: false,
     apiIsDown: false,
     scoutGroupMapping: [],
+    registeredTents: [{
+      id: 1, registration: 1, tentType: 1, usedByScoutGroups: [1],
+    }],
   },
   getters: {
     dpvAddedLocation(state) {
@@ -65,6 +70,9 @@ export default new Vuex.Store({
     },
     scoutGroupMapping(state) {
       return state.scoutGroupMapping;
+    },
+    registeredTents(state) {
+      return state.registeredTents;
     },
   },
   mutations: {
@@ -111,6 +119,9 @@ export default new Vuex.Store({
     },
     setScoutGroupMapping(state, newData) {
       state.scoutGroupMapping = newData;
+    },
+    setRegisteredTents(state, newData) {
+      state.registeredTents = newData;
     },
   },
   actions: {
