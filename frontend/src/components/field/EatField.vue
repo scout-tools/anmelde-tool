@@ -1,5 +1,5 @@
 <template>
-  <v-autocomplete
+  <v-combobox
     v-model="value"
     :items="eatHabitTypeMapping"
     label="Essens Besonderheiten"
@@ -23,7 +23,7 @@
         </span>
       </v-tooltip>
     </template>
-  </v-autocomplete>
+  </v-combobox>
 </template>
 
 <script>

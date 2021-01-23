@@ -23,12 +23,14 @@
         <v-form v-model="valid">
           <v-row>
             <v-col cols="12" sm="6" md="4">
-              <v-select
-                v-model="data.group"
-                :items="items"
+              <v-combobox
+                v-model="data.scoutGroup"
+                :items="scoutHierarchyGroups"
                 item-text="name"
                 item-value="name"
                 autofocus
+                required
+                :rules="[requiredField]"
                 label="Gruppe"
                 prepend-icon="mdi-account-group"
               >
@@ -44,10 +46,10 @@
                     </span>
                   </v-tooltip>
                 </template>
-              </v-select>
+              </v-combobox>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-checkbox v-model="data.isGroupLeader" label="Gruppenführung">
+              <v-switch v-model="data.isGroupLeader" label="Gruppenführung">
                 <template slot="append">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -60,7 +62,7 @@
                     </span>
                   </v-tooltip>
                 </template>
-              </v-checkbox>
+              </v-switch>
             </v-col>
           </v-row>
           <v-divider class="my-3" />
@@ -116,7 +118,29 @@
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <birthday-field v-model="data.dateBirth" />
+              <v-select
+                v-model="data.ageGroup"
+                :items="ageGroupMapping"
+                :error-messages="ageGroupsErrors"
+                item-text="name"
+                item-value="id"
+                label="Alter"
+                required
+                prepend-icon="mdi-human-child"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Gallo' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-select>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
@@ -128,6 +152,31 @@
                 required
                 @input="$v.data.street.$touch()"
                 @blur="$v.data.street.$touch()"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Gallo' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="data.phoneNumber"
+                :counter="30"
+                :error-messages="phoneNumberErrors"
+                label="Telefonnummer"
+                prepend-icon="mdi-phone"
+                required
+                @input="$v.data.phoneNumber.$touch()"
+                @blur="$v.data.phoneNumber.$touch()"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -209,45 +258,34 @@
 import { required, maxLength, numeric } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import moment from 'moment';
+import { mapGetters } from 'vuex';
 
 import ZipCodeField from '@/components/field/ZipCodeField.vue';
 import EatField from '@/components/field/EatField.vue';
-import BirthdayField from '@/components/field/BirthdayField.vue';
 
 export default {
   props: ['isOpen'],
   components: {
     ZipCodeField,
     EatField,
-    BirthdayField,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
     valid: true,
+    scoutHierarchyGroups: [],
     data: {
       firstName: '',
       lastName: '',
       street: '',
       zipCode: '',
-      dateBirth: '2010-01-01',
+      phoneNumber: '',
+      ageGroup: null,
       registration: null,
       eatHabitType: [],
+      scoutGroup: null,
       isGroupLeader: false,
       roles: ['Bundesfahrt'],
-    },
-    items: [
-      {
-        id: 1,
-        name: 'Bären',
-      },
-      {
-        id: 2,
-        name: 'Döner',
-      },
-    ],
-    dialog: {
-      dateBirth: false,
     },
     showError: false,
     showSuccess: false,
@@ -263,17 +301,32 @@ export default {
         required,
         maxLength: maxLength(20),
       },
-      dateBirth: {},
+      scoutGroup: {
+        required,
+      },
+      phoneNumber: {
+        required,
+      },
+      ageGroup: {
+        required,
+      },
       street: {
         required,
         maxLength: maxLength(30),
       },
       zipCode: {
+        required,
         numeric,
       },
     },
   },
   computed: {
+    ...mapGetters([
+      'isAuthenticated',
+      'getJwtData',
+      'hierarchyMapping',
+      'ageGroupMapping',
+    ]),
     firstNameErrors() {
       const errors = [];
       if (!this.$v.data.firstName.$dirty) return errors;
@@ -293,17 +346,6 @@ export default {
       }
       if (!this.$v.data.lastName.maxLength) {
         errors.push('Name must be at most 20 characters long');
-      }
-      return errors;
-    },
-    dateBirthErrors() {
-      const errors = [];
-      if (!this.$v.data.dateBirth.$dirty) return errors;
-      if (!this.$v.data.dateBirth.required) {
-        errors.push('Geburtstag is required.');
-      }
-      if (!this.$v.data.dateBirth.maxLength) {
-        errors.push('Geburtstag must be at most 10 characters long');
       }
       return errors;
     },
@@ -350,8 +392,38 @@ export default {
       }
       return errors;
     },
+    scoutGroupsErrors() {
+      const errors = [];
+      if (!this.$v.data.scoutGroup.$dirty) return errors;
+      if (!this.$v.data.scoutGroup.required) {
+        errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
+      }
+      return errors;
+    },
+    ageGroupsErrors() {
+      const errors = [];
+      if (!this.$v.data.ageGroup.$dirty) return errors;
+      if (!this.$v.data.ageGroup.required) {
+        errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
+      }
+      return errors;
+    },
+    phoneNumberErrors() {
+      const errors = [];
+      if (!this.$v.data.phoneNumber.$dirty) return errors;
+      if (!this.$v.data.phoneNumber.required) {
+        errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
+      }
+      return errors;
+    },
   },
   methods: {
+    requiredField(value) {
+      if (value instanceof Array && value.length === 0) {
+        return 'Bitte Füllen';
+      }
+      return !!value || 'Bitte Füllen';
+    },
     onClickOk() {
       this.active = false;
     },
@@ -359,7 +431,29 @@ export default {
       this.active = false;
     },
     openDialog() {
+      this.data = {
+        firstName: '',
+        lastName: '',
+        street: '',
+        zipCode: '',
+        dateBirth: '2010-01-01',
+        registration: null,
+        eatHabitType: [],
+        isGroupLeader: false,
+        roles: ['Bundesfahrt'],
+      };
       this.active = true;
+      this.getGroups();
+    },
+    getGroups() {
+      axios
+        .get(`${this.API_URL}basic/scout-hierarchy-group/`)
+        .then((res) => {
+          this.scoutHierarchyGroups = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     closeDialog() {
       this.active = false;
@@ -378,8 +472,6 @@ export default {
       if (this.valid) {
         try {
           this.callCreateParticipantPost();
-          this.closeDialog();
-          this.$emit('refresh');
         } catch (e) {
           console.log(e);
           this.showError = true;
@@ -388,8 +480,12 @@ export default {
     },
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
-      console.log(this.data);
-      await axios.post(`${this.API_URL}basic/participant-personal/`, this.data);
+      axios
+        .post(`${this.API_URL}basic/participant-personal/`, this.data)
+        .then(() => {
+          this.closeDialog();
+          this.$emit('refresh');
+        });
     },
     getData() {
       return this.data;
