@@ -112,7 +112,7 @@ export default {
   methods: {
     getParticipants() {
       axios
-        .get(`${this.API_URL}basic/registration/${this.$route.params.id}/participants/`)
+        .get(`${this.API_URL}basic/registration/${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`)
         .then((res) => {
           this.items = res.data;
         })
