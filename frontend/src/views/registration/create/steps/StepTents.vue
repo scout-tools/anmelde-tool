@@ -5,19 +5,20 @@
         <v-col cols="6">
           <v-select
             v-model="tent.selectedType"
-            :items="data.type"
-            item-text="state"
-            item-value="abbr"
+            :items="tentTypeMapping"
+            item-text="name"
+            item-value="id"
             label="Zelt"
             persistent-hint
-            return-object
             prepend-icon="mdi-home"
           ></v-select>
         </v-col>
         <v-col cols="6">
           <v-combobox
-            v-model="tent.selectedGroup"
-            :items="data.groups"
+            v-model="tent.selectedGroups"
+            :items="scoutGroupMapping"
+            item-text="name"
+            item-value="id"
             label="Gruppe"
             multiple
             outlined
@@ -64,10 +65,11 @@ export default {
     valid: true,
     isLoading: false,
     data: {
-      type: ['Jurte', 'Kothe'],
-      groups: ['Baeren', 'Adler'],
+      groups: [
+        { id: 1, name: '' },
+      ],
       tents: [
-        { i: 0, selectedType: '', selectedGroup: '' },
+        { i: 0, selectedType: '', selectedGroups: [] },
       ],
     },
     dto: { registration: 7, tentType: 1, usedByScoutGroups: [] },
@@ -82,24 +84,24 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),
+    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping', 'tentTypeMapping', 'scoutGroupMapping']),
     total() {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },
   },
   created() {
-    console.log(this.getTents());
-    const savedTent = { selectedType: '', selectedGroup: '', i: 1 };
+    const savedTent = { selectedType: '', selectedGroups: [], i: 1 };
     this.getTents().forEach((i, index) => {
-      savedTent.selectedType = this.convertBack(i.tentType);
-      savedTent.selectedGroup = i.usedByScoutGroups;
+      console.log(`Type: ${i.tentType}ScoutGroups: ${i.usedByScoutGroups}`);
+      savedTent.selectedType = i.tentType;
+      savedTent.selectedGroups = i.usedByScoutGroups;
       savedTent.i = index;
-      this.tents.push(savedTent);
+      this.data.tents.add(savedTent);
     });
   },
   methods: {
     addTent() {
-      this.data.tents.push({ i: 0, selectedType: '', selectedGroup: '' });
+      this.data.tents.push({ i: 0, selectedType: '', selectedGroups: [] });
     },
     greaterThanZero(value) {
       return value > 0;
@@ -126,28 +128,12 @@ export default {
       }
       this.$emit('submit');
     },
-    convertType(typeName) {
-      if (typeName === 'Kothe') {
-        return 1;
-      } if (typeName === 'Jurte') {
-        return 2;
-      }
-      return null;
-    },
-    convertBack(typeInt) {
-      if (typeInt === 1) {
-        return 'Kothe';
-      } if (typeInt === 2) {
-        return 'Jurte';
-      }
-      return null;
-    },
     createTent() {
       const dto = { registration: '', tentType: 1, usedByScoutGroups: [] };
       dto.registration = this.$route.params.id;
       this.data.tents.forEach((i) => {
-        dto.tentType = this.convertType(i.selectedType);
-        dto.usedByScoutGroups = [1]; // TODO
+        dto.tentType = i.selectedType;
+        dto.usedByScoutGroups = i.selectedGroups;
         axios.post(`${this.API_URL}basic/tent/`, dto);
       });
       return null;
@@ -155,17 +141,30 @@ export default {
     getTents() {
       let result = [];
       axios
-        .get(`${this.API_URL}basic/tent/`)
+        .get(`${this.API_URL}basic/tent/?&timestamp=${new Date().getTime()}`)
         .then((res) => {
           result = res.data;
         })
         .catch((err) => {
           console.log(err);
         });
+      result.forEach((i) => {
+        console.log(`Reg: ${i.registration} Route: ${this.$route.params.id}`);
+      });
       return result.filter((i) => {
-        console.log(i.registration);
+        console.log(`Reg: ${i.registration} Route: ${this.$route.params.id}`);
         return i.registration === this.$route.params.id;
       });
+    },
+    getGroups() {
+      axios
+        .get(`${this.API_URL}basic/scout-hierarchy-group/?&timestamp=${new Date().getTime()}`)
+        .then((res) => {
+          this.$store.commit('setScoutGroupMapping', res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

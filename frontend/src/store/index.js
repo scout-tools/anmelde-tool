@@ -21,6 +21,7 @@ export default new Vuex.Store({
     currentEventParticipants: [],
     dpvAddedLocation: false,
     apiIsDown: false,
+    scoutGroupMapping: [],
   },
   getters: {
     dpvAddedLocation(state) {
@@ -61,6 +62,9 @@ export default new Vuex.Store({
     },
     apiIsDown(state) {
       return state.apiIsDown;
+    },
+    scoutGroupMapping(state) {
+      return state.scoutGroupMapping;
     },
   },
   mutations: {
@@ -104,6 +108,9 @@ export default new Vuex.Store({
     },
     setDpvAddedLocation(state, newData) {
       state.dpvAddedLocation = newData;
+    },
+    setScoutGroupMapping(state, newData) {
+      state.scoutGroupMapping = newData;
     },
   },
   actions: {
