@@ -98,6 +98,7 @@ export default {
       savedTent.i = index;
       this.data.tents.add(savedTent);
     });
+    this.getGroups();
   },
   methods: {
     addTent() {
