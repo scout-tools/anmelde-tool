@@ -201,18 +201,19 @@
           <v-row>
             <v-col cols="12" sm="6">
               <v-container fluid>
-                <p>{{ people }}</p>
                 <v-switch
-                  v-model="people"
+                  v-model="data.roles"
                   color="primary"
-                  label="John"
-                  value="John"
+                  label="Bundesfahrt"
+                  value="1"
+                  hide-details
                 ></v-switch>
                 <v-switch
-                  v-model="people"
-                  color="primary"
-                  label="Jacob"
-                  value="Jacob"
+                  v-model="data.roles"
+                  color="orange"
+                  label="Kaperfahrt"
+                  value="2"
+                  hide-details
                 ></v-switch>
               </v-container>
               <template slot="append">
@@ -273,7 +274,7 @@ export default {
       eatHabitType: [],
       scoutGroup: null,
       isGroupLeader: false,
-      roles: ['Bundesfahrt'],
+      roles: ['1'],
     },
     showError: false,
     showSuccess: false,
@@ -423,7 +424,7 @@ export default {
         registration: null,
         eatHabitType: [],
         isGroupLeader: false,
-        roles: ['Bundesfahrt'],
+        roles: ['1'],
       };
       this.active = true;
       this.getGroups();
