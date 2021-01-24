@@ -464,7 +464,9 @@ export default {
     },
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
-      this.data.scoutGroup = this.data.scoutGroup.id;
+      if (this.data.scoutGroup && this.data.scoutGroup.id) {
+        this.data.scoutGroup = this.data.scoutGroup.id;
+      }
       axios
         .post(`${this.API_URL}basic/participant-personal/`, this.data)
         .then(() => {

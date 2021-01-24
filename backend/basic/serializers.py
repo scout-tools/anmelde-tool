@@ -114,13 +114,16 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
 
     def get_locations(self, obj):
 
-        result = obj.registration_set.values('scout_organisation__name').annotate(
+        result = obj.registration_set.values('scout_organisation__name', 'participantgroup__created_at__date',
+                                             'participantpersonal__created_at__date').annotate(
             participants=Coalesce(Sum('participantgroup__number_of_persons'), 0)
                          + Coalesce(Count('participantpersonal'), 0),
             bund=F('scout_organisation__parent__parent__name')) \
             .values('scout_organisation__name',
                     'participants',
                     'bund',
+                    'participantgroup__created_at__date',
+                    'participantpersonal__created_at__date',
                     lon=F('scout_organisation__zip_code__lon'),
                     lat=F('scout_organisation__zip_code__lat'),
                     )

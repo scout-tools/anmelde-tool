@@ -29,25 +29,30 @@ export default {
       },
     };
   },
-
   computed: {
-    ...mapGetters(['currentEventKitchen']),
+    ...mapGetters(['currentEventCash']),
 
   },
 
   methods: {
     json_to_chart_data(jsonData) {
       const returnData = [];
-      returnData.push(['Type', 'Number']);
+      returnData.push(['Name', 'Group TN', 'Signle TN', 'TN', 'Beitrag']);
       jsonData.forEach((event) => {
-        returnData.push(['Vegetarier', event.numVegetarien.veggiPersonal]);
-        returnData.push(['Veganer', event.numVegan.veganPersonal]);
-        returnData.push(['Omnivor', event.totalParticipants - event.numVegan.veganPersonal - event.numVegetarien.veggiPersonal]);
+        event.groupedParticipants.forEach((group) => {
+          returnData.push([
+            group.scoutOrganisation_Name,
+            group.groupedParticipants,
+            group.singleParticipants,
+            group.totalAmount,
+            group.totalFee,
+          ]);
+        });
       });
       return returnData;
     },
     getData() {
-      this.chartData = this.json_to_chart_data(this.currentEventKitchen);
+      this.chartData = this.json_to_chart_data(this.currentEventCash);
     },
   },
   created() {
