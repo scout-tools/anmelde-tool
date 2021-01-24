@@ -16,6 +16,18 @@
         v-bind="attrs"
         v-on="on"
       >
+        <template slot="append">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon color="success" dark v-bind="attrs" v-on="on">
+                mdi-help-circle-outline
+              </v-icon>
+            </template>
+            <span>
+              {{ 'Gallo' }}
+            </span>
+          </v-tooltip>
+        </template>
       </v-text-field>
     </template>
     <v-date-picker
@@ -43,6 +55,7 @@ export default {
   },
   methods: {
     save(date) {
+      this.$emit('input', this.date);
       this.$refs.menu.save(date);
     },
   },

@@ -1,28 +1,10 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-    <v-tabs vertical class="ma-10">
-      <v-tab>
-        Kaperfahrt
-      </v-tab>
-      <v-tab>
-        Mosaikersleben
-      </v-tab>
-
-      <v-tab-item>
-        <v-card flat>
-          <travel-picker
-            title="Kaperfahrt"
-          />
-        </v-card>
-      </v-tab-item>
-      <v-tab-item>
         <v-card flat>
           <travel-picker
             title="Mosaikersleben"
           />
         </v-card>
-      </v-tab-item>
-    </v-tabs>
       <v-divider class="my-3" />
       <prev-next-buttons
         :position="position"
@@ -42,7 +24,7 @@ import TravelPicker from '../components/TravelPicker.vue';
 
 export default {
   name: 'StepNameDescription',
-  displayName: 'Anreise',
+  displayName: 'Abreise',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,

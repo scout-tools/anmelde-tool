@@ -17,10 +17,19 @@ export default new Vuex.Store({
     hierarchyMapping: [],
     eatHabitTypeMapping: [],
     travelTypeTypeMapping: [],
-    tentTypeMapping: [],
+    tentTypeMapping: [{
+      id: 1, name: 'Kothe',
+    }],
     currentEventParticipants: [],
+    currentEventCash: [],
+    currentEventKitchen: [],
+    currentEventProgram: [],
     dpvAddedLocation: false,
     apiIsDown: false,
+    scoutGroupMapping: [],
+    registeredTents: [{
+      id: 1, registration: 1, tentType: 1, usedByScoutGroups: [1],
+    }],
   },
   getters: {
     dpvAddedLocation(state) {
@@ -37,6 +46,15 @@ export default new Vuex.Store({
     },
     currentEventParticipants(state) {
       return state.currentEventParticipants;
+    },
+    currentEventCash(state) {
+      return state.currentEventCash;
+    },
+    currentEventKitchen(state) {
+      return state.currentEventKitchen;
+    },
+    currentEventProgram(state) {
+      return state.currentEventProgram;
     },
     roleMapping(state) {
       return state.roleMapping;
@@ -62,6 +80,12 @@ export default new Vuex.Store({
     apiIsDown(state) {
       return state.apiIsDown;
     },
+    scoutGroupMapping(state) {
+      return state.scoutGroupMapping;
+    },
+    registeredTents(state) {
+      return state.registeredTents;
+    },
   },
   mutations: {
     setTokens(state, access, refresh) {
@@ -77,6 +101,15 @@ export default new Vuex.Store({
     },
     setCurrentEventParticipants(state, newData) {
       state.currentEventParticipants = newData;
+    },
+    setCurrentEventCash(state, newData) {
+      state.currentEventCash = newData;
+    },
+    setCurrentEventKitchen(state, newData) {
+      state.currentEventKitchen = newData;
+    },
+    setCurrentEventProgram(state, newData) {
+      state.currentEventProgram = newData;
     },
     setRoleMapping(state, newData) {
       state.roleMapping = newData;
@@ -104,6 +137,12 @@ export default new Vuex.Store({
     },
     setDpvAddedLocation(state, newData) {
       state.dpvAddedLocation = newData;
+    },
+    setScoutGroupMapping(state, newData) {
+      state.scoutGroupMapping = newData;
+    },
+    setRegisteredTents(state, newData) {
+      state.registeredTents = newData;
     },
   },
   actions: {

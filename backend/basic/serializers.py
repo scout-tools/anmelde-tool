@@ -27,6 +27,8 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'description',
             'event_tags',
             'start_time',
+            'registration_start',
+            'registration_deadline',
             'end_time',
             'participant_role',
             'is_registered'

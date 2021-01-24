@@ -7,6 +7,9 @@
 # activate venv
 `source venv/bin/activate`
 
+Mac, Linux: ( `pipenv install` )
+             `pipenv shell`
+
 # install
 `pip install -r requirements.txt`
 

@@ -2,32 +2,34 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container fluid>
       <v-row align="center" v-for="(tent, index) in this.data.tents" :key="index">
-        <v-col cols="6">
-          <v-subheader>
-            Zelttyp
-          </v-subheader>
-        </v-col>
-        <v-col cols="6">
+        <v-col cols="5">
           <v-select
             v-model="tent.selectedType"
-            :items="data.type"
-            item-text="state"
-            item-value="abbr"
-            label="Select"
+            :items="tentTypeMapping"
+            item-text="name"
+            item-value="id"
+            label="Zelt"
             persistent-hint
-            return-object
-            single-line
+            prepend-icon="mdi-home"
           ></v-select>
         </v-col>
-        <v-col cols="12">
-          <v-combobox
-            v-model="tent.selectedGroup"
-            :items="data.groups"
+        <v-col cols="5">
+          <v-select
+            v-model="tent.selectedGroups"
+            :items="scoutGroupMapping"
+            item-text="name"
+            item-value="id"
             label="Gruppe"
             multiple
             outlined
             dense
-          ></v-combobox>
+            prepend-icon="mdi-human-male-female"
+          ></v-select>
+        </v-col>
+        <v-col cols="2">
+          <v-btn icon @click="this.deleteTent(index)">
+            <v-icon>mdi-trash-can</v-icon>
+          </v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -35,6 +37,12 @@
           <v-btn
             elevation="5" @click="this.addTent"
           >Nächstes Zelt
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn
+            elevation="5" @click="this.createTent"
+          >Speichern
           </v-btn>
         </v-col>
       </v-row>
@@ -51,6 +59,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { required, minLength, minValue } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
@@ -67,10 +76,11 @@ export default {
     valid: true,
     isLoading: false,
     data: {
-      type: ['Jurte', 'Kothe'],
-      groups: ['Baeren', 'Adler'],
+      groups: [
+        { id: 1, name: '' },
+      ],
       tents: [
-        { i: 0, selectedType: '', selectedGroup: '' },
+        { i: 0, selectedType: '', selectedGroups: [] },
       ],
     },
   }),
@@ -84,14 +94,24 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),
+    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping', 'tentTypeMapping', 'scoutGroupMapping', 'registeredTents']),
     total() {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },
   },
+  created() {
+    this.getGroups();
+    this.getTentTypes();
+    this.getTents();
+    this.convertSavedTents();
+  },
   methods: {
     addTent() {
-      this.data.tents.push({ i: 0, selectedType: '', selectedGroup: '' });
+      this.data.tents.push({ i: 0, selectedType: '', selectedGroups: [] });
+    },
+    deleteTent(id) {
+      console.log(id);
+      this.data.tents.splice(id, 1);
     },
     greaterThanZero(value) {
       return value > 0;
@@ -116,6 +136,66 @@ export default {
         return;
       }
       this.$emit('submit');
+    },
+    createTent() {
+      const dto = { registration: '', tentType: 1, usedByScoutGroups: [] };
+      dto.registration = this.$route.params.id;
+      this.data.tents.forEach((i) => {
+        dto.tentType = i.selectedType;
+        i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
+        axios.post(`${this.API_URL}basic/tent/`, dto);
+        dto.usedByScoutGroups = [];
+      });
+      return null;
+    },
+    getTents() {
+      axios
+        .get(`${this.API_URL}basic/tent/?&timestamp=${new Date().getTime()}`)
+        .then((res) => this.$store.commit('setRegisteredTents', res.data))
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getTentTypes() {
+      axios
+        .get(`${this.API_URL}basic/tent-type/`)
+        .then((res) => this.$store.commit('setTentTypeMapping', res.data))
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    convertSavedTents() {
+      if (this.data.tents.length === 1) {
+        this.data.tents.splice(0, 1);
+      }
+      this.registeredTents.forEach((i, index) => {
+        const savedTent = { selectedType: '', selectedGroups: [], i: 1 };
+        if (parseInt(i.registration, 10) === parseInt(this.$route.params.id, 10)) {
+          console.log(`Type:${i.tentType} ScoutGroups:${i.usedByScoutGroups}`);
+          this.tentTypeMapping.forEach((type) => {
+            if (i.tentType === type.id) {
+              savedTent.selectedType = type.id;
+            }
+          });
+          console.log(savedTent.selectedType);
+          savedTent.selectedGroups = i.usedByScoutGroups;
+          savedTent.i = index;
+          this.data.tents.push(savedTent);
+        } else {
+          console.log('nothing');
+        }
+      });
+      console.log(this.data.tents);
+    },
+    getGroups() {
+      axios
+        .get(`${this.API_URL}basic/scout-hierarchy-group/?&timestamp=${new Date().getTime()}`)
+        .then((res) => {
+          this.$store.commit('setScoutGroupMapping', res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

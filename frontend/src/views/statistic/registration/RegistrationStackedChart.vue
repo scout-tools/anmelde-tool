@@ -32,7 +32,7 @@ export default {
     ...mapGetters(['currentEventParticipants']),
   },
   created() {
-    this.debouncedGetAnswer = this._.debounce(this.json_to_chart_data, 500);
+    // this.debouncedGetAnswer = this._.debounce(this.json_to_chart_data, 500);
   },
   watch: {
     currentEventParticipants() {
