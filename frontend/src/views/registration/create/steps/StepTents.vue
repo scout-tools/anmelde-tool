@@ -27,7 +27,7 @@
           ></v-select>
         </v-col>
         <v-col cols="2">
-          <v-btn icon @click="this.deleteTent(index)">
+          <v-btn icon @click="deleteTent(index)">
             <v-icon>mdi-trash-can</v-icon>
           </v-btn>
         </v-col>
@@ -111,6 +111,11 @@ export default {
     },
     deleteTent(id) {
       console.log(id);
+      axios
+        .delete(`${this.API_URL}basic/tent/${this.data.tents[id].i}/`)
+        .catch((err) => {
+          console.log(err);
+        });
       this.data.tents.splice(id, 1);
     },
     greaterThanZero(value) {
@@ -141,10 +146,13 @@ export default {
       const dto = { registration: '', tentType: 1, usedByScoutGroups: [] };
       dto.registration = this.$route.params.id;
       this.data.tents.forEach((i) => {
-        dto.tentType = i.selectedType;
-        i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
-        axios.post(`${this.API_URL}basic/tent/`, dto);
-        dto.usedByScoutGroups = [];
+        console.log(i);
+        if (i.i.isEmpty || i.i === 0) {
+          dto.tentType = i.selectedType;
+          i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
+          axios.post(`${this.API_URL}basic/tent/`, dto);
+          dto.usedByScoutGroups = [];
+        }
       });
       return null;
     },
@@ -165,27 +173,22 @@ export default {
         });
     },
     convertSavedTents() {
-      if (this.data.tents.length === 1) {
-        this.data.tents.splice(0, 1);
-      }
-      this.registeredTents.forEach((i, index) => {
+      this.registeredTents.forEach((i) => {
         const savedTent = { selectedType: '', selectedGroups: [], i: 1 };
         if (parseInt(i.registration, 10) === parseInt(this.$route.params.id, 10)) {
-          console.log(`Type:${i.tentType} ScoutGroups:${i.usedByScoutGroups}`);
           this.tentTypeMapping.forEach((type) => {
             if (i.tentType === type.id) {
               savedTent.selectedType = type.id;
             }
           });
-          console.log(savedTent.selectedType);
           savedTent.selectedGroups = i.usedByScoutGroups;
-          savedTent.i = index;
+          savedTent.i = i.id;
           this.data.tents.push(savedTent);
-        } else {
-          console.log('nothing');
         }
       });
-      console.log(this.data.tents);
+      if (this.data.tents.length > 1) {
+        this.data.tents.splice(0, 1);
+      }
     },
     getGroups() {
       axios
