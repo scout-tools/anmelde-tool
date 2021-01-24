@@ -39,12 +39,6 @@
           >Nächstes Zelt
           </v-btn>
         </v-col>
-        <v-col>
-          <v-btn
-            elevation="5" @click="this.createTent"
-          >Speichern
-          </v-btn>
-        </v-col>
       </v-row>
       <v-divider class="my-3" />
       <prev-next-buttons
@@ -133,6 +127,7 @@ export default {
       if (!this.valid) {
         return;
       } */
+      this.createTent();
       this.$emit('nextStep');
     },
     submitStep() {
@@ -151,6 +146,11 @@ export default {
           dto.tentType = i.selectedType;
           i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
           axios.post(`${this.API_URL}basic/tent/`, dto);
+          dto.usedByScoutGroups = [];
+        } else {
+          dto.tentType = i.selectedType;
+          i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
+          axios.put(`${this.API_URL}basic/tent/${i.i}/`, dto);
           dto.usedByScoutGroups = [];
         }
       });
