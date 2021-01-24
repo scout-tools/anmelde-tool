@@ -36,13 +36,18 @@ export default {
   },
 
   methods: {
-    json_to_chart_data() {
+    json_to_chart_data(jsonData) {
       const returnData = [];
-      returnData.push(['Name', 'Group TN', 'Signle TN', 'TN', 'Beitrag']);
+      returnData.push(['Type', 'Number']);
+      jsonData.forEach((event) => {
+        returnData.push(['Vegetarier', event.numVegetarien.veggiPersonal]);
+        returnData.push(['Veganer', event.numVegan.veganPersonal]);
+        returnData.push(['Omnivor', event.totalParticipants - event.numVegan.veganPersonal - event.numVegetarien.veggiPersonal]);
+      });
       return returnData;
     },
     getData() {
-      this.chartData = this.json_to_chart_data();
+      this.chartData = this.json_to_chart_data(this.currentEventKitchen);
     },
   },
   created() {
