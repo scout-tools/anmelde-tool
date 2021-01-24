@@ -34,7 +34,7 @@
               </v-tab>
               <v-tab href="#tab-5">
                 Program
-                <v-icon>mdi-silverware-fork-knife</v-icon>
+                <v-icon>mdi-run-fast</v-icon>
               </v-tab>
             </v-tabs>
 
