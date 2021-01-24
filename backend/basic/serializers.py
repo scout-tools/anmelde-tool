@@ -95,12 +95,14 @@ class ParticipantGroupSerializer(serializers.ModelSerializer):
 
 
 class EventParticipantsSerializer(serializers.ModelSerializer):
-    locations = serializers.SerializerMethodField('get_locations')
+    scout_organisations = serializers.SerializerMethodField('get_scout_organisations')
+    registration_date = serializers.SerializerMethodField('get_registration_date')
 
     class Meta:
         model = Event
         fields = (
-            'locations',
+            'scout_organisations',
+            'registration_date'
         )
 
     def get_bund_name(self, scout_organisation):
@@ -112,8 +114,7 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
         else:
             return scout_organisation.name
 
-    def get_locations(self, obj):
-
+    def get_scout_organisations(self, obj):
         result = obj.registration_set.values('scout_organisation__name').annotate(
             participants=Coalesce(Sum('participantgroup__number_of_persons'), 0)
                          + Coalesce(Count('participantpersonal'), 0),
@@ -121,6 +122,23 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
             .values('scout_organisation__name',
                     'participants',
                     'bund',
+                    lon=F('scout_organisation__zip_code__lon'),
+                    lat=F('scout_organisation__zip_code__lat'),
+                    )
+
+        return result
+
+    def get_registration_date(self, obj):
+        result = obj.registration_set.values('scout_organisation__name', 'participantgroup__created_at__date',
+                                             'participantpersonal__created_at__date').annotate(
+            participants=Coalesce(Sum('participantgroup__number_of_persons'), 0)
+                         + Coalesce(Count('participantpersonal'), 0),
+            bund=F('scout_organisation__parent__parent__name')) \
+            .values('scout_organisation__name',
+                    'participants',
+                    'bund',
+                    created_at_group='participantgroup__created_at__date',
+                    created_at_personal='participantpersonal__created_at__date',
                     lon=F('scout_organisation__zip_code__lon'),
                     lat=F('scout_organisation__zip_code__lat'),
                     )
