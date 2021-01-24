@@ -8,6 +8,8 @@
 
 <script>
 
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -27,10 +29,24 @@ export default {
       },
     };
   },
+
   computed: {
-    chartData() {
-      return [this.chartDataHeader, ...this.chartDataRows];
+    ...mapGetters(['currentEventKitchen']),
+
+  },
+
+  methods: {
+    json_to_chart_data() {
+      const returnData = [];
+      returnData.push(['Name', 'Group TN', 'Signle TN', 'TN', 'Beitrag']);
+      return returnData;
     },
+    getData() {
+      this.chartData = this.json_to_chart_data();
+    },
+  },
+  created() {
+    this.getData();
   },
 };
 </script>
