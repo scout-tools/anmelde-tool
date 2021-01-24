@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <top-menu-main v-show="!isLoginOnly"/>
-    <router-view />
+    <router-view class="fullsize"/>
     <footer-main v-show="!isLoginOnly"/>
   </v-app>
 </template>
@@ -36,4 +36,7 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.fullsize{
+  height: 85vh !important;
+}</style>
