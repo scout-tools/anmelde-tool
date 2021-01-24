@@ -137,8 +137,8 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
             .values('scout_organisation__name',
                     'participants',
                     'bund',
-                    created_at_group='participantgroup__created_at__date',
-                    created_at_personal='participantpersonal__created_at__date',
+                    created_at_group=F('participantgroup__created_at__date'),
+                    created_at_personal=F('participantpersonal__created_at__date'),
                     lon=F('scout_organisation__zip_code__lon'),
                     lat=F('scout_organisation__zip_code__lat'),
                     )

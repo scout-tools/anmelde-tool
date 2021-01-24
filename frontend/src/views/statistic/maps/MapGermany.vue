@@ -49,10 +49,10 @@ export default {
           'TN',
           { role: 'tooltip', p: { html: false } },
         ]);
-        event.locations.forEach((loc) => {
+        event.scoutOrganisations.forEach((loc) => {
           if (buende.indexOf(loc.bund) === -1) buende.push(loc.bund);
         });
-        event.locations.forEach((loc) => {
+        event.scoutOrganisations.forEach((loc) => {
           returnData.push([
             loc.lat,
             loc.lon,
