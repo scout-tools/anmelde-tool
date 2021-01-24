@@ -187,7 +187,6 @@ export default {
   },
   methods: {
     getRegisteredId(item) {
-      debugger;
       if (item && item.isRegistered && item.isRegistered.length && item.isRegistered[0].id) {
         return item.isRegistered[0].id;
       }
@@ -197,8 +196,7 @@ export default {
       const startTime = new Date(date1).getTime();
       const endTime = new Date(date2).getTime();
       const today = new Date().getTime();
-      console.log(today > startTime && today < endTime);
-      debugger;
+
       return today > startTime && today < endTime;
     },
     getLagerText(item) {
