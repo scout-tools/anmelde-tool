@@ -21,6 +21,7 @@ export default new Vuex.Store({
       id: 1, name: 'Kothe',
     }],
     currentEventParticipants: [],
+    currentEventCash: [],
     dpvAddedLocation: false,
     apiIsDown: false,
     scoutGroupMapping: [],
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     },
     currentEventParticipants(state) {
       return state.currentEventParticipants;
+    },
+    currentEventCash(state) {
+      return state.currentEventCash;
     },
     roleMapping(state) {
       return state.roleMapping;
@@ -87,8 +91,11 @@ export default new Vuex.Store({
     setAgeGroupMapping(state, newAgeGroup) {
       state.ageGroupMapping = newAgeGroup;
     },
-    setCurrentEventParticipants(state, newData) {
+    setCurrentCurrentEventParticipants(state, newData) {
       state.currentEventParticipants = newData;
+    },
+    setCurrentEventCash(state, newData) {
+      state.currentEventCash = newData;
     },
     setRoleMapping(state, newData) {
       state.roleMapping = newData;

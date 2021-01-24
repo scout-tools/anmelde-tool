@@ -68,7 +68,7 @@ export default {
     KitchenMain,
   },
   computed: {
-    ...mapGetters(['currentEventParticipants']),
+    ...mapGetters(['currentEventParticipants', 'currentEventCash']),
     eventId() {
       return this.$route.params.id;
     },
@@ -85,6 +85,16 @@ export default {
       axios.get(path)
         .then((res) => {
           this.$store.commit('setCurrentEventParticipants', res.data);
+        })
+        .catch(() => {
+          console.log('Fehler');
+        });
+    },
+    async getCashData() {
+      const path = `${process.env.VUE_APP_API}basic/event/${this.eventId}/cash-eventmaster-overview/`;
+      axios.get(path)
+        .then((res) => {
+          this.$store.commit('setCurrentEventCash', res.data);
         })
         .catch(() => {
           console.log('Fehler');

@@ -1,5 +1,15 @@
 <template>
   <div class="about">
-    <h2>Hier kannst du dir alle Kassen Diagramme sehen... :)</h2>
+    <table-overview/>
   </div>
 </template>
+
+<script>
+import TableOverview from './TableOverview.vue';
+
+export default {
+  components: {
+    TableOverview,
+  },
+};
+</script>
