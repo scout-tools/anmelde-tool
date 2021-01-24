@@ -121,6 +121,7 @@
               <v-text-field
                 label="Alter"
                 v-model="data.age"
+                type="number"
                 suffix="Jahre"
                 :error-messages="ageErrors"
                 prepend-icon="mdi-human-child"
@@ -199,43 +200,34 @@
           <v-divider class="my-3" />
           <v-row>
             <v-col cols="12" sm="6">
-              <v-radio-group row mandatory v-model="data.roles">
-                <v-radio value="Bundesfahrt">
-                  <template v-slot:label>
-                    <div>
-                      <strong class="primary--text">Nur Bundesfahrt</strong>
-                    </div>
+              <v-container fluid>
+                <v-switch
+                  v-model="data.roles"
+                  color="primary"
+                  label="Bundesfahrt"
+                  value="1"
+                  hide-details
+                ></v-switch>
+                <v-switch
+                  v-model="data.roles"
+                  color="orange"
+                  label="Kaperfahrt"
+                  value="2"
+                  hide-details
+                ></v-switch>
+              </v-container>
+              <template slot="append">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon color="success" dark v-bind="attrs" v-on="on">
+                      mdi-help-circle-outline
+                    </v-icon>
                   </template>
-                </v-radio>
-                <v-radio value="Kaperfahrt">
-                  <template v-slot:label>
-                    <div>
-                      <strong class="primary--text">Nur Kaperfahrt</strong>
-                    </div>
-                  </template>
-                </v-radio>
-                <v-radio value="both">
-                  <template v-slot:label>
-                    <div>
-                      <strong class="primary--text"
-                        >Bundesfahrt und Kaperfahrt</strong
-                      >
-                    </div>
-                  </template>
-                </v-radio>
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{ 'Gallo' }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-radio-group>
+                  <span>
+                    {{ 'Gallo' }}
+                  </span>
+                </v-tooltip>
+              </template>
             </v-col>
           </v-row>
           <v-divider class="my-3" />
@@ -282,7 +274,7 @@ export default {
       eatHabitType: [],
       scoutGroup: null,
       isGroupLeader: false,
-      roles: ['Bundesfahrt'],
+      roles: ['1'],
     },
     showError: false,
     showSuccess: false,
@@ -318,11 +310,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([
-      'isAuthenticated',
-      'getJwtData',
-      'hierarchyMapping',
-    ]),
+    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
     firstNameErrors() {
       const errors = [];
       if (!this.$v.data.firstName.$dirty) return errors;
@@ -436,7 +424,7 @@ export default {
         registration: null,
         eatHabitType: [],
         isGroupLeader: false,
-        roles: ['Bundesfahrt'],
+        roles: ['1'],
       };
       this.active = true;
       this.getGroups();
@@ -476,9 +464,7 @@ export default {
     },
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
-      console.log(this.data.scoutGroup);
       this.data.scoutGroup = this.data.scoutGroup.id;
-      debugger;
       axios
         .post(`${this.API_URL}basic/participant-personal/`, this.data)
         .then(() => {

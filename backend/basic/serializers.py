@@ -180,6 +180,13 @@ class ParticipantPersonalSerializer(serializers.ModelSerializer):
         slug_field='name'
     )
 
+    scout_group = serializers.SlugRelatedField(
+        many=False,
+        read_only=False,
+        queryset=ScoutHierarchy.objects.filter(level=6),
+        slug_field='name'
+    )
+
     class Meta:
         model = ParticipantPersonal
         fields = '__all__'
