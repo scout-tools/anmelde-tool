@@ -5,9 +5,8 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration
     EatHabitType, EatHabit, TravelType, TentType
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
-from django.db.models import Sum, Count, F, Q, Func, Subquery, Value, When, Case
+from django.db.models import Sum, Count, F, Q, Func, Subquery
 from django.db.models.functions import Coalesce
-from django.db.models.functions import Length, Upper
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -30,7 +29,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'start_time',
             'end_time',
             'participant_role',
-            'is_registered',
+            'is_registered'
         )
 
     def get_event_role(self, obj):
@@ -42,13 +41,12 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             return []
 
     def get_is_registered(self, obj):
-        res = obj.registration_set.filter(
-            scout_organisation=self.context['request'].user.userextended.scout_organisation).values('is_confirmed',
-                                                                                                    'is_accepted')
-        if res:
-            return res
-        else:
-            return False
+        return obj.registration_set.filter(
+            scout_organisation=self.context['request'].user.userextended.scout_organisation).values(
+            'id',
+            'is_confirmed',
+            'is_accepted'
+        )
 
 
 class AgeGroupSerializer(serializers.ModelSerializer):
@@ -104,6 +102,7 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
         )
 
     def get_bund_name(self, scout_organisation):
+        print(scout_organisation)
         if scout_organisation.level_id > 3:
             return self.get_bund_name(scout_organisation.parent)
         elif scout_organisation.level_id < 3:
@@ -114,19 +113,14 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
     def get_locations(self, obj):
 
         result = obj.registration_set.values('scout_organisation__name').annotate(
-            participants=Coalesce(Sum('participantgroup__number_of_persons'), 0) +
-                         Coalesce(Count('participantpersonal'), 0),
-            bund=Case(When(scout_organisation__level=3,
-                           then=F('scout_organisation__name')),
-                      When(scout_organisation__parent__level=3,
-                           then=F('scout_organisation__parent__name')),
-                      When(scout_organisation__parent__parent__level=3,
-                           then=F('scout_organisation__parent__parent__name')))) \
+            participants=Coalesce(Sum('participantgroup__number_of_persons'), 0)
+                         + Coalesce(Count('participantpersonal'), 0),
+            bund=F('scout_organisation__parent__parent__name')) \
             .values('scout_organisation__name',
                     'participants',
                     'bund',
-                    lon=Coalesce(F('scout_organisation__zip_code__lon'), 0),
-                    lat=Coalesce(F('scout_organisation__zip_code__lat'), 0),
+                    lon=F('scout_organisation__zip_code__lon'),
+                    lat=F('scout_organisation__zip_code__lat'),
                     )
 
         return result
@@ -181,13 +175,6 @@ class ParticipantPersonalSerializer(serializers.ModelSerializer):
         many=True,
         read_only=False,
         queryset=EatHabitType.objects.all(),
-        slug_field='name'
-    )
-
-    scout_group = serializers.SlugRelatedField(
-        many=False,
-        read_only=False,
-        queryset=ScoutHierarchy.objects.filter(level=6),
         slug_field='name'
     )
 
@@ -264,16 +251,14 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
     total_participants = serializers.SerializerMethodField('get_total_participants')
     num_vegetarien = serializers.SerializerMethodField('get_num_vegetarien')
     num_vegan = serializers.SerializerMethodField('get_num_vegan')
-    num_grouped_by_age_group = serializers.SerializerMethodField('get_num_grouped_by_age_group')
-    num_grouped_by_age_personal = serializers.SerializerMethodField('get_num_grouped_by_age_personal')
+    num_grouped_by_age = serializers.SerializerMethodField('get_num_grouped_by_age')
 
     class Meta:
         model = Event
         fields = ('total_participants',
                   'num_vegetarien',
                   'num_vegan',
-                  'num_grouped_by_age_group',
-                  'num_grouped_by_age_personal')
+                  'num_grouped_by_age')
 
     def get_total_participants(self, obj):
         return obj.registration_set.aggregate(
@@ -294,19 +279,13 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
                                                                    filter=Q(participantpersonal__eat_habit_type=2)),
                                               vegan_total=F('vegan_group') + F('vegan_personal'))
 
-    def get_num_grouped_by_age_group(self, obj):
-        result = obj.registration_set.values(age_group_group=F('participantgroup__age_group__name'),
-                                             habit_type_group=F('participantgroup__eathabit__eat_habit_type__name')) \
+    def get_num_grouped_by_age(self, obj):
+        # Todo: Add participantpersonel
+        result = obj.registration_set.values(age_group=F('participantgroup__age_group__name'),
+                                             habit_type=F('participantgroup__eathabit__eat_habit_type')) \
             .annotate(number_group=Coalesce(Sum('participantgroup__eathabit__number_of_persons'), 0)) \
-            .order_by('-participantgroup__age_group')
-        return result
-
-    def get_num_grouped_by_age_personal(self, obj):
-        # TODO: Improve result by combaining different habits
-        result = obj.registration_set.values(age_group_personal=F('participantpersonal__age_group__name'),
-                                             habit_type_personal=F('participantpersonal__eat_habit_type__name')) \
-            .annotate(number_personal=Coalesce(Count('participantpersonal__eat_habit_type'), 0)) \
-            .order_by('-participantpersonal__age_group')
+            .order_by('-participantgroup__age_group') \
+            .exclude(participantgroup__age_group__isnull=True, participantgroup__eathabit__isnull=True)
         return result
 
 
@@ -326,8 +305,10 @@ class EventProgramMasterSerializer(serializers.ModelSerializer):
             'total_participants']
 
     def get_participants_grouped_by_age(self, obj):
-        return obj.registration_set.values(
-            age_group_group=F('participantgroup__age_group__name'),
-            age_group_personal=F('participantpersonal__age_group__name')) \
+        # TODO: Add participantpersonel by agegroup
+        result = obj.registration_set.values(age_group=F('participantgroup__age_group__name')) \
             .annotate(number_group=Coalesce(Sum('participantgroup__number_of_persons'), 0),
-                      number_personal=Coalesce(Count('participantpersonal'), 0))
+                      number_personal=Coalesce(Count('participantpersonal'), 0)) \
+            # .exclude(participantgroup__age_group__isnull=True)
+
+        return result
