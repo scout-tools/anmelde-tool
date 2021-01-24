@@ -55,6 +55,7 @@ import StepTents from './steps/StepTents.vue';
 import StepTravel from './steps/StepTravel.vue';
 import StepAddParticipantGroupRole from './steps/StepAddParticipantGroupRole.vue';
 import StepBdpDpvTextForStamm from './steps/StepBdpDpvTextForStamm.vue';
+import StepTravelBack from './steps/StepTravelBack.vue';
 
 export default {
   components: {
@@ -94,6 +95,7 @@ export default {
           StepAddParticipantsSingle,
           StepTents,
           StepTravel,
+          StepTravelBack,
           StepConfirm,
         ];
       }

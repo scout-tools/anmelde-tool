@@ -2,7 +2,7 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container fluid>
       <v-row align="center" v-for="(tent, index) in this.data.tents" :key="index">
-        <v-col cols="6">
+        <v-col cols="5">
           <v-select
             v-model="tent.selectedType"
             :items="tentTypeMapping"
@@ -13,8 +13,8 @@
             prepend-icon="mdi-home"
           ></v-select>
         </v-col>
-        <v-col cols="6">
-          <v-combobox
+        <v-col cols="5">
+          <v-select
             v-model="tent.selectedGroups"
             :items="scoutGroupMapping"
             item-text="name"
@@ -24,7 +24,12 @@
             outlined
             dense
             prepend-icon="mdi-human-male-female"
-          ></v-combobox>
+          ></v-select>
+        </v-col>
+        <v-col cols="2">
+          <v-btn icon @click="this.deleteTent(index)">
+            <v-icon>mdi-trash-can</v-icon>
+          </v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -32,6 +37,12 @@
           <v-btn
             elevation="5" @click="this.addTent"
           >Nächstes Zelt
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn
+            elevation="5" @click="this.createTent"
+          >Speichern
           </v-btn>
         </v-col>
       </v-row>
@@ -98,6 +109,10 @@ export default {
     addTent() {
       this.data.tents.push({ i: 0, selectedType: '', selectedGroups: [] });
     },
+    deleteTent(id) {
+      console.log(id);
+      this.data.tents.splice(id, 1);
+    },
     greaterThanZero(value) {
       return value > 0;
     },
@@ -113,7 +128,6 @@ export default {
       if (!this.valid) {
         return;
       } */
-      this.createTent();
       this.$emit('nextStep');
     },
     submitStep() {
@@ -128,8 +142,9 @@ export default {
       dto.registration = this.$route.params.id;
       this.data.tents.forEach((i) => {
         dto.tentType = i.selectedType;
-        i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group.id));
+        i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
         axios.post(`${this.API_URL}basic/tent/`, dto);
+        dto.usedByScoutGroups = [];
       });
       return null;
     },
@@ -150,12 +165,19 @@ export default {
         });
     },
     convertSavedTents() {
-      const savedTent = { selectedType: '', selectedGroups: [], i: 1 };
+      if (this.data.tents.length === 1) {
+        this.data.tents.splice(0, 1);
+      }
       this.registeredTents.forEach((i, index) => {
+        const savedTent = { selectedType: '', selectedGroups: [], i: 1 };
         if (parseInt(i.registration, 10) === parseInt(this.$route.params.id, 10)) {
-          console.log(`Type: ${i.tentType}ScoutGroups: ${i.usedByScoutGroups}`);
-          savedTent.selectedType = this.tentTypeMapping
-            .filter((type) => i.tentType === type.id)[0].name;
+          console.log(`Type:${i.tentType} ScoutGroups:${i.usedByScoutGroups}`);
+          this.tentTypeMapping.forEach((type) => {
+            if (i.tentType === type.id) {
+              savedTent.selectedType = type.id;
+            }
+          });
+          console.log(savedTent.selectedType);
           savedTent.selectedGroups = i.usedByScoutGroups;
           savedTent.i = index;
           this.data.tents.push(savedTent);
@@ -163,6 +185,7 @@ export default {
           console.log('nothing');
         }
       });
+      console.log(this.data.tents);
     },
     getGroups() {
       axios
