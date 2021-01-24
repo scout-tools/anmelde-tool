@@ -38,5 +38,5 @@ export default {
 
 <style scoped>
 .fullsize{
-  height: 85vh !important;
+  min-height: 85vh !important;
 }</style>
