@@ -15,6 +15,12 @@ class Command(BaseCommand):
             user_1.is_staff = True
             user_1.save()
 
+        if not UserModel.objects.filter(username='thea@raubvoegel.de').exists():
+            user = UserModel.objects.create_user('thea@raubvoegel.de', password='thea')
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
+
         if not UserModel.objects.filter(username='joto@dpbm.de').exists():
             user_2 = UserModel.objects.create_user('joto@dpbm.de', password='joto')
             user_2.is_superuser = True

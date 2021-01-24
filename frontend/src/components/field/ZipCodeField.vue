@@ -1,6 +1,6 @@
 <template>
   <v-autocomplete
-    v-model="model"
+    v-model="value"
     :items="items"
     :loading="isLoading"
     :search-input.sync="search"
@@ -10,6 +10,7 @@
     placeholder="Wähle Stadt oder Postleitzahl"
     prepend-icon="mdi-city"
     return-object
+    @change="onInputchange"
   >
     <template slot="append">
       <v-tooltip bottom>
@@ -30,16 +31,21 @@
 import axios from 'axios';
 
 export default {
+  prop: ['value'],
+
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     entries: [],
     isLoading: false,
-    model: null,
+    value: null,
     search: null,
     tooltip: 'Gebe die Stadt oder die Postleitzahl passend zur Adresse ein.',
   }),
   methods: {
     customText: (item) => `${item.zipCode} — ${item.city}`,
+    onInputchange() {
+      this.$emit('input', this.value.id);
+    },
   },
   computed: {
     items() {
