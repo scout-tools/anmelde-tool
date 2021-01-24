@@ -42,7 +42,11 @@ class EventOverviewSerializer(serializers.ModelSerializer):
 
     def get_is_registered(self, obj):
         return obj.registration_set.filter(
-            scout_organisation=self.context['request'].user.userextended.scout_organisation).exists()
+            scout_organisation=self.context['request'].user.userextended.scout_organisation).values(
+            'id',
+            'is_confirmed',
+            'is_accepted'
+        )
 
 
 class AgeGroupSerializer(serializers.ModelSerializer):
