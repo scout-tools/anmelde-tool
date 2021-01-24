@@ -2,7 +2,6 @@
   <v-container fluid style="width:70%">
     <v-form v-model="valid">
       <v-card flat>
-        <v-text-field>Anreise</v-text-field>
         <v-row align="center">
           <v-col cols="12">
             <v-card-text>
@@ -62,6 +61,16 @@
               prepend-icon="mdi-ship-wheel"
             />
           </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="data.numberAlreadyThere"
+              label="Schon da"
+              required
+              @input="$v.data.numberAlreadyThere.$touch()"
+              @blur="$v.data.numberAlreadyThere.$touch()"
+              prepend-icon="mdi-account-check"
+            />
+          </v-col>
         </v-row>
       </v-card>
     </v-form>
@@ -71,6 +80,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { required, minLength, minValue } from 'vuelidate/lib/validators';
+import axios from 'axios';
 
 export default {
   props: ['title'],
@@ -85,6 +95,7 @@ export default {
       numberPublic: 0,
       numberWalking: 0,
       numberWater: 0,
+      numberAlreadyThere: 0,
       infos: ['Anreise', 'Abreise'],
     },
   }),
@@ -103,11 +114,24 @@ export default {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },
   },
+  created() {
+    this.getMaxNumber();
+  },
   methods: {
     reached() {
       // eslint-disable-next-line max-len
       const sum = this.data.numberBus * 1 + this.data.numberCar * 1 + this.data.numberPublic * 1 + this.data.numberWalking * 1 + this.data.numberWater * 1;
       return sum;
+    },
+    getMaxNumber() {
+      axios
+        .get(`${this.API_URL}basic/registration/${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`)
+        .then((res) => {
+          this.data.maxNumber = res.data[0].participants.length;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

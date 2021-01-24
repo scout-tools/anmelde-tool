@@ -155,7 +155,7 @@ class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantPersonalViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
+    permission_classes = [IsAuthenticated]  # ToDo: implement IsResponsiblePersonPermission
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
 
@@ -175,7 +175,6 @@ class ParticipantPersonalViewSet(viewsets.ModelViewSet):
                 new_group = ScoutHierarchy.objects.create(name=scout_group, level=ScoutOrgaLevel.objects.get(pk=6),
                                                           parent=request.user.userextended.scout_organisation)
                 new_group.save()
-                print('created new group: ', new_group)
 
         return super().create(request, *args, **kwargs)
 
@@ -197,10 +196,18 @@ class EatHabitViewSet(viewsets.ModelViewSet):
             print(request.data['eat_habit_type'])
             habit_types = request.data['eat_habit_type']
             for type in habit_types:
-                print(type)
                 if not EatHabitType.objects.filter(name__exact=type).exists():
                     new_type = EatHabitType.objects.create(name=type)
                     new_type.save()
+
+        # Check whether group name exits
+        if 'scout_group' in request.data:
+            scout_group = request.data['scout_group']
+            if not ScoutHierarchy.objects.filter(name__exact=scout_group, level__id=6).exists():
+                new_group = ScoutHierarchy.objects.create(name=scout_group, level=ScoutOrgaLevel.objects.get(pk=6),
+                                                          parent=request.user.userextended.scout_organisation)
+                new_group.save()
+                print('created new group: ', new_group)
 
         return super().create(request, *args, **kwargs)
 
@@ -276,7 +283,7 @@ class EventParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
+    permission_classes = [IsAuthenticated]  # ToDo: implement IsResponsiblePersonPermission
     serializer_class = RegistrationParticipantsSerializer
 
     def get_queryset(self):

@@ -118,14 +118,12 @@
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-select
-                v-model="data.ageGroup"
-                :items="ageGroupMapping"
-                :error-messages="ageGroupsErrors"
-                item-text="name"
-                item-value="id"
+              <v-text-field
                 label="Alter"
-                required
+                v-model="data.age"
+                type="number"
+                suffix="Jahre"
+                :error-messages="ageErrors"
                 prepend-icon="mdi-human-child"
               >
                 <template slot="append">
@@ -136,11 +134,11 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Gallo' }}
+                      {{ 'Alter zum Lagerbeginn' }}
                     </span>
                   </v-tooltip>
                 </template>
-              </v-select>
+              </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
@@ -202,43 +200,34 @@
           <v-divider class="my-3" />
           <v-row>
             <v-col cols="12" sm="6">
-              <v-radio-group row mandatory v-model="data.roles">
-                <v-radio value="Bundesfahrt">
-                  <template v-slot:label>
-                    <div>
-                      <strong class="primary--text">Nur Bundesfahrt</strong>
-                    </div>
+              <v-container fluid>
+                <v-switch
+                  v-model="data.roles"
+                  color="primary"
+                  label="Bundesfahrt"
+                  value="1"
+                  hide-details
+                ></v-switch>
+                <v-switch
+                  v-model="data.roles"
+                  color="orange"
+                  label="Kaperfahrt"
+                  value="2"
+                  hide-details
+                ></v-switch>
+              </v-container>
+              <template slot="append">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon color="success" dark v-bind="attrs" v-on="on">
+                      mdi-help-circle-outline
+                    </v-icon>
                   </template>
-                </v-radio>
-                <v-radio value="Kaperfahrt">
-                  <template v-slot:label>
-                    <div>
-                      <strong class="primary--text">Nur Kaperfahrt</strong>
-                    </div>
-                  </template>
-                </v-radio>
-                <v-radio value="both">
-                  <template v-slot:label>
-                    <div>
-                      <strong class="primary--text"
-                        >Bundesfahrt und Kaperfahrt</strong
-                      >
-                    </div>
-                  </template>
-                </v-radio>
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{ 'Gallo' }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-radio-group>
+                  <span>
+                    {{ 'Gallo' }}
+                  </span>
+                </v-tooltip>
+              </template>
             </v-col>
           </v-row>
           <v-divider class="my-3" />
@@ -280,12 +269,12 @@ export default {
       street: '',
       zipCode: '',
       phoneNumber: '',
-      ageGroup: null,
+      age: null,
       registration: null,
       eatHabitType: [],
       scoutGroup: null,
       isGroupLeader: false,
-      roles: ['Bundesfahrt'],
+      roles: ['1'],
     },
     showError: false,
     showSuccess: false,
@@ -307,7 +296,7 @@ export default {
       phoneNumber: {
         required,
       },
-      ageGroup: {
+      age: {
         required,
       },
       street: {
@@ -321,12 +310,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([
-      'isAuthenticated',
-      'getJwtData',
-      'hierarchyMapping',
-      'ageGroupMapping',
-    ]),
+    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
     firstNameErrors() {
       const errors = [];
       if (!this.$v.data.firstName.$dirty) return errors;
@@ -400,10 +384,10 @@ export default {
       }
       return errors;
     },
-    ageGroupsErrors() {
+    ageErrors() {
       const errors = [];
-      if (!this.$v.data.ageGroup.$dirty) return errors;
-      if (!this.$v.data.ageGroup.required) {
+      if (!this.$v.data.age.$dirty) return errors;
+      if (!this.$v.data.age.required) {
         errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
       }
       return errors;
@@ -440,7 +424,7 @@ export default {
         registration: null,
         eatHabitType: [],
         isGroupLeader: false,
-        roles: ['Bundesfahrt'],
+        roles: ['1'],
       };
       this.active = true;
       this.getGroups();
@@ -480,6 +464,9 @@ export default {
     },
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
+      if (this.data.scoutGroup && this.data.scoutGroup.id) {
+        this.data.scoutGroup = this.data.scoutGroup.id;
+      }
       axios
         .post(`${this.API_URL}basic/participant-personal/`, this.data)
         .then(() => {
