@@ -32,14 +32,22 @@
                     <v-list-item-title v-text="item.name"></v-list-item-title>
 
                     <v-list-item-subtitle class="text--primary">
-                      {{ getText(item) }}
+                      {{ getLagerText(item) }}
                     </v-list-item-subtitle>
 
                     <v-list-item-subtitle
                       v-text="item.description"
                     ></v-list-item-subtitle>
                   </v-list-item-content>
-                  <v-list-item-action>
+
+                  <v-list-item-action
+                    v-show="
+                      isInTimeRange(
+                        item.registrationStart,
+                        item.registrationDeadline,
+                      ) && !item.isRegistered.length
+                    "
+                  >
                     <router-link
                       :to="{
                         name: 'registrationForm',
@@ -59,6 +67,35 @@
                       </v-tooltip>
                     </router-link>
                   </v-list-item-action>
+
+                  <v-list-item-action
+                    v-show="
+                      isInTimeRange(
+                        item.registrationStart,
+                        item.registrationDeadline,
+                      ) && item.isRegistered.length
+                    "
+                    class="ml-4"
+                  >
+                    <router-link
+                      :to="{
+                        name: 'registrationCreate',
+                        params: { id: getRegisteredId(item) },
+                      }"
+                      style="text-decoration: none"
+                      v-if="!isSimpleUser || item.participantRole.length"
+                    >
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-bind="attrs" v-on="on">
+                            <v-icon fab color="primary"> mdi-pencil </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Lageranmeldung bearbeiten</span>
+                      </v-tooltip>
+                    </router-link>
+                  </v-list-item-action>
+
                   <v-list-item-action>
                     <router-link
                       :to="{
@@ -71,9 +108,7 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn icon v-bind="attrs" v-on="on">
-                            <v-icon fab color="primary">
-                              mdi-chart-bar
-                            </v-icon>
+                            <v-icon fab color="primary"> mdi-chart-bar </v-icon>
                           </v-btn>
                         </template>
                         <span>Lagerstatistik</span>
@@ -151,15 +186,40 @@ export default {
     },
   },
   methods: {
-    getText(item) {
+    getRegisteredId(item) {
+      debugger;
+      if (item && item.isRegistered && item.isRegistered.length && item.isRegistered[0].id) {
+        return item.isRegistered[0].id;
+      }
+      return 0;
+    },
+    isInTimeRange(date1, date2) {
+      const startTime = new Date(date1).getTime();
+      const endTime = new Date(date2).getTime();
+      const today = new Date().getTime();
+      console.log(today > startTime && today < endTime);
+      debugger;
+      return today > startTime && today < endTime;
+    },
+    getLagerText(item) {
       const startTime = new Date(item.startTime);
       const endTime = new Date(item.endTime);
+      const registrationStart = new Date(item.registrationStart);
+      const registrationDeadline = new Date(item.registrationDeadline);
       const dateFormat = 'll';
 
-      return `${moment(startTime).lang('de').format(dateFormat)} bis ${moment(
-        endTime,
-      ).format(dateFormat)}`;
+      const text1 = `Lager: ${moment(startTime)
+        .lang('de')
+        .format(dateFormat)} bis ${moment(endTime).format(dateFormat)}`;
+
+      const text2 = ` - Anmeldung: ${moment(registrationStart)
+        .lang('de')
+        .format(dateFormat)} bis ${moment(registrationDeadline).format(
+        dateFormat,
+      )}`;
+      return text1 + text2;
     },
+
     getEvent() {
       const path = `${this.API_URL}basic/event-overview/`;
       axios

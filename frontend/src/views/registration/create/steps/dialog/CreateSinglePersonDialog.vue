@@ -118,14 +118,11 @@
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-select
-                v-model="data.ageGroup"
-                :items="ageGroupMapping"
-                :error-messages="ageGroupsErrors"
-                item-text="name"
-                item-value="id"
+              <v-text-field
                 label="Alter"
-                required
+                v-model="data.age"
+                suffix="Jahre"
+                :error-messages="ageErrors"
                 prepend-icon="mdi-human-child"
               >
                 <template slot="append">
@@ -136,11 +133,11 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Gallo' }}
+                      {{ 'Alter zum Lagerbeginn' }}
                     </span>
                   </v-tooltip>
                 </template>
-              </v-select>
+              </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
@@ -280,7 +277,7 @@ export default {
       street: '',
       zipCode: '',
       phoneNumber: '',
-      ageGroup: null,
+      age: null,
       registration: null,
       eatHabitType: [],
       scoutGroup: null,
@@ -307,7 +304,7 @@ export default {
       phoneNumber: {
         required,
       },
-      ageGroup: {
+      age: {
         required,
       },
       street: {
@@ -325,7 +322,6 @@ export default {
       'isAuthenticated',
       'getJwtData',
       'hierarchyMapping',
-      'ageGroupMapping',
     ]),
     firstNameErrors() {
       const errors = [];
@@ -400,10 +396,10 @@ export default {
       }
       return errors;
     },
-    ageGroupsErrors() {
+    ageErrors() {
       const errors = [];
-      if (!this.$v.data.ageGroup.$dirty) return errors;
-      if (!this.$v.data.ageGroup.required) {
+      if (!this.$v.data.age.$dirty) return errors;
+      if (!this.$v.data.age.required) {
         errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
       }
       return errors;
@@ -480,6 +476,9 @@ export default {
     },
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
+      console.log(this.data.scoutGroup);
+      this.data.scoutGroup = this.data.scoutGroup.id;
+      debugger;
       axios
         .post(`${this.API_URL}basic/participant-personal/`, this.data)
         .then(() => {
