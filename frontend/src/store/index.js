@@ -22,6 +22,8 @@ export default new Vuex.Store({
     }],
     currentEventParticipants: [],
     currentEventCash: [],
+    currentEventKitchen: [],
+    currentEventProgram: [],
     dpvAddedLocation: false,
     apiIsDown: false,
     scoutGroupMapping: [],
@@ -47,6 +49,12 @@ export default new Vuex.Store({
     },
     currentEventCash(state) {
       return state.currentEventCash;
+    },
+    currentEventKitchen(state) {
+      return state.currentEventKitchen;
+    },
+    currentEventProgram(state) {
+      return state.currentEventProgram;
     },
     roleMapping(state) {
       return state.roleMapping;
@@ -91,11 +99,17 @@ export default new Vuex.Store({
     setAgeGroupMapping(state, newAgeGroup) {
       state.ageGroupMapping = newAgeGroup;
     },
-    setCurrentCurrentEventParticipants(state, newData) {
+    setCurrentEventParticipants(state, newData) {
       state.currentEventParticipants = newData;
     },
     setCurrentEventCash(state, newData) {
       state.currentEventCash = newData;
+    },
+    setCurrentEventKitchen(state, newData) {
+      state.currentEventKitchen = newData;
+    },
+    setCurrentEventProgram(state, newData) {
+      state.currentEventProgram = newData;
     },
     setRoleMapping(state, newData) {
       state.roleMapping = newData;
