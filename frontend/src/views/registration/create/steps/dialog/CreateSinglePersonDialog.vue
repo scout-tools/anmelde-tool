@@ -215,6 +215,13 @@
                   value="2"
                   hide-details
                 ></v-switch>
+                <v-switch
+                  v-model="data.roles"
+                  color="orange"
+                  label="Tagesgast"
+                  value="3"
+                  hide-details
+                ></v-switch>
               </v-container>
               <template slot="append">
                 <v-tooltip bottom>
