@@ -23,7 +23,7 @@
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Test-Default-Lager 2020",
+            "name": "Test-Lager 2020",
             "description": "Ganz tolles Lager",
             "start_time": "2020-07-26 11:00:00.796728",
             "end_time": "2020-08-01 11:00:00.796728",
@@ -38,7 +38,7 @@
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "Test-Default-Lager",
+            "name": "Test-Lager 2021",
             "description": "Ganz tolles Lager",
             "start_time": "2021-07-26 11:00:00.796728",
             "end_time": "2021-08-01 11:00:00.796728",
