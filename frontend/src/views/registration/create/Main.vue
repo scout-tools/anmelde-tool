@@ -53,6 +53,9 @@ import StepBdpDpvLocation from './steps/StepBdpDpvLocation.vue';
 import StepBdpDpVPreferences from './steps/StepBdpDpVPreferences.vue';
 import StepTents from './steps/StepTents.vue';
 import StepTravel from './steps/StepTravel.vue';
+import StepAddParticipantGroupRole from './steps/StepAddParticipantGroupRole.vue';
+import StepBdpDpvTextForStamm from './steps/StepBdpDpvTextForStamm.vue';
+import StepTravelBack from './steps/StepTravelBack.vue';
 
 export default {
   components: {
@@ -63,6 +66,7 @@ export default {
     StepConsent,
     StepBdpDpvLocation,
     StepBdpDpVPreferences,
+    StepBdpDpvTextForStamm,
   },
   props: ['scoutOrganisation'],
   data() {
@@ -91,6 +95,7 @@ export default {
           StepAddParticipantsSingle,
           StepTents,
           StepTravel,
+          StepTravelBack,
           StepConfirm,
         ];
       }
@@ -101,8 +106,10 @@ export default {
         return [
           StepConsent,
           StepAddParticipants,
+          StepAddParticipantGroupRole,
           StepBdpDpvLocation,
           StepBdpDpVPreferences,
+          StepBdpDpvTextForStamm,
           StepConfirm,
         ];
       }

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-footer color="primary lighten-1" padless absolute>
+  <div class="mt-10">
+    <v-footer color="primary lighten-1" padless>
       <v-row justify="center" no-gutters>
         <v-btn
           color="white"
@@ -74,5 +74,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
