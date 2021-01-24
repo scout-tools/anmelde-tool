@@ -1,5 +1,6 @@
-from rest_framework import permissions
+from rest_framework import permissions, status, exceptions
 from .models import EventRoleMapping, Registration
+from rest_framework.response import Response
 
 
 def get_eventrole(request, view, event_role_id):
@@ -53,4 +54,11 @@ class IsResponsiblePersonPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         pk = view.kwargs.get("registration_pk") or request.data['registration']
+        if pk is None:
+            raise NoRegistationId()
         return Registration.objects.filter(id=pk, responsible_persons=request.user).exists()
+
+
+class NoRegistationId(exceptions.APIException):
+    status_code = status.HTTP_400_BAD_REQUEST
+    default_detail = "No Registration id given"
