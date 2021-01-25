@@ -20,7 +20,8 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     EventParticipantsSerializer, ScoutOrgaLevelSerializer, ParticipantPersonalSerializer, \
     EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, \
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
-    EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer
+    EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
+    RegistrationSummarySerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission
@@ -28,7 +29,6 @@ from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsPr
 
 def get_dataset(kwargs, pk, dataset):
     dataset_id = kwargs.get(pk, None)
-    print(dataset_id)
     if dataset_id is not None:
         return dataset.objects.filter(id=dataset_id)
     else:
@@ -292,3 +292,11 @@ class RegistrationParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
             return Registration.objects.filter(id=event_id)
         else:
             return Response('No registration selected', status=status.HTTP_400_BAD_REQUEST)
+
+
+class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]  # ToDo: implement IsResponsiblePersonPermission
+    serializer_class = RegistrationSummarySerializer
+
+    def get_queryset(self):
+        return get_dataset(self.kwargs, 'registration_pk', Registration)

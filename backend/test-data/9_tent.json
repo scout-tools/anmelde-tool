@@ -1,0 +1,32 @@
+[
+  {
+    "model": "basic.Tent",
+    "pk": 1,
+    "fields": {
+      "id": 1,
+      "registration": 7,
+      "tent_type": 2,
+      "used_by_scout_groups": [341]
+    }
+  },
+  {
+    "model": "basic.Tent",
+    "pk": 2,
+    "fields": {
+      "id": 2,
+      "registration": 7,
+      "tent_type": 2,
+      "used_by_scout_groups": [341]
+    }
+  },
+  {
+    "model": "basic.Tent",
+    "pk": 3,
+    "fields": {
+      "id": 3,
+      "registration": 7,
+      "tent_type": 1,
+      "used_by_scout_groups": [1]
+    }
+  }
+]
