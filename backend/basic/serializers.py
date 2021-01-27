@@ -277,18 +277,20 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
             'total_participants']
 
     def get_num_vegetarien(self, obj):
-        return obj.registration_set.aggregate(veggi_group=Sum('participantgroup__eathabit__number_of_persons',
-                                                              filter=Q(participantgroup__eathabit__eat_habit_type=1)),
-                                              veggi_personal=Count('participantpersonal',
-                                                                   filter=Q(participantpersonal__eat_habit_type=1)),
-                                              veggie_total=F('veggi_group') + F('veggi_personal'))
+        return obj.registration_set.aggregate(veggi_group=Coalesce(Sum('participantgroup__eathabit__number_of_persons',
+                                                                       filter=
+                                                                       Q( participantgroup__eathabit__eat_habit_type=1)),0)
+                                                          + Count('participantpersonal',
+                                                                        filter=
+                                                                        Q(participantpersonal__eat_habit_type=1)))
 
     def get_num_vegan(self, obj):
-        return obj.registration_set.aggregate(vegan_group=Sum('participantgroup__eathabit__number_of_persons',
-                                                              filter=Q(participantgroup__eathabit__eat_habit_type=2)),
-                                              vegan_personal=Count('participantpersonal',
-                                                                   filter=Q(participantpersonal__eat_habit_type=2)),
-                                              vegan_total=F('vegan_group') + F('vegan_personal'))
+        return obj.registration_set.aggregate(vegan_total=Coalesce(Sum('participantgroup__eathabit__number_of_persons',
+                                                                       filter=
+                                                                       Q(participantgroup__eathabit__eat_habit_type=2)),0)
+                                                          + Count('participantpersonal',
+                                                                        filter=
+                                                                        Q(participantpersonal__eat_habit_type=2)))
 
     def get_num_grouped_by_age_group(self, obj):
         result = obj.registration_set.values(age_group_group=F('participantgroup__age_group__name'),
