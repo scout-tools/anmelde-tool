@@ -243,7 +243,10 @@ class EventCashMasterSerializer(serializers.ModelSerializer):
         return self.participants
 
     def get_total_fee(self, obj):
-        return obj.participation_fee * self.participants
+        if (self.participants):
+            return obj.participation_fee * self.participants
+
+        return 0
 
     def get_grouped_participants(self, obj):
         return obj.registration_set.values('scout_organisation', 'scout_organisation__name') \

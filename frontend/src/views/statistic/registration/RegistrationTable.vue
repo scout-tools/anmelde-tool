@@ -3,6 +3,7 @@
     :data="data"
     v-model="fields"
     :reducer="reducer"
+    :showSettings="defaultShowSettings"
   />
 </template>
 
@@ -11,33 +12,36 @@ import { mapGetters } from 'vuex';
 import { Pivot } from 'vue-pivot-table-plus';
 
 export default {
+  name: 'RegistrationCalender',
   components: { Pivot },
   data: () => { // eslint-disable-line
     return {
-
+      defaultShowSettings: true,
       fields: {
         availableFields: [],
         rowFields: [
           {
-            getter: (item) => item.ageGroupPersonal,
-            label: 'Alter',
+            getter: (item) => item.scoutOrganisation_Name,
+            label: 'Stamm',
           },
           {
-            getter: (item) => item.habitTypePersonal,
-            label: 'Typ',
+            getter: (item) => item.bund,
+            label: 'Bund',
+            showHeader: false,
           },
         ],
         colFields: [
         ],
         fieldsOrder: {},
       },
-      reducer: (sum, item) => sum + item.numberPersonal, // eslint-disable-line
+      reducer: (sum, item) => sum + item.participants, // eslint-disable-line
+      tableHeight: '400px',
     };
   },
   computed: {
-    ...mapGetters(['currentEventKitchen']),
+    ...mapGetters(['currentEventParticipants']),
     data() {
-      return this.currentEventKitchen.numGroupedByAgePersonal;
+      return this.currentEventParticipants;
     },
   },
 };
