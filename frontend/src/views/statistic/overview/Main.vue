@@ -24,16 +24,18 @@
                 <v-icon>mdi-map</v-icon>
               </v-tab>
 
-              <v-tab href="#tab-3">
+              <v-tab v-if="displayEventRoleTab(eventOverview, 2)" href="#tab-3">
                 Kasse
                 <v-icon>mdi-currency-eur</v-icon>
               </v-tab>
-              <v-tab href="#tab-4">
+
+              <v-tab v-if="displayEventRoleTab(eventOverview, 3)" href="#tab-4">
                 Küche
                 <v-icon>mdi-silverware-fork-knife</v-icon>
               </v-tab>
-              <v-tab href="#tab-5">
-                Program
+
+              <v-tab v-if="displayEventRoleTab(eventOverview, 4)" href="#tab-5">
+                Programm
                 <v-icon>mdi-run-fast</v-icon>
               </v-tab>
             </v-tabs>
@@ -75,7 +77,12 @@ export default {
     ProgramMain,
   },
   computed: {
-    ...mapGetters(['currentEventParticipants', 'currentEventCash', 'currentEventKitchen', 'currentEventProgram']),
+    ...mapGetters([
+      'currentEventParticipants',
+      'currentEventCash',
+      'currentEventKitchen',
+      'currentEventProgram',
+    ]),
     eventId() {
       return this.$route.params.id;
     },
@@ -84,14 +91,25 @@ export default {
     return {
       tab: null,
       selected: null,
+      eventOverview: [],
     };
+  },
+  methods: {
+    displayEventRoleTab(eventOverview, id) {
+      if (eventOverview && eventOverview.participantRole) {
+        const roles = eventOverview.participantRole;
+        return roles.includes(1) || roles.includes(id);
+      }
+      return 0;
+    },
   },
   asyncComputed: {
     async getParticipantsData() {
       const path = `${process.env.VUE_APP_API}basic/event/${this.eventId}/participants/`;
-      axios.get(path)
+      axios
+        .get(path)
         .then((res) => {
-          this.$store.commit('setCurrentEventParticipants', res.data);
+          this.$store.commit('setCurrentEventParticipants', res.data[0].locations);
         })
         .catch(() => {
           console.log('Fehler');
@@ -99,7 +117,8 @@ export default {
     },
     async getCashData() {
       const path = `${process.env.VUE_APP_API}basic/event/${this.eventId}/cash-eventmaster-overview/`;
-      axios.get(path)
+      axios
+        .get(path)
         .then((res) => {
           this.$store.commit('setCurrentEventCash', res.data);
         })
@@ -109,9 +128,10 @@ export default {
     },
     async getKitchenData() {
       const path = `${process.env.VUE_APP_API}basic/event/${this.eventId}/kitchen-eventmaster-overview/`;
-      axios.get(path)
+      axios
+        .get(path)
         .then((res) => {
-          this.$store.commit('setCurrentEventKitchen', res.data);
+          this.$store.commit('setCurrentEventKitchen', res.data[0]);
         })
         .catch(() => {
           console.log('Fehler');
@@ -119,9 +139,22 @@ export default {
     },
     async getKitchenProgram() {
       const path = `${process.env.VUE_APP_API}basic/event/${this.eventId}/program-eventmaster-overview/`;
-      axios.get(path)
+      axios
+        .get(path)
         .then((res) => {
           this.$store.commit('setCurrentEventProgram', res.data);
+        })
+        .catch(() => {
+          console.log('Fehler');
+        });
+    },
+    async getEventOverview() {
+      const path = `${process.env.VUE_APP_API}basic/event-overview/${this.eventId}/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.eventOverview = res.data;
+          console.log(res.data);
         })
         .catch(() => {
           console.log('Fehler');

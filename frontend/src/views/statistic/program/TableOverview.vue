@@ -1,57 +1,45 @@
 <template>
-  <GChart
-    type="Table"
-    :data="chartData"
-    :options="chartOptions"
+  <Pivot
+    :data="data"
+    v-model="fields"
+    :reducer="reducer"
   />
 </template>
 
 <script>
-
 import { mapGetters } from 'vuex';
+import { Pivot } from 'vue-pivot-table-plus';
 
 export default {
-  data() {
+  name: 'RegistrationProgram',
+  components: { Pivot },
+  data: () => { // eslint-disable-line
     return {
-      chartDataHeader: ['', 'Gesamt', 'Wölflinge', 'Pfadfinder', 'Rover', 'Altrover'],
-      chartDataRows: [
-        ['Gesamt', 100, 10, 20, 7, 0],
-      ],
-      updatedChartData: [],
-      chartOptions: {
-        table: {
-          title: 'Company Performance',
-        },
+
+      fields: {
+        availableFields: [],
+        rowFields: [
+          {
+            getter: (item) => item.ageGroupGroup,
+            label: 'Alter-1',
+          },
+          {
+            getter: (item) => item.ageGroupPersonal,
+            label: 'Alter-2',
+          },
+        ],
+        colFields: [
+        ],
+        fieldsOrder: {},
       },
+      reducer: (sum, item) => sum + item.numberGroup + item.numberPersonal, // eslint-disable-line
     };
   },
   computed: {
     ...mapGetters(['currentEventProgram']),
-
-  },
-
-  methods: {
-    json_to_chart_data(jsonData) {
-      const returnData = [];
-      returnData.push(['Altersgruppe', 'Group TN', 'Single TN', 'TN']);
-      jsonData.forEach((event) => {
-        event.participantsGroupedByAge.forEach((group) => {
-          returnData.push([
-            group.ageGroup,
-            group.numberGroup,
-            group.numberPersonal,
-            group.numberGroup + group.numberPersonal,
-          ]);
-        });
-      });
-      return returnData;
+    data() {
+      return this.currentEventProgram[0].participantsGroupedByAge;
     },
-    getData() {
-      this.chartData = this.json_to_chart_data(this.currentEventProgram);
-    },
-  },
-  created() {
-    this.getData();
   },
 };
 </script>

@@ -51,10 +51,20 @@
     },
     {
         "model": "basic.EventRoleMapping",
-        "pk": 5,
+        "pk": 6,
         "fields": {
             "id": 6,
             "event": 1,
+            "event_role": 1,
+            "user": 1
+        }
+    },
+    {
+        "model": "basic.EventRoleMapping",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "event": 4,
             "event_role": 1,
             "user": 1
         }
