@@ -349,4 +349,68 @@ class EventProgramMasterSerializer(serializers.ModelSerializer):
             age_group_group=F('participantgroup__age_group__name'),
             age_group_personal=F('participantpersonal__age_group__name')) \
             .annotate(number_group=Coalesce(Sum('participantgroup__number_of_persons'), 0),
-                      number_personal=Coalesce(Count('participantpersonal'), 0))
+                      number_personal=Coalesce(Count('participantpersonal'), 0)) \
+            # .exclude(participantgroup__age_group__isnull=True)
+
+        return result
+
+
+class RegistrationSummarySerializer(serializers.ModelSerializer):
+    total_participants = serializers.SerializerMethodField('get_total_participants')
+    total_fee = serializers.SerializerMethodField('get_total_fee')
+    group_participants = serializers.SerializerMethodField('get_group_participants')
+    personal_participants = serializers.SerializerMethodField('get_personal_participants')
+    travel_method = serializers.SerializerMethodField('get_travel_method')
+    travel_method_detailed = serializers.SerializerMethodField('get_travel_method_detailed')
+    tents = serializers.SerializerMethodField('get_tents')
+    tents_detailed = serializers.SerializerMethodField('get_tents_detailed')
+
+    class Meta:
+        model = Registration
+        fields = (
+            'scout_organisation',
+            'responsible_persons',
+            'total_participants',
+            'total_fee',
+            'group_participants',
+            'personal_participants',
+            'is_confirmed',
+            'is_accepted',
+            'travel_method',
+            'travel_method_detailed',
+            'tents',
+            'tents_detailed'
+        )
+
+    def get_total_participants(self, obj):
+        num_group = obj.participantgroup_set.aggregate(num=Coalesce(Sum('number_of_persons'), 0))['num']
+        num_pers = obj.participantpersonal_set.count()
+        result = num_group + num_pers
+        self.total_participants = result
+        return result
+
+    def get_total_fee(self, obj):
+        return obj.event.participation_fee * self.total_participants
+
+    def get_group_participants(self, obj):
+        result = obj.participantgroup_set.values('created_at__date').annotate(
+            registered=Coalesce(Sum('number_of_persons'), 0)).order_by('-created_at__date')
+
+        return result
+
+    def get_personal_participants(self, obj):
+        result = obj.participantpersonal_set.values('created_at__date').annotate(registered=Count('id')) \
+            .order_by('-created_at__date')
+        return result
+
+    def get_travel_method(self, obj):
+        return obj.methodoftravel_set.values('travel_type__name').annotate(sum_method=Sum('number_of_persons'))
+
+    def get_travel_method_detailed(self, obj):
+        return obj.methodoftravel_set.values('travel_type__name').values('travel_type__name', 'number_of_persons')
+
+    def get_tents(self, obj):
+        return obj.tent_set.values('tent_type__name').annotate(sum_tents=Count('tent_type'))
+
+    def get_tents_detailed(self, obj):
+        return obj.tent_set.values('tent_type__name', 'used_by_scout_groups__name')
