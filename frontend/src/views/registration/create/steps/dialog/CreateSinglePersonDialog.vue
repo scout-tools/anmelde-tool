@@ -215,6 +215,13 @@
                   value="2"
                   hide-details
                 ></v-switch>
+                <v-switch
+                  v-model="data.roles"
+                  color="orange"
+                  label="Tagesgast"
+                  value="3"
+                  hide-details
+                ></v-switch>
               </v-container>
               <template slot="append">
                 <v-tooltip bottom>
@@ -464,7 +471,9 @@ export default {
     },
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
-      this.data.scoutGroup = this.data.scoutGroup.id;
+      if (this.data.scoutGroup && this.data.scoutGroup.id) {
+        this.data.scoutGroup = this.data.scoutGroup.id;
+      }
       axios
         .post(`${this.API_URL}basic/participant-personal/`, this.data)
         .then(() => {
