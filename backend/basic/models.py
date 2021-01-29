@@ -4,8 +4,8 @@ from rest_framework.renderers import JSONRenderer
 
 
 class TimeStampMixin(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -207,6 +207,12 @@ class EventRoleMapping(TimeStampMixin):
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
     event_role = models.ForeignKey(EventRole, on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return str(self.event) + ' : ' + str(self.event_role) + ' : ' + str(self.user)
+
+    def __repr__(self):
+        return self.__str__()
 
 
 class Registration(TimeStampMixin):

@@ -46,6 +46,8 @@ import axios from 'axios';
 
 import StepAddParticipantsSingle from './steps/StepAddParticipantsSingle.vue';
 import StepAddParticipants from './steps/StepAddParticipants.vue';
+import StepConfirmBundesfahrt from './steps/StepConfirmBundesfahrt.vue';
+import StepConfirmDpv from './steps/StepConfirmDpv.vue';
 import StepConfirm from './steps/StepConfirm.vue';
 import StepConsent from './steps/StepConsent.vue';
 import StepFood from './steps/StepFood.vue';
@@ -53,20 +55,24 @@ import StepBdpDpvLocation from './steps/StepBdpDpvLocation.vue';
 import StepBdpDpVPreferences from './steps/StepBdpDpVPreferences.vue';
 import StepTents from './steps/StepTents.vue';
 import StepTravel from './steps/StepTravel.vue';
-import StepAddParticipantGroupRole from './steps/StepAddParticipantGroupRole.vue';
+import StepAddParticipantGroupRole from './steps/StepBdPDpvAddParticipantGroupRole.vue';
 import StepBdpDpvTextForStamm from './steps/StepBdpDpvTextForStamm.vue';
 import StepTravelBack from './steps/StepTravelBack.vue';
+import StepBdpDpvLocationSuggestion from './steps/StepBdpDpvLocationSuggestion.vue';
 
 export default {
   components: {
     StepAddParticipantsSingle,
     StepAddParticipants,
     StepFood,
+    StepConfirmBundesfahrt,
+    StepConfirmDpv,
     StepConfirm,
     StepConsent,
     StepBdpDpvLocation,
     StepBdpDpVPreferences,
     StepBdpDpvTextForStamm,
+    StepBdpDpvLocationSuggestion,
   },
   props: ['scoutOrganisation'],
   data() {
@@ -96,7 +102,7 @@ export default {
           StepTents,
           StepTravel,
           StepTravelBack,
-          StepConfirm,
+          StepConfirmBundesfahrt,
         ];
       }
       // BdP-DPV
@@ -105,12 +111,12 @@ export default {
         && this.currentEvent.eventTags.includes(2)) {
         return [
           StepConsent,
-          StepAddParticipants,
           StepAddParticipantGroupRole,
           StepBdpDpvLocation,
           StepBdpDpVPreferences,
           StepBdpDpvTextForStamm,
-          StepConfirm,
+          StepBdpDpvLocationSuggestion,
+          StepConfirmDpv,
         ];
       }
       return [
