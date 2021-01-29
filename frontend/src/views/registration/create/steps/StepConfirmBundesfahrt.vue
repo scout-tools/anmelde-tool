@@ -2,26 +2,17 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container>
       <v-row class="mt-2">
-        <span class="text-left subtitle-1">
-          <p>
-            Hiermit melde ich meinen Stamm <b> {{ myStamm }} </b>
-            zum Lager <b> {{ currentEvent.name }} </b> an. <br />
-            <br />
-
-            Ich bin  der Ansprechpartner und unter
-            <b>{{ myEmail }} </b>
-            zu erreichen. <br/>
-            <br/>
-            Bevor deine Anmeldung verbindlich ist,
-            musst du dene Anmeldung im letzten Schritt ausdrücklich bestätigen.
-            Du kannst dein Anmeldevorgang zu jedem Zeitpunkt abbrechen und später vorsetzen.
-            Du kannst deine Daten bis zum Anemeldeschluss problemlos verändern.
-          </p>
-        </span>
+        <!-- <span class="text-left subtitle-1">
+          <p><b>Zusammenfassung</b></p>
+            Ich habe folgende Daten eingefügt:
+        </span> -->
       </v-row>
-      <v-divider class="text-left my-2" />
+      <!-- <v-divider class="text-left my-2" /> -->
       <v-row>
-        <v-checkbox v-model="data.checkbox1" :label="`Ich stimme zu.`">
+        <v-checkbox
+          v-model="data.checkbox1"
+          :label="`Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zum Lager an.`"
+        >
         </v-checkbox>
       </v-row>
 
@@ -39,15 +30,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 import { required } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
-  displayName: 'Einverständnis',
-  props: ['position', 'maxPos', 'currentEvent', 'currentRegistration', 'scoutOrganisation'],
+  displayName: 'Zusammenfassung und Bestätigung',
+  props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
   },
@@ -56,8 +45,6 @@ export default {
     valid: true,
     data: {
       checkbox1: false,
-      name: '',
-      description: '',
     },
   }),
   validations: {
@@ -69,17 +56,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'hierarchyMapping', 'getJwtData']),
-    myStamm() {
-      if (this.scoutOrganisation) {
-        return this.hierarchyMapping.find(
-          (user) => user.id === this.scoutOrganisation,
-        ).name;
-      }
-      return 'Keine Name';
-    },
-    myEmail() {
-      return this.getJwtData.email;
+    id() {
+      return this.$route.params.id;
     },
   },
   methods: {
