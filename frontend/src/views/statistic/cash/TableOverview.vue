@@ -1,62 +1,46 @@
 <template>
-    <GChart
-      type="Table"
-      :data="chartData"
-      :options="chartOptions"
-    />
+  <Pivot
+    :data="data"
+    v-model="fields"
+    :reducer="reducer"
+  />
 </template>
 
 <script>
-
 import { mapGetters } from 'vuex';
+import { Pivot } from 'vue-pivot-table-plus';
 
 export default {
-  data() {
+  components: { Pivot },
+  data: () => { // eslint-disable-line
     return {
-      chartDataHeader: ['', 'Gesamt', 'Wölflinge', 'Pfadfinder', 'Rover', 'Altrover'],
-      chartDataRows: [
-        ['Gesamt', 100, 10, 20, 7, 0],
-        ['Fleisch', 100, 8, 18, 6, 0],
-        ['Vegetarisch', 100, 1, 1, 1, 0],
-        ['Vegan', 100, 0, 1, 0, 0],
-        ['Keine Nüße', 100, 0, 0, 0, 0],
-      ],
-      updatedChartData: [],
-      chartOptions: {
-        table: {
-          title: 'Company Performance',
-        },
+
+      fields: {
+        availableFields: [],
+        rowFields: [
+          {
+            getter: (item) => item.scoutOrganisation_Name,
+            label: 'Stamm',
+          },
+          {
+            getter: (item) => `${item.totalAmount} Pers`,
+            label: 'Anzal',
+          },
+        ],
+        colFields: [
+        ],
+        fieldsOrder: {},
       },
+      reducer: (sum, item) => sum + item.totalFee, // eslint-disable-line
+      tableHeight: '400px',
     };
   },
   computed: {
     ...mapGetters(['currentEventCash']),
-
-  },
-
-  methods: {
-    json_to_chart_data(jsonData) {
-      const returnData = [];
-      returnData.push(['Name', 'Group TN', 'Signle TN', 'TN', 'Beitrag']);
-      jsonData.forEach((event) => {
-        event.groupedParticipants.forEach((group) => {
-          returnData.push([
-            group.scoutOrganisation_Name,
-            group.groupedParticipants,
-            group.singleParticipants,
-            group.totalAmount,
-            group.totalFee,
-          ]);
-        });
-      });
-      return returnData;
+    data() {
+      console.log(this.currentEventCash[0].groupedParticipants);
+      return this.currentEventCash[0].groupedParticipants;
     },
-    getData() {
-      this.chartData = this.json_to_chart_data(this.currentEventCash);
-    },
-  },
-  created() {
-    this.getData();
   },
 };
 </script>

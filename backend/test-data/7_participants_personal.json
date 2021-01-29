@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "id": 1,
-      "registration_id": 7,
+      "registration_id": 2,
       "first_name": "Philip",
       "last_name": "Hagemann",
       "street": "Dönerstraße 1",
@@ -23,7 +23,7 @@
     "pk": 2,
     "fields": {
       "id": 2,
-      "registration_id": 7,
+      "registration_id": 1,
       "first_name": "Daniel",
       "last_name": "Hillebrand",
       "street": "Dönerstraße 2",
@@ -43,7 +43,7 @@
     "pk": 3,
     "fields": {
       "id": 3,
-      "registration_id": 7,
+      "registration_id": 2,
       "first_name": "Robert",
       "last_name": "Bagdahn",
       "street": "Dönerstraße 999",
@@ -63,7 +63,7 @@
     "pk": 4,
     "fields": {
       "id": 4,
-      "registration_id": 7,
+      "registration_id": 1,
       "first_name": "Caroline",
       "last_name": "Fantasiename",
       "street": "Dönerstraße 33",
@@ -84,7 +84,7 @@
     "pk": 5,
     "fields": {
       "id": 5,
-      "registration_id": 7,
+      "registration_id": 1,
       "first_name": "Paul",
       "last_name": "Kruse",
       "street": "Dönerstraße 45",

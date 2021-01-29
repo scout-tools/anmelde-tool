@@ -55,10 +55,10 @@ export default {
         returnData.push([
           regis.lat,
           regis.lon,
-          regis.name,
+          regis.scoutOrganisation_Name,
           buende.indexOf(regis.bund),
-          regis.numberOfPersons,
-          `TN: ${regis.numberOfPersons}\n Bund: ${regis.bund}`,
+          regis.participants,
+          `TN: ${regis.participants}\n Bund: ${regis.bund}`,
         ]);
       });
       return returnData;
@@ -68,7 +68,7 @@ export default {
     },
   },
   created() {
-    // this.getData();
+    this.getData();
   },
 };
 </script>

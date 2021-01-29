@@ -26,10 +26,16 @@
               <template v-for="(item, index) in getItems">
                 <v-list-item :key="item.name">
                   <v-list-item-avatar>
-                    <v-icon color="black"> mdi-account-group</v-icon>
+                    <v-icon
+                      :class="'primary'"
+                      dark
+                      v-text="'mdi-tent'"
+                    ></v-icon>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title v-text="item.name"></v-list-item-title>
+                    <v-list-item-title
+                      v-text="getHeaderText(item.name, item.participantRole)"
+                    ></v-list-item-title>
 
                     <v-list-item-subtitle class="text--primary">
                       {{ getLagerText(item) }}
@@ -83,7 +89,7 @@
                         params: { id: getRegisteredId(item) },
                       }"
                       style="text-decoration: none"
-                      v-if="!isSimpleUser || item.participantRole.length"
+                      v-if="item.participantRole.length"
                     >
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
@@ -103,7 +109,7 @@
                         params: { id: item.id },
                       }"
                       style="text-decoration: none"
-                      v-if="!isSimpleUser || item.participantRole.length"
+                      v-if="item.participantRole.length"
                     >
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
@@ -186,8 +192,16 @@ export default {
     },
   },
   methods: {
+    getHeaderText(header, roles) {
+      return `${header} (${roles})`;
+    },
     getRegisteredId(item) {
-      if (item && item.isRegistered && item.isRegistered.length && item.isRegistered[0].id) {
+      if (
+        item && // eslint-disable-line
+        item.isRegistered && // eslint-disable-line
+        item.isRegistered.length && // eslint-disable-line
+        item.isRegistered[0].id
+      ) {
         return item.isRegistered[0].id;
       }
       return 0;

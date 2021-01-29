@@ -1,21 +1,17 @@
 <template>
   <v-form ref="StepBdpDpVPreferences" v-model="valid">
-  <v-container
-    class="px-0"
-    fluid
-  >
-        <v-textarea
-          name="input-7-1"
-          label="Text für den Partnerstamm"
-        ></v-textarea>
+    <v-container class="px-0" fluid>
+      <v-textarea
+        name="input-7-1"
+        label="Freitext für den Partnerstamm"
+        :placeholder="placeholder"
+      ></v-textarea>
 
-<v-expand-transition>
-  <v-checkbox
-    v-show="dpvAddedLocation"
-    v-model="data.checkbox1"
-    :label="`Wir stellen unser Heim / Lagerplatz anderen Stämmen zur Verfügung.)`"/>
-  <v-divider class="my-3" />
-</v-expand-transition>
+      <v-subheader>
+        Hinweis: Auch diesen Freitext kannst du später noch bis zum XXX anpassen,
+        wenn du erst mit deinem Stamm euer Lieblingslied, etc. abstimmen möchtest.
+      </v-subheader>
+        <v-divider class="my-3" />
 
       <prev-next-buttons
         :position="position"
@@ -24,8 +20,8 @@
         @prevStep="prevStep"
         @submitStep="submitStep()"
       />
-  </v-container>
-  <create-location-dialog ref="newLocationDialog" @close="getEvents()"/>
+    </v-container>
+    <create-location-dialog ref="newLocationDialog" @close="getEvents()" />
   </v-form>
 </template>
 
@@ -52,6 +48,11 @@ export default {
       value1: true,
       value2: false,
     },
+    placeholder: 'Hier ist Platz für eine persönliche Nachricht an euren '
+    + 'noch unbekannten Partnerstamm. Wenn du Lust hast, '
+    + 'dann schreibe auf, was euch ausmacht, was euer tollstes Fahrtenerlebnis war, '
+    + 'euer Lieblingslied, was euch an eurer Stadt besonders gefällt… und wie man dich als '
+    + 'Ansprechperson am besten erreichen kann, z.B. Mail / Whats App / Telegram / Brieftaube',
   }),
   computed: {
     ...mapGetters(['dpvAddedLocation']),

@@ -34,7 +34,11 @@
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
-          <v-row class="pa-4" justify="space-between">
+          <v-subheader class="ma-0">
+            <v-icon class="ma-2" color="error">mdi-alert-circle </v-icon>
+            Dein Stamm fehlt? Dann schreib uns eine E-Mail support@anmelde-tool.de
+          </v-subheader>
+          <v-row class="pa-2" justify="space-between">
             <v-col cols="5">
               <v-text-field
                 v-model="search"

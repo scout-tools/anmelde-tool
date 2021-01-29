@@ -207,8 +207,8 @@ export default {
       loading: false,
       tooltip: {
         scoutName:
-          'Hier musst du deinen Fahrtennamen oder deinen Vornamen angeben. ',
-        email: 'Für die Kommunikation mit dem Tool.',
+          'Gib hier bitte deinen Namen oder deinen Fahrtennamen ein.',
+        email: 'Die E-Mail nutzen wir für die Kommunikation mit dem Tool als auch für Rückfragen.',
         mobileNumber: 'Hier kannst du freiwillig deine Handynummer angeben. ',
         scoutOrganisation: 'Blub',
       },
