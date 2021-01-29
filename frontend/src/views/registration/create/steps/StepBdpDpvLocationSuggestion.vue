@@ -1,41 +1,17 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
     <v-container class="px-0" fluid>
-      <v-expand-transition>
         <v-container>
           <span>
-            <b
-              >Das Heim/Der Lagerplatz meines Stammes kann für die Aktion
-              genutzt werden
-            </b>
-            <br />
-            <br />
-            Notwendig sind:
-            <ul>
-              <li>Möglichkeiten zum Kochen (Herd/Feuerstelle)</li>
-              <li>ausreichend Toiletten und fließend Wasser</li>
-            </ul>
+            Hier kannst Du noch ein weiteres Heim eintragen (freiwillig)
           </span>
-          <v-radio-group v-model="radioGroup">
-            <v-radio
-              label="Nein"
-              value="2"
-            ></v-radio>
-            <v-radio
-              label="Ja"
-              value="1"
-            ></v-radio>
-          </v-radio-group>
-        </v-container>
-      </v-expand-transition>
 
-      <v-expand-transition>
-        <v-container v-show="radioGroup === '1'">
+          <v-divider class="my-2"/>
+
           <v-btn color="primary" @click="newLocation()">
-            Platz oder Haus Hinzufügen
+            Platz oder Haus vorschlagen
           </v-btn>
         </v-container>
-      </v-expand-transition>
       <v-divider class="my-3" />
 
       <prev-next-buttons
@@ -56,7 +32,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
-  displayName: 'Lagerplatz',
+  displayName: 'Lagerplatz vorschlagen',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,

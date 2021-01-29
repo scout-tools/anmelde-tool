@@ -29,7 +29,6 @@ export default {
           const table = this.$refs.gChart.chartObject;
           const selection = table.getSelection();
           const onSelectionMessage = selection.length !== 0 ? 'row was selected' : 'row was diselected';
-          console.log(onSelectionMessage);
         },
       },
     };

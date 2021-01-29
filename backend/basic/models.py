@@ -208,6 +208,12 @@ class EventRoleMapping(TimeStampMixin):
     event_role = models.ForeignKey(EventRole, on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return str(self.event) + ' : ' + str(self.event_role) + ' : ' + str(self.user)
+
+    def __repr__(self):
+        return self.__str__()
+
 
 class Registration(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')

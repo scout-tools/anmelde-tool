@@ -6,16 +6,15 @@
           <v-layout column>
             <v-card>
               <v-card-title class="text-center justify-center py-6">
-                Hier kannst du deine persönlichen Einstellungen Account
-                anpassen.
+                Deine persönlichen Daten
               </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-subheader class="ma-5">
-                    Bitte trag hier die Daten ein die das Anmeldetool aus. Diese
-                    Daten werden teilweise später in Anwendungen gebraucht.
-                    Diese Daten sind für die Administratoren und für die
-                    Lagerleitung nach deiner explizieten Anmeldung sichtbar.
+                    Bitte füge folgende Daten in dein Profil hinzu, damit
+                    das Anmelde-Tool in der Lage ist, dich korrekt zuzuordnen. <br>
+                    Diese Daten sind für nur für die
+                    Lagerleitung nach deiner explizieten Anmeldung zu einem Lager sichtbar.
                   </v-subheader>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
@@ -147,7 +146,8 @@ export default {
         email: '123',
         scoutName: '456',
         invitationCode:
-          'Hast du keinen Code bekommen? Gucke nochmal in der Einladung. Falls du nichts findest melde dich bei der Lagerleitung',
+          'Hast du keinen Code bekommen? Gucke nochmal in der Einladung.'
+          + 'Falls du nichts findest melde dich bei der Lagerleitung, deiner Bundesführung oder bei support@anmelde-too.de',
       },
     };
   },

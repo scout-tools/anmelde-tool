@@ -3,11 +3,11 @@
     <v-container>
       <v-divider class="text-left my-2" />
       <v-row class="mb-6">
-        <span class="subtitle-1"> Gebe die Anzahl der Teilnehmer an. </span>
+        <span class="subtitle-1"> Gebe die Anzahl der Teilnehmenden an. </span>
       </v-row>
       <v-row class="mb-6">
         <span class="subtitle-2">
-          Du kannst diese Teilnehmerzahlen bis zum 1. Mai 2020 noch
+          Du kannst dies Antahl der Teilnehmenden bis zum 1. Mai 2021
           anpassen. <br/>
           Dafür kannst du dich dafür jederzeit wieder einloggen.</span
         >
