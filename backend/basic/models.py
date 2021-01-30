@@ -327,6 +327,22 @@ class TravelType(TimeStampMixin):
         return self.__str__()
 
 
+class TravelTag(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.__str__()
+
+
 class MethodOfTravel(TimeStampMixin):
     id = models.AutoField(
         auto_created=True,
@@ -336,6 +352,7 @@ class MethodOfTravel(TimeStampMixin):
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
     travel_type = models.ForeignKey(TravelType, on_delete=models.PROTECT, null=True, blank=True)
     number_of_persons = models.IntegerField(blank=True, null=True)
+    travel_tag = models.ForeignKey(TravelTag, on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
         return "{} - {}".format(self.registration, self.travel_type)
