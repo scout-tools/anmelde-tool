@@ -103,7 +103,7 @@ export default {
         const reader = new FileReader(); // eslint-disable-line
         reader.onload = (e3) => {
           const data = new Uint8Array(e3.target.result); // eslint-disable-line
-          const workbook = XLSX.read(data, { type: 'array' }); // eslint-disable-line
+          const workbook = XLSX.read(data, {type: 'array'}); // eslint-disable-line
           const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
           const dataExport = XLSX.utils.sheet_to_json(firstWorksheet, {
             range: 0,
@@ -132,7 +132,37 @@ export default {
       this.$emit('close');
     },
     fillParticipant(input) {
-      this.$refs.createSinglePersonDialog.openDialogEdit(input);
+      const newInput = this.map(input);
+      this.$refs.createSinglePersonDialog.openDialogEdit(newInput);
+    },
+    map(input) {
+      const dto = {
+        firstName: '',
+        lastName: '',
+        street: '',
+        zipCode: '',
+        phoneNumber: '',
+        age: null,
+        registration: null,
+        eatHabitType: [],
+        scoutGroup: null,
+        isGroupLeader: false,
+        roles: ['1'],
+        id: 0,
+        zipCodeId: 0,
+      };
+      dto.firstName = input.Vorname;
+      dto.lastName = input.Nachname;
+      dto.street = input.Adresse;
+      dto.zipCode = input.Postleitzahl;
+      dto.phoneNumber = input.Telefonnummer;
+      dto.age = input.Alter;
+      dto.scoutGroup = input.scoutGroup;
+      dto.isGroupLeader = false;
+      if (input.Vegetarisch === 'x') {
+        dto.eatHabitType.push('Kein Fleisch(vegetarisch)');
+      }
+      return dto;
     },
   },
   computed: {
