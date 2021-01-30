@@ -166,34 +166,6 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
         return result
 
 
-class RegistrationParticipantsSerializer(serializers.ModelSerializer):
-    participants = serializers.SerializerMethodField('get_participants')
-
-    class Meta:
-        model = Registration
-        fields = (
-            'event',
-            'participants'
-        )
-
-    def get_participants(self, obj):
-        return obj.participantpersonal_set.annotate(scout_group_name=F('scout_group__name'),
-                                                    eat_habit_type_name=F('eat_habit_type__name')) \
-            .values('id',
-                    'first_name',
-                    'last_name',
-                    'street',
-                    'zip_code',
-                    'age',
-                    'scout_group_name',
-                    'phone_number',
-                    'is_group_leader',
-                    'age_group',
-                    'eat_habit_type_name',
-                    'participant_role'
-                    )
-
-
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Role
@@ -459,3 +431,14 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
 
     def get_tents_detailed(self, obj):
         return obj.tent_set.values('tent_type__name', 'used_by_scout_groups__name')
+
+
+class RegistrationParticipantsSerializer(serializers.ModelSerializer):
+    participantpersonal_set = ParticipantPersonalSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Registration
+        fields = (
+            'event',
+            'participantpersonal_set'
+        )
