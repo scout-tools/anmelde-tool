@@ -40,6 +40,7 @@ event_router.register(r'program-eventmaster-overview', views.EventProgramMasterV
 
 registration_router = routers.NestedSimpleRouter(router, r'registration', lookup='registration')
 registration_router.register(r'participants', views.RegistrationParticipantsViewSet, basename='participants')
+registration_router.register(r'summary', views.RegistrationSummaryViewSet, basename='summary')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

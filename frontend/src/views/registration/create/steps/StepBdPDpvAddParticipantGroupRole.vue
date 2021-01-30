@@ -159,7 +159,7 @@ export default {
     tooltip: {
       normal: 'Das sind die allgemeinen Gruppenkinder, die aktiv am Spiel teilnehmen',
       helper: 'Auch diese nehmen aktiv am Spiel teil, sollten aber Aufsichtspflichten erfüllen',
-      stammes: 'Hier sind lediglich wenige Menschen pro Stamm notwendig (max. 3, eher weniger), sie sind aktive SpielerInnen mit Koordinationsaufgaben',
+      stammes: 'Hier sind lediglich wenige Menschen pro Stamm notwendig (max. 3, eher weniger), sie sind aktive Spieler_innen mit Koordinationsaufgaben',
       groupLeader: 'Alle, die keine Lust haben auf der aktiven Spielseite zu stehen, sondern lieber hinter oder auf der Bühne die Fäden ziehen wollen, können sich hier melden',
       total: 'Many ist eine Tomate',
     },

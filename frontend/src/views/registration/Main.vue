@@ -147,7 +147,7 @@ export default {
         scoutName: '456',
         invitationCode:
           'Hast du keinen Code bekommen? Gucke nochmal in der Einladung.'
-          + 'Falls du nichts findest melde dich bei der Lagerleitung, deiner Bundesführung oder bei support@anmelde-too.de',
+          + 'Falls du nichts findest melde dich bei der Lagerleitung, deiner Bundesführung oder bei support@anmelde-tool.de',
       },
     };
   },

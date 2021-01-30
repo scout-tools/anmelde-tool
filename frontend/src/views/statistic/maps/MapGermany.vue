@@ -39,27 +39,29 @@ export default {
   methods: {
     json_to_chart_data(jsonData) {
       const returnData = [];
-      const buende = [];
-      returnData.push([
-        'Lat',
-        'Lon',
-        'Name',
-        'Bund',
-        'TN',
-        { role: 'tooltip', p: { html: false } },
-      ]);
-      jsonData.forEach((regis) => {
-        if (buende.indexOf(regis.bund) === -1) buende.push(regis.bund);
-      });
-      jsonData.forEach((regis) => {
+      jsonData.forEach((event) => {
+        const buende = [];
         returnData.push([
-          regis.lat,
-          regis.lon,
-          regis.scoutOrganisation_Name,
-          buende.indexOf(regis.bund),
-          regis.participants,
-          `TN: ${regis.participants}\n Bund: ${regis.bund}`,
+          'Lat',
+          'Lon',
+          'Name',
+          'Bund',
+          'TN',
+          { role: 'tooltip', p: { html: false } },
         ]);
+        event.scoutOrganisations.forEach((loc) => {
+          if (buende.indexOf(loc.bund) === -1) buende.push(loc.bund);
+        });
+        event.scoutOrganisations.forEach((loc) => {
+          returnData.push([
+            loc.lat,
+            loc.lon,
+            loc.scoutOrganisation_Name,
+            buende.indexOf(loc.bund),
+            loc.participants,
+            `TN: ${loc.participants}\n Bund: ${loc.bund}`,
+          ]);
+        });
       });
       return returnData;
     },
