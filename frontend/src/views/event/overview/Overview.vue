@@ -46,14 +46,7 @@
                     ></v-list-item-subtitle>
                   </v-list-item-content>
 
-                  <v-list-item-action
-                    v-show="
-                      isInTimeRange(
-                        item.registrationStart,
-                        item.registrationDeadline,
-                      ) && !item.isRegistered.length
-                    "
-                  >
+                  <v-list-item-action>
                     <router-link
                       :to="{
                         name: 'registrationForm',
@@ -75,12 +68,6 @@
                   </v-list-item-action>
 
                   <v-list-item-action
-                    v-show="
-                      isInTimeRange(
-                        item.registrationStart,
-                        item.registrationDeadline,
-                      ) && item.isRegistered.length
-                    "
                     class="ml-4"
                   >
                     <router-link
@@ -193,7 +180,10 @@ export default {
   },
   methods: {
     getHeaderText(header, roles) {
-      return `${header} (${roles})`;
+      if (roles && roles.length) {
+        return `${header} (Rolle: ${roles[0].eventRole_Name})`;
+      }
+      return header;
     },
     getRegisteredId(item) {
       if (
