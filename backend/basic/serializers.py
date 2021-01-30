@@ -177,17 +177,21 @@ class RegistrationParticipantsSerializer(serializers.ModelSerializer):
         )
 
     def get_participants(self, obj):
-        return obj.participantpersonal_set.annotate(scout_group_name=F('scout_group__name')).values('id',
-                                                                                                    'first_name',
-                                                                                                    'last_name',
-                                                                                                    'street',
-                                                                                                    'zip_code',
-                                                                                                    'age',
-                                                                                                    'scout_group_name',
-                                                                                                    'phone_number',
-                                                                                                    'is_group_leader',
-                                                                                                    'age_group'
-                                                                                                    )
+        return obj.participantpersonal_set.annotate(scout_group_name=F('scout_group__name'),
+                                                    eat_habit_type_name=F('eat_habit_type__name')) \
+            .values('id',
+                    'first_name',
+                    'last_name',
+                    'street',
+                    'zip_code',
+                    'age',
+                    'scout_group_name',
+                    'phone_number',
+                    'is_group_leader',
+                    'age_group',
+                    'eat_habit_type_name',
+                    'participant_role'
+                    )
 
 
 class RoleSerializer(serializers.ModelSerializer):
