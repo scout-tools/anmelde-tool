@@ -177,7 +177,17 @@ class RegistrationParticipantsSerializer(serializers.ModelSerializer):
         )
 
     def get_participants(self, obj):
-        return obj.participantpersonal_set.values()
+        return obj.participantpersonal_set.annotate(scout_group_name=F('scout_group__name')).values('id',
+                                                                                                    'first_name',
+                                                                                                    'last_name',
+                                                                                                    'street',
+                                                                                                    'zip_code',
+                                                                                                    'age',
+                                                                                                    'scout_group_name',
+                                                                                                    'phone_number',
+                                                                                                    'is_group_leader',
+                                                                                                    'age_group'
+                                                                                                    )
 
 
 class ParticipantRoleSerializer(serializers.ModelSerializer):
