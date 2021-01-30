@@ -43,6 +43,9 @@
           <v-btn dense icon @click="editParticipant(item.id)">
             <v-icon color="grey lighten-1">mdi-pencil</v-icon>
           </v-btn>
+          <v-btn dense icon @click="deleteParticipant(item.id)">
+            <v-icon color="grey lighten-1">mdi-trash-can</v-icon>
+          </v-btn>
         </v-list-item-action>
         </v-list-item>
 
@@ -161,9 +164,19 @@ export default {
       });
     },
     editParticipant(id) {
-      console.log(id);
       this.$refs.createSinglePersonDialog.openDialogEdit(this.items[0].participants
         .filter((i) => i.id === id)[0]);
+    },
+    deleteParticipant(id) {
+      axios
+        .delete(`${this.API_URL}basic/participant-personal/${id}/`)
+        .then((res) => {
+          this.items = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      this.getParticipants();
     },
     newUser() {
       this.$refs.createSinglePersonDialog.openDialog();
