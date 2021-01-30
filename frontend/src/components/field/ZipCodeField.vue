@@ -1,14 +1,13 @@
 <template>
   <v-autocomplete
     v-model="value"
-    :items="items"
+    :items="zipCodeMapping"
     :search-input.sync="search"
     :item-text="customText"
     item-value="id"
     label="Stadt / Postleitzahl"
     placeholder="Wähle Stadt oder Postleitzahl"
     prepend-icon="mdi-city"
-    return-object
     @change="onInputchange"
   >
     <template slot="append">
@@ -43,18 +42,14 @@ export default {
   methods: {
     customText: (item) => `${item.zipCode} — ${item.city}`,
     onInputchange() {
-      this.$emit('input', this.value.id);
+      this.$emit('input', this.value);
+    },
+    setValue(value) {
+      this.value = value;
     },
   },
   computed: {
     ...mapGetters(['zipCodeMapping']),
-    items() {
-      return this.entries;
-    },
-  },
-  created() {
-    this.count = this.zipCodeMapping.length;
-    this.entries = this.zipCodeMapping;
   },
 };
 </script>

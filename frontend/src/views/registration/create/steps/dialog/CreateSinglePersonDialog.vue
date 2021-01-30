@@ -191,10 +191,16 @@
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <zip-code-field v-model="data.zipCode"/>
+              <zip-code-field
+                ref="zipCodeField"
+                v-model="data.zipCode"
+              />
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <eat-field v-model="data.eatHabitType" />
+              <eat-field
+                ref="eatHabitType"
+                v-model="data.eatHabitType"
+              />
             </v-col>
           </v-row>
           <v-divider class="my-3" />
@@ -274,7 +280,7 @@ export default {
       firstName: '',
       lastName: '',
       street: '',
-      zipCode: '',
+      zipCode: 0,
       phoneNumber: '',
       age: null,
       registration: null,
@@ -283,7 +289,6 @@ export default {
       isGroupLeader: false,
       roles: ['1'],
       id: 0,
-      zipCodeId: 0,
     },
     showError: false,
     showSuccess: false,
@@ -410,6 +415,13 @@ export default {
       return errors;
     },
   },
+  watch: {
+    data() {
+      debugger;
+      this.$refs.zipCodeField.setValue(this.data.zipCode);
+      this.$refs.eatHabitType.setValue(this.data.eatHabitType);
+    },
+  },
   methods: {
     requiredField(value) {
       if (value instanceof Array && value.length === 0) {
@@ -428,7 +440,7 @@ export default {
         firstName: '',
         lastName: '',
         street: '',
-        zipCode: '',
+        zipCode: 0,
         dateBirth: '2010-01-01',
         registration: null,
         eatHabitType: [],
@@ -440,12 +452,7 @@ export default {
       this.getGroups();
     },
     openDialogEdit(input) {
-      this.data = input;
-      this.data.scoutGroup = this.scoutHierarchyGroups
-        .filter((i) => i.id === input.scoutGroup).name;
-      if (!input.eatHabitType) {
-        this.data.eatHabitType = [];
-      }
+      this.getParticipantPersonalById(input.id);
       this.active = true;
       this.getGroups();
     },
@@ -454,6 +461,16 @@ export default {
         .get(`${this.API_URL}basic/scout-hierarchy-group/`)
         .then((res) => {
           this.scoutHierarchyGroups = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getParticipantPersonalById(id) {
+      axios
+        .get(`${this.API_URL}basic/participant-personal/${id}/`)
+        .then((res) => {
+          this.data = res.data;
         })
         .catch((err) => {
           console.log(err);
@@ -484,8 +501,11 @@ export default {
     },
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
-      if (this.data.scoutGroup && this.data.scoutGroup.id) {
-        this.data.scoutGroup = this.data.scoutGroup.id;
+      if (this.data.scoutGroup && this.data.scoutGroup.name) {
+        this.data.scoutGroup = this.data.scoutGroup.name;
+      }
+      if (this.data.eatHabitType && this.data.eatHabitType.name) {
+        this.data.eatHabitType = this.data.eatHabitType.name;
       }
       if (this.data.id === 0) {
         axios
@@ -496,7 +516,10 @@ export default {
           });
       } else {
         axios
-          .put(`${this.API_URL}basic/participant-personal/${this.data.id}/`, this.data)
+          .put(
+            `${this.API_URL}basic/participant-personal/${this.data.id}/`,
+            this.data,
+          )
           .then(() => {
             this.closeDialog();
             this.$emit('refresh');

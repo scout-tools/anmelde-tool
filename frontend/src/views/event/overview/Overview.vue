@@ -366,7 +366,6 @@ export default {
     this.getEvent();
     this.getUserExtended();
     this.getScoutOrgaLevelMapping();
-    this.getParticipantRoleMapping();
     this.getEatHabitTypeMapping();
     this.getTravelTypeMapping();
     this.getHierarchyMapping();
