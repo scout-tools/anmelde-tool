@@ -95,7 +95,7 @@ export default {
     };
   },
   methods: {
-    displayEventRoleTab(eventOverview, id) {
+    displayEventRoleTab() {
       // if (eventOverview && eventOverview.participantRole &&
       // eventOverview.participantRole.length) {
       //   const roles = eventOverview.participantRole;
@@ -104,8 +104,8 @@ export default {
       //   debugger;
       //   // return roles.includes(1) || roles.includes(id);
       // }
-      console.log(eventOverview);
-      console.log(id);
+      // console.log(eventOverview);
+      // console.log(id);
       return 1;
     },
   },
@@ -115,7 +115,7 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.$store.commit('setCurrentEventParticipants', res.data[0].scoutOrganisations);
+          this.$store.commit('setCurrentEventParticipants', res.data);
         })
         .catch(() => {
           console.log('Fehler');
