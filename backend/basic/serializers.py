@@ -293,7 +293,6 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
     num_vegan = serializers.SerializerMethodField('get_num_vegan')
     num_grouped_by_age_group = serializers.SerializerMethodField('get_num_grouped_by_age_group')
     num_grouped_by_age_personal = serializers.SerializerMethodField('get_num_grouped_by_age_personal')
-    food_grouped = serializers.SerializerMethodField('get_food_grouped')
 
     class Meta:
         model = Event
@@ -343,6 +342,7 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
         return result
 
     def get_num_grouped_by_age_personal(self, obj):
+        # TODO: Improve result by combaining different habits
         result = obj.registration_set.values(age_group_personal=F('participantpersonal__age_group__name'),
                                              habit_type_personal=F('participantpersonal__eat_habit_type__name')) \
             .annotate(number_personal=Coalesce(Count('participantpersonal__eat_habit_type'), 0)) \
