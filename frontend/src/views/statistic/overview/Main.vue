@@ -96,11 +96,17 @@ export default {
   },
   methods: {
     displayEventRoleTab(eventOverview, id) {
-      if (eventOverview && eventOverview.participantRole) {
-        const roles = eventOverview.participantRole;
-        return roles.includes(1) || roles.includes(id);
-      }
-      return 0;
+      // if (eventOverview && eventOverview.participantRole &&
+      // eventOverview.participantRole.length) {
+      //   const roles = eventOverview.participantRole;
+      //   console.log(roles);
+      //   console.log(id);
+      //   debugger;
+      //   // return roles.includes(1) || roles.includes(id);
+      // }
+      console.log(eventOverview);
+      console.log(id);
+      return 1;
     },
   },
   asyncComputed: {
@@ -109,7 +115,7 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.$store.commit('setCurrentEventParticipants', res.data[0].locations);
+          this.$store.commit('setCurrentEventParticipants', res.data[0].scoutOrganisations);
         })
         .catch(() => {
           console.log('Fehler');

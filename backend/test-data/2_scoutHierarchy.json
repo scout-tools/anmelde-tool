@@ -3629,10 +3629,39 @@
     "pk": 340,
     "fields": {
       "id": 340,
-      "name": "",
-      "zip_code": 1,
-      "parent_id": 1,
-      "level_id": 5
+      "name": "Sippe Eisbären",
+      "parent_id": 41,
+      "level_id": 6
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 341,
+    "fields": {
+      "id": 341,
+      "name": "Roverrunde Hagi",
+      "parent_id": 41,
+      "level_id": 6
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 342,
+    "fields": {
+      "id": 342,
+      "name": "Sippe Thea",
+      "parent_id": 53,
+      "level_id": 6
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 343,
+    "fields": {
+      "id": 343,
+      "name": "Sippe Linus",
+      "parent_id": 53,
+      "level_id": 6
     }
   }
 ]

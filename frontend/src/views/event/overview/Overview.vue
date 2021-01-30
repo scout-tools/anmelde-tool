@@ -89,7 +89,7 @@
                         params: { id: getRegisteredId(item) },
                       }"
                       style="text-decoration: none"
-                      v-if="item.participantRole.length"
+                      v-if="item.isRegistered.length"
                     >
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
@@ -173,6 +173,7 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
     getItems() {
+      console.log(this.items);
       return this.items;
     },
     hasSetExtendedUserInfos() {
@@ -193,7 +194,10 @@ export default {
   },
   methods: {
     getHeaderText(header, roles) {
-      return `${header} (${roles})`;
+      if (roles && roles.length) {
+        return `${header} (Deine Rolle: ${roles[0].eventRole_Name})`;
+      }
+      return header;
     },
     getRegisteredId(item) {
       if (
@@ -222,11 +226,11 @@ export default {
 
       const text1 = `Lager: ${moment(startTime)
         .lang('de')
-        .format(dateFormat)} bis ${moment(endTime).format(dateFormat)}`;
+        .format(dateFormat)} bis ${moment(endTime).lang('de').format(dateFormat)}`;
 
       const text2 = ` - Anmeldung: ${moment(registrationStart)
         .lang('de')
-        .format(dateFormat)} bis ${moment(registrationDeadline).format(
+        .format(dateFormat)} bis ${moment(registrationDeadline).lang('de').format(
         dateFormat,
       )}`;
       return text1 + text2;
@@ -277,18 +281,6 @@ export default {
         .get(path)
         .then((res) => {
           this.$store.commit('setScoutOrgaLevelMapping', res.data);
-        })
-        .catch(() => {
-          this.showError = true;
-        });
-    },
-
-    getParticipantRoleMapping() {
-      const path = `${this.API_URL}basic/participant-role/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.$store.commit('setParticipantRoleMapping', res.data);
         })
         .catch(() => {
           this.showError = true;

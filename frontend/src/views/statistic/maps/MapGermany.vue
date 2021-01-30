@@ -39,6 +39,7 @@ export default {
   methods: {
     json_to_chart_data(jsonData) {
       const returnData = [];
+      debugger;
       jsonData.forEach((event) => {
         const buende = [];
         returnData.push([
@@ -63,9 +64,11 @@ export default {
           ]);
         });
       });
+      debugger;
       return returnData;
     },
     getData() {
+      console.log(this.currentEventParticipants);
       this.chartData = this.json_to_chart_data(this.currentEventParticipants);
     },
   },

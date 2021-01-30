@@ -34,5 +34,23 @@
             "name": "Freie Helfer",
             "description": ""
         }
+    },
+    {
+        "model": "basic.role",
+        "pk": 5,
+        "fields": {
+            "id": 5,
+            "name": "Nur Mosaikers Leben",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 6,
+        "fields": {
+            "id": 6,
+            "name": "Kaperfahrt und Mosaikers Leben",
+            "description": ""
+        }
     }
 ]

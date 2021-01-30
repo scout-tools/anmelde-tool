@@ -73,7 +73,7 @@
         "model": "basic.EventRoleMapping",
         "pk": 8,
         "fields": {
-            "id": 6,
+            "id": 8,
             "event": 1,
             "event_role": 1,
             "user": 2
@@ -83,7 +83,7 @@
         "model": "basic.EventRoleMapping",
         "pk": 9,
         "fields": {
-            "id": 7,
+            "id": 9,
             "event": 4,
             "event_role": 1,
             "user": 2

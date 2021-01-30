@@ -10,13 +10,13 @@ from rest_framework.viewsets import GenericViewSet
 from helper.user_creation import CreateUserExternally
 from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
-    ZipCode, ParticipantGroup, ParticipantRole, Role, MethodOfTravel, Tent, \
+    ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
     TentType, EatHabit
 
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
-    ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
+    RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
     EventParticipantsSerializer, ScoutOrgaLevelSerializer, ParticipantPersonalSerializer, \
     EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, \
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
@@ -122,12 +122,6 @@ class ParticipantGroupViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ParticipantGroup.objects.all()
     serializer_class = ParticipantGroupSerializer
-
-
-class ParticipantRoleViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = ParticipantRole.objects.all()
-    serializer_class = ParticipantRoleSerializer
 
 
 class RoleViewSet(viewsets.ModelViewSet):
