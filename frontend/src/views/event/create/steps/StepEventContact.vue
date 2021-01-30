@@ -7,7 +7,7 @@
       <v-row class="mt-6">
       <span class="subtitle-1">
         {{'Trage hier die E-Mail-Adressen der verantwortlichen Kontaktpersonen' +
-          ' als Ansprechpartner ein.' }}
+          ' als Ansprechperson ein.' }}
         <br>
         <i>{{' (Jede geschriebene E-Mail-Adresse muss mit Enter bestätigt werden!)'}}</i>
       </span>
@@ -62,7 +62,7 @@ export default {
       const errors = [];
       if (!this.$v.contacts.$dirty) return errors;
       if (!this.$v.contacts.required) {
-        errors.push('Es muss mindestens ein Ansprechpartner angegeben werden.');
+        errors.push('Es muss mindestens eine Ansprechperson angegeben werden.');
       }
       if (this.$v.contacts.$each.$anyError) {
         errors.push('Es müssen gültige E-Mail-Adressen angegeben werden.');

@@ -245,6 +245,7 @@ export default {
     },
 
     getUserExtended() {
+      this.userExtendedItems = [];
       const path = `${this.API_URL}auth/data/user-extended/${
         this.getJwtData.userId
       }/?&timestamp=${new Date().getTime()}`;

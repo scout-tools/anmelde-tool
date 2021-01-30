@@ -8,7 +8,7 @@
             zum Lager <b> {{ currentEvent.name }} </b> an. <br />
             <br />
 
-            Ich bin  der Ansprechpartner und unter
+            Ich bin die Ansprechperson und unter
             <b>{{ myEmail }} </b>
             zu erreichen. <br/>
             <br/>
