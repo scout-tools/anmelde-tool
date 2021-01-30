@@ -446,7 +446,7 @@ export default {
       this.getGroups();
     },
     openDialogEdit(input) {
-      this.getParticipantPersonalById(input.id);
+      this.data = input;
       this.active = true;
       this.getGroups();
     },
