@@ -191,16 +191,10 @@
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <zip-code-field
-                ref="zipCodeField"
-                v-model="data.zipCode"
-              />
+              <zip-code-field ref="zipCodeField" v-model="data.zipCode" />
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <eat-field
-                ref="eatHabitType"
-                v-model="data.eatHabitType"
-              />
+              <eat-field ref="eatHabitType" v-model="data.eatHabitType" />
             </v-col>
           </v-row>
           <v-divider class="my-3" />
@@ -417,12 +411,12 @@ export default {
   },
   watch: {
     data() {
-      debugger;
       this.$refs.zipCodeField.setValue(this.data.zipCode);
       this.$refs.eatHabitType.setValue(this.data.eatHabitType);
     },
   },
   methods: {
+    refresh() {},
     requiredField(value) {
       if (value instanceof Array && value.length === 0) {
         return 'Bitte Füllen';

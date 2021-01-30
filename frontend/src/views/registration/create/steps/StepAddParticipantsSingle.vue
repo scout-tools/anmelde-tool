@@ -41,10 +41,12 @@
           </v-list-item-content>
         <v-list-item-action>
           <v-btn dense icon @click="editParticipant(item.id)">
-            <v-icon color="grey lighten-1">mdi-pencil</v-icon>
+            <v-icon color="primary lighten-1">mdi-pencil</v-icon>
           </v-btn>
+        </v-list-item-action>
+        <v-list-item-action>
           <v-btn dense icon @click="deleteParticipant(item.id)">
-            <v-icon color="grey lighten-1">mdi-trash-can</v-icon>
+            <v-icon color="red lighten-1">mdi-trash-can</v-icon>
           </v-btn>
         </v-list-item-action>
         </v-list-item>
@@ -62,6 +64,7 @@
     </v-container>
     <create-single-person-dialog ref="createSinglePersonDialog" @refresh="getParticipants()"/>
     <upload-excel-file ref="uploadExcelFile"/>
+    <delete-modal ref="deleteModal" @refresh="onRefresh" />
   </v-form>
 </template>
 
@@ -69,6 +72,7 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 
+import DeleteModal from '@/views/registration/create/steps/dialog/DeleteModal.vue';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 import CreateSinglePersonDialog from './dialog/CreateSinglePersonDialog.vue';
 import UploadExcelFile from './dialog/UploadExcelFile.vue';
@@ -81,6 +85,7 @@ export default {
     PrevNextButtons,
     CreateSinglePersonDialog,
     UploadExcelFile,
+    DeleteModal,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
@@ -167,15 +172,7 @@ export default {
       this.$refs.createSinglePersonDialog.openDialogEdit(this.items[0].participants
         .filter((i) => i.id === id)[0]);
     },
-    deleteParticipant(id) {
-      axios
-        .delete(`${this.API_URL}basic/participant-personal/${id}/`)
-        .then((res) => {
-          this.items = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    onRefresh() {
       this.getParticipants();
     },
     newUser() {
@@ -183,6 +180,9 @@ export default {
     },
     openExcelDialog() {
       this.$refs.uploadExcelFile.openDialog();
+    },
+    deleteParticipant(item) {
+      this.$refs.deleteModal.show(item);
     },
   },
 };
