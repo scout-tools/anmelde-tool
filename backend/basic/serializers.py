@@ -346,7 +346,7 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
         result = obj.registration_set.values(age_group_group=F('participantgroup__age_group__name'),
                                              habit_type_group=F('participantgroup__eathabit__eat_habit_type__name')) \
             .annotate(number_group=Coalesce(Sum('participantgroup__eathabit__number_of_persons'), 0)) \
-            .exclude(age_group_group__isnull=True, habit_type_group__isnull=True) \
+            .exclude(age_group_group__isnull=True).exclude(habit_type_group__isnull=True) \
             .order_by('-participantgroup__age_group')
         return result
 
@@ -355,7 +355,7 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
         result = obj.registration_set.values(age_group_personal=F('participantpersonal__age_group__name'),
                                              habit_type_personal=F('participantpersonal__eat_habit_type__name')) \
             .annotate(number_personal=Coalesce(Count('participantpersonal__eat_habit_type'), 0)) \
-            .exclude(age_group_personal__isnull=True, habit_type_personal__isnull=True) \
+            .exclude(age_group_personal__isnull=True).exclude(habit_type_personal__isnull=True) \
             .order_by('-participantpersonal__age_group')
         return result
 
