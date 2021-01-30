@@ -2,7 +2,7 @@
 from django.contrib.postgres.aggregates import ArrayAgg
 from rest_framework import serializers
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, \
-    ParticipantGroup, ParticipantRole, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
+    ParticipantGroup, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
     EatHabitType, EatHabit, TravelType, TentType
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
@@ -178,12 +178,6 @@ class RegistrationParticipantsSerializer(serializers.ModelSerializer):
 
     def get_participants(self, obj):
         return obj.participantpersonal_set.values()
-
-
-class ParticipantRoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ParticipantRole
-        fields = '__all__'
 
 
 class RoleSerializer(serializers.ModelSerializer):

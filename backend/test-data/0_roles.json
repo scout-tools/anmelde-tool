@@ -40,7 +40,7 @@
         "pk": 5,
         "fields": {
             "id": 5,
-            "name": "Mosaikers Leben",
+            "name": "Nur Mosaikers Leben",
             "description": ""
         }
     },
@@ -49,7 +49,7 @@
         "pk": 6,
         "fields": {
             "id": 6,
-            "name": "Kaperfahrt",
+            "name": "Kaperfahrt und Mosaikers Leben",
             "description": ""
         }
     }

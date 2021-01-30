@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy,\
-    Registration, ZipCode, ParticipantGroup, ParticipantRole,\
+    Registration, ZipCode, ParticipantGroup,\
     Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal,\
     EatHabitType, EatHabit, TravelType,\
     TentType, EventTag, EventRoleMapping, EventRole
@@ -12,7 +12,6 @@ admin.site.register(EventLocation)
 admin.site.register(Registration)
 admin.site.register(ZipCode)
 admin.site.register(ParticipantGroup)
-admin.site.register(ParticipantRole)
 admin.site.register(Role)
 admin.site.register(MethodOfTravel)
 admin.site.register(ScoutOrgaLevel)

@@ -14,7 +14,6 @@ router.register(r'registration', views.RegistrationViewSet, basename='registrati
 router.register(r'zip-code', views.ZipCodeViewSet)
 router.register(r'participant-group', views.ParticipantGroupViewSet, basename="participant-group")
 router.register(r'participant-personal', views.ParticipantPersonalViewSet)
-router.register(r'participant-role', views.ParticipantRoleViewSet)
 router.register(r'eat-habit-type', views.EatHabitTypeViewSet)
 router.register(r'eat-habit', views.EatHabitViewSet)
 router.register(r'travel-type', views.TravelTypeViewSet)
