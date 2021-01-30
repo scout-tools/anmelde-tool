@@ -43,7 +43,7 @@
                     {{ item[column] }}
                   </td>
                   <td>
-                    <v-btn icon>
+                    <v-btn icon @click="fillParticipant(item)">
                       <v-icon> mdi-cloud-upload </v-icon>
                     </v-btn>
                   </td>
@@ -53,14 +53,19 @@
           </v-simple-table>
         </v-card>
       </v-sheet>
+      <create-single-person-dialog ref="createSinglePersonDialog"></create-single-person-dialog>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
 import XLSX from 'xlsx';
+import CreateSinglePersonDialog from '@/views/registration/create/steps/dialog/CreateSinglePersonDialog.vue';
 
 export default {
+  components: {
+    CreateSinglePersonDialog,
+  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
@@ -125,6 +130,9 @@ export default {
         this.data[key] = '';
       });
       this.$emit('close');
+    },
+    fillParticipant(input) {
+      this.$refs.createSinglePersonDialog.openDialogEdit(input);
     },
   },
   computed: {

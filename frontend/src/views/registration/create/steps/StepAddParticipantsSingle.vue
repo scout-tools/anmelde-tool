@@ -40,7 +40,7 @@
             <v-list-item-title v-text="item.firstName"></v-list-item-title>
           </v-list-item-content>
         <v-list-item-action>
-          <v-btn dense icon>
+          <v-btn dense icon @click="editParticipant(item.id)">
             <v-icon color="grey lighten-1">mdi-pencil</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -159,6 +159,11 @@ export default {
       Promise.all(promises).then(() => {
         this.$emit('nextStep');
       });
+    },
+    editParticipant(id) {
+      console.log(id);
+      this.$refs.createSinglePersonDialog.openDialogEdit(this.items[0].participants
+        .filter((i) => i.id === id)[0]);
     },
     newUser() {
       this.$refs.createSinglePersonDialog.openDialog();

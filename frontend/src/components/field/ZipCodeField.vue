@@ -2,7 +2,6 @@
   <v-autocomplete
     v-model="value"
     :items="items"
-    :loading="isLoading"
     :search-input.sync="search"
     :item-text="customText"
     item-value="id"
@@ -28,7 +27,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 export default {
   prop: ['value'],
@@ -48,34 +47,14 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['zipCodeMapping']),
     items() {
       return this.entries;
     },
   },
-
-  watch: {
-    search() {
-      // Items have already been loaded
-      if (this.items.length > 0) return;
-
-      // Items have already been requested
-      if (this.isLoading) return;
-
-      this.isLoading = true;
-
-      // Lazily load input items
-      const path = `${this.API_URL}basic/zip-code/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.count = res.data.length;
-          this.entries = res.data;
-          this.isLoading = false;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+  created() {
+    this.count = this.zipCodeMapping.length;
+    this.entries = this.zipCodeMapping;
   },
 };
 </script>

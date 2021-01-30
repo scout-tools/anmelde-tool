@@ -351,6 +351,17 @@ export default {
           this.showError = true;
         });
     },
+    getZipCodeMapping() {
+      const path = `${this.API_URL}basic/zip-code/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setZipCodeMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
 
     show(item) {
       this.$refs.messageModal.show(item);
@@ -369,6 +380,7 @@ export default {
     this.getHierarchyMapping();
     this.getAgeGroupMapping();
     this.getTentTypeMapping();
+    this.getZipCodeMapping();
   },
 };
 </script>

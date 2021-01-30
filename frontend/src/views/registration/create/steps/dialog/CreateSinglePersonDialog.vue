@@ -191,7 +191,7 @@
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <zip-code-field v-model="data.zipCode" />
+              <zip-code-field v-model="data.zipCode"/>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <eat-field v-model="data.eatHabitType" />
@@ -282,6 +282,8 @@ export default {
       scoutGroup: null,
       isGroupLeader: false,
       roles: ['1'],
+      id: 0,
+      zipCodeId: 0,
     },
     showError: false,
     showSuccess: false,
@@ -432,7 +434,18 @@ export default {
         eatHabitType: [],
         isGroupLeader: false,
         roles: ['1'],
+        id: 0,
       };
+      this.active = true;
+      this.getGroups();
+    },
+    openDialogEdit(input) {
+      this.data = input;
+      this.data.scoutGroup = this.scoutHierarchyGroups
+        .filter((i) => i.id === input.scoutGroup).name;
+      if (!input.eatHabitType) {
+        this.data.eatHabitType = [];
+      }
       this.active = true;
       this.getGroups();
     },
@@ -474,12 +487,21 @@ export default {
       if (this.data.scoutGroup && this.data.scoutGroup.id) {
         this.data.scoutGroup = this.data.scoutGroup.id;
       }
-      axios
-        .post(`${this.API_URL}basic/participant-personal/`, this.data)
-        .then(() => {
-          this.closeDialog();
-          this.$emit('refresh');
-        });
+      if (this.data.id === 0) {
+        axios
+          .post(`${this.API_URL}basic/participant-personal/`, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
+      } else {
+        axios
+          .put(`${this.API_URL}basic/participant-personal/${this.data.id}/`, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
+      }
     },
     getData() {
       return this.data;
