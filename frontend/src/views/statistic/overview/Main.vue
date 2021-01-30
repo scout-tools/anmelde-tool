@@ -115,7 +115,7 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.$store.commit('setCurrentEventParticipants', res.data[0].locations);
+          this.$store.commit('setCurrentEventParticipants', res.data[0].scoutOrganisations);
         })
         .catch(() => {
           console.log('Fehler');
