@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { required, minLength, minValue } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
@@ -107,6 +108,23 @@ export default {
         return;
       }
       this.$emit('submit');
+    },
+    saveTravel(type, id, number) {
+      const dto = {
+        numberOfPersons: number,
+        registration: this.$route.params.id,
+        travelType: 0,
+        travelTag: 1,
+      };
+      dto.travelType = type;
+      axios
+        .put(
+          `${this.API_URL}basic/method-of-travel/`,
+          dto,
+        )
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
