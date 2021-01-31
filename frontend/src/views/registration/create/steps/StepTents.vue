@@ -141,7 +141,6 @@ export default {
       const dto = { registration: '', tentType: 1, usedByScoutGroups: [] };
       dto.registration = this.$route.params.id;
       this.data.tents.forEach((i) => {
-        console.log(i);
         if (i.i.isEmpty || i.i === 0) {
           dto.tentType = i.selectedType;
           i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));

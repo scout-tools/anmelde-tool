@@ -13,7 +13,7 @@
         <v-row align="center">
           <v-col cols="6">
             <v-text-field
-              v-model="data.methodOfTravels[0].numberOfPersons"
+              v-model="data.methodOfTravels.filter((i) => i.travelType === 1)[0].numberOfPersons"
               label="Bus"
               required
               prepend-icon="mdi-bus"
@@ -21,7 +21,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              v-model="data.methodOfTravels[1].numberOfPersons"
+              v-model="data.methodOfTravels.filter((i) => i.travelType === 2)[0].numberOfPersons"
               label="PKW"
               required
               prepend-icon="mdi-car"
@@ -29,7 +29,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              v-model="data.methodOfTravels[2].numberOfPersons"
+              v-model="data.methodOfTravels.filter((i) => i.travelType === 3)[0].numberOfPersons"
               label="OEPNV"
               required
               prepend-icon="mdi-bus-stop"
@@ -37,7 +37,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              v-model="data.methodOfTravels[3].numberOfPersons"
+              v-model="data.methodOfTravels.filter((i) => i.travelType === 4)[0].numberOfPersons"
               label="zu Fuss"
               required
               prepend-icon="mdi-hiking"
@@ -45,7 +45,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              v-model="data.methodOfTravels[4].numberOfPersons"
+              v-model="data.methodOfTravels.filter((i) => i.travelType === 5)[0].numberOfPersons"
               label="Wasserweg"
               required
               prepend-icon="mdi-ship-wheel"
@@ -60,6 +60,7 @@
             />
           </v-col>
         </v-row>
+        <v-btn @click="save">Fertig</v-btn>
       </v-card>
     </v-form>
   </v-container>
@@ -71,20 +72,14 @@ import { required, minLength, minValue } from 'vuelidate/lib/validators';
 import axios from 'axios';
 
 export default {
-  props: ['title'],
+  props: ['title', 'input'],
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: false,
     data: {
       maxNumber: 0,
-      numberBus: 0,
-      numberCar: 0,
-      numberPublic: 0,
-      numberWalking: 0,
-      numberWater: 0,
       numberAlreadyThere: 0,
-      infos: ['Anreise', 'Abreise'],
       methodOfTravels: [{
         numberOfPersons: 0,
         registration: 0,
@@ -130,12 +125,16 @@ export default {
   },
   created() {
     this.getMaxNumber();
+    console.log(this.input);
+    if (!this.input === []) {
+      this.data.methodOfTravels = this.input;
+    }
   },
   methods: {
     reached() {
       let sum = 0;
       this.data.methodOfTravels.forEach((i) => {
-        sum += i.numberOfPersons;
+        sum += i.numberOfPersons * 1;
       });
       sum += this.data.numberAlreadyThere;
       return sum;
@@ -152,7 +151,8 @@ export default {
         });
     },
     save() {
-      this.$emit('customEvent', this.data.methodOfTravels);
+      console.log(this.data.methodOfTravels);
+      this.$emit('save', this.data.methodOfTravels);
     },
   },
 };

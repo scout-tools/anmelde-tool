@@ -26,7 +26,7 @@ import TravelPicker from '../components/TravelPicker.vue';
 
 export default {
   name: 'StepNameDescription',
-  displayName: 'Abreise',
+  displayName: 'Anreise - Mosaikersleben',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,
@@ -36,7 +36,7 @@ export default {
     API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: false,
-    travelTag: 3,
+    travelTag: 2,
   }),
   validations: {
     data: {

@@ -2,9 +2,9 @@
   <v-form ref="formNameDescription" v-model="valid">
         <v-card flat>
           <travel-picker
+            :input=this.getMethod
             title="Kaperfahrt"
-            @customEvent = "saveTravel"
-          />
+            @save="saveTravel"></travel-picker>
         </v-card>
       <v-divider class="my-3" />
       <prev-next-buttons
@@ -26,7 +26,7 @@ import TravelPicker from '../components/TravelPicker.vue';
 
 export default {
   name: 'StepNameDescription',
-  displayName: 'Anreise',
+  displayName: 'Anreise - Kaperfahrt',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,
@@ -36,40 +36,9 @@ export default {
     API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: false,
-    data: {
-      maxNumber: 25,
-      numberBus: 0,
-      numberCar: 0,
-      numberPublic: 0,
-      numberWalking: 0,
-      numberWater: 0,
-      methodOfTravels: [{
-        numberOfPersons: 0,
-        registration: this.$route.params.id,
-        travelType: 1, // Reisebus
-        travelTag: -1,
-      }, {
-        numberOfPersons: 0,
-        registration: this.$route.params.id,
-        travelType: 2, // PKW
-        travelTag: -1,
-      }, {
-        numberOfPersons: 0,
-        registration: this.$route.params.id,
-        travelType: 3, // OEPNV
-        travelTag: -1,
-      }, {
-        numberOfPersons: 0,
-        registration: this.$route.params.id,
-        travelType: 4, // zu fuss
-        travelTag: -1,
-      }, {
-        numberOfPersons: 0,
-        registration: this.$route.params.id,
-        travelType: 5, // Wasserweg
-        travelTag: -1,
-      }],
-    },
+    travelTag: 1,
+    items: [],
+    filteredItems: [],
   }),
   validations: {
     data: {
@@ -79,6 +48,9 @@ export default {
         minValue: minValue(1),
       },
     },
+  },
+  created() {
+
   },
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),
@@ -98,6 +70,16 @@ export default {
     },
   },
   methods: {
+    getMethod() {
+      axios
+        .get(
+          `${this.API_URL}basic/method-of-travel/`,
+        )
+        .then((res) => res.data.filter((i) => i.travelTag === this.travelTag))
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     greaterThanZero(value) {
       return value > 0;
     },
@@ -118,35 +100,20 @@ export default {
       }
       this.$emit('submit');
     },
-    saveTravel(type, id, number) {
-      const dto = {
-        numberOfPersons: number,
-        registration: this.$route.params.id,
-        travelType: 0,
-        travelTag: 1,
-      };
-      dto.travelType = type;
-      axios
-        .put(
-          `${this.API_URL}basic/method-of-travel/`,
-          dto,
-        )
-        .catch((err) => {
-          console.log(err);
-        });
-      const promises = [];
-      const registrationId = this.$route.params.id;
-      const myUrl = `${this.API_URL}basic/participant-group/`;
-      const valueArray = Object.values(this.data);
-      Object.keys(this.data).forEach((element, index) => {
-        const paramsData = {
-          ageGroup: parseInt(element, 10),
-          numberOfPersons: parseInt(valueArray[index], 10),
-          registration: parseInt(registrationId, 10),
-        };
-        promises.push(axios.post(myUrl, paramsData));
+    saveTravel(methodOfTravel) {
+      methodOfTravel.forEach((i) => {
+        // eslint-disable-next-line no-param-reassign
+        i.registration = parseInt(this.$route.params.id, 10);
+        // eslint-disable-next-line no-param-reassign
+        i.travelTag = this.travelTag;
       });
+      console.log(methodOfTravel);
 
+      const promises = [];
+      const myUrl = `${this.API_URL}basic/method-of-travel/`;
+      methodOfTravel.forEach((i) => {
+        promises.push(axios.post(myUrl, i));
+      });
       Promise.all(promises).then(() => {
         this.$emit('nextStep');
       });
