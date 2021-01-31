@@ -173,7 +173,6 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
     getItems() {
-      console.log(this.items);
       return this.items;
     },
     hasSetExtendedUserInfos() {

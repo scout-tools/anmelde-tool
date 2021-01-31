@@ -50,7 +50,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
-  displayName: 'Teilnehmer_innen Anzahl',
+  displayName: 'Teilnehmende',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,
