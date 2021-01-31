@@ -281,8 +281,7 @@ export default {
       eatHabitType: [],
       scoutGroup: null,
       isGroupLeader: false,
-      roles: ['1'],
-      id: 0,
+      roles: [],
     },
     showError: false,
     showSuccess: false,
@@ -439,8 +438,7 @@ export default {
         registration: null,
         eatHabitType: [],
         isGroupLeader: false,
-        roles: ['1'],
-        id: 0,
+        roles: [],
       };
       this.active = true;
       this.getGroups();
@@ -501,7 +499,7 @@ export default {
       if (this.data.eatHabitType && this.data.eatHabitType.name) {
         this.data.eatHabitType = this.data.eatHabitType.name;
       }
-      if (this.data.id === 0) {
+      if (!this.data.id) {
         axios
           .post(`${this.API_URL}basic/participant-personal/`, this.data)
           .then(() => {

@@ -66,7 +66,7 @@ import UploadExcelFile from './dialog/UploadExcelFile.vue';
 
 export default {
   name: 'StepNameDescription',
-  displayName: 'Einzel Teilnehmer_innen',
+  displayName: 'Teilnehmende',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,

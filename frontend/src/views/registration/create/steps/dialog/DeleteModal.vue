@@ -52,7 +52,6 @@ export default {
 
   methods: {
     onDeleteClick() {
-      debugger;
       axios
         .delete(`${this.API_URL}basic/participant-personal/${this.data}/`)
         .then(() => {
