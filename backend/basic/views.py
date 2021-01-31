@@ -130,7 +130,7 @@ class RoleViewSet(viewsets.ModelViewSet):
     serializer_class = RoleSerializer
 
 
-class MethodOfTravelViewSet(viewsets.ReadOnlyModelViewSet):
+class MethodOfTravelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = MethodOfTravel.objects.all()
     serializer_class = MethodOfTravelSerializer
