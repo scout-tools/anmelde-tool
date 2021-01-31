@@ -292,7 +292,7 @@ export default {
       eatHabitType: [],
       scoutGroup: null,
       isGroupLeader: false,
-      participantRole: 6,
+      participantRole: 5,
     },
     roleItems: [
       {
@@ -475,6 +475,7 @@ export default {
         scoutGroup: null,
         isGroupLeader: false,
         roles: [],
+        participantRole: 5,
       };
       this.eatHabitText = null;
       this.active = true;

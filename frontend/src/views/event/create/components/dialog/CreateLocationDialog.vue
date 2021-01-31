@@ -82,7 +82,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gallo' }}
+                        {{ 'Schlafplätze Drinnen in Betten und auf dem Boden' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -103,7 +103,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gallo' }}
+                        {{ 'Schlafplätze in Zelten' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -125,7 +125,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gallo' }}
+                        {{ 'Wie viele Schlafkapazitäten hattet ihr im September 2020' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -147,7 +147,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gallo' }}
+                        {{ 'Wie viele Schlafkapazitäten hattet ihr im September 2020' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -172,7 +172,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gallo' }}
+                        {{ 'Genaue Adresse des Ortes' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -196,7 +196,7 @@
                   prepend-icon="mdi-account"
                   v-model="data.contactName"
                   :error-messages="contactNameErrors"
-                  label="Name"
+                  label="Name der Kontaktperson"
                 >
                   <template slot="append">
                     <v-tooltip bottom>
@@ -206,7 +206,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gallo' }}
+                        {{ 'Name der Kontaktperson' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -227,7 +227,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gallo' }}
+                        {{ 'E-Mail der Kontaktperson' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -248,7 +248,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gallo' }}
+                        {{ 'Telefonnummer der Kontaktperson' }}
                       </span>
                     </v-tooltip>
                   </template>
