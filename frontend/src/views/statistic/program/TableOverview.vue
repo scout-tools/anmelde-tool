@@ -20,12 +20,12 @@ export default {
         availableFields: [],
         rowFields: [
           {
-            getter: (item) => item.ageGroupGroup,
-            label: 'Alter-1',
+            getter: (item) => item.ageGroup,
+            label: 'Alter',
           },
           {
-            getter: (item) => item.ageGroupPersonal,
-            label: 'Alter-2',
+            getter: (item) => item.role,
+            label: 'Lager',
           },
         ],
         colFields: [
