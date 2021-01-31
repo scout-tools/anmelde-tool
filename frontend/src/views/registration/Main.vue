@@ -6,15 +6,15 @@
           <v-layout column>
             <v-card>
               <v-card-title class="text-center justify-center py-6">
-                Deine persönlichen Daten
+                Anmeldung starten
               </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-subheader class="ma-5">
-                    Bitte füge folgende Daten in dein Profil hinzu, damit
-                    das Anmelde-Tool in der Lage ist, dich korrekt zuzuordnen. <br>
-                    Diese Daten sind für nur für die
-                    Lagerleitung nach deiner explizieten Anmeldung zu einem Lager sichtbar.
+                    Hast du keinen Code bekommen? Gucke nochmal in der Einladung.
+                    Falls du nichts findest melde dich bei der Lagerleitung,
+                    deiner Bundesführung oder bei:
+                    <a href= "mailto:support@anmelde-tool.de">support@anmelde-tool.de</a>
                   </v-subheader>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
@@ -143,11 +143,10 @@ export default {
       showError: false,
       items: {},
       tooltip: {
-        email: '123',
-        scoutName: '456',
+        email: 'Name falsch? Diesen kannst Du unter User ändern.',
+        scoutName: 'Stamm falsch? Diesen kannst Du unter User ändern.',
         invitationCode:
-          'Hast du keinen Code bekommen? Gucke nochmal in der Einladung.'
-          + 'Falls du nichts findest melde dich bei der Lagerleitung, deiner Bundesführung oder bei support@anmelde-tool.de',
+          'Der Code steht in der offizellen Anmeldung.',
       },
     };
   },

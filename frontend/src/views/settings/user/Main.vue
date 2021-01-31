@@ -12,11 +12,11 @@
               <v-card-text>
                 <v-container>
                   <v-subheader class="ma-5">
-                    Hier musst du paar persönlichen Daten angeben. Dein
-                    Stamm sowie dein Pfadfindername sind wichtig damit du dich
-                    bei Lagern anmelden kannst. Fülle die Felder deswegen
-                    unbedingt aus. Die Handynummer ist natürlich nur freiwillig
-                    und hilft ggf. dich zu kontaktieren.
+                    Hier musst du deine persönlichen Daten angeben. Dein
+                    Stamm sowie deine Pfadfindername sind wichtig, damit
+                    du dich bei Lagern anmelden kannst. Fülle die Felder
+                    deswegen unbedingt aus. Die Handynummer ist freiwillig
+                    und hilft dich zu kontaktieren.
                   </v-subheader>
                   <v-row>
                     <v-col cols="12" sm="6">
@@ -73,6 +73,8 @@
                     </v-col>
                     <v-col cols="12" sm="6">
                       <v-text-field
+                        readonly
+                        filled
                         v-model="getStammName"
                         label="Mein Stamm*"
                         prepend-icon="mdi-account-group"
@@ -210,7 +212,7 @@ export default {
           'Gib hier bitte deinen Namen oder deinen Fahrtennamen ein.',
         email: 'Die E-Mail nutzen wir für die Kommunikation mit dem Tool als auch für Rückfragen.',
         mobileNumber: 'Hier kannst du freiwillig deine Handynummer angeben. ',
-        scoutOrganisation: 'Blub',
+        scoutOrganisation: 'Bei dem Stift kannst Du deinen Stamm auswählen',
       },
       user: null,
       scoutOrganisation: null,
@@ -231,7 +233,7 @@ export default {
       if (obj && obj.name) {
         return obj.name;
       }
-      return 'Kein Stamm';
+      return 'Noch kein Stamm gewählt';
     },
     checkboxErrors() {
       const errors = [];

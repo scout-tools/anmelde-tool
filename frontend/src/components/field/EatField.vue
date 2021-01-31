@@ -1,5 +1,5 @@
 <template>
-  <v-combobox
+  <v-autocomplete
     v-model="value"
     :items="eatHabitTypeMapping"
     label="Essens Besonderheiten"
@@ -23,7 +23,7 @@
         </span>
       </v-tooltip>
     </template>
-  </v-combobox>
+  </v-autocomplete>
 </template>
 
 <script>
@@ -42,19 +42,13 @@ export default {
   computed: {
     ...mapGetters(['eatHabitTypeMapping']),
 
-    // items() {
-    //   if (!this.model.filter((item) => item.id === 2).length) {
-    //     return this.eatHabitTypeMapping;
-    //   }
-    //   return this.eatHabitTypeMapping
-    //     .filter((item) => item.id !== 5)
-    //     .filter((item) => item.id !== 6)
-    //     .filter((item) => item.id !== 1);
-    // },
   },
   methods: {
     onInputchange() {
       this.$emit('input', this.value);
+    },
+    setValue(value) {
+      this.value = value;
     },
   },
 };

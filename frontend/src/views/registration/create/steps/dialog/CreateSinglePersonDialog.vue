@@ -191,10 +191,10 @@
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <zip-code-field v-model="data.zipCode" />
+              <zip-code-field ref="zipCodeField" v-model="data.zipCode" />
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <eat-field v-model="data.eatHabitType" />
+              <eat-field ref="eatHabitType" v-model="data.eatHabitType" />
             </v-col>
           </v-row>
           <v-divider class="my-3" />
@@ -274,14 +274,14 @@ export default {
       firstName: '',
       lastName: '',
       street: '',
-      zipCode: '',
+      zipCode: 0,
       phoneNumber: '',
       age: null,
       registration: null,
       eatHabitType: [],
       scoutGroup: null,
       isGroupLeader: false,
-      roles: ['1'],
+      roles: [],
     },
     showError: false,
     showSuccess: false,
@@ -408,7 +408,14 @@ export default {
       return errors;
     },
   },
+  watch: {
+    data() {
+      this.$refs.zipCodeField.setValue(this.data.zipCode);
+      this.$refs.eatHabitType.setValue(this.data.eatHabitType);
+    },
+  },
   methods: {
+    refresh() {},
     requiredField(value) {
       if (value instanceof Array && value.length === 0) {
         return 'Bitte Füllen';
@@ -426,13 +433,18 @@ export default {
         firstName: '',
         lastName: '',
         street: '',
-        zipCode: '',
+        zipCode: 0,
         dateBirth: '2010-01-01',
         registration: null,
         eatHabitType: [],
         isGroupLeader: false,
-        roles: ['1'],
+        roles: [],
       };
+      this.active = true;
+      this.getGroups();
+    },
+    openDialogEdit(input) {
+      this.data = input;
       this.active = true;
       this.getGroups();
     },
@@ -441,6 +453,16 @@ export default {
         .get(`${this.API_URL}basic/scout-hierarchy-group/`)
         .then((res) => {
           this.scoutHierarchyGroups = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getParticipantPersonalById(id) {
+      axios
+        .get(`${this.API_URL}basic/participant-personal/${id}/`)
+        .then((res) => {
+          this.data = res.data;
         })
         .catch((err) => {
           console.log(err);
@@ -471,15 +493,30 @@ export default {
     },
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
-      if (this.data.scoutGroup && this.data.scoutGroup.id) {
-        this.data.scoutGroup = this.data.scoutGroup.id;
+      if (this.data.scoutGroup && this.data.scoutGroup.name) {
+        this.data.scoutGroup = this.data.scoutGroup.name;
       }
-      axios
-        .post(`${this.API_URL}basic/participant-personal/`, this.data)
-        .then(() => {
-          this.closeDialog();
-          this.$emit('refresh');
-        });
+      if (this.data.eatHabitType && this.data.eatHabitType.name) {
+        this.data.eatHabitType = this.data.eatHabitType.name;
+      }
+      if (!this.data.id) {
+        axios
+          .post(`${this.API_URL}basic/participant-personal/`, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
+      } else {
+        axios
+          .put(
+            `${this.API_URL}basic/participant-personal/${this.data.id}/`,
+            this.data,
+          )
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
+      }
     },
     getData() {
       return this.data;

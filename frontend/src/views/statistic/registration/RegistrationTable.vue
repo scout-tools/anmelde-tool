@@ -41,7 +41,7 @@ export default {
   computed: {
     ...mapGetters(['currentEventParticipants']),
     data() {
-      return this.currentEventParticipants;
+      return this.currentEventParticipants[0].scoutOrganisations;
     },
   },
 };

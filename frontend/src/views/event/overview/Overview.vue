@@ -173,7 +173,6 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
     getItems() {
-      console.log(this.items);
       return this.items;
     },
     hasSetExtendedUserInfos() {
@@ -343,6 +342,17 @@ export default {
           this.showError = true;
         });
     },
+    getZipCodeMapping() {
+      const path = `${this.API_URL}basic/zip-code/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setZipCodeMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
 
     show(item) {
       this.$refs.messageModal.show(item);
@@ -355,12 +365,12 @@ export default {
     this.getEvent();
     this.getUserExtended();
     this.getScoutOrgaLevelMapping();
-    this.getParticipantRoleMapping();
     this.getEatHabitTypeMapping();
     this.getTravelTypeMapping();
     this.getHierarchyMapping();
     this.getAgeGroupMapping();
     this.getTentTypeMapping();
+    this.getZipCodeMapping();
   },
 };
 </script>
