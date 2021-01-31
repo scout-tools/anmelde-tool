@@ -203,14 +203,27 @@
               <v-container fluid>
                 <v-select
                   v-model="data.participantRole"
+                  prepend-icon="mdi-tent"
                   :items="roleItems"
                   :error-messages="participantRoleErrors"
                   item-text="name"
                   item-value="id"
-                  label="Kaperfahrt?"
+                  label="Bundesfahrt und/oder Kaperfahrt?"
                   required
                   @input="validate()"
                 >
+                  <template slot="append">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon color="success" dark v-bind="attrs" v-on="on">
+                          mdi-help-circle-outline
+                        </v-icon>
+                      </template>
+                      <span>
+                        {{ 'Gallo' }}
+                      </span>
+                    </v-tooltip>
+                  </template>
                 </v-select>
               </v-container>
               <template slot="append">
