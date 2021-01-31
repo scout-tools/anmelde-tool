@@ -11,7 +11,7 @@
             letzten Schritt ausdrücklich bestätigen. Du kannst deinen
             Anmeldevorgang zu jedem Zeitpunkt abbrechen und später
             fortsetzen. Deine Daten kannst Du bis zum Anmeldeschluss
-            01.Mai 2021 verändern. <br>
+            {{ registrationDeadlineFormat }} verändern. <br>
             <br>
             Deine folgenden Daten sind nur für das Planungsteam sichtbar
           </p>
@@ -19,7 +19,10 @@
       </v-row>
       <v-divider class="text-left my-2" />
       <v-row>
-        <v-checkbox v-model="data.checkbox1" :label="`Ich stimme zu.`">
+        <v-checkbox
+          v-model="data.checkbox1"
+          :label="`Ich stimme zu.`"
+          :error-messages="checkbox1Errors">
         </v-checkbox>
       </v-row>
 
@@ -38,6 +41,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import moment from 'moment';
 
 import { required } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
@@ -68,6 +72,14 @@ export default {
   },
   computed: {
     ...mapGetters(['isAuthenticated', 'hierarchyMapping', 'getJwtData']),
+    checkbox1Errors() {
+      const errors = [];
+      if (!this.$v.data.checkbox1.$dirty) return errors;
+      if (!this.$v.data.checkbox1.required || !this.$v.data.checkbox1.checked) {
+        errors.push('Deine Zustimmung ist erforderlich, damit du weiter machen kannst.');
+      }
+      return errors;
+    },
     myStamm() {
       if (this.scoutOrganisation) {
         return this.hierarchyMapping.find(
@@ -76,6 +88,9 @@ export default {
       }
       return 'Keine Name';
     },
+    registrationDeadlineFormat() {
+      return moment(this.currentEvent.registrationDeadline).lang('de').format('ll');
+    },
     myEmail() {
       return this.getJwtData.email;
     },
@@ -83,7 +98,6 @@ export default {
   methods: {
     validate() {
       this.$v.$touch();
-      console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
     },
     prevStep() {

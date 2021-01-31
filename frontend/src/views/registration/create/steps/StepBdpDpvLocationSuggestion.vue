@@ -2,9 +2,10 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container class="px-0" fluid>
         <v-container>
-          <span>
-            Hier kannst Du noch ein weiteres Heim eintragen (freiwillig)
-          </span>
+          <p>
+            Wir würden uns freuen, wenn Du hier noch weitere Heime
+            und/oder Lagerplätze einträgst, die sich für das Spiel eignen
+          </p>
 
           <v-divider class="my-2"/>
 
@@ -32,7 +33,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
-  displayName: 'Lagerplatz vorschlagen',
+  displayName: 'Heim-/Lagerplatzvorschläge',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
