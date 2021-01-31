@@ -30,7 +30,7 @@
                 item-value="name"
                 autofocus
                 required
-                :rules="[requiredField]"
+                :rules="[requiredField, validScoutGroup]"
                 label="Gruppe"
                 prepend-icon="mdi-account-group"
               >
@@ -42,7 +42,8 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Gallo' }}
+                      {{ 'Gruppe des Teilnehmenden aus der Liste auswählen ' +
+                          'oder neuen Namen eingeben' }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -58,7 +59,7 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Gallo' }}
+                      {{ 'Ist Teil der Gruppenführung der Gruppe' }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -86,7 +87,7 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Gallo' }}
+                      {{ 'Vorname des Teilnehmenden' }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -111,7 +112,7 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Gallo' }}
+                      {{ 'Nachname des Teilnehmenden' }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -119,12 +120,14 @@
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                label="Alter"
                 v-model="data.age"
-                type="number"
-                suffix="Jahre"
                 :error-messages="ageErrors"
+                label="Alter"
+                suffix="Jahre"
                 prepend-icon="mdi-human-child"
+                required
+                @input="$v.data.age.$touch()"
+                @blur="$v.data.age.$touch()"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -159,7 +162,7 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Gallo' }}
+                      {{ 'Adresse des Teilnehmenden' }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -184,7 +187,7 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Gallo' }}
+                      {{ 'Telefonnummer des Teilnehmenden' }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -194,47 +197,41 @@
               <zip-code-field ref="zipCodeField" v-model="data.zipCode" />
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <eat-field ref="eatHabitType" v-model="data.eatHabitType" />
+              <eat-autocomplete-field ref="eatHabitType" v-model="data.eatHabitType" />
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <eat-text-field ref="eatHabitText" v-model="eatHabitText" />
             </v-col>
           </v-row>
           <v-divider class="my-3" />
           <v-row>
             <v-col cols="12" sm="6">
               <v-container fluid>
-                <v-switch
-                  v-model="data.roles"
-                  color="primary"
-                  label="Bundesfahrt"
-                  value="1"
-                  hide-details
-                ></v-switch>
-                <v-switch
-                  v-model="data.roles"
-                  color="orange"
-                  label="Kaperfahrt"
-                  value="2"
-                  hide-details
-                ></v-switch>
-                <v-switch
-                  v-model="data.roles"
-                  color="orange"
-                  label="Tagesgast"
-                  value="3"
-                  hide-details
-                ></v-switch>
-              </v-container>
-              <template slot="append">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="success" dark v-bind="attrs" v-on="on">
-                      mdi-help-circle-outline
-                    </v-icon>
-                  </template>
-                  <span>
-                    {{ 'Gallo' }}
+                <v-select
+                  v-model="data.participantRole"
+                  prepend-icon="mdi-tent"
+                  :items="roleItems"
+                  :error-messages="participantRoleErrors"
+                  item-text="name"
+                  item-value="id"
+                  label="Bundesfahrt und/oder Kaperfahrt?"
+                  required
+                  @input="$v.data.participantRole.$touch()"
+                >
+                  <template slot="append">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon color="success" dark v-bind="attrs" v-on="on">
+                          mdi-help-circle-outline
+                        </v-icon>
+                      </template>
+                      <span>
+                    {{ 'An welchen Teilfahrten nimmt der Teilnehmende teil?' }}
                   </span>
-                </v-tooltip>
-              </template>
+                    </v-tooltip>
+                  </template>
+                </v-select>
+              </v-container>
             </v-col>
           </v-row>
           <v-divider class="my-3" />
@@ -244,45 +241,69 @@
       <v-divider class="my-4" />
 
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
-        {{ 'Fehler beim Erstellen des Ortes' }}
+        {{ 'Fehler beim Anlegen eines Teilnehmenden' }}
       </v-snackbar>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-import { required, maxLength, numeric } from 'vuelidate/lib/validators';
+import {
+  required, minLength, maxLength, integer, minValue,
+} from 'vuelidate/lib/validators';
 import axios from 'axios';
-import moment from 'moment';
+// import moment from 'moment';
 import { mapGetters } from 'vuex';
 
 import ZipCodeField from '@/components/field/ZipCodeField.vue';
-import EatField from '@/components/field/EatField.vue';
+import EatAutocompleteField from '@/components/field/EatAutocompleteField.vue';
+import EatTextField from '@/components/field/EatTextField.vue';
+
+const scoutGroupStartValidator = (groupObjOrGroupName) => {
+  const validStarts = ['Meute', 'Sippe', 'Roverrunde'];
+  if (!groupObjOrGroupName) {
+    return false;
+  }
+  const name = (groupObjOrGroupName.name) ? groupObjOrGroupName.name : groupObjOrGroupName;
+  return validStarts.includes(name.trim().split(' ')[0]);
+};
 
 export default {
   props: ['isOpen'],
   components: {
     ZipCodeField,
-    EatField,
+    EatAutocompleteField,
+    EatTextField,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
     valid: true,
     scoutHierarchyGroups: [],
+    eatHabitText: null,
     data: {
-      firstName: '',
-      lastName: '',
-      street: '',
-      zipCode: 0,
-      phoneNumber: '',
+      firstName: null,
+      lastName: null,
+      street: null,
+      zipCode: null,
+      phoneNumber: null,
       age: null,
       registration: null,
       eatHabitType: [],
       scoutGroup: null,
       isGroupLeader: false,
-      roles: [],
+      participantRole: 5,
     },
+    roleItems: [
+      {
+        id: 5,
+        name: 'Nur Bundesfahrt',
+      },
+      {
+        id: 6,
+        name: 'Bundesfahrt + Kaperfahrt',
+      },
+    ],
     showError: false,
     showSuccess: false,
     timeout: 7000,
@@ -291,28 +312,35 @@ export default {
     data: {
       firstName: {
         required,
+        minLength: minLength(2),
         maxLength: maxLength(20),
       },
       lastName: {
         required,
+        minLength: minLength(2),
         maxLength: maxLength(20),
       },
       scoutGroup: {
         required,
+        scoutGroupStartValidator,
       },
       phoneNumber: {
         required,
+        integer,
+        minValue: minValue(1),
       },
       age: {
         required,
+        integer,
+        minValue: minValue(1),
       },
       street: {
         required,
+        minLength: minLength(5),
         maxLength: maxLength(30),
       },
-      zipCode: {
+      participantRole: {
         required,
-        numeric,
       },
     },
   },
@@ -322,10 +350,13 @@ export default {
       const errors = [];
       if (!this.$v.data.firstName.$dirty) return errors;
       if (!this.$v.data.firstName.required) {
-        errors.push('Name is required.');
+        errors.push('Vorname ist erforderlich.');
+      }
+      if (!this.$v.data.firstName.minLength) {
+        errors.push('Vorname muss mindestens 2 Zeichen lang sein.');
       }
       if (!this.$v.data.firstName.maxLength) {
-        errors.push('Name must be at most 20 characters long');
+        errors.push('Vorname darf maximal 20 Zeichen lang sein.');
       }
       return errors;
     },
@@ -333,53 +364,27 @@ export default {
       const errors = [];
       if (!this.$v.data.lastName.$dirty) return errors;
       if (!this.$v.data.lastName.required) {
-        errors.push('Name is required.');
+        errors.push('Nachname ist erforderlich.');
+      }
+      if (!this.$v.data.lastName.minLength) {
+        errors.push('Nachname muss mindestens 2 Zeichen lang sein.');
       }
       if (!this.$v.data.lastName.maxLength) {
-        errors.push('Name must be at most 20 characters long');
+        errors.push('Nachname darf maximal 20 Zeichen lang sein.');
       }
       return errors;
-    },
-    dateBirthString() {
-      const dateFormat = 'DD.MM.YYYY';
-      if (this.data.dateBirth === '') {
-        return '';
-      }
-      return `${moment(this.data.dateBirth).format(dateFormat)}`;
     },
     streetErrors() {
       const errors = [];
       if (!this.$v.data.street.$dirty) return errors;
       if (!this.$v.data.street.required) {
-        errors.push('Adresse is required.');
+        errors.push('Adresse ist erforderlich.');
+      }
+      if (!this.$v.data.street.minLength) {
+        errors.push('Adresse muss mindestens 5 Zeichen lang sein.');
       }
       if (!this.$v.data.street.maxLength) {
-        errors.push('Adresse must be at most 20 characters long');
-      }
-      return errors;
-    },
-    cityErrors() {
-      const errors = [];
-      if (!this.$v.data.city.$dirty) return errors;
-      if (!this.$v.data.city.required) {
-        errors.push('Stadt is required.');
-      }
-      if (!this.$v.data.city.maxLength) {
-        errors.push('Stadt must be at most 30 characters long');
-      }
-      return errors;
-    },
-    zipCodeErrors() {
-      const errors = [];
-      if (!this.$v.data.zipCode.$dirty) return errors;
-      if (!this.$v.data.zipCode.required) {
-        errors.push('PLZ is required.');
-      }
-      if (!this.$v.data.zipCode.numeric) {
-        errors.push('PLZ muss eine Zahl sein.');
-      }
-      if (!this.$v.data.zipCode.minLength || !this.$v.data.zipCode.maxLength) {
-        errors.push('PLZ muss eine 5-stellige Zahl sein.');
+        errors.push('Adresse darf maximal 30 Zeichen lang sein.');
       }
       return errors;
     },
@@ -389,13 +394,19 @@ export default {
       if (!this.$v.data.scoutGroup.required) {
         errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
       }
+      if (!this.$v.data.scoutGroup.scoutGroupStartValidator) {
+        errors.push('Der Gruppenname muss mit Meute, Sippe oder Roverrunde beginnen.');
+      }
       return errors;
     },
     ageErrors() {
       const errors = [];
       if (!this.$v.data.age.$dirty) return errors;
       if (!this.$v.data.age.required) {
-        errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
+        errors.push('Alter ist erforderlich.');
+      }
+      if (!this.$v.data.age.integer || !this.$v.data.age.minValue) {
+        errors.push('Es muss ein gültiges Alter eingetragen werden.');
       }
       return errors;
     },
@@ -403,24 +414,47 @@ export default {
       const errors = [];
       if (!this.$v.data.phoneNumber.$dirty) return errors;
       if (!this.$v.data.phoneNumber.required) {
-        errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
+        errors.push('Telefonnummer ist erforderlich.');
+      }
+      if (!this.$v.data.phoneNumber.integer || !this.$v.data.phoneNumber.minValue) {
+        errors.push('Telefonnummer darf nur aus Zahlen bestehen.');
+      }
+      return errors;
+    },
+    participantRoleErrors() {
+      const errors = [];
+      if (!this.$v.data.participantRole.$dirty) return errors;
+      if (!this.$v.data.participantRole.required) {
+        errors.push('Es muss mindestens eine Fahrt ausgewählt werden.');
       }
       return errors;
     },
   },
   watch: {
     data() {
-      this.$refs.zipCodeField.setValue(this.data.zipCode);
-      this.$refs.eatHabitType.setValue(this.data.eatHabitType);
+      if (this.$refs.zipCodeField) {
+        this.$refs.zipCodeField.setValue(this.data.zipCode);
+      }
+      if (this.$refs.eatHabitType) {
+        this.$refs.eatHabitType.setValue(this.data.eatHabitType);
+      }
+      if (this.$refs.eatHabitText) {
+        this.$refs.eatHabitText.setValue(this.eatHabitText);
+      }
     },
   },
   methods: {
     refresh() {},
     requiredField(value) {
+      const errorMsg = 'Dieses Feld muss ausgefüllt werden.';
       if (value instanceof Array && value.length === 0) {
-        return 'Bitte Füllen';
+        return errorMsg;
       }
-      return !!value || 'Bitte Füllen';
+      return !!value || errorMsg;
+    },
+    validScoutGroup(value) {
+      const errorMsg = 'Der Gruppenname muss mit Meute, Sippe oder Roverrunde beginnen';
+      return !!scoutGroupStartValidator(value) || errorMsg;
     },
     onClickOk() {
       this.active = false;
@@ -430,16 +464,20 @@ export default {
     },
     openDialog() {
       this.data = {
-        firstName: '',
-        lastName: '',
-        street: '',
-        zipCode: 0,
-        dateBirth: '2010-01-01',
+        firstName: null,
+        lastName: null,
+        street: null,
+        zipCode: null,
+        phoneNumber: null,
+        age: null,
         registration: null,
         eatHabitType: [],
+        scoutGroup: null,
         isGroupLeader: false,
         roles: [],
+        participantRole: 5,
       };
+      this.eatHabitText = null;
       this.active = true;
       this.getGroups();
     },
@@ -469,6 +507,7 @@ export default {
         });
     },
     closeDialog() {
+      this.$refs.zipCodeField.$v.$reset();
       this.active = false;
       this.$v.$reset();
       Object.keys(this.data).forEach((key) => {
@@ -478,6 +517,7 @@ export default {
     },
     validate() {
       this.$v.$touch();
+      this.$refs.zipCodeField.$v.$touch();
       this.valid = !this.$v.$anyError;
     },
     onClickOkay() {
@@ -498,6 +538,9 @@ export default {
       }
       if (this.data.eatHabitType && this.data.eatHabitType.name) {
         this.data.eatHabitType = this.data.eatHabitType.name;
+      }
+      if (this.eatHabitText) {
+        this.data.eatHabitType.push(this.eatHabitText);
       }
       if (!this.data.id) {
         axios

@@ -56,7 +56,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
-  displayName: 'Lagerplatz',
+  displayName: 'Unser Heim/Lagerplatz',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
