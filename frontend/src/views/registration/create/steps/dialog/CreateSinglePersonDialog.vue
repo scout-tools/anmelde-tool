@@ -197,7 +197,10 @@
               <zip-code-field ref="zipCodeField" v-model="data.zipCode" />
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <eat-field ref="eatHabitType" v-model="data.eatHabitType" />
+              <eat-autocomplete-field ref="eatHabitType" v-model="data.eatHabitType" />
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <eat-text-field ref="eatHabitText" v-model="eatHabitText" />
             </v-col>
           </v-row>
           <v-divider class="my-3" />
@@ -252,7 +255,8 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 
 import ZipCodeField from '@/components/field/ZipCodeField.vue';
-import EatField from '@/components/field/EatField.vue';
+import EatAutocompleteField from '@/components/field/EatAutocompleteField.vue';
+import EatTextField from '@/components/field/EatTextField.vue';
 
 const scoutGroupStartValidator = (groupObjOrGroupName) => {
   const validStarts = ['Meute', 'Sippe', 'Roverrunde'];
@@ -267,13 +271,15 @@ export default {
   props: ['isOpen'],
   components: {
     ZipCodeField,
-    EatField,
+    EatAutocompleteField,
+    EatTextField,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
     valid: true,
     scoutHierarchyGroups: [],
+    eatHabitText: null,
     data: {
       firstName: null,
       lastName: null,
@@ -431,6 +437,9 @@ export default {
       if (this.$refs.eatHabitType) {
         this.$refs.eatHabitType.setValue(this.data.eatHabitType);
       }
+      if (this.$refs.eatHabitText) {
+        this.$refs.eatHabitText.setValue(this.eatHabitText);
+      }
     },
   },
   methods: {
@@ -466,6 +475,7 @@ export default {
         isGroupLeader: false,
         roles: [],
       };
+      this.eatHabitText = null;
       this.active = true;
       this.getGroups();
     },
@@ -526,6 +536,9 @@ export default {
       }
       if (this.data.eatHabitType && this.data.eatHabitType.name) {
         this.data.eatHabitType = this.data.eatHabitType.name;
+      }
+      if (this.eatHabitText) {
+        this.data.eatHabitType.push(this.eatHabitText);
       }
       if (!this.data.id) {
         axios

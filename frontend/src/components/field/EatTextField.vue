@@ -1,14 +1,9 @@
 <template>
-  <v-autocomplete
+  <v-text-field
     v-model="value"
-    :items="eatHabitTypeMapping"
-    label="Essens Besonderheiten"
-    item-text="name"
-    item-value="name"
+    label="Essens Besonderheiten (Freitext)"
     prepend-icon="mdi-food"
-    multiple
     clearable
-    chips
     @change="onInputChange"
   >
     <template slot="append">
@@ -19,11 +14,11 @@
           </v-icon>
         </template>
         <span>
-          {{ toolTip }}
+          {{ toolTipTextField }}
         </span>
       </v-tooltip>
     </template>
-  </v-autocomplete>
+  </v-text-field>
 </template>
 
 <script>
@@ -33,15 +28,13 @@ export default {
   prop: ['value'],
 
   data: () => ({
-    entries: [],
     isLoading: false,
-    value: [],
-    search: null,
-    toolTip: 'Bitte trage hier ein, auf welche Besonderheiten die Küche achten muss.',
+    value: '',
+    toolTipTextField: 'Bitte trage hier ein, auf welche Besonderheiten die Küche achten muss.'
+      + 'Trage hier nur etwas ein, wenn die Optionen des anderen Feldes nicht zutreffen',
   }),
   computed: {
     ...mapGetters(['eatHabitTypeMapping']),
-
   },
   methods: {
     onInputChange() {
