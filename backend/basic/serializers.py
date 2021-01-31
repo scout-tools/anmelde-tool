@@ -293,6 +293,7 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
     num_vegan = serializers.SerializerMethodField('get_num_vegan')
     num_grouped_by_age_group = serializers.SerializerMethodField('get_num_grouped_by_age_group')
     num_grouped_by_age_personal = serializers.SerializerMethodField('get_num_grouped_by_age_personal')
+    food_grouped = serializers.SerializerMethodField('get_food_grouped')
 
     class Meta:
         model = Event
@@ -405,8 +406,8 @@ class EventProgramMasterSerializer(serializers.ModelSerializer):
                            When(participantpersonal__age_group__isnull=False,
                                 then=F('participantpersonal__age_group__name')))) \
             .annotate(number_group=Coalesce(Sum('participantgroup__number_of_persons'), 0),
-                      number_personal=Coalesce(Count('participantpersonal'), 0))
-        # .exclude(participantgroup__age_group__isnull=True)
+                      number_personal=Coalesce(Count('participantpersonal'), 0)) \
+            .exclude(role__isnull=True).exclude(age_group__isnull=True)
 
         return result
 
@@ -460,7 +461,8 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
         return result
 
     def get_travel_method(self, obj):
-        return obj.methodoftravel_set.values('travel_type__name').annotate(sum_method=Coalesce(('number_of_persons'),0))
+        return obj.methodoftravel_set.values('travel_type__name').annotate(
+            sum_method=Coalesce(('number_of_persons'), 0))
 
     def get_travel_method_detailed(self, obj):
         return obj.methodoftravel_set.values('travel_type__name').values('travel_type__name', 'number_of_persons')
