@@ -8,6 +8,15 @@ from rest_framework.fields import Field
 from django.contrib.auth.models import User
 from django.db.models import Sum, Count, F, Q, Func, Subquery, Case, When
 from django.db.models.functions import Coalesce
+from itertools import combinations
+
+
+def distinct_combinations(num_range):
+    result = []
+    for r in num_range:
+        comb = list(combinations(num_range, r))
+        result.append(comb)
+    return [item for sublist in result for item in sublist]
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -292,7 +301,9 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
                   'num_vegetarien',
                   'num_vegan',
                   'num_grouped_by_age_group',
-                  'num_grouped_by_age_personal')
+                  'num_grouped_by_age_personal',
+                  'food_grouped'
+                  )
 
     def get_total_participants(self, obj):
         return obj.registration_set.aggregate(
@@ -337,6 +348,32 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
             .annotate(number_personal=Coalesce(Count('participantpersonal__eat_habit_type'), 0)) \
             .exclude(age_group_personal__isnull=True).exclude(habit_type_personal__isnull=True) \
             .order_by('-participantpersonal__age_group')
+        return result
+
+    def get_food_grouped(self, obj):
+        habit_types = list(EatHabitType.objects.values_list('id', flat=True))
+        all_combination = distinct_combinations(habit_types)
+
+        result = []
+        list_id = []
+
+        ids = list(obj.registration_set.values_list('id', flat=True))
+        total_participants = ParticipantPersonal.objects.filter(registration__in=ids)
+
+        for combination in all_combination:
+            comb_opposite = list([elem for elem in habit_types if elem not in combination])
+            num_pariticpants = total_participants.filter(eat_habit_type=combination) \
+                .exclude(eat_habit_type__in=comb_opposite).exclude(id__in=list_id).values_list('id', flat=True)
+
+            list_id.extend(num_pariticpants)
+            num_result = num_pariticpants.count()
+
+            json = {
+                'eat_habit_type': EatHabitType.objects.filter(id__in=combination).values_list('name', flat=True),
+                'num_participants': num_result
+            }
+
+            result.append(json)
         return result
 
 
