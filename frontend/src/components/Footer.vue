@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-footer color="primary lighten-1" padless absolute>
+  <div class="mt-10">
+    <v-footer color="primary lighten-1" padless>
       <v-row justify="center" no-gutters>
         <v-btn
           color="white"
@@ -43,6 +43,15 @@
           text
           rounded
           class="my-2"
+          @click="$router.push({ name: 'checkToken' })"
+        >
+          Login
+        </v-btn>
+        <v-btn
+          color="white"
+          text
+          rounded
+          class="my-2"
           v-if="isAuthenticated"
           @click="onLogoutClicked"
         >
@@ -74,5 +83,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

@@ -1,0 +1,65 @@
+[
+    {
+        "model": "basic.Registration",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "scout_organisation": 360,
+            "event": 1
+        }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "scout_organisation": 361,
+            "event": 1
+        }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "scout_organisation": 362,
+            "event": 1
+        }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "scout_organisation": 363,
+            "event": 4
+        }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 5,
+        "fields": {
+            "id": 5,
+            "scout_organisation": 361,
+            "event": 4
+        }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 6,
+        "fields": {
+            "id": 6,
+            "scout_organisation": 365,
+            "event": 4
+        }
+    },
+    {
+        "model": "basic.Registration",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "scout_organisation": 359,
+            "event": 1
+        }
+    }
+]

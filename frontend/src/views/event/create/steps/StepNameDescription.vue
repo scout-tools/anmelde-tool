@@ -9,7 +9,7 @@
         <p>
         Willkommen bei der <b> Aktionserstellung </b>.
         </p>
-        Viele Pfadfinder freuen sich
+        Viele Pfadfinder_innen und Pfadfinder freuen sich
         schon auf deine Aktion. Im folgenden führen wir dich durch {{ maxPos }} kleine
         Schritte. Viel Spaß!
       </span>

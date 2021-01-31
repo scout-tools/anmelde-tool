@@ -1,55 +1,55 @@
 [
     {
-        "model": "basic.EventRole",
+        "model": "basic.role",
         "pk": 1,
         "fields": {
             "id": 1,
-            "name": "Pfadfinder",
+            "name": "Kein Teilnahmer",
             "description": ""
         }
     },
     {
-        "model": "basic.EventRole",
+        "model": "basic.role",
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Verband",
+            "name": "Teilnahmer",
             "description": ""
         }
     },
     {
-        "model": "basic.EventRole",
+        "model": "basic.role",
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "Bund",
+            "name": "Gruppenführer",
             "description": ""
         }
     },
     {
-        "model": "basic.EventRole",
+        "model": "basic.role",
         "pk": 4,
         "fields": {
             "id": 4,
-            "name": "Ring/Regional",
+            "name": "Freie Helfer",
             "description": ""
         }
     },
     {
-        "model": "basic.EventRole",
+        "model": "basic.role",
         "pk": 5,
         "fields": {
             "id": 5,
-            "name": "Stamm",
+            "name": "Nur Mosaikers Leben",
             "description": ""
         }
     },
     {
-        "model": "basic.EventRole",
+        "model": "basic.role",
         "pk": 6,
         "fields": {
             "id": 6,
-            "name": "Gruppe",
+            "name": "Kaperfahrt und Mosaikers Leben",
             "description": ""
         }
     }

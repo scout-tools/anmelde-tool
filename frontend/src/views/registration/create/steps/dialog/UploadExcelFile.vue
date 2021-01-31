@@ -43,7 +43,7 @@
                     {{ item[column] }}
                   </td>
                   <td>
-                    <v-btn icon>
+                    <v-btn icon @click="fillParticipant(item)">
                       <v-icon> mdi-cloud-upload </v-icon>
                     </v-btn>
                   </td>
@@ -53,14 +53,19 @@
           </v-simple-table>
         </v-card>
       </v-sheet>
+      <create-single-person-dialog ref="createSinglePersonDialog"></create-single-person-dialog>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
 import XLSX from 'xlsx';
+import CreateSinglePersonDialog from '@/views/registration/create/steps/dialog/CreateSinglePersonDialog.vue';
 
 export default {
+  components: {
+    CreateSinglePersonDialog,
+  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
@@ -88,7 +93,6 @@ export default {
   methods: {
     onFileChange(e) {
       this.getJsonFromFile(e).then((data) => {
-        debugger;
         this.jsonData = data;
       });
     },
@@ -99,7 +103,7 @@ export default {
         const reader = new FileReader(); // eslint-disable-line
         reader.onload = (e3) => {
           const data = new Uint8Array(e3.target.result); // eslint-disable-line
-          const workbook = XLSX.read(data, { type: 'array' }); // eslint-disable-line
+          const workbook = XLSX.read(data, {type: 'array'}); // eslint-disable-line
           const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
           const dataExport = XLSX.utils.sheet_to_json(firstWorksheet, {
             range: 0,
@@ -126,6 +130,39 @@ export default {
         this.data[key] = '';
       });
       this.$emit('close');
+    },
+    fillParticipant(input) {
+      const newInput = this.map(input);
+      this.$refs.createSinglePersonDialog.openDialogEdit(newInput);
+    },
+    map(input) {
+      const dto = {
+        firstName: '',
+        lastName: '',
+        street: '',
+        zipCode: '',
+        phoneNumber: '',
+        age: null,
+        registration: null,
+        eatHabitType: [],
+        scoutGroup: null,
+        isGroupLeader: false,
+        roles: ['1'],
+        id: 0,
+        zipCodeId: 0,
+      };
+      dto.firstName = input.Vorname;
+      dto.lastName = input.Nachname;
+      dto.street = input.Adresse;
+      dto.zipCode = input.Postleitzahl;
+      dto.phoneNumber = input.Telefonnummer;
+      dto.age = input.Alter;
+      dto.scoutGroup = input.scoutGroup;
+      dto.isGroupLeader = false;
+      if (input.Vegetarisch === 'x') {
+        dto.eatHabitType.push('Kein Fleisch(vegetarisch)');
+      }
+      return dto;
     },
   },
   computed: {

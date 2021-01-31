@@ -1,0 +1,4830 @@
+[
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 1,
+    "fields": {
+      "id": 1,
+      "level_id": 3,
+      "name": "BdP"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 2,
+    "fields": {
+      "id": 2,
+      "level_id": 3,
+      "name": "DBP-Mosaik"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 3,
+    "fields": {
+      "id": 3,
+      "level_id": 3,
+      "name": "PB-Nordlicht"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 4,
+    "fields": {
+      "id": 4,
+      "level_id": 3,
+      "name": "PB-Nord"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 5,
+    "fields": {
+      "id": 5,
+      "level_id": 3,
+      "name": "BP-Horizonte"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 6,
+    "fields": {
+      "id": 6,
+      "level_id": 3,
+      "name": "DPBH"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 7,
+    "fields": {
+      "id": 7,
+      "level_id": 3,
+      "name": "PSD"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 8,
+    "fields": {
+      "id": 8,
+      "level_id": 3,
+      "name": "BEP"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 9,
+    "fields": {
+      "id": 9,
+      "level_id": 3,
+      "name": "PB Boreas"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 10,
+    "fields": {
+      "id": 10,
+      "level_id": 3,
+      "name": "PBMV"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 11,
+    "fields": {
+      "id": 11,
+      "level_id": 3,
+      "name": "Jomsburg"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 12,
+    "fields": {
+      "id": 12,
+      "level_id": 3,
+      "name": "PBW"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 13,
+    "fields": {
+      "id": 13,
+      "level_id": 3,
+      "name": "FPS"
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 20,
+    "fields": {
+      "id": 20,
+      "level_id": 4,
+      "name": "Ring Rhein Lippe",
+      "parent": 2
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 21,
+    "fields": {
+      "id": 21,
+      "level_id": 4,
+      "name": "Ring Kölner Bucht",
+      "parent": 2
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 22,
+    "fields": {
+      "id": 22,
+      "level_id": 4,
+      "name": "Ring Bergisches Land",
+      "parent": 2
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 23,
+    "fields": {
+      "id": 23,
+      "level_id": 4,
+      "name": "Ring Köln",
+      "parent": 2
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 24,
+    "fields": {
+      "id": 24,
+      "level_id": 4,
+      "name": "Ring Bayern",
+      "parent": 2
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 25,
+    "fields": {
+      "id": 25,
+      "level_id": 4,
+      "name": "Ring Nord",
+      "parent": 2
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 26,
+    "fields": {
+      "id": 26,
+      "level_id": 4,
+      "name": "Ring Nord-Ost",
+      "parent": 2
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 27,
+    "fields": {
+      "id": 27,
+      "level_id": 4,
+      "name": "Aufbauring Waterkant",
+      "parent": 2
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 30,
+    "fields": {
+      "id": 30,
+      "level_id": 4,
+      "name": "LV Baden-Württemberg",
+      "parent": 1
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 31,
+    "fields": {
+      "id": 31,
+      "level_id": 4,
+      "name": "LV Bayern",
+      "parent": 1
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 32,
+    "fields": {
+      "id": 32,
+      "level_id": 4,
+      "name": "LV Berlin-Brandeburg",
+      "parent": 1
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 33,
+    "fields": {
+      "id": 33,
+      "level_id": 4,
+      "name": "LV Bremen",
+      "parent": 1
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 34,
+    "fields": {
+      "id": 34,
+      "level_id": 4,
+      "name": "LV Hessen",
+      "parent": 1
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 35,
+    "fields": {
+      "id": 35,
+      "level_id": 4,
+      "name": "LV Niedersachsen",
+      "parent": 1
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 36,
+    "fields": {
+      "id": 36,
+      "level_id": 4,
+      "name": "LV Nordrhein-Westfalen",
+      "parent": 1
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 37,
+    "fields": {
+      "id": 37,
+      "level_id": 4,
+      "name": "LV Rheinland-Pfalz / Saar",
+      "parent": 1
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 38,
+    "fields": {
+      "id": 38,
+      "level_id": 4,
+      "name": "LV Sachsen",
+      "parent": 1
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 39,
+    "fields": {
+      "id": 39,
+      "level_id": 4,
+      "name": "LV Schleswig-Holstein / Hamburg",
+      "parent": 1
+    }
+  },
+  {
+    "model": "basic.scoutHierarchy",
+    "pk": 40,
+    "fields": {
+      "id": 40,
+      "level_id": 4,
+      "name": "LV Thüringen",
+      "parent": 1
+    }
+  },
+  {
+    "pk": 82,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 11108,
+      "id": 82,
+      "name": "\ufeffStamm Adler"
+    }
+  },
+  {
+    "pk": 83,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 10404,
+      "id": 83,
+      "name": "Stamm Armer Konrad"
+    }
+  },
+  {
+    "pk": 84,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 3283,
+      "id": 84,
+      "name": "Stamm Beowulf"
+    }
+  },
+  {
+    "pk": 85,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 11142,
+      "id": 85,
+      "name": "Stamm Bergwolf"
+    }
+  },
+  {
+    "pk": 86,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 5825,
+      "id": 86,
+      "name": "Stamm Bundschuh"
+    }
+  },
+  {
+    "pk": 87,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 5816,
+      "id": 87,
+      "name": "Stamm Burg Karlsruhe"
+    }
+  },
+  {
+    "pk": 88,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 1390,
+      "id": 88,
+      "name": "Stamm Diadochen"
+    }
+  },
+  {
+    "pk": 89,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 10450,
+      "id": 89,
+      "name": "Stamm Einhorn"
+    }
+  },
+  {
+    "pk": 90,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 11928,
+      "id": 90,
+      "name": "Stamm der Elche"
+    }
+  },
+  {
+    "pk": 91,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 11122,
+      "id": 91,
+      "name": "Stamm Feuerreiter"
+    }
+  },
+  {
+    "pk": 92,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 4895,
+      "id": 92,
+      "name": "Stamm Grenzland"
+    }
+  },
+  {
+    "pk": 93,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 141,
+      "id": 93,
+      "name": "Stamm Nibelgau"
+    }
+  },
+  {
+    "pk": 94,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 3493,
+      "id": 94,
+      "name": "Stamm der Raben"
+    }
+  },
+  {
+    "pk": 95,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 2399,
+      "id": 95,
+      "name": "Stamm Schwarze W\u00f6lfe"
+    }
+  },
+  {
+    "pk": 96,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 2705,
+      "id": 96,
+      "name": "Stamm Silberreiher"
+    }
+  },
+  {
+    "pk": 97,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 5818,
+      "id": 97,
+      "name": "Stamm St. J\u00f6rg"
+    }
+  },
+  {
+    "pk": 98,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 11620,
+      "id": 98,
+      "name": "Stamm Stettenfels"
+    }
+  },
+  {
+    "pk": 99,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 11529,
+      "id": 99,
+      "name": "Stamm Sueben"
+    }
+  },
+  {
+    "pk": 100,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 1505,
+      "id": 100,
+      "name": "Stamm Ulrich v. Hutten"
+    }
+  },
+  {
+    "pk": 101,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 11580,
+      "id": 101,
+      "name": "Stamm Wei\u00dfe Rotte"
+    }
+  },
+  {
+    "pk": 102,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 11928,
+      "id": 102,
+      "name": "Stamm Yanktonai"
+    }
+  },
+  {
+    "pk": 103,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 2009,
+      "id": 103,
+      "name": "Stamm Sternfahrer"
+    }
+  },
+  {
+    "pk": 104,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 9103,
+      "id": 104,
+      "name": "Stamm Schwarzer Panter"
+    }
+  },
+  {
+    "pk": 105,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 7237,
+      "id": 105,
+      "name": "Stamm Mammut"
+    }
+  },
+  {
+    "pk": 106,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 8122,
+      "id": 106,
+      "name": "Aufbaugruppe Filderf\u00fcchse"
+    }
+  },
+  {
+    "pk": 107,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 10418,
+      "id": 107,
+      "name": "Stamm B\u00e4rengrund"
+    }
+  },
+  {
+    "pk": 108,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 11511,
+      "id": 108,
+      "name": "Aufbaugruppe Dr\u00e1gan"
+    }
+  },
+  {
+    "pk": 109,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 7241,
+      "id": 109,
+      "name": "Aufbaugruppe Draconis"
+    }
+  },
+  {
+    "pk": 110,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 30,
+      "level_id": 5,
+      "zip_code": 12751,
+      "id": 110,
+      "name": "Aufbaugruppe Schw\u00e4bische Toskana"
+    }
+  },
+  {
+    "pk": 111,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 2054,
+      "id": 111,
+      "name": "Stamm Alemannen"
+    }
+  },
+  {
+    "pk": 112,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 6676,
+      "id": 112,
+      "name": "Stamm Castellum ad Luofi"
+    }
+  },
+  {
+    "pk": 113,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 9112,
+      "id": 113,
+      "name": "Stamm Don Bosco"
+    }
+  },
+  {
+    "pk": 114,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 11916,
+      "id": 114,
+      "name": "Stamm Fafnir"
+    }
+  },
+  {
+    "pk": 115,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 11916,
+      "id": 115,
+      "name": "Stamm Outpost"
+    }
+  },
+  {
+    "pk": 116,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 4100,
+      "id": 116,
+      "name": "Stamm Schwarzer Mustang"
+    }
+  },
+  {
+    "pk": 117,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 3039,
+      "id": 117,
+      "name": "Stamm Staufen"
+    }
+  },
+  {
+    "pk": 118,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 6572,
+      "id": 118,
+      "name": "Stamm Wittelsbach"
+    }
+  },
+  {
+    "pk": 119,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 5687,
+      "id": 119,
+      "name": "Stamm Leones Oeni"
+    }
+  },
+  {
+    "pk": 120,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 12098,
+      "id": 120,
+      "name": "Aufbaugruppe Wei\u00dfe W\u00f6lfe"
+    }
+  },
+  {
+    "pk": 121,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 5055,
+      "id": 121,
+      "name": "Aufbaugruppe Merlin"
+    }
+  },
+  {
+    "pk": 122,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 10826,
+      "id": 122,
+      "name": "Stamm Ph\u00f6nix"
+    }
+  },
+  {
+    "pk": 123,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 8488,
+      "id": 123,
+      "name": "Stamm Artus"
+    }
+  },
+  {
+    "pk": 124,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 3076,
+      "id": 124,
+      "name": "Stamm Asgard"
+    }
+  },
+  {
+    "pk": 125,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 3076,
+      "id": 125,
+      "name": "Stamm Faber"
+    }
+  },
+  {
+    "pk": 126,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 705,
+      "id": 126,
+      "name": "Stamm Goldene Horde"
+    }
+  },
+  {
+    "pk": 127,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 11198,
+      "id": 127,
+      "name": "Stamm Graf Gebhard"
+    }
+  },
+  {
+    "pk": 128,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 8225,
+      "id": 128,
+      "name": "Stamm L\u00f6we von Meissen"
+    }
+  },
+  {
+    "pk": 129,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 12727,
+      "id": 129,
+      "name": "Stamm Schwarzer Haufen"
+    }
+  },
+  {
+    "pk": 130,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 705,
+      "id": 130,
+      "name": "Stamm Seeadler Bamberg"
+    }
+  },
+  {
+    "pk": 131,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 3776,
+      "id": 131,
+      "name": "Stamm Shir Khan"
+    }
+  },
+  {
+    "pk": 132,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 12842,
+      "id": 132,
+      "name": "Stamm Truchse\u00df"
+    }
+  },
+  {
+    "pk": 133,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 1880,
+      "id": 133,
+      "name": "Stamm War\u00e4ger"
+    }
+  },
+  {
+    "pk": 134,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 194,
+      "id": 134,
+      "name": "Stamm Kim"
+    }
+  },
+  {
+    "pk": 135,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 8473,
+      "id": 135,
+      "name": "Stamm Sigena"
+    }
+  },
+  {
+    "pk": 136,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 3076,
+      "id": 136,
+      "name": "Stamm Steinadler Erlangen"
+    }
+  },
+  {
+    "pk": 137,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 6622,
+      "id": 137,
+      "name": "Stamm Excalibur"
+    }
+  },
+  {
+    "pk": 138,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 2078,
+      "id": 138,
+      "name": "Aufbaugruppe Waldkatzen"
+    }
+  },
+  {
+    "pk": 139,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 7860,
+      "id": 139,
+      "name": "Stamm Albatros e.V."
+    }
+  },
+  {
+    "pk": 140,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 3808,
+      "id": 140,
+      "name": "Stamm Bussard"
+    }
+  },
+  {
+    "pk": 141,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 8191,
+      "id": 141,
+      "name": "Stamm B\u00e4ren"
+    }
+  },
+  {
+    "pk": 142,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 11706,
+      "id": 142,
+      "name": "Stamm Barrakuda"
+    }
+  },
+  {
+    "pk": 143,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 4831,
+      "id": 143,
+      "name": "Stamm Cebolon"
+    }
+  },
+  {
+    "pk": 144,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 7867,
+      "id": 144,
+      "name": "Stamm Cosuaneten"
+    }
+  },
+  {
+    "pk": 145,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 7834,
+      "id": 145,
+      "name": "Stamm Goten"
+    }
+  },
+  {
+    "pk": 146,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 5250,
+      "id": 146,
+      "name": "Stamm Jean Monnet"
+    }
+  },
+  {
+    "pk": 147,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 7846,
+      "id": 147,
+      "name": "Stamm Marco Polo"
+    }
+  },
+  {
+    "pk": 148,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 7868,
+      "id": 148,
+      "name": "Stamm Pegasus"
+    }
+  },
+  {
+    "pk": 149,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 5250,
+      "id": 149,
+      "name": "Stamm Robin Hood"
+    }
+  },
+  {
+    "pk": 150,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 6025,
+      "id": 150,
+      "name": "Stamm Seeadler Kirchheim"
+    }
+  },
+  {
+    "pk": 151,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 7851,
+      "id": 151,
+      "name": "Stamm Steinadler"
+    }
+  },
+  {
+    "pk": 152,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 8557,
+      "id": 152,
+      "name": "Stamm Kelten"
+    }
+  },
+  {
+    "pk": 153,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 8237,
+      "id": 153,
+      "name": "Aufbaugruppe Thor Heyerdahl"
+    }
+  },
+  {
+    "pk": 154,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 7245,
+      "id": 154,
+      "name": "Stamm Burgund"
+    }
+  },
+  {
+    "pk": 155,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 6258,
+      "id": 155,
+      "name": "Stamm Eisvogel"
+    }
+  },
+  {
+    "pk": 156,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 3800,
+      "id": 156,
+      "name": "Stamm Eulen"
+    }
+  },
+  {
+    "pk": 157,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 440,
+      "id": 157,
+      "name": "Stamm Jakob Fugger"
+    }
+  },
+  {
+    "pk": 158,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 10372,
+      "id": 158,
+      "name": "Stamm Nacanapah"
+    }
+  },
+  {
+    "pk": 159,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 5881,
+      "id": 159,
+      "name": "Stamm Seeschwalben"
+    }
+  },
+  {
+    "pk": 160,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 12122,
+      "id": 160,
+      "name": "Stamm Sir Francis Drake"
+    }
+  },
+  {
+    "pk": 161,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 5516,
+      "id": 161,
+      "name": "Stamm Skythen"
+    }
+  },
+  {
+    "pk": 162,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 3666,
+      "id": 162,
+      "name": "Stamm Bergl\u00f6wen"
+    }
+  },
+  {
+    "pk": 163,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 10352,
+      "id": 163,
+      "name": "Stamm Stamm 42"
+    }
+  },
+  {
+    "pk": 164,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 31,
+      "level_id": 5,
+      "zip_code": 1439,
+      "id": 164,
+      "name": "Aufbaugruppe Seew\u00f6lfe Lindau"
+    }
+  },
+  {
+    "pk": 165,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1034,
+      "id": 165,
+      "name": "Stamm Burgund"
+    }
+  },
+  {
+    "pk": 166,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 972,
+      "id": 166,
+      "name": "Aufbaugruppe Plejaden"
+    }
+  },
+  {
+    "pk": 167,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1139,
+      "id": 167,
+      "name": "Stamm Grabowski"
+    }
+  },
+  {
+    "pk": 168,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1139,
+      "id": 168,
+      "name": "Stamm Stamm der Hunnen"
+    }
+  },
+  {
+    "pk": 169,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1138,
+      "id": 169,
+      "name": "Stamm Kelten"
+    }
+  },
+  {
+    "pk": 170,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1132,
+      "id": 170,
+      "name": "Stamm Kimbern"
+    }
+  },
+  {
+    "pk": 171,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1124,
+      "id": 171,
+      "name": "Stamm Normannen"
+    }
+  },
+  {
+    "pk": 172,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1139,
+      "id": 172,
+      "name": "Stamm Askanier"
+    }
+  },
+  {
+    "pk": 173,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1139,
+      "id": 173,
+      "name": "Stamm Teutonen"
+    }
+  },
+  {
+    "pk": 174,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1762,
+      "id": 174,
+      "name": "Aufbaugruppe Graue Schar"
+    }
+  },
+  {
+    "pk": 175,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1127,
+      "id": 175,
+      "name": "Stamm Waringar"
+    }
+  },
+  {
+    "pk": 176,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 9230,
+      "id": 176,
+      "name": "Stamm Alanen"
+    }
+  },
+  {
+    "pk": 177,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1343,
+      "id": 177,
+      "name": "Aufbaugruppe Heveller"
+    }
+  },
+  {
+    "pk": 178,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 32,
+      "level_id": 5,
+      "zip_code": 1139,
+      "id": 178,
+      "name": "Stamm Cassiopeia"
+    }
+  },
+  {
+    "pk": 179,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 33,
+      "level_id": 5,
+      "zip_code": 1732,
+      "id": 179,
+      "name": "Stamm de Poppenspeeler"
+    }
+  },
+  {
+    "pk": 180,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 33,
+      "level_id": 5,
+      "zip_code": 1696,
+      "id": 180,
+      "name": "Aufbaugruppe Weserwale"
+    }
+  },
+  {
+    "pk": 181,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 33,
+      "level_id": 5,
+      "zip_code": 1735,
+      "id": 181,
+      "name": "Stamm Goten"
+    }
+  },
+  {
+    "pk": 182,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 33,
+      "level_id": 5,
+      "zip_code": 10471,
+      "id": 182,
+      "name": "Stamm Hanseaten"
+    }
+  },
+  {
+    "pk": 183,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 33,
+      "level_id": 5,
+      "zip_code": 1722,
+      "id": 183,
+      "name": "Stamm Lesmona"
+    }
+  },
+  {
+    "pk": 184,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 33,
+      "level_id": 5,
+      "zip_code": 1731,
+      "id": 184,
+      "name": "Stamm Rainbow"
+    }
+  },
+  {
+    "pk": 185,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 33,
+      "level_id": 5,
+      "zip_code": 1707,
+      "id": 185,
+      "name": "Stamm Schevemoor"
+    }
+  },
+  {
+    "pk": 186,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 33,
+      "level_id": 5,
+      "zip_code": 1715,
+      "id": 186,
+      "name": "Stamm Wilhelm Olbers"
+    }
+  },
+  {
+    "pk": 187,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 33,
+      "level_id": 5,
+      "zip_code": 1712,
+      "id": 187,
+      "name": "Stamm Ph\u00f6nix"
+    }
+  },
+  {
+    "pk": 188,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 11966,
+      "id": 188,
+      "name": "Stamm Greutungen"
+    }
+  },
+  {
+    "pk": 189,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 12385,
+      "id": 189,
+      "name": "Stamm Seeadler"
+    }
+  },
+  {
+    "pk": 190,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 12391,
+      "id": 190,
+      "name": "Stamm Steinadler"
+    }
+  },
+  {
+    "pk": 191,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 2192,
+      "id": 191,
+      "name": "Stamm Pioniere Darmstadt"
+    }
+  },
+  {
+    "pk": 192,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 4991,
+      "id": 192,
+      "name": "Stamm Burgheldon"
+    }
+  },
+  {
+    "pk": 193,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 885,
+      "id": 193,
+      "name": "Stamm Hagen von Tronje"
+    }
+  },
+  {
+    "pk": 194,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 3865,
+      "id": 194,
+      "name": "Stamm Arnsburg"
+    }
+  },
+  {
+    "pk": 195,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 4452,
+      "id": 195,
+      "name": "Stamm Christophorus"
+    }
+  },
+  {
+    "pk": 196,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 6411,
+      "id": 196,
+      "name": "Stamm Feuerreiter"
+    }
+  },
+  {
+    "pk": 197,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 12332,
+      "id": 197,
+      "name": "Stamm Greif"
+    }
+  },
+  {
+    "pk": 198,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 12109,
+      "id": 198,
+      "name": "Stamm Konradstein"
+    }
+  },
+  {
+    "pk": 199,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 5858,
+      "id": 199,
+      "name": "Stamm Artus"
+    }
+  },
+  {
+    "pk": 200,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 3128,
+      "id": 200,
+      "name": "Stamm Excalibur"
+    }
+  },
+  {
+    "pk": 201,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 5857,
+      "id": 201,
+      "name": "Stamm Wilhelm Busch"
+    }
+  },
+  {
+    "pk": 202,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 8688,
+      "id": 202,
+      "name": "Stamm Graue B\u00e4ren"
+    }
+  },
+  {
+    "pk": 203,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 3552,
+      "id": 203,
+      "name": "Stamm Graue W\u00f6lfe"
+    }
+  },
+  {
+    "pk": 204,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 11673,
+      "id": 204,
+      "name": "Stamm Hattstein"
+    }
+  },
+  {
+    "pk": 205,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 6411,
+      "id": 205,
+      "name": "Stamm Schinderhannes"
+    }
+  },
+  {
+    "pk": 206,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 3434,
+      "id": 206,
+      "name": "Stamm Turtle"
+    }
+  },
+  {
+    "pk": 207,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 10461,
+      "id": 207,
+      "name": "Stamm der Vaganten"
+    }
+  },
+  {
+    "pk": 208,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 5802,
+      "id": 208,
+      "name": "Stamm Graue Adler"
+    }
+  },
+  {
+    "pk": 209,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 651,
+      "id": 209,
+      "name": "Stamm Graue Biber"
+    }
+  },
+  {
+    "pk": 210,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 5802,
+      "id": 210,
+      "name": "Stamm Graue Drachen"
+    }
+  },
+  {
+    "pk": 211,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 8255,
+      "id": 211,
+      "name": "Stamm Roter Milan"
+    }
+  },
+  {
+    "pk": 212,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 4655,
+      "id": 212,
+      "name": "Stamm Wildwasser"
+    }
+  },
+  {
+    "pk": 213,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 12322,
+      "id": 213,
+      "name": "Stamm Chatten"
+    }
+  },
+  {
+    "pk": 214,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 12322,
+      "id": 214,
+      "name": "Stamm Deutschritter"
+    }
+  },
+  {
+    "pk": 215,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 3890,
+      "id": 215,
+      "name": "Stamm Luchs"
+    }
+  },
+  {
+    "pk": 216,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 7276,
+      "id": 216,
+      "name": "Stamm L\u00f6wenherz"
+    }
+  },
+  {
+    "pk": 217,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 1972,
+      "id": 217,
+      "name": "Stamm Wikinger"
+    }
+  },
+  {
+    "pk": 218,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 5085,
+      "id": 218,
+      "name": "Stamm Bergl\u00f6we"
+    }
+  },
+  {
+    "pk": 219,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 3290,
+      "id": 219,
+      "name": "Stamm Fischreiher"
+    }
+  },
+  {
+    "pk": 220,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 562,
+      "id": 220,
+      "name": "Stamm Wisent"
+    }
+  },
+  {
+    "pk": 221,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 5375,
+      "id": 221,
+      "name": "Stamm W\u00fcstenf\u00fcchse"
+    }
+  },
+  {
+    "pk": 222,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 34,
+      "level_id": 5,
+      "zip_code": 12026,
+      "id": 222,
+      "name": "Stamm Zugv\u00f6gel"
+    }
+  },
+  {
+    "pk": 223,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 8798,
+      "id": 223,
+      "name": "Stamm Parzival"
+    }
+  },
+  {
+    "pk": 224,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 2028,
+      "id": 224,
+      "name": "Stamm Altai Maral"
+    }
+  },
+  {
+    "pk": 225,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 12690,
+      "id": 225,
+      "name": "Stamm Askanier"
+    }
+  },
+  {
+    "pk": 226,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 3868,
+      "id": 226,
+      "name": "Stamm Ata Ulf"
+    }
+  },
+  {
+    "pk": 227,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 5086,
+      "id": 227,
+      "name": "Stamm Helmburgis"
+    }
+  },
+  {
+    "pk": 228,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 4693,
+      "id": 228,
+      "name": "Stamm Nujakin"
+    }
+  },
+  {
+    "pk": 229,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 1591,
+      "id": 229,
+      "name": "Stamm Ordensritter"
+    }
+  },
+  {
+    "pk": 230,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 11565,
+      "id": 230,
+      "name": "Stamm Sankt Hubertus"
+    }
+  },
+  {
+    "pk": 231,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 1290,
+      "id": 231,
+      "name": "Stamm Sturmvogel"
+    }
+  },
+  {
+    "pk": 232,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 1635,
+      "id": 232,
+      "name": "Stamm Voortrekker"
+    }
+  },
+  {
+    "pk": 233,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 12619,
+      "id": 233,
+      "name": "Stamm Wei\u00dfe Kohte"
+    }
+  },
+  {
+    "pk": 234,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 7132,
+      "id": 234,
+      "name": "Stamm Lunen"
+    }
+  },
+  {
+    "pk": 235,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 11738,
+      "id": 235,
+      "name": "Stamm Amelungen"
+    }
+  },
+  {
+    "pk": 236,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 8885,
+      "id": 236,
+      "name": "Stamm Graf Walo"
+    }
+  },
+  {
+    "pk": 237,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 871,
+      "id": 237,
+      "name": "Stamm Gro\u00dfer J\u00e4ger"
+    }
+  },
+  {
+    "pk": 238,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 10863,
+      "id": 238,
+      "name": "Stamm Hasko"
+    }
+  },
+  {
+    "pk": 239,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 729,
+      "id": 239,
+      "name": "Stamm Horse"
+    }
+  },
+  {
+    "pk": 240,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 4658,
+      "id": 240,
+      "name": "Stamm Leviatan"
+    }
+  },
+  {
+    "pk": 241,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 2235,
+      "id": 241,
+      "name": "Stamm Likedeeler"
+    }
+  },
+  {
+    "pk": 242,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 1799,
+      "id": 242,
+      "name": "Stamm Rotmilan"
+    }
+  },
+  {
+    "pk": 243,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 33,
+      "id": 243,
+      "name": "Stamm Wikinger"
+    }
+  },
+  {
+    "pk": 244,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 2118,
+      "id": 244,
+      "name": "Stamm Adler"
+    }
+  },
+  {
+    "pk": 245,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 12806,
+      "id": 245,
+      "name": "Stamm Aldenburg"
+    }
+  },
+  {
+    "pk": 246,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 12412,
+      "id": 246,
+      "name": "Stamm Birkhahn"
+    }
+  },
+  {
+    "pk": 247,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 12306,
+      "id": 247,
+      "name": "Stamm Eiche"
+    }
+  },
+  {
+    "pk": 248,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 3540,
+      "id": 248,
+      "name": "Stamm Germanen"
+    }
+  },
+  {
+    "pk": 249,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 6444,
+      "id": 249,
+      "name": "Stamm Manninga"
+    }
+  },
+  {
+    "pk": 250,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 10408,
+      "id": 250,
+      "name": "Stamm Oestringen"
+    }
+  },
+  {
+    "pk": 251,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 469,
+      "id": 251,
+      "name": "Stamm Vaganten"
+    }
+  },
+  {
+    "pk": 252,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 35,
+      "level_id": 5,
+      "zip_code": 6721,
+      "id": 252,
+      "name": "Stamm Wildg\u00e4nse"
+    }
+  },
+  {
+    "pk": 253,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 8745,
+      "id": 253,
+      "name": "Stamm Camelot"
+    }
+  },
+  {
+    "pk": 254,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 928,
+      "id": 254,
+      "name": "Stamm Erdenburg"
+    }
+  },
+  {
+    "pk": 255,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 929,
+      "id": 255,
+      "name": "Stamm Folke Bernadotte"
+    }
+  },
+  {
+    "pk": 256,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 6279,
+      "id": 256,
+      "name": "Stamm Gegenwind"
+    }
+  },
+  {
+    "pk": 257,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 3933,
+      "id": 257,
+      "name": "Stamm Langenberg"
+    }
+  },
+  {
+    "pk": 258,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 10689,
+      "id": 258,
+      "name": "Stamm Hubertus"
+    }
+  },
+  {
+    "pk": 259,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 10065,
+      "id": 259,
+      "name": "Stamm Janusz Korczak"
+    }
+  },
+  {
+    "pk": 260,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 1495,
+      "id": 260,
+      "name": "Stamm Jupiter"
+    }
+  },
+  {
+    "pk": 261,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 928,
+      "id": 261,
+      "name": "Stamm K\u00fcrten"
+    }
+  },
+  {
+    "pk": 262,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 6808,
+      "id": 262,
+      "name": "Stamm Martin Luther King"
+    }
+  },
+  {
+    "pk": 263,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 2023,
+      "id": 263,
+      "name": "Stamm Nordlicht"
+    }
+  },
+  {
+    "pk": 264,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 6279,
+      "id": 264,
+      "name": "Stamm Oberon"
+    }
+  },
+  {
+    "pk": 265,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 6857,
+      "id": 265,
+      "name": "Stamm Orion"
+    }
+  },
+  {
+    "pk": 266,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 6855,
+      "id": 266,
+      "name": "Stamm Ph\u00f6nix"
+    }
+  },
+  {
+    "pk": 267,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 7335,
+      "id": 267,
+      "name": "Stamm Ritter vom Loe zum Loe"
+    }
+  },
+  {
+    "pk": 268,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 2684,
+      "id": 268,
+      "name": "Stamm Roter L\u00f6we"
+    }
+  },
+  {
+    "pk": 269,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 7909,
+      "id": 269,
+      "name": "Stamm totila"
+    }
+  },
+  {
+    "pk": 270,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 2507,
+      "id": 270,
+      "name": "Stamm Vagabunden"
+    }
+  },
+  {
+    "pk": 271,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 2674,
+      "id": 271,
+      "name": "Stamm Wei\u00dfe M\u00f6wen"
+    }
+  },
+  {
+    "pk": 272,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 2500,
+      "id": 272,
+      "name": "Stamm Wei\u00dfe Rose"
+    }
+  },
+  {
+    "pk": 273,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 12705,
+      "id": 273,
+      "name": "Stamm Wichmarinchusen"
+    }
+  },
+  {
+    "pk": 274,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 2607,
+      "id": 274,
+      "name": "Stamm Wildkatzen"
+    }
+  },
+  {
+    "pk": 275,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 7668,
+      "id": 275,
+      "name": "Stamm Winrich von Kniprode"
+    }
+  },
+  {
+    "pk": 276,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 2382,
+      "id": 276,
+      "name": "Stamm Molinero"
+    }
+  },
+  {
+    "pk": 277,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 7708,
+      "id": 277,
+      "name": "Stamm Nebelkr\u00e4hen"
+    }
+  },
+  {
+    "pk": 278,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 4639,
+      "id": 278,
+      "name": "Stamm Skoten"
+    }
+  },
+  {
+    "pk": 279,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 372,
+      "id": 279,
+      "name": "Aufbaugruppe Korsaren"
+    }
+  },
+  {
+    "pk": 280,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 938,
+      "id": 280,
+      "name": "Aufbaugruppe Bergluchse"
+    }
+  },
+  {
+    "pk": 281,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 6242,
+      "id": 281,
+      "name": "Aufbaugruppe Sirius"
+    }
+  },
+  {
+    "pk": 282,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 4900,
+      "id": 282,
+      "name": "Stamm Eisvogel Heljens"
+    }
+  },
+  {
+    "pk": 283,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 3143,
+      "id": 283,
+      "name": "Stamm Saint Josef "
+    }
+  },
+  {
+    "pk": 284,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 12065,
+      "id": 284,
+      "name": "Aufbaugruppe Pollution Police"
+    }
+  },
+  {
+    "pk": 285,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 36,
+      "level_id": 5,
+      "zip_code": 8745,
+      "id": 285,
+      "name": "Aufbaugruppe Centauren"
+    }
+  },
+  {
+    "pk": 286,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 10272,
+      "id": 286,
+      "name": "Stamm Albert Schweitzer"
+    }
+  },
+  {
+    "pk": 287,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 11539,
+      "id": 287,
+      "name": "Stamm Falke"
+    }
+  },
+  {
+    "pk": 288,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 2862,
+      "id": 288,
+      "name": "Stamm Franz von Sickingen"
+    }
+  },
+  {
+    "pk": 289,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 1,
+      "id": 289,
+      "name": "Stamm Goten Kaiserslautern"
+    }
+  },
+  {
+    "pk": 290,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 2366,
+      "id": 290,
+      "name": "Stamm Graf von Sponheim"
+    }
+  },
+  {
+    "pk": 291,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 6175,
+      "id": 291,
+      "name": "Stamm von Helfenstein"
+    }
+  },
+  {
+    "pk": 292,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 3327,
+      "id": 292,
+      "name": "Stamm Idar-Oberstein"
+    }
+  },
+  {
+    "pk": 293,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 9376,
+      "id": 293,
+      "name": "Stamm Kurpfalz"
+    }
+  },
+  {
+    "pk": 294,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 276,
+      "id": 294,
+      "name": "Stamm Raugrafen"
+    }
+  },
+  {
+    "pk": 295,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 6174,
+      "id": 295,
+      "name": "Stamm Robin Hood"
+    }
+  },
+  {
+    "pk": 296,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 1749,
+      "id": 296,
+      "name": "Stamm Schwarzer Milan"
+    }
+  },
+  {
+    "pk": 297,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 1290,
+      "id": 297,
+      "name": "Stamm Sturmvogel"
+    }
+  },
+  {
+    "pk": 298,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 9997,
+      "id": 298,
+      "name": "Stamm Tscherkessen"
+    }
+  },
+  {
+    "pk": 299,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 10272,
+      "id": 299,
+      "name": "Stamm Vogt von Hunolstein"
+    }
+  },
+  {
+    "pk": 300,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 8240,
+      "id": 300,
+      "name": "Stamm der Piraten"
+    }
+  },
+  {
+    "pk": 301,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 8241,
+      "id": 301,
+      "name": "Stamm Pilgrim Falkoni"
+    }
+  },
+  {
+    "pk": 302,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 9126,
+      "id": 302,
+      "name": "Stamm Luchs"
+    }
+  },
+  {
+    "pk": 303,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 12660,
+      "id": 303,
+      "name": "Stamm Bundschuh"
+    }
+  },
+  {
+    "pk": 304,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 7468,
+      "id": 304,
+      "name": "Stamm Drache"
+    }
+  },
+  {
+    "pk": 305,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 37,
+      "level_id": 5,
+      "zip_code": 6560,
+      "id": 305,
+      "name": "Stamm Ciconia"
+    }
+  },
+  {
+    "pk": 306,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 38,
+      "level_id": 5,
+      "zip_code": 6766,
+      "id": 306,
+      "name": "Stamm LEO"
+    }
+  },
+  {
+    "pk": 307,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 38,
+      "level_id": 5,
+      "zip_code": 2557,
+      "id": 307,
+      "name": "Stamm Goldener Reiter"
+    }
+  },
+  {
+    "pk": 308,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 38,
+      "level_id": 5,
+      "zip_code": 11271,
+      "id": 308,
+      "name": "Stamm Ancalagon"
+    }
+  },
+  {
+    "pk": 309,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 38,
+      "level_id": 5,
+      "zip_code": 2025,
+      "id": 309,
+      "name": "Stamm der J\u00f6tnar"
+    }
+  },
+  {
+    "pk": 310,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 38,
+      "level_id": 5,
+      "zip_code": 6788,
+      "id": 310,
+      "name": "Aufbaugruppe Feuerland"
+    }
+  },
+  {
+    "pk": 311,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 38,
+      "level_id": 5,
+      "zip_code": 2034,
+      "id": 311,
+      "name": "Aufbaugruppe Wanderer"
+    }
+  },
+  {
+    "pk": 312,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 38,
+      "level_id": 5,
+      "zip_code": 1151,
+      "id": 312,
+      "name": "Aufbaugruppe Saalepiraten"
+    }
+  },
+  {
+    "pk": 313,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 10239,
+      "id": 313,
+      "name": "Stamm Domzoo"
+    }
+  },
+  {
+    "pk": 314,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 3350,
+      "id": 314,
+      "name": "Stamm Duburg"
+    }
+  },
+  {
+    "pk": 315,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 725,
+      "id": 315,
+      "name": "Stamm Carsten Niebuhr"
+    }
+  },
+  {
+    "pk": 316,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 877,
+      "id": 316,
+      "name": "Aufbaugruppe Obotriten"
+    }
+  },
+  {
+    "pk": 317,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 2411,
+      "id": 317,
+      "name": "Aufbaugruppe Sventana"
+    }
+  },
+  {
+    "pk": 318,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 89,
+      "id": 318,
+      "name": "Stamm Inka"
+    }
+  },
+  {
+    "pk": 319,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 731,
+      "id": 319,
+      "name": "Stamm Geisterburg"
+    }
+  },
+  {
+    "pk": 320,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 7068,
+      "id": 320,
+      "name": "Stamm Kolibri"
+    }
+  },
+  {
+    "pk": 321,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 3221,
+      "id": 321,
+      "name": "Stamm M\u00f6we"
+    }
+  },
+  {
+    "pk": 322,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 9539,
+      "id": 322,
+      "name": "Stamm Norwing"
+    }
+  },
+  {
+    "pk": 323,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 5956,
+      "id": 323,
+      "name": "Stamm Nydam"
+    }
+  },
+  {
+    "pk": 324,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 10527,
+      "id": 324,
+      "name": "Stamm Radwersdorp"
+    }
+  },
+  {
+    "pk": 325,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 9582,
+      "id": 325,
+      "name": "Stamm Reinholdsburg"
+    }
+  },
+  {
+    "pk": 326,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 463,
+      "id": 326,
+      "name": "Stamm Sachsenwald"
+    }
+  },
+  {
+    "pk": 327,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 4215,
+      "id": 327,
+      "name": "Stamm Waldreiter"
+    }
+  },
+  {
+    "pk": 328,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 3288,
+      "id": 328,
+      "name": "Stamm St. J\u00fcrgen"
+    }
+  },
+  {
+    "pk": 329,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 4257,
+      "id": 329,
+      "name": "Stamm Torona"
+    }
+  },
+  {
+    "pk": 330,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 744,
+      "id": 330,
+      "name": "Stamm Fealoce"
+    }
+  },
+  {
+    "pk": 331,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 849,
+      "id": 331,
+      "name": "Stamm St\u00f6rtebeker"
+    }
+  },
+  {
+    "pk": 332,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 5463,
+      "id": 332,
+      "name": "Stamm Janus"
+    }
+  },
+  {
+    "pk": 333,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 4586,
+      "id": 333,
+      "name": "Aufbaugruppe Uhlenhorst"
+    }
+  },
+  {
+    "pk": 334,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 39,
+      "level_id": 5,
+      "zip_code": 4551,
+      "id": 334,
+      "name": "Stamm Albatros"
+    }
+  },
+  {
+    "pk": 335,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 40,
+      "level_id": 5,
+      "zip_code": 5668,
+      "id": 335,
+      "name": "Stamm Columbus"
+    }
+  },
+  {
+    "pk": 336,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 40,
+      "level_id": 5,
+      "zip_code": 513,
+      "id": 336,
+      "name": "Stamm Falken vom Greifenstein"
+    }
+  },
+  {
+    "pk": 337,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 40,
+      "level_id": 5,
+      "zip_code": 8907,
+      "id": 337,
+      "name": "Aufbaugruppe Bussarde vom Burgberg"
+    }
+  },
+  {
+    "pk": 338,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 40,
+      "level_id": 5,
+      "zip_code": 307,
+      "id": 338,
+      "name": "Aufbaugruppe Arnstadt"
+    }
+  },
+  {
+    "pk": 339,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 20,
+      "level_id": 5,
+      "zip_code": 11762,
+      "id": 339,
+      "name": "Stamm Adler"
+    }
+  },
+  {
+    "pk": 340,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 22,
+      "level_id": 5,
+      "zip_code": 9632,
+      "id": 340,
+      "name": "Stamm Alexander Lion"
+    }
+  },
+  {
+    "pk": 341,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 20,
+      "level_id": 5,
+      "zip_code": 2695,
+      "id": 341,
+      "name": "Stamm Apollo"
+    }
+  },
+  {
+    "pk": 342,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 23,
+      "level_id": 5,
+      "zip_code": 6238,
+      "id": 342,
+      "name": "Stamm Argonauten"
+    }
+  },
+  {
+    "pk": 343,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 21,
+      "level_id": 5,
+      "zip_code": 1819,
+      "id": 343,
+      "name": "Stamm Condor"
+    }
+  },
+  {
+    "pk": 344,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 23,
+      "level_id": 5,
+      "zip_code": 6238,
+      "id": 344,
+      "name": "Stamm Deutschritter"
+    }
+  },
+  {
+    "pk": 345,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 22,
+      "level_id": 5,
+      "zip_code": 6202,
+      "id": 345,
+      "name": "Stamm Draconis"
+    }
+  },
+  {
+    "pk": 346,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 20,
+      "level_id": 5,
+      "zip_code": 9414,
+      "id": 346,
+      "name": "Stamm Dumeklemmer"
+    }
+  },
+  {
+    "pk": 347,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 25,
+      "level_id": 5,
+      "zip_code": 11032,
+      "id": 347,
+      "name": "Stamm Eulen"
+    }
+  },
+  {
+    "pk": 348,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 21,
+      "level_id": 5,
+      "zip_code": 6245,
+      "id": 348,
+      "name": "Stamm Galaxias"
+    }
+  },
+  {
+    "pk": 349,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 22,
+      "level_id": 5,
+      "zip_code": 12691,
+      "id": 349,
+      "name": "Stamm Graf Luckner"
+    }
+  },
+  {
+    "pk": 350,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 25,
+      "level_id": 5,
+      "zip_code": 8956,
+      "id": 350,
+      "name": "Stamm Hagazussa"
+    }
+  },
+  {
+    "pk": 351,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 23,
+      "level_id": 5,
+      "zip_code": 6221,
+      "id": 351,
+      "name": "Stamm Hellas"
+    }
+  },
+  {
+    "pk": 352,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 20,
+      "level_id": 5,
+      "zip_code": 9416,
+      "id": 352,
+      "name": "Stamm Hratuga"
+    }
+  },
+  {
+    "pk": 353,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 26,
+      "level_id": 5,
+      "zip_code": 130,
+      "id": 353,
+      "name": "Stamm Iltis"
+    }
+  },
+  {
+    "pk": 354,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 23,
+      "level_id": 5,
+      "zip_code": 6214,
+      "id": 354,
+      "name": "Stamm Karthago-Persepolis"
+    }
+  },
+  {
+    "pk": 355,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 26,
+      "level_id": 5,
+      "zip_code": 7061,
+      "id": 355,
+      "name": "Stamm Kliffkieker"
+    }
+  },
+  {
+    "pk": 356,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 24,
+      "level_id": 5,
+      "zip_code": 6480,
+      "id": 356,
+      "name": "Stamm K\u00f6nig Artus"
+    }
+  },
+  {
+    "pk": 357,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 21,
+      "level_id": 5,
+      "zip_code": 3046,
+      "id": 357,
+      "name": "Stamm Landesritter"
+    }
+  },
+  {
+    "pk": 358,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 27,
+      "level_id": 5,
+      "zip_code": 9125,
+      "id": 358,
+      "name": "Stamm Landgraf Ludwig IX"
+    }
+  },
+  {
+    "pk": 359,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 27,
+      "level_id": 5,
+      "zip_code": 9125,
+      "id": 359,
+      "name": "Stamm Landgr\u00e4fin Caroline"
+    }
+  },
+  {
+    "pk": 360,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 22,
+      "level_id": 5,
+      "zip_code": 10065,
+      "id": 360,
+      "name": "Stamm Maximilian Bayer"
+    }
+  },
+  {
+    "pk": 361,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 20,
+      "level_id": 5,
+      "zip_code": 640,
+      "id": 361,
+      "name": "Stamm Mittelerde"
+    }
+  },
+  {
+    "pk": 362,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 24,
+      "level_id": 5,
+      "zip_code": 402,
+      "id": 362,
+      "name": "Stamm M\u00f6hrenk\u00f6ppe"
+    }
+  },
+  {
+    "pk": 363,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 22,
+      "level_id": 5,
+      "zip_code": 3300,
+      "id": 363,
+      "name": "Stamm Crismeke"
+    }
+  },
+  {
+    "pk": 364,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 26,
+      "level_id": 5,
+      "zip_code": 11988,
+      "id": 364,
+      "name": "Stamm Pegasus"
+    }
+  },
+  {
+    "pk": 365,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 24,
+      "level_id": 5,
+      "zip_code": 45,
+      "id": 365,
+      "name": "Stamm Raubv\u00f6gel"
+    }
+  },
+  {
+    "pk": 366,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 22,
+      "level_id": 5,
+      "zip_code": 569,
+      "id": 366,
+      "name": "Stamm Rheinfranken"
+    }
+  },
+  {
+    "pk": 367,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 22,
+      "level_id": 5,
+      "zip_code": 10065,
+      "id": 367,
+      "name": "Stamm Rote Corsaren"
+    }
+  },
+  {
+    "pk": 368,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 22,
+      "level_id": 5,
+      "zip_code": 8185,
+      "id": 368,
+      "name": "Stamm Roter Milan"
+    }
+  },
+  {
+    "pk": 369,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 24,
+      "level_id": 5,
+      "zip_code": 7854,
+      "id": 369,
+      "name": "Stamm Schwarze L\u00f6wen"
+    }
+  },
+  {
+    "pk": 370,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 26,
+      "level_id": 5,
+      "zip_code": 749,
+      "id": 370,
+      "name": "Stamm Seeadler"
+    }
+  },
+  {
+    "pk": 371,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 24,
+      "level_id": 5,
+      "zip_code": 3076,
+      "id": 371,
+      "name": "Stamm Silberf\u00fcchse"
+    }
+  },
+  {
+    "pk": 372,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 21,
+      "level_id": 5,
+      "zip_code": 1819,
+      "id": 372,
+      "name": "\ufeffStamm Sperber"
+    }
+  },
+  {
+    "pk": 373,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 21,
+      "level_id": 5,
+      "zip_code": 7216,
+      "id": 373,
+      "name": "Stamm St. Willigis"
+    }
+  },
+  {
+    "pk": 374,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 24,
+      "level_id": 5,
+      "zip_code": 11498,
+      "id": 374,
+      "name": "Stamm Steppenw\u00f6lfe"
+    }
+  },
+  {
+    "pk": 375,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 20,
+      "level_id": 5,
+      "zip_code": 11065,
+      "id": 375,
+      "name": "Stamm Sterk Helmes"
+    }
+  },
+  {
+    "pk": 376,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 23,
+      "level_id": 5,
+      "zip_code": 6212,
+      "id": 376,
+      "name": "Stamm Troja Toscana"
+    }
+  },
+  {
+    "pk": 377,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 21,
+      "level_id": 5,
+      "zip_code": 4,
+      "id": 377,
+      "name": "Stamm Monte Verita"
+    }
+  },
+  {
+    "pk": 378,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 24,
+      "level_id": 5,
+      "zip_code": 4071,
+      "id": 378,
+      "name": "Stamm Waldl\u00e4ufer"
+    }
+  },
+  {
+    "pk": 379,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 25,
+      "level_id": 5,
+      "zip_code": 2103,
+      "id": 379,
+      "name": "Stamm Welfen"
+    }
+  },
+  {
+    "pk": 380,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 21,
+      "level_id": 5,
+      "zip_code": 8301,
+      "id": 380,
+      "name": "Stamm Wikinger"
+    }
+  },
+  {
+    "pk": 381,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 22,
+      "level_id": 5,
+      "zip_code": 3155,
+      "id": 381,
+      "name": "Stamm Wildg\u00e4nse"
+    }
+  },
+  {
+    "pk": 382,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 21,
+      "level_id": 5,
+      "zip_code": 1819,
+      "id": 382,
+      "name": "Stamm Wildkatzen"
+    }
+  },
+  {
+    "pk": 383,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 25,
+      "level_id": 5,
+      "zip_code": 2103,
+      "id": 383,
+      "name": "Stamm Salzig"
+    }
+  },
+  {
+    "pk": 384,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 23,
+      "level_id": 5,
+      "zip_code": 6221,
+      "id": 384,
+      "name": "Stamm Zugv\u00f6gel"
+    }
+  },
+  {
+    "pk": 385,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 3,
+      "level_id": 5,
+      "zip_code": 7132,
+      "id": 385,
+      "name": "Stamm Ekkaia"
+    }
+  },
+  {
+    "pk": 386,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 3,
+      "level_id": 5,
+      "zip_code": 4612,
+      "id": 386,
+      "name": "Stamm Faro"
+    }
+  },
+  {
+    "pk": 387,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 3,
+      "level_id": 5,
+      "zip_code": 4620,
+      "id": 387,
+      "name": "Stamm Caradhras"
+    }
+  },
+  {
+    "pk": 388,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 3,
+      "level_id": 5,
+      "zip_code": 4593,
+      "id": 388,
+      "name": "Stamm Ynys Avilion"
+    }
+  },
+  {
+    "pk": 389,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 3,
+      "level_id": 5,
+      "zip_code": 4593,
+      "id": 389,
+      "name": "Stamm Walter von Aquitanien"
+    }
+  },
+  {
+    "pk": 390,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 3,
+      "level_id": 5,
+      "zip_code": 4620,
+      "id": 390,
+      "name": "Stamm Ambronen"
+    }
+  },
+  {
+    "pk": 391,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 3,
+      "level_id": 5,
+      "zip_code": 4257,
+      "id": 391,
+      "name": "Stamm Dragon"
+    }
+  },
+  {
+    "pk": 392,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 8415,
+      "id": 392,
+      "name": "Jungenschaft Goten"
+    }
+  },
+  {
+    "pk": 393,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 4620,
+      "id": 393,
+      "name": "Stamm Ambronen"
+    }
+  },
+  {
+    "pk": 394,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 4600,
+      "id": 394,
+      "name": "Stamm Langobarden"
+    }
+  },
+  {
+    "pk": 395,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 8415,
+      "id": 395,
+      "name": "Stamm Camelot"
+    }
+  },
+  {
+    "pk": 396,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 8415,
+      "id": 396,
+      "name": "Stamm Albis"
+    }
+  },
+  {
+    "pk": 397,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 8415,
+      "id": 397,
+      "name": "Stamm Taragona"
+    }
+  },
+  {
+    "pk": 398,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 8415,
+      "id": 398,
+      "name": "M\u00e4delschaft Solaris"
+    }
+  },
+  {
+    "pk": 399,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 4620,
+      "id": 399,
+      "name": "Hag Eichh\u00f6rnchen"
+    }
+  },
+  {
+    "pk": 400,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 4600,
+      "id": 400,
+      "name": "Hag Dea Dia"
+    }
+  },
+  {
+    "pk": 401,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 8415,
+      "id": 401,
+      "name": "Hag Nocturis"
+    }
+  },
+  {
+    "pk": 402,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 8415,
+      "id": 402,
+      "name": "Hag Arboris"
+    }
+  },
+  {
+    "pk": 403,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 1,
+      "id": 403,
+      "name": "Hansischer Orden"
+    }
+  },
+  {
+    "pk": 404,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 6,
+      "level_id": 5,
+      "zip_code": 8415,
+      "id": 404,
+      "name": "Meute Norderstedt"
+    }
+  },
+  {
+    "pk": 405,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 5,
+      "level_id": 5,
+      "zip_code": 5816,
+      "id": 405,
+      "name": "Stamm Calapallo\u00a0"
+    }
+  },
+  {
+    "pk": 406,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 5,
+      "level_id": 5,
+      "zip_code": 9443,
+      "id": 406,
+      "name": "Stamm Edelwei\u00dfpiraten\u00a0"
+    }
+  },
+  {
+    "pk": 407,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 5,
+      "level_id": 5,
+      "zip_code": 10966,
+      "id": 407,
+      "name": "Stamm Schwarzkittel\u00a0"
+    }
+  },
+  {
+    "pk": 408,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 5,
+      "level_id": 5,
+      "zip_code": 2009,
+      "id": 408,
+      "name": "Stamm Steppenwolf\u00a0"
+    }
+  },
+  {
+    "pk": 409,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 7,
+      "level_id": 5,
+      "zip_code": 1802,
+      "id": 409,
+      "name": "Stamm Greif"
+    }
+  },
+  {
+    "pk": 410,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 7,
+      "level_id": 5,
+      "zip_code": 5827,
+      "id": 410,
+      "name": "Stamm Kondor"
+    }
+  },
+  {
+    "pk": 411,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 7,
+      "level_id": 5,
+      "zip_code": 8591,
+      "id": 411,
+      "name": "Stamm J\u00f6rg von Schauenburg"
+    }
+  },
+  {
+    "pk": 412,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 7,
+      "level_id": 5,
+      "zip_code": 603,
+      "id": 412,
+      "name": "Stamm Schwarzer Adler\u00a0"
+    }
+  },
+  {
+    "pk": 413,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 7,
+      "level_id": 5,
+      "zip_code": 151,
+      "id": 413,
+      "name": "Stamm Treverer"
+    }
+  },
+  {
+    "pk": 414,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 8,
+      "level_id": 5,
+      "zip_code": 7274,
+      "id": 414,
+      "name": "Stamm Goten\u00a0"
+    }
+  },
+  {
+    "pk": 415,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 8,
+      "level_id": 5,
+      "zip_code": 12698,
+      "id": 415,
+      "name": "Stamm Lichtstafette\u00a0"
+    }
+  },
+  {
+    "pk": 416,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 8,
+      "level_id": 5,
+      "zip_code": 6238,
+      "id": 416,
+      "name": "Stamm Mauritius\u00a0"
+    }
+  },
+  {
+    "pk": 417,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 9,
+      "level_id": 5,
+      "zip_code": 6530,
+      "id": 417,
+      "name": "Stamm der Ritter"
+    }
+  },
+  {
+    "pk": 418,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 9,
+      "level_id": 5,
+      "zip_code": 10466,
+      "id": 418,
+      "name": "Stamm Franken"
+    }
+  },
+  {
+    "pk": 419,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 9,
+      "level_id": 5,
+      "zip_code": 4514,
+      "id": 419,
+      "name": "Stamm Seeadler"
+    }
+  },
+  {
+    "pk": 420,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 9,
+      "level_id": 5,
+      "zip_code": 307,
+      "id": 420,
+      "name": "Stamm K\u00f6nigstiger"
+    }
+  },
+  {
+    "pk": 421,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 9,
+      "level_id": 5,
+      "zip_code": 1724,
+      "id": 421,
+      "name": "Stamm Walhall"
+    }
+  },
+  {
+    "pk": 422,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 9,
+      "level_id": 5,
+      "zip_code": 69,
+      "id": 422,
+      "name": "Stamm Zugv\u00f6gel"
+    }
+  },
+  {
+    "pk": 423,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 9,
+      "level_id": 5,
+      "zip_code": 3128,
+      "id": 423,
+      "name": "Stamm Excalibur"
+    }
+  },
+  {
+    "pk": 424,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 9,
+      "level_id": 5,
+      "zip_code": 4043,
+      "id": 424,
+      "name": "Stamm Chawrusen"
+    }
+  },
+  {
+    "pk": 425,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 9,
+      "level_id": 5,
+      "zip_code": 3868,
+      "id": 425,
+      "name": "Stamm Welfen"
+    }
+  },
+  {
+    "pk": 426,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4561,
+      "id": 426,
+      "name": "Alouris"
+    }
+  },
+  {
+    "pk": 427,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4593,
+      "id": 427,
+      "name": "Amarganth"
+    }
+  },
+  {
+    "pk": 428,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4590,
+      "id": 428,
+      "name": "Andwaranaut"
+    }
+  },
+  {
+    "pk": 429,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4591,
+      "id": 429,
+      "name": "Chersonisos"
+    }
+  },
+  {
+    "pk": 430,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4598,
+      "id": 430,
+      "name": "Dietrich von Bern"
+    }
+  },
+  {
+    "pk": 431,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4602,
+      "id": 431,
+      "name": "Lyk\u00e0medas"
+    }
+  },
+  {
+    "pk": 432,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4590,
+      "id": 432,
+      "name": "Minas Tirith"
+    }
+  },
+  {
+    "pk": 433,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4561,
+      "id": 433,
+      "name": "Mizar Alkor"
+    }
+  },
+  {
+    "pk": 434,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4553,
+      "id": 434,
+      "name": "Orion"
+    }
+  },
+  {
+    "pk": 435,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4591,
+      "id": 435,
+      "name": "Orithya"
+    }
+  },
+  {
+    "pk": 436,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4553,
+      "id": 436,
+      "name": "Pleione"
+    }
+  },
+  {
+    "pk": 437,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4588,
+      "id": 437,
+      "name": "Saliskiaron"
+    }
+  },
+  {
+    "pk": 438,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4591,
+      "id": 438,
+      "name": "Thadesia"
+    }
+  },
+  {
+    "pk": 439,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4588,
+      "id": 439,
+      "name": "Thyreatis"
+    }
+  },
+  {
+    "pk": 440,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4565,
+      "id": 440,
+      "name": "Xephalonia"
+    }
+  },
+  {
+    "pk": 441,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 4,
+      "level_id": 5,
+      "zip_code": 4611,
+      "id": 441,
+      "name": "Yggdrasil"
+    }
+  },
+  {
+    "pk": 442,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 10,
+      "level_id": 5,
+      "zip_code": 8978,
+      "id": 442,
+      "name": "Teutates Avalon"
+    }
+  },
+  {
+    "pk": 443,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 10,
+      "level_id": 5,
+      "zip_code": 11069,
+      "id": 443,
+      "name": "Stadtpiraten"
+    }
+  },
+  {
+    "pk": 444,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 10,
+      "level_id": 5,
+      "zip_code": 1388,
+      "id": 444,
+      "name": "Samarkand"
+    }
+  },
+  {
+    "pk": 445,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 10,
+      "level_id": 5,
+      "zip_code": 324,
+      "id": 445,
+      "name": "Aruba"
+    }
+  },
+  {
+    "pk": 446,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 10,
+      "level_id": 5,
+      "zip_code": 4113,
+      "id": 446,
+      "name": "Enonteki\u00f6"
+    }
+  },
+  {
+    "pk": 447,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 10,
+      "level_id": 5,
+      "zip_code": 8049,
+      "id": 447,
+      "name": "Ritter Herbord von Raven"
+    }
+  },
+  {
+    "pk": 448,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 10,
+      "level_id": 5,
+      "zip_code": 913,
+      "id": 448,
+      "name": "Ranen"
+    }
+  },
+  {
+    "pk": 449,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 11,
+      "level_id": 5,
+      "zip_code": 5963,
+      "id": 449,
+      "name": "Goten"
+    }
+  },
+  {
+    "pk": 450,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 11,
+      "level_id": 5,
+      "zip_code": 217,
+      "id": 450,
+      "name": "Styrbj\u00f8rn"
+    }
+  },
+  {
+    "pk": 451,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 11,
+      "level_id": 5,
+      "zip_code": 2175,
+      "id": 451,
+      "name": "Vaganten"
+    }
+  },
+  {
+    "pk": 452,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 5669,
+      "id": 452,
+      "name": "Bravehearts"
+    }
+  },
+  {
+    "pk": 453,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 10295,
+      "id": 453,
+      "name": "Grauf\u00fcchse"
+    }
+  },
+  {
+    "pk": 454,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 2397,
+      "id": 454,
+      "name": "Nebell\u00e4ufer"
+    }
+  },
+  {
+    "pk": 455,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 2446,
+      "id": 455,
+      "name": "Aar"
+    }
+  },
+  {
+    "pk": 456,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 2034,
+      "id": 456,
+      "name": "Adventure"
+    }
+  },
+  {
+    "pk": 457,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 9089,
+      "id": 457,
+      "name": "Bienen"
+    }
+  },
+  {
+    "pk": 458,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 7304,
+      "id": 458,
+      "name": "Dietrich von Bern"
+    }
+  },
+  {
+    "pk": 459,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 9087,
+      "id": 459,
+      "name": "Dompfaff"
+    }
+  },
+  {
+    "pk": 460,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 11179,
+      "id": 460,
+      "name": "Eulen"
+    }
+  },
+  {
+    "pk": 461,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 10930,
+      "id": 461,
+      "name": "Falken"
+    }
+  },
+  {
+    "pk": 462,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 704,
+      "id": 462,
+      "name": "Goldene Horde"
+    }
+  },
+  {
+    "pk": 463,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 6145,
+      "id": 463,
+      "name": "Goten"
+    }
+  },
+  {
+    "pk": 464,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 3811,
+      "id": 464,
+      "name": "Graf Wolff von Eberstein"
+    }
+  },
+  {
+    "pk": 465,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 2070,
+      "id": 465,
+      "name": "Grafen von Andechs"
+    }
+  },
+  {
+    "pk": 466,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 5772,
+      "id": 466,
+      "name": "Gralsritter"
+    }
+  },
+  {
+    "pk": 467,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 12187,
+      "id": 467,
+      "name": "Greif"
+    }
+  },
+  {
+    "pk": 468,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 794,
+      "id": 468,
+      "name": "Herz\u00f6ge von Meranien"
+    }
+  },
+  {
+    "pk": 469,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 10792,
+      "id": 469,
+      "name": "Himmelsst\u00fcrmer"
+    }
+  },
+  {
+    "pk": 470,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 12567,
+      "id": 470,
+      "name": "Huskies"
+    }
+  },
+  {
+    "pk": 471,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 8474,
+      "id": 471,
+      "name": "Karakal"
+    }
+  },
+  {
+    "pk": 472,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 2747,
+      "id": 472,
+      "name": "Kojoten"
+    }
+  },
+  {
+    "pk": 473,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 9751,
+      "id": 473,
+      "name": "Korsar"
+    }
+  },
+  {
+    "pk": 474,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 11444,
+      "id": 474,
+      "name": "Lindl-Ritter"
+    }
+  },
+  {
+    "pk": 475,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 4507,
+      "id": 475,
+      "name": "Milan"
+    }
+  },
+  {
+    "pk": 476,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 2747,
+      "id": 476,
+      "name": "Nordf\u00fcchse"
+    }
+  },
+  {
+    "pk": 477,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 2456,
+      "id": 477,
+      "name": "Reineke"
+    }
+  },
+  {
+    "pk": 478,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 10974,
+      "id": 478,
+      "name": "Roter Milan"
+    }
+  },
+  {
+    "pk": 479,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 9429,
+      "id": 479,
+      "name": "Rupilo"
+    }
+  },
+  {
+    "pk": 480,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 5043,
+      "id": 480,
+      "name": "Sandf\u00fcchse"
+    }
+  },
+  {
+    "pk": 481,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 1137,
+      "id": 481,
+      "name": "Schwarzer Adler"
+    }
+  },
+  {
+    "pk": 482,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 2456,
+      "id": 482,
+      "name": "Sechuraf\u00fcchse"
+    }
+  },
+  {
+    "pk": 483,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 3613,
+      "id": 483,
+      "name": "Sturmvaganten"
+    }
+  },
+  {
+    "pk": 484,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 4363,
+      "id": 484,
+      "name": "Wei\u00dfer Schwan"
+    }
+  },
+  {
+    "pk": 485,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 2070,
+      "id": 485,
+      "name": "Wilde Gesellen"
+    }
+  },
+  {
+    "pk": 486,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 3168,
+      "id": 486,
+      "name": "Wilde Waschb\u00e4ren"
+    }
+  },
+  {
+    "pk": 487,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 7819,
+      "id": 487,
+      "name": "Wilde Isar"
+    }
+  },
+  {
+    "pk": 488,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 12,
+      "level_id": 5,
+      "zip_code": 1681,
+      "id": 488,
+      "name": "Wildkatzen"
+    }
+  },
+  {
+    "pk": 489,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 13,
+      "level_id": 5,
+      "zip_code": 636,
+      "id": 489,
+      "name": "Turmschwalbe"
+    }
+  },
+  {
+    "pk": 490,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 13,
+      "level_id": 5,
+      "zip_code": 636,
+      "id": 490,
+      "name": "Turmfalke"
+    }
+  },
+  {
+    "pk": 491,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 13,
+      "level_id": 5,
+      "zip_code": 635,
+      "id": 491,
+      "name": "Schwarzer Milan"
+    }
+  },
+  {
+    "pk": 492,
+    "model": "basic.scoutHierarchy",
+    "fields": {
+      "parent_id": 13,
+      "level_id": 5,
+      "zip_code": 635,
+      "id": 492,
+      "name": "L\u00fcbscher Adler"
+    }
+  }
+]

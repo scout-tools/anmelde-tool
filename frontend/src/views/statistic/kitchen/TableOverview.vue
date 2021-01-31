@@ -1,35 +1,43 @@
 <template>
-    <GChart
-      type="Table"
-      :data="chartData"
-      :options="chartOptions"
-    />
+  <Pivot
+    :data="data"
+    v-model="fields"
+    :reducer="reducer"
+  />
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { Pivot } from 'vue-pivot-table-plus';
 
 export default {
-  data() {
+  components: { Pivot },
+  data: () => { // eslint-disable-line
     return {
-      chartDataHeader: ['', 'Gesamt', 'Wölflinge', 'Pfadfinder', 'Rover', 'Altrover'],
-      chartDataRows: [
-        ['Gesamt', 100, 10, 20, 7, 0],
-        ['Fleisch', 100, 8, 18, 6, 0],
-        ['Vegetarisch', 100, 1, 1, 1, 0],
-        ['Vegan', 100, 0, 1, 0, 0],
-        ['Keine Nüße', 100, 0, 0, 0, 0],
-      ],
-      updatedChartData: [],
-      chartOptions: {
-        table: {
-          title: 'Company Performance',
-        },
+
+      fields: {
+        availableFields: [],
+        rowFields: [
+          {
+            getter: (item) => item.ageGroupPersonal,
+            label: 'Alter',
+          },
+          {
+            getter: (item) => item.habitTypePersonal,
+            label: 'Typ',
+          },
+        ],
+        colFields: [
+        ],
+        fieldsOrder: {},
       },
+      reducer: (sum, item) => sum + item.numberPersonal, // eslint-disable-line
     };
   },
   computed: {
-    chartData() {
-      return [this.chartDataHeader, ...this.chartDataRows];
+    ...mapGetters(['currentEventKitchen']),
+    data() {
+      return this.currentEventKitchen.numGroupedByAgePersonal;
     },
   },
 };

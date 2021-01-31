@@ -8,7 +8,7 @@
             :complete="currentStep > index + 1"
             :step="index + 1"
           >
-            {{ `${index + 1} Schritt`  }}
+            {{ `${step.displayName}`  }}
           </v-stepper-step>
 
           <v-divider :key="index"></v-divider>
@@ -46,21 +46,33 @@ import axios from 'axios';
 
 import StepAddParticipantsSingle from './steps/StepAddParticipantsSingle.vue';
 import StepAddParticipants from './steps/StepAddParticipants.vue';
+import StepConfirmBundesfahrt from './steps/StepConfirmBundesfahrt.vue';
+import StepConfirmDpv from './steps/StepConfirmDpv.vue';
 import StepConfirm from './steps/StepConfirm.vue';
 import StepConsent from './steps/StepConsent.vue';
 import StepFood from './steps/StepFood.vue';
 import StepBdpDpvLocation from './steps/StepBdpDpvLocation.vue';
 import StepBdpDpVPreferences from './steps/StepBdpDpVPreferences.vue';
+import StepTents from './steps/StepTents.vue';
+import StepTravel from './steps/StepTravel.vue';
+import StepAddParticipantGroupRole from './steps/StepBdPDpvAddParticipantGroupRole.vue';
+import StepBdpDpvTextForStamm from './steps/StepBdpDpvTextForStamm.vue';
+import StepTravelBack from './steps/StepTravelBack.vue';
+import StepBdpDpvLocationSuggestion from './steps/StepBdpDpvLocationSuggestion.vue';
 
 export default {
   components: {
     StepAddParticipantsSingle,
     StepAddParticipants,
     StepFood,
+    StepConfirmBundesfahrt,
+    StepConfirmDpv,
     StepConfirm,
     StepConsent,
     StepBdpDpvLocation,
     StepBdpDpVPreferences,
+    StepBdpDpvTextForStamm,
+    StepBdpDpvLocationSuggestion,
   },
   props: ['scoutOrganisation'],
   data() {
@@ -87,7 +99,10 @@ export default {
         return [
           StepConsent,
           StepAddParticipantsSingle,
-          StepConfirm,
+          StepTents,
+          StepTravel,
+          StepTravelBack,
+          StepConfirmBundesfahrt,
         ];
       }
       // BdP-DPV
@@ -96,10 +111,12 @@ export default {
         && this.currentEvent.eventTags.includes(2)) {
         return [
           StepConsent,
-          StepAddParticipants,
+          StepAddParticipantGroupRole,
           StepBdpDpvLocation,
           StepBdpDpVPreferences,
-          StepConfirm,
+          StepBdpDpvTextForStamm,
+          StepBdpDpvLocationSuggestion,
+          StepConfirmDpv,
         ];
       }
       return [
@@ -110,7 +127,7 @@ export default {
       ];
     },
     headerSteps() {
-      return ['Teilnehmer', 'Essen', 'Bestätigung'];
+      return ['Teilnehmende', 'Essen', 'Bestätigung'];
     },
   },
   methods: {

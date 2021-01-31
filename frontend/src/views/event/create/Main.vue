@@ -104,7 +104,7 @@ export default {
         'Verifizierungscode',
         'Daten und Uhrzeit',
         'Ort',
-        'Teilnehmerbeitrag',
+        'Teilnehmer_innen Beitrag',
         'Zielgruppe',
         'Kontaktdaten',
       ];
@@ -124,7 +124,6 @@ export default {
       setTimeout(() => this.$router.push({ name: 'eventOverview' }), 2000);
     },
     callCreateEventPost() {
-      console.log(this.data.event);
       return axios.post(`${this.API_URL}basic/event/`, this.data.event);
     },
     formatCreateEventRequestData() {

@@ -1,75 +1,62 @@
 <template>
   <v-form ref="StepBdpDpVPreferences" v-model="valid">
-  <v-container
-    class="px-0"
-    fluid
-  >
-    <v-radio-group
-        v-model="radioGroup">
-      <v-radio
-        label="Wir wollen bei uns in der Stadt bleiben"
-        value="1"
-      ></v-radio>
-      <v-radio
-        label="Wir wollen nicht bei uns in der Stadt bleiben."
-        value="2"
-      ></v-radio>
-      <v-radio
-        label="Uns ist beides recht."
-        value="22"
-      ></v-radio>
+    <v-container class="px-0" fluid>
+      <v-expand-transition>
+        <v-container>
+          <v-row v-if="dpvAddedLocation">
+            <v-subheader>
+              Sehr cool. Du hast einen Lagerplatz hinzugefügt.
+            </v-subheader>
+            <v-radio-group v-model="radioGroup">
+              <v-radio
+                label="Wir wollen bei uns im Heim bleiben und besucht werden."
+                value="1"
+              ></v-radio>
+              <v-radio
+                label="Wir wollen einen anderen Stamm besuchen
+                und stellen unser Heim zur Verfügung."
+                value="2"
+              ></v-radio>
+              <v-radio label="Uns ist beides recht." value="3"></v-radio>
+            </v-radio-group>
+          </v-row>
 
-    </v-radio-group>
+          <v-row v-else>
+            <v-subheader>
+              Du hast kein Heim oder einen Lagerplatz,
+              was du uns zur Verfügung stellen kannst. Welche Präferenzen hast du? <br>
+            </v-subheader>
+            <v-radio-group v-model="radioGroup">
+              <v-radio
+                label="Wir wollen bei uns in der Stadt oder im direktem Umfeld bleiben."
+                value="1"
+              ></v-radio>
+              <v-radio
+                label="Wir wollen nicht bei uns in der Stadt
+                bleiben."
+                value="2"
+              ></v-radio>
+              <v-radio label="Uns ist beides recht." value="3"></v-radio>
+            </v-radio-group>
+          </v-row>
+        </v-container>
+      </v-expand-transition>
 
-<v-expand-transition>
-  <v-container v-show="radioGroup === '1'">
-    <v-divider class="my-4"/>
-    <v-radio-group
-        v-model="radioGroup2">
-      <v-radio
-        v-show="dpvAddedLocation"
-        label="Wir wollen einen anderen Stamm zu uns einladen"
-        value="3"
-      ></v-radio>
-      <v-radio
-        v-show="dpvAddedLocation"
-        label="Wir wollen einen anderen Stamm in unserer Stadt besuchen (und stellen
-        unser Heim/ Lagerplatz anderen Stämmen zur Verfügung)"
-        value="5"
-      ></v-radio>
-      <v-radio
-        v-show="!dpvAddedLocation"
-        label="Wir wollen einen anderen Stamm in unserer Stadt besuchen."
-        value="5"
-      ></v-radio>
-    </v-radio-group>
-  </v-container>
-</v-expand-transition>
-
-<v-expand-transition>
-  <v-container v-show="radioGroup === '2'">
-    <v-divider class="my-4"/>
-    <v-radio-group
-        v-model="radioGroup2">
-      <v-radio
-        label="Wir fahren gern weit weg. "
-        value="3"
-      ></v-radio>
-      <v-radio
-        label="Wir möchten gern in der Nähe unserer Stadt bleiben. "
-        value="5"
-      ></v-radio>
-    </v-radio-group>
-  </v-container>
-</v-expand-transition>
-
-<v-expand-transition>
-  <v-checkbox
-    v-show="dpvAddedLocation"
-    v-model="data.checkbox1"
-    :label="`Wir stellen unser Heim / Lagerplatz anderen Stämmen zur Verfügung.)`"/>
-  <v-divider class="my-3" />
-</v-expand-transition>
+      <v-expand-transition>
+        <v-container v-show="radioGroup === '2' || radioGroup === '3'">
+          <v-divider class="my-4" />
+          <v-radio-group v-model="radioGroup2">
+            <v-radio label="Wir fahren gern weit weg.
+              (Im Zweifel gern quer durch ganz Deutschland) " value="3">
+            </v-radio>
+            <v-radio
+              label="Wir möchten gern in der Nähe unserer Stadt bleiben.
+              (Mit der Regio kommt man gut hin) "
+              value="5"
+            ></v-radio>
+          </v-radio-group>
+        </v-container>
+      </v-expand-transition>
 
       <prev-next-buttons
         :position="position"
@@ -78,8 +65,25 @@
         @prevStep="prevStep"
         @submitStep="submitStep()"
       />
-  </v-container>
-  <create-location-dialog ref="newLocationDialog" @close="getEvents()"/>
+    </v-container>
+    <v-snackbar
+      top
+      v-model="snackbar"
+    >
+      {{ textSnackbar}}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="green"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Schließen
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <create-location-dialog ref="newLocationDialog" @close="getEvents()" />
   </v-form>
 </template>
 
@@ -91,6 +95,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
+  displayName: 'Wo soll es hingehen?',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
@@ -101,6 +106,8 @@ export default {
     valid: true,
     radioGroup: 0,
     radioGroup2: 0,
+    snackbar: false,
+    textSnackbar: 'Wir geben uns größte Mühe alles zu beachten, aber können nichts versprechen. ',
     data: {
       value1: true,
       value2: false,
@@ -127,6 +134,7 @@ export default {
       if (!this.valid) {
         return;
       }
+      this.snackbar = true;
       this.$emit('nextStep');
     },
     submitStep() {
@@ -147,5 +155,4 @@ export default {
 </script>
 
 <style>
-
 </style>

@@ -33,7 +33,6 @@ export default {
       this.$emit('onEditClick');
     },
     onChange(newData) {
-      debugger;
       this.$emit('update-data', this.type, newData);
     },
   },

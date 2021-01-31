@@ -1,75 +1,17 @@
 <template>
   <v-form ref="StepBdpDpVPreferences" v-model="valid">
-  <v-container
-    class="px-0"
-    fluid
-  >
-    <v-radio-group
-        v-model="radioGroup">
-      <v-radio
-        label="Wir wollen bei uns in der Stadt bleiben"
-        value="1"
-      ></v-radio>
-      <v-radio
-        label="Wir wollen nicht bei uns in der Stadt bleiben."
-        value="2"
-      ></v-radio>
-      <v-radio
-        label="Uns ist beides recht."
-        value="22"
-      ></v-radio>
+    <v-container class="px-0" fluid>
+      <v-textarea
+        name="input-7-1"
+        label="Freitext für den Partnerstamm"
+        :placeholder="placeholder"
+      ></v-textarea>
 
-    </v-radio-group>
-
-<v-expand-transition>
-  <v-container v-show="radioGroup === '1'">
-    <v-divider class="my-4"/>
-    <v-radio-group
-        v-model="radioGroup2">
-      <v-radio
-        v-show="dpvAddedLocation"
-        label="Wir wollen einen anderen Stamm zu uns einladen"
-        value="3"
-      ></v-radio>
-      <v-radio
-        v-show="dpvAddedLocation"
-        label="Wir wollen einen anderen Stamm in unserer Stadt besuchen (und stellen
-        unser Heim/ Lagerplatz anderen Stämmen zur Verfügung)"
-        value="5"
-      ></v-radio>
-      <v-radio
-        v-show="!dpvAddedLocation"
-        label="Wir wollen einen anderen Stamm in unserer Stadt besuchen."
-        value="5"
-      ></v-radio>
-    </v-radio-group>
-  </v-container>
-</v-expand-transition>
-
-<v-expand-transition>
-  <v-container v-show="radioGroup === '2'">
-    <v-divider class="my-4"/>
-    <v-radio-group
-        v-model="radioGroup2">
-      <v-radio
-        label="Wir fahren gern weit weg. "
-        value="3"
-      ></v-radio>
-      <v-radio
-        label="Wir möchten gern in der Nähe unserer Stadt bleiben. "
-        value="5"
-      ></v-radio>
-    </v-radio-group>
-  </v-container>
-</v-expand-transition>
-
-<v-expand-transition>
-  <v-checkbox
-    v-show="dpvAddedLocation"
-    v-model="data.checkbox1"
-    :label="`Wir stellen unser Heim / Lagerplatz anderen Stämmen zur Verfügung.)`"/>
-  <v-divider class="my-3" />
-</v-expand-transition>
+      <v-subheader>
+        Hinweis: Auch diesen Freitext kannst du später noch bis zum XXX anpassen,
+        wenn du erst mit deinem Stamm euer Lieblingslied, etc. abstimmen möchtest.
+      </v-subheader>
+        <v-divider class="my-3" />
 
       <prev-next-buttons
         :position="position"
@@ -78,8 +20,8 @@
         @prevStep="prevStep"
         @submitStep="submitStep()"
       />
-  </v-container>
-  <create-location-dialog ref="newLocationDialog" @close="getEvents()"/>
+    </v-container>
+    <create-location-dialog ref="newLocationDialog" @close="getEvents()" />
   </v-form>
 </template>
 
@@ -91,6 +33,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
+  displayName: 'Nachricht an Partnerstamm',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
@@ -105,6 +48,11 @@ export default {
       value1: true,
       value2: false,
     },
+    placeholder: 'Hier ist Platz für eine persönliche Nachricht an euren '
+    + 'noch unbekannten Partnerstamm. Wenn du Lust hast, '
+    + 'dann schreibe auf, was euch ausmacht, was euer tollstes Fahrtenerlebnis war, '
+    + 'euer Lieblingslied, was euch an eurer Stadt besonders gefällt… und wie man dich als '
+    + 'Ansprechperson am besten erreichen kann, z.B. Mail / Whats App / Telegram / Brieftaube',
   }),
   computed: {
     ...mapGetters(['dpvAddedLocation']),
@@ -147,5 +95,4 @@ export default {
 </script>
 
 <style>
-
 </style>

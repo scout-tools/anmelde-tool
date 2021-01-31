@@ -1,28 +1,28 @@
 [
     {
-        "model": "basic.ageGroup",
+        "model": "basic.travelTag",
         "pk": 1,
         "fields": {
             "id": 1,
-            "name": "11 Jahre oder Jünger",
+            "name": "Anreise - Kaperfahrt",
             "description": ""
         }
     },
     {
-        "model": "basic.ageGroup",
+        "model": "basic.travelTag",
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "12-16 Jahre",
+            "name": "Anreise - Mosaikersleben",
             "description": ""
         }
     },
     {
-        "model": "basic.ageGroup",
+        "model": "basic.travelTag",
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "17 Jahre oder Älter",
+            "name": "Abreise - Mosaikersleben",
             "description": ""
         }
     }

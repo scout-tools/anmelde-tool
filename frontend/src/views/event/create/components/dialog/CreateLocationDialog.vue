@@ -60,7 +60,7 @@
               <zip-code-field
                 :counter="5"
                 :error-messages="zipCodeErrors"
-                label="Postleitzahl"
+                label="Stadt/Postleitzahl"
                 required
                 @blur="$v.data.zipCode.$touch()"/>
             </v-row>

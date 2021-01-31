@@ -1,0 +1,35 @@
+[
+    {
+        "model": "basic.ageGroup",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "name": "<= 10",
+            "min_age": 0,
+            "max_age": 10,
+            "description": "10 Jahre oder Jünger"
+        }
+    },
+    {
+        "model": "basic.ageGroup",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "name": "11-15",
+            "min_age": 11,
+            "max_age": 15,
+            "description": "11-15 Jahre"
+        }
+    },
+    {
+        "model": "basic.ageGroup",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "name": ">= 16",
+            "min_age": 16,
+            "max_age": 99,
+            "description": "16 Jahre oder Älter"
+        }
+    }
+]

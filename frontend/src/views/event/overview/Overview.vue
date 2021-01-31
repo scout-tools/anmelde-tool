@@ -8,10 +8,10 @@
               Zu diesen Lagern kannst du dich Anmelden:
             </v-card-title>
             <v-list subheader two-line>
-              <v-subheader inset
-                >Hier kannst du alle deine aktuell buchbaren Lagern
-                sehen</v-subheader
-              >
+              <v-subheader inset>
+                Nicht lange zögern. Melde dich oder deine Gruppe zu einen dieser
+                Lager an.
+              </v-subheader>
 
               <v-btn
                 class="ma-6"
@@ -26,20 +26,34 @@
               <template v-for="(item, index) in getItems">
                 <v-list-item :key="item.name">
                   <v-list-item-avatar>
-                    <v-icon color="black"> mdi-account-group</v-icon>
+                    <v-icon
+                      :class="'primary'"
+                      dark
+                      v-text="'mdi-tent'"
+                    ></v-icon>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title v-text="item.name"></v-list-item-title>
+                    <v-list-item-title
+                      v-text="getHeaderText(item.name, item.participantRole)"
+                    ></v-list-item-title>
 
                     <v-list-item-subtitle class="text--primary">
-                      {{ getText(item) }}
+                      {{ getLagerText(item) }}
                     </v-list-item-subtitle>
 
                     <v-list-item-subtitle
                       v-text="item.description"
                     ></v-list-item-subtitle>
                   </v-list-item-content>
-                  <v-list-item-action>
+
+                  <v-list-item-action
+                    v-show="
+                      isInTimeRange(
+                        item.registrationStart,
+                        item.registrationDeadline,
+                      ) && !item.isRegistered.length
+                    "
+                  >
                     <router-link
                       :to="{
                         name: 'registrationForm',
@@ -47,13 +61,47 @@
                       }"
                       style="text-decoration: none"
                     >
-                      <v-btn icon>
-                        <v-icon fab color="primary">
-                          mdi-account-multiple-plus
-                        </v-icon>
-                      </v-btn>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-bind="attrs" v-on="on">
+                            <v-icon fab color="primary">
+                              mdi-account-multiple-plus
+                            </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Lageranmeldung</span>
+                      </v-tooltip>
                     </router-link>
                   </v-list-item-action>
+
+                  <v-list-item-action
+                    v-show="
+                      isInTimeRange(
+                        item.registrationStart,
+                        item.registrationDeadline,
+                      ) && item.isRegistered.length
+                    "
+                    class="ml-4"
+                  >
+                    <router-link
+                      :to="{
+                        name: 'registrationCreate',
+                        params: { id: getRegisteredId(item) },
+                      }"
+                      style="text-decoration: none"
+                      v-if="item.isRegistered.length"
+                    >
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-bind="attrs" v-on="on">
+                            <v-icon fab color="primary"> mdi-pencil </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Lageranmeldung bearbeiten</span>
+                      </v-tooltip>
+                    </router-link>
+                  </v-list-item-action>
+
                   <v-list-item-action>
                     <router-link
                       :to="{
@@ -61,11 +109,16 @@
                         params: { id: item.id },
                       }"
                       style="text-decoration: none"
-                      v-if="!isSimpleUser || item.participantRole.length"
+                      v-if="item.participantRole.length"
                     >
-                      <v-btn icon>
-                        <v-icon fab color="primary"> mdi-chart-bar </v-icon>
-                      </v-btn>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-bind="attrs" v-on="on">
+                            <v-icon fab color="primary"> mdi-chart-bar </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Lagerstatistik</span>
+                      </v-tooltip>
                     </router-link>
                   </v-list-item-action>
                 </v-list-item>
@@ -125,8 +178,8 @@ export default {
     hasSetExtendedUserInfos() {
       if (this.userExtendedItems) {
         return (
-          this.userExtendedItems.scoutName
-          && this.userExtendedItems.scoutOrganisation
+          this.userExtendedItems.scoutName && // eslint-disable-line
+          this.userExtendedItems.scoutOrganisation
         );
       }
       return false;
@@ -139,15 +192,49 @@ export default {
     },
   },
   methods: {
-    getText(item) {
+    getHeaderText(header, roles) {
+      if (roles && roles.length) {
+        return `${header} (Deine Rolle: ${roles[0].eventRole_Name})`;
+      }
+      return header;
+    },
+    getRegisteredId(item) {
+      if (
+        item && // eslint-disable-line
+        item.isRegistered && // eslint-disable-line
+        item.isRegistered.length && // eslint-disable-line
+        item.isRegistered[0].id
+      ) {
+        return item.isRegistered[0].id;
+      }
+      return 0;
+    },
+    isInTimeRange(date1, date2) {
+      const startTime = new Date(date1).getTime();
+      const endTime = new Date(date2).getTime();
+      const today = new Date().getTime();
+
+      return today > startTime && today < endTime;
+    },
+    getLagerText(item) {
       const startTime = new Date(item.startTime);
       const endTime = new Date(item.endTime);
+      const registrationStart = new Date(item.registrationStart);
+      const registrationDeadline = new Date(item.registrationDeadline);
       const dateFormat = 'll';
 
-      return `${moment(startTime).format(dateFormat)} bis ${moment(
-        endTime,
-      ).format(dateFormat)}`;
+      const text1 = `Lager: ${moment(startTime)
+        .lang('de')
+        .format(dateFormat)} bis ${moment(endTime).lang('de').format(dateFormat)}`;
+
+      const text2 = ` - Anmeldung: ${moment(registrationStart)
+        .lang('de')
+        .format(dateFormat)} bis ${moment(registrationDeadline).lang('de').format(
+        dateFormat,
+      )}`;
+      return text1 + text2;
     },
+
     getEvent() {
       const path = `${this.API_URL}basic/event-overview/`;
       axios
@@ -161,6 +248,7 @@ export default {
     },
 
     getUserExtended() {
+      this.userExtendedItems = [];
       const path = `${this.API_URL}auth/data/user-extended/${
         this.getJwtData.userId
       }/?&timestamp=${new Date().getTime()}`;
@@ -192,18 +280,6 @@ export default {
         .get(path)
         .then((res) => {
           this.$store.commit('setScoutOrgaLevelMapping', res.data);
-        })
-        .catch(() => {
-          this.showError = true;
-        });
-    },
-
-    getParticipantRoleMapping() {
-      const path = `${this.API_URL}basic/participant-role/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.$store.commit('setParticipantRoleMapping', res.data);
         })
         .catch(() => {
           this.showError = true;
@@ -266,6 +342,17 @@ export default {
           this.showError = true;
         });
     },
+    getZipCodeMapping() {
+      const path = `${this.API_URL}basic/zip-code/`;
+      axios
+        .get(path)
+        .then((res) => {
+          this.$store.commit('setZipCodeMapping', res.data);
+        })
+        .catch(() => {
+          this.showError = true;
+        });
+    },
 
     show(item) {
       this.$refs.messageModal.show(item);
@@ -278,12 +365,12 @@ export default {
     this.getEvent();
     this.getUserExtended();
     this.getScoutOrgaLevelMapping();
-    this.getParticipantRoleMapping();
     this.getEatHabitTypeMapping();
     this.getTravelTypeMapping();
     this.getHierarchyMapping();
     this.getAgeGroupMapping();
     this.getTentTypeMapping();
+    this.getZipCodeMapping();
   },
 };
 </script>

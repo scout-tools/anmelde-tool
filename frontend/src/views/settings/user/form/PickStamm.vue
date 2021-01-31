@@ -34,11 +34,17 @@
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
-          <v-row class="pa-4" justify="space-between">
+          <v-subheader class="ma-0">
+            <v-icon class="ma-2" color="error">mdi-alert-circle </v-icon>
+            Dein Stamm fehlt oder der Ort/die Postleitzahl
+            ist falsch? Schreibe uns eine E-Mail an: &nbsp; &emsp;
+            <a href= "mailto:support@anmelde-tool.de">support@anmelde-tool.de</a>
+          </v-subheader>
+          <v-row class="pa-2" justify="space-between">
             <v-col cols="5">
               <v-text-field
                 v-model="search"
-                label="Suche einen Stamm"
+                label="Suche deinen Stamm"
                 flat
                 clearable
                 clear-icon="mdi-close-circle-outline"

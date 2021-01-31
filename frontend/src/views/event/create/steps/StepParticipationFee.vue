@@ -12,7 +12,7 @@
         <vuetify-money
           v-model="data.participationFee"
           :options="options"
-          label="Teilnehmerbeitrag"
+          label="Teilnehmer_innen Beitrag"
         />
       </v-row>
 

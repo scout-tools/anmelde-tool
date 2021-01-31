@@ -1,55 +1,55 @@
 [
     {
-        "model": "basic.ScoutOrgaLevel",
+        "model": "basic.EventRole",
         "pk": 1,
         "fields": {
             "id": 1,
-            "name": "Pfadfinder",
+            "name": "Lagerleitung",
             "description": ""
         }
     },
     {
-        "model": "basic.ScoutOrgaLevel",
+        "model": "basic.EventRole",
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Verband",
+            "name": "Kasse",
             "description": ""
         }
     },
     {
-        "model": "basic.ScoutOrgaLevel",
+        "model": "basic.EventRole",
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "Bund",
+            "name": "Küche",
             "description": ""
         }
     },
     {
-        "model": "basic.ScoutOrgaLevel",
+        "model": "basic.EventRole",
         "pk": 4,
         "fields": {
             "id": 4,
-            "name": "Ring/Regional",
+            "name": "Programm",
             "description": ""
         }
     },
     {
-        "model": "basic.ScoutOrgaLevel",
+        "model": "basic.EventRole",
         "pk": 5,
         "fields": {
             "id": 5,
-            "name": "Stamm",
+            "name": "Logistik",
             "description": ""
         }
     },
     {
-        "model": "basic.ScoutOrgaLevel",
+        "model": "basic.EventRole",
         "pk": 6,
         "fields": {
             "id": 6,
-            "name": "Gruppe",
+            "name": "Öffentlichkeit",
             "description": ""
         }
     }

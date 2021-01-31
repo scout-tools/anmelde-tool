@@ -4,25 +4,22 @@
       <v-row class="mt-2">
         <span class="text-left subtitle-1">
           <p>
-            Ich möchte mich zur <b>{{ currentEvent.name }}</b> anmelden. <br />
+            Hiermit melde ich <b> {{ myStamm }} </b>
+            zum Lager <b> {{ currentEvent.name }} </b> an. <br />
             <br />
-
-            Ich melde hiermit folgende Organsition <b> {{ myStamm }} </b> an.
-            <br />
-            <br />
-
-            Ich bin zukünfig der Ansprechpartner und bin unter meiner E-Mail
-            Adresse: <br />
-            <br />
-            <b>{{ myEmail }} </b> <br />
-            <br />
-            zu erreichen.
+            Bevor deine Anmeldung verbindlich ist, musst du sie im
+            letzten Schritt ausdrücklich bestätigen. Du kannst deinen
+            Anmeldevorgang zu jedem Zeitpunkt abbrechen und später
+            fortsetzen. Deine Daten kannst Du bis zum Anmeldeschluss
+            01.Mai 2021 verändern. <br>
+            <br>
+            Deine folgenden Daten sind nur für das Planungsteam sichtbar
           </p>
         </span>
       </v-row>
       <v-divider class="text-left my-2" />
       <v-row>
-        <v-checkbox v-model="data.checkbox1" :label="`Ich Stimme zu`">
+        <v-checkbox v-model="data.checkbox1" :label="`Ich stimme zu.`">
         </v-checkbox>
       </v-row>
 
@@ -47,6 +44,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',
+  displayName: 'Einverständnis',
   props: ['position', 'maxPos', 'currentEvent', 'currentRegistration', 'scoutOrganisation'],
   components: {
     PrevNextButtons,
@@ -71,7 +69,6 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'hierarchyMapping', 'getJwtData']),
     myStamm() {
-      debugger;
       if (this.scoutOrganisation) {
         return this.hierarchyMapping.find(
           (user) => user.id === this.scoutOrganisation,
@@ -104,7 +101,6 @@ export default {
       if (!this.valid) {
         return;
       }
-      debugger;
       this.$emit('submit');
     },
     getData() {
