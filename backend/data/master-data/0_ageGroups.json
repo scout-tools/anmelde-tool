@@ -5,7 +5,7 @@
         "fields": {
             "id": 1,
             "name": "<= 10",
-            "min_age": 6,
+            "min_age": 0,
             "max_age": 10,
             "description": "10 Jahre oder Jünger"
         }

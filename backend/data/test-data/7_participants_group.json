@@ -7,7 +7,8 @@
       "number_of_persons": 4,
       "registration_id": 4,
       "age_group_id": 1,
-      "created_at": "2020-12-20 17:17:58.124440"
+      "created_at": "2020-12-20 17:17:58.124440",
+      "participant_role": 2
     }
   },
   {
@@ -18,7 +19,8 @@
       "number_of_persons": 200,
       "registration_id": 4,
       "age_group_id": 3,
-      "created_at": "2020-12-23 17:17:58.124440"
+      "created_at": "2020-12-23 17:17:58.124440",
+      "participant_role": 2
     }
   },
   {
@@ -29,7 +31,8 @@
       "number_of_persons": 50,
       "registration_id": 4,
       "age_group_id": 1,
-      "created_at": "2020-12-25 17:17:58.124440"
+      "created_at": "2020-12-25 17:17:58.124440",
+      "participant_role": 2
     }
   },
   {
@@ -40,7 +43,8 @@
       "number_of_persons": 33,
       "registration_id": 4,
       "age_group_id": 3,
-      "created_at": "2020-12-27 17:17:58.124440"
+      "created_at": "2020-12-27 17:17:58.124440",
+      "participant_role": 2
     }
   },
   {
@@ -51,7 +55,8 @@
       "number_of_persons": 12,
       "registration_id": 4,
       "age_group_id": 2,
-      "created_at": "2020-12-27 17:17:58.124440"
+      "created_at": "2020-12-27 17:17:58.124440",
+      "participant_role": 2
     }
   },
   {
@@ -62,7 +67,8 @@
       "number_of_persons": 100,
       "registration_id": 5,
       "age_group_id": 1,
-      "created_at": "2020-12-27 17:17:58.124440"
+      "created_at": "2020-12-27 17:17:58.124440",
+      "participant_role": 4
     }
   },
   {
@@ -73,7 +79,8 @@
       "number_of_persons": 100,
       "registration_id": 5,
       "age_group_id": 2,
-      "created_at": "2020-12-25 17:17:58.124440"
+      "created_at": "2020-12-25 17:17:58.124440",
+      "participant_role": 1
     }
   },
   {
@@ -84,7 +91,8 @@
       "number_of_persons": 140,
       "registration_id": 5,
       "age_group_id": 3,
-      "created_at": "2020-12-24 17:17:58.124440"
+      "created_at": "2020-12-24 17:17:58.124440",
+      "participant_role": 4
     }
   },
   {
@@ -95,7 +103,8 @@
       "number_of_persons": 1,
       "registration_id": 6,
       "age_group_id": 3,
-      "created_at": "2020-12-28 17:17:58.124440"
+      "created_at": "2020-12-28 17:17:58.124440",
+      "participant_role": 3
     }
   }
 ]

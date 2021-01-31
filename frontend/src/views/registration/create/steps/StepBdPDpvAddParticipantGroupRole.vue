@@ -2,9 +2,14 @@
   <v-form ref="formParticipantGroupRole" v-model="valid">
     <v-container>
       <span class="subtitle-2">
-        Du kannst dies Antahl der Teilnehmenden bis zum 1. Mai 2021 anpassen.
+        Du kannst die Anzahl der Teilnehmenden bis zum 01.Mai 2021 anpassen. <br>
         <br />
-        Dafür kannst du dich dafür jederzeit wieder einloggen.</span
+        Dafür kannst du dich jederzeit wieder einloggen. <br>
+        <br>
+        Diese Anmeldung bezieht sich auf das gesamte Wochenende.
+        Personen, die früher fahren oder später kommen zählen als
+        vollwertige teilnehmende Person
+      </span
       >
       <v-form v-model="valid">
         <v-row>
@@ -12,7 +17,7 @@
             <v-slider
               v-model="normal"
               color="orange"
-              label="Normale Teilnehmer_innen"
+              label="Teilnehmende"
               min="1"
               max="200"
               thumb-label="always"
@@ -35,8 +40,9 @@
             <v-slider
               v-model="groupLeader"
               color="grey"
-              label="Gruppenleiter_innen"
-              min="1"
+              label="Gruppenleitung"
+              min="0"
+              max="30"
               thumb-label="always"
               type="number"
             >
@@ -60,6 +66,7 @@
               color="blue"
               label="Stammesvertretung"
               min="1"
+              max="5"
               thumb-label="always"
               type="number"
             >
@@ -83,6 +90,7 @@
               color="red"
               label="Helferlein"
               min="0"
+              max="50"
               thumb-label="always"
               type="number"
             >
@@ -110,22 +118,13 @@
               type="number"
               readonly
             >
-              <template slot="append">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="success" dark v-bind="attrs" v-on="on">
-                      mdi-help-circle-outline
-                    </v-icon>
-                  </template>
-                  <span> {{tooltip.total}} </span>
-                </v-tooltip>
-              </template></v-slider
+            </v-slider
             >
           </v-col>
         </v-row>
       </v-form>
       {{
-        `Du hast ${total} Personen angemeldet.Das entspricht einem Teilnehmerbeitrag von maximal ${
+        `Du hast ${total} Personen angemeldet. Das entspricht einem Stammesbeitrag von maximal ${
           total * 10
         } €`
       }}

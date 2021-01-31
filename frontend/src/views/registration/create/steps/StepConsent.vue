@@ -4,18 +4,16 @@
       <v-row class="mt-2">
         <span class="text-left subtitle-1">
           <p>
-            Hiermit melde ich meinen Stamm <b> {{ myStamm }} </b>
+            Hiermit melde ich <b> {{ myStamm }} </b>
             zum Lager <b> {{ currentEvent.name }} </b> an. <br />
             <br />
-
-            Ich bin die Ansprechperson und unter
-            <b>{{ myEmail }} </b>
-            zu erreichen. <br/>
-            <br/>
-            Bevor deine Anmeldung verbindlich ist,
-            musst du dene Anmeldung im letzten Schritt ausdrücklich bestätigen.
-            Du kannst dein Anmeldevorgang zu jedem Zeitpunkt abbrechen und später vorsetzen.
-            Du kannst deine Daten bis zum Anemeldeschluss problemlos verändern.
+            Bevor deine Anmeldung verbindlich ist, musst du sie im
+            letzten Schritt ausdrücklich bestätigen. Du kannst deinen
+            Anmeldevorgang zu jedem Zeitpunkt abbrechen und später
+            fortsetzen. Deine Daten kannst Du bis zum Anmeldeschluss
+            01.Mai 2021 verändern. <br>
+            <br>
+            Deine folgenden Daten sind nur für das Planungsteam sichtbar
           </p>
         </span>
       </v-row>

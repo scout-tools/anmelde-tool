@@ -1,15 +1,13 @@
 <template>
   <v-autocomplete
     v-model="value"
-    :items="items"
-    :loading="isLoading"
+    :items="zipCodeMapping"
     :search-input.sync="search"
     :item-text="customText"
     item-value="id"
     label="Stadt / Postleitzahl"
     placeholder="Wähle Stadt oder Postleitzahl"
     prepend-icon="mdi-city"
-    return-object
     @change="onInputchange"
   >
     <template slot="append">
@@ -28,7 +26,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 export default {
   prop: ['value'],
@@ -44,38 +42,14 @@ export default {
   methods: {
     customText: (item) => `${item.zipCode} — ${item.city}`,
     onInputchange() {
-      this.$emit('input', this.value.id);
+      this.$emit('input', this.value);
+    },
+    setValue(value) {
+      this.value = value;
     },
   },
   computed: {
-    items() {
-      return this.entries;
-    },
-  },
-
-  watch: {
-    search() {
-      // Items have already been loaded
-      if (this.items.length > 0) return;
-
-      // Items have already been requested
-      if (this.isLoading) return;
-
-      this.isLoading = true;
-
-      // Lazily load input items
-      const path = `${this.API_URL}basic/zip-code/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.count = res.data.length;
-          this.entries = res.data;
-          this.isLoading = false;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    ...mapGetters(['zipCodeMapping']),
   },
 };
 </script>

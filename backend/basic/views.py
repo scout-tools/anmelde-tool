@@ -10,18 +10,18 @@ from rest_framework.viewsets import GenericViewSet
 from helper.user_creation import CreateUserExternally
 from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
-    ZipCode, ParticipantGroup, ParticipantRole, Role, MethodOfTravel, Tent, \
+    ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
-    TentType, EatHabit
+    TentType, EatHabit, TravelTag
 
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
-    ParticipantRoleSerializer, RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
+    RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
     EventParticipantsSerializer, ScoutOrgaLevelSerializer, ParticipantPersonalSerializer, \
     EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, \
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
     EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
-    RegistrationSummarySerializer
+    RegistrationSummarySerializer, TravelTagSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission
@@ -124,19 +124,13 @@ class ParticipantGroupViewSet(viewsets.ModelViewSet):
     serializer_class = ParticipantGroupSerializer
 
 
-class ParticipantRoleViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = ParticipantRole.objects.all()
-    serializer_class = ParticipantRoleSerializer
-
-
 class RoleViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
 
 
-class MethodOfTravelViewSet(viewsets.ReadOnlyModelViewSet):
+class MethodOfTravelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = MethodOfTravel.objects.all()
     serializer_class = MethodOfTravelSerializer
@@ -222,6 +216,12 @@ class TentTypeViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = TentType.objects.all()
     serializer_class = TentTypeSerializer
+
+
+class TravelTagViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = TravelTag.objects.all()
+    serializer_class = TravelTagSerializer
 
 
 class EventCodeCheckerViewSet(viewsets.ReadOnlyModelViewSet):

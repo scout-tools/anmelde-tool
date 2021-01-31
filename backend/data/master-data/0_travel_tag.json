@@ -1,0 +1,29 @@
+[
+    {
+        "model": "basic.travelTag",
+        "pk": 1,
+        "fields": {
+            "id": 1,
+            "name": "Anreise - Kaperfahrt",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.travelTag",
+        "pk": 2,
+        "fields": {
+            "id": 2,
+            "name": "Anreise - Mosaikersleben",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.travelTag",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "name": "Abreise - Mosaikersleben",
+            "description": ""
+        }
+    }
+]

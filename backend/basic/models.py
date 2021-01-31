@@ -62,6 +62,8 @@ class EventLocation(TimeStampMixin):
     is_public = models.BooleanField(default=0)
     capacity_indoor = models.IntegerField(blank=True, null=True)
     capacity_outdoor = models.IntegerField(blank=True, null=True)
+    capacity_indoor_corona = models.IntegerField(blank=True, null=True)
+    capacity_outdoor_corona = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -224,6 +226,12 @@ class Registration(TimeStampMixin):
     is_confirmed = models.BooleanField(default=0)
     is_accepted = models.BooleanField(default=0)
 
+    def __str__(self):
+        return "{} - {}".format(self.scout_organisation, self.event)
+
+    def __repr__(self):
+        return self.__str__()
+
 
 class ParticipantGroup(TimeStampMixin):
     id = models.AutoField(
@@ -234,6 +242,13 @@ class ParticipantGroup(TimeStampMixin):
     number_of_persons = models.IntegerField(blank=True, null=True)
     age_group = models.ForeignKey(AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
+    participant_role = models.ForeignKey(Role, on_delete=models.PROTECT, default=0)
+
+    def __str__(self):
+        return "{} - {}".format(self.registration, self.participant_role)
+
+    def __repr__(self):
+        return self.__str__()
 
 
 class EatHabitType(TimeStampMixin):
@@ -270,17 +285,13 @@ class ParticipantPersonal(TimeStampMixin):
     is_group_leader = models.BooleanField(default=0)
     age_group = models.ForeignKey(AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
     eat_habit_type = models.ManyToManyField(EatHabitType, blank=True)
+    participant_role = models.ForeignKey(Role, on_delete=models.PROTECT, default=0)
 
+    def __str__(self):
+        return "{} - {}".format(self.registration, self.first_name)
 
-class ParticipantRole(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
-    participant_personal = models.ForeignKey(ParticipantPersonal, on_delete=models.PROTECT, null=True, blank=True)
-    event = models.ForeignKey(Event, on_delete=models.PROTECT, null=True, blank=True)
-    role = models.ForeignKey(Role, on_delete=models.PROTECT, null=True, blank=True)
+    def __repr__(self):
+        return self.__str__()
 
 
 class EatHabit(models.Model):
@@ -316,6 +327,22 @@ class TravelType(TimeStampMixin):
         return self.__str__()
 
 
+class TravelTag(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.__str__()
+
+
 class MethodOfTravel(TimeStampMixin):
     id = models.AutoField(
         auto_created=True,
@@ -325,6 +352,13 @@ class MethodOfTravel(TimeStampMixin):
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
     travel_type = models.ForeignKey(TravelType, on_delete=models.PROTECT, null=True, blank=True)
     number_of_persons = models.IntegerField(blank=True, null=True)
+    travel_tag = models.ForeignKey(TravelTag, on_delete=models.PROTECT, null=True, blank=True)
+
+    def __str__(self):
+        return "{} - {}".format(self.registration, self.travel_type)
+
+    def __repr__(self):
+        return self.__str__()
 
 
 class TentType(TimeStampMixin):
@@ -352,3 +386,9 @@ class Tent(TimeStampMixin):
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
     tent_type = models.ForeignKey(TentType, on_delete=models.PROTECT, null=True, blank=True)
     used_by_scout_groups = models.ManyToManyField(ScoutHierarchy, blank=True)
+
+    def __str__(self):
+        return "{} - {} - {}".format(self.registration, self.used_by_scout_groups)
+
+    def __repr__(self):
+        return self.__str__()

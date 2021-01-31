@@ -12,6 +12,12 @@ class UserExtended(models.Model):
     mobile_number = models.CharField(max_length=20, blank=True)
     scout_name = models.CharField(max_length=20, blank=True)
 
+    def __str__(self):
+        return "{} - {}".format(self.user, self.scout_organisation)
+
+    def __repr__(self):
+        return self.__str__()
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

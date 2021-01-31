@@ -30,6 +30,7 @@ export default new Vuex.Store({
     registeredTents: [{
       id: 1, registration: 1, tentType: 1, usedByScoutGroups: [1],
     }],
+    zipCodeMapping: [],
   },
   getters: {
     dpvAddedLocation(state) {
@@ -85,6 +86,9 @@ export default new Vuex.Store({
     },
     registeredTents(state) {
       return state.registeredTents;
+    },
+    zipCodeMapping(state) {
+      return state.zipCodeMapping;
     },
   },
   mutations: {
@@ -143,6 +147,9 @@ export default new Vuex.Store({
     },
     setRegisteredTents(state, newData) {
       state.registeredTents = newData;
+    },
+    setZipCodeMapping(state, newData) {
+      state.zipCodeMapping = newData;
     },
   },
   actions: {

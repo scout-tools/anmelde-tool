@@ -38,7 +38,6 @@ export default {
   computed: {
     ...mapGetters(['currentEventCash']),
     data() {
-      console.log(this.currentEventCash[0].groupedParticipants);
       return this.currentEventCash[0].groupedParticipants;
     },
   },

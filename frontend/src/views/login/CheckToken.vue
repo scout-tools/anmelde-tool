@@ -158,7 +158,6 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      debugger;
       this.onButtonClick();
     },
     onButtonClick() {

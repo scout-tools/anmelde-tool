@@ -14,12 +14,12 @@
             >
               <v-tabs-slider></v-tabs-slider>
 
-              <v-tab href="#tab-1">
+              <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-1">
                 Anmeldungen
                 <v-icon>mdi-counter</v-icon>
               </v-tab>
 
-              <v-tab href="#tab-2">
+              <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-2">
                 Karte
                 <v-icon>mdi-map</v-icon>
               </v-tab>
@@ -96,16 +96,17 @@ export default {
   },
   methods: {
     displayEventRoleTab(eventOverview, id) {
-      // if (eventOverview && eventOverview.participantRole &&
-      // eventOverview.participantRole.length) {
-      //   const roles = eventOverview.participantRole;
-      //   console.log(roles);
-      //   console.log(id);
-      //   debugger;
-      //   // return roles.includes(1) || roles.includes(id);
-      // }
-      console.log(eventOverview);
-      console.log(id);
+      if (
+        eventOverview && // eslint-disable-line
+        eventOverview.participantRole && // eslint-disable-line
+        eventOverview.participantRole.length
+      ) {
+        const roles = eventOverview.participantRole;
+        const hasRole = roles.some((role) => role.eventRoleId === id);
+        const isLagerleitung = roles.some((role) => role.eventRoleId === 1);
+
+        return hasRole || isLagerleitung;
+      }
       return 1;
     },
   },
@@ -115,7 +116,7 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.$store.commit('setCurrentEventParticipants', res.data[0].locations);
+          this.$store.commit('setCurrentEventParticipants', res.data);
         })
         .catch(() => {
           console.log('Fehler');
@@ -160,7 +161,6 @@ export default {
         .get(path)
         .then((res) => {
           this.eventOverview = res.data;
-          console.log(res.data);
         })
         .catch(() => {
           console.log('Fehler');
