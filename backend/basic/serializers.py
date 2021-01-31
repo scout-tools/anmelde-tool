@@ -270,7 +270,7 @@ class EventCashMasterSerializer(serializers.ModelSerializer):
         return self.participants
 
     def get_total_fee(self, obj):
-        if (self.participants):
+        if self.participants:
             return obj.participation_fee * self.participants
 
         return 0
@@ -388,17 +388,27 @@ class EventProgramMasterSerializer(serializers.ModelSerializer):
                   )
 
     def get_total_participants(self, obj):
-        return obj.registration_set.aggregate(
+        return obj.registration_set.values(role=Case(
+            When(participantgroup__participant_role__isnull=False, then=F('participantgroup__participant_role__name')),
+            When(participantpersonal__participant_role__isnull=False,
+                 then=F('participantpersonal__participant_role__name')),
+            default=None)
+        ).aggregate(
             total_participants=Sum('participantgroup__number_of_persons') + Count('participantpersonal'))[
             'total_participants']
 
     def get_participants_grouped_by_age(self, obj):
-        return obj.registration_set.values(
-            age_group_group=F('participantgroup__age_group__name'),
-            age_group_personal=F('participantpersonal__age_group__name')) \
-            .annotate(number_group=Coalesce(Sum('participantgroup__number_of_persons'), 0),
-                      number_personal=Coalesce(Count('participantpersonal'), 0)) \
-            # .exclude(participantgroup__age_group__isnull=True)
+        return obj.registration_set.values(role=Case(
+            When(participantgroup__participant_role__isnull=False, then=F('participantgroup__participant_role__name')),
+            When(participantpersonal__participant_role__isnull=False,
+                 then=F('participantpersonal__participant_role__name'))),
+            age_group=Case(When(participantgroup__age_group__isnull=False,
+                                then=F('participantgroup__age_group__name')),
+                           When(participantpersonal__age_group__isnull=False,
+                                then=F('participantpersonal__age_group__name')))) \
+                .annotate(number_group=Coalesce(Sum('participantgroup__number_of_persons'), 0),
+                          number_personal=Coalesce(Count('participantpersonal'), 0))
+        # .exclude(participantgroup__age_group__isnull=True)
 
         return result
 
