@@ -190,8 +190,8 @@ export default {
       required,
     },
     mobileNumber: {
-      minLength: minLength(10),
-      maxLength: maxLength(10),
+      minLength: minLength(6),
+      maxLength: maxLength(20),
     },
     scoutName: {
       required,
@@ -247,10 +247,10 @@ export default {
       if (!this.$v.mobileNumber.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.mobileNumber.maxLength &&
-        errors.push('Name must be at most 10 characters long');
+        errors.push('Darf nicht mehr als 20 Zeichen haben');
       // eslint-disable-next-line
       !this.$v.mobileNumber.minLength &&
-        errors.push('Name must be at most 10 characters long');
+        errors.push('Mindestens 6 Zeichen.');
       return errors;
     },
     scoutNameErrors() {

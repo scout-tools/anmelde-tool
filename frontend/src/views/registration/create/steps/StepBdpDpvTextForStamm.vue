@@ -1,12 +1,13 @@
 <template>
   <v-form ref="StepBdpDpVPreferences" v-model="valid">
     <v-container class="px-0" fluid>
-      <v-subheader class="ma-6">
+      <p class="ma-6">
         {{ placeholder }}
-      </v-subheader>
+      </p>
       <v-divider/>
       <v-textarea
-        label="Freitext für den Partnerstamm"
+      class="ma-6"
+        label="Nachricht für den Partnerstamm"
         placeholder="Hier den Text eintippen"
       ></v-textarea>
 
@@ -36,7 +37,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
-  displayName: 'Nachricht an Partnerstamm',
+  displayName: 'Nachricht an euren Partnerstamm',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,

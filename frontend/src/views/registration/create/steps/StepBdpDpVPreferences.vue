@@ -5,7 +5,7 @@
         <v-container>
           <v-row v-if="dpvAddedLocation">
             <p>
-              Sehr cool. Du hast einen Lagerplatz hinzugefügt.
+              Sehr cool. Du hast ein Heim / Lagerplatz hinzugefügt.
             </p>
             <v-radio-group v-model="radioGroup">
               <v-radio
@@ -33,7 +33,7 @@
               value="5"
             ></v-radio>
             <v-radio label="Wir fahren gern weit weg.
-              (Im Zweifel gern quer durch ganz Deutschland) " value="3">
+              (Im Zweifel quer durch ganz Deutschland) " value="3">
             </v-radio>
               <v-radio label="Uns ist beides recht." value="6"></v-radio>
           </v-radio-group>
@@ -77,7 +77,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
-  displayName: 'Wohin geht es',
+  displayName: 'Wohin geht es?',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,

@@ -3,14 +3,13 @@
     ref="deadlineDateDialog"
     v-model="active"
     transition="dialog-top-transition"
-    fullscreen
   >
     <v-card>
       <v-toolbar dark color="primary">
         <v-btn icon dark @click="active = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Teilnehmer_innen hinzufügen</v-toolbar-title>
+        <v-toolbar-title>Haus / Lagerplatz hinzufügen</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-container>
@@ -23,7 +22,7 @@
                   autofocus
                   :counter="20"
                   :error-messages="nameErrors"
-                  label="Anzeigename"
+                  label="Name der Schlafstätte"
                   required
                   prepend-icon="mdi-earth"
                 >
@@ -46,7 +45,7 @@
                   v-model="data.description"
                   :counter="100"
                   :error-messages="descriptionErrors"
-                  label="Beschreibung"
+                  label="Beschreibung der Schlafstätte"
                   prepend-icon="mdi-card-text"
                 >
                   <template slot="append">

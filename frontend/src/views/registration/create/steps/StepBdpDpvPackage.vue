@@ -4,7 +4,7 @@
       <v-container>
         <p>
           Gib hier eine Adresse innerhalb Deutschlands an, wo wie ein
-          Überraschungspaket hinschicken können
+          Überraschungspaket für deinen Stamm hinschicken können.
         </p>
 
         <v-divider class="my-2" />
