@@ -209,11 +209,12 @@
               <v-container fluid>
                 <v-select
                   v-model="data.participantRole"
+                  prepend-icon="mdi-tent"
                   :items="roleItems"
                   :error-messages="participantRoleErrors"
                   item-text="name"
                   item-value="id"
-                  label="Kaperfahrt?"
+                  label="Bundesfahrt und/oder Kaperfahrt?"
                   required
                   @input="$v.data.participantRole.$touch()"
                 >

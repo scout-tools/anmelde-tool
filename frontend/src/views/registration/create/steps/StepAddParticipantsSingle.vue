@@ -1,11 +1,11 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
     <v-container class="pa-5">
-      <v-btn class="mx-3" color="success" @click="newUser">
+      <v-btn class="ma-2" color="success" @click="newUser">
         <v-icon left> mdi-plus </v-icon>
         Teilnehmer_innen hinzufügen
       </v-btn>
-      <v-btn class="mx-3" color="primary" @click="openExcelDialog">
+      <v-btn class="ma-2" color="primary" @click="openExcelDialog">
         <v-icon left> mdi-plus </v-icon>
         Excel Datei hochladen
       </v-btn>
