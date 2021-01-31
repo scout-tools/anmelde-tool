@@ -13,51 +13,41 @@
         <v-row align="center">
           <v-col cols="6">
             <v-text-field
-              v-model="data.numberBus"
+              v-model="data.methodOfTravels[0].numberOfPersons"
               label="Bus"
               required
-              @input="$v.data.numberBus.$touch()"
-              @blur="$v.data.numberBus.$touch()"
               prepend-icon="mdi-bus"
             />
           </v-col>
           <v-col cols="6">
             <v-text-field
-              v-model="data.numberCar"
+              v-model="data.methodOfTravels[1].numberOfPersons"
               label="PKW"
               required
-              @input="$v.data.numberCar.$touch()"
-              @blur="$v.data.numberCar.$touch()"
               prepend-icon="mdi-car"
             />
           </v-col>
           <v-col cols="6">
             <v-text-field
-              v-model="data.numberPublic"
+              v-model="data.methodOfTravels[2].numberOfPersons"
               label="OEPNV"
               required
-              @input="$v.data.numberPublic.$touch()"
-              @blur="$v.data.numberPublic.$touch()"
               prepend-icon="mdi-bus-stop"
             />
           </v-col>
           <v-col cols="6">
             <v-text-field
-              v-model="data.numberWalking"
+              v-model="data.methodOfTravels[3].numberOfPersons"
               label="zu Fuss"
               required
-              @input="$v.data.numberWalking.$touch()"
-              @blur="$v.data.numberWalking.$touch()"
               prepend-icon="mdi-hiking"
             />
           </v-col>
           <v-col cols="6">
             <v-text-field
-              v-model="data.numberWater"
+              v-model="data.methodOfTravels[4].numberOfPersons"
               label="Wasserweg"
               required
-              @input="$v.data.numberWater.$touch()"
-              @blur="$v.data.numberWater.$touch()"
               prepend-icon="mdi-ship-wheel"
             />
           </v-col>
@@ -66,8 +56,6 @@
               v-model="data.numberAlreadyThere"
               label="Schon da"
               required
-              @input="$v.data.numberAlreadyThere.$touch()"
-              @blur="$v.data.numberAlreadyThere.$touch()"
               prepend-icon="mdi-account-check"
             />
           </v-col>
@@ -89,7 +77,7 @@ export default {
     valid: true,
     isLoading: false,
     data: {
-      maxNumber: 25,
+      maxNumber: 0,
       numberBus: 0,
       numberCar: 0,
       numberPublic: 0,
@@ -97,6 +85,32 @@ export default {
       numberWater: 0,
       numberAlreadyThere: 0,
       infos: ['Anreise', 'Abreise'],
+      methodOfTravels: [{
+        numberOfPersons: 0,
+        registration: 0,
+        travelType: 1, // Reisebus
+        travelTag: -1,
+      }, {
+        numberOfPersons: 0,
+        registration: 0,
+        travelType: 2, // PKW
+        travelTag: -1,
+      }, {
+        numberOfPersons: 0,
+        registration: 0,
+        travelType: 3, // OEPNV
+        travelTag: -1,
+      }, {
+        numberOfPersons: 0,
+        registration: 0,
+        travelType: 4, // zu fuss
+        travelTag: -1,
+      }, {
+        numberOfPersons: 0,
+        registration: 0,
+        travelType: 5, // Wasserweg
+        travelTag: -1,
+      }],
     },
   }),
   validations: {
@@ -119,19 +133,26 @@ export default {
   },
   methods: {
     reached() {
-      // eslint-disable-next-line max-len
-      const sum = this.data.numberBus * 1 + this.data.numberCar * 1 + this.data.numberPublic * 1 + this.data.numberWalking * 1 + this.data.numberWater * 1;
+      let sum = 0;
+      this.data.methodOfTravels.forEach((i) => {
+        sum += i.numberOfPersons;
+      });
+      sum += this.data.numberAlreadyThere;
       return sum;
     },
     getMaxNumber() {
+      const path = `${process.env.VUE_APP_API}basic/registration/`;
       axios
-        .get(`${this.API_URL}basic/registration/${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`)
+        .get(`${path}${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`)
         .then((res) => {
-          this.data.maxNumber = res.data[0].participants.length;
+          this.data.maxNumber = res.data[0].participantpersonalSet.length;
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    save() {
+      this.$emit('customEvent', this.data.methodOfTravels);
     },
   },
 };

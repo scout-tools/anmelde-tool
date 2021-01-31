@@ -1,28 +1,11 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-    <v-tabs vertical class="ma-10">
-      <v-tab>
-        Kaperfahrt
-      </v-tab>
-      <v-tab>
-        Mosaikersleben
-      </v-tab>
-
-      <v-tab-item>
         <v-card flat>
           <travel-picker
             title="Kaperfahrt"
+            @customEvent = "saveTravel"
           />
         </v-card>
-      </v-tab-item>
-      <v-tab-item>
-        <v-card flat>
-          <travel-picker
-            title="Mosaikersleben"
-          />
-        </v-card>
-      </v-tab-item>
-    </v-tabs>
       <v-divider class="my-3" />
       <prev-next-buttons
         :position="position"
@@ -60,6 +43,32 @@ export default {
       numberPublic: 0,
       numberWalking: 0,
       numberWater: 0,
+      methodOfTravels: [{
+        numberOfPersons: 0,
+        registration: this.$route.params.id,
+        travelType: 1, // Reisebus
+        travelTag: -1,
+      }, {
+        numberOfPersons: 0,
+        registration: this.$route.params.id,
+        travelType: 2, // PKW
+        travelTag: -1,
+      }, {
+        numberOfPersons: 0,
+        registration: this.$route.params.id,
+        travelType: 3, // OEPNV
+        travelTag: -1,
+      }, {
+        numberOfPersons: 0,
+        registration: this.$route.params.id,
+        travelType: 4, // zu fuss
+        travelTag: -1,
+      }, {
+        numberOfPersons: 0,
+        registration: this.$route.params.id,
+        travelType: 5, // Wasserweg
+        travelTag: -1,
+      }],
     },
   }),
   validations: {
@@ -125,6 +134,22 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      const promises = [];
+      const registrationId = this.$route.params.id;
+      const myUrl = `${this.API_URL}basic/participant-group/`;
+      const valueArray = Object.values(this.data);
+      Object.keys(this.data).forEach((element, index) => {
+        const paramsData = {
+          ageGroup: parseInt(element, 10),
+          numberOfPersons: parseInt(valueArray[index], 10),
+          registration: parseInt(registrationId, 10),
+        };
+        promises.push(axios.post(myUrl, paramsData));
+      });
+
+      Promise.all(promises).then(() => {
+        this.$emit('nextStep');
+      });
     },
   },
 };
