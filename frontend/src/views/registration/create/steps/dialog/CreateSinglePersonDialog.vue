@@ -201,27 +201,17 @@
           <v-row>
             <v-col cols="12" sm="6">
               <v-container fluid>
-                <v-switch
-                  v-model="data.roles"
-                  color="primary"
-                  label="Bundesfahrt"
-                  value="1"
-                  hide-details
-                ></v-switch>
-                <v-switch
-                  v-model="data.roles"
-                  color="orange"
-                  label="Kaperfahrt"
-                  value="2"
-                  hide-details
-                ></v-switch>
-                <v-switch
-                  v-model="data.roles"
-                  color="orange"
-                  label="Tagesgast"
-                  value="3"
-                  hide-details
-                ></v-switch>
+                <v-select
+                  v-model="data.participantRole"
+                  :items="roleItems"
+                  :error-messages="participantRoleErrors"
+                  item-text="name"
+                  item-value="id"
+                  label="Kaperfahrt?"
+                  required
+                  @input="validate()"
+                >
+                </v-select>
               </v-container>
               <template slot="append">
                 <v-tooltip bottom>
@@ -271,18 +261,28 @@ export default {
     valid: true,
     scoutHierarchyGroups: [],
     data: {
-      firstName: '',
-      lastName: '',
-      street: '',
-      zipCode: 0,
-      phoneNumber: '',
+      firstName: null,
+      lastName: null,
+      street: null,
+      zipCode: null,
+      phoneNumber: null,
       age: null,
       registration: null,
       eatHabitType: [],
       scoutGroup: null,
       isGroupLeader: false,
-      roles: [],
+      participantRole: 6,
     },
+    roleItems: [
+      {
+        id: 6,
+        name: 'Nur Bundesfahrt',
+      },
+      {
+        id: 7,
+        name: 'Bundesfahrt + Kaperfahrt',
+      },
+    ],
     showError: false,
     showSuccess: false,
     timeout: 7000,
@@ -313,6 +313,9 @@ export default {
       zipCode: {
         required,
         numeric,
+      },
+      participantRole: {
+        required,
       },
     },
   },
@@ -407,6 +410,14 @@ export default {
       }
       return errors;
     },
+    participantRoleErrors() {
+      const errors = [];
+      if (!this.$v.data.participantRole.$dirty) return errors;
+      if (!this.$v.data.participantRole.required) {
+        errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
+      }
+      return errors;
+    },
   },
   watch: {
     data() {
@@ -430,15 +441,17 @@ export default {
     },
     openDialog() {
       this.data = {
-        firstName: '',
-        lastName: '',
-        street: '',
-        zipCode: 0,
-        dateBirth: '2010-01-01',
+        firstName: null,
+        lastName: null,
+        street: null,
+        zipCode: null,
+        phoneNumber: null,
+        age: 3,
         registration: null,
         eatHabitType: [],
+        scoutGroup: null,
         isGroupLeader: false,
-        roles: [],
+        participantRole: 6,
       };
       this.active = true;
       this.getGroups();
