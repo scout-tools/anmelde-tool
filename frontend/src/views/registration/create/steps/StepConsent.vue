@@ -19,7 +19,10 @@
       </v-row>
       <v-divider class="text-left my-2" />
       <v-row>
-        <v-checkbox v-model="data.checkbox1" :label="`Ich stimme zu.`">
+        <v-checkbox
+          v-model="data.checkbox1"
+          :label="`Ich stimme zu.`"
+          :error-messages="checkbox1Errors">
         </v-checkbox>
       </v-row>
 
@@ -68,6 +71,14 @@ export default {
   },
   computed: {
     ...mapGetters(['isAuthenticated', 'hierarchyMapping', 'getJwtData']),
+    checkbox1Errors() {
+      const errors = [];
+      if (!this.$v.data.checkbox1.$dirty) return errors;
+      if (!this.$v.data.checkbox1.required || !this.$v.data.checkbox1.checked) {
+        errors.push('Deine Zustimmung ist erforderlich, damit du weiter machen kannst.');
+      }
+      return errors;
+    },
     myStamm() {
       if (this.scoutOrganisation) {
         return this.hierarchyMapping.find(
