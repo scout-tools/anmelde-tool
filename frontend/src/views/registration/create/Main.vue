@@ -48,6 +48,7 @@ import StepAddParticipantsSingle from './steps/StepAddParticipantsSingle.vue';
 import StepAddParticipants from './steps/StepAddParticipants.vue';
 import StepConfirmBundesfahrt from './steps/StepConfirmBundesfahrt.vue';
 import StepConfirmDpv from './steps/StepConfirmDpv.vue';
+import StepBdpDpvPackage from './steps/StepBdpDpvPackage.vue';
 import StepConfirm from './steps/StepConfirm.vue';
 import StepConsent from './steps/StepConsent.vue';
 import StepFood from './steps/StepFood.vue';
@@ -73,6 +74,7 @@ export default {
     StepBdpDpVPreferences,
     StepBdpDpvTextForStamm,
     StepBdpDpvLocationSuggestion,
+    StepBdpDpvPackage,
   },
   props: ['scoutOrganisation'],
   data() {
@@ -116,6 +118,7 @@ export default {
           StepBdpDpVPreferences,
           StepBdpDpvTextForStamm,
           StepBdpDpvLocationSuggestion,
+          StepBdpDpvPackage,
           StepConfirmDpv,
         ];
       }

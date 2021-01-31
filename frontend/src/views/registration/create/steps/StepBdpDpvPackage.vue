@@ -1,20 +1,17 @@
 <template>
-  <v-form ref="StepBdpDpVPreferences" v-model="valid">
+  <v-form ref="formNameDescription" v-model="valid">
     <v-container class="px-0" fluid>
-      <v-subheader class="ma-6">
-        {{ placeholder }}
-      </v-subheader>
-      <v-divider/>
-      <v-textarea
-        label="Freitext für den Partnerstamm"
-        placeholder="Hier den Text eintippen"
-      ></v-textarea>
+      <v-container>
+        <p>
+          Gib hier eine Adresse innerhalb Deutschlands an, wo wie ein
+          Überraschungspaket hinschicken können
+        </p>
 
-      <v-subheader>
-        Hinweis: Auch diese Nachricht kannst Du noch bis zum 01.Mai.2021
-        anpassen, wenn Du sie mit deinem Stamm gemeinsam schreiben möchtest
-      </v-subheader>
-        <v-divider class="my-3" />
+        <v-divider class="my-2" />
+
+        <v-textarea label="Postadresse"></v-textarea>
+      </v-container>
+      <v-divider class="my-3" />
 
       <prev-next-buttons
         :position="position"
@@ -24,19 +21,17 @@
         @submitStep="submitStep()"
       />
     </v-container>
-    <create-location-dialog ref="newLocationDialog" @close="getEvents()" />
+    <create-location-dialog ref="newLocationDialog" @close="onCloseWindow()" />
   </v-form>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 import CreateLocationDialog from '@/views/event/create/components/dialog/CreateLocationDialog.vue';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
-  displayName: 'Nachricht an Partnerstamm',
+  displayName: 'Paketadresse',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
@@ -51,19 +46,19 @@ export default {
       value1: true,
       value2: false,
     },
-    placeholder: 'Hier ist Platz für eine persönliche Nachricht an euren '
-    + 'noch unbekannten Partnerstamm. Wenn du Lust hast, '
-    + 'dann schreibe auf, was euch ausmacht, was euer tollstes Fahrtenerlebnis war, '
-    + 'euer Lieblingslied, was euch an eurer Stadt besonders gefällt… und wie man dich als '
-    + 'Ansprechperson am besten erreichen kann, z.B. Mail / Whats App / Telegram / Brieftaube',
   }),
-  computed: {
-    ...mapGetters(['dpvAddedLocation']),
-  },
   validations: {},
+  watch: {
+    radioGroup(value) {
+      this.$store.commit('setDpvAddedLocation', value === '1');
+    },
+  },
   methods: {
     newLocation() {
       this.$refs.newLocationDialog.openDialog();
+    },
+    onCloseWindow() {
+      // this.$store.commit('setDpvAddedLocation', true);
     },
     validate() {
       this.$v.$touch();
@@ -93,6 +88,9 @@ export default {
         description: this.data.description,
       };
     },
+  },
+  created() {
+    this.$store.commit('setDpvAddedLocation', false);
   },
 };
 </script>
