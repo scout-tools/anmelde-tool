@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "id": 1,
-            "scout_organisation": 16,
+            "scout_organisation": 360,
             "event": 1
         }
     },
@@ -13,7 +13,7 @@
         "pk": 2,
         "fields": {
             "id": 2,
-            "scout_organisation": 17,
+            "scout_organisation": 361,
             "event": 1
         }
     },
@@ -22,7 +22,7 @@
         "pk": 3,
         "fields": {
             "id": 3,
-            "scout_organisation": 18,
+            "scout_organisation": 362,
             "event": 1
         }
     },
@@ -31,7 +31,7 @@
         "pk": 4,
         "fields": {
             "id": 4,
-            "scout_organisation": 19,
+            "scout_organisation": 363,
             "event": 4
         }
     },
@@ -40,7 +40,7 @@
         "pk": 5,
         "fields": {
             "id": 5,
-            "scout_organisation": 70,
+            "scout_organisation": 361,
             "event": 4
         }
     },
@@ -49,7 +49,7 @@
         "pk": 6,
         "fields": {
             "id": 6,
-            "scout_organisation": 40,
+            "scout_organisation": 365,
             "event": 4
         }
     },
@@ -58,7 +58,7 @@
         "pk": 7,
         "fields": {
             "id": 7,
-            "scout_organisation": 41,
+            "scout_organisation": 359,
             "event": 1
         }
     }
