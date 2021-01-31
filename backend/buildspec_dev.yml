@@ -10,6 +10,7 @@ phases:
       - echo "Before running tests"
       - cd backend/
       - pip install -r requirements.txt
+      - rm .ebextensions/django_prod.config
   build:
     commands:
       - echo "Running all unit tests"

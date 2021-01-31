@@ -1,0 +1,16 @@
+version: 0.2
+
+env:
+  variables:
+    FRONT_URL: 'http://localhost:8000/'
+
+phases:
+  post_build:
+    commands:
+      - cd backend/
+      - rm .ebextensions/django_dev.config
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'backend'
