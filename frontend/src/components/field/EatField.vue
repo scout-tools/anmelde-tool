@@ -9,7 +9,7 @@
     multiple
     clearable
     chips
-    @change="onInputchange"
+    @change="onInputChange"
   >
     <template slot="append">
       <v-tooltip bottom>
@@ -19,7 +19,7 @@
           </v-icon>
         </template>
         <span>
-          gallo
+          {{ toolTip }}
         </span>
       </v-tooltip>
     </template>
@@ -37,14 +37,14 @@ export default {
     isLoading: false,
     value: [],
     search: null,
-    tooptip: 'Bitte trage hier ein, auf welche Besonderheiten die Küche achten muss.',
+    toolTip: 'Bitte trage hier ein, auf welche Besonderheiten die Küche achten muss.',
   }),
   computed: {
     ...mapGetters(['eatHabitTypeMapping']),
 
   },
   methods: {
-    onInputchange() {
+    onInputChange() {
       this.$emit('input', this.value);
     },
     setValue(value) {
