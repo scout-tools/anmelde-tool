@@ -432,7 +432,9 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
         model = Registration
         fields = (
             'scout_organisation',
+            'event',
             'responsible_persons',
+            'free_text',
             'total_participants',
             'total_fee',
             'group_participants',

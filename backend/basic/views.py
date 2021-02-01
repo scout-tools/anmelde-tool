@@ -26,6 +26,8 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission
 
+from helper.registration_summary import registration_responsible_person, create_registration_summary
+
 
 def get_dataset(kwargs, pk, dataset):
     dataset_id = kwargs.get(pk, None)
@@ -87,17 +89,11 @@ class RegistrationViewSet(viewsets.ModelViewSet):
     serializer_class = RegistrationSerializer
 
     def create(self, request, *args, **kwargs):
-        # Check responsible person
-        emails = request.data['responsible_persons']
-        for user_email in emails:
-            user = User.objects.filter(username=user_email).first()
-            if user is None:
-                CreateUserExternally(user_email)
-                # TODO: Add mail for notifiction as registered as responsible person
-
+        if 'event' not in request.data:
+            return Response('Event not selected', status=status.HTTP_400_BAD_REQUEST)
         # Check invitation code
-        queryset = Event.objects.all()
-        event = get_object_or_404(queryset, pk=request.data['event'])
+        queryset_event = Event.objects.all()
+        event = get_object_or_404(queryset_event, pk=request.data['event'])
 
         if 'code' in self.request.query_params:
             code = self.request.query_params.get('code', None)
@@ -107,7 +103,62 @@ class RegistrationViewSet(viewsets.ModelViewSet):
         if event.invitation_code != code:
             raise PermissionDenied('wrong invitation code')
 
+        self.add_responsible_person(event, request)
+
         return super().create(request, *args, **kwargs)
+
+    def update(self, request, pk=None):
+        queryset = Event.objects.all()
+        event = get_object_or_404(queryset, pk=request.data['event'])
+        self.add_responsible_person(event, request, pk)
+
+        response = super().update(request, pk)
+
+        if 'is_confirmed' in response.data and response.data['is_confirmed']:
+            create_registration_summary(response.data)
+        return response
+
+    def add_responsible_person(self, event, request, pk=None):
+        event_data = {'event': event.name,
+                      'event_id': event.id,
+                      'foreign_email': request.user.username,
+                      'foreign_name': request.user.userextended.scout_name
+                      }
+
+        # Check responsible person
+        if 'responsible_persons' not in request.data:
+            request.data['responsible_persons'] = [request.user.username]
+        elif request.user.username not in request.data['responsible_persons']:
+            request.data['responsible_persons'].append(request.user.username)
+        emails = request.data['responsible_persons']
+
+        # Check if responsible person already exists
+        new_responsible_persons = []
+        if pk is not None:
+            registration = Registration.objects.get(pk=pk)
+            existing_responsible_persons = registration.responsible_persons.values_list('username', flat=True)
+
+            for email in emails:
+                if email not in existing_responsible_persons:
+                    new_responsible_persons.append(email)
+        else:
+            new_responsible_persons = emails
+
+        # send to each new responsible person a notification
+        for user_email in new_responsible_persons:
+            if user_email is not request.user.username:
+                data = event_data
+                user = User.objects.filter(username=user_email).first()
+                if user is None:
+                    data.update(CreateUserExternally(user_email, event_data))
+                else:
+                    user_data = {'username': user.userextended.scout_name if user.userextended is not None else
+                    user.username.split('@', 1)[0],
+                                 'user': user.username,
+                                 'email': user.username,
+                                 }
+                    data.update(user_data)
+                registration_responsible_person(data)
 
 
 class ZipCodeViewSet(viewsets.ReadOnlyModelViewSet):
@@ -187,7 +238,6 @@ class EatHabitViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         # Check whether habit type exists
         if 'eat_habit_type' in request.data:
-            print(request.data['eat_habit_type'])
             habit_types = request.data['eat_habit_type']
             for type in habit_types:
                 if not EatHabitType.objects.filter(name__exact=type).exists():
@@ -201,7 +251,6 @@ class EatHabitViewSet(viewsets.ModelViewSet):
                 new_group = ScoutHierarchy.objects.create(name=scout_group, level=ScoutOrgaLevel.objects.get(pk=6),
                                                           parent=request.user.userextended.scout_organisation)
                 new_group.save()
-                print('created new group: ', new_group)
 
         return super().create(request, *args, **kwargs)
 
