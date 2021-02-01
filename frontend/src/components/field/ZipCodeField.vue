@@ -4,11 +4,15 @@
     :items="zipCodeMapping"
     :search-input.sync="search"
     :item-text="customText"
+    required
+    :error-messages="zipCodeErrors"
     item-value="id"
     label="Stadt / Postleitzahl"
     placeholder="Wähle Stadt oder Postleitzahl"
     prepend-icon="mdi-city"
-    @change="onInputchange"
+    @change="onInputChange"
+    @input="$v.value.$touch()"
+    @blur="$v.value.$touch()"
   >
     <template slot="append">
       <v-tooltip bottom>
@@ -18,15 +22,16 @@
           </v-icon>
         </template>
         <span>
-          {{ tooltip }}
+          {{ toolTip }}
         </span>
       </v-tooltip>
-    </template></v-autocomplete
-  >
+    </template>
+  </v-autocomplete>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   prop: ['value'],
@@ -37,11 +42,17 @@ export default {
     isLoading: false,
     value: null,
     search: null,
-    tooltip: 'Gebe die Stadt oder die Postleitzahl passend zur Adresse ein.',
+    toolTip: 'Gebe die Stadt oder die Postleitzahl passend zur Adresse ein.',
   }),
+  validations: {
+    value: {
+      required,
+    },
+  },
   methods: {
     customText: (item) => `${item.zipCode} — ${item.city}`,
-    onInputchange() {
+    onInputChange() {
+      this.$v.value.$touch();
       this.$emit('input', this.value);
     },
     setValue(value) {
@@ -50,6 +61,14 @@ export default {
   },
   computed: {
     ...mapGetters(['zipCodeMapping']),
+    zipCodeErrors() {
+      const errors = [];
+      if (!this.$v.value.$dirty) return errors;
+      if (!this.$v.value.required) {
+        errors.push('Stadt ist erforderlich.');
+      }
+      return errors;
+    },
   },
 };
 </script>

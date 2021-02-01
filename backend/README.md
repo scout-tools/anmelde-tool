@@ -19,7 +19,9 @@ Mac, Linux: ( `pipenv install` )
 
 `python manage.py add_users`
 
-Mac, Linux: `python manage.py loaddata test-data/*.json`
+Mac, Linux:
+`python manage.py loaddata data/master-data/*.json`
+`python manage.py loaddata data/test-data/*.json`
 
 Windows: `python manage.py add_fixtures test-data`
 

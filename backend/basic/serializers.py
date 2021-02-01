@@ -276,7 +276,7 @@ class EventCashMasterSerializer(serializers.ModelSerializer):
         return self.participants
 
     def get_total_fee(self, obj):
-        if (self.participants):
+        if self.participants:
             return obj.participation_fee * self.participants
 
         return 0
@@ -299,6 +299,7 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
     num_vegan = serializers.SerializerMethodField('get_num_vegan')
     num_grouped_by_age_group = serializers.SerializerMethodField('get_num_grouped_by_age_group')
     num_grouped_by_age_personal = serializers.SerializerMethodField('get_num_grouped_by_age_personal')
+    food_grouped = serializers.SerializerMethodField('get_food_grouped')
 
     class Meta:
         model = Event
@@ -394,17 +395,25 @@ class EventProgramMasterSerializer(serializers.ModelSerializer):
                   )
 
     def get_total_participants(self, obj):
-        return obj.registration_set.aggregate(
-            total_participants=Sum('participantgroup__number_of_persons') + Count('participantpersonal'))[
-            'total_participants']
+        return obj.registration_set.values(role=Case(
+            When(participantgroup__participant_role__isnull=False, then=F('participantgroup__participant_role__name')),
+            When(participantpersonal__participant_role__isnull=False,
+                 then=F('participantpersonal__participant_role__name')))
+        ).aggregate(total_participants=Coalesce(Sum('participantgroup__number_of_persons'), 0)
+                                       + Count('participantpersonal'))['total_participants']
 
     def get_participants_grouped_by_age(self, obj):
-        return obj.registration_set.values(
-            age_group_group=F('participantgroup__age_group__name'),
-            age_group_personal=F('participantpersonal__age_group__name')) \
+        return obj.registration_set.values(role=Case(
+            When(participantgroup__participant_role__isnull=False, then=F('participantgroup__participant_role__name')),
+            When(participantpersonal__participant_role__isnull=False,
+                 then=F('participantpersonal__participant_role__name'))),
+            age_group=Case(When(participantgroup__age_group__isnull=False,
+                                then=F('participantgroup__age_group__name')),
+                           When(participantpersonal__age_group__isnull=False,
+                                then=F('participantpersonal__age_group__name')))) \
             .annotate(number_group=Coalesce(Sum('participantgroup__number_of_persons'), 0),
                       number_personal=Coalesce(Count('participantpersonal'), 0)) \
-            # .exclude(participantgroup__age_group__isnull=True)
+            .exclude(role__isnull=True).exclude(age_group__isnull=True)
 
         return result
 
@@ -458,7 +467,8 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
         return result
 
     def get_travel_method(self, obj):
-        return obj.methodoftravel_set.values('travel_type__name').annotate(sum_method=Sum('number_of_persons'))
+        return obj.methodoftravel_set.values('travel_type__name').annotate(
+            sum_method=Coalesce(('number_of_persons'), 0))
 
     def get_travel_method_detailed(self, obj):
         return obj.methodoftravel_set.values('travel_type__name').values('travel_type__name', 'number_of_persons')

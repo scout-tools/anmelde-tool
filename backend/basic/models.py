@@ -96,7 +96,7 @@ class Role(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=40)
     description = models.CharField(max_length=100, blank=True)
     force_email = models.BooleanField(default=0)
 

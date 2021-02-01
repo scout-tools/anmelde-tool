@@ -1,17 +1,17 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-dialog v-model="dialog" max-width="290">
+      <v-dialog v-model="dialog" max-width="400">
         <v-card>
-          <v-card-title class="headline">Heimabend-Idee löschen</v-card-title>
+          <v-card-title class="headline">Person löschen</v-card-title>
 
-          <v-card-text> Willst du diese Idee echt löschen? </v-card-text>
+          <v-card-text> Diese Person komplett enfernen? </v-card-text>
 
           <v-card-actions>
             <v-spacer></v-spacer>
 
             <v-btn color="grey darken-1" text @click="cancel()">
-              Abbrechen
+              Behalten
             </v-btn>
 
             <v-btn color="red darken-1" text @click="onDeleteClick()">
@@ -30,7 +30,7 @@
       y="top"
       :timeout="timeout"
     >
-      {{ 'Diese Idee wurde erfolgreich gelöscht' }}
+      {{ 'Diese Person wurde erfolgreich gelöscht' }}
     </v-snackbar>
   </div>
 </template>

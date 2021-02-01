@@ -1,18 +1,16 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
     <v-container class="px-0" fluid>
-        <v-container>
-          <p>
-            Wir würden uns freuen, wenn Du hier noch weitere Heime
-            und/oder Lagerplätze einträgst, die sich für das Spiel eignen
-          </p>
+      <v-container>
+        <p>
+          Gib hier eine Adresse innerhalb Deutschlands an, wo wie ein
+          Überraschungspaket für deinen Stamm hinschicken können.
+        </p>
 
-          <v-divider class="my-2"/>
+        <v-divider class="my-2" />
 
-          <v-btn color="primary" @click="newLocation()">
-            Platz oder Haus vorschlagen
-          </v-btn>
-        </v-container>
+        <v-textarea label="Postadresse"></v-textarea>
+      </v-container>
       <v-divider class="my-3" />
 
       <prev-next-buttons
@@ -33,7 +31,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
-  displayName: 'Heim-/Lagerplatzvorschläge',
+  displayName: 'Paketadresse',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,

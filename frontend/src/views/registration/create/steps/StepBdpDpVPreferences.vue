@@ -4,9 +4,9 @@
       <v-expand-transition>
         <v-container>
           <v-row v-if="dpvAddedLocation">
-            <v-subheader>
-              Sehr cool. Du hast einen Lagerplatz hinzugefügt.
-            </v-subheader>
+            <p>
+              Sehr cool. Du hast ein Heim / Lagerplatz hinzugefügt.
+            </p>
             <v-radio-group v-model="radioGroup">
               <v-radio
                 label="Wir wollen bei uns im Heim bleiben und besucht werden."
@@ -20,40 +20,22 @@
               <v-radio label="Uns ist beides recht." value="3"></v-radio>
             </v-radio-group>
           </v-row>
-
-          <v-row v-else>
-            <v-subheader>
-              Du hast kein Heim oder einen Lagerplatz,
-              was du uns zur Verfügung stellen kannst. Welche Präferenzen hast du? <br>
-            </v-subheader>
-            <v-radio-group v-model="radioGroup">
-              <v-radio
-                label="Wir wollen bei uns in der Stadt oder im direktem Umfeld bleiben."
-                value="1"
-              ></v-radio>
-              <v-radio
-                label="Wir wollen nicht bei uns in der Stadt
-                bleiben."
-                value="2"
-              ></v-radio>
-              <v-radio label="Uns ist beides recht." value="3"></v-radio>
-            </v-radio-group>
-          </v-row>
         </v-container>
       </v-expand-transition>
 
       <v-expand-transition>
-        <v-container v-show="radioGroup === '2' || radioGroup === '3'">
+        <v-container v-show="!dpvAddedLocation || radioGroup === '2' || radioGroup === '3'">
           <v-divider class="my-4" />
           <v-radio-group v-model="radioGroup2">
-            <v-radio label="Wir fahren gern weit weg.
-              (Im Zweifel gern quer durch ganz Deutschland) " value="3">
-            </v-radio>
             <v-radio
               label="Wir möchten gern in der Nähe unserer Stadt bleiben.
               (Mit der Regio kommt man gut hin) "
               value="5"
             ></v-radio>
+            <v-radio label="Wir fahren gern weit weg.
+              (Im Zweifel quer durch ganz Deutschland) " value="3">
+            </v-radio>
+              <v-radio label="Uns ist beides recht." value="6"></v-radio>
           </v-radio-group>
         </v-container>
       </v-expand-transition>
@@ -95,7 +77,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
-  displayName: 'Wo soll es hingehen?',
+  displayName: 'Wohin geht es?',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
