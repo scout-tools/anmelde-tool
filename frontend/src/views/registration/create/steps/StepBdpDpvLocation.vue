@@ -17,14 +17,15 @@
             </ul>
           </span>
           <v-radio-group v-model="radioGroup">
+          <v-radio
+              label="Ja"
+              value="1"
+            ></v-radio>
             <v-radio
               label="Nein"
               value="2"
             ></v-radio>
-            <v-radio
-              label="Ja"
-              value="1"
-            ></v-radio>
+
           </v-radio-group>
         </v-container>
       </v-expand-transition>

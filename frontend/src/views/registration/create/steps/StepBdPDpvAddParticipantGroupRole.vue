@@ -147,7 +147,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepAddParticipantGroupRole',
-  displayName: 'Teilnehmer_innen Rolle',
+  displayName: 'Teilnehmende',
 
   components: {
     // RolePicker,

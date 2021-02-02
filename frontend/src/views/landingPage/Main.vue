@@ -14,7 +14,7 @@
             class="white--text subheading mb-3"
             style="font-weight: 900; text-shadow: 2px 2px #000000"
           >
-            Einfach. Schnell. Übersichtlich
+            Einfach. Schnell. Übersichtlich.
           </div>
           <v-btn
             class="mt-10"
@@ -44,10 +44,10 @@
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
             <h2 class="headline">
-                Der Beste Weg um große Anmeldezahlen Übersichtlich zu gestalten
+                Der Beste Weg um große Anmeldezahlen Übersichtlich zu gestalten.
             </h2>
             <span class="subheading">
-                Kein E-Mail Krieg. Keine Missverständnisse. Zeit für das wesentliche
+                Kein E-Mail Krieg. Keine Missverständnisse. Zeit für das Wesentliche.
             </span>
           </div>
         </v-flex>
@@ -65,7 +65,7 @@
                   <v-card-text>
                     Schneller und Einfacher gab es keine Anmeldung für ein Pfadfinder_innen Lager.
                     Einloggen innerhalb von Sekunden ohne ein extra Passwort und du wirst durch
-                    den Anmeldeprozess begleitet
+                    den Anmeldeprozess begleitet.
                   </v-card-text>
                 </v-card>
               </v-flex>

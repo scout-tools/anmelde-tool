@@ -43,15 +43,6 @@
           text
           rounded
           class="my-2"
-          @click="$router.push({ name: 'checkToken' })"
-        >
-          Login
-        </v-btn>
-        <v-btn
-          color="white"
-          text
-          rounded
-          class="my-2"
           v-if="isAuthenticated"
           @click="onLogoutClicked"
         >
