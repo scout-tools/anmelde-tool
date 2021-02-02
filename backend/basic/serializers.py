@@ -428,11 +428,34 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
     tents = serializers.SerializerMethodField('get_tents')
     tents_detailed = serializers.SerializerMethodField('get_tents_detailed')
 
+    responsible_persons = serializers.SlugRelatedField(
+        many=True,
+        read_only=False,
+        queryset=User.objects.all(),
+        slug_field='username'
+    )
+
+    scout_organisation = serializers.SlugRelatedField(
+        many=False,
+        read_only=False,
+        queryset=ScoutHierarchy.objects.all(),
+        slug_field='name'
+    )
+
+    event = serializers.SlugRelatedField(
+        many=False,
+        read_only=False,
+        queryset=Event.objects.all(),
+        slug_field='name'
+    )
+
     class Meta:
         model = Registration
         fields = (
             'scout_organisation',
+            'event',
             'responsible_persons',
+            'free_text',
             'total_participants',
             'total_fee',
             'group_participants',
