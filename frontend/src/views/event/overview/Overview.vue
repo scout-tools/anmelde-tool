@@ -20,7 +20,7 @@
                 @click="$router.push({ name: 'createEvent' })"
               >
                 <v-icon left>mdi-calendar-plus</v-icon>
-                Neues Lager
+                Neues Lager erstellen
               </v-btn>
 
               <template v-for="(item, index) in getItems">
@@ -57,7 +57,9 @@
                     <router-link
                       :to="{
                         name: 'registrationForm',
-                        params: { id: item.id },
+                        params: {
+                          id: item.id
+                        },
                       }"
                       style="text-decoration: none"
                     >
@@ -137,7 +139,7 @@
               Bevor du dich anmelden kannst musst du deine persönlichen Daten
               eingeben.
             </v-subheader>
-                        <div class="text-center">
+            <div class="text-center">
               <v-progress-circular
                 :size="80"
                 :width="10"
@@ -233,13 +235,15 @@ export default {
 
       const text1 = `Lager: ${moment(startTime)
         .lang('de')
-        .format(dateFormat)} bis ${moment(endTime).lang('de').format(dateFormat)}`;
+        .format(dateFormat)} bis ${moment(endTime)
+        .lang('de')
+        .format(dateFormat)}`;
 
       const text2 = ` - Anmeldung: ${moment(registrationStart)
         .lang('de')
-        .format(dateFormat)} bis ${moment(registrationDeadline).lang('de').format(
-        dateFormat,
-      )}`;
+        .format(dateFormat)} bis ${moment(registrationDeadline)
+        .lang('de')
+        .format(dateFormat)}`;
       return text1 + text2;
     },
 
@@ -374,7 +378,11 @@ export default {
       this.$router.push({ name: 'registrationForm' });
     },
     redirectToUserSettings() {
-      setTimeout(() => this.goToSettings(), 300);
+      setTimeout(() => {
+        if (!this.hasSetExtendedUserInfos) {
+          this.goToSettings();
+        }
+      }, 300);
     },
   },
   mounted() {
