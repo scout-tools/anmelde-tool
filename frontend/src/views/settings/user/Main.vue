@@ -48,6 +48,8 @@
                     </v-col>
                     <v-col cols="12" sm="6">
                       <v-text-field
+                        readonly
+                        filled
                         v-model="email"
                         label="Email Address*"
                         prepend-icon="mdi-email"
@@ -211,7 +213,7 @@ export default {
         scoutName:
           'Gib hier bitte deinen Namen oder deinen Fahrtennamen ein.',
         email: 'Die E-Mail nutzen wir für die Kommunikation mit dem Tool als auch für Rückfragen.',
-        mobileNumber: 'Hier kannst du freiwillig deine Handynummer angeben. ',
+        mobileNumber: 'Hier kannst du freiwillig deine Handynummer angeben. Für manche Lager ist sie allerdings Pflicht. ',
         scoutOrganisation: 'Bei dem Stift kannst Du deinen Stamm auswählen',
       },
       user: null,
@@ -239,7 +241,7 @@ export default {
       const errors = [];
       if (!this.$v.checkbox.$dirty) return errors;
       // eslint-disable-next-line
-      !this.$v.checkbox.checked && errors.push('You must agree to continue!');
+      !this.$v.checkbox.checked && errors.push('Du musst den Datenschutzbestimmungen zustimmen.');
       return errors;
     },
     mobileNumberErrors() {
@@ -247,10 +249,10 @@ export default {
       if (!this.$v.mobileNumber.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.mobileNumber.maxLength &&
-        errors.push('Darf nicht mehr als 20 Zeichen haben');
+        errors.push('Eine Handynummer hat maxtimal 20 Ziffern');
       // eslint-disable-next-line
       !this.$v.mobileNumber.minLength &&
-        errors.push('Mindestens 6 Zeichen.');
+        errors.push('Eine Handynummer hat mindestens 6 Ziffern.');
       return errors;
     },
     scoutNameErrors() {
@@ -258,16 +260,16 @@ export default {
       if (!this.$v.scoutName.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.scoutName.maxLength &&
-        errors.push('Name must be at most 10 characters long');
+        errors.push('Darf nicht mehr als 20 Zeichen haben');
       // eslint-disable-next-line
-      !this.$v.scoutName.required && errors.push('Name is required.');
+      !this.$v.scoutName.required && errors.push('Dein Name ist erforderlich');
       return errors;
     },
     stammErrors() {
       const errors = [];
       if (!this.$v.scoutOrganisation.$dirty) return errors;
       // eslint-disable-next-line
-      !this.$v.scoutOrganisation.required && errors.push('E-mail is required');
+      !this.$v.scoutOrganisation.required && errors.push('Wir brauchen deine E-Mail');
       return errors;
     },
   },
@@ -323,6 +325,9 @@ export default {
   },
   created() {
     this.getData();
+  },
+  mounted() {
+    this.$v.$touch();
   },
 };
 </script>
