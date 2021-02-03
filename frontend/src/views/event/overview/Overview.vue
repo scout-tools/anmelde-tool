@@ -131,16 +131,24 @@
           </v-card>
           <v-card v-else>
             <v-card-title class="text-center justify-center py-6">
-              Willkommen im Anmele-Tool
+              Willkommen
             </v-card-title>
             <v-subheader>
               Bevor du dich anmelden kannst musst du deine persönlichen Daten
               eingeben.
             </v-subheader>
+                        <div class="text-center">
+              <v-progress-circular
+                :size="80"
+                :width="10"
+                color="primary"
+                indeterminate
+              ></v-progress-circular>
+            </div>
             <v-btn
               class="ma-5"
               color="primary"
-              @click="$router.push({ name: 'settingsUser' })"
+              @click="onGoToSettingsButtonClicked"
             >
               <v-icon left dark>mdi-tools</v-icon>
               Zu den Benutzerdaten
@@ -353,12 +361,20 @@ export default {
           this.showError = true;
         });
     },
-
+    onGoToSettingsButtonClicked() {
+      this.goToSettings();
+    },
+    goToSettings() {
+      this.$router.push({ name: 'settingsUser' });
+    },
     show(item) {
       this.$refs.messageModal.show(item);
     },
     onRegistrationClicked() {
       this.$router.push({ name: 'registrationForm' });
+    },
+    redirectToUserSettings() {
+      setTimeout(() => this.goToSettings(), 300);
     },
   },
   mounted() {
@@ -371,6 +387,8 @@ export default {
     this.getAgeGroupMapping();
     this.getTentTypeMapping();
     this.getZipCodeMapping();
+
+    this.redirectToUserSettings();
   },
 };
 </script>
