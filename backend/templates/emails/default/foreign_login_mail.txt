@@ -6,7 +6,7 @@ Du wurdest von {{ foreign_name }} ({{ foreign_email }}) bei uns registriert. Das
 Mit deiner Email Adresse kannst du dich immer wieder anmelden, falls du Änderungen vornehmen willst.
 Der Link ist nur 24h gültig. Falls er schon abgelaufen ist, kannst du dir hier einen neuen zusenden lassen.
 
-Klicke hier um dich anzumelden [{{ website }}/check-token?username={{ user }}&password={{ password }}]
+Klicke hier um dich anzumelden [{{ website }}check-token?username={{ user }}&password={{ password }}]
 
 Solltest du Probleme haben dich anzumelden, kannst du dich mit den folgenden Daten anmelden:
 
