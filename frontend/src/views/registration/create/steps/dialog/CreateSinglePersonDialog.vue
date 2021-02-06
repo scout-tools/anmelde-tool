@@ -434,6 +434,26 @@ export default {
         id: 6,
         name: 'Mosaikersleben / Bundesfahrt + Kaperfahrt / Bundesmeutenlager',
       },
+      {
+        name: 'Tagesgast: Nur Sonntag',
+        id: 7,
+      },
+      {
+        name: 'Tagesgast: Nur Montag',
+        id: 8,
+      },
+      {
+        name: 'Tagesgast: Nur Dienstag',
+        id: 9,
+      },
+      {
+        name: 'Tagesgast: Sonntag auf Montag',
+        id: 10,
+      },
+      {
+        name: 'Tagesgast: Montag auf Dienstag',
+        id: 11,
+      },
     ],
     showError: false,
     showSuccess: false,

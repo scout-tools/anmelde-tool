@@ -5,7 +5,7 @@
         <v-layout column>
           <v-card v-if="!isLoading">
             <v-card-title class="text-center justify-center py-6">
-              Zu diesen Lagern kannst du deinen Stamm anmelden:
+              Zu diesen Lagern kannst du deinen Stamm anmelden
             </v-card-title>
             <v-list subheader two-line>
               <v-subheader inset>
