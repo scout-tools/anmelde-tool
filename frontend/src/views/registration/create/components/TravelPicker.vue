@@ -145,22 +145,25 @@ export default {
       ])
         .then((values) => {
           console.log(values);
-          this.data.maxNumber = values[0].participantpersonalSet.length;
+          this.data.maxNumber = values[0][0].participantpersonalSet
+            .filter((i) => i.participantRole === 6).length;
           this.data.methodOfTravels = values[1].filter((i) => i.travelTag === 1);
+          this.isLoading = false;
         })
         .catch((error) => {
           console.log(error);
           this.isLoading = false;
         });
     },
-    getMethod() {
-      const res = axios
+    async getMethod() {
+      const res = await axios
         .get(
           `${this.API_URL}basic/method-of-travel/`,
         );
       return res.data;
     },
     reached() {
+      console.log(this.data.methodOfTravels);
       let sum = 0;
       this.data.methodOfTravels.forEach((i) => {
         sum += i.numberOfPersons * 1;
@@ -168,9 +171,9 @@ export default {
       sum += this.data.numberAlreadyThere;
       return sum;
     },
-    getMaxNumber() {
+    async getMaxNumber() {
       const path = `${process.env.VUE_APP_API}basic/registration/`;
-      const answer = axios
+      const answer = await axios
         .get(`${path}${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`);
       return answer.data;
     },
