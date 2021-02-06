@@ -424,11 +424,11 @@ export default {
     roleItems: [
       {
         id: 5,
-        name: 'Nur Bundesfahrt',
+        name: 'Nur Mosaikersleben / Bundesfahrt',
       },
       {
         id: 6,
-        name: 'Bundesfahrt + Kaperfahrt',
+        name: 'Mosaikersleben / Bundesfahrt + Kaperfahrt / Bundesmeutenlager',
       },
     ],
     showError: false,
