@@ -5,8 +5,8 @@
         <v-row align="center">
           <v-col cols="12">
             <v-card-text>
-              {{this.reached()}} / {{this.data.maxNumber}}
-              <v-icon v-if="this.reached() === this.data.maxNumber">mdi-check</v-icon>
+              {{reached}} / {{data.maxNumber}}
+              <v-icon v-if="this.reached === this.data.maxNumber">mdi-check</v-icon>
             </v-card-text>
           </v-col>
         </v-row>
@@ -52,6 +52,15 @@
             />
           </v-col>
           <v-col cols="6" v-if="this.travelTag === 3">
+            <v-divider class="my-3" />
+            <v-row class="mt-2" center>
+              <span class="text-center ma-5 subtitle-1">
+                <p>
+                  Bitte gebt die Anzahl Lunchpakete an,die ihr für die Rück- oder Weiterreise nutzen
+                  wollt. Damit helft ihr der Küche bei der genaueren Planung.
+                </p>
+              </span>
+            </v-row>
             <v-text-field
               v-model="data.methodOfTravels.filter((i) => i.travelType === 6)[0].numberOfPersons"
               label="Lunchpaket"
@@ -96,7 +105,6 @@ export default {
     isLoading: false,
     data: {
       maxNumber: 0,
-      numberAlreadyThere: 0,
       methodOfTravels: [
         {
           numberOfPersons: 0,
@@ -165,6 +173,15 @@ export default {
         0,
       );
     },
+    reached() {
+      let sum = 0;
+      this.data.methodOfTravels.forEach((i) => {
+        if (i.travelType !== 6) {
+          sum += i.numberOfPersons * 1;
+        }
+      });
+      return sum;
+    },
   },
   mounted() {
     this.loadData();
@@ -194,20 +211,10 @@ export default {
       const res = await axios.get(`${this.API_URL}basic/method-of-travel/`);
       return res.data;
     },
-    reached() {
-      let sum = 0;
-      this.data.methodOfTravels.forEach((i) => {
-        sum += i.numberOfPersons * 1;
-      });
-      sum += this.data.numberAlreadyThere;
-      return sum;
-    },
     async getMaxNumber() {
-      const path = `${process.env.VUE_APP_API}basic/registration/`;
+      const path = `${this.API_URL}basic/registration/`;
       const answer = await axios.get(
-        `${path}${
-          this.$route.params.id
-        }/participants/?&timestamp=${new Date().getTime()}`,
+        `${path}${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`,
       );
       return answer.data;
     },
