@@ -141,12 +141,15 @@
               <v-combobox
                 v-model="data.scoutGroup"
                 :items="scoutHierarchyGroups"
+                :error-messages="scoutGroupsErrors"
                 item-text="name"
                 item-value="name"
                 required
                 :rules="[requiredField, validScoutGroup]"
                 label="Gruppe"
                 prepend-icon="mdi-account-group"
+                @input="$v.data.scoutGroup.$touch()"
+                @blur="$v.data.scoutGroup.$touch()"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -157,10 +160,11 @@
                     </template>
                     <span>
                       {{
-                        'Bitte gib die zugehörige Gruppe zu deinem_r' +
-                        'Teilnehmer_in an. Wähle dazu' +
-                        'eine Gruppe aus der Liste oder schreibe den' +
-                        'Gruppennamen in das Feld ein.'
+                        'Bitte gib die zugehörige Gruppe zu deinem_r ' +
+                        'Teilnehmer_in an. Wähle dazu ' +
+                        'eine Gruppe aus der Liste oder schreibe den ' +
+                        'Gruppennamen in das Feld ein.' +
+                        '(Neuanlage einer Gruppe beim editieren klappt noch nicht)'
                       }}
                     </span>
                   </v-tooltip>
@@ -472,6 +476,7 @@ export default {
       },
       zipCode: {
         required,
+        minLength: minLength(1),
       },
       participantRole: {
         required,
@@ -531,7 +536,7 @@ export default {
       const errors = [];
       if (!this.$v.data.scoutGroup.$dirty) return errors;
       if (!this.$v.data.scoutGroup.required) {
-        errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
+        errors.push('Es muss mindestens eine Gruppe ausgewählt werden.');
       }
       if (!this.$v.data.scoutGroup.scoutGroupStartValidator) {
         errors.push(
@@ -584,6 +589,11 @@ export default {
     zipCodeErrors() {
       const errors = [];
       if (!this.$v.data.zipCode.$dirty) return errors;
+
+      if (!this.$v.data.zipCode.minLength) {
+        errors.push('Stadt ist erforderlich.');
+      }
+
       if (!this.$v.data.zipCode.required) {
         errors.push('Stadt ist erforderlich.');
       }
@@ -635,6 +645,7 @@ export default {
       this.data = input;
       this.active = true;
       this.isEditWindow = true;
+      this.eatHabitText = [];
       this.loadData();
     },
     loadData() {
