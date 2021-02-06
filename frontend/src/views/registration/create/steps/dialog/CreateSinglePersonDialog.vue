@@ -15,24 +15,26 @@
       </v-toolbar>
       <v-container>
         <v-subheader class="ma-5">
-          Bitte trag hier die Daten ein die das Anmeldetool aus. Diese Daten
-          werden teilweise später in Anwendungen gebraucht. Diese Daten sind für
-          die Administratoren und für die Lagerleitung nach deiner explizieten
-          Anmeldung sichtbar.
+          Bitte trage alle Daten deiner Teilnehmer_innen einzeln
+          ein.
         </v-subheader>
         <v-form v-model="valid">
+          <v-divider/>
+        <v-subheader>
+          Namen
+        </v-subheader>
           <v-row>
             <v-col cols="12" sm="6" md="4">
-              <v-combobox
-                v-model="data.scoutGroup"
-                :items="scoutHierarchyGroups"
-                item-text="name"
-                item-value="name"
+              <v-text-field
+                v-model="data.scoutName"
                 autofocus
+                :counter="20"
+                :error-messages="scoutNameErrors"
+                label="Pfadfindername"
                 required
-                :rules="[requiredField, validScoutGroup]"
-                label="Gruppe"
-                prepend-icon="mdi-account-group"
+                prepend-icon="mdi-campfire"
+                @input="$v.data.scoutName.$touch()"
+                @blur="$v.data.scoutName.$touch()"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -42,32 +44,14 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Gruppe des Teilnehmenden aus der Liste auswählen ' +
-                          'oder neuen Namen eingeben' }}
+                      {{ 'Trag bitte den Pfadfindernamen/Fahrtennamen' +
+                      'des_der Teilnehmer_in ein. Dies ist eine' +
+                      'freiwillige Angabe.' }}
                     </span>
                   </v-tooltip>
                 </template>
-              </v-combobox>
+              </v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-switch v-model="data.isGroupLeader" label="Gruppenführung">
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{ 'Ist Teil der Gruppenführung der Gruppe' }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-switch>
-            </v-col>
-          </v-row>
-          <v-divider class="my-3" />
-          <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="data.firstName"
@@ -87,7 +71,8 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Vorname des Teilnehmenden' }}
+                      {{ 'Trag bitte den Vornamen des_der Teilnehmer_in' +
+                      'ein. Zweitnamen müssen nicht mit angegeben werden.' }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -112,12 +97,19 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Nachname des Teilnehmenden' }}
+                      {{ 'Trag bitte den vollständigen Nachnamen ein.' }}
                     </span>
                   </v-tooltip>
                 </template>
               </v-text-field>
             </v-col>
+          </v-row>
+
+          <v-divider class="my-3" />
+        <v-subheader>
+          Alter / Gruppe
+        </v-subheader>
+          <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="data.age"
@@ -137,12 +129,69 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Alter zum Lagerbeginn' }}
+                      {{ 'Trag bitte das Alter des_der Teilnehmer_in' +
+                      'zum Start des Lagers ein (4. bzw. 7. August 2021).' }}
                     </span>
                   </v-tooltip>
                 </template>
               </v-text-field>
             </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-combobox
+                v-model="data.scoutGroup"
+                :items="scoutHierarchyGroups"
+                item-text="name"
+                item-value="name"
+                required
+                :rules="[requiredField, validScoutGroup]"
+                label="Gruppe"
+                prepend-icon="mdi-account-group"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Bitte gib die zugehörige Gruppe zu deinem_r' +
+                        'Teilnehmer_in an. Wähle dazu' +
+                        'eine Gruppe aus der Liste oder schreibe den' +
+                        'Gruppennamen in das Feld ein.'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-combobox>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-switch v-model="data.isGroupLeader" label="Teil der Gruppenführung">
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Bitte aktiviere die Option,' +
+                        'wenn dein_e Teilnehmer_in' +
+                        'Gruppenführer_in/-leiter_in, Gruppenhelfer_in' +
+                        'oder ähnliches ist.'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-switch>
+            </v-col>
+          </v-row>
+
+          <v-divider />
+        <v-subheader>
+          Adresse / Telefon
+        </v-subheader>
+          <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="data.street"
@@ -162,32 +211,7 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Adresse des Teilnehmenden' }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="data.phoneNumber"
-                :counter="30"
-                :error-messages="phoneNumberErrors"
-                label="Telefonnummer"
-                prepend-icon="mdi-phone"
-                required
-                @input="$v.data.phoneNumber.$touch()"
-                @blur="$v.data.phoneNumber.$touch()"
-              >
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{ 'Telefonnummer des Teilnehmenden' }}
+                      {{ 'Trag bitte Straße und Hausnummer ein.' }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -197,13 +221,55 @@
               <zip-code-field ref="zipCodeField" v-model="data.zipCode" />
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <eat-autocomplete-field ref="eatHabitType" v-model="data.eatHabitType" />
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <eat-text-field ref="eatHabitText" v-model="eatHabitText" />
+              <v-text-field
+                v-model="data.phoneNumber"
+                :counter="30"
+                :error-messages="phoneNumberErrors"
+                label="Telefonnummer"
+                prepend-icon="mdi-phone"
+                required
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Trag bitte eine Mobil- oder Festnetznummer' +
+                      'ein unter der der_die Teilnehmer_in nach' +
+                      'dem Lager erreichbar ist.' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-text-field>
             </v-col>
           </v-row>
-          <v-divider class="my-3" />
+
+          <v-divider/>
+        <v-subheader>
+          Essgewohnheiten
+        </v-subheader>
+          <v-row>
+            <v-col cols="12" sm="6">
+              <eat-autocomplete-field
+                ref="eatHabitType"
+                v-model="data.eatHabitType"
+                :eatHabitTypeMapping="eatHabitTypeMapping"
+              />
+            </v-col>
+            <v-col cols="12" sm="6">
+              <eat-text-field
+                ref="eatHabitText"
+                v-model="eatHabitText"
+              />
+            </v-col>
+          </v-row>
+          <v-divider />
+        <v-subheader>
+          Bitte wähle die Lager aus an denen der_die Teilnehmer_in teilnimmt.
+        </v-subheader>
           <v-row>
             <v-col cols="12" sm="6">
               <v-container fluid>
@@ -214,7 +280,7 @@
                   :error-messages="participantRoleErrors"
                   item-text="name"
                   item-value="id"
-                  label="Bundesfahrt und/oder Kaperfahrt?"
+                  label="Bundesfahrt und Kaperfahrt?"
                   required
                   @input="$v.data.participantRole.$touch()"
                 >
@@ -280,7 +346,9 @@ export default {
     active: false,
     valid: true,
     scoutHierarchyGroups: [],
-    eatHabitText: null,
+    eatHabitTypeMapping: [],
+    isLoading: true,
+    isEditWindow: false,
     data: {
       firstName: null,
       lastName: null,
@@ -290,6 +358,7 @@ export default {
       age: null,
       registration: null,
       eatHabitType: [],
+      eatHabitText: [],
       scoutGroup: null,
       isGroupLeader: false,
       participantRole: 5,
@@ -310,6 +379,10 @@ export default {
   }),
   validations: {
     data: {
+      scoutName: {
+        minLength: minLength(2),
+        maxLength: maxLength(20),
+      },
       firstName: {
         required,
         minLength: minLength(2),
@@ -429,6 +502,16 @@ export default {
       }
       return errors;
     },
+    scoutNameErrors() {
+      const errors = [];
+      if (!this.$v.data.scoutName.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.data.scoutName.maxLength &&
+        errors.push('Darf nicht mehr als 20 Zeichen haben');
+      // eslint-disable-next-line
+      !this.$v.data.scoutName.required && errors.push('Dein Name ist erforderlich');
+      return errors;
+    },
   },
   watch: {
     data() {
@@ -472,29 +555,52 @@ export default {
         age: null,
         registration: null,
         eatHabitType: [],
+        eatHabitText: [],
         scoutGroup: null,
         isGroupLeader: false,
+        isEditWindow: false,
         roles: [],
         participantRole: 5,
       };
       this.eatHabitText = null;
       this.active = true;
-      this.getGroups();
+      this.loadData();
     },
     openDialogEdit(input) {
+      this.data = [];
       this.data = input;
       this.active = true;
-      this.getGroups();
+      this.isEditWindow = true;
+      this.loadData();
     },
-    getGroups() {
-      axios
-        .get(`${this.API_URL}basic/scout-hierarchy-group/`)
-        .then((res) => {
-          this.scoutHierarchyGroups = res.data;
+    loadData() {
+      this.isLoading = true;
+
+      Promise.all([
+        this.getGroups(),
+        this.getEatHabitTypeMapping(),
+      ])
+        .then((values) => {
+          [this.scoutHierarchyGroups] = values;
+          this.$store.commit('setEatHabitTypeMapping', values[1]);
+          this.isLoading = false;
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
         });
+    },
+    async getGroups() {
+      const path = `${this.API_URL}basic/scout-hierarchy-group/`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+    async getEatHabitTypeMapping() {
+      const path = `${this.API_URL}basic/eat-habit-type/`;
+      const response = await axios.get(path);
+
+      return response.data;
     },
     getParticipantPersonalById(id) {
       axios
@@ -539,8 +645,8 @@ export default {
       if (this.data.eatHabitType && this.data.eatHabitType.name) {
         this.data.eatHabitType = this.data.eatHabitType.name;
       }
-      if (this.eatHabitText) {
-        this.data.eatHabitType.push(this.eatHabitText);
+      if (this.eatHabitText && this.data.eatHabitType) {
+        this.data.eatHabitType = this.data.eatHabitType.concat(this.eatHabitText);
       }
       if (!this.data.id) {
         axios

@@ -59,7 +59,7 @@ export default {
   props: ['position', 'maxPos'],
   data: () => ({
     valid: true,
-    displayName: 'Essen',
+    displayName: 'Essgewohnheiten',
   }),
   validations: {},
   methods: {

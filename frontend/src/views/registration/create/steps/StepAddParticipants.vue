@@ -16,7 +16,7 @@
         <v-row :key="`agegroup-${index}`">
           <v-text-field
             v-model="data[item.id]"
-            :label="`Anzahl ${item.name}`"
+            :label="`Anzahl: ${item.description}`"
             required
           >
           </v-text-field>
@@ -42,9 +42,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { required, minLength, minValue } from 'vuelidate/lib/validators';
+// import { required, minLength, minValue } from 'vuelidate/lib/validators';
 
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
@@ -61,15 +61,6 @@ export default {
     isLoading: false,
     data: {},
   }),
-  validations: {
-    data: {
-      required,
-      minLength: minLength(1),
-      $each: {
-        minValue: minValue(1),
-      },
-    },
-  },
   computed: {
     ...mapGetters([
       'isAuthenticated',
@@ -107,37 +98,29 @@ export default {
       this.$emit('prevStep');
     },
     nextStep() {
-      this.validate();
       if (!this.valid) {
         return;
       }
 
-      this.addParticipants();
-    },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-      this.$emit('submit');
+      this.$emit('nextStep');
     },
     addParticipants() {
-      const promises = [];
-      const registrationId = this.$route.params.id;
-      const myUrl = `${this.API_URL}basic/participant-group/`;
-      const valueArray = Object.values(this.data);
-      Object.keys(this.data).forEach((element, index) => {
-        const paramsData = {
-          ageGroup: parseInt(element, 10),
-          numberOfPersons: parseInt(valueArray[index], 10),
-          registration: parseInt(registrationId, 10),
-        };
-        promises.push(axios.post(myUrl, paramsData));
-      });
+      // const promises = [];
+      // const registrationId = this.$route.params.id;
+      // const myUrl = `${this.API_URL}basic/participant-group/`;
+      // const valueArray = Object.values(this.data);
+      // Object.keys(this.data).forEach((element, index) => {
+      //   const paramsData = {
+      //     ageGroup: parseInt(element, 10),
+      //     numberOfPersons: parseInt(valueArray[index], 10),
+      //     registration: parseInt(registrationId, 10),
+      //   };
+      //   promises.push(axios.post(myUrl, paramsData));
+      // });
 
-      Promise.all(promises).then(() => {
-        this.$emit('nextStep');
-      });
+      // Promise.all(promises).then(() => {
+      //   this.$emit('nextStep');
+      // });
     },
   },
 };

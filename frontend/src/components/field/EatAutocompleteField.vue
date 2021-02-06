@@ -2,7 +2,7 @@
   <v-autocomplete
     v-model="value"
     :items="eatHabitTypeMapping"
-    label="Essens Besonderheiten"
+    label="Essgewohnheiten"
     item-text="name"
     item-value="name"
     prepend-icon="mdi-food"
@@ -37,7 +37,8 @@ export default {
     isLoading: false,
     value: [],
     search: null,
-    toolTip: 'Bitte wähle aus, auf welche Besonderheiten die Küche achten muss.',
+    toolTip: 'Bitte wähle aus den angezeigten Essgewohnheiten.'
+      + 'Weitere Essgewohnheiten können einfach durch Eingabe im Feld angegeben werden.',
   }),
   computed: {
     ...mapGetters(['eatHabitTypeMapping']),

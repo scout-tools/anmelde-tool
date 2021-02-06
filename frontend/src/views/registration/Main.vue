@@ -21,13 +21,17 @@
                   <a
                     href= "mailto:support@anmelde-tool.de">support@anmelde-tool.de</a>
                   </div>
+                <v-subheader v-if="isMobilMandatory" class="ma-0">
+                  <v-icon class="ma-2" color="error">mdi-alert-circle </v-icon>
+                  Für dieses Lager ist die Handynummer Pflicht.
+                </v-subheader>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         v-model="invitationCode"
                         label="Code aus der Einladung"
                         counter="6"
-                        prepend-icon="mdi-lock"
+                        prepend-inner-icon="mdi-lock"
                         :error-messages="invitationCodeErrors"
                       >
                         <template slot="append">
@@ -57,7 +61,7 @@
                         filled
                         v-model="items.scoutName"
                         label="Mein Name"
-                        prepend-icon="mdi-account-circle"
+                        prepend-inner-icon="mdi-account-circle"
                       >
                         <template slot="append">
                           <v-tooltip bottom>
@@ -84,7 +88,7 @@
                         filled
                         v-model="getStammName"
                         label="Mein Stamm"
-                        prepend-icon="mdi-account-group"
+                        prepend-inner-icon="mdi-account-group"
                       >
                         <template slot="append">
                           <v-tooltip bottom>
@@ -111,7 +115,7 @@
                         filled
                         v-model="mobileNumber"
                         label="Telefonnummer"
-                        prepend-icon="mdi-phone"
+                        prepend-inner-icon="mdi-phone"
                         :error-messages="mobileNumberErrors"
                       >
                         <template slot="append">
@@ -163,7 +167,7 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
-import { required } from 'vuelidate/lib/validators';
+import { required, requiredIf } from 'vuelidate/lib/validators';
 
 export default {
   mixins: [validationMixin],
@@ -174,6 +178,7 @@ export default {
       loading: false,
       invitationCode: '',
       scoutName: '',
+      event: null,
       reg_id: null,
       showError: false,
       items: {},
@@ -189,9 +194,23 @@ export default {
     invitationCode: {
       required,
     },
+    mobileNumber: {
+      required: requiredIf((main) => { // eslint-disable-line
+        return main.isMobilMandatory;
+      }),
+    },
   },
   props: ['scoutOrganisation'],
   computed: {
+    eventId() {
+      return this.$route.params.id;
+    },
+    isMobilMandatory() {
+      if (this.event) {
+        return this.event.eventTags.filter((tag) => tag === 1).length;
+      }
+      return false;
+    },
     mobileNumber() {
       return this.items.mobileNumber;
     },
@@ -222,15 +241,15 @@ export default {
       if (!this.$v.invitationCode.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.invitationCode.required &&
-        errors.push('Der Einladungscode wurd benötigt');
+        errors.push('Der Einladungscode wird benötigt');
       return errors;
     },
     mobileNumberErrors() {
       const errors = [];
-      // if (!this.$v.mobileNumber.$dirty) return errors;
-      // // eslint-disable-next-line
-      // !this.$v.mobileNumber.required &&
-      //   errors.push('Nummer ist cool');
+      if (!this.$v.mobileNumber.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.mobileNumber.required &&
+        errors.push('Telefonnummer ist für dieses Lager verpflichtend.');
       return errors;
     },
   },
@@ -249,26 +268,44 @@ export default {
       this.createRegestration();
     },
     getData() {
-      this.loadUserExtended();
-    },
-    loadUserExtended() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.items = res.data;
+      this.isLoading = true;
+
+      Promise.all([
+        this.loadUserExtended(),
+        this.getEventById(this.eventId),
+      ])
+        .then((values) => {
+          [this.items, this.event] = values;
+
+          // this.$store.commit('setRoleMapping', values[2]);
+
+          this.isLoading = false;
         })
-        .catch(() => {
-          console.log('Fehler');
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
         });
     },
+
+    async loadUserExtended() {
+      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+    async getEventById(id) {
+      const path = `${process.env.VUE_APP_API}basic/event/${id}/`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+
     createRegestration() {
-      const eventId = this.$route.params.id;
       axios
         .post(`${this.API_URL}basic/registration/?code=${this.getCodeParam}`, {
           responsiblePersons: [this.getJwtData.email],
           scoutOrganisation: this.items.scoutOrganisation,
-          event: eventId,
+          event: this.eventId,
         })
         .then((response) => {
           this.$router.push({

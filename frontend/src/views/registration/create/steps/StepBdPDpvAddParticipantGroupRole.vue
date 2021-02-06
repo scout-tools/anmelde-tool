@@ -162,7 +162,7 @@ export default {
       groupLeader: 'Alle, die keine Lust haben auf der aktiven Spielseite zu stehen, sondern lieber hinter oder auf der Bühne die Fäden ziehen wollen, können sich hier melden',
       total: 'Many ist eine Tomate',
     },
-    displayName: 'Essen',
+    displayName: 'Essgewohnheiten',
     normal: 0,
     helper: 0,
     stammes: 0,
