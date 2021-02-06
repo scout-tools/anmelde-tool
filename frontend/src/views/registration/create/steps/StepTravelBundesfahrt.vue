@@ -1,5 +1,13 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
+    <v-row class="mt-2" center>
+        <span class="text-center ma-5 subtitle-1">
+          <p>
+            Informationen zu An- und Abreise findet ihr auf
+            <a href="https://www.bundesfahrt.de" target="_blank">www.bundesfahrt.de</a>.
+          </p>
+        </span>
+    </v-row>
     <v-card flat>
       <travel-picker
         ref="bundesfahrtTravelpicker"
