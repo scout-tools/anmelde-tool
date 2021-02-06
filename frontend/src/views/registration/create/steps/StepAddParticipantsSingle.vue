@@ -143,7 +143,6 @@ export default {
       if (!this.valid) {
         return;
       }
-
       this.$emit('nextStep');
     },
     submitStep() {
