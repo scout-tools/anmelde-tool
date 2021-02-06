@@ -68,7 +68,6 @@
             />
           </v-col>
         </v-row>
-        <v-btn @click="save">Fertig</v-btn>
       </v-card>
       <v-card v-else>
         <div class="text-center ma-5">
@@ -98,42 +97,50 @@ export default {
     data: {
       maxNumber: 0,
       numberAlreadyThere: 0,
-      methodOfTravels: [{
-        numberOfPersons: 0,
-        registration: 0,
-        travelType: 1, // Reisebus
-        travelTag: -1,
-      }, {
-        numberOfPersons: 0,
-        registration: 0,
-        travelType: 2, // PKW
-        travelTag: -1,
-      }, {
-        numberOfPersons: 0,
-        registration: 0,
-        travelType: 3, // OEPNV
-        travelTag: -1,
-      }, {
-        numberOfPersons: 0,
-        registration: 0,
-        travelType: 4, // zu fuss
-        travelTag: -1,
-      }, {
-        numberOfPersons: 0,
-        registration: 0,
-        travelType: 5, // Wasserweg
-        travelTag: -1,
-      }, {
-        numberOfPersons: 0,
-        registration: 0,
-        travelType: 6, // Lunchpaket
-        travelTag: -1,
-      }, {
-        numberOfPersons: 0,
-        registration: 0,
-        travelType: 7, // Schon da
-        travelTag: -1,
-      }],
+      methodOfTravels: [
+        {
+          numberOfPersons: 0,
+          registration: 0,
+          travelType: 1, // Reisebus
+          travelTag: -1,
+        },
+        {
+          numberOfPersons: 0,
+          registration: 0,
+          travelType: 2, // PKW
+          travelTag: -1,
+        },
+        {
+          numberOfPersons: 0,
+          registration: 0,
+          travelType: 3, // OEPNV
+          travelTag: -1,
+        },
+        {
+          numberOfPersons: 0,
+          registration: 0,
+          travelType: 4, // zu fuss
+          travelTag: -1,
+        },
+        {
+          numberOfPersons: 0,
+          registration: 0,
+          travelType: 5, // Wasserweg
+          travelTag: -1,
+        },
+        {
+          numberOfPersons: 0,
+          registration: 0,
+          travelType: 6, // Lunchpaket
+          travelTag: -1,
+        },
+        {
+          numberOfPersons: 0,
+          registration: 0,
+          travelType: 7, // Schon da
+          travelTag: -1,
+        },
+      ],
     },
   }),
   validations: {
@@ -146,26 +153,31 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),
+    ...mapGetters([
+      'isAuthenticated',
+      'getJwtData',
+      'hierarchyMapping',
+      'ageGroupMapping',
+    ]),
     total() {
-      return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
+      return Object.values(this.data).reduce(
+        (pv, cv) => parseInt(pv, 10) + parseInt(cv, 10),
+        0,
+      );
     },
   },
   mounted() {
-    this.getData();
+    this.loadData();
   },
   methods: {
-    getData() {
+    loadData() {
       this.isLoading = true;
-      Promise.all([
-        this.getMaxNumber(),
-        this.getMethod(),
-      ])
+      Promise.all([this.getMaxNumber(), this.getMethod()])
         .then((values) => {
           this.participantRole.forEach((j) => {
-            this.data.maxNumber += values[0][0]
-              .participantpersonalSet
-              .filter((i) => i.participantRole === j).length;
+            this.data.maxNumber += values[0][0].participantpersonalSet.filter(
+              (i) => i.participantRole === j,
+            ).length;
           });
           const list = values[1].filter((i) => i.travelTag === this.travelTag);
           if (list.length > 0) {
@@ -179,10 +191,7 @@ export default {
         });
     },
     async getMethod() {
-      const res = await axios
-        .get(
-          `${this.API_URL}basic/method-of-travel/`,
-        );
+      const res = await axios.get(`${this.API_URL}basic/method-of-travel/`);
       return res.data;
     },
     reached() {
@@ -195,13 +204,15 @@ export default {
     },
     async getMaxNumber() {
       const path = `${process.env.VUE_APP_API}basic/registration/`;
-      const answer = await axios
-        .get(`${path}${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`);
+      const answer = await axios.get(
+        `${path}${
+          this.$route.params.id
+        }/participants/?&timestamp=${new Date().getTime()}`,
+      );
       return answer.data;
     },
-    save() {
-      console.log(this.data.methodOfTravels);
-      this.$emit('save', this.data.methodOfTravels);
+    getData() {
+      return this.data.methodOfTravels;
     },
   },
 };

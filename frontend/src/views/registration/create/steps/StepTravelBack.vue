@@ -5,7 +5,7 @@
         :travelTag=this.travelTag
         :participantRole=this.participantRole
         title="Kaperfahrt"
-        @save="saveTravel"></travel-picker>
+      />
     </v-card>
     <v-divider class="my-3" />
     <prev-next-buttons
