@@ -52,5 +52,14 @@
             "name": "Lunchpaket",
             "description": ""
         }
+    },
+    {
+        "model": "basic.travelType",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "name": "Schon da",
+            "description": ""
+        }
     }
 ]

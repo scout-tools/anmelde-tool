@@ -2,7 +2,7 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-card flat>
       <travel-picker
-        ref="kaperfahrtTravelpicker"
+        ref="bundesfahrtTravelpicker"
         :travelTag=this.travelTag
         :participantRole=this.participantRole
         title="Kaperfahrt / Bundesmeutenlager"
@@ -27,7 +27,7 @@ import TravelPicker from '../components/TravelPicker.vue';
 
 export default {
   name: 'StepNameDescription',
-  displayName: 'Anreise - Kaperfahrt',
+  displayName: 'Anreise - Mosaikersleben',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
     PrevNextButtons,
@@ -37,8 +37,8 @@ export default {
     API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: false,
-    travelTag: 1,
-    participantRole: [6],
+    travelTag: 2,
+    participantRole: [5],
     items: [],
     filteredItems: [],
   }),
@@ -84,8 +84,8 @@ export default {
       this.onSaveTravelHandler();
     },
     onSaveTravelHandler() {
-      if (this.$refs.kaperfahrtTravelpicker) {
-        const methodOfTravel = this.$refs.kaperfahrtTravelpicker.getData();
+      if (this.$refs.bundesfahrtTravelpicker) {
+        const methodOfTravel = this.$refs.bundesfahrtTravelpicker.getData();
 
         if (!methodOfTravel[0].id || methodOfTravel[0].id === 0) {
           methodOfTravel.forEach((i) => {

@@ -695,7 +695,6 @@ export default {
       this.$v.$touch();
       this.valid = !this.$v.$anyError;
       console.log(this.$v);
-      debugger;
     },
     onClickOkay() {
       this.validate();

@@ -1,6 +1,15 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-    <v-container fluid>
+    <v-container fluid v-if="!isLoading">
+      <v-row class="mt-2">
+        <span class="text-left subtitle-1">
+          <p>
+            Bitte gebt die Zelte an, die ihr in Mosaikersleben nutzen wollt
+            und ordnet alle Gruppen den Zelten zu. Wenn ihr andere Zelte als
+            Kohte oder Jurte nutzt, ordnet bitte eure Grundfläche einem der beiden Zelte zu.
+          </p>
+        </span>
+      </v-row>
       <v-row align="center" v-for="(tent, index) in this.data.tents" :key="index">
         <v-col cols="5">
           <v-select
@@ -49,6 +58,16 @@
         @submitStep="submitStep()"
       />
     </v-container>
+    <v-container v-else>
+      <div class="text-center ma-5">
+        <v-progress-circular
+          :size="80"
+          :width="10"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </div>
+    </v-container>
   </v-form>
 </template>
 
@@ -93,15 +112,37 @@ export default {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },
   },
-  created() {
-    this.getGroups();
-    this.getTentTypes();
-    this.getTents();
-    this.convertSavedTents();
+  mounted() {
+    this.data.tents = [];
+    this.getData();
   },
   methods: {
+    getData() {
+      this.isLoading = true;
+      Promise.all([
+        this.getGroups(),
+        this.getTentTypes(),
+        this.getTents(),
+      ])
+        .then((values) => {
+          this.$store.commit('setScoutGroupMapping', values[0]);
+          this.$store.commit('setTentTypeMapping', values[1]);
+          this.$store.commit('setRegisteredTents', values[2].filter((i) => parseInt(i.registration, 10) === parseInt(this.$route.params.id, 10)));
+          this.convertSavedTents();
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isLoading = false;
+        });
+    },
     addTent() {
       this.data.tents.push({ i: 0, selectedType: '', selectedGroups: [] });
+      this.getGroups()
+        .then((res) => this.$store.commit('setScoutGroupMapping', res))
+        .catch((error) => {
+          console.log(error);
+        });
     },
     deleteTent(id) {
       console.log(id);
@@ -141,7 +182,6 @@ export default {
       const dto = { registration: '', tentType: 1, usedByScoutGroups: [] };
       dto.registration = this.$route.params.id;
       this.data.tents.forEach((i) => {
-        console.log(i);
         if (i.i.isEmpty || i.i === 0) {
           dto.tentType = i.selectedType;
           i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
@@ -156,49 +196,36 @@ export default {
       });
       return null;
     },
-    getTents() {
-      axios
-        .get(`${this.API_URL}basic/tent/?&timestamp=${new Date().getTime()}`)
-        .then((res) => this.$store.commit('setRegisteredTents', res.data))
-        .catch((err) => {
-          console.log(err);
-        });
+    async getTents() {
+      const res = await axios
+        .get(`${this.API_URL}basic/tent/?&timestamp=${new Date().getTime()}`);
+      return res.data;
     },
-    getTentTypes() {
-      axios
-        .get(`${this.API_URL}basic/tent-type/`)
-        .then((res) => this.$store.commit('setTentTypeMapping', res.data))
-        .catch((err) => {
-          console.log(err);
-        });
+    async getTentTypes() {
+      const res = await axios
+        .get(`${this.API_URL}basic/tent-type/`);
+      return res.data;
     },
     convertSavedTents() {
       this.registeredTents.forEach((i) => {
-        const savedTent = { selectedType: '', selectedGroups: [], i: 1 };
-        if (parseInt(i.registration, 10) === parseInt(this.$route.params.id, 10)) {
-          this.tentTypeMapping.forEach((type) => {
-            if (i.tentType === type.id) {
-              savedTent.selectedType = type.id;
-            }
-          });
-          savedTent.selectedGroups = i.usedByScoutGroups;
-          savedTent.i = i.id;
-          this.data.tents.push(savedTent);
-        }
-      });
-      if (this.data.tents.length > 1) {
-        this.data.tents.splice(0, 1);
-      }
-    },
-    getGroups() {
-      axios
-        .get(`${this.API_URL}basic/scout-hierarchy-group/?&timestamp=${new Date().getTime()}`)
-        .then((res) => {
-          this.$store.commit('setScoutGroupMapping', res.data);
-        })
-        .catch((err) => {
-          console.log(err);
+        const savedTent = { selectedType: '', selectedGroups: [], i: -1 };
+        this.tentTypeMapping.forEach((type) => {
+          if (i.tentType === type.id) {
+            savedTent.selectedType = type.id;
+          }
         });
+        savedTent.selectedGroups = i.usedByScoutGroups;
+        savedTent.i = i.id;
+        this.data.tents.push(savedTent);
+      });
+      // if (this.data.tents.length > 1) {
+      //   this.data.tents.splice(0, 1);
+      // }
+    },
+    async getGroups() {
+      const res = await axios
+        .get(`${this.API_URL}basic/scout-hierarchy-group/?&timestamp=${new Date().getTime()}`);
+      return res.data;
     },
   },
 };
