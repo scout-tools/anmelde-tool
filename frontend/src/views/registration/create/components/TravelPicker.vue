@@ -82,7 +82,7 @@ import { required, minLength, minValue } from 'vuelidate/lib/validators';
 import axios from 'axios';
 
 export default {
-  props: ['title', 'input'],
+  props: ['title', 'travelTag', 'participantRole'],
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
@@ -144,10 +144,15 @@ export default {
         this.getMethod(),
       ])
         .then((values) => {
-          console.log(values);
-          this.data.maxNumber = values[0][0].participantpersonalSet
-            .filter((i) => i.participantRole === 6).length;
-          this.data.methodOfTravels = values[1].filter((i) => i.travelTag === 1);
+          this.participantRole.forEach((j) => {
+            this.data.maxNumber += values[0][0]
+              .participantpersonalSet
+              .filter((i) => i.participantRole === j).length;
+          });
+          const list = values[1].filter((i) => i.travelTag === this.travelTag);
+          if (list.length > 0) {
+            this.data.methodOfTravels = list;
+          }
           this.isLoading = false;
         })
         .catch((error) => {
@@ -163,7 +168,6 @@ export default {
       return res.data;
     },
     reached() {
-      console.log(this.data.methodOfTravels);
       let sum = 0;
       this.data.methodOfTravels.forEach((i) => {
         sum += i.numberOfPersons * 1;

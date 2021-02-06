@@ -2,9 +2,10 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-card flat>
       <travel-picker
-        title="Abreise"
-        @save = "saveTravel"
-      />
+        :travelTag=this.travelTag
+        :participantRole=this.participantRole
+        title="Kaperfahrt"
+        @save="saveTravel"></travel-picker>
     </v-card>
     <v-divider class="my-3" />
     <prev-next-buttons
@@ -37,6 +38,9 @@ export default {
     valid: true,
     isLoading: false,
     travelTag: 3,
+    participantRole: [5, 6],
+    items: [],
+    filteredItems: [],
   }),
   validations: {
     data: {
@@ -46,6 +50,8 @@ export default {
         minValue: minValue(1),
       },
     },
+  },
+  created() {
   },
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),
@@ -65,6 +71,16 @@ export default {
     },
   },
   methods: {
+    getMethod() {
+      axios
+        .get(
+          `${this.API_URL}basic/method-of-travel/`,
+        )
+        .then((res) => res.data.filter((i) => i.travelTag === this.travelTag))
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     greaterThanZero(value) {
       return value > 0;
     },
@@ -86,22 +102,32 @@ export default {
       this.$emit('submit');
     },
     saveTravel(methodOfTravel) {
-      methodOfTravel.forEach((i) => {
-        // eslint-disable-next-line no-param-reassign
-        i.registration = parseInt(this.$route.params.id, 10);
-        // eslint-disable-next-line no-param-reassign
-        i.travelTag = this.travelTag;
-      });
-      console.log(methodOfTravel);
+      if (!methodOfTravel[0].id || methodOfTravel[0].id === 0) {
+        methodOfTravel.forEach((i) => {
+          // eslint-disable-next-line no-param-reassign
+          i.registration = parseInt(this.$route.params.id, 10);
+          // eslint-disable-next-line no-param-reassign
+          i.travelTag = this.travelTag;
+        });
+        console.log(methodOfTravel);
 
-      const promises = [];
-      const myUrl = `${this.API_URL}basic/method-of-travel/`;
-      methodOfTravel.forEach((i) => {
-        promises.push(axios.post(myUrl, i));
-      });
-      Promise.all(promises).then(() => {
-        this.$emit('nextStep');
-      });
+        const promises = [];
+        const myUrl = `${this.API_URL}basic/method-of-travel/`;
+        methodOfTravel.forEach((i) => {
+          promises.push(axios.post(myUrl, i));
+        });
+        Promise.all(promises).then(() => {
+          this.$emit('nextStep');
+        });
+      } else {
+        const promises = [];
+        methodOfTravel.forEach((i) => {
+          promises.push(axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i));
+        });
+        Promise.all(promises).then(() => {
+          this.$emit('nextStep');
+        });
+      }
     },
   },
 };

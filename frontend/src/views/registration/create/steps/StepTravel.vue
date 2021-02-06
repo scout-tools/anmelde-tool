@@ -2,7 +2,8 @@
   <v-form ref="formNameDescription" v-model="valid">
         <v-card flat>
           <travel-picker
-            :input=this.getMethod
+            :travelTag=this.travelTag
+            :participantRole=this.participantRole
             title="Kaperfahrt"
             @save="saveTravel"></travel-picker>
         </v-card>
@@ -37,6 +38,7 @@ export default {
     valid: true,
     isLoading: false,
     travelTag: 1,
+    participantRole: [6],
     items: [],
     filteredItems: [],
   }),
@@ -100,22 +102,32 @@ export default {
       this.$emit('submit');
     },
     saveTravel(methodOfTravel) {
-      methodOfTravel.forEach((i) => {
-        // eslint-disable-next-line no-param-reassign
-        i.registration = parseInt(this.$route.params.id, 10);
-        // eslint-disable-next-line no-param-reassign
-        i.travelTag = this.travelTag;
-      });
-      console.log(methodOfTravel);
+      if (!methodOfTravel[0].id || methodOfTravel[0].id === 0) {
+        methodOfTravel.forEach((i) => {
+          // eslint-disable-next-line no-param-reassign
+          i.registration = parseInt(this.$route.params.id, 10);
+          // eslint-disable-next-line no-param-reassign
+          i.travelTag = this.travelTag;
+        });
+        console.log(methodOfTravel);
 
-      const promises = [];
-      const myUrl = `${this.API_URL}basic/method-of-travel/`;
-      methodOfTravel.forEach((i) => {
-        promises.push(axios.post(myUrl, i));
-      });
-      Promise.all(promises).then(() => {
-        this.$emit('nextStep');
-      });
+        const promises = [];
+        const myUrl = `${this.API_URL}basic/method-of-travel/`;
+        methodOfTravel.forEach((i) => {
+          promises.push(axios.post(myUrl, i));
+        });
+        Promise.all(promises).then(() => {
+          this.$emit('nextStep');
+        });
+      } else {
+        const promises = [];
+        methodOfTravel.forEach((i) => {
+          promises.push(axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i));
+        });
+        Promise.all(promises).then(() => {
+          this.$emit('nextStep');
+        });
+      }
     },
   },
 };
