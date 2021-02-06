@@ -50,7 +50,6 @@ export default {
     },
   },
   created() {
-
   },
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),

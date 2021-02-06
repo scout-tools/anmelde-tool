@@ -129,8 +129,19 @@ export default {
     if (!this.input === []) {
       this.data.methodOfTravels = this.input;
     }
+    this.getMethod(1);
   },
   methods: {
+    getMethod(travelTag) {
+      axios
+        .get(
+          `${this.API_URL}basic/method-of-travel/`,
+        )
+        .then((res) => res.data.filter((i) => i.travelTag === travelTag))
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     reached() {
       let sum = 0;
       this.data.methodOfTravels.forEach((i) => {
