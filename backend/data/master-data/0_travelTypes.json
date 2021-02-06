@@ -43,5 +43,14 @@
             "name": "Wasserweg",
             "description": ""
         }
+    },
+    {
+        "model": "basic.travelType",
+        "pk": 6,
+        "fields": {
+            "id": 6,
+            "name": "Lunchpaket",
+            "description": ""
+        }
     }
 ]
