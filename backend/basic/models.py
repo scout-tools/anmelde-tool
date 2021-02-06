@@ -275,6 +275,7 @@ class ParticipantPersonal(TimeStampMixin):
         serialize=False,
         verbose_name='ID')
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
+    scout_name = models.CharField(max_length=100, blank=True)
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     street = models.CharField(max_length=100, blank=True)

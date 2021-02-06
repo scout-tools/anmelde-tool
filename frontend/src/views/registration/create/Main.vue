@@ -133,7 +133,7 @@ export default {
       ];
     },
     headerSteps() {
-      return ['Teilnehmende', 'Essen', 'Bestätigung'];
+      return ['Teilnehmende', 'Essgewohnheiten', 'Bestätigung'];
     },
   },
   methods: {

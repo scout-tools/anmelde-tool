@@ -42,7 +42,8 @@ export default {
     isLoading: false,
     value: null,
     search: null,
-    toolTip: 'Gebe die Stadt oder die Postleitzahl passend zur Adresse ein.',
+    toolTip: 'Trag bitte den Wohnort oder die Postleitzahl'
+      + 'des Wohnorts ein und wähle die richtige Option aus.',
   }),
   validations: {
     value: {

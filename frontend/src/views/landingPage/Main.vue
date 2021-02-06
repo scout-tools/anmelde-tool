@@ -63,9 +63,14 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Schneller und Einfacher gab es keine Anmeldung für ein Pfadfinder_innen Lager.
-                    Einloggen innerhalb von Sekunden ohne ein extra Passwort und du wirst durch
-                    den Anmeldeprozess begleitet.
+                    Schneller und einfacher war eine Anmeldung für ein Pfadfinder_innen
+                    Lager noch nie.
+                    Die Anmeldung deiner Teilnehmer klappt innerhalb
+                    von Minuten. Kein extra Passwort.
+                    Der Anmeldeprozess ist gut erklärt, so dass Keine
+                    Fragen offen bleiben. Falls sich eine Änderung
+                    ergeben hat, können die Daten bis zum Anmeldeschluss
+                    einfach noch schnell angepasst werden.
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -80,8 +85,8 @@
                   <v-card-text>
                     Wer kennt es nicht? Du bekommst eine Anmeldung per E-Mail
                     und einige Informationen fehlen.
-                    Es beginnt eine E-Mail Unterhaltung und das kostet wertvolle Zeit und nerven.
-                    Eine Anmeldung über das Anmelde-Tool ist immer Vollständig.
+                    Es beginnt eine E-Mail Unterhaltung und das kostet wertvolle Zeit und Nerven.
+                    Eine Anmeldung über das Anmelde-Tool ist immer vollständig.
                   </v-card-text>
                 </v-card>
               </v-flex>
