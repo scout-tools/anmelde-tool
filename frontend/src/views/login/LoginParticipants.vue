@@ -100,7 +100,7 @@
                 </v-row>
                 <v-divider class="my-5" />
                 <v-subheader class="my-3">
-                  Falls der Login-Button in der E-Mail nicht funktioniert Kannst
+                  Falls der Login-Button in der E-Mail nicht funktioniert, kannst
                   du hier den Token eingeben und dich einloggen
                 </v-subheader>
                 <v-row>

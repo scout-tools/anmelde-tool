@@ -5,11 +5,11 @@
         <v-layout column>
           <v-card v-if="!isLoading">
             <v-card-title class="text-center justify-center py-6">
-              Zu diesen Lagern kannst du dich Anmelden:
+              Zu diesen Lagern kannst du deinen Stamm anmelden:
             </v-card-title>
             <v-list subheader two-line>
               <v-subheader inset>
-                Nicht lange zögern. Melde dich oder deine Gruppe zu einen dieser
+                Nicht lange zögern. Melde deinen Stamm zu einem dieser
                 Lager an.
               </v-subheader>
 
@@ -22,7 +22,7 @@
                 <v-icon left>mdi-calendar-plus</v-icon>
                 Neues Lager erstellen
               </v-btn>
-
+                <v-divider/>
               <template v-for="(item, index) in getItems">
                 <v-list-item :key="item.name">
                   <v-list-item-avatar>
@@ -37,13 +37,17 @@
                       v-text="getHeaderText(item.name, item.participantRole)"
                     ></v-list-item-title>
 
-                    <v-list-item-subtitle class="text--primary">
-                      {{ getLagerText(item) }}
-                    </v-list-item-subtitle>
-
                     <v-list-item-subtitle
                       v-text="item.description"
                     ></v-list-item-subtitle>
+
+                    <v-list-item-subtitle>
+                      {{ getLagerText(item) }}
+                    </v-list-item-subtitle>
+
+                    <v-list-item-subtitle>
+                      {{ getDeadline(item) }}
+                    </v-list-item-subtitle>
                   </v-list-item-content>
 
                   <v-list-item-action
@@ -133,12 +137,15 @@
           </v-card>
           <v-card v-else>
             <div class="text-center ma-5">
+              <p> Lade Daten ...</p>
               <v-progress-circular
                 :size="80"
                 :width="10"
+                class="ma-5"
                 color="primary"
                 indeterminate
               ></v-progress-circular>
+              <p> Bitte hab etwas Geduld.</p>
             </div>
           </v-card>
         </v-layout>
@@ -215,31 +222,29 @@ export default {
     getLagerText(item) {
       const startTime = new Date(item.startTime);
       const endTime = new Date(item.endTime);
-      const registrationStart = new Date(item.registrationStart);
-      const registrationDeadline = new Date(item.registrationDeadline);
       const dateFormat = 'll';
 
-      const text1 = `Lager: ${moment(startTime)
+      const text1 = `Termin: ${moment(startTime)
         .lang('de')
         .format(dateFormat)} bis ${moment(endTime)
         .lang('de')
         .format(dateFormat)}`;
-
-      const text2 = ` - Anmeldung: ${moment(registrationStart)
-        .lang('de')
-        .format(dateFormat)} bis ${moment(registrationDeadline)
+      return text1;
+    },
+    getDeadline(item) {
+      const dateFormat = 'll';
+      const registrationDeadline = new Date(item.registrationDeadline);
+      const text2 = `Anmeldeschluss: ${moment(registrationDeadline)
         .lang('de')
         .format(dateFormat)}`;
-      return text1 + text2;
+      return text2;
     },
-
     async getEvent() {
       const path = `${this.API_URL}basic/event-overview/`;
       const response = await axios.get(path);
 
       return response.data;
     },
-
     async getUserExtended() {
       const { userId } = this.getJwtData;
       const ts = new Date().getTime();
@@ -248,21 +253,18 @@ export default {
 
       return response.data;
     },
-
     async getRoleMapping() {
       const path = `${this.API_URL}basic/role/`;
       const response = await axios.get(path);
 
       return response.data;
     },
-
     async getScoutOrgaLevelMapping() {
       const path = `${this.API_URL}basic/scout-orga-level/`;
       const response = await axios.get(path);
 
       return response.data;
     },
-
     async getEatHabitTypeMapping() {
       const path = `${this.API_URL}basic/eat-habit-type/`;
       const response = await axios.get(path);

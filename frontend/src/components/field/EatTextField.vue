@@ -1,9 +1,12 @@
 <template>
-  <v-text-field
+  <v-combobox
     v-model="value"
-    label="Essens Besonderheiten (Freitext)"
+    label="Essgewohnheiten (Freitext)"
     prepend-icon="mdi-food"
+    :items="items"
     clearable
+    multiple
+    chips
     @change="onInputChange"
   >
     <template slot="append">
@@ -18,7 +21,7 @@
         </span>
       </v-tooltip>
     </template>
-  </v-text-field>
+  </v-combobox>
 </template>
 
 <script>
@@ -29,6 +32,7 @@ export default {
 
   data: () => ({
     isLoading: false,
+    items: [],
     value: '',
     toolTipTextField: 'Bitte trage hier ein, auf welche Besonderheiten die Küche achten muss.'
       + 'Trage hier nur etwas ein, wenn die Optionen des anderen Feldes nicht zutreffen',

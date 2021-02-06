@@ -10,10 +10,12 @@
             Bevor deine Anmeldung verbindlich ist, musst du sie im
             letzten Schritt ausdrücklich bestätigen. Du kannst deinen
             Anmeldevorgang zu jedem Zeitpunkt abbrechen und später
-            fortsetzen. Deine Daten kannst Du bis zum Anmeldeschluss
-            {{ registrationDeadlineFormat }} verändern. <br>
+            fortsetzen. Du kannst deine Daten bis zum Anmeldeschluss
+            ({{ registrationDeadlineFormat }}) problemlos verändern. <br>
             <br>
-            Deine folgenden Daten sind nur für das Planungsteam sichtbar
+            Deine folgenden Daten sind nur für das Planungsteam sichtbar <br>
+            <br>
+            Hinweis: Man muss sich als Fahrtenleitung selbst auch anmelden. <br>
           </p>
         </span>
       </v-row>

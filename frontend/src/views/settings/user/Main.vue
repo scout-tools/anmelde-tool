@@ -323,11 +323,8 @@ export default {
         });
     },
   },
-  created() {
-    this.getData();
-  },
   mounted() {
-    this.$v.$touch();
+    this.getData();
   },
 };
 </script>
