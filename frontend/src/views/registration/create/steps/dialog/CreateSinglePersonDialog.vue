@@ -15,14 +15,11 @@
       </v-toolbar>
       <v-container>
         <v-subheader class="ma-5">
-          Bitte trage alle Daten deiner Teilnehmer_innen einzeln
-          ein.
+          Bitte trage alle Daten deiner Teilnehmer_innen einzeln ein.
         </v-subheader>
         <v-form v-model="valid">
-          <v-divider/>
-        <v-subheader>
-          Namen
-        </v-subheader>
+          <v-divider />
+          <v-subheader> Namen </v-subheader>
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
@@ -44,9 +41,11 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Trag bitte den Pfadfindernamen/Fahrtennamen' +
-                      'des_der Teilnehmer_in ein. Dies ist eine' +
-                      'freiwillige Angabe.' }}
+                      {{
+                        'Trag bitte den Pfadfindernamen/Fahrtennamen' +
+                        'des_der Teilnehmer_in ein. Dies ist eine' +
+                        'freiwillige Angabe.'
+                      }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -71,8 +70,10 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Trag bitte den Vornamen des_der Teilnehmer_in' +
-                      'ein. Zweitnamen müssen nicht mit angegeben werden.' }}
+                      {{
+                        'Trag bitte den Vornamen des_der Teilnehmer_in' +
+                        'ein. Zweitnamen müssen nicht mit angegeben werden.'
+                      }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -106,9 +107,7 @@
           </v-row>
 
           <v-divider class="my-3" />
-        <v-subheader>
-          Alter / Gruppe
-        </v-subheader>
+          <v-subheader> Alter / Gruppe </v-subheader>
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
@@ -129,8 +128,10 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Trag bitte das Alter des_der Teilnehmer_in' +
-                      'zum Start des Lagers ein (4. bzw. 7. August 2021).' }}
+                      {{
+                        'Trag bitte das Alter des_der Teilnehmer_in' +
+                        'zum Start des Lagers ein (4. bzw. 7. August 2021).'
+                      }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -155,7 +156,8 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Bitte gib die zugehörige Gruppe zu deinem_r' +
+                      {{
+                        'Bitte gib die zugehörige Gruppe zu deinem_r' +
                         'Teilnehmer_in an. Wähle dazu' +
                         'eine Gruppe aus der Liste oder schreibe den' +
                         'Gruppennamen in das Feld ein.'
@@ -166,7 +168,10 @@
               </v-combobox>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-switch v-model="data.isGroupLeader" label="Teil der Gruppenführung">
+              <v-switch
+                v-model="data.isGroupLeader"
+                label="Teil der Gruppenführung"
+              >
                 <template slot="append">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -175,7 +180,8 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Bitte aktiviere die Option,' +
+                      {{
+                        'Bitte aktiviere die Option,' +
                         'wenn dein_e Teilnehmer_in' +
                         'Gruppenführer_in/-leiter_in, Gruppenhelfer_in' +
                         'oder ähnliches ist.'
@@ -188,9 +194,7 @@
           </v-row>
 
           <v-divider />
-        <v-subheader>
-          Adresse / Telefon
-        </v-subheader>
+          <v-subheader> Adresse / Telefon </v-subheader>
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
@@ -218,7 +222,33 @@
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <zip-code-field ref="zipCodeField" v-model="data.zipCode" />
+              <v-autocomplete
+                v-model="data.zipCode"
+                :items="zipCodeMapping"
+                :item-text="customText"
+                required
+                :error-messages="zipCodeErrors"
+                item-value="id"
+                label="Stadt / Postleitzahl"
+                placeholder="Wähle Stadt oder Postleitzahl"
+                prepend-icon="mdi-city"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{
+                        'Trage bitte den Wohnort oder die Postleitzahl' +
+                        'des Wohnorts ein und wähle die richtige Option aus.'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-autocomplete>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
@@ -237,9 +267,11 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Trag bitte eine Mobil- oder Festnetznummer' +
-                      'ein unter der der_die Teilnehmer_in nach' +
-                      'dem Lager erreichbar ist.' }}
+                      {{
+                        'Trag bitte eine Mobil- oder Festnetznummer' +
+                        'ein unter der der_die Teilnehmer_in nach' +
+                        'dem Lager erreichbar ist.'
+                      }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -247,29 +279,51 @@
             </v-col>
           </v-row>
 
-          <v-divider/>
-        <v-subheader>
-          Essgewohnheiten
-        </v-subheader>
+          <v-divider />
+          <v-subheader> Essgewohnheiten </v-subheader>
           <v-row>
             <v-col cols="12" sm="6">
-              <eat-autocomplete-field
-                ref="eatHabitType"
+              <v-autocomplete
                 v-model="data.eatHabitType"
-                :eatHabitTypeMapping="eatHabitTypeMapping"
-              />
+                :items="eatHabitTypeMapping"
+                label="Essgewohnheiten"
+                item-text="name"
+                item-value="name"
+                prepend-icon="mdi-food"
+                multiple
+                clearable
+                chips
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{
+                        'Bitte wähle aus den angezeigten Essgewohnheiten.' +
+                        'Weitere Essgewohnheiten können einfach durch Eingabe' +
+                        'im Feld angegeben werden.'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-autocomplete>
             </v-col>
             <v-col cols="12" sm="6">
               <eat-text-field
                 ref="eatHabitText"
                 v-model="eatHabitText"
+                v-show="!isEditWindow"
               />
             </v-col>
           </v-row>
           <v-divider />
-        <v-subheader>
-          Bitte wähle die Lager aus an denen der_die Teilnehmer_in teilnimmt.
-        </v-subheader>
+          <v-subheader>
+            Bitte wähle die Lager aus an denen der_die Teilnehmer_in teilnimmt.
+          </v-subheader>
           <v-row>
             <v-col cols="12" sm="6">
               <v-container fluid>
@@ -292,8 +346,10 @@
                         </v-icon>
                       </template>
                       <span>
-                    {{ 'An welchen Teilfahrten nimmt der Teilnehmende teil?' }}
-                  </span>
+                        {{
+                          'An welchen Teilfahrten nimmt der Teilnehmende teil?'
+                        }}
+                      </span>
                     </v-tooltip>
                   </template>
                 </v-select>
@@ -315,14 +371,16 @@
 
 <script>
 import {
-  required, minLength, maxLength, integer, minValue,
+  required,
+  minLength,
+  maxLength,
+  integer,
+  minValue,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
 // import moment from 'moment';
 import { mapGetters } from 'vuex';
 
-import ZipCodeField from '@/components/field/ZipCodeField.vue';
-import EatAutocompleteField from '@/components/field/EatAutocompleteField.vue';
 import EatTextField from '@/components/field/EatTextField.vue';
 
 const scoutGroupStartValidator = (groupObjOrGroupName) => {
@@ -330,15 +388,15 @@ const scoutGroupStartValidator = (groupObjOrGroupName) => {
   if (!groupObjOrGroupName) {
     return false;
   }
-  const name = (groupObjOrGroupName.name) ? groupObjOrGroupName.name : groupObjOrGroupName;
+  const name = groupObjOrGroupName.name
+    ? groupObjOrGroupName.name
+    : groupObjOrGroupName;
   return validStarts.includes(name.trim().split(' ')[0]);
 };
 
 export default {
   props: ['isOpen'],
   components: {
-    ZipCodeField,
-    EatAutocompleteField,
     EatTextField,
   },
   data: () => ({
@@ -349,6 +407,7 @@ export default {
     eatHabitTypeMapping: [],
     isLoading: true,
     isEditWindow: false,
+    eatHabitText: [],
     data: {
       firstName: null,
       lastName: null,
@@ -358,7 +417,6 @@ export default {
       age: null,
       registration: null,
       eatHabitType: [],
-      eatHabitText: [],
       scoutGroup: null,
       isGroupLeader: false,
       participantRole: 5,
@@ -412,13 +470,21 @@ export default {
         minLength: minLength(5),
         maxLength: maxLength(30),
       },
+      zipCode: {
+        required,
+      },
       participantRole: {
         required,
       },
     },
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
+    ...mapGetters([
+      'isAuthenticated',
+      'getJwtData',
+      'hierarchyMapping',
+      'zipCodeMapping',
+    ]),
     firstNameErrors() {
       const errors = [];
       if (!this.$v.data.firstName.$dirty) return errors;
@@ -468,7 +534,9 @@ export default {
         errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
       }
       if (!this.$v.data.scoutGroup.scoutGroupStartValidator) {
-        errors.push('Der Gruppenname muss mit Meute, Sippe oder Roverrunde beginnen.');
+        errors.push(
+          'Der Gruppenname muss mit Meute, Sippe oder Roverrunde beginnen.',
+        );
       }
       return errors;
     },
@@ -489,7 +557,10 @@ export default {
       if (!this.$v.data.phoneNumber.required) {
         errors.push('Telefonnummer ist erforderlich.');
       }
-      if (!this.$v.data.phoneNumber.integer || !this.$v.data.phoneNumber.minValue) {
+      if (
+        !this.$v.data.phoneNumber.integer
+        || !this.$v.data.phoneNumber.minValue
+      ) {
         errors.push('Telefonnummer darf nur aus Zahlen bestehen.');
       }
       return errors;
@@ -508,26 +579,19 @@ export default {
       // eslint-disable-next-line
       !this.$v.data.scoutName.maxLength &&
         errors.push('Darf nicht mehr als 20 Zeichen haben');
-      // eslint-disable-next-line
-      !this.$v.data.scoutName.required && errors.push('Dein Name ist erforderlich');
+      return errors;
+    },
+    zipCodeErrors() {
+      const errors = [];
+      if (!this.$v.data.zipCode.$dirty) return errors;
+      if (!this.$v.data.zipCode.required) {
+        errors.push('Stadt ist erforderlich.');
+      }
       return errors;
     },
   },
-  watch: {
-    data() {
-      if (this.$refs.zipCodeField) {
-        this.$refs.zipCodeField.setValue(this.data.zipCode);
-      }
-      if (this.$refs.eatHabitType) {
-        this.$refs.eatHabitType.setValue(this.data.eatHabitType);
-      }
-      if (this.$refs.eatHabitText) {
-        this.$refs.eatHabitText.setValue(this.eatHabitText);
-      }
-    },
-  },
   methods: {
-    refresh() {},
+    customText: (item) => `${item.zipCode} — ${item.city}`,
     requiredField(value) {
       const errorMsg = 'Dieses Feld muss ausgefüllt werden.';
       if (value instanceof Array && value.length === 0) {
@@ -555,14 +619,14 @@ export default {
         age: null,
         registration: null,
         eatHabitType: [],
-        eatHabitText: [],
+
         scoutGroup: null,
         isGroupLeader: false,
-        isEditWindow: false,
         roles: [],
         participantRole: 5,
       };
-      this.eatHabitText = null;
+      this.eatHabitText = [];
+      this.isEditWindow = false;
       this.active = true;
       this.loadData();
     },
@@ -576,13 +640,9 @@ export default {
     loadData() {
       this.isLoading = true;
 
-      Promise.all([
-        this.getGroups(),
-        this.getEatHabitTypeMapping(),
-      ])
+      Promise.all([this.getGroups(), this.getEatHabitTypeMapping()])
         .then((values) => {
-          [this.scoutHierarchyGroups] = values;
-          this.$store.commit('setEatHabitTypeMapping', values[1]);
+          [this.scoutHierarchyGroups, this.eatHabitTypeMapping] = values;
           this.isLoading = false;
         })
         .catch((error) => {
@@ -613,7 +673,6 @@ export default {
         });
     },
     closeDialog() {
-      this.$refs.zipCodeField.$v.$reset();
       this.active = false;
       this.$v.$reset();
       Object.keys(this.data).forEach((key) => {
@@ -623,8 +682,9 @@ export default {
     },
     validate() {
       this.$v.$touch();
-      this.$refs.zipCodeField.$v.$touch();
       this.valid = !this.$v.$anyError;
+      console.log(this.$v);
+      debugger;
     },
     onClickOkay() {
       this.validate();
@@ -646,7 +706,9 @@ export default {
         this.data.eatHabitType = this.data.eatHabitType.name;
       }
       if (this.eatHabitText && this.data.eatHabitType) {
-        this.data.eatHabitType = this.data.eatHabitType.concat(this.eatHabitText);
+        this.data.eatHabitType = this.data.eatHabitType.concat(
+          this.eatHabitText,
+        );
       }
       if (!this.data.id) {
         axios

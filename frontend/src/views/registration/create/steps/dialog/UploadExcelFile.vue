@@ -15,7 +15,7 @@
       </v-toolbar>
       <v-sheet class="ma-5">
         <v-header>
-          Lade deine Excel Datei hoch um dir die Manuelle eingabe zu erleichern
+          Lade hier deine Excel Datei hoch, um dir die manuelle Eingabe zu erleichtern.
         </v-header>
         <v-card class="ma-4 pa-3">
         <input type="file" @change="onFileChange" />
