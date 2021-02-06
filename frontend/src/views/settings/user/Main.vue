@@ -269,7 +269,7 @@ export default {
       const errors = [];
       if (!this.$v.scoutOrganisation.$dirty) return errors;
       // eslint-disable-next-line
-      !this.$v.scoutOrganisation.required && errors.push('Wir brauchen deine E-Mail');
+      !this.$v.scoutOrganisation.required && errors.push('Wir brauchen deinen Stamm');
       return errors;
     },
   },
