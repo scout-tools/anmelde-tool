@@ -51,9 +51,17 @@
               prepend-icon="mdi-ship-wheel"
             />
           </v-col>
-          <v-col cols="6">
+          <v-col cols="6" v-if="this.travelTag === 3">
             <v-text-field
-              v-model="data.numberAlreadyThere"
+              v-model="data.methodOfTravels.filter((i) => i.travelType === 6)[0].numberOfPersons"
+              label="Lunchpaket"
+              required
+              prepend-icon="mdi-food-apple"
+            />
+          </v-col>
+          <v-col cols="6" v-else>
+            <v-text-field
+              v-model="data.methodOfTravels.filter((i) => i.travelType === 7)[0].numberOfPersons"
               label="Schon da"
               required
               prepend-icon="mdi-account-check"
@@ -114,6 +122,16 @@ export default {
         numberOfPersons: 0,
         registration: 0,
         travelType: 5, // Wasserweg
+        travelTag: -1,
+      }, {
+        numberOfPersons: 0,
+        registration: 0,
+        travelType: 6, // Lunchpaket
+        travelTag: -1,
+      }, {
+        numberOfPersons: 0,
+        registration: 0,
+        travelType: 7, // Schon da
         travelTag: -1,
       }],
     },
