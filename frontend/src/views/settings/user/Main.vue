@@ -316,7 +316,7 @@ export default {
         )
         .then(() => {
           this.showSuccess = true;
-          this.$router.push({ name: 'eventOverview' });
+          setTimeout(() => this.$router.push({ name: 'eventOverview' }), 100);
         })
         .catch(() => {
           this.showError = true;
