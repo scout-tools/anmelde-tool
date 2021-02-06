@@ -1,22 +1,25 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-        <v-card flat>
-          <travel-picker
-            title="Mosaikersleben"
-          />
-        </v-card>
-      <v-divider class="my-3" />
-      <prev-next-buttons
-        :position="position"
-        :max-pos="maxPos"
-        @nextStep="nextStep()"
-        @prevStep="prevStep"
-        @submitStep="submitStep()"
+    <v-card flat>
+      <travel-picker
+        ref="backTravelpicker"
+        :travelTag=this.travelTag
+        :participantRole=this.participantRole
+        title="Kaperfahrt / Bundesmeutenlager"
       />
+    </v-card>
+    <v-divider class="my-3" />
+    <prev-next-buttons
+      :position="position"
+      :max-pos="maxPos"
+      @nextStep="nextStep"
+      @prevStep="prevStep"
+    />
   </v-form>
 </template>
 
 <script>
+import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { required, minLength, minValue } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
@@ -34,14 +37,10 @@ export default {
     API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: false,
-    data: {
-      maxNumber: 25,
-      numberBus: 0,
-      numberCar: 0,
-      numberPublic: 0,
-      numberWalking: 0,
-      numberWater: 0,
-    },
+    travelTag: 3,
+    participantRole: [5, 6],
+    items: [],
+    filteredItems: [],
   }),
   validations: {
     data: {
@@ -52,24 +51,25 @@ export default {
       },
     },
   },
+  created() {
+  },
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),
     total() {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },
-    mobileNumberErrors() {
-      const errors = [];
-      if (!this.$v.mobileNumber.$dirty) return errors;
-      // eslint-disable-next-line
-      !this.$v.mobileNumber.maxLength &&
-        errors.push('Name must be at most 10 characters long');
-      // eslint-disable-next-line
-      !this.$v.mobileNumber.minLength &&
-        errors.push('Name must be at most 10 characters long');
-      return errors;
-    },
   },
   methods: {
+    getMethod() {
+      axios
+        .get(
+          `${this.API_URL}basic/method-of-travel/`,
+        )
+        .then((res) => res.data.filter((i) => i.travelTag === this.travelTag))
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     greaterThanZero(value) {
       return value > 0;
     },
@@ -81,14 +81,39 @@ export default {
       this.$emit('prevStep');
     },
     nextStep() {
-      this.$emit('nextStep');
+      this.onSaveTravelHandler();
     },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
+    onSaveTravelHandler() {
+      if (this.$refs.backTravelpicker) {
+        const methodOfTravel = this.$refs.backTravelpicker.getData();
+
+        if (!methodOfTravel[0].id || methodOfTravel[0].id === 0) {
+          methodOfTravel.forEach((i) => {
+            // eslint-disable-next-line no-param-reassign
+            i.registration = parseInt(this.$route.params.id, 10);
+            // eslint-disable-next-line no-param-reassign
+            i.travelTag = this.travelTag;
+          });
+          console.log(methodOfTravel);
+
+          const promises = [];
+          const myUrl = `${this.API_URL}basic/method-of-travel/`;
+          methodOfTravel.forEach((i) => {
+            promises.push(axios.post(myUrl, i));
+          });
+          Promise.all(promises).then(() => {
+            this.$emit('nextStep');
+          });
+        } else {
+          const promises = [];
+          methodOfTravel.forEach((i) => {
+            promises.push(axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i));
+          });
+          Promise.all(promises).then(() => {
+            this.$emit('nextStep');
+          });
+        }
       }
-      this.$emit('submit');
     },
   },
 };

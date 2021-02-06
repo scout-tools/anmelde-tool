@@ -59,6 +59,7 @@ import StepTravel from './steps/StepTravel.vue';
 import StepAddParticipantGroupRole from './steps/StepBdPDpvAddParticipantGroupRole.vue';
 import StepBdpDpvTextForStamm from './steps/StepBdpDpvTextForStamm.vue';
 import StepTravelBack from './steps/StepTravelBack.vue';
+import StepTravelBundesfahrt from './steps/StepTravelBundesfahrt.vue';
 import StepBdpDpvLocationSuggestion from './steps/StepBdpDpvLocationSuggestion.vue';
 
 export default {
@@ -74,6 +75,7 @@ export default {
     StepBdpDpVPreferences,
     StepBdpDpvTextForStamm,
     StepBdpDpvLocationSuggestion,
+    StepTravelBundesfahrt,
     StepBdpDpvPackage,
   },
   props: ['scoutOrganisation'],
@@ -103,6 +105,7 @@ export default {
           StepAddParticipantsSingle,
           StepTents,
           StepTravel,
+          StepTravelBundesfahrt,
           StepTravelBack,
           StepConfirmBundesfahrt,
         ];
