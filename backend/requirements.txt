@@ -6,7 +6,7 @@ cffi==1.14.4
 chardet==3.0.4
 cryptography==3.2.1
 defusedxml==0.6.0
-Django==3.1.4
+Django==3.1.5
 django-cors-headers==3.5.0
 django-ebhealthcheck==1.0.1
 django-extensions==3.1.0

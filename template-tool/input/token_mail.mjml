@@ -36,7 +36,7 @@
           font-weight="bold" border="none" padding="15px 30px" border-radius="10px"
           target="_blank"
           rel="noopener noreferrer"
-          href="{{ website }}/check-token?username={{ user }}&password={{ password }}"
+          href="{{ website }}check-token?username={{ user }}&password={{ password }}"
           font-family="Helvetica" padding-left="25px" padding-right="25px" padding-bottom="10px">Klicke hier um dich anzumelden</mj-button>
       </mj-column>
     </mj-section>

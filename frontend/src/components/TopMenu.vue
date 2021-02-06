@@ -37,7 +37,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'HelloWorld',
+  name: 'TopMenu',
 
   data: () => ({}),
   computed: {

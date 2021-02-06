@@ -10,12 +10,17 @@
               </v-card-title>
               <v-card-text>
                 <v-container>
-                  <v-subheader class="ma-5">
+                  <div class="ma-2">
+                  <p class="ma-0">
                     Hast du keinen Code bekommen? Gucke nochmal in der Einladung.
                     Falls du nichts findest melde dich bei der Lagerleitung,
                     deiner Bundesführung oder bei:
-                    <a href= "mailto:support@anmelde-tool.de">support@anmelde-tool.de</a>
-                  </v-subheader>
+                  </p>
+                  </div>
+                  <div class="pl-2">
+                  <a
+                    href= "mailto:support@anmelde-tool.de">support@anmelde-tool.de</a>
+                  </div>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
@@ -44,6 +49,8 @@
                         </template>
                       </v-text-field>
                     </v-col>
+                  </v-row>
+                  <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         readonly
@@ -78,6 +85,34 @@
                         v-model="getStammName"
                         label="Mein Stamm"
                         prepend-icon="mdi-account-group"
+                      >
+                        <template slot="append">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                color="success"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                mdi-help-circle-outline
+                              </v-icon>
+                            </template>
+                            <span>
+                              {{ tooltip.stammName }}
+                            </span>
+                          </v-tooltip>
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        readonly
+                        filled
+                        v-model="mobileNumber"
+                        label="Telefonnummer"
+                        prepend-icon="mdi-phone"
+                        :error-messages="mobileNumberErrors"
                       >
                         <template slot="append">
                           <v-tooltip bottom>
@@ -157,6 +192,9 @@ export default {
   },
   props: ['scoutOrganisation'],
   computed: {
+    mobileNumber() {
+      return this.items.mobileNumber;
+    },
     getItems() {
       return this.items;
     },
@@ -185,6 +223,14 @@ export default {
       // eslint-disable-next-line
       !this.$v.invitationCode.required &&
         errors.push('Der Einladungscode wurd benötigt');
+      return errors;
+    },
+    mobileNumberErrors() {
+      const errors = [];
+      // if (!this.$v.mobileNumber.$dirty) return errors;
+      // // eslint-disable-next-line
+      // !this.$v.mobileNumber.required &&
+      //   errors.push('Nummer ist cool');
       return errors;
     },
   },

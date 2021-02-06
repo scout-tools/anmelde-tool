@@ -1,9 +1,18 @@
 <template>
+  <div
+    class="bg"
+    :style="{
+      'background-image':
+        'url(' + require('@/assets/2018-05-Führungstippel-63_klein.jpg') + ')',
+    }"
+  >
   <v-container class="top-margin">
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
-          <v-card v-if="isLoading">
+          <v-card
+            v-show="isLoading"
+          >
             <v-subheader inset>
               Wir versuchen dich automatisch einzuloggen.
             </v-subheader>
@@ -16,7 +25,12 @@
               ></v-progress-circular>
             </div>
           </v-card>
-          <v-card v-else>
+          <v-card
+            max-width="500px"
+            min-width="350px"
+            class="mx-auto my-12"
+            color="rgb(255, 255, 255, 0.9)"
+            v-show="!isLoading">
             <v-toolbar dark color="primary">
               <v-toolbar-title>
                 {{ 'Automatischer Login ist fehlgeschlagen' }}
@@ -99,6 +113,7 @@
       {{ responseObj }}
     </v-snackbar>
   </v-container>
+  </div>
 </template>
 
 <script>
@@ -113,7 +128,7 @@ export default {
     timeout: 6000,
     responseObj: null,
     API_URL: process.env.VUE_APP_API,
-    isLoading: false,
+    isLoading: true,
     username: null,
     password: null,
   }),
@@ -161,26 +176,30 @@ export default {
       this.onButtonClick();
     },
     onButtonClick() {
-      this.isLoading = true;
-      axios
-        .post(`${this.API_URL}auth/token/`, {
-          username: this.username,
-          password: this.password,
-        })
-        .then((response) => {
-          this.$store.commit(
-            'setTokens',
-            response.data.access,
-            response.data.refresh,
-          );
-          this.isLoading = false;
-          this.onSuccessfulLogin();
-        })
-        .catch((error) => {
-          this.responseObj = error.response.data;
-          this.showError = true;
-          this.isLoading = false;
-        });
+      if (this.username && this.password) {
+        this.isLoading = true;
+        axios
+          .post(`${this.API_URL}auth/token/`, {
+            username: this.username,
+            password: this.password,
+          })
+          .then((response) => {
+            this.$store.commit(
+              'setTokens',
+              response.data.access,
+              response.data.refresh,
+            );
+            this.isLoading = false;
+            this.onSuccessfulLogin();
+          })
+          .catch((error) => {
+            this.responseObj = error.response.data;
+            this.showError = true;
+            this.isLoading = false;
+          });
+      } else {
+        this.isLoading = false;
+      }
     },
     onSuccessfulLogin() {
       this.isLoading = false;
@@ -193,7 +212,7 @@ export default {
   },
   mounted() {
     this.setDataFromParams();
-    this.onButtonClick();
+    setTimeout(() => this.onButtonClick(), 300);
   },
 };
 </script>

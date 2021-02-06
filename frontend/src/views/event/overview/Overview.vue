@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
-          <v-card v-if="hasSetExtendedUserInfos">
+          <v-card v-if="!isLoading">
             <v-card-title class="text-center justify-center py-6">
               Zu diesen Lagern kannst du dich Anmelden:
             </v-card-title>
@@ -20,7 +20,7 @@
                 @click="$router.push({ name: 'createEvent' })"
               >
                 <v-icon left>mdi-calendar-plus</v-icon>
-                Neues Lager
+                Neues Lager erstellen
               </v-btn>
 
               <template v-for="(item, index) in getItems">
@@ -57,7 +57,9 @@
                     <router-link
                       :to="{
                         name: 'registrationForm',
-                        params: { id: item.id },
+                        params: {
+                          id: item.id,
+                        },
                       }"
                       style="text-decoration: none"
                     >
@@ -130,21 +132,14 @@
             </v-list>
           </v-card>
           <v-card v-else>
-            <v-card-title class="text-center justify-center py-6">
-              Willkommen im Anmele-Tool
-            </v-card-title>
-            <v-subheader>
-              Bevor du dich anmelden kannst musst du deine persönlichen Daten
-              eingeben.
-            </v-subheader>
-            <v-btn
-              class="ma-5"
-              color="primary"
-              @click="$router.push({ name: 'settingsUser' })"
-            >
-              <v-icon left dark>mdi-tools</v-icon>
-              Zu den Benutzerdaten
-            </v-btn>
+            <div class="text-center ma-5">
+              <v-progress-circular
+                :size="80"
+                :width="10"
+                color="primary"
+                indeterminate
+              ></v-progress-circular>
+            </div>
           </v-card>
         </v-layout>
       </v-flex>
@@ -161,6 +156,7 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     items: [],
+    isLoading: true,
     userExtendedItems: [],
     headers: [
       { text: 'Id', value: 'id' },
@@ -225,135 +221,91 @@ export default {
 
       const text1 = `Lager: ${moment(startTime)
         .lang('de')
-        .format(dateFormat)} bis ${moment(endTime).lang('de').format(dateFormat)}`;
+        .format(dateFormat)} bis ${moment(endTime)
+        .lang('de')
+        .format(dateFormat)}`;
 
       const text2 = ` - Anmeldung: ${moment(registrationStart)
         .lang('de')
-        .format(dateFormat)} bis ${moment(registrationDeadline).lang('de').format(
-        dateFormat,
-      )}`;
+        .format(dateFormat)} bis ${moment(registrationDeadline)
+        .lang('de')
+        .format(dateFormat)}`;
       return text1 + text2;
     },
 
-    getEvent() {
+    async getEvent() {
       const path = `${this.API_URL}basic/event-overview/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.items = res.data;
-        })
-        .catch(() => {
-          console.log('Fehler');
-        });
+      const response = await axios.get(path);
+
+      return response.data;
     },
 
-    getUserExtended() {
-      this.userExtendedItems = [];
-      const path = `${this.API_URL}auth/data/user-extended/${
-        this.getJwtData.userId
-      }/?&timestamp=${new Date().getTime()}`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.userExtendedItems = res.data;
-        })
-        .catch(() => {
-          console.log('Fehler');
-        });
+    async getUserExtended() {
+      const { userId } = this.getJwtData;
+      const ts = new Date().getTime();
+      const path = `${this.API_URL}auth/data/user-extended/${userId}/?&timestamp=${ts}`;
+      const response = await axios.get(path);
+
+      return response.data;
     },
 
-    getRoleMapping() {
+    async getRoleMapping() {
       const path = `${this.API_URL}basic/role/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.$store.commit('setRoleMapping', res.data);
-        })
-        .catch(() => {
-          this.showError = true;
-        });
+      const response = await axios.get(path);
+
+      return response.data;
     },
 
-    getScoutOrgaLevelMapping() {
+    async getScoutOrgaLevelMapping() {
       const path = `${this.API_URL}basic/scout-orga-level/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.$store.commit('setScoutOrgaLevelMapping', res.data);
-        })
-        .catch(() => {
-          this.showError = true;
-        });
+      const response = await axios.get(path);
+
+      return response.data;
     },
 
-    getEatHabitTypeMapping() {
+    async getEatHabitTypeMapping() {
       const path = `${this.API_URL}basic/eat-habit-type/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.$store.commit('setEatHabitTypeMapping', res.data);
-        })
-        .catch(() => {
-          this.showError = true;
-        });
+      const response = await axios.get(path);
+
+      return response.data;
     },
 
-    getTravelTypeMapping() {
+    async getTravelTypeMapping() {
       const path = `${this.API_URL}basic/travel-type/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.$store.commit('setTravelTypeTypeMapping', res.data);
-        })
-        .catch(() => {
-          this.showError = true;
-        });
-    },
-    getHierarchyMapping() {
-      const path = `${process.env.VUE_APP_API}basic/scout-hierarchy/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.$store.commit('setHierarchyMapping', res.data);
-        })
-        .catch(() => {
-          this.showError = true;
-        });
-    },
-    getAgeGroupMapping() {
-      const path = `${this.API_URL}basic/age-group/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.$store.commit('setAgeGroupMapping', res.data);
-        })
-        .catch(() => {
-          this.showError = true;
-        });
-    },
-    getTentTypeMapping() {
-      const path = `${this.API_URL}basic/tent-type/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.$store.commit('setTentTypeMapping', res.data);
-        })
-        .catch(() => {
-          this.showError = true;
-        });
-    },
-    getZipCodeMapping() {
-      const path = `${this.API_URL}basic/zip-code/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.$store.commit('setZipCodeMapping', res.data);
-        })
-        .catch(() => {
-          this.showError = true;
-        });
-    },
+      const response = await axios.get(path);
 
+      return response.data;
+    },
+    async getHierarchyMapping() {
+      const path = `${process.env.VUE_APP_API}basic/scout-hierarchy/`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+    async getAgeGroupMapping() {
+      const path = `${this.API_URL}basic/age-group/`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+    async getTentTypeMapping() {
+      const path = `${this.API_URL}basic/tent-type/`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+    async getZipCodeMapping() {
+      const path = `${this.API_URL}basic/zip-code/`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+    onGoToSettingsButtonClicked() {
+      this.goToSettings();
+    },
+    goToSettings() {
+      this.$router.push({ name: 'settingsUser' });
+    },
     show(item) {
       this.$refs.messageModal.show(item);
     },
@@ -362,15 +314,42 @@ export default {
     },
   },
   mounted() {
-    this.getEvent();
-    this.getUserExtended();
-    this.getScoutOrgaLevelMapping();
-    this.getEatHabitTypeMapping();
-    this.getTravelTypeMapping();
-    this.getHierarchyMapping();
-    this.getAgeGroupMapping();
-    this.getTentTypeMapping();
-    this.getZipCodeMapping();
+    this.isLoading = true;
+
+    Promise.all([
+      this.getEvent(),
+      this.getUserExtended(),
+      this.getRoleMapping(),
+      this.getScoutOrgaLevelMapping(),
+      this.getEatHabitTypeMapping(),
+      this.getTravelTypeMapping(),
+      this.getHierarchyMapping(),
+      this.getAgeGroupMapping(),
+      this.getTentTypeMapping(),
+      this.getZipCodeMapping(),
+    ])
+      .then((values) => {
+        [this.items, this.userExtendedItems] = values;
+
+        this.$store.commit('setRoleMapping', values[2]);
+        this.$store.commit('setScoutOrgaLevelMapping', values[3]);
+        this.$store.commit('setEatHabitTypeMapping', values[4]);
+        this.$store.commit('setTravelTypeTypeMapping', values[5]);
+        this.$store.commit('setHierarchyMapping', values[6]);
+        this.$store.commit('setAgeGroupMapping', values[7]);
+        this.$store.commit('setTentTypeMapping', values[8]);
+        this.$store.commit('setZipCodeMapping', values[9]);
+
+        if (!this.hasSetExtendedUserInfos) {
+          this.goToSettings();
+        }
+
+        this.isLoading = false;
+      })
+      .catch((error) => {
+        this.errormsg = error.response.data.message;
+        this.isLoading = false;
+      });
   },
 };
 </script>
