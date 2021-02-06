@@ -2,7 +2,7 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container fluid v-if="!isLoading">
       <v-row class="mt-2">
-        <span class="text-left subtitle-1">
+        <span class="text-center ma-5 subtitle-1">
           <p>
             Bitte gebt die Zelte an, die ihr in Mosaikersleben nutzen wollt
             und ordnet alle Gruppen den Zelten zu. Wenn ihr andere Zelte als

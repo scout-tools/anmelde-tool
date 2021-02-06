@@ -289,7 +289,6 @@ export default {
         return;
       }
       this.saveUserData();
-      this.$router.push({ name: 'eventOverview' });
     },
     getData() {
       const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
@@ -317,6 +316,7 @@ export default {
         )
         .then(() => {
           this.showSuccess = true;
+          setTimeout(() => this.$router.push({ name: 'eventOverview' }), 100);
         })
         .catch(() => {
           this.showError = true;
