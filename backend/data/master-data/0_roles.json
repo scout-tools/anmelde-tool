@@ -52,5 +52,50 @@
             "name": "Kaperfahrt und Mosaikers Leben",
             "description": ""
         }
+    },
+    {
+        "model": "basic.role",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "name": "Tagesgast: Nur Sonntag",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 8,
+        "fields": {
+            "id": 8,
+            "name": "Tagesgast: Nur Montag",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 9,
+        "fields": {
+            "id": 9,
+            "name": "Tagesgast: Nur Dienstag",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 10,
+        "fields": {
+            "id": 10,
+            "name": "Tagesgast: Sonntag auf Montag",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 11,
+        "fields": {
+            "id": 11,
+            "name": "Tagesgast: Montag auf Dienstag",
+            "description": ""
+        }
     }
 ]

@@ -41,7 +41,10 @@ export default {
   computed: {
     ...mapGetters(['currentEventParticipants']),
     data() {
-      return this.currentEventParticipants[0].scoutOrganisations;
+      if (this.currentEventParticipants && this.currentEventParticipants.length) {
+        return this.currentEventParticipants[0].scoutOrganisations;
+      }
+      return [];
     },
   },
 };
