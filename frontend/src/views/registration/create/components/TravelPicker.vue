@@ -1,7 +1,7 @@
 <template>
   <v-container fluid style="width:70%">
     <v-form v-model="valid">
-      <v-card flat>
+      <v-card flat v-if="!isLoading">
         <v-row align="center">
           <v-col cols="12">
             <v-card-text>
@@ -61,6 +61,16 @@
           </v-col>
         </v-row>
         <v-btn @click="save">Fertig</v-btn>
+      </v-card>
+      <v-card v-else>
+        <div class="text-center ma-5">
+          <v-progress-circular
+            :size="80"
+            :width="10"
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+        </div>
       </v-card>
     </v-form>
   </v-container>
@@ -123,24 +133,32 @@ export default {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },
   },
-  created() {
-    this.getMaxNumber();
-    console.log(this.input);
-    if (!this.input === []) {
-      this.data.methodOfTravels = this.input;
-    }
-    this.getMethod(1);
+  mounted() {
+    this.getData();
   },
   methods: {
-    getMethod(travelTag) {
-      axios
+    getData() {
+      this.isLoading = true;
+      Promise.all([
+        this.getMaxNumber(),
+        this.getMethod(),
+      ])
+        .then((values) => {
+          console.log(values);
+          this.data.maxNumber = values[0].participantpersonalSet.length;
+          this.data.methodOfTravels = values[1].filter((i) => i.travelTag === 1);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isLoading = false;
+        });
+    },
+    getMethod() {
+      const res = axios
         .get(
           `${this.API_URL}basic/method-of-travel/`,
-        )
-        .then((res) => res.data.filter((i) => i.travelTag === travelTag))
-        .catch((err) => {
-          console.log(err);
-        });
+        );
+      return res.data;
     },
     reached() {
       let sum = 0;
@@ -152,14 +170,9 @@ export default {
     },
     getMaxNumber() {
       const path = `${process.env.VUE_APP_API}basic/registration/`;
-      axios
-        .get(`${path}${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`)
-        .then((res) => {
-          this.data.maxNumber = res.data[0].participantpersonalSet.length;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const answer = axios
+        .get(`${path}${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`);
+      return answer.data;
     },
     save() {
       console.log(this.data.methodOfTravels);
