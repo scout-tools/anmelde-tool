@@ -6,7 +6,7 @@
     <v-container>
       <v-row class="mt-6">
       <span class="subtitle-1">
-        {{'Trage hier die E-Mail-Adressen der verantwortlichen Kontaktpersonen' +
+        {{'Trage hier die E-Mail-Adressen der verantwortlichen Kontaktpersonen ' +
           ' als Ansprechperson ein.' }}
         <br>
         <i>{{' (Jede geschriebene E-Mail-Adresse muss mit Enter bestätigt werden!)'}}</i>

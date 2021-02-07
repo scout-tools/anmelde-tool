@@ -19,7 +19,7 @@
                 data.methodOfTravels.filter((i) => i.travelType === 1)[0]
                   .numberOfPersons
               "
-              label="Bus"
+              label="Mit dem Reisebus"
               required
               prepend-icon="mdi-bus"
             />
@@ -211,6 +211,7 @@ export default {
   },
   methods: {
     loadData() {
+      this.data.maxNumber = 0;
       this.isLoading = true;
       Promise.all([this.getMaxNumber(), this.getMethod()])
         .then((values) => {

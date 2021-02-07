@@ -37,7 +37,7 @@
         </v-col>
         <v-col cols="2">
           <v-btn icon @click="deleteTent(index)">
-            <v-icon>mdi-trash-can</v-icon>
+            <v-icon color="red">mdi-trash-can</v-icon>
           </v-btn>
         </v-col>
       </v-row>
