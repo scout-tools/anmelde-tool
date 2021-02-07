@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="primary" dark>
+  <v-app-bar app color="primary" dark absolute>
     <v-tabs background-color="primary" centered dark icons-and-text>
       <v-tab>
         <router-link to="/">

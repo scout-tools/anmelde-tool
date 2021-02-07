@@ -1,79 +1,105 @@
 <template>
-  <v-container fluid style="width:70%">
+  <v-container fluid style="width: 70%">
     <v-form v-model="valid">
       <v-card flat v-if="!isLoading">
         <v-row align="center">
           <v-col cols="12">
             <v-card-text>
-              {{reached}} / {{data.maxNumber}}
-              <v-icon v-if="this.reached === this.data.maxNumber">mdi-check</v-icon>
+              {{ reached }} / {{ data.maxNumber }}
+              <v-icon v-if="this.reached === this.data.maxNumber"
+                >mdi-check</v-icon
+              >
             </v-card-text>
           </v-col>
         </v-row>
         <v-row align="center">
-          <v-col cols="6">
+          <v-col cols="12" sm="6">
             <v-text-field
-              v-model="data.methodOfTravels.filter((i) => i.travelType === 1)[0].numberOfPersons"
+              v-model="
+                data.methodOfTravels.filter((i) => i.travelType === 1)[0]
+                  .numberOfPersons
+              "
               label="Bus"
               required
               prepend-icon="mdi-bus"
             />
           </v-col>
-          <v-col cols="6">
+          <v-col cols="12" sm="6">
             <v-text-field
-              v-model="data.methodOfTravels.filter((i) => i.travelType === 2)[0].numberOfPersons"
+              v-model="
+                data.methodOfTravels.filter((i) => i.travelType === 2)[0]
+                  .numberOfPersons
+              "
               label="PKW"
               required
               prepend-icon="mdi-car"
             />
           </v-col>
-          <v-col cols="6">
+          <v-col cols="12" sm="6">
             <v-text-field
-              v-model="data.methodOfTravels.filter((i) => i.travelType === 3)[0].numberOfPersons"
+              v-model="
+                data.methodOfTravels.filter((i) => i.travelType === 3)[0]
+                  .numberOfPersons
+              "
               label="OEPNV"
               required
               prepend-icon="mdi-bus-stop"
             />
           </v-col>
-          <v-col cols="6">
+          <v-col cols="12" sm="6">
             <v-text-field
-              v-model="data.methodOfTravels.filter((i) => i.travelType === 4)[0].numberOfPersons"
+              v-model="
+                data.methodOfTravels.filter((i) => i.travelType === 4)[0]
+                  .numberOfPersons
+              "
               label="zu Fuss"
               required
               prepend-icon="mdi-hiking"
             />
           </v-col>
-          <v-col cols="6">
+          <v-col cols="12" sm="6">
             <v-text-field
-              v-model="data.methodOfTravels.filter((i) => i.travelType === 5)[0].numberOfPersons"
+              v-model="
+                data.methodOfTravels.filter((i) => i.travelType === 5)[0]
+                  .numberOfPersons
+              "
               label="Wasserweg"
               required
               prepend-icon="mdi-ship-wheel"
             />
           </v-col>
-          <v-col cols="6" v-if="this.travelTag === 3">
+          <v-col cols="12" sm="6" v-if="this.travelTag !== 3">
+            <v-text-field
+              v-model="
+                data.methodOfTravels.filter((i) => i.travelType === 7)[0]
+                  .numberOfPersons
+              "
+              label="Schon da"
+              required
+              prepend-icon="mdi-account-check"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" v-if="this.travelTag === 3">
             <v-divider class="my-3" />
             <v-row class="mt-2" center>
               <span class="text-center ma-5 subtitle-1">
                 <p>
-                  Bitte gebt die Anzahl Lunchpakete an,die ihr für die Rück- oder Weiterreise nutzen
-                  wollt. Damit helft ihr der Küche bei der genaueren Planung.
+                  Bitte gebt die Anzahl Lunchpakete an,die ihr für die Rück-
+                  oder Weiterreise nutzen wollt. Damit helft ihr der Küche bei
+                  der genaueren Planung.
                 </p>
               </span>
             </v-row>
             <v-text-field
-              v-model="data.methodOfTravels.filter((i) => i.travelType === 6)[0].numberOfPersons"
+              v-model="
+                data.methodOfTravels.filter((i) => i.travelType === 6)[0]
+                  .numberOfPersons
+              "
               label="Lunchpaket"
               required
               prepend-icon="mdi-food-apple"
-            />
-          </v-col>
-          <v-col cols="6" v-else>
-            <v-text-field
-              v-model="data.methodOfTravels.filter((i) => i.travelType === 7)[0].numberOfPersons"
-              label="Schon da"
-              required
-              prepend-icon="mdi-account-check"
             />
           </v-col>
         </v-row>
@@ -214,7 +240,9 @@ export default {
     async getMaxNumber() {
       const path = `${this.API_URL}basic/registration/`;
       const answer = await axios.get(
-        `${path}${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`,
+        `${path}${
+          this.$route.params.id
+        }/participants/?&timestamp=${new Date().getTime()}`,
       );
       return answer.data;
     },

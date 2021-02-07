@@ -90,6 +90,8 @@ export default {
         description: this.data.description,
       };
     },
+    beforeTabShow() {
+    },
   },
   created() {
     this.$store.commit('setDpvAddedLocation', false);

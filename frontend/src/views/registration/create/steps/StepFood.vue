@@ -56,7 +56,15 @@ export default {
     EatPicker,
     PrevNextButtons,
   },
-  props: ['position', 'maxPos'],
+  name: 'StepFood',
+  displayName: 'Essgewohnheiten',
+  props: [
+    'position',
+    'maxPos',
+    'currentEvent',
+    'currentRegistration',
+    'scoutOrganisation',
+  ],
   data: () => ({
     valid: true,
     displayName: 'Essgewohnheiten',
@@ -85,6 +93,8 @@ export default {
     },
     addMeatEaters() {
       this.$emit('nextStep');
+    },
+    beforeTabShow() {
     },
   },
 };

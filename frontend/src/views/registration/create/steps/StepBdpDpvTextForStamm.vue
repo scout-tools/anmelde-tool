@@ -1,6 +1,6 @@
 <template>
   <v-form ref="StepBdpDpVPreferences" v-model="valid">
-    <v-container class="px-0" fluid>
+    <v-container class="px-0">
       <p class="ma-6">
         {{ placeholder }}
       </p>
@@ -93,6 +93,8 @@ export default {
         name: this.data.name,
         description: this.data.description,
       };
+    },
+    beforeTabShow() {
     },
   },
 };

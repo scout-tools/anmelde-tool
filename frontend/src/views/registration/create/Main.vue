@@ -1,44 +1,64 @@
 <template>
-  <v-card class="mx-auto top-margin">
-    <v-row justify="center">
-      <v-stepper v-model="currentStep" vertical>
-        <template v-for="(step, index) in steps">
-          <v-stepper-step
-            :key="`stepper-${index}`"
-            :complete="currentStep > index + 1"
-            :step="index + 1"
-          >
-            {{ `${step.displayName}`  }}
-          </v-stepper-step>
+  <v-container>
+    <v-card v-if="!isLoading" class="mx-auto top-margin">
+      <v-row justify="center">
+        <v-stepper v-model="currentStep" vertical>
+          <template v-for="(step, index) in steps">
+            <v-stepper-step
+              :key="`stepper-${index}`"
+              :complete="currentStep > index + 1"
+              :step="index + 1"
+            >
+              {{ `${step.displayName}` }}
+            </v-stepper-step>
 
-          <v-divider :key="index"></v-divider>
+            <v-divider :key="index"></v-divider>
 
-          <v-stepper-items :key="`stepper-items-${index}`">
-            <v-stepper-content :step="index + 1">
-              <component
-                :is="step"
-                :ref="step.name"
-                :position="index + 1"
-                :max-pos="steps.length"
-                :currentRegistration="currentRegistration"
-                :scoutOrganisation="scoutOrganisation"
-                :currentEvent="currentEvent"
-                @prevStep="prevStep()"
-                @nextStep="nextStep()"
-                @submit="onRegistrationConfirmed()"
-              />
-            </v-stepper-content>
-          </v-stepper-items>
-        </template>
-      </v-stepper>
-    </v-row>
-    <v-snackbar v-model="showSuccess" color="success" y="top" :timeout="timeout">
-      {{ 'Die Aktion wurde erfolgreich angelegt.' }}
-    </v-snackbar>
-    <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
-      {{ 'Fehler beim Speichern der Aktion' }}
-    </v-snackbar>
-  </v-card>
+            <v-stepper-items :key="`stepper-items-${index}`">
+              <v-stepper-content :step="index + 1">
+                <component
+                  :is="step"
+                  :ref="step.name"
+                  :position="index + 1"
+                  :max-pos="steps.length"
+                  :currentRegistration="currentRegistration"
+                  :scoutOrganisation="scoutOrganisation"
+                  :currentEvent="currentEvent"
+                  @prevStep="prevStep()"
+                  @nextStep="nextStep()"
+                  @submit="onRegistrationConfirmed()"
+                />
+              </v-stepper-content>
+            </v-stepper-items>
+          </template>
+        </v-stepper>
+      </v-row>
+      <v-snackbar
+        v-model="showSuccess"
+        color="success"
+        y="top"
+        :timeout="timeout"
+      >
+        {{ 'Die Aktion wurde erfolgreich angelegt.' }}
+      </v-snackbar>
+      <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
+        {{ 'Fehler beim Speichern der Aktion' }}
+      </v-snackbar>
+    </v-card>
+    <v-card v-else>
+      <div class="text-center ma-5">
+        <p>Lade Daten ...</p>
+        <v-progress-circular
+          :size="80"
+          :width="10"
+          class="ma-5"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+        <p>Bitte hab etwas Geduld.</p>
+      </div>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -87,6 +107,7 @@ export default {
       timeout: 7000,
       currentEvent: [],
       currentRegistration: [],
+      isLoading: true,
       data: {
         event: {
           responsiblePersons: ['robert@hratuga.de'],
@@ -97,9 +118,11 @@ export default {
   computed: {
     steps() {
       // Bundesfahrt
-      if (this.currentEvent
-        && this.currentEvent.eventTags
-        && this.currentEvent.eventTags.includes(1)) {
+      if (
+        this.currentEvent && // eslint-disable-line
+        this.currentEvent.eventTags && // eslint-disable-line
+        this.currentEvent.eventTags.includes(1)
+      ) {
         return [
           StepConsent,
           StepAddParticipantsSingle,
@@ -111,9 +134,11 @@ export default {
         ];
       }
       // BdP-DPV
-      if (this.currentEvent
-        && this.currentEvent.eventTags
-        && this.currentEvent.eventTags.includes(2)) {
+      if (
+        this.currentEvent && // eslint-disable-line
+        this.currentEvent.eventTags && // eslint-disable-line
+        this.currentEvent.eventTags.includes(2)
+      ) {
         return [
           StepConsent,
           StepAddParticipantGroupRole,
@@ -125,23 +150,25 @@ export default {
           StepConfirmDpv,
         ];
       }
-      return [
-        StepConsent,
-        StepAddParticipants,
-        StepFood,
-        StepConfirm,
-      ];
-    },
-    headerSteps() {
-      return ['Teilnehmende', 'Essgewohnheiten', 'Bestätigung'];
+      return [StepConsent, StepAddParticipants, StepFood, StepConfirm];
     },
   },
   methods: {
     nextStep() {
       this.currentStep += 1;
+      this.callOnBeforeTab(this.currentStep - 1);
     },
     prevStep() {
       this.currentStep -= 1;
+      this.callOnBeforeTab(this.currentStep - 1);
+    },
+    callOnBeforeTab(step) {
+      const nextStepName = this.steps[step].name;
+      if (this.$refs[nextStepName]
+        && this.$refs[nextStepName].length
+        && this.$refs[nextStepName][0].beforeTabShow) {
+        this.$refs[nextStepName][0].beforeTabShow();
+      }
     },
     onRegistrationConfirmed() {
       this.$router.push({ name: 'eventOverview' });
@@ -154,16 +181,26 @@ export default {
       });
     },
     getEvent(id) {
-      const path = `${process.env.VUE_APP_API}basic/event/${parseInt(id, 10)}/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.currentEvent = res.data;
+      this.isLoading = true;
+      Promise.all([this.getEventData(id)])
+        .then((values) => {
+          [this.currentEvent] = values;
+
+          this.isLoading = false;
         })
-        .catch(() => {
-          this.showError = true;
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
         });
     },
+
+    async getEventData(id) {
+      const path = `${process.env.VUE_APP_API}basic/event/${parseInt(id, 10)}/`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+
     getRegistration() {
       const path = `${process.env.VUE_APP_API}basic/registration/${this.$route.params.id}/`;
       axios
@@ -187,6 +224,5 @@ export default {
   created() {
     this.loadData();
   },
-
 };
 </script>

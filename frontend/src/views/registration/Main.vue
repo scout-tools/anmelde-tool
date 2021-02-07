@@ -15,11 +15,8 @@
                     Hast du keinen Code bekommen? Gucke nochmal in der Einladung.
                     Falls du nichts findest melde dich bei der Lagerleitung,
                     deiner Bundesführung oder bei:
+                    <a href= "mailto:support@anmelde-tool.de">support@anmelde-tool.de</a>
                   </p>
-                  </div>
-                  <div class="pl-2">
-                  <a
-                    href= "mailto:support@anmelde-tool.de">support@anmelde-tool.de</a>
                   </div>
                 <v-subheader v-if="isMobilMandatory" class="ma-0">
                   <v-icon class="ma-2" color="error">mdi-alert-circle </v-icon>
@@ -55,7 +52,7 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6">
                       <v-text-field
                         readonly
                         filled
@@ -131,7 +128,7 @@
                               </v-icon>
                             </template>
                             <span>
-                              {{ tooltip.stammName }}
+                              {{ tooltip.mobileNumber }}
                             </span>
                           </v-tooltip>
                         </template>
@@ -187,6 +184,8 @@ export default {
         scoutName: 'Stamm falsch? Diesen kannst Du unter User ändern.',
         invitationCode:
           'Der Code steht in der offizellen Anmeldung.',
+        mobileNumber: 'Deine Telefonnummer. Hinzufügen kannst du deine Nummer nur unter Users',
+        stammName: 'Dein Stammesname',
       },
     };
   },

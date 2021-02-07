@@ -34,7 +34,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 import TravelPicker from '../components/TravelPicker.vue';
 
 export default {
-  name: 'StepNameDescription',
+  name: 'StepTravelBundesfahrt',
   displayName: 'Anreise - Mosaikersleben',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
@@ -122,6 +122,8 @@ export default {
           });
         }
       }
+    },
+    beforeTabShow() {
     },
   },
 };

@@ -34,7 +34,7 @@ import { required } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepNameDescription',
+  name: 'StepConfirm',
   displayName: 'Zusammenfassung und Bestätigung',
   props: ['position', 'maxPos'],
   components: {
@@ -88,6 +88,8 @@ export default {
         name: this.data.name,
         description: this.data.description,
       };
+    },
+    beforeTabShow() {
     },
   },
 };
