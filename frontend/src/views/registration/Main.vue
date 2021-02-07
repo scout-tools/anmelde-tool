@@ -21,6 +21,8 @@
                 <v-subheader v-if="isMobilMandatory" class="ma-0">
                   <v-icon class="ma-2" color="error">mdi-alert-circle </v-icon>
                   Für dieses Lager ist die Handynummer Pflicht.
+                  Fall du sie nicht eintragen hast,
+                  kannst du sie nur unter den User Einstellungen ändern.
                 </v-subheader>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
@@ -184,7 +186,7 @@ export default {
         scoutName: 'Stamm falsch? Diesen kannst Du unter User ändern.',
         invitationCode:
           'Der Code steht in der offizellen Anmeldung.',
-        mobileNumber: 'Deine Telefonnummer. Hinzufügen kannst du deine Nummer nur unter Users',
+        mobileNumber: 'Deine Telefonnummer. Hinzufügen kannst du deine Nummer nur unter "User" (oben rechts)',
         stammName: 'Dein Stammesname',
       },
     };
