@@ -113,9 +113,6 @@ export default {
       return [];
     },
   },
-  mounted() {
-    this.getParticipants();
-  },
   methods: {
     getParticipants() {
       axios
@@ -188,6 +185,7 @@ export default {
       this.$refs.deleteModal.show(item);
     },
     beforeTabShow() {
+      this.onRefresh();
     },
   },
 };

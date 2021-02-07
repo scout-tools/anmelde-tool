@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-10">
+  <div>
     <v-footer color="primary lighten-1" padless>
       <v-row justify="center" no-gutters>
         <v-btn
@@ -9,6 +9,9 @@
           class="my-2"
           @click="$router.push({ name: 'impressum' })"
         >
+          <v-icon fab color="white" class="mr-1">
+            mdi-card-text-outline
+          </v-icon>
           Impressum
         </v-btn>
         <v-btn
@@ -18,6 +21,9 @@
           class="my-2"
           @click="$router.push({ name: 'contact' })"
         >
+          <v-icon fab color="white" class="mr-1">
+            mdi-account-box
+          </v-icon>
           Kontakt
         </v-btn>
         <v-btn
@@ -27,7 +33,11 @@
           class="my-2"
           @click="$router.push({ name: 'contact' })"
         >
+          <v-icon fab color="white" class="mr-1">
+            mdi-fingerprint
+          </v-icon>
           Datenschutz
+
         </v-btn>
         <v-btn
           color="white"
@@ -36,6 +46,9 @@
           class="my-2"
           @click="$router.push({ name: 'loginInterals' })"
         >
+          <v-icon fab color="white" class="mr-1">
+            mdi-chess-king
+          </v-icon>
           Planungsjurte
         </v-btn>
         <v-btn
@@ -46,11 +59,14 @@
           v-if="isAuthenticated"
           @click="onLogoutClicked"
         >
+          <v-icon fab color="white" class="mr-1">
+            mdi-logout-variant
+          </v-icon>
           Logout
         </v-btn>
-        <v-col class="primary lighten py-4 text-center white--text" cols="12">
+        <!-- <v-col class="primary lighten py-1 text-center white--text" cols="12">
           {{ new Date().getFullYear() }} — <strong>Anmelde-Tool</strong>
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-footer>
   </div>

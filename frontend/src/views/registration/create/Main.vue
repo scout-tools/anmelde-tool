@@ -152,9 +152,6 @@ export default {
       }
       return [StepConsent, StepAddParticipants, StepFood, StepConfirm];
     },
-    headerSteps() {
-      return ['Teilnehmende', 'Essgewohnheiten', 'Bestätigung'];
-    },
   },
   methods: {
     nextStep() {

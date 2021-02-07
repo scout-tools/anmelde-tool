@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div id="app">
-      <main-comp class="mt-100p"/>
+      <main-comp/>
     </div>
   </v-app>
 </template>
