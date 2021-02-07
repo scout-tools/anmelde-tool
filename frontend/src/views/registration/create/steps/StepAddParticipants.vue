@@ -122,6 +122,8 @@ export default {
       //   this.$emit('nextStep');
       // });
     },
+    beforeTabShow() {
+    },
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-    <v-container fluid v-if="!isLoading">
+    <v-container v-if="!isLoading">
       <v-row class="mt-2">
         <span class="text-center ma-5 subtitle-1">
           <p>
@@ -78,7 +78,7 @@ import { required, minLength, minValue } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepNameDescription',
+  name: 'StepTents',
   displayName: 'Zelte',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
@@ -111,10 +111,6 @@ export default {
     total() {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },
-  },
-  mounted() {
-    this.data.tents = [];
-    this.getData();
   },
   methods: {
     getData() {
@@ -226,6 +222,10 @@ export default {
       const res = await axios
         .get(`${this.API_URL}basic/scout-hierarchy-group/?&timestamp=${new Date().getTime()}`);
       return res.data;
+    },
+    beforeTabShow() {
+      this.data.tents = [];
+      this.getData();
     },
   },
 };

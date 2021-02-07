@@ -1,5 +1,6 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
+    <v-container>
     <v-row class="mt-2" center>
         <span class="text-center ma-5 subtitle-1">
           <p>
@@ -23,6 +24,7 @@
       @nextStep="nextStep"
       @prevStep="prevStep"
     />
+  </v-container>
   </v-form>
 </template>
 
@@ -34,7 +36,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 import TravelPicker from '../components/TravelPicker.vue';
 
 export default {
-  name: 'StepNameDescription',
+  name: 'StepTravelBack',
   displayName: 'Abreise',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
@@ -122,6 +124,8 @@ export default {
           });
         }
       }
+    },
+    beforeTabShow() {
     },
   },
 };

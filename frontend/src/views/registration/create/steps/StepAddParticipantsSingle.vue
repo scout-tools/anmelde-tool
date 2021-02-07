@@ -71,7 +71,7 @@ import CreateSinglePersonDialog from './dialog/CreateSinglePersonDialog.vue';
 import UploadExcelFile from './dialog/UploadExcelFile.vue';
 
 export default {
-  name: 'StepNameDescription',
+  name: 'StepAddParticipantsSingle',
   displayName: 'Teilnehmende',
   props: ['position', 'maxPos', 'currentEvent'],
   components: {
@@ -113,7 +113,7 @@ export default {
       return [];
     },
   },
-  created() {
+  mounted() {
     this.getParticipants();
   },
   methods: {
@@ -186,6 +186,8 @@ export default {
     },
     deleteParticipant(item) {
       this.$refs.deleteModal.show(item);
+    },
+    beforeTabShow() {
     },
   },
 };

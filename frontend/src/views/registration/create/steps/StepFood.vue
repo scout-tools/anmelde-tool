@@ -86,6 +86,8 @@ export default {
     addMeatEaters() {
       this.$emit('nextStep');
     },
+    beforeTabShow() {
+    },
   },
 };
 </script>

@@ -132,6 +132,8 @@ export default {
         description: this.data.description,
       };
     },
+    beforeTabShow() {
+    },
   },
 };
 </script>
