@@ -283,7 +283,9 @@
           </v-row>
 
           <v-divider />
-          <v-subheader> Essgewohnheiten / Allergien und Unverträglichkeiten </v-subheader>
+          <v-subheader>
+            Essgewohnheiten / Allergien und Unverträglichkeiten
+          </v-subheader>
           <v-row>
             <v-col cols="12" sm="6">
               <v-autocomplete
@@ -316,11 +318,31 @@
               </v-autocomplete>
             </v-col>
             <v-col cols="12" sm="6">
-              <eat-text-field
-                ref="eatHabitText"
+              <v-combobox
                 v-model="eatHabitText"
                 v-show="!isEditWindow"
-              />
+                label="weitere Allergien und Unverträglichkeiten (Freitext)"
+                prepend-icon="mdi-food"
+                clearable
+                multiple
+                chips
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Bitte trage hier ein, auf welche ' +
+                      'Besonderheiten die Küche achten muss. ' +
+                      'Trage hier nur etwas ein, wenn die Optionen ' +
+                      'des anderen Feldes nicht zutreffen' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-combobox>
             </v-col>
           </v-row>
           <v-divider />
@@ -333,7 +355,7 @@
                 <v-select
                   v-model="data.participantRole"
                   prepend-icon="mdi-tent"
-                  :items="roleItems"
+                  :items="getRoleItems"
                   :error-messages="participantRoleErrors"
                   item-text="name"
                   item-value="id"
@@ -356,6 +378,20 @@
                     </v-tooltip>
                   </template>
                 </v-select>
+                <v-switch v-model="isDayGuest" label="Tagesgast?">
+                  <template slot="append">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon color="success" dark v-bind="attrs" v-on="on">
+                          mdi-help-circle-outline
+                        </v-icon>
+                      </template>
+                      <span>
+                        {{ 'Tagesgast?' }}
+                      </span>
+                    </v-tooltip>
+                  </template>
+                </v-switch>
               </v-container>
             </v-col>
           </v-row>
@@ -384,8 +420,6 @@ import axios from 'axios';
 // import moment from 'moment';
 import { mapGetters } from 'vuex';
 
-import EatTextField from '@/components/field/EatTextField.vue';
-
 const scoutGroupStartValidator = (groupObjOrGroupName) => {
   const validStarts = ['Meute', 'Sippe', 'Roverrunde'];
   if (!groupObjOrGroupName) {
@@ -399,9 +433,6 @@ const scoutGroupStartValidator = (groupObjOrGroupName) => {
 
 export default {
   props: ['isOpen'],
-  components: {
-    EatTextField,
-  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
@@ -411,6 +442,7 @@ export default {
     isLoading: true,
     isEditWindow: false,
     eatHabitText: [],
+    isDayGuest: false,
     data: {
       firstName: null,
       lastName: null,
@@ -428,30 +460,37 @@ export default {
       {
         id: 5,
         name: 'Mosaikersleben',
+        dayGuest: true,
       },
       {
         id: 6,
         name: 'Mosaikersleben + Kaperfahrt',
+        dayGuest: true,
       },
       {
         name: 'Tagesgast: Nur Sonntag',
         id: 7,
+        dayGuest: false,
       },
       {
         name: 'Tagesgast: Nur Montag',
         id: 8,
+        dayGuest: false,
       },
       {
         name: 'Tagesgast: Nur Dienstag',
         id: 9,
+        dayGuest: false,
       },
       {
         name: 'Tagesgast: Sonntag auf Montag',
         id: 10,
+        dayGuest: false,
       },
       {
         name: 'Tagesgast: Montag auf Dienstag',
         id: 11,
+        dayGuest: false,
       },
     ],
     showError: false,
@@ -509,6 +548,9 @@ export default {
       'hierarchyMapping',
       'zipCodeMapping',
     ]),
+    getRoleItems() {
+      return this.roleItems.filter((item) => item.dayGuest !== this.isDayGuest);
+    },
     firstNameErrors() {
       const errors = [];
       if (!this.$v.data.firstName.$dirty) return errors;
@@ -582,10 +624,10 @@ export default {
         errors.push('Telefonnummer ist erforderlich.');
       }
       if (
-        !this.$v.data.phoneNumber.integer
-        || !this.$v.data.phoneNumber.minValue
+        !this.$v.data.phoneNumber.integer || // eslint-disable-line
+        !this.$v.data.phoneNumber.minValue // eslint-disable-line
       ) {
-        errors.push('Telefonnummer darf nur aus Zahlen bestehen.');
+        errors.push('Telefonnummer darf nur aus Zahlen bestehen.'); // eslint-disable-line
       }
       return errors;
     },
@@ -629,7 +671,8 @@ export default {
       return !!value || errorMsg;
     },
     validScoutGroup(value) {
-      const errorMsg = 'Der Gruppenname muss mit Meute, Sippe oder Roverrunde beginnen';
+      const errorMsg = // eslint-disable-line
+        'Der Gruppenname muss mit Meute, Sippe oder Roverrunde beginnen'; // eslint-disable-line
       return !!scoutGroupStartValidator(value) || errorMsg;
     },
     onClickOk() {
@@ -648,19 +691,18 @@ export default {
         age: null,
         registration: null,
         eatHabitType: [],
-
         scoutGroup: null,
         isGroupLeader: false,
         roles: [],
         participantRole: 5,
       };
       this.eatHabitText = [];
+      this.isDayGuest = false;
       this.isEditWindow = false;
       this.active = true;
       this.loadData();
     },
     openDialogEdit(input) {
-      this.data = [];
       this.data = input;
       this.active = true;
       this.isEditWindow = true;
