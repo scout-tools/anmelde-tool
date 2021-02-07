@@ -59,8 +59,6 @@ export default {
       },
     },
   },
-  created() {
-  },
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),
     total() {
@@ -124,6 +122,7 @@ export default {
       }
     },
     beforeTabShow() {
+      this.$refs.bundesfahrtTravelpicker.refresh();
     },
   },
 };

@@ -1,12 +1,14 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
     <v-container class="pa-5">
-        <p>
-          Bitte trag hier die Daten jede_r einzelnen Teilnehmer_in ein.
-          Diese Daten sind für die Administratoren und für
-          die Lagerleitung nach deiner expliziten Anmeldung sichtbar.<br> <br>
-          Du hast auch die Möglichkeit die Felder mithilfe einer Excel Tabelle vorauszufüllen.
-        </p>
+      <p>
+        Bitte trag hier die Daten jede_r einzelnen Teilnehmer_in ein. Diese
+        Daten sind für die Administratoren und für die Lagerleitung nach deiner
+        expliziten Anmeldung sichtbar.<br />
+        <br />
+        Du hast auch die Möglichkeit die Felder mithilfe einer Excel Tabelle
+        vorauszufüllen.
+      </p>
       <v-btn class="ma-2" color="success" @click="newUser">
         <v-icon left> mdi-plus </v-icon>
         Teilnehmer_innen hinzufügen
@@ -15,7 +17,7 @@
         <v-icon left> mdi-plus </v-icon>
         Excel Datei hochladen
       </v-btn>
-      <v-list>
+      <v-list v-if="!isLoading">
         <v-subheader>Teilnehmer_innen</v-subheader>
         <v-list-item-group color="primary">
           <v-list-item
@@ -43,6 +45,19 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
+      <div v-else>
+        <div class="text-center ma-5">
+        <p>
+          Lade Daten
+        </p>
+          <v-progress-circular
+            :size="80"
+            :width="10"
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+        </div>
+      </div>
       <v-divider class="my-3" />
       <prev-next-buttons
         :position="position"
@@ -54,10 +69,16 @@
     </v-container>
     <create-single-person-dialog
       ref="createSinglePersonDialog"
-      @refresh="getParticipants()"
+      @refresh="onRefresh()"
     />
-    <upload-excel-file ref="uploadExcelFile" />
-    <delete-modal ref="deleteModal" @refresh="onRefresh" />
+    <upload-excel-file
+      ref="uploadExcelFile"
+      @refresh="onRefresh()"
+    />
+    <delete-modal
+      ref="deleteModal"
+      @refresh="onRefresh()"
+    />
   </v-form>
 </template>
 
@@ -83,7 +104,7 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    isLoading: false,
+    isLoading: true,
     selectedItem: 1,
     items: [{ participants: [] }],
   }),
@@ -108,25 +129,31 @@ export default {
         this.currentEvent.ageGroups && // eslint-disable-line
         this.currentEvent.ageGroups.length // eslint-disable-line
       ) {
-        return this.ageGroupMapping.filter((item) => this.currentEvent.ageGroups.includes(item.id));
+        return this.ageGroupMapping.filter((item) =>
+          this.currentEvent.ageGroups.includes(item.id), // eslint-disable-line
+        ); // eslint-disable-line
       }
       return [];
     },
   },
   methods: {
     getParticipants() {
-      axios
-        .get(
-          `${this.API_URL}basic/registration/${
-            this.$route.params.id
-          }/participants/?&timestamp=${new Date().getTime()}`,
-        )
-        .then((res) => {
-          this.items = res.data;
+      this.isLoading = true;
+      Promise.all([this.loadParticipants()])
+        .then((values) => {
+          [this.items] = values;
+          this.isLoading = false;
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
         });
+    },
+    async loadParticipants() {
+      const path = `${this.API_URL}basic/registration/${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`;
+      const response = await axios.get(path);
+
+      return response.data;
     },
     validate() {
       this.$v.$touch();
