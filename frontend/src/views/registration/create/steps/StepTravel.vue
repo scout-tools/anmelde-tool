@@ -1,30 +1,32 @@
 <template>
-  <v-form ref="formNameDescription" v-model="valid">
+  <v-form v-model="valid">
     <v-container>
-    <v-row class="mt-2" center>
+      <v-row class="mt-2" center>
         <span class="text-center ma-5 subtitle-1">
           <p>
             Informationen zu An- und Abreise findet ihr auf
-            <a href="https://www.bundesfahrt.de" target="_blank">www.bundesfahrt.de</a>.
+            <a href="https://www.bundesfahrt.de" target="_blank"
+              >www.bundesfahrt.de</a
+            >.
           </p>
         </span>
-    </v-row>
-    <v-card flat>
-      <travel-picker
-        ref="kaperfahrtTravelpicker"
-        :travelTag=this.travelTag
-        :participantRole=this.participantRole
-        title="Kaperfahrt / Bundesmeutenlager"
+      </v-row>
+      <v-card flat>
+        <travel-picker
+          ref="kaperfahrtTravelpicker"
+          :travelTag="this.travelTag"
+          :participantRole="this.participantRole"
+          title="Kaperfahrt / Bundesmeutenlager"
+        />
+      </v-card>
+      <v-divider class="my-3" />
+      <prev-next-buttons
+        :position="position"
+        :max-pos="maxPos"
+        @nextStep="nextStep"
+        @prevStep="prevStep"
       />
-    </v-card>
-    <v-divider class="my-3" />
-    <prev-next-buttons
-      :position="position"
-      :max-pos="maxPos"
-      @nextStep="nextStep"
-      @prevStep="prevStep"
-    />
-        </v-container>
+    </v-container>
   </v-form>
 </template>
 
@@ -61,25 +63,22 @@ export default {
       },
     },
   },
-  created() {
-  },
+  created() {},
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping']),
+    ...mapGetters([
+      'isAuthenticated',
+      'getJwtData',
+      'hierarchyMapping',
+      'ageGroupMapping',
+    ]),
     total() {
-      return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
+      return Object.values(this.data).reduce(
+        (pv, cv) => parseInt(pv, 10) + parseInt(cv, 10),
+        0,
+      );
     },
   },
   methods: {
-    getMethod() {
-      axios
-        .get(
-          `${this.API_URL}basic/method-of-travel/`,
-        )
-        .then((res) => res.data.filter((i) => i.travelTag === this.travelTag))
-        .catch((err) => {
-          console.log(err);
-        });
-    },
     greaterThanZero(value) {
       return value > 0;
     },
@@ -117,7 +116,9 @@ export default {
         } else {
           const promises = [];
           methodOfTravel.forEach((i) => {
-            promises.push(axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i));
+            promises.push(
+              axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i),
+            );
           });
           Promise.all(promises).then(() => {
             this.$emit('nextStep');
@@ -126,6 +127,10 @@ export default {
       }
     },
     beforeTabShow() {
+      if (this.$refs.kaperfahrtTravelpicker
+      ) {
+        this.$refs.kaperfahrtTravelpicker.refresh();
+      }
     },
   },
 };

@@ -209,9 +209,6 @@ export default {
       return sum;
     },
   },
-  mounted() {
-    this.loadData();
-  },
   methods: {
     loadData() {
       this.isLoading = true;
@@ -248,6 +245,9 @@ export default {
     },
     getData() {
       return this.data.methodOfTravels;
+    },
+    refresh() {
+      this.loadData();
     },
   },
 };
