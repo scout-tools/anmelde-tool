@@ -4,7 +4,7 @@
       <v-tab>
         <router-link to="/">
           <img
-            src="@/assets/logo_bdp_dpv.svg"
+            :src="logoPath"
             height="40"
             alt="Logo"
             class="logo-img mx-2"
@@ -25,7 +25,7 @@
         v-if="isAuthenticated"
         @click="$router.push({ name: 'settingsUser' })"
       >
-        User
+        Profil
         <v-icon>mdi-account-circle</v-icon>
 
       </v-tab>
@@ -44,6 +44,12 @@ export default {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
     userName() {
       return this.getJwtData.email;
+    },
+    logoPath() {
+      if (process.env.VUE_APP_ENV === 'DEV') {
+        return require('../assets/logo_dpv_beta.png'); // eslint-disable-line
+      }
+      return require('../assets/logo_bdp_dpv.svg'); // eslint-disable-line
     },
     isSimpleUser() {
       if (this.getJwtData) {

@@ -95,7 +95,7 @@
               :error-messages="addressAdditionErrors"
               label="Adresszusatz"
               prepend-icon="mdi-home"
-              placeholder="Freiwllig"
+              placeholder="(optional)"
               required
             >
               <template slot="append">

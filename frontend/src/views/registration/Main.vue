@@ -32,7 +32,7 @@
                       >mdi-alert-circle
                     </v-icon>
                     Für dieses Lager ist die Handynummer Pflicht. Fall du sie
-                    nicht eintragen hast, kannst du sie nur unter den User
+                    nicht eintragen hast, kannst du sie nur unter den Profil
                     Einstellungen ändern.
                   </v-subheader>
                   <v-row>
@@ -124,7 +124,8 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         readonly
-                        disabled
+                        v-if="isMobilMandatory"
+                        placeholder="Bitte im Profil hinzufügen"
                         filled
                         v-model="mobileNumber"
                         label="Telefonnummer"
@@ -197,12 +198,12 @@ export default {
       items: {},
       tooltip: {
         scoutName:
-          'Name falsch?. Ändern kannst du deinen Namen nur unter "User" (oben rechts)',
+          'Name falsch?. Ändern kannst du deinen Namen nur unter "Profil" (oben rechts)',
         stammName:
-          'Stamm falsch?. Ändern kannst du deinen Stamm nur unter "User" (oben rechts)',
+          'Stamm falsch?. Ändern kannst du deinen Stamm nur unter "Profil" (oben rechts)',
         invitationCode: 'Der Code steht in der offizellen Anmeldung.',
         mobileNumber:
-          'Telefonnummer fehlt oder ist falsch?. Hinzufügen kannst du deine Nummer nur unter "User" (oben rechts)',
+          'Telefonnummer fehlt oder ist falsch?. Hinzufügen kannst du deine Nummer nur unter "Profil" (oben rechts)',
       },
     };
   },
@@ -266,7 +267,7 @@ export default {
       if (!this.$v.mobileNumber.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.mobileNumber.required &&
-        errors.push('Telefonnummer ist für dieses Lager verpflichtend.');
+        errors.push('Telefonnummer ist für dieses Lager verpflichtend. Wechsele ins Profil um die Telefonnummer hinzuzufügen');
       return errors;
     },
   },

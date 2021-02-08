@@ -33,7 +33,7 @@
       <v-container>
         <v-layout column align-center justify-center class="white--text">
           <v-flex xs12 class="text-xs-center">
-            <img height="200px" src="@/assets/logo_bdp_dpv_color.png"/>
+            <img height="200px" :src="logoPath"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -130,6 +130,14 @@ export default {
     email: '',
     subscribed: false,
   }),
+  computed: {
+    logoPath() {
+      if (process.env.VUE_APP_ENV === 'DEV') {
+        return require('../../assets/logo_dpv_beta.png'); // eslint-disable-line
+      }
+      return require('../../assets/logo_bdp_dpv_color.png'); // eslint-disable-line
+    },
+  },
 };
 </script>
 

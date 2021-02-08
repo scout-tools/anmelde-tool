@@ -224,7 +224,7 @@
                 <v-text-field
                   v-model="data.address"
                   :error-messages="addressErrors"
-                  label="Fixposten"
+                  label="Fixkosten"
                   prepend-icon="mdi-currency-eur"
                 >
                   <template slot="append">
