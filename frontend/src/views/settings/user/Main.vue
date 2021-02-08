@@ -6,17 +6,16 @@
           <v-layout column>
             <v-card>
               <v-card-title class="text-center justify-center py-6">
-                Hier kannst du deine persönlichen Einstellungen Account
-                anpassen.
+                Hier kannst Du deinen persönlichen Account anpassen.
               </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-subheader class="ma-5">
-                    Hier musst du deine persönlichen Daten angeben. Dein
-                    Stamm sowie deine Pfadfindername sind wichtig, damit
-                    du dich bei Lagern anmelden kannst. Fülle die Felder
-                    deswegen unbedingt aus. Die Handynummer ist freiwillig
-                    und hilft dich zu kontaktieren.
+                    Hier musst du deine persönlichen Daten angeben. Dein Stamm
+                    sowie dein Pfadfindername sind wichtig, damit du dich bei
+                    Lagern anmelden kannst. Fülle die Felder deswegen unbedingt
+                    aus. Die Handynummer ist freiwillig und hilft dich zu
+                    kontaktieren.
                   </v-subheader>
                   <v-row>
                     <v-col cols="12" sm="6">
@@ -49,9 +48,10 @@
                     <v-col cols="12" sm="6">
                       <v-text-field
                         readonly
+                        disabled
                         filled
                         v-model="email"
-                        label="Email Address*"
+                        label="E-Mail Adresse*"
                         prepend-icon="mdi-email"
                       >
                         <template slot="append">
@@ -76,6 +76,7 @@
                     <v-col cols="12" sm="6">
                       <v-text-field
                         readonly
+                        disabled
                         filled
                         v-model="getStammName"
                         label="Mein Stamm*"
@@ -160,7 +161,7 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-btn dark color="red">
                         <v-icon left>mdi-delete</v-icon>
-                        Meine persönlichen Daten löschen
+                        Meine persönlichen Daten löschen.
                       </v-btn>
                     </v-col>
                   </v-row>
@@ -210,11 +211,12 @@ export default {
       API_URL: process.env.VUE_APP_API,
       loading: false,
       tooltip: {
-        scoutName:
-          'Gib hier bitte deinen Namen oder deinen Fahrtennamen ein.',
-        email: 'Die E-Mail nutzen wir für die Kommunikation mit dem Tool als auch für Rückfragen.',
-        mobileNumber: 'Hier kannst du freiwillig deine Handynummer angeben. Für manche Lager ist sie allerdings Pflicht. ',
-        scoutOrganisation: 'Bei dem Stift kannst Du deinen Stamm auswählen',
+        scoutName: 'Gib hier bitte deinen Namen oder deinen Fahrtennamen ein.',
+        email:
+          'Die E-Mail nutzen wir für die Kommunikation mit dem Tool und für Rückfragen.',
+        mobileNumber:
+          'Hier kannst du freiwillig deine Handynummer angeben. Für manche Lager ist sie allerdings Pflicht. ',
+        scoutOrganisation: 'Mit dem Stift kannst Du deinen Stamm auswählen.',
       },
       user: null,
       scoutOrganisation: null,
@@ -241,7 +243,8 @@ export default {
       const errors = [];
       if (!this.$v.checkbox.$dirty) return errors;
       // eslint-disable-next-line
-      !this.$v.checkbox.checked && errors.push('Du musst den Datenschutzbestimmungen zustimmen.');
+      !this.$v.checkbox.checked &&
+        errors.push('Du musst den Datenschutzbestimmungen zustimmen.');
       return errors;
     },
     mobileNumberErrors() {
@@ -269,7 +272,8 @@ export default {
       const errors = [];
       if (!this.$v.scoutOrganisation.$dirty) return errors;
       // eslint-disable-next-line
-      !this.$v.scoutOrganisation.required && errors.push('Wir brauchen deinen Stamm');
+      !this.$v.scoutOrganisation.required &&
+        errors.push('Wir brauchen deinen Stamm');
       return errors;
     },
   },

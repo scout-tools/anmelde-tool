@@ -56,7 +56,10 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gallo' }}
+                        {{
+                          'Worum handelt es sich (z.B. Jugendherberge' +
+                          ', Stammesheim, Bruchbude etc.)'
+                        }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -81,7 +84,9 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Schlafplätze Drinnen in Betten und auf dem Boden' }}
+                        {{
+                          'Schlafplätze drinnen, in Betten oder auf dem Boden.'
+                        }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -102,7 +107,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Schlafplätze in Zelten' }}
+                        {{ ' Schlafplätze draußen.' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -124,7 +129,9 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Wie viele Schlafkapazitäten hattet ihr im September 2020' }}
+                        {{
+                          'Wie viele Schlafkapazitäten hattet ihr im September 2020'
+                        }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -146,7 +153,9 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Wie viele Schlafkapazitäten hattet ihr im September 2020' }}
+                        {{
+                          'Wie viele Schlafkapazitäten hattet ihr im September 2020'
+                        }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -163,7 +172,41 @@
                   label="Straße und Hausnummer"
                   prepend-icon="mdi-map-marker"
                 >
-                                  <template slot="append">
+                  <template slot="append">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon color="success" dark v-bind="attrs" v-on="on">
+                          mdi-help-circle-outline
+                        </v-icon>
+                      </template>
+                      <span>
+                        {{ 'genaue Adresse der Schlafstätte' }}
+                      </span>
+                    </v-tooltip>
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <zip-code-field
+                  :counter="5"
+                  :error-messages="zipCodeErrors"
+                  label="Stadt/Postleitzahl"
+                  required
+                  @blur="$v.data.zipCode.$touch()"
+                />
+              </v-col>
+            </v-row>
+            <v-subheader class="my-0"> Kosten </v-subheader>
+            <v-divider class="my-0" />
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="data.address"
+                  :error-messages="addressErrors"
+                  label="Kosten pro Person"
+                  prepend-icon="mdi-currency-eur"
+                >
+                  <template slot="append">
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
                         <v-icon color="success" dark v-bind="attrs" v-on="on">
@@ -178,13 +221,31 @@
                 </v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
-                <zip-code-field
-                  :counter="5"
-                  :error-messages="zipCodeErrors"
-                  label="Stadt/Postleitzahl"
-                  required
-                  @blur="$v.data.zipCode.$touch()"
-                />
+                <v-text-field
+                  v-model="data.address"
+                  :error-messages="addressErrors"
+                  label="Fixposten"
+                  prepend-icon="mdi-currency-eur"
+                >
+                  <template slot="append">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon color="success" dark v-bind="attrs" v-on="on">
+                          mdi-help-circle-outline
+                        </v-icon>
+                      </template>
+                      <span>
+                        {{ 'Genaue Adresse des Ortes' }}
+                      </span>
+                    </v-tooltip>
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col>
+                <v-switch
+                  v-model="switch1"
+                  label="Ich kenne keine Preisliste "
+                ></v-switch>
               </v-col>
             </v-row>
             <v-subheader class="my-0"> Kontakt </v-subheader>
@@ -255,6 +316,8 @@
               </v-col>
             </v-row>
           </v-container>
+          <v-divider class="my-3" />
+          <v-btn color="primary" @click="onClickOkay"> Speichern </v-btn>
         </v-form>
       </v-container>
       <v-divider class="my-4" />

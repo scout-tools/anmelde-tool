@@ -4,9 +4,7 @@
       <v-expand-transition>
         <v-container>
           <v-row v-if="dpvAddedLocation">
-            <p>
-              Sehr cool. Du hast ein Heim / Lagerplatz hinzugefügt.
-            </p>
+            <p>Sehr cool. Du hast ein Heim / Lagerplatz hinzugefügt.</p>
             <v-radio-group v-model="radioGroup">
               <v-radio
                 label="Wir wollen bei uns im Heim bleiben und besucht werden."
@@ -24,7 +22,9 @@
       </v-expand-transition>
 
       <v-expand-transition>
-        <v-container v-show="!dpvAddedLocation || radioGroup === '2' || radioGroup === '3'">
+        <v-container
+          v-show="!dpvAddedLocation || radioGroup === '2' || radioGroup === '3'"
+        >
           <v-divider class="my-4" />
           <v-radio-group v-model="radioGroup2">
             <v-radio
@@ -32,13 +32,30 @@
               (Mit der Regio kommt man gut hin) "
               value="5"
             ></v-radio>
-            <v-radio label="Wir fahren gern weit weg.
-              (Im Zweifel quer durch ganz Deutschland) " value="3">
+            <v-radio
+              label="Wir fahren gern weit weg.
+              (Im Zweifel quer durch ganz Deutschland) "
+              value="3"
+            >
             </v-radio>
-              <v-radio label="Uns ist beides recht." value="6"></v-radio>
+            <v-radio label="Uns ist beides recht." value="6"></v-radio>
           </v-radio-group>
         </v-container>
       </v-expand-transition>
+
+      <p
+        class="text-center"
+        v-if="radioGroup2 !== 0"
+        style="border-style: solid; border-color: red"
+      >
+        <v-icon color="pink darken-1" large class="ma-2">
+          mdi-unicorn mdi-spin
+        </v-icon>
+        {{ textSnackbar }}
+        <v-icon color="pink darken-1" large class="ma-2">
+          mdi-unicorn mdi-flip-h mdi-spin
+        </v-icon>
+      </p>
 
       <prev-next-buttons
         :position="position"
@@ -48,23 +65,6 @@
         @submitStep="submitStep()"
       />
     </v-container>
-    <v-snackbar
-      top
-      v-model="snackbar"
-    >
-      {{ textSnackbar}}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="green"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
-          Schließen
-        </v-btn>
-      </template>
-    </v-snackbar>
     <create-location-dialog ref="newLocationDialog" @close="getEvents()" />
   </v-form>
 </template>
@@ -89,7 +89,8 @@ export default {
     radioGroup: 0,
     radioGroup2: 0,
     snackbar: false,
-    textSnackbar: 'Wir geben uns größte Mühe alles zu beachten, aber können nichts versprechen. ',
+    textSnackbar:
+      'Wir geben uns größte Mühe alles zu beachten, aber können nichts versprechen. ',
     data: {
       value1: true,
       value2: false,
@@ -132,8 +133,7 @@ export default {
         description: this.data.description,
       };
     },
-    beforeTabShow() {
-    },
+    beforeTabShow() {},
   },
 };
 </script>
