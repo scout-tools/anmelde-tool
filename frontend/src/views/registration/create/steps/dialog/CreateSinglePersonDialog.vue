@@ -23,36 +23,6 @@
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                v-model="data.scoutName"
-                autofocus
-                :counter="20"
-                :error-messages="scoutNameErrors"
-                label="Pfadfindername"
-                required
-                prepend-icon="mdi-campfire"
-                @input="$v.data.scoutName.$touch()"
-                @blur="$v.data.scoutName.$touch()"
-              >
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{
-                        'Trag bitte den Pfadfindernamen/Fahrtennamen' +
-                        'des_der Teilnehmer_in ein. Dies ist eine' +
-                        'freiwillige Angabe.'
-                      }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
                 v-model="data.firstName"
                 :counter="20"
                 :error-messages="firstNameErrors"
@@ -71,7 +41,7 @@
                     </template>
                     <span>
                       {{
-                        'Trag bitte den Vornamen des_der Teilnehmer_in' +
+                        'Trag bitte den Vornamen des_der Teilnehmer_in ' +
                         'ein. Zweitnamen müssen nicht mit angegeben werden.'
                       }}
                     </span>
@@ -104,6 +74,35 @@
                 </template>
               </v-text-field>
             </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="data.scoutName"
+                autofocus
+                :counter="20"
+                :error-messages="scoutNameErrors"
+                label="Fahrtenname (freiwillig)"
+                required
+                prepend-icon="mdi-campfire"
+                @input="$v.data.scoutName.$touch()"
+                @blur="$v.data.scoutName.$touch()"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{
+                        'Trag bitte den Fahrtennamen ' +
+                        'des_der Teilnehmer_in ein.'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-text-field>
+            </v-col>
           </v-row>
 
           <v-divider class="my-3" />
@@ -129,7 +128,7 @@
                     </template>
                     <span>
                       {{
-                        'Trag bitte das Alter des_der Teilnehmer_in' +
+                        'Trag bitte das Alter des_der Teilnehmer_in ' +
                         'zum Start des Lagers ein (4. bzw. 7. August 2021).'
                       }}
                     </span>
@@ -163,7 +162,7 @@
                         'Bitte gib die zugehörige Gruppe zu deinem_r ' +
                         'Teilnehmer_in an. Wähle dazu ' +
                         'eine Gruppe aus der Liste oder schreibe den ' +
-                        'Gruppennamen in das Feld ein.' +
+                        'Gruppennamen in das Feld ein. ' +
                         '(Neuanlage einer Gruppe beim editieren klappt noch nicht)'
                       }}
                     </span>
@@ -185,9 +184,9 @@
                     </template>
                     <span>
                       {{
-                        'Bitte aktiviere die Option,' +
-                        'wenn dein_e Teilnehmer_in' +
-                        'Gruppenführer_in/-leiter_in, Gruppenhelfer_in' +
+                        'Bitte aktiviere die Option, ' +
+                        'wenn dein_e Teilnehmer_in ' +
+                        'Gruppenführer_in/-leiter_in, Gruppenhelfer_in ' +
                         'oder ähnliches ist.'
                       }}
                     </span>
@@ -203,7 +202,7 @@
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="data.street"
-                :counter="30"
+                :counter="40"
                 :error-messages="streetErrors"
                 label="Straße und Hausnummer"
                 prepend-icon="mdi-home"
@@ -246,7 +245,7 @@
                     </template>
                     <span>
                       {{
-                        'Trage bitte den Wohnort oder die Postleitzahl' +
+                        'Trage bitte den Wohnort oder die Postleitzahl ' +
                         'des Wohnorts ein und wähle die richtige Option aus.'
                       }}
                     </span>
@@ -272,8 +271,8 @@
                     </template>
                     <span>
                       {{
-                        'Trag bitte eine Mobil- oder Festnetznummer' +
-                        'ein unter der der_die Teilnehmer_in nach' +
+                        'Trag bitte eine Mobil- oder Festnetznummer ' +
+                        'ein unter der der_die Teilnehmer_in nach ' +
                         'dem Lager erreichbar ist.'
                       }}
                     </span>
@@ -284,13 +283,15 @@
           </v-row>
 
           <v-divider />
-          <v-subheader> Essgewohnheiten </v-subheader>
+          <v-subheader>
+            Essgewohnheiten / Allergien und Unverträglichkeiten
+          </v-subheader>
           <v-row>
             <v-col cols="12" sm="6">
               <v-autocomplete
                 v-model="data.eatHabitType"
                 :items="eatHabitTypeMapping"
-                label="Essgewohnheiten"
+                label="Essgewohnheiten / Allergien und Unverträglichkeiten"
                 item-text="name"
                 item-value="name"
                 prepend-icon="mdi-food"
@@ -307,8 +308,8 @@
                     </template>
                     <span>
                       {{
-                        'Bitte wähle aus den angezeigten Essgewohnheiten.' +
-                        'Weitere Essgewohnheiten können einfach durch Eingabe' +
+                        'Bitte wähle aus den angezeigten Essgewohnheiten. ' +
+                        'Weitere Essgewohnheiten können einfach durch Eingabe ' +
                         'im Feld angegeben werden.'
                       }}
                     </span>
@@ -317,11 +318,31 @@
               </v-autocomplete>
             </v-col>
             <v-col cols="12" sm="6">
-              <eat-text-field
-                ref="eatHabitText"
+              <v-combobox
                 v-model="eatHabitText"
                 v-show="!isEditWindow"
-              />
+                label="weitere Allergien und Unverträglichkeiten (Freitext)"
+                prepend-icon="mdi-food"
+                clearable
+                multiple
+                chips
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Bitte trage hier ein, auf welche ' +
+                      'Besonderheiten die Küche achten muss. ' +
+                      'Trage hier nur etwas ein, wenn die Optionen ' +
+                      'des anderen Feldes nicht zutreffen' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-combobox>
             </v-col>
           </v-row>
           <v-divider />
@@ -334,11 +355,11 @@
                 <v-select
                   v-model="data.participantRole"
                   prepend-icon="mdi-tent"
-                  :items="roleItems"
+                  :items="getRoleItems"
                   :error-messages="participantRoleErrors"
                   item-text="name"
                   item-value="id"
-                  label="Bundesfahrt und Kaperfahrt?"
+                  label="Mosaikersleben und Kaperfahrt?"
                   required
                   @input="$v.data.participantRole.$touch()"
                 >
@@ -357,6 +378,20 @@
                     </v-tooltip>
                   </template>
                 </v-select>
+                <v-switch v-model="isDayGuest" label="Tagesgast?">
+                  <template slot="append">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon color="success" dark v-bind="attrs" v-on="on">
+                          mdi-help-circle-outline
+                        </v-icon>
+                      </template>
+                      <span>
+                        {{ 'Tagesgast?' }}
+                      </span>
+                    </v-tooltip>
+                  </template>
+                </v-switch>
               </v-container>
             </v-col>
           </v-row>
@@ -385,8 +420,6 @@ import axios from 'axios';
 // import moment from 'moment';
 import { mapGetters } from 'vuex';
 
-import EatTextField from '@/components/field/EatTextField.vue';
-
 const scoutGroupStartValidator = (groupObjOrGroupName) => {
   const validStarts = ['Meute', 'Sippe', 'Roverrunde'];
   if (!groupObjOrGroupName) {
@@ -400,9 +433,6 @@ const scoutGroupStartValidator = (groupObjOrGroupName) => {
 
 export default {
   props: ['isOpen'],
-  components: {
-    EatTextField,
-  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
@@ -412,6 +442,7 @@ export default {
     isLoading: true,
     isEditWindow: false,
     eatHabitText: [],
+    isDayGuest: false,
     data: {
       firstName: null,
       lastName: null,
@@ -428,31 +459,38 @@ export default {
     roleItems: [
       {
         id: 5,
-        name: 'Nur Mosaikersleben / Bundesfahrt',
+        name: 'Mosaikersleben',
+        dayGuest: true,
       },
       {
         id: 6,
-        name: 'Mosaikersleben / Bundesfahrt + Kaperfahrt / Bundesmeutenlager',
+        name: 'Mosaikersleben + Kaperfahrt',
+        dayGuest: true,
       },
       {
         name: 'Tagesgast: Nur Sonntag',
         id: 7,
+        dayGuest: false,
       },
       {
         name: 'Tagesgast: Nur Montag',
         id: 8,
+        dayGuest: false,
       },
       {
         name: 'Tagesgast: Nur Dienstag',
         id: 9,
+        dayGuest: false,
       },
       {
         name: 'Tagesgast: Sonntag auf Montag',
         id: 10,
+        dayGuest: false,
       },
       {
         name: 'Tagesgast: Montag auf Dienstag',
         id: 11,
+        dayGuest: false,
       },
     ],
     showError: false,
@@ -510,6 +548,9 @@ export default {
       'hierarchyMapping',
       'zipCodeMapping',
     ]),
+    getRoleItems() {
+      return this.roleItems.filter((item) => item.dayGuest !== this.isDayGuest);
+    },
     firstNameErrors() {
       const errors = [];
       if (!this.$v.data.firstName.$dirty) return errors;
@@ -583,10 +624,10 @@ export default {
         errors.push('Telefonnummer ist erforderlich.');
       }
       if (
-        !this.$v.data.phoneNumber.integer
-        || !this.$v.data.phoneNumber.minValue
+        !this.$v.data.phoneNumber.integer || // eslint-disable-line
+        !this.$v.data.phoneNumber.minValue // eslint-disable-line
       ) {
-        errors.push('Telefonnummer darf nur aus Zahlen bestehen.');
+        errors.push('Telefonnummer darf nur aus Zahlen bestehen.'); // eslint-disable-line
       }
       return errors;
     },
@@ -630,7 +671,8 @@ export default {
       return !!value || errorMsg;
     },
     validScoutGroup(value) {
-      const errorMsg = 'Der Gruppenname muss mit Meute, Sippe oder Roverrunde beginnen';
+      const errorMsg = // eslint-disable-line
+        'Der Gruppenname muss mit Meute, Sippe oder Roverrunde beginnen'; // eslint-disable-line
       return !!scoutGroupStartValidator(value) || errorMsg;
     },
     onClickOk() {
@@ -649,19 +691,18 @@ export default {
         age: null,
         registration: null,
         eatHabitType: [],
-
         scoutGroup: null,
         isGroupLeader: false,
         roles: [],
         participantRole: 5,
       };
       this.eatHabitText = [];
+      this.isDayGuest = false;
       this.isEditWindow = false;
       this.active = true;
       this.loadData();
     },
     openDialogEdit(input) {
-      this.data = [];
       this.data = input;
       this.active = true;
       this.isEditWindow = true;

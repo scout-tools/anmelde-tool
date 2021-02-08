@@ -13,7 +13,8 @@
             Daten bis zum Anmeldeschluss ({{ registrationDeadlineFormat }})
             problemlos verändern. <br />
             <br />
-            Deine folgenden Daten sind nur für das Planungsteam sichtbar <br />
+            Daten sind für die Administratoren und für die Lagerleitung nach deiner
+            expliziten Anmeldung sichtbar. <br />
             <br />
             Hinweis: Man muss sich als Fahrtenleitung selbst auch anmelden.
             <br />

@@ -2,11 +2,9 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container class="pa-5">
       <p>
-        Bitte trag hier die Daten jede_r einzelnen Teilnehmer_in ein. Diese
-        Daten sind für die Administratoren und für die Lagerleitung nach deiner
-        expliziten Anmeldung sichtbar.<br />
+        Bitte trag hier die Daten jede_r einzelnen Teilnehmer_in <b>einzeln</b> ein. <br />
         <br />
-        Du hast auch die Möglichkeit die Felder mithilfe einer Excel Tabelle
+        Du hast auch die Möglichkeit die Felder mit Hilfe einer Excel Tabelle
         vorauszufüllen.
       </p>
       <v-btn class="ma-2" color="success" @click="newUser">

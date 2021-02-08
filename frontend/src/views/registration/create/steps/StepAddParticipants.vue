@@ -6,11 +6,11 @@
         <span class="subtitle-1"> Gebe die Anzahl der Teilnehmenden an. </span>
       </v-row>
       <v-row class="mb-6">
-        <span class="subtitle-2">
-          Du kannst dies Antahl der Teilnehmenden bis zum 1. Mai 2021
-          anpassen. <br/>
-          Dafür kannst du dich dafür jederzeit wieder einloggen.</span
-        >
+        <p>
+          Du kannst dies Antahl der Teilnehmenden bis zum 1. Mai 2021 anpassen.
+          <br />
+          Dafür kannst du dich dafür jederzeit wieder einloggen.
+        </p>
       </v-row>
       <template v-for="(item, index) in getActiveAgeGroups">
         <v-row :key="`agegroup-${index}`">
@@ -76,12 +76,14 @@ export default {
     },
     getActiveAgeGroups() {
       if (
-        this.ageGroupMapping
-        && this.currentEvent
-        && this.currentEvent.ageGroups
-        && this.currentEvent.ageGroups.length
+        this.ageGroupMapping && // eslint-disable-line
+        this.currentEvent && // eslint-disable-line
+        this.currentEvent.ageGroups && // eslint-disable-line
+        this.currentEvent.ageGroups.length
       ) {
-        return this.ageGroupMapping.filter((item) => this.currentEvent.ageGroups.includes(item.id));
+        return this.ageGroupMapping.filter((item) =>
+          this.currentEvent.ageGroups.includes(item.id), // eslint-disable-line
+        );  // eslint-disable-line
       }
       return [];
     },
@@ -117,13 +119,11 @@ export default {
       //   };
       //   promises.push(axios.post(myUrl, paramsData));
       // });
-
       // Promise.all(promises).then(() => {
       //   this.$emit('nextStep');
       // });
     },
-    beforeTabShow() {
-    },
+    beforeTabShow() {},
   },
 };
 </script>

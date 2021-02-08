@@ -18,6 +18,7 @@
             item-text="name"
             item-value="id"
             label="Zelt"
+            dense
             persistent-hint
             prepend-icon="mdi-home"
           ></v-select>
@@ -30,22 +31,23 @@
             item-value="id"
             label="Gruppe"
             multiple
-            outlined
+            chips
             dense
             prepend-icon="mdi-human-male-female"
           ></v-select>
         </v-col>
         <v-col cols="2">
-          <v-btn icon @click="deleteTent(index)">
-            <v-icon>mdi-trash-can</v-icon>
+          <v-btn fab icon @click="deleteTent(index)">
+            <v-icon color="red">mdi-trash-can</v-icon>
           </v-btn>
         </v-col>
       </v-row>
+      <v-divider/>
       <v-row>
         <v-col>
-          <v-btn
-            elevation="5" @click="this.addTent"
-          >Nächstes Zelt
+          <v-btn color="success" @click="this.addTent">
+            <v-icon>mdi-plus</v-icon>
+            Weiteres Zelt
           </v-btn>
         </v-col>
       </v-row>

@@ -1,18 +1,18 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
     <v-container class="px-0" fluid>
-        <v-container>
-          <p>
-            Wir würden uns freuen, wenn Du hier noch weitere Heime
-            und/oder Lagerplätze einträgst, die sich für das Spiel eignen
-          </p>
+      <v-container>
+        <p>
+          Wir würden uns freuen, wenn Du hier noch weitere Heime und/oder
+          Lagerplätze einträgst, die sich für das Spiel eignen.
+        </p>
 
-          <v-divider class="my-2"/>
+        <v-divider class="my-2" />
 
-          <v-btn color="primary" @click="newLocation()">
-            Platz oder Haus vorschlagen
-          </v-btn>
-        </v-container>
+        <v-btn color="primary" @click="newLocation()">
+          Platz oder Haus vorschlagen
+        </v-btn>
+      </v-container>
       <v-divider class="my-3" />
 
       <prev-next-buttons
@@ -90,8 +90,7 @@ export default {
         description: this.data.description,
       };
     },
-    beforeTabShow() {
-    },
+    beforeTabShow() {},
   },
   created() {
     this.$store.commit('setDpvAddedLocation', false);

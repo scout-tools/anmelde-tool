@@ -18,7 +18,7 @@
             >
               <v-toolbar dark color="primary">
                 <v-toolbar-title>
-                  {{ 'Automatischer Login ist fehlgeschlagen' }}
+                  {{ 'Login' }}
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>

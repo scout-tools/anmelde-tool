@@ -1,17 +1,18 @@
 <template>
   <v-form ref="formParticipantGroupRole" v-model="valid">
     <v-container>
-      <span class="subtitle-2">
-        Du kannst die Anzahl der Teilnehmenden bis zum 01.Mai 2021 anpassen. <br>
+      <p>
+        Du kannst die Anzahl der Teilnehmenden bis zum 01.Mai 2021 anpassen.
         <br />
-        Dafür kannst du dich jederzeit wieder einloggen. <br>
-        <br>
-        Diese Anmeldung bezieht sich auf das gesamte Wochenende.
-        Personen, die früher fahren oder später kommen zählen als
-        vollwertige teilnehmende Person
-      </span
-      >
+        <br />
+        Dafür kannst du dich jederzeit wieder einloggen. <br />
+        <br />
+        Diese Anmeldung bezieht sich auf das gesamte Wochenende. Personen, die
+        früher fahren oder später kommen zählen als vollwertige teilnehmende
+        Person.
+      </p>
       <v-form v-model="valid">
+        <v-divider class="py-3 mt-5" />
         <v-row>
           <v-col col="12">
             <v-slider
@@ -22,19 +23,16 @@
               max="200"
               thumb-label="always"
             >
-              <template slot="append">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="success" dark v-bind="attrs" v-on="on">
-                      mdi-help-circle-outline
-                    </v-icon>
-                  </template>
-                  <span> {{tooltip.normal}} </span>
-                </v-tooltip>
-              </template>
             </v-slider>
+            <v-row class="ml-5">
+              <p>
+                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                {{ tooltip.normal }}
+              </p>
+            </v-row>
           </v-col>
         </v-row>
+        <v-divider class="py-4 ma-0" />
         <v-row>
           <v-col col="12">
             <v-slider
@@ -45,20 +43,16 @@
               max="30"
               thumb-label="always"
               type="number"
-            >
-              <template slot="append">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="success" dark v-bind="attrs" v-on="on">
-                      mdi-help-circle-outline
-                    </v-icon>
-                  </template>
-                  <span> {{tooltip.groupLeader}} </span>
-                </v-tooltip>
-              </template></v-slider
-            >
+            />
+            <v-row class="ml-5">
+              <p>
+                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                {{ tooltip.groupLeader }}
+              </p>
+            </v-row>
           </v-col>
         </v-row>
+        <v-divider class="py-4 ma-0" />
         <v-row>
           <v-col col="12">
             <v-slider
@@ -69,20 +63,16 @@
               max="5"
               thumb-label="always"
               type="number"
-            >
-              <template slot="append">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="success" dark v-bind="attrs" v-on="on">
-                      mdi-help-circle-outline
-                    </v-icon>
-                  </template>
-                  <span> {{tooltip.stammes}} </span>
-                </v-tooltip>
-              </template></v-slider
-            >
+            />
+            <v-row class="ml-5">
+              <p>
+                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                {{ tooltip.stammes }}
+              </p>
+            </v-row>
           </v-col>
         </v-row>
+        <v-divider class="py-4 ma-0" />
         <v-row>
           <v-col col="12">
             <v-slider
@@ -93,20 +83,16 @@
               max="50"
               thumb-label="always"
               type="number"
-            >
-              <template slot="append">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="success" dark v-bind="attrs" v-on="on">
-                      mdi-help-circle-outline
-                    </v-icon>
-                  </template>
-                  <span> {{tooltip.helper}} </span>
-                </v-tooltip>
-              </template></v-slider
-            >
+            />
+            <v-row class="ml-5">
+              <p>
+                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                {{ tooltip.helper }}
+              </p>
+            </v-row>
           </v-col>
         </v-row>
+        <v-divider class="py-4 ma-0" />
         <v-row>
           <v-col col="12">
             <v-slider
@@ -118,11 +104,11 @@
               type="number"
               readonly
             >
-            </v-slider
-            >
+            </v-slider>
           </v-col>
         </v-row>
       </v-form>
+      <v-divider class="py-4 ma-0" />
       {{
         `Du hast ${total} Personen angemeldet. Das entspricht einem Stammesbeitrag von maximal ${
           total * 10
@@ -156,10 +142,14 @@ export default {
   props: ['position', 'maxPos'],
   data: () => ({
     tooltip: {
-      normal: 'Das sind die allgemeinen Gruppenkinder, die aktiv am Spiel teilnehmen',
-      helper: 'Auch diese nehmen aktiv am Spiel teil, sollten aber Aufsichtspflichten erfüllen',
-      stammes: 'Hier sind lediglich wenige Menschen pro Stamm notwendig (max. 3, eher weniger), sie sind aktive Spieler_innen mit Koordinationsaufgaben',
-      groupLeader: 'Alle, die keine Lust haben auf der aktiven Spielseite zu stehen, sondern lieber hinter oder auf der Bühne die Fäden ziehen wollen, können sich hier melden',
+      normal:
+        'Das sind die allgemeinen Gruppenkinder, die aktiv am Spiel teilnehmen.',
+      helper:
+        'Auch diese nehmen aktiv am Spiel teil, sollten aber Aufsichtspflichten erfüllen.',
+      stammes:
+        'Hier sind lediglich wenige Menschen pro Stamm notwendig (max. 3, eher weniger), sie sind aktive Spieler_innen mit Koordinationsaufgaben.',
+      groupLeader:
+        'Alle, die keine Lust haben auf der aktiven Spielseite zu stehen, sondern lieber hinter oder auf der Bühne die Fäden ziehen wollen, können sich hier melden.',
       total: 'Many ist eine Tomate',
     },
     displayName: 'Essgewohnheiten',
@@ -207,8 +197,7 @@ export default {
     addMeatEaters() {
       this.$emit('nextStep');
     },
-    beforeTabShow() {
-    },
+    beforeTabShow() {},
   },
 };
 </script>

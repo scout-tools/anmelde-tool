@@ -11,17 +11,30 @@
               <v-card-text>
                 <v-container>
                   <div class="ma-2">
-                  <p class="ma-0">
-                    Hast du keinen Code bekommen? Gucke nochmal in der Einladung.
-                    Falls du nichts findest melde dich bei der Lagerleitung,
-                    deiner Bundesführung oder bei:
-                    <a href= "mailto:support@anmelde-tool.de">support@anmelde-tool.de</a>
-                  </p>
+                    <p class="ma-0">
+                      Hast du keinen Code bekommen? Gucke nochmal in der
+                      Einladung. Falls du nichts findest melde dich bei der
+                      Lagerleitung, deiner Bundesführung oder bei:
+                      <a href="mailto:support@anmelde-tool.de"
+                        >support@anmelde-tool.de</a
+                      >
+                    </p>
+                    <p class="mt-4">
+                      Bevor deine Anmeldung verbindlich ist, musst Du sie im
+                      letzten Schritt ausdrücklich bestätigen. Du kannst deinen
+                      Anmeldevorgang zu jedem Zeitpunkt abbrechen und später
+                      fortsetzen. Deine Daten kannst Du bis zum Anmeldeschluss
+                      verändern.
+                    </p>
                   </div>
-                <v-subheader v-if="isMobilMandatory" class="ma-0">
-                  <v-icon class="ma-2" color="error">mdi-alert-circle </v-icon>
-                  Für dieses Lager ist die Handynummer Pflicht.
-                </v-subheader>
+                  <v-subheader v-if="isMobilMandatory" class="ma-0">
+                    <v-icon class="ma-2" color="error"
+                      >mdi-alert-circle
+                    </v-icon>
+                    Für dieses Lager ist die Handynummer Pflicht. Fall du sie
+                    nicht eintragen hast, kannst du sie nur unter den User
+                    Einstellungen ändern.
+                  </v-subheader>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
@@ -55,6 +68,7 @@
                     <v-col cols="12" sm="6">
                       <v-text-field
                         readonly
+                        disabled
                         filled
                         v-model="items.scoutName"
                         label="Mein Name"
@@ -82,6 +96,7 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         readonly
+                        disabled
                         filled
                         v-model="getStammName"
                         label="Mein Stamm"
@@ -109,6 +124,7 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         readonly
+                        disabled
                         filled
                         v-model="mobileNumber"
                         label="Telefonnummer"
@@ -180,12 +196,13 @@ export default {
       showError: false,
       items: {},
       tooltip: {
-        email: 'Name falsch? Diesen kannst Du unter User ändern.',
-        scoutName: 'Stamm falsch? Diesen kannst Du unter User ändern.',
-        invitationCode:
-          'Der Code steht in der offizellen Anmeldung.',
-        mobileNumber: 'Deine Telefonnummer. Hinzufügen kannst du deine Nummer nur unter Users',
-        stammName: 'Dein Stammesname',
+        scoutName:
+          'Name falsch?. Ändern kannst du deinen Namen nur unter "User" (oben rechts)',
+        stammName:
+          'Stamm falsch?. Ändern kannst du deinen Stamm nur unter "User" (oben rechts)',
+        invitationCode: 'Der Code steht in der offizellen Anmeldung.',
+        mobileNumber:
+          'Telefonnummer fehlt oder ist falsch?. Hinzufügen kannst du deine Nummer nur unter "User" (oben rechts)',
       },
     };
   },
@@ -195,6 +212,7 @@ export default {
     },
     mobileNumber: {
       required: requiredIf((main) => { // eslint-disable-line
+        // eslint-disable-next-line
         return main.isMobilMandatory;
       }),
     },
@@ -269,10 +287,7 @@ export default {
     getData() {
       this.isLoading = true;
 
-      Promise.all([
-        this.loadUserExtended(),
-        this.getEventById(this.eventId),
-      ])
+      Promise.all([this.loadUserExtended(), this.getEventById(this.eventId)])
         .then((values) => {
           [this.items, this.event] = values;
 

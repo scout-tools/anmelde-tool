@@ -4,18 +4,18 @@
       <p class="ma-6">
         {{ placeholder }}
       </p>
-      <v-divider/>
+      <v-divider />
       <v-textarea
-      class="ma-6"
+        class="ma-6"
         label="Nachricht für den Partnerstamm"
         placeholder="Hier den Text eintippen"
       ></v-textarea>
 
       <v-subheader>
         Hinweis: Auch diese Nachricht kannst Du noch bis zum 01.Mai.2021
-        anpassen, wenn Du sie mit deinem Stamm gemeinsam schreiben möchtest
+        anpassen, wenn Du sie mit deinem Stamm gemeinsam schreiben möchtest.
       </v-subheader>
-        <v-divider class="my-3" />
+      <v-divider class="my-3" />
 
       <prev-next-buttons
         :position="position"
@@ -52,11 +52,12 @@ export default {
       value1: true,
       value2: false,
     },
-    placeholder: 'Hier ist Platz für eine persönliche Nachricht an euren '
-    + 'noch unbekannten Partnerstamm. Wenn du Lust hast, '
-    + 'dann schreibe auf, was euch ausmacht, was euer tollstes Fahrtenerlebnis war, '
-    + 'euer Lieblingslied, was euch an eurer Stadt besonders gefällt… und wie man dich als '
-    + 'Ansprechperson am besten erreichen kann, z.B. Mail / Whats App / Telegram / Brieftaube',
+    placeholder:
+      'Hier ist Platz für eine persönliche Nachricht an euren ' + // eslint-disable-line
+      'noch unbekannten Partnerstamm. Wenn du Lust hast, ' + // eslint-disable-line
+      'dann schreibe auf, was euch ausmacht, was euer tollstes Fahrtenerlebnis war, ' + // eslint-disable-line
+      'euer Lieblingslied, was euch an eurer Stadt besonders gefällt und wie man dich als ' + // eslint-disable-line
+      'Ansprechperson am besten erreichen kann, z.B. Mail / Whats App / Telegram / Brieftaube.', // eslint-disable-line
   }),
   computed: {
     ...mapGetters(['dpvAddedLocation']),
@@ -94,8 +95,7 @@ export default {
         description: this.data.description,
       };
     },
-    beforeTabShow() {
-    },
+    beforeTabShow() {},
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-combobox
     v-model="value"
-    label="Essgewohnheiten (Freitext)"
+    label="weitere Allergien und Unverträglichkeiten (Freitext)"
     prepend-icon="mdi-food"
     :items="items"
     clearable

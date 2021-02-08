@@ -58,19 +58,19 @@
                 <v-spacer />
                 <v-row>
                   <v-col cols="5">
-                  <v-btn color="primary" @click="onEmailLoginClick">
-                    Absenden
-                  </v-btn>
+                    <v-btn color="primary" @click="onEmailLoginClick">
+                      Absenden
+                    </v-btn>
                   </v-col>
                   <v-col cols="5">
-                  <v-btn
-                    text
-                    class="mb-3"
-                    @click="$router.push({ name: 'checkToken' })"
-                  >
-                    Zum Login Formular
-                    <v-icon>mdi-login</v-icon>
-                  </v-btn>
+                    <v-btn
+                      text
+                      small
+                      class="mb-3"
+                      @click="$router.push({ name: 'checkToken' })"
+                    >
+                      E-Mail Link klappt nicht?
+                    </v-btn>
                   </v-col>
                 </v-row>
               </v-container>
@@ -100,8 +100,8 @@
                 </v-row>
                 <v-divider class="my-5" />
                 <v-subheader class="my-3">
-                  Falls der Login-Button in der E-Mail nicht funktioniert, kannst
-                  du hier den Token eingeben und dich einloggen
+                  Falls der Login-Button in der E-Mail nicht funktioniert,
+                  kannst du hier den Token eingeben und dich einloggen
                 </v-subheader>
                 <v-row>
                   <v-col cols="12" sm="8">
