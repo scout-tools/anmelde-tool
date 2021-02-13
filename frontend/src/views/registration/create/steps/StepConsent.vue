@@ -7,16 +7,16 @@
             Hiermit melde ich <b> {{ myStamm }} </b> zum Lager
             <b> {{ currentEvent.name }} </b> an. <br />
             <br />
-            Bevor deine Anmeldung verbindlich ist, musst du sie im letzten
+            Damit deine Anmeldung verbindlich wird, musst du sie im letzten
             Schritt ausdrücklich bestätigen. Du kannst deinen Anmeldevorgang zu
-            jedem Zeitpunkt abbrechen und später fortsetzen. Du kannst deine
-            Daten bis zum Anmeldeschluss ({{ registrationDeadlineFormat }})
-            problemlos verändern. <br />
+            jedem Zeitpunkt unterbrechen und später fortsetzen. Die Daten kannst du
+            bis zum Anmeldeschluss ({{ registrationDeadlineFormat }})
+            anpassen und ergänzen. <br />
             <br />
             Daten sind für die Administratoren und für die Lagerleitung nach deiner
             expliziten Anmeldung sichtbar. <br />
             <br />
-            Hinweis: Man muss sich als Fahrtenleitung selbst auch anmelden.
+            Hinweis: Vergiss nicht dich als Fahrtenleitung auch selbst anzumelden.
             <br />
           </p>
         </span>

@@ -3,8 +3,10 @@
     <v-row class="mt-2" center>
         <span class="text-center ma-5 subtitle-1">
           <p>
-            Informationen zu An- und Abreise findet ihr auf
+            Weitere Informationen zu An- und Abreise findet ihr auf
             <a href="https://www.bundesfahrt.de" target="_blank">www.bundesfahrt.de</a>.
+            Bitte teile uns mit, wie viele Teilnehmer_innen jeweils auf welche Art
+            nach Mosaikersleben anreisen.
           </p>
         </span>
     </v-row>

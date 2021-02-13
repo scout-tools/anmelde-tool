@@ -9,7 +9,7 @@
       </p>
       <v-btn class="ma-2" color="success" @click="newUser">
         <v-icon left> mdi-plus </v-icon>
-        Teilnehmer_innen hinzufügen
+        Teilnehmer_in hinzufügen
       </v-btn>
       <v-btn class="ma-2" color="primary" @click="openExcelDialog">
         <v-icon left> mdi-plus </v-icon>

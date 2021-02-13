@@ -4,9 +4,18 @@
       <v-row class="mt-2">
         <span class="text-center ma-5 subtitle-1">
           <p>
-            Bitte gebt die Zelte an, die ihr in Mosaikersleben nutzen wollt
-            und ordnet alle Gruppen den Zelten zu. Wenn ihr andere Zelte als
-            Kohte oder Jurte nutzt, ordnet bitte eure Grundfläche einem der beiden Zelte zu.
+            Bitte teilt uns mit, welche Zelte ihr in Mosaikersleben
+            aufschlagen möchtet und ordnet alle Gruppen den Zelten zu,
+            wir reservieren euch dann schonmal die entsprechenden Liegeplätze.
+          </p>
+          <p style="font-size:10px">
+            Wenn ihr andere Zelte als Kohten oder Jurten nutzt, dann wählt
+            einfach das aus was der Grundfläche eures Zeltes am nächsten kommt.
+            Wenn ihr zum Beispiel in einem Kamel schlaft, dann ordnet ihr einer
+            Gruppe zwei Kohten zu. Es ist möglich ein Zelt mehreren Gruppen zuzuordnen
+            oder eine Gruppe auf mehrere Zelte aufzuteilen (z.B. die freien Rover).
+            Wählt dazu die Gruppe einfach bei mehreren Zelten aus oder umgekehrt, die
+            genaue Aufteilung ist für uns nicht wichtig und wird daher nicht erfragt.
           </p>
         </span>
       </v-row>

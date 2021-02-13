@@ -15,7 +15,7 @@
       </v-toolbar>
       <v-container>
         <v-subheader class="ma-5">
-          Bitte trage alle Daten deiner Teilnehmer_innen einzeln ein.
+          Ich melde folgende_n Teilnehmer_in an.
         </v-subheader>
         <v-form v-model="valid">
           <v-divider />
@@ -41,7 +41,7 @@
                     </template>
                     <span>
                       {{
-                        'Trag bitte den Vornamen des_der Teilnehmer_in ' +
+                        'Trage bitte den Vornamen des_der Teilnehmer_in ' +
                         'ein. Zweitnamen müssen nicht mit angegeben werden.'
                       }}
                     </span>
@@ -68,7 +68,7 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Trag bitte den vollständigen Nachnamen ein.' }}
+                      {{ 'Trage bitte den vollständigen Nachnamen ein.' }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -112,7 +112,7 @@
               <v-text-field
                 v-model="data.age"
                 :error-messages="ageErrors"
-                label="Alter"
+                label="Alter zum Lagerbeginn"
                 suffix="Jahre"
                 prepend-icon="mdi-human-child"
                 required
@@ -161,7 +161,7 @@
                       {{
                         'Bitte gib die zugehörige Gruppe zu deinem_r ' +
                         'Teilnehmer_in an. Wähle dazu ' +
-                        'eine Gruppe aus der Liste oder schreibe den ' +
+                        'eine vorhandene Gruppe aus der Liste oder trage den ' +
                         'Gruppennamen in das Feld ein. ' +
                         '(Neuanlage einer Gruppe beim editieren klappt noch nicht)'
                       }}
@@ -271,9 +271,10 @@
                     </template>
                     <span>
                       {{
-                        'Trag bitte eine Mobil- oder Festnetznummer ' +
-                        'ein unter der der_die Teilnehmer_in nach ' +
-                        'dem Lager erreichbar ist.'
+                        'Trage bitte eine Mobil- oder Festnetznummer ' +
+                        'ein unter der der_die Teilnehmer_in oder die ' +
+                        'Erziehungsberechtigten nach ' +
+                        'dem Lager erreichbar sind.'
                       }}
                     </span>
                   </v-tooltip>
@@ -336,9 +337,9 @@
                     </template>
                     <span>
                       {{ 'Bitte trage hier ein, auf welche ' +
-                      'Besonderheiten die Küche achten muss. ' +
+                      'Besonderheiten die Küche noch achten soll. ' +
                       'Trage hier nur etwas ein, wenn die Optionen ' +
-                      'des anderen Feldes nicht zutreffen' }}
+                      'des anderen Feldes nicht ausreichen' }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -347,7 +348,7 @@
           </v-row>
           <v-divider />
           <v-subheader>
-            Bitte wähle die Lager aus an denen der_die Teilnehmer_in teilnimmt.
+            Teilnahme
           </v-subheader>
           <v-row>
             <v-col cols="12" sm="6">
