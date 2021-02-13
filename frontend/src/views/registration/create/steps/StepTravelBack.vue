@@ -19,6 +19,9 @@
         title="Kaperfahrt / Bundesmeutenlager"
       />
     </v-card>
+    <p v-if="this.errorNotFinished" style="color:red">
+      Verteile alle deine Teilnehmer!
+    </p>
     <v-divider class="my-3" />
     <prev-next-buttons
       :position="position"
@@ -53,6 +56,7 @@ export default {
     participantRole: [5, 6],
     items: [],
     filteredItems: [],
+    errorNotFinished: false,
   }),
   validations: {
     data: {
