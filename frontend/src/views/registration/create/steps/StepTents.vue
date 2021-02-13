@@ -30,6 +30,7 @@
             dense
             persistent-hint
             prepend-icon="mdi-home"
+            :error-messages="typeError"
           ></v-select>
         </v-col>
         <v-col cols="5">
@@ -43,6 +44,7 @@
             chips
             dense
             prepend-icon="mdi-human-male-female"
+            :error-messages="groupError"
           ></v-select>
         </v-col>
         <v-col cols="2">
@@ -60,13 +62,15 @@
           </v-btn>
         </v-col>
       </v-row>
+      <v-row v-if="data.errorTent" style="color:red">
+        Lege mindestens ein Zelt an.
+      </v-row>
       <v-divider class="my-3" />
       <prev-next-buttons
         :position="position"
         :max-pos="maxPos"
         @nextStep="nextStep()"
         @prevStep="prevStep"
-        @submitStep="submitStep()"
       />
     </v-container>
     <v-container v-else>
@@ -106,6 +110,7 @@ export default {
       tents: [
         { i: 0, selectedType: '', selectedGroups: [] },
       ],
+      errorTent: false,
     },
   }),
   validations: {
@@ -121,6 +126,30 @@ export default {
     ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'ageGroupMapping', 'tentTypeMapping', 'scoutGroupMapping', 'registeredTents']),
     total() {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
+    },
+    typeError() {
+      let fehler = false;
+      this.data.tents.forEach((i) => {
+        if (i.selectedType === '' && !i.selectedType.$dirty) {
+          fehler = true;
+        }
+      });
+      if (fehler) {
+        return 'Dieses Feld muss ausgefüllt sein.';
+      }
+      return null;
+    },
+    groupError() {
+      let fehler = false;
+      this.data.tents.forEach((i) => {
+        if (i.selectedGroups.length < 1 && !i.selectedGroups.$dirty) {
+          fehler = true;
+        }
+      });
+      if (fehler) {
+        return 'Dieses Feld muss ausgefüllt sein.';
+      }
+      return null;
     },
   },
   methods: {
@@ -150,6 +179,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+      this.data.errorTent = false;
     },
     deleteTent(id) {
       console.log(id);
@@ -164,26 +194,28 @@ export default {
       return value > 0;
     },
     validate() {
-      this.$v.$touch();
       this.valid = !this.$v.$error;
+      if (this.data.tents.length < 1) {
+        this.valid = false;
+        this.data.errorTent = true;
+      } else {
+        this.data.tents.forEach((i) => {
+          if (i.selectedGroups.length < 1 || i.selectedType === '') {
+            this.valid = false;
+          }
+        });
+      }
     },
     prevStep() {
       this.$emit('prevStep');
     },
     nextStep() {
-      /*  this.validate();
-      if (!this.valid) {
-        return;
-      } */
-      this.createTent();
-      this.$emit('nextStep');
-    },
-    submitStep() {
       this.validate();
       if (!this.valid) {
         return;
       }
-      this.$emit('submit');
+      this.createTent();
+      this.$emit('nextStep');
     },
     createTent() {
       const dto = { registration: '', tentType: 1, usedByScoutGroups: [] };
