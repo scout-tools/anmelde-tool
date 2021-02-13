@@ -14,24 +14,13 @@
           </v-icon>
           Impressum
         </v-btn>
+
         <v-btn
           color="white"
           text
           rounded
           class="my-2"
-          @click="$router.push({ name: 'contact' })"
-        >
-          <v-icon fab color="white" class="mr-1">
-            mdi-account-box
-          </v-icon>
-          Kontakt
-        </v-btn>
-        <v-btn
-          color="white"
-          text
-          rounded
-          class="my-2"
-          @click="$router.push({ name: 'contact' })"
+          @click="$router.push({ name: 'datenschutz' })"
         >
           <v-icon fab color="white" class="mr-1">
             mdi-fingerprint
