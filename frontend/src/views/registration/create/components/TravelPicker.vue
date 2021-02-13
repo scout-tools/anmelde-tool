@@ -6,7 +6,7 @@
           <v-col cols="12">
             <v-card-text>
               {{ reached }} / {{ data.maxNumber }}
-              <v-icon v-if="this.reached === this.data.maxNumber"
+              <v-icon v-if="done"
                 >mdi-check</v-icon
               >
             </v-card-text>
@@ -207,6 +207,9 @@ export default {
         }
       });
       return sum;
+    },
+    done() {
+      return this.reached === this.data.maxNumber;
     },
   },
   methods: {

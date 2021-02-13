@@ -95,33 +95,37 @@ export default {
     },
     onSaveTravelHandler() {
       if (this.$refs.backTravelpicker) {
-        const methodOfTravel = this.$refs.backTravelpicker.getData();
+        if (this.$refs.backTravelpicker.done) {
+          const methodOfTravel = this.$refs.backTravelpicker.getData();
 
-        if (!methodOfTravel[0].id || methodOfTravel[0].id === 0) {
-          methodOfTravel.forEach((i) => {
-            // eslint-disable-next-line no-param-reassign
-            i.registration = parseInt(this.$route.params.id, 10);
-            // eslint-disable-next-line no-param-reassign
-            i.travelTag = this.travelTag;
-          });
-          console.log(methodOfTravel);
+          if (!methodOfTravel[0].id || methodOfTravel[0].id === 0) {
+            methodOfTravel.forEach((i) => {
+              // eslint-disable-next-line no-param-reassign
+              i.registration = parseInt(this.$route.params.id, 10);
+              // eslint-disable-next-line no-param-reassign
+              i.travelTag = this.travelTag;
+            });
+            console.log(methodOfTravel);
 
-          const promises = [];
-          const myUrl = `${this.API_URL}basic/method-of-travel/`;
-          methodOfTravel.forEach((i) => {
-            promises.push(axios.post(myUrl, i));
-          });
-          Promise.all(promises).then(() => {
-            this.$emit('nextStep');
-          });
+            const promises = [];
+            const myUrl = `${this.API_URL}basic/method-of-travel/`;
+            methodOfTravel.forEach((i) => {
+              promises.push(axios.post(myUrl, i));
+            });
+            Promise.all(promises).then(() => {
+              this.$emit('nextStep');
+            });
+          } else {
+            const promises = [];
+            methodOfTravel.forEach((i) => {
+              promises.push(axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i));
+            });
+            Promise.all(promises).then(() => {
+              this.$emit('nextStep');
+            });
+          }
         } else {
-          const promises = [];
-          methodOfTravel.forEach((i) => {
-            promises.push(axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i));
-          });
-          Promise.all(promises).then(() => {
-            this.$emit('nextStep');
-          });
+          this.errorNotFinished = true;
         }
       }
     },
