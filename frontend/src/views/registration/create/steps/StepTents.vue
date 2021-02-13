@@ -8,7 +8,7 @@
             aufschlagen möchtet und ordnet alle Gruppen den Zelten zu,
             wir reservieren euch dann schonmal die entsprechenden Liegeplätze.
           </p>
-          <p style="font-size:10px">
+          <p style="font-size:12px; line-height:110%">
             Wenn ihr andere Zelte als Kohten oder Jurten nutzt, dann wählt
             einfach das aus was der Grundfläche eures Zeltes am nächsten kommt.
             Wenn ihr zum Beispiel in einem Kamel schlaft, dann ordnet ihr einer
