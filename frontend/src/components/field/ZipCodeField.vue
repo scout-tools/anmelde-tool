@@ -42,7 +42,7 @@ export default {
     isLoading: false,
     value: null,
     search: null,
-    toolTip: 'Trag bitte den Wohnort oder die Postleitzahl'
+    toolTip: 'Trage bitte den Wohnort oder die Postleitzahl'
       + 'des Wohnorts ein und wähle die richtige Option aus.',
   }),
   validations: {

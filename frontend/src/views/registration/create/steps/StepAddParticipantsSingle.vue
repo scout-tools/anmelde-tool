@@ -2,18 +2,20 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container class="pa-5">
       <p>
-        Bitte trag hier die Daten jede_r einzelnen Teilnehmer_in <b>einzeln</b> ein. <br />
+        Ich melde folgende_n Teilnehmer_in an <br />
         <br />
-        Du hast auch die Möglichkeit die Felder mit Hilfe einer Excel Tabelle
-        vorauszufüllen.
+        Die Erfassung erfolgt pro Person. <br>
+        <br>
+        Alternativ kannst du hier die Excelliste hochladen,
+        wenn du die Daten dort bereits erfasst hast.
       </p>
       <v-btn class="ma-2" color="success" @click="newUser">
         <v-icon left> mdi-plus </v-icon>
-        Teilnehmer_in hinzufügen
+        Teilnehmer_innen hinzufügen
       </v-btn>
-      <v-btn class="ma-2" color="primary" @click="openExcelDialog">
+      <v-btn class="ma-2" color="primary" disabled @click="openExcelDialog">
         <v-icon left> mdi-plus </v-icon>
-        Excel Datei hochladen
+        Excel Datei hochladen (comming soon)
       </v-btn>
       <v-list v-if="!isLoading">
         <v-subheader>Teilnehmer_innen</v-subheader>
@@ -40,6 +42,11 @@
                 <v-icon color="red lighten-1">mdi-trash-can</v-icon>
               </v-btn>
             </v-list-item-action>
+          </v-list-item>
+          <v-list-item
+            v-if="!items[0].participantpersonalSet.length"
+          >
+            Bisher hast noch noch niemanden hinzugefügt.
           </v-list-item>
         </v-list-item-group>
       </v-list>

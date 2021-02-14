@@ -110,7 +110,6 @@ export default {
               // eslint-disable-next-line no-param-reassign
               i.travelTag = this.travelTag;
             });
-            console.log(methodOfTravel);
 
             const promises = [];
             const myUrl = `${this.API_URL}basic/method-of-travel/`;

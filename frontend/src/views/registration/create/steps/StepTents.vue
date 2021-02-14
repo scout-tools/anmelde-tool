@@ -2,21 +2,28 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container v-if="!isLoading">
       <v-row class="mt-2">
-        <span class="text-center ma-5 subtitle-1">
+        <span class="ma-5 subtitle-1">
           <p>
             Bitte teilt uns mit, welche Zelte ihr in Mosaikersleben
             aufschlagen möchtet und ordnet alle Gruppen den Zelten zu,
             wir reservieren euch dann schonmal die entsprechenden Liegeplätze.
           </p>
-          <p style="font-size:12px; line-height:110%">
-            Wenn ihr andere Zelte als Kohten oder Jurten nutzt, dann wählt
-            einfach das aus was der Grundfläche eures Zeltes am nächsten kommt.
-            Wenn ihr zum Beispiel in einem Kamel schlaft, dann ordnet ihr einer
-            Gruppe zwei Kohten zu. Es ist möglich ein Zelt mehreren Gruppen zuzuordnen
-            oder eine Gruppe auf mehrere Zelte aufzuteilen (z.B. die freien Rover).
-            Wählt dazu die Gruppe einfach bei mehreren Zelten aus oder umgekehrt, die
-            genaue Aufteilung ist für uns nicht wichtig und wird daher nicht erfragt.
-          </p>
+  <v-expansion-panels flat>
+    <v-expansion-panel>
+      <v-expansion-panel-header>
+        Habt ihr andere Zelte? (klicke hier zum aufklappen)
+      </v-expansion-panel-header>
+      <v-expansion-panel-content>
+        Wenn ihr andere Zelte als Kohten oder Jurten nutzt, dann wählt
+        einfach das aus was der Grundfläche eures Zeltes am nächsten kommt.
+        Wenn ihr zum Beispiel in einem Kamel schlaft, dann ordnet ihr einer
+        Gruppe zwei Kohten zu. Es ist möglich ein Zelt mehreren Gruppen zuzuordnen
+        oder eine Gruppe auf mehrere Zelte aufzuteilen (z.B. die freien Rover).
+        Wählt dazu die Gruppe einfach bei mehreren Zelten aus oder umgekehrt, die
+        genaue Aufteilung ist für uns nicht wichtig und wird daher nicht erfragt.
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-expansion-panels>
         </span>
       </v-row>
       <v-row align="center" v-for="(tent, index) in this.data.tents" :key="index">
@@ -30,7 +37,7 @@
             dense
             persistent-hint
             prepend-icon="mdi-home"
-            :error-messages="typeError"
+            :error-messages="selectedTypeError(index)"
           ></v-select>
         </v-col>
         <v-col cols="5">
@@ -44,7 +51,7 @@
             chips
             dense
             prepend-icon="mdi-human-male-female"
-            :error-messages="groupError"
+            :error-messages="selectedGroupsError(index)"
           ></v-select>
         </v-col>
         <v-col cols="2">
@@ -89,7 +96,7 @@
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { required, minLength, minValue } from 'vuelidate/lib/validators';
+import { required, minLength } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
@@ -104,21 +111,28 @@ export default {
     valid: true,
     isLoading: false,
     data: {
-      groups: [
-        { id: 1, name: '' },
-      ],
       tents: [
-        { i: 0, selectedType: '', selectedGroups: [] },
+        { i: 0, selectedType: null, selectedGroups: null },
       ],
       errorTent: false,
     },
   }),
   validations: {
     data: {
-      required,
-      minLength: minLength(1),
-      $each: {
-        minValue: minValue(1),
+      tents: {
+        required,
+        minLength: minLength(2),
+        $each: {
+          selectedType: {
+            required,
+          },
+          selectedGroups: {
+            required,
+            $each: {
+              required,
+            },
+          },
+        },
       },
     },
   },
@@ -127,32 +141,23 @@ export default {
     total() {
       return Object.values(this.data).reduce((pv, cv) => parseInt(pv, 10) + parseInt(cv, 10), 0);
     },
-    typeError() {
-      let fehler = false;
-      this.data.tents.forEach((i) => {
-        if (i.selectedType === '' && !i.selectedType.$dirty) {
-          fehler = true;
-        }
-      });
-      if (fehler) {
-        return 'Dieses Feld muss ausgefüllt sein.';
-      }
-      return null;
-    },
-    groupError() {
-      let fehler = false;
-      this.data.tents.forEach((i) => {
-        if (i.selectedGroups.length < 1 && !i.selectedGroups.$dirty) {
-          fehler = true;
-        }
-      });
-      if (fehler) {
-        return 'Dieses Feld muss ausgefüllt sein.';
-      }
-      return null;
-    },
   },
   methods: {
+    selectedTypeError(index) {
+      const errors = [];
+      if (!this.$v.data.tents.$each[index].selectedType.required) {
+        errors.push('Zelt ist erforderlich');
+      }
+      return errors;
+    },
+    selectedGroupsError(index) {
+      const errors = [];
+
+      if (!this.$v.data.tents.$each[index].selectedGroups.required) {
+        errors.push('Gruppe ist erforderlich');
+      }
+      return errors;
+    },
     getData() {
       this.isLoading = true;
       Promise.all([
@@ -173,7 +178,7 @@ export default {
         });
     },
     addTent() {
-      this.data.tents.push({ i: 0, selectedType: '', selectedGroups: [] });
+      this.data.tents.push({ i: 0, selectedType: null, selectedGroups: null });
       this.getGroups()
         .then((res) => this.$store.commit('setScoutGroupMapping', res))
         .catch((error) => {
@@ -182,7 +187,6 @@ export default {
       this.data.errorTent = false;
     },
     deleteTent(id) {
-      console.log(id);
       axios
         .delete(`${this.API_URL}basic/tent/${this.data.tents[id].i}/`)
         .catch((err) => {
@@ -195,22 +199,13 @@ export default {
     },
     validate() {
       this.valid = !this.$v.$error;
-      if (this.data.tents.length < 1) {
-        this.valid = false;
-        this.data.errorTent = true;
-      } else {
-        this.data.tents.forEach((i) => {
-          if (i.selectedGroups.length < 1 || i.selectedType === '') {
-            this.valid = false;
-          }
-        });
-      }
     },
     prevStep() {
       this.$emit('prevStep');
     },
     nextStep() {
       this.validate();
+
       if (!this.valid) {
         return;
       }
@@ -218,19 +213,20 @@ export default {
       this.$emit('nextStep');
     },
     createTent() {
-      const dto = { registration: '', tentType: 1, usedByScoutGroups: [] };
-      dto.registration = this.$route.params.id;
+      const dto = {
+        registration: this.$route.params.id,
+        tentType: 1,
+        usedByScoutGroups: [],
+      };
       this.data.tents.forEach((i) => {
         if (i.i.isEmpty || i.i === 0) {
           dto.tentType = i.selectedType;
           i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
           axios.post(`${this.API_URL}basic/tent/`, dto);
-          dto.usedByScoutGroups = [];
         } else {
           dto.tentType = i.selectedType;
           i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
           axios.put(`${this.API_URL}basic/tent/${i.i}/`, dto);
-          dto.usedByScoutGroups = [];
         }
       });
       return null;
@@ -247,7 +243,7 @@ export default {
     },
     convertSavedTents() {
       this.registeredTents.forEach((i) => {
-        const savedTent = { selectedType: '', selectedGroups: [], i: -1 };
+        const savedTent = { selectedType: null, selectedGroups: null, i: -1 };
         this.tentTypeMapping.forEach((type) => {
           if (i.tentType === type.id) {
             savedTent.selectedType = type.id;

@@ -348,6 +348,7 @@ export default {
     API_URL: process.env.VUE_APP_API,
     active: false,
     valid: true,
+    switch1: false,
     data: {
       name: '',
       description: '',

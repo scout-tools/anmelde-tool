@@ -137,6 +137,11 @@
                       </v-text-field>
                     </v-col>
                     <v-col cols="12">
+                        <router-link to="/datenschutz">
+                          Link zur Datenschutzerklärung
+                        </router-link>
+                    </v-col>
+                    <v-col cols="12">
                       <v-checkbox
                         v-model="checkbox"
                         label="Ich habe die Datenschutzerklärung gelesen und akzeptiert!"
