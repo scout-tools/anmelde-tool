@@ -12,7 +12,7 @@
                 <v-container>
                   <v-subheader class="ma-5">
                     Hier musst du deine persönlichen Daten angeben. Dein Stamm
-                    sowie dein Pfadfindername sind wichtig, damit du dich bei
+                    sowie dein Fahrtenleitung sind wichtig, damit du dich bei
                     Lagern anmelden kannst. Fülle die Felder deswegen unbedingt
                     aus. Die Handynummer ist freiwillig und hilft dich zu
                     kontaktieren.
@@ -21,7 +21,7 @@
                     <v-col cols="12" sm="6">
                       <v-text-field
                         v-model="scoutName"
-                        label="Pfadfindername*"
+                        label="Fahrtenleitung*"
                         prepend-icon="mdi-account-circle"
                         @change="updateData"
                         :error-messages="scoutNameErrors"
@@ -137,7 +137,10 @@
                       </v-text-field>
                     </v-col>
                     <v-col cols="12">
-                        <router-link to="/datenschutz">
+                        <router-link
+                        to="/datenschutz"
+                        target="_blank"
+                        >
                           Link zur Datenschutzerklärung
                         </router-link>
                     </v-col>
