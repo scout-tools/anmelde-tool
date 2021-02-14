@@ -6,7 +6,7 @@
           <v-row v-if="dpvAddedLocation">
             <p>
               Sehr cool. Wo wollt ihr das stadt und spiel spielen?.
-              Du hast ein Heim / Lagerplatz hinzugefügt.
+              Du hast ein Heim / Zeltplatz hinzugefügt.
             </p>
             <v-radio-group v-model="radioGroup">
               <v-radio

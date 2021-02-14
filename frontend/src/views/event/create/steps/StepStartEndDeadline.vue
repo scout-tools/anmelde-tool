@@ -49,7 +49,7 @@
             <v-text-field
               v-model="data.startTime"
               :disabled="!dataRangeIsFilled"
-              label="Wähle die Lagereröffnung"
+              label="Wähle den Tag der Eröffnungsrunde"
               prepend-icon="mdi-clock-time-four-outline"
               readonly
               required

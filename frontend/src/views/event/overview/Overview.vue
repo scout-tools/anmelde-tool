@@ -5,12 +5,12 @@
         <v-layout column>
           <v-card v-if="!isLoading">
             <v-card-title class="text-center justify-center py-6">
-              Zu diesen Lagern kannst du deinen Stamm anmelden
+              Zu diesen Fahrten kannst du deinen Stamm anmelden
             </v-card-title>
             <v-list subheader two-line>
               <v-subheader inset>
-                Nicht lange zögern. Melde deinen Stamm zu einem dieser
-                Lager an.
+                Nicht lange zögern. Melde deinen Stamm zu einem diesen
+                Fahrten an.
               </v-subheader>
 
               <v-btn
@@ -20,7 +20,7 @@
                 @click="$router.push({ name: 'createEvent' })"
               >
                 <v-icon left>mdi-calendar-plus</v-icon>
-                Neues Lager erstellen
+                Neue Fahrt erstellen
               </v-btn>
                 <v-divider/>
               <template v-for="(item, index) in getItems">
@@ -75,7 +75,7 @@
                             </v-icon>
                           </v-btn>
                         </template>
-                        <span>Lageranmeldung</span>
+                        <span>Fahrtenanmeldung</span>
                       </v-tooltip>
                     </router-link>
                   </v-list-item-action>
@@ -103,7 +103,7 @@
                             <v-icon fab color="primary"> mdi-pencil </v-icon>
                           </v-btn>
                         </template>
-                        <span>Lageranmeldung bearbeiten</span>
+                        <span>Fahrtenanmeldung bearbeiten</span>
                       </v-tooltip>
                     </router-link>
                   </v-list-item-action>
@@ -123,7 +123,7 @@
                             <v-icon fab color="primary"> mdi-chart-bar </v-icon>
                           </v-btn>
                         </template>
-                        <span>Lagerstatistik</span>
+                        <span>Fahrtenstatistik</span>
                       </v-tooltip>
                     </router-link>
                   </v-list-item-action>
@@ -167,7 +167,7 @@ export default {
     userExtendedItems: [],
     headers: [
       { text: 'Id', value: 'id' },
-      { text: 'Fahrt/Lager', value: 'name' },
+      { text: 'Fahrt', value: 'name' },
       { text: 'Beschreibung', value: 'description' },
       { text: 'Actions', value: 'action', sortable: false },
     ],

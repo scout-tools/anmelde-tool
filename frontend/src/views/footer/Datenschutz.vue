@@ -46,13 +46,13 @@ export default {
         question: 'Datenspeicherung für „eingeloggten User“',
         answer:
           'Um sich einzuloggen müssen wir deine persönlichen Daten dauerhaft speichern. Es dient dem Zweck des Anmeldetools, dass wir deine Anmeldung dir zuordnen können. Dazu speichern wir:' + // eslint-disable-line
-          '<ul><li>Deine E-Mail-Adresse</li><li>Deinen Pfadfindernamen</li><li>Ggf. deine Telefonnummer (die Lagerleitung entscheidet darüber, ob das Feld verpflichtend ist)</li></ul>',
+          '<ul><li>Deine E-Mail-Adresse</li><li>Deinen Pfadfindernamen</li><li>Ggf. deine Telefonnummer (die Fahrtenleitung entscheidet darüber, ob das Feld verpflichtend ist)</li></ul>',
       },
       {
         question: 'Empfänger / Weitergabe von Daten (an Dritte )',
         answer:
           'Deine Persönlichen Daten sind grundsätzlich für zwei Personengruppen sichtbar: <br> <br>' + // eslint-disable-line
-          '<b>Lagerleitungen:</b> Jede Lagerleitung hat Zugriff auf deinen Namen, deine E-Mail-Adresse und deine Telefonnummer nachdem zu dich für das Lager ausdrücklich als Verantwortlicher eingetragen hast.<br> <br>' + // eslint-disable-line
+          '<b>Fahrtenleitungen:</b> Jede Fahrtenleitung hat Zugriff auf deinen Namen, deine E-Mail-Adresse und deine Telefonnummer nachdem zu dich für die Fahrt ausdrücklich als Verantwortlicher eingetragen hast.<br> <br>' + // eslint-disable-line
           '<b>Administratoren vom Anmelde-Tool:</b> Um den ordnungsgemäßen Betrieb des Anmelde-Tools zu gewährleisten haben ausdrücklich vom Pfadfinder-Bundesamt Köln e.V. ausgewählte Personen Zugriff auf die Daten. Diese Personen können wechseln und werden protokolliert. <br> <br>' + // eslint-disable-line
           '<b>Dritte:</b> Darüberhinaus erfolg keine Datenweitergabe an Dritte .',
       },

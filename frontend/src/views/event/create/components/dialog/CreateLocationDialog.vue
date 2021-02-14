@@ -9,7 +9,7 @@
         <v-btn icon dark @click="active = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Haus / Lagerplatz hinzufügen</v-toolbar-title>
+        <v-toolbar-title>Haus / Zeltplatz hinzufügen</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-container>

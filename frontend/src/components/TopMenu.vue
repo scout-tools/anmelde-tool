@@ -17,7 +17,7 @@
         v-if="isAuthenticated"
         @click="$router.push({ name: 'eventOverview' })"
       >
-        Lager
+        Fahrten
         <v-icon>mdi-view-list</v-icon>
       </v-tab>
       <v-spacer></v-spacer>

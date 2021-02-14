@@ -23,7 +23,7 @@
             @click="$router.push({ name: 'loginParticipants' })"
           >
             <v-icon left>mdi-calendar-plus</v-icon>
-            Zu einem Lager Anmelden
+            Zu einer Fahrt Anmelden
           </v-btn>
         </v-layout>
       </v-parallax>
@@ -63,8 +63,8 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Schneller und einfacher war eine Anmeldung für ein Pfadfinder_innen
-                    Lager noch nie.
+                    Schneller und einfacher war eine Anmeldung für ein Fahrt
+                    noch nie.
                     Die Anmeldung deiner Teilnehmer klappt innerhalb
                     von Minuten. Kein extra Passwort.
                     Der Anmeldeprozess ist gut erklärt, so dass Keine
