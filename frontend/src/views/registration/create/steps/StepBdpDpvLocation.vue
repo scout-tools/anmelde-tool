@@ -6,7 +6,7 @@
           <span>
             <b
               >Das Heim/Der Lagerplatz meines Stammes kann für die Aktion
-              genutzt werden
+              genutzt werden.
             </b>
             <br />
             <br />

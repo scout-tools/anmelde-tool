@@ -14,7 +14,6 @@
             anpassen und ergänzen. <br />
             <br />
             Die folgenden Daten sind nur für das Planungsteam und die Administrator_innen
-            und für die Lagerleitung
             sichtbar <br />
           </p>
           <p>

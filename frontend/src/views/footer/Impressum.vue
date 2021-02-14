@@ -6,6 +6,7 @@
           <h2 class="py-4">Angaben gemäß § 5 TMG</h2>
 
           <p class="font-weight-medium">
+            Pfadfinder-Bundesamt Köln e.V. <br>
             Deutscher Pfadfinderbund Mosaik <br />
             Robert-Perthel-Str. 79<br />
             50739 Köln <br />
@@ -13,17 +14,16 @@
 
           <p>
             Der Deutsche Pfadfinderbund Mosaik hat die Rechtsform eines nicht
-            eingetragenen Vereins. Vorstand im Sinne des § 26 BGB sind je zwei
-            Mitglieder der Bundesführung gemeinschaftlich. Bundesführer
-            (Vorsitzender): David Miron, Römerstr. 440c, 50321 Brühl
-            Stellvertretende Bundesführer_innen (Stellvertretende Vorsitzende):
-            Laurenz Sterk, Theresa Schuhmann, Tobias Michaely, Verena Schmidt
+            eingetragenen Vereins.
           </p>
 
           <p>
             Rechtsträger aller Bundesstellen, Bundeseinrichtungen und
-            Bundesunternehmungen ist: Pfadfinder-Bundesamt Köln e.V.,
-            Robert-Perthel-Str. 79, 50739 Köln VR 8654, Amtsgericht Köln
+            Bundesunternehmungen ist: <br> <br>
+            Pfadfinder-Bundesamt Köln e.V., <br>
+            Robert-Perthel-Str. 79, <br>
+            50739 Köln <br>
+            VR 8654, Amtsgericht Köln<br>
           </p>
         </div>
       </v-card>

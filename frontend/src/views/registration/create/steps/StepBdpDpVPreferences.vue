@@ -4,7 +4,10 @@
       <v-expand-transition>
         <v-container>
           <v-row v-if="dpvAddedLocation">
-            <p>Sehr cool. Du hast ein Heim / Lagerplatz hinzugefügt.</p>
+            <p>
+              Sehr cool. Wo wollt ihr das stadt und spiel spielen?.
+              Du hast ein Heim / Lagerplatz hinzugefügt.
+            </p>
             <v-radio-group v-model="radioGroup">
               <v-radio
                 label="Wir wollen bei uns im Heim bleiben und besucht werden."
@@ -17,6 +20,11 @@
               ></v-radio>
               <v-radio label="Uns ist beides recht." value="3"></v-radio>
             </v-radio-group>
+          </v-row>
+          <v-row v-else>
+            <p>
+              Wo wollt ihr das stadt und spiel spielen?
+            </p>
           </v-row>
         </v-container>
       </v-expand-transition>
@@ -90,7 +98,7 @@ export default {
     radioGroup2: 0,
     snackbar: false,
     textSnackbar:
-      'Wir geben uns größte Mühe alles zu beachten, aber können nichts versprechen. ',
+      'Wir geben uns größte Mühe alle Wünsche zu berücksichtigen, können aber nichts versprechen.',
     data: {
       value1: true,
       value2: false,

@@ -46,15 +46,15 @@ export default {
         question: 'Datenspeicherung für „eingeloggten User“',
         answer:
           'Um sich einzuloggen müssen wir deine persönlichen Daten dauerhaft speichern. Es dient dem Zweck des Anmeldetools, dass wir deine Anmeldung dir zuordnen können. Dazu speichern wir:' + // eslint-disable-line
-          '<ul><li>Deine E-Mail-Adresse</li><li>Deinen Pfadfindernamen</li><li>Deine Telefonnummer (die Lagerleitung entscheidet darüber, ob das Feld verpflichtend ist)</li></ul>',
+          '<ul><li>Deine E-Mail-Adresse</li><li>Deinen Pfadfindernamen</li><li>Ggf. deine Telefonnummer (die Lagerleitung entscheidet darüber, ob das Feld verpflichtend ist)</li></ul>',
       },
       {
-        question: 'Empfänger / Weitergabe von Daten (an dritte)',
+        question: 'Empfänger / Weitergabe von Daten (an Dritte )',
         answer:
           'Deine Persönlichen Daten sind grundsätzlich für zwei Personengruppen sichtbar: <br> <br>' + // eslint-disable-line
           '<b>Lagerleitungen:</b> Jede Lagerleitung hat Zugriff auf deinen Namen, deine E-Mail-Adresse und deine Telefonnummer nachdem zu dich für das Lager ausdrücklich als Verantwortlicher eingetragen hast.<br> <br>' + // eslint-disable-line
-          '<b>Administratoren vom Anmelde-Tool:</b> Um den ordnungsgemäßen Betrieb des Anmelde-Tools zu gewährleisten haben ausdrücklich vom Pfadfinder Bundesamt Köln e.V. ausgewählte Personen Zugriff auf die Daten. Diese Personen können wechseln und werden protokolliert. <br> <br>' + // eslint-disable-line
-          '<b>Dritte:</b> Darüberhinaus erfolg keine Datenweitergabe an dritte.',
+          '<b>Administratoren vom Anmelde-Tool:</b> Um den ordnungsgemäßen Betrieb des Anmelde-Tools zu gewährleisten haben ausdrücklich vom Pfadfinder-Bundesamt Köln e.V. ausgewählte Personen Zugriff auf die Daten. Diese Personen können wechseln und werden protokolliert. <br> <br>' + // eslint-disable-line
+          '<b>Dritte:</b> Darüberhinaus erfolg keine Datenweitergabe an Dritte .',
       },
       {
         question: 'Verschlüsselung',
@@ -84,7 +84,7 @@ export default {
         question: 'EU-US Privacy Shield',
         answer:
           'Amazon ist ein US-Amerikanisches Unternehmen und seitdem der Europäische Gerichtshof das Privacy-Shield für ungültig erklärt hat ist die Rechtslage undurchsichtiger geworden. <br> <br>' + // eslint-disable-line
-          'Amazon beschreibt die Rechtslage auf der Internetseite das Thema wie folgt: <br><br>' + // eslint-disable-line
+          'Amazon beschreibt die Rechtslage auf der Internetseite wie folgt: <br><br>' + // eslint-disable-line
           '<i>AWS bietet Kunden eine Reihe von Möglichkeiten zur Einhaltung der europäischen Datenschutzgesetze. Beispielsweise können sich Kunden auf den AWS GDPR-Datenverarbeitungszusatz (Data Processing Addendum) verlassen, der die von der Artikel-29-Datenschutzgruppe genehmigten Standardvertragsklauseln enthält (Data Processing Addendum). Der Zusatz zur Datenverarbeitung steht allen AWS-Kunden zur Verfügung, die Daten aus der EU in eine der AWS-Regionen in der ganzen Welt übertragen, ob nun in die USA oder nicht. Der Zusatz zur Datenverarbeitung bietet Kunden die Sicherheit, dass AWS die Daten der Kunden nach den gleichen hohen Sicherheits- und Datenschutzstandards behandelt, die sie auch in der EU erhalten würden.</i><br>' + // eslint-disable-line
           'Weitere Informationen findest du <a href="https://aws.amazon.com/de/compliance/eu-us-privacy-shield-faq/">hier</a>',
       },
@@ -96,8 +96,8 @@ export default {
       {
         question: 'Verantwortlich für die Datenverarbeitung',
         answer:
-          'Deutscher Pfadfinderbund Mosaik,<br>' + // eslint-disable-line
           'Pfadfinder-Bundesamt Köln e.V.<br>' + // eslint-disable-line
+          'Deutscher Pfadfinderbund Mosaik,<br>' + // eslint-disable-line
           'Robert-Perthel-Str. 79<br>' + // eslint-disable-line
           '50739 Köln<br>' + // eslint-disable-line
           'Telefon: 02 21 – 52 40 18<br>',

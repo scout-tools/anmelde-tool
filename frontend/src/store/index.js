@@ -18,7 +18,7 @@ export default new Vuex.Store({
     eatHabitTypeMapping: [],
     travelTypeTypeMapping: [],
     tentTypeMapping: [{
-      id: 1, name: 'Kothe',
+      id: 1, name: 'Kohte',
     }],
     currentEventParticipants: [],
     currentEventCash: [],

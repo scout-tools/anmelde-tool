@@ -19,12 +19,12 @@
               Einloggen
             </v-card-title>
             <v-card-text class="mt-5">
-              <v-subheader
-                >Gebe hier deine E-Mail-Adresse an. Den Link zur Anmeldung und
+              <p v-if="!emailSend && !isEmailFieldIsLoading">
+                Gebe hier deine E-Mail-Adresse an. Den Link zur Anmeldung und
                 den Aktionen bekommst du dann per Mail. Für ein erneutes
                 Einloggen benutze den Link aus der Mail oder gebe deine E-Mail
-                einfach erneut an.</v-subheader
-              >
+                einfach erneut an.
+              </p>
               <v-container v-if="!emailSend && !isEmailFieldIsLoading">
                 <v-row>
                   <v-col cols="12">
@@ -62,16 +62,7 @@
                       Absenden
                     </v-btn>
                   </v-col>
-                  <v-col cols="5">
-                    <v-btn
-                      text
-                      small
-                      class="mb-3"
-                      @click="$router.push({ name: 'checkToken' })"
-                    >
-                      E-Mail Link klappt nicht?
-                    </v-btn>
-                  </v-col>
+                  <v-col cols="5"> </v-col>
                 </v-row>
               </v-container>
 
@@ -92,48 +83,75 @@
                     }}
                   </v-col>
                 </v-row>
-                <v-row>
-                  <v-btn color="primary" @click="emailSend = false">
-                    <v-icon left> mdi-refresh </v-icon>
-                    Mit einer anderen E-Mail einloggen
-                  </v-btn>
-                </v-row>
                 <v-divider class="my-5" />
-                <v-subheader class="my-3">
-                  Falls der Login-Button in der E-Mail nicht funktioniert,
-                  kannst du hier den Token eingeben und dich einloggen
-                </v-subheader>
-                <v-row>
-                  <v-col cols="12" sm="8">
-                    <v-text-field
-                      v-model="token"
-                      color="primary"
-                      x-large
-                      placeholder="'Token aus E-Mail hier eingeben'"
-                    >
-                      <v-icon left>mdi-key</v-icon>
-                      Token aus der E-Mail eingeben
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="3">
-                    <v-btn
-                      icon
-                      outlined
-                      @click="
-                        $router.push({
-                          name: 'checkToken',
-                          query: {
-                            username: email,
-                            password: token,
-                          },
-                        })
-                      "
-                    >
-                      <v-icon> mdi-login </v-icon>
-                    </v-btn>
-                  </v-col>
-                </v-row>
               </v-container>
+              <v-expansion-panels
+                v-if="emailSend && !isEmailFieldIsLoading"
+                flat
+              >
+                <v-expansion-panel>
+                  <v-expansion-panel-header
+                    style="background: rgba(200, 54, 54, 0.3)"
+                  >
+                    Login klappt nicht? (Klicke hier)
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content
+                    style="background: rgba(200, 54, 54, 0.3)"
+                  >
+                    <v-btn color="primary" @click="emailSend = false">
+                      <v-icon left> mdi-refresh </v-icon>
+                      Mit einer anderen E-Mail einloggen
+                    </v-btn>
+                    <v-container>
+                      <p class="my-3">
+                        Falls der Login-Button in der E-Mail nicht funktioniert,
+                        kannst du hier den Token eingeben und dich einloggen
+                      </p>
+                      <v-row>
+                        <v-col cols="12" sm="8">
+                          <v-text-field
+                            v-model="token"
+                            color="primary"
+                            x-large
+                            placeholder="'Token aus E-Mail hier eingeben'"
+                          >
+                            <v-icon left>mdi-key</v-icon>
+                            Token aus der E-Mail eingeben
+                          </v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="3">
+                          <v-btn
+                            icon
+                            outlined
+                            @click="
+                              $router.push({
+                                name: 'checkToken',
+                                query: {
+                                  username: email,
+                                  password: token,
+                                },
+                              })
+                            "
+                          >
+                            <v-icon> mdi-login </v-icon>
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                      <v-divider />
+                      <v-row>
+                        <v-btn
+                          text
+                          small
+                          class="mb-3"
+                          @click="$router.push({ name: 'checkToken' })"
+                        >
+                          E-Mail Link klappt nicht?
+                        </v-btn>
+                      </v-row>
+                    </v-container>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
             </v-card-text>
           </v-card>
         </v-col>

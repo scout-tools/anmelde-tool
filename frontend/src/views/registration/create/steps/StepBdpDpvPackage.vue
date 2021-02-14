@@ -30,8 +30,8 @@
                   </template>
                   <span>
                     {{
-                      'Trage bitte den Vornamen des_der Teilnehmer_in ' +
-                      'ein. Zweitnamen müssen nicht mit angegeben werden.'
+                      'Gib hier den Vornamen ein, ' +
+                      'an den das Paket geschickt wird.'
                     }}
                   </span>
                 </v-tooltip>
@@ -57,7 +57,9 @@
                     </v-icon>
                   </template>
                   <span>
-                    {{ 'Trage bitte den vollständigen Nachnamen ein.' }}
+                    {{
+                      'Gib hier den Nachnamen ein, an den das Paket geschickt wird.'
+                    }}
                   </span>
                 </v-tooltip>
               </template>

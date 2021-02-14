@@ -34,7 +34,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gallo' }}
+                        {{ 'Gib hier den Namen der Schlafstätte ein.' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -130,7 +130,7 @@
                       </template>
                       <span>
                         {{
-                          'Wie viele Schlafkapazitäten hattet ihr im September 2020'
+                          'Wie viele Schlafplätze hattet ihr im September 2020 drinnen.'
                         }}
                       </span>
                     </v-tooltip>
@@ -154,7 +154,7 @@
                       </template>
                       <span>
                         {{
-                          'Wie viele Schlafkapazitäten hattet ihr im September 2020'
+                          'Wie viele Schlafplätze hattet ihr im September 2020 draußen'
                         }}
                       </span>
                     </v-tooltip>
@@ -214,7 +214,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Genaue Adresse des Ortes' }}
+                        {{ 'Kosten pro Person pro Nacht' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -235,7 +235,8 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Genaue Adresse des Ortes' }}
+                        {{ 'Gib hier die Fixkosten ein, die für ein ' +
+                        'Wochenende entstehen (Strom, Miete, etc.).' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -248,7 +249,7 @@
                 ></v-switch>
               </v-col>
             </v-row>
-            <v-subheader class="my-0"> Kontakt </v-subheader>
+            <v-subheader class="my-0"> Kontakt Haus-/Zeltplatzvermietung </v-subheader>
             <v-divider class="my-0" />
             <v-row>
               <v-col cols="12" sm="6" md="4">
