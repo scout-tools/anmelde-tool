@@ -427,13 +427,8 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
     travel_method_detailed = serializers.SerializerMethodField('get_travel_method_detailed')
     tents = serializers.SerializerMethodField('get_tents')
     tents_detailed = serializers.SerializerMethodField('get_tents_detailed')
+    responsible_persons = serializers.SerializerMethodField('get_responsible_persons')
 
-    responsible_persons = serializers.SlugRelatedField(
-        many=True,
-        read_only=False,
-        queryset=User.objects.all(),
-        slug_field='username'
-    )
 
     scout_organisation = serializers.SlugRelatedField(
         many=False,
@@ -467,6 +462,12 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
             'tents',
             'tents_detailed'
         )
+
+    def get_responsible_persons(self, obj):
+        result = obj.responsible_persons.values('username',
+                                                "userextended__scout_name",
+                                                "userextended__mobile_number")
+        return result
 
     def get_total_participants(self, obj):
         num_group = obj.participantgroup_set.aggregate(num=Coalesce(Sum('number_of_persons'), 0))['num']
