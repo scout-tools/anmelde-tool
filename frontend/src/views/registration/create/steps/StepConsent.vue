@@ -7,14 +7,13 @@
             Hiermit melde ich <b> {{ myStamm }} </b> zum Lager
             <b> {{ currentEvent.name }} </b> an. <br />
             <br />
-            Bevor deine Anmeldung verbindlich ist, musst du sie im letzten
+            Bevor deine Anmeldung verbindlich wird, musst du sie im letzten
             Schritt ausdrücklich bestätigen. Du kannst deinen Anmeldevorgang zu
             jedem Zeitpunkt unterbrechen und später fortsetzen. Die Daten kannst du
             bis zum Anmeldeschluss ({{ registrationDeadlineFormat }}) jederzeit
             anpassen und ergänzen. <br />
             <br />
             Die folgenden Daten sind nur für das Planungsteam und die Administrator_innen
-            und für die Lagerleitung
             sichtbar <br />
           </p>
           <p>
