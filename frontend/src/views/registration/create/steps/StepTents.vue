@@ -6,7 +6,7 @@
           <p>
             Bitte teilt uns mit, welche Zelte ihr in Mosaikersleben
             aufschlagen möchtet und ordnet alle Gruppen den Zelten zu,
-            wir reservieren euch dann schonmal die entsprechenden Liegeplätze.
+            wir reservieren euch dann schon mal die besten Liegeplätze.
           </p>
   <v-expansion-panels flat>
     <v-expansion-panel>
