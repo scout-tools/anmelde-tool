@@ -86,7 +86,7 @@
             <v-row class="mt-2" center>
               <span class="text-center ma-5 subtitle-1">
                 <p>
-                  Bitte gebt die Anzahl Lunchpakete an,die ihr für die Rück-
+                  Bitte gebt die Anzahl Lunchpakete an, die ihr für die Rück-
                   oder Weiterreise benötigt. Damit helft ihr der Küche bei
                   der genaueren Planung.
                 </p>

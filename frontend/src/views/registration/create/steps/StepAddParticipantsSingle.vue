@@ -11,7 +11,7 @@
       </p>
       <v-btn class="ma-2" color="success" @click="newUser">
         <v-icon left> mdi-plus </v-icon>
-        Teilnehmer_innen hinzufügen
+        Teilnehmer_in hinzufügen
       </v-btn>
       <v-btn class="ma-2" color="primary" disabled @click="openExcelDialog">
         <v-icon left> mdi-plus </v-icon>
@@ -46,7 +46,7 @@
           <v-list-item
             v-if="!items[0].participantpersonalSet.length"
           >
-            Bisher hast noch noch niemanden hinzugefügt.
+            Bisher hast du noch niemanden hinzugefügt.
           </v-list-item>
         </v-list-item-group>
       </v-list>
