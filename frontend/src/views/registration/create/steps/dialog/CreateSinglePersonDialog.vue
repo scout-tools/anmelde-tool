@@ -162,8 +162,7 @@
                         'Bitte gib die zugehörige Gruppe zu deinem_r ' +
                         'Teilnehmer_in an. Wähle dazu ' +
                         'eine vorhandene Gruppe aus der Liste aus oder trage den ' +
-                        'Gruppennamen in das Feld ein. ' +
-                        '(Neuanlage einer Gruppe beim editieren klappt noch nicht)'
+                        'Gruppennamen in das Feld ein.'
                       }}
                     </span>
                   </v-tooltip>
@@ -336,7 +335,7 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Bitte trage hier ein, auf welche ' +
+                      {{ 'Trage bitte hier ein, auf welche ' +
                       'Besonderheiten die Küche noch achten soll. ' +
                       'Trage hier nur etwas ein, wenn die Optionen ' +
                       'des anderen Feldes nicht ausreichen' }}
@@ -469,7 +468,7 @@ export default {
         dayGuest: true,
       },
       {
-        name: 'Sonntag 08.08',
+        name: 'Sonntag, 08.08.',
         id: 7,
         dayGuest: false,
       },
@@ -550,7 +549,7 @@ export default {
       'zipCodeMapping',
     ]),
     getParticipantRoleLabel() {
-      return this.isDayGuest ? 'Tagesgast: Welchen Tag' : 'Mosaikersleben und/oder Kaperfahrt';
+      return this.isDayGuest ? 'Tagesgast: Welcher Tag?' : 'Mosaikersleben und/oder Kaperfahrt';
     },
     getRoleItems() {
       return this.roleItems.filter((item) => item.dayGuest !== this.isDayGuest);
