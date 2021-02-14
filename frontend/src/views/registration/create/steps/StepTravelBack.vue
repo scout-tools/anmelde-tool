@@ -4,8 +4,10 @@
     <v-row class="mt-2" center>
         <span class="text-center ma-5 subtitle-1">
           <p>
-            Informationen zu An- und Abreise findet ihr auf
+            Weitere Informationen zu An- und Abreise findet ihr auf
             <a href="https://www.bundesfahrt.de" target="_blank">www.bundesfahrt.de</a>.
+            Bitte teile uns mit, wie viele Teilnehmer_innen jeweils auf welche Art
+            aus Mosaikersleben abreisen.
           </p>
         </span>
     </v-row>
@@ -17,6 +19,9 @@
         title="Kaperfahrt / Bundesmeutenlager"
       />
     </v-card>
+    <p v-if="this.errorNotFinished" style="color:red">
+      Verteile alle deine Teilnehmer!
+    </p>
     <v-divider class="my-3" />
     <prev-next-buttons
       :position="position"
@@ -51,6 +56,7 @@ export default {
     participantRole: [5, 6],
     items: [],
     filteredItems: [],
+    errorNotFinished: false,
   }),
   validations: {
     data: {
@@ -93,33 +99,36 @@ export default {
     },
     onSaveTravelHandler() {
       if (this.$refs.backTravelpicker) {
-        const methodOfTravel = this.$refs.backTravelpicker.getData();
+        if (this.$refs.backTravelpicker.done) {
+          const methodOfTravel = this.$refs.backTravelpicker.getData();
 
-        if (!methodOfTravel[0].id || methodOfTravel[0].id === 0) {
-          methodOfTravel.forEach((i) => {
-            // eslint-disable-next-line no-param-reassign
-            i.registration = parseInt(this.$route.params.id, 10);
-            // eslint-disable-next-line no-param-reassign
-            i.travelTag = this.travelTag;
-          });
-          console.log(methodOfTravel);
+          if (!methodOfTravel[0].id || methodOfTravel[0].id === 0) {
+            methodOfTravel.forEach((i) => {
+              // eslint-disable-next-line no-param-reassign
+              i.registration = parseInt(this.$route.params.id, 10);
+              // eslint-disable-next-line no-param-reassign
+              i.travelTag = this.travelTag;
+            });
 
-          const promises = [];
-          const myUrl = `${this.API_URL}basic/method-of-travel/`;
-          methodOfTravel.forEach((i) => {
-            promises.push(axios.post(myUrl, i));
-          });
-          Promise.all(promises).then(() => {
-            this.$emit('nextStep');
-          });
+            const promises = [];
+            const myUrl = `${this.API_URL}basic/method-of-travel/`;
+            methodOfTravel.forEach((i) => {
+              promises.push(axios.post(myUrl, i));
+            });
+            Promise.all(promises).then(() => {
+              this.$emit('nextStep');
+            });
+          } else {
+            const promises = [];
+            methodOfTravel.forEach((i) => {
+              promises.push(axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i));
+            });
+            Promise.all(promises).then(() => {
+              this.$emit('nextStep');
+            });
+          }
         } else {
-          const promises = [];
-          methodOfTravel.forEach((i) => {
-            promises.push(axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i));
-          });
-          Promise.all(promises).then(() => {
-            this.$emit('nextStep');
-          });
+          this.errorNotFinished = true;
         }
       }
     },

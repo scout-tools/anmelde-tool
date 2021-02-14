@@ -30,7 +30,7 @@
                   </template>
                   <span>
                     {{
-                      'Trag bitte den Vornamen des_der Teilnehmer_in ' +
+                      'Trage bitte den Vornamen des_der Teilnehmer_in ' +
                       'ein. Zweitnamen müssen nicht mit angegeben werden.'
                     }}
                   </span>
@@ -57,7 +57,7 @@
                     </v-icon>
                   </template>
                   <span>
-                    {{ 'Trag bitte den vollständigen Nachnamen ein.' }}
+                    {{ 'Trage bitte den vollständigen Nachnamen ein.' }}
                   </span>
                 </v-tooltip>
               </template>
@@ -82,7 +82,7 @@
                     </v-icon>
                   </template>
                   <span>
-                    {{ 'Trag bitte Straße und Hausnummer ein.' }}
+                    {{ 'Trage bitte Straße und Hausnummer ein.' }}
                   </span>
                 </v-tooltip>
               </template>
@@ -106,7 +106,7 @@
                     </v-icon>
                   </template>
                   <span>
-                    {{ 'Trag bitte den Adresszusatz ein.' }}
+                    {{ 'Trage bitte den Adresszusatz ein.' }}
                   </span>
                 </v-tooltip>
               </template>
