@@ -24,7 +24,7 @@
               </v-icon>
             </template>
             <span>
-              {{ 'Gallo' }}
+              {{ 'Wähle das Geburtsdatum' }}
             </span>
           </v-tooltip>
         </template>
@@ -46,7 +46,7 @@ export default {
   data: () => ({
     date: new Date('Jan 2, 2010').toISOString().substr(0, 10),
     menu: false,
-    tooltip: 'Gallo',
+    tooltip: 'Wähle das Geburtsdatum',
   }),
   watch: {
     menu(val) {

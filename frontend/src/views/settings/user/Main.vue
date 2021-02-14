@@ -220,7 +220,7 @@ export default {
         email:
           'Die E-Mail nutzen wir für die Kommunikation mit dem Tool und für Rückfragen.',
         mobileNumber:
-          'Hier kannst du freiwillig deine Handynummer angeben. Für manche Lager ist sie allerdings Pflicht. ',
+          'Die Handynummer ist freiwillig und hilft dich zu kontaktieren (Für manche Lager ist sie Pflicht)',
         scoutOrganisation: 'Mit dem Stift kannst Du deinen Stamm auswählen.',
       },
       user: null,
