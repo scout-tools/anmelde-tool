@@ -6,7 +6,7 @@
           <v-col cols="12">
             <v-card-text>
               {{ reached }} / {{ data.maxNumber }}
-              <v-icon v-if="this.reached === this.data.maxNumber"
+              <v-icon v-if="done"
                 >mdi-check</v-icon
               >
             </v-card-text>
@@ -30,7 +30,7 @@
                 data.methodOfTravels.filter((i) => i.travelType === 2)[0]
                   .numberOfPersons
               "
-              label="PKW"
+              label="Mit dem Auto"
               required
               prepend-icon="mdi-car"
             />
@@ -41,7 +41,7 @@
                 data.methodOfTravels.filter((i) => i.travelType === 3)[0]
                   .numberOfPersons
               "
-              label="OEPNV"
+              label="Mit ÖPNV"
               required
               prepend-icon="mdi-bus-stop"
             />
@@ -52,7 +52,7 @@
                 data.methodOfTravels.filter((i) => i.travelType === 4)[0]
                   .numberOfPersons
               "
-              label="zu Fuss"
+              label="Zu Fuß"
               required
               prepend-icon="mdi-hiking"
             />
@@ -63,7 +63,7 @@
                 data.methodOfTravels.filter((i) => i.travelType === 5)[0]
                   .numberOfPersons
               "
-              label="Wasserweg"
+              label="Auf dem Wasserweg"
               required
               prepend-icon="mdi-ship-wheel"
             />
@@ -87,7 +87,7 @@
               <span class="text-center ma-5 subtitle-1">
                 <p>
                   Bitte gebt die Anzahl Lunchpakete an,die ihr für die Rück-
-                  oder Weiterreise nutzen wollt. Damit helft ihr der Küche bei
+                  oder Weiterreise benötigt. Damit helft ihr der Küche bei
                   der genaueren Planung.
                 </p>
               </span>
@@ -97,7 +97,7 @@
                 data.methodOfTravels.filter((i) => i.travelType === 6)[0]
                   .numberOfPersons
               "
-              label="Lunchpaket"
+              label="Lunchpakete"
               required
               prepend-icon="mdi-food-apple"
             />
@@ -207,6 +207,9 @@ export default {
         }
       });
       return sum;
+    },
+    done() {
+      return this.reached === this.data.maxNumber;
     },
   },
   methods: {
