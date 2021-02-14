@@ -25,7 +25,7 @@ export default {
           },
           {
             getter: (item) => item.role,
-            label: 'Lager',
+            label: 'Fahrt',
           },
         ],
         colFields: [

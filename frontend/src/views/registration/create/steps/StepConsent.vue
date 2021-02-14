@@ -4,7 +4,7 @@
       <v-row class="mt-2">
         <span class="text-left subtitle-1">
           <p>
-            Hiermit melde ich <b> {{ myStamm }} </b> zum Lager
+            Hiermit melde ich <b> {{ myStamm }} </b> zur
             <b> {{ currentEvent.name }} </b> an. <br />
             <br />
             Bevor deine Anmeldung verbindlich wird, musst du sie im letzten

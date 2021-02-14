@@ -15,7 +15,7 @@
       </v-btn>
       <v-btn class="ma-2" color="primary" disabled @click="openExcelDialog">
         <v-icon left> mdi-plus </v-icon>
-        Excel Datei hochladen (comming soon)
+        Excel Datei hochladen (coming soon)
       </v-btn>
       <v-list v-if="!isLoading">
         <v-subheader>Teilnehmer_innen</v-subheader>

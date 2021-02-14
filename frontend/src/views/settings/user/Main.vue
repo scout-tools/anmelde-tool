@@ -11,9 +11,9 @@
               <v-card-text>
                 <v-container>
                   <v-subheader class="ma-5">
-                    Hier musst du deine persönlichen Daten angeben. Dein Stamm
-                    sowie dein Pfadfindername sind wichtig, damit du dich bei
-                    Lagern anmelden kannst. Fülle die Felder deswegen unbedingt
+                    Hier musst du deine persönlichen Daten angeben. Deine Stammes-Zugehörigkeit
+                    sowie deinen Fahrtenname sind wichtig, damit du dich oder deinen Stamm bei
+                    Fahrten anmelden kannst. Fülle die Felder deswegen unbedingt
                     aus. Die Handynummer ist freiwillig und hilft dich zu
                     kontaktieren.
                   </v-subheader>
@@ -21,7 +21,7 @@
                     <v-col cols="12" sm="6">
                       <v-text-field
                         v-model="scoutName"
-                        label="Pfadfindername*"
+                        label="Fahrtenleitung*"
                         prepend-icon="mdi-account-circle"
                         @change="updateData"
                         :error-messages="scoutNameErrors"
@@ -137,7 +137,10 @@
                       </v-text-field>
                     </v-col>
                     <v-col cols="12">
-                        <router-link to="/datenschutz">
+                        <router-link
+                        to="/datenschutz"
+                        target="_blank"
+                        >
                           Link zur Datenschutzerklärung
                         </router-link>
                     </v-col>
@@ -220,7 +223,7 @@ export default {
         email:
           'Die E-Mail nutzen wir für die Kommunikation mit dem Tool und für Rückfragen.',
         mobileNumber:
-          'Die Handynummer ist freiwillig und hilft dich zu kontaktieren (Für manche Lager ist sie Pflicht)',
+          'Die Handynummer ist freiwillig und hilft dich zu kontaktieren (Für manche Fahrten ist sie Pflicht)',
         scoutOrganisation: 'Mit dem Stift kannst Du deinen Stamm auswählen.',
       },
       user: null,

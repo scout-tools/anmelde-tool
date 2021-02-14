@@ -87,14 +87,14 @@ class Command(BaseCommand):
             user.is_staff = True
             user.save()
 
-        if not UserModel.objects.filter(username='hagi-lagerleitung@bundesfahrt.de').exists():
-            user = UserModel.objects.create_user('hagi-lagerleitung@bundesfahrt.de', password='hagi1234')
+        if not UserModel.objects.filter(username='hagi-fhrtenleitung@bundesfahrt.de').exists():
+            user = UserModel.objects.create_user('hagi-fahrtenleitung@bundesfahrt.de', password='hagi1234')
             user.is_superuser = False
             user.is_staff = True
             user.save()
 
-        if not UserModel.objects.filter(username='hagi-lagerleitung@dpv.de').exists():
-            user = UserModel.objects.create_user('hagi-lagerleitung@dpv.de', password='hagi1234')
+        if not UserModel.objects.filter(username='hagi-fahrtenleitung@dpv.de').exists():
+            user = UserModel.objects.create_user('hagi-fahrtenleitung@dpv.de', password='hagi1234')
             user.is_superuser = False
             user.is_staff = True
             user.save()
@@ -111,8 +111,8 @@ class Command(BaseCommand):
             user.is_staff = True
             user.save()
 
-        if not UserModel.objects.filter(username='ingo@lagerleitung.de').exists():
-            user = UserModel.objects.create_user('ingo@lagerleitung.de', password='ingo1234')
+        if not UserModel.objects.filter(username='ingo@fahrtenleitung.de').exists():
+            user = UserModel.objects.create_user('ingo@fahrtenleitung.de', password='ingo1234')
             user.is_superuser = False
             user.is_staff = True
             user.save()

@@ -112,7 +112,7 @@
               <v-text-field
                 v-model="data.age"
                 :error-messages="ageErrors"
-                label="Alter zum Lagerbeginn"
+                label="Alter zum Fahrtenbeginn"
                 suffix="Jahre"
                 prepend-icon="mdi-human-child"
                 required
@@ -129,7 +129,7 @@
                     <span>
                       {{
                         'Trage bitte das Alter des_der Teilnehmer_in ' +
-                        'zum Start des Lagers ein (4. bzw. 7. August 2021).'
+                        'zum Start der Fahrt ein (4. bzw. 7. August 2021).'
                       }}
                     </span>
                   </v-tooltip>
@@ -273,7 +273,7 @@
                         'Trage bitte eine Mobil- oder Festnetznummer ' +
                         'ein unter der der_die Teilnehmer_in oder die ' +
                         'Erziehungsberechtigten nach ' +
-                        'dem Lager erreichbar sind.'
+                        'der Fahrt erreichbar sind.'
                       }}
                     </span>
                   </v-tooltip>

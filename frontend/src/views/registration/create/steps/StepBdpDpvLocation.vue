@@ -5,7 +5,7 @@
         <v-container>
           <span>
             <b
-              >Das Heim/Der Lagerplatz meines Stammes kann für die Aktion
+              >Das Heim/Der Zeltplatz meines Stammes kann für die Aktion
               genutzt werden.
             </b>
             <br />
@@ -57,7 +57,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
-  displayName: 'Unser Heim/Lagerplatz',
+  displayName: 'Unser Heim/Zeltplatz',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,

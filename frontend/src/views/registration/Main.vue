@@ -13,8 +13,8 @@
                   <div class="ma-2">
                     <p class="ma-0">
                       Hast du keinen Code bekommen? Gucke nochmal in der
-                      Einladung. Falls du nichts findest melde dich bei der
-                      Lagerleitung, deiner Bundesführung oder bei:
+                      Einladung. Falls du nichts findest melde dich beim
+                      Veranstalter, deiner Bundesführung oder bei:
                       <a href="mailto:support@anmelde-tool.de"
                         >support@anmelde-tool.de</a
                       >
@@ -31,7 +31,7 @@
                     <v-icon class="ma-2" color="error"
                       >mdi-alert-circle
                     </v-icon>
-                    Für dieses Lager ist die Handynummer Pflicht. Fall du sie
+                    Für diese Fahrt ist die Handynummer Pflicht. Falls du sie
                     nicht eintragen hast, kannst du sie nur unter den Profil
                     Einstellungen ändern.
                   </v-subheader>
@@ -267,7 +267,7 @@ export default {
       if (!this.$v.mobileNumber.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.mobileNumber.required &&
-        errors.push('Telefonnummer ist für dieses Lager verpflichtend. Wechsele ins Profil um die Telefonnummer hinzuzufügen');
+        errors.push('Telefonnummer ist für diese Fahrt verpflichtend. Wechsele ins Profil um die Telefonnummer hinzuzufügen');
       return errors;
     },
   },

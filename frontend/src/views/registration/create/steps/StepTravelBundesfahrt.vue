@@ -15,7 +15,7 @@
         ref="bundesfahrtTravelpicker"
         :travelTag=this.travelTag
         :participantRole=this.participantRole
-        title="Kaperfahrt / Bundesmeutenlager"
+        title="Kaperfahrt"
       />
     </v-card>
     <p v-if="this.errorNotFinished" style="color:red">
