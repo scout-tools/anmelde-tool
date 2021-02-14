@@ -479,8 +479,10 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
         return obj.event.participation_fee * self.total_participants
 
     def get_group_participants(self, obj):
-        result = obj.participantgroup_set.values('created_at__date').annotate(
-            registered=Coalesce(Sum('number_of_persons'), 0)).order_by('-created_at__date')
+        result = obj.participantgroup_set.values('participant_role_id').annotate(
+            registered=Coalesce(Sum('number_of_persons'), 0)).values(
+                "participant_role_id__name", "participant_role_id", "registered"
+            )
 
         return result
 

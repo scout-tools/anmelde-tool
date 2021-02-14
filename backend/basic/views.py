@@ -13,7 +13,6 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
     TentType, EatHabit, TravelTag
-
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
