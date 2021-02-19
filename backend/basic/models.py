@@ -61,10 +61,8 @@ class EventLocation(TimeStampMixin):
     contact_phone = models.CharField(max_length=30, blank=True)
     registration = models.ForeignKey("Registration", on_delete=models.PROTECT, null=True, blank=True)
     is_public = models.BooleanField(default=0)
-    capacity_indoor = models.IntegerField(blank=True, null=True)
-    capacity_outdoor = models.IntegerField(blank=True, null=True)
-    capacity_indoor_corona = models.IntegerField(blank=True, null=True)
-    capacity_outdoor_corona = models.IntegerField(blank=True, null=True)
+    capacity = models.IntegerField(blank=True, null=True)
+    capacity_corona = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
