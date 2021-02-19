@@ -32,7 +32,7 @@ import CreateLocationDialog from '@/views/event/create/components/dialog/CreateL
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepBdpDpvLocation',
+  name: 'StepBdpDpvLocationSuggention',
   displayName: 'Heim-/Zeltplatzvorschläge',
   props: ['position', 'maxPos'],
   components: {

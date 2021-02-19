@@ -84,7 +84,7 @@ import CreateLocationDialog from '@/views/event/create/components/dialog/CreateL
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepBdpDpvLocation',
+  name: 'StepBdpDpvPreference',
   displayName: 'Wohin geht es?',
   props: ['position', 'maxPos'],
   components: {
