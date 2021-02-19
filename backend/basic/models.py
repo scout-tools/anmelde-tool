@@ -59,6 +59,7 @@ class EventLocation(TimeStampMixin):
     contact_name = models.CharField(max_length=30, blank=True)
     contact_email = models.CharField(max_length=30, blank=True)
     contact_phone = models.CharField(max_length=30, blank=True)
+    registration = models.ForeignKey("Registration", on_delete=models.PROTECT, null=True, blank=True)
     is_public = models.BooleanField(default=0)
     capacity_indoor = models.IntegerField(blank=True, null=True)
     capacity_outdoor = models.IntegerField(blank=True, null=True)
