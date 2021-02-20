@@ -106,8 +106,8 @@ export default {
     radioGroup2: 0,
     value: '0',
     event_location_types: [
-      { state: 'Zeltplatz', abbr: 1 },
-      { state: 'Heim', abbr: 2 },
+      { state: 'Eigener Zeltplatz', abbr: 1 },
+      { state: 'Eigener Heim', abbr: 2 },
     ],
     show_event_location_types: [1, 2],
     addOwnLocation: 0,
@@ -117,7 +117,7 @@ export default {
   validations: {},
   watch: {
     location(value) {
-      this.$store.commit('setDpvAddedLocation', !!value.length);
+      this.$store.commit('setDpvAddedLocation', value.length);
     },
   },
   methods: {
