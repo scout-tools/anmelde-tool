@@ -36,7 +36,7 @@ import CreateLocationDialog from '@/views/event/create/components/dialog/CreateL
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepBdpDpvLocation',
+  name: 'StepBdpDpvTextForStamm',
   displayName: 'Nachricht an euren Partnerstamm',
   props: ['position', 'maxPos'],
   components: {

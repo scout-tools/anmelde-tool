@@ -16,5 +16,23 @@
             "name": "Heim",
             "description": ""
         }
+    },
+    {
+        "model": "basic.EventLocationType",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "name": "Zeltplatz Vorschlag",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.EventLocationType",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "name": "Heim Vorschlag",
+            "description": ""
+        }
     }
 ]

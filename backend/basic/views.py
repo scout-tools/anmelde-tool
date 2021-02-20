@@ -64,6 +64,8 @@ class AgeGroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 class EventLocationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('registration',)
     queryset = EventLocation.objects.all()
     serializer_class = EventLocationSerializer
 
