@@ -13,7 +13,6 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
     TentType, EatHabit, TravelTag
-
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
@@ -107,12 +106,13 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 
         return super().create(request, *args, **kwargs)
 
-    def update(self, request, pk=None):
-        queryset = Event.objects.all()
-        event = get_object_or_404(queryset, pk=request.data['event'])
-        self.add_responsible_person(event, request, pk)
+    def update(self, request, pk=None, partial=False):
+        if "responsible_persons" in request.data or not partial:
+            queryset = Event.objects.all()
+            event = get_object_or_404(queryset, pk=request.data['event'])
+            self.add_responsible_person(event, request, pk)
 
-        response = super().update(request, pk)
+        response = super().update(request, pk, partial=partial)
 
         if 'is_confirmed' in response.data and response.data['is_confirmed']:
             create_registration_summary(response.data)

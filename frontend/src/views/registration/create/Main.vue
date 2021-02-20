@@ -116,6 +116,9 @@ export default {
     };
   },
   computed: {
+    id() {
+      return this.$route.params.id;
+    },
     steps() {
       // Bundesfahrt
       if (
@@ -171,13 +174,12 @@ export default {
       }
     },
     onRegistrationConfirmed() {
+      this.callConfirmRegistration();
       this.$router.push({ name: 'eventOverview' });
     },
     callConfirmRegistration() {
-      return axios.post(`${process.env.VUE_APP_API}basic/event/`, {
-        responsiblePersons: ['robert@hratuga.de'],
-        event: 1,
-        scoutOrganisation: 39,
+      return axios.patch(`${process.env.VUE_APP_API}basic/registration/${this.id}/`, {
+        is_confirmed: true,
       });
     },
     getEvent(id) {

@@ -21,6 +21,7 @@ export default new Vuex.Store({
       id: 1, name: 'Kohte',
     }],
     currentEventParticipants: [],
+    currentRegistrationSummary: [],
     currentEventCash: [],
     currentEventKitchen: [],
     currentEventProgram: [],
@@ -50,6 +51,9 @@ export default new Vuex.Store({
     },
     currentEventCash(state) {
       return state.currentEventCash;
+    },
+    currentRegistrationSummary(state) {
+      return state.currentRegistrationSummary;
     },
     currentEventKitchen(state) {
       return state.currentEventKitchen;
@@ -105,6 +109,9 @@ export default new Vuex.Store({
     },
     setCurrentEventParticipants(state, newData) {
       state.currentEventParticipants = newData;
+    },
+    setCurrentRegistrationSummary(state, newData) {
+      state.currentRegistrationSummary = newData;
     },
     setCurrentEventCash(state, newData) {
       state.currentEventCash = newData;
