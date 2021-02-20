@@ -13,7 +13,7 @@
                   <div class="ma-2">
                     <p class="ma-0">
                       Hast du keinen Code bekommen? Gucke nochmal in der
-                      Einladung. Falls du nichts findest melde dich beim
+                      Einladung. Falls du nichts findest, melde dich beim
                       Veranstalter, deiner Bundesführung oder bei:
                       <a href="mailto:support@anmelde-tool.de"
                         >support@anmelde-tool.de</a

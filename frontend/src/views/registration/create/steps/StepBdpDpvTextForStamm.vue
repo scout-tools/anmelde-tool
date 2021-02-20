@@ -9,6 +9,7 @@
         class="ma-6"
         label="Nachricht für den Partnerstamm"
         placeholder="Hier den Text eintippen"
+        v-model="textfieldText"
       ></v-textarea>
 
       <v-subheader>
@@ -30,13 +31,14 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapGetters } from 'vuex';
 
 import CreateLocationDialog from '@/views/event/create/components/dialog/CreateLocationDialog.vue';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepBdpDpvLocation',
+  name: 'StepBdpDpvTextForStamm',
   displayName: 'Nachricht an euren Partnerstamm',
   props: ['position', 'maxPos'],
   components: {
@@ -46,12 +48,8 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    radioGroup: 0,
-    radioGroup2: 0,
-    data: {
-      value1: true,
-      value2: false,
-    },
+    textfieldText: '',
+    currentRegistration: [],
     placeholder:
       'Hier ist Platz für eine persönliche Nachricht an euren ' + // eslint-disable-line
       'noch unbekannten Partnerstamm. Wenn du Lust hast, ' + // eslint-disable-line
@@ -63,10 +61,14 @@ export default {
     ...mapGetters(['dpvAddedLocation']),
   },
   validations: {},
-  methods: {
-    newLocation() {
-      this.$refs.newLocationDialog.openDialog();
+  watch: {
+    currentRegistration() {
+      if (this.currentRegistration && this.currentRegistration.length) {
+        this.textfieldText = this.currentRegistration[0].freeText;
+      }
     },
+  },
+  methods: {
     validate() {
       this.$v.$touch();
       console.log(!this.$v.$error);
@@ -80,22 +82,41 @@ export default {
       if (!this.valid) {
         return;
       }
-      this.$emit('nextStep');
+      this.patchRegiststration().then((item) => {
+        console.log(item);
+        this.$emit('nextStep');
+      });
     },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-      this.$emit('submit');
+    async patchRegiststration() {
+      const registrationId = this.$route.params.id;
+      return axios.patch(`${process.env.VUE_APP_API}basic/registration/${registrationId}/`, {
+        freeText: this.textfieldText,
+      });
     },
-    getData() {
-      return {
-        name: this.data.name,
-        description: this.data.description,
-      };
+    beforeTabShow() {
+      this.loadData();
     },
-    beforeTabShow() {},
+    async getRegistration() {
+      const registrationId = this.$route.params.id;
+      const res = await axios.get(
+        `${
+          this.API_URL
+        }basic/registration/?id=${registrationId}&timestamp=${new Date().getTime()}`,
+      );
+      return res.data;
+    },
+    loadData() {
+      this.isLoading = true;
+      Promise.all([this.getRegistration()])
+        .then((values) => {
+          [this.currentRegistration] = values;
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isLoading = false;
+        });
+    },
   },
 };
 </script>

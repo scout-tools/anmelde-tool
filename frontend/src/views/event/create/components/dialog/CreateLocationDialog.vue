@@ -16,10 +16,24 @@
         <v-form v-model="valid">
           <v-container>
             <v-row>
+              <v-col cols="6"  sm="6">
+                <v-select
+                  autofocus
+                  :items="event_location_types"
+                  item-text="state"
+                  item-value="abbr"
+                  v-model="data.locationType"
+                  required
+                  :error-messages="typeErrors"
+                  label="Type"
+                  prepend-icon="mdi-home">
+                </v-select>
+              </v-col>
+            </v-row>
+            <v-row>
               <v-col cols="12" sm="4">
                 <v-text-field
                   v-model="data.name"
-                  autofocus
                   :counter="20"
                   :error-messages="nameErrors"
                   label="Name der Schlafstätte"
@@ -45,7 +59,7 @@
                   v-model="data.description"
                   :counter="100"
                   :error-messages="descriptionErrors"
-                  label="Beschreibung der Schlafstätte"
+                  label="Beschreibung/Hiweise zur Schlafstätte"
                   prepend-icon="mdi-card-text"
                 >
                   <template slot="append">
@@ -57,8 +71,7 @@
                       </template>
                       <span>
                         {{
-                          'Worum handelt es sich (z.B. Jugendherberge' +
-                          ', Stammesheim, Bruchbude etc.)'
+                          'Möchtest du noch etwas hinzufügen? Hast du Anmerkungen?'
                         }}
                       </span>
                     </v-tooltip>
@@ -73,7 +86,7 @@
                 <v-text-field
                   v-model="data.capacity"
                   :error-messages="capacityError"
-                  label="Im Haus"
+                  label="Schlafplätze"
                   prepend-icon="mdi-home"
                 >
                   <template slot="append">
@@ -85,7 +98,7 @@
                       </template>
                       <span>
                         {{
-                          'Schlafplätze drinnen, in Betten oder auf dem Boden.'
+                          'Schlafplätze'
                         }}
                       </span>
                     </v-tooltip>
@@ -94,30 +107,9 @@
               </v-col>
               <v-col cols="12" sm="4" md="3">
                 <v-text-field
-                  v-model="data.capacity"
-                  :error-messages="capacityError"
-                  label="Zeltplatz"
-                  prepend-icon="mdi-tent"
-                >
-                  <template slot="append">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon color="success" dark v-bind="attrs" v-on="on">
-                          mdi-help-circle-outline
-                        </v-icon>
-                      </template>
-                      <span>
-                        {{ ' Schlafplätze draußen.' }}
-                      </span>
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="12" sm="4" md="3">
-                <v-text-field
-                  v-model="data.capacity"
-                  :error-messages="capacityError"
-                  label="Im Haus (Corona)"
+                  v-model="data.capacityCorona"
+                  :error-messages="capacityCoronaError"
+                  label="Schlafplätze (Corona)"
                   required
                   prepend-icon="mdi-virus"
                 >
@@ -131,30 +123,6 @@
                       <span>
                         {{
                           'Wie viele Schlafplätze hattet ihr im September 2020 drinnen.'
-                        }}
-                      </span>
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="12" sm="4" md="3">
-                <v-text-field
-                  v-model="data.capacity"
-                  :error-messages="capacityError"
-                  label="Zeltplatz (Corona)"
-                  required
-                  prepend-icon="mdi-virus"
-                >
-                  <template slot="append">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon color="success" dark v-bind="attrs" v-on="on">
-                          mdi-help-circle-outline
-                        </v-icon>
-                      </template>
-                      <span>
-                        {{
-                          'Wie viele Schlafplätze hattet ihr im September 2020 draußen'
                         }}
                       </span>
                     </v-tooltip>
@@ -180,7 +148,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'genaue Adresse der Schlafstätte' }}
+                        {{ 'Die genaue Adresse der Schlafstätte.' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -201,9 +169,10 @@
             <v-row>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="data.address"
-                  :error-messages="addressErrors"
-                  label="Kosten pro Person"
+                  v-model="data.perPersonFee"
+                  :error-messages="perPersonFeeErrors"
+                  :disabled="feeNotKnowen"
+                  label="Kosten pro Person pro Nacht"
                   prepend-icon="mdi-currency-eur"
                 >
                   <template slot="append">
@@ -222,8 +191,9 @@
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="data.address"
-                  :error-messages="addressErrors"
+                  v-model="data.fixFee"
+                  :disabled="feeNotKnowen"
+                  :error-messages="fixFeeErrors"
                   label="Fixkosten"
                   prepend-icon="mdi-currency-eur"
                 >
@@ -244,8 +214,8 @@
               </v-col>
               <v-col>
                 <v-switch
-                  v-model="switch1"
-                  label="Ich kenne keine Preisliste "
+                  v-model="feeNotKnowen"
+                  label="Ich kenne die Preise nicht"
                 ></v-switch>
               </v-col>
             </v-row>
@@ -267,7 +237,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Name der Kontaktperson' }}
+                        {{ 'Name der Kontaktperson.' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -288,7 +258,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'E-Mail der Kontaktperson' }}
+                        {{ 'E-Mail der Kontaktperson.' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -309,7 +279,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Telefonnummer der Kontaktperson' }}
+                        {{ 'Telefonnummer der Kontaktperson.' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -337,8 +307,8 @@ import {
   minLength,
   numeric,
 } from 'vuelidate/lib/validators';
-import ZipCodeField from '@/components/field/ZipCodeField.vue';
 import axios from 'axios';
+import ZipCodeField from '@/components/field/ZipCodeField.vue';
 
 export default {
   props: ['isOpen'],
@@ -349,9 +319,12 @@ export default {
     API_URL: process.env.VUE_APP_API,
     active: false,
     valid: true,
-    switch1: false,
+    feeNotKnowen: false,
+    event_location_types: [
+      { state: 'No data. PLS Set data', abbr: 0 }],
     data: {
       name: '',
+      locationType: '',
       description: '',
       address: '',
       zipCode: 6,
@@ -359,6 +332,9 @@ export default {
       contactEmail: '',
       contactPhone: '',
       capacity: null,
+      capacityCorona: null,
+      perPersonFee: 0,
+      fixFee: 0,
     },
     showError: false,
     showSuccess: false,
@@ -366,6 +342,9 @@ export default {
   }),
   validations: {
     data: {
+      locationType: {
+        required,
+      },
       name: {
         required,
         minLength: minLength(4),
@@ -397,6 +376,15 @@ export default {
     capacityError() {
       return [];
     },
+    perPersonFeeErrors() {
+      return [];
+    },
+    fixFeeErrors() {
+      return [];
+    },
+    capacityCoronaError() {
+      return [];
+    },
     contactNameErrors() {
       return [];
     },
@@ -406,6 +394,14 @@ export default {
     contactEmailErrors() {
       return [];
     },
+    typeErrors() {
+      const errors = [];
+      if (!this.$v.data.locationType.$dirty) return errors;
+      if (!this.$v.data.locationType.required) {
+        errors.push('Type is required.');
+      }
+      return errors;
+    },
     nameErrors() {
       const errors = [];
       if (!this.$v.data.name.$dirty) return errors;
@@ -414,6 +410,9 @@ export default {
       }
       if (!this.$v.data.name.maxLength) {
         errors.push('Name must be at most 20 characters long');
+      }
+      if (!this.$v.data.name.minLength) {
+        errors.push('Name must be at leat 4 characters long');
       }
       return errors;
     },
@@ -436,17 +435,6 @@ export default {
       }
       return errors;
     },
-    cityErrors() {
-      const errors = [];
-      if (!this.$v.data.city.$dirty) return errors;
-      if (!this.$v.data.city.required) {
-        errors.push('Stadt is required.');
-      }
-      if (!this.$v.data.city.maxLength) {
-        errors.push('Stadt must be at most 30 characters long');
-      }
-      return errors;
-    },
     zipCodeErrors() {
       const errors = [];
       if (!this.$v.data.zipCode.$dirty) return errors;
@@ -465,6 +453,12 @@ export default {
   methods: {
     openDialog() {
       this.active = true;
+    },
+    openDialogEdit(input) {
+      this.data = input;
+      this.feeNotKnowen = this.data.fixFee == null && this.data.perPersonFee == null;
+      this.active = true;
+      this.isEditWindow = true;
     },
     closeDialog() {
       this.active = false;
@@ -491,7 +485,35 @@ export default {
       }
     },
     async callCreateEventLocationPost() {
-      await axios.post(`${this.API_URL}basic/event-location/`, this.data);
+      this.data.registration = this.$route.params.id;
+      if (this.feeNotKnowen) {
+        this.data.fixFee = null;
+        this.data.perPersonFee = null;
+      }
+      if (this.data.perPersonFee === '') {
+        this.data.perPersonFee = null;
+      }
+      if (this.data.fixFee === '') {
+        this.data.fixFee = null;
+      }
+      if (!this.data.id) {
+        axios
+          .post(`${this.API_URL}basic/event-location/`, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
+      } else {
+        axios
+          .put(
+            `${this.API_URL}basic/event-location/${this.data.id}/`,
+            this.data,
+          )
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
+      }
     },
   },
 };

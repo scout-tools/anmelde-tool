@@ -13,7 +13,6 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
     TentType, EatHabit, TravelTag
-
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
@@ -65,6 +64,8 @@ class AgeGroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 class EventLocationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('registration',)
     queryset = EventLocation.objects.all()
     serializer_class = EventLocationSerializer
 
@@ -87,6 +88,8 @@ class RegistrationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Registration.objects.all()
     serializer_class = RegistrationSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('id',)
 
     def create(self, request, *args, **kwargs):
         if 'event' not in request.data:
@@ -107,12 +110,13 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 
         return super().create(request, *args, **kwargs)
 
-    def update(self, request, pk=None):
-        queryset = Event.objects.all()
-        event = get_object_or_404(queryset, pk=request.data['event'])
-        self.add_responsible_person(event, request, pk)
+    def update(self, request, pk=None, partial=False):
+        if "responsible_persons" in request.data or not partial:
+            queryset = Event.objects.all()
+            event = get_object_or_404(queryset, pk=request.data['event'])
+            self.add_responsible_person(event, request, pk)
 
-        response = super().update(request, pk)
+        response = super().update(request, pk, partial=partial)
 
         if 'is_confirmed' in response.data and response.data['is_confirmed']:
             create_registration_summary(response.data)
@@ -171,8 +175,10 @@ class ZipCodeViewSet(viewsets.ReadOnlyModelViewSet):
 
 class ParticipantGroupViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = ParticipantGroup.objects.all()
+    queryset = ParticipantGroup.objects.all().order_by('-updated_at')
     serializer_class = ParticipantGroupSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('registration',)
 
 
 class RoleViewSet(viewsets.ModelViewSet):

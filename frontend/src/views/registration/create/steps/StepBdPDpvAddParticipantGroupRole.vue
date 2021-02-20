@@ -128,6 +128,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 // import RolePicker from '../components/RolePicker..vue';
 
@@ -141,9 +143,10 @@ export default {
   },
   props: ['position', 'maxPos'],
   data: () => ({
+    API_URL: process.env.VUE_APP_API,
     tooltip: {
       normal:
-        'Das sind die Kinder/Jugendliche in den Gruppen, die aktiv am Spiel teilnehmen.',
+        'Das sind die Kinder/Jugendlichen in den Gruppen, die aktiv am Spiel teilnehmen.',
       groupLeader:
         'Auch diese nehmen aktiv am Spiel teil und haben die Aufsichtspflicht.',
       stammes:
@@ -162,16 +165,31 @@ export default {
   validations: {},
   computed: {
     total() {
-      return this.normal + this.helper + this.stammes + this.groupLeader;
+      return (
+        this.normal + // eslint-disable-line
+        this.helper + // eslint-disable-line
+        this.stammes + // eslint-disable-line
+        this.groupLeader
+      );
     },
     maxHelper() {
-      return this.total - this.stammes - this.groupLeader;
+      return (
+        this.total - // eslint-disable-line
+        this.stammes - // eslint-disable-line
+        this.groupLeader
+      );
     },
     maxStammes() {
-      return this.total - this.helper - this.groupLeader;
+      return (
+        this.total - // eslint-disable-line
+        this.helper - // eslint-disable-line
+        this.groupLeader
+      );
     },
     maxGroupLeader() {
-      return this.total - this.helper - this.stammes;
+      return (
+        this.total - this.helper - this.stammes
+      );
     },
   },
   methods: {
@@ -185,19 +203,103 @@ export default {
         return;
       }
 
-      this.addMeatEaters();
+      this.saveData();
     },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
+    beforeTabShow() {
+      this.loadData();
+    },
+    loadData() {
+      this.isLoading = true;
+      Promise.all([this.getParticipant()])
+        .then((values) => {
+          this.processData(values[0]);
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isLoading = false;
+        });
+    },
+    async getParticipant() {
+      const registrationId = this.$route.params.id;
+      const res = await axios.get(
+        `${
+          this.API_URL
+        }basic/participant-group/?registration=${registrationId}&timestamp=${new Date().getTime()}`,
+      );
+      return res.data;
+    },
+    processData(items) {
+      const obj1 = items.filter((item) => item.participantRole === 1);
+      if (obj1 && obj1.length) {
+        this.normal = obj1[0].numberOfPersons;
       }
-      this.$emit('submit');
+
+      const obj2 = items.filter((item) => item.participantRole === 2);
+      if (obj2 && obj2.length) {
+        this.groupLeader = obj2[0].numberOfPersons;
+      }
+
+      const obj3 = items.filter((item) => item.participantRole === 3);
+      if (obj3 && obj3.length) {
+        this.stammes = obj3[0].numberOfPersons;
+      }
+
+      const obj4 = items.filter((item) => item.participantRole === 4);
+      if (obj4 && obj4.length) {
+        this.helper = obj4[0].numberOfPersons;
+      }
     },
-    addMeatEaters() {
-      this.$emit('nextStep');
+    saveData() {
+      const promises = [];
+      const registrationId = this.$route.params.id;
+      console.log(registrationId);
+      const myUrl = `${this.API_URL}basic/participant-group/`;
+
+      if (this.normal > 0) {
+        promises.push(
+          axios.post(myUrl, {
+            participant_role: 1,
+            numberOfPersons: this.normal,
+            registration: registrationId,
+          }),
+        );
+      }
+
+      if (this.groupLeader > 0) {
+        promises.push(
+          axios.post(myUrl, {
+            participant_role: 2,
+            numberOfPersons: this.groupLeader,
+            registration: registrationId,
+          }),
+        );
+      }
+
+      if (this.stammes > 0) {
+        promises.push(
+          axios.post(myUrl, {
+            participant_role: 3,
+            numberOfPersons: this.stammes,
+            registration: registrationId,
+          }),
+        );
+      }
+
+      if (this.helper > 0) {
+        promises.push(
+          axios.post(myUrl, {
+            participant_role: 4,
+            numberOfPersons: this.helper,
+            registration: registrationId,
+          }),
+        );
+      }
+
+      Promise.all(promises).then(() => {
+        this.$emit('nextStep');
+      });
     },
-    beforeTabShow() {},
   },
 };
 </script>

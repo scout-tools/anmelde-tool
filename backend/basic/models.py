@@ -59,11 +59,12 @@ class EventLocation(TimeStampMixin):
     contact_name = models.CharField(max_length=30, blank=True)
     contact_email = models.CharField(max_length=30, blank=True)
     contact_phone = models.CharField(max_length=30, blank=True)
+    registration = models.ForeignKey("Registration", on_delete=models.PROTECT, null=True, blank=True)
     is_public = models.BooleanField(default=0)
-    capacity_indoor = models.IntegerField(blank=True, null=True)
-    capacity_outdoor = models.IntegerField(blank=True, null=True)
-    capacity_indoor_corona = models.IntegerField(blank=True, null=True)
-    capacity_outdoor_corona = models.IntegerField(blank=True, null=True)
+    capacity = models.IntegerField(blank=True, null=True)
+    per_person_fee = models.FloatField(blank=True, null=True)
+    fix_fee = models.FloatField(blank=True, null=True)
+    capacity_corona = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -223,6 +224,7 @@ class Registration(TimeStampMixin):
     responsible_persons = models.ManyToManyField(User)
     event = models.ForeignKey(Event, on_delete=models.PROTECT, null=True, blank=True)
     free_text = models.CharField(max_length=1000, blank=True)
+    custom_choice = models.IntegerField(default=0)
     is_confirmed = models.BooleanField(default=0)
     is_accepted = models.BooleanField(default=0)
 
@@ -393,3 +395,17 @@ class Tent(TimeStampMixin):
 
     def __repr__(self):
         return self.__str__()
+
+
+class PostalAddress(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
+    street = models.CharField(max_length=100, blank=True)
+    addressAddition = models.CharField(max_length=100, blank=True)
+    zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
+    registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
