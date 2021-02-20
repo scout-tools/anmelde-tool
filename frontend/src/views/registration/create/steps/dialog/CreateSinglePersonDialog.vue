@@ -232,7 +232,7 @@
                 :error-messages="zipCodeErrors"
                 item-value="id"
                 label="Stadt / Postleitzahl"
-                placeholder="Wähle Stadt oder Postleitzahl"
+                placeholder="Wähle Stadt oder Postleitzahl."
                 prepend-icon="mdi-city"
               >
                 <template slot="append">

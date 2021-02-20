@@ -9,7 +9,7 @@
             </v-card-title>
             <v-list subheader two-line>
               <v-subheader inset>
-                Nicht lange zögern. Melde deinen Stamm zu einem diesen
+                Nicht lange zögern. Melde deinen Stamm zu einer dieser
                 Fahrten an.
               </v-subheader>
 

@@ -198,12 +198,12 @@ export default {
       items: {},
       tooltip: {
         scoutName:
-          'Name falsch?. Ändern kannst du deinen Namen nur unter "Profil" (oben rechts)',
+          'Name falsch? Ändern kannst du deinen Namen nur unter "Profil" (oben rechts)',
         stammName:
-          'Stamm falsch?. Ändern kannst du deinen Stamm nur unter "Profil" (oben rechts)',
+          'Stamm falsch? Ändern kannst du deinen Stamm nur unter "Profil" (oben rechts)',
         invitationCode: 'Der Code steht in der offizellen Anmeldung.',
         mobileNumber:
-          'Telefonnummer fehlt oder ist falsch?. Hinzufügen kannst du deine Nummer nur unter "Profil" (oben rechts)',
+          'Telefonnummer fehlt oder ist falsch? Hinzufügen kannst du deine Nummer nur unter "Profil" (oben rechts)',
       },
     };
   },

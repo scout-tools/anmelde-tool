@@ -5,7 +5,7 @@
         <v-container>
           <v-row v-if="dpvAddedLocation">
             <p>
-              Sehr cool. Wo wollt ihr das stadt&amp;spiel spielen?.
+              Sehr cool. Wo wollt ihr das stadt&amp;spiel spielen?
               Du hast ein Heim / Zeltplatz hinzugefügt.
             </p>
             <v-radio-group v-model="customChoiceOne">

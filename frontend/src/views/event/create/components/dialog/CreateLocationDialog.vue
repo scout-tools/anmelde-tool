@@ -172,7 +172,7 @@
                   v-model="data.perPersonFee"
                   :error-messages="perPersonFeeErrors"
                   :disabled="feeNotKnowen"
-                  label="Kosten pro Person pro Nacht"
+                  label="Kosten pro Person pro Nacht."
                   prepend-icon="mdi-currency-eur"
                 >
                   <template slot="append">
@@ -183,7 +183,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Kosten pro Person pro Nacht' }}
+                        {{ 'Kosten pro Person pro Nacht.' }}
                       </span>
                     </v-tooltip>
                   </template>
