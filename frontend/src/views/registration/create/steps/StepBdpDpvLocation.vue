@@ -5,8 +5,8 @@
         <v-container>
           <span>
             <b
-              >Das Heim/Der Zeltplatz meines Stammes kann für die Aktion
-              genutzt werden.
+              >Das Heim/Der Zeltplatz meines Stammes kann für die Aktion genutzt
+              werden.
             </b>
             <br />
             <br />
@@ -16,24 +16,55 @@
               <li>ausreichend Toiletten und fließend Wasser</li>
             </ul>
           </span>
+          <v-radio-group v-model="radioGroup">
+            <v-radio label="Ja" value="1"></v-radio>
+            <v-radio :disabled="!!location.length" label="Nein" value="2"></v-radio>
+          </v-radio-group>
         </v-container>
       </v-expand-transition>
 
-      <v-container>
-        <v-btn color="primary" @click="newLocation()" v-if="location.length === 0">
-          Platz oder Haus Hinzufügen
-        </v-btn>
-        <div v-else>
-          <v-icon color="black" dark>mdi-home</v-icon>
-          {{location[0].name + ' - ' + location[0].description}}
-          <v-btn dense icon @click="editLocation(location[0].id)">
-            <v-icon color="primary lighten-1">mdi-pencil</v-icon>
+      <v-expand-transition>
+        <v-container v-show="radioGroup === '1'">
+          <v-btn
+            color="primary"
+            @click="newLocation()"
+          >
+            Platz oder Haus Hinzufügen
           </v-btn>
-          <v-btn dense icon @click="deleteLocation(location[0].id)">
-            <v-icon color="red lighten-1">mdi-trash-can</v-icon>
-          </v-btn>
-        </div>
-      </v-container>
+      <v-list-item-group color="primary">
+        <v-container>
+        <v-list-item
+          v-for="(item, i) in location"
+          :key="i"
+        >
+          <v-list-item-avatar>
+            <v-icon color="black" dark>mdi-home</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title
+              v-text="item.name"
+            ></v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-btn dense icon @click="editLocation(item.id)">
+              <v-icon color="primary lighten-1">mdi-pencil</v-icon>
+            </v-btn>
+          </v-list-item-action>
+          <v-list-item-action>
+            <v-btn dense icon @click="deleteLocation(item.id)">
+              <v-icon color="red lighten-1">mdi-trash-can</v-icon>
+            </v-btn>
+          </v-list-item-action>
+        </v-list-item>
+        <v-list-item
+          v-if="!location.length"
+        >
+          Bisher hast du noch niemanden hinzugefügt.
+        </v-list-item>
+        </v-container>
+      </v-list-item-group>
+        </v-container>
+      </v-expand-transition>
       <v-divider class="my-3" />
 
       <prev-next-buttons
@@ -47,11 +78,9 @@
     <create-location-dialog
       ref="newLocationDialog"
       @close="onCloseWindow()"
-      @refresh="onRefresh()"/>
-    <delete-location-modal
-      ref="deleteLocationModal"
       @refresh="onRefresh()"
     />
+    <delete-location-modal ref="deleteLocationModal" @refresh="onRefresh()" />
   </v-form>
 </template>
 
@@ -73,9 +102,13 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
+    radioGroup: 0,
+    radioGroup2: 0,
+    value: '0',
     event_location_types: [
       { state: 'Zeltplatz', abbr: 1 },
-      { state: 'Heim', abbr: 2 }],
+      { state: 'Heim', abbr: 2 },
+    ],
     show_event_location_types: [1, 2],
     addOwnLocation: 0,
     location: [],
@@ -83,8 +116,8 @@ export default {
   }),
   validations: {},
   watch: {
-    radioGroup(value) {
-      this.$store.commit('setDpvAddedLocation', value === '1');
+    location(value) {
+      this.$store.commit('setDpvAddedLocation', !!value.length);
     },
   },
   methods: {
@@ -99,6 +132,8 @@ export default {
       this.$v.$touch();
       console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
+
+      this.valid = this.radioGroup === '2' || this.location.length;
     },
     prevStep() {
       this.$emit('prevStep');
@@ -123,9 +158,9 @@ export default {
         .then((values) => {
           [this.location] = values;
           this.isLoading = false;
-          this.location = this.location.filter(
-            (item) => this.show_event_location_types.includes(item.locationType),
-          );
+          this.location = this.location.filter((item) =>
+            this.show_event_location_types.includes(item.locationType), // eslint-disable-line
+          ); // eslint-disable-line
           console.log(this.location);
         })
         .catch((error) => {

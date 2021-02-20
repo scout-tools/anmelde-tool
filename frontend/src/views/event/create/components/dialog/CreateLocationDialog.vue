@@ -82,7 +82,7 @@
             <v-subheader class="my-0"> Anzahl Schlafplätze </v-subheader>
             <v-divider class="my-0" />
             <v-row>
-              <v-col cols="12" sm="4" md="3">
+              <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="data.capacity"
                   :error-messages="capacityError"
@@ -105,7 +105,7 @@
                   </template>
                 </v-text-field>
               </v-col>
-              <v-col cols="12" sm="4" md="3">
+              <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="data.capacityCorona"
                   :error-messages="capacityCoronaError"
@@ -133,7 +133,7 @@
             <v-subheader class="my-0"> Adresse </v-subheader>
             <v-divider class="my-0" />
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="data.address"
                   :error-messages="addressErrors"
@@ -154,7 +154,7 @@
                   </template>
                 </v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" sm="6">
                 <zip-code-field
                   :counter="5"
                   :error-messages="zipCodeErrors"

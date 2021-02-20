@@ -121,8 +121,7 @@ export default {
         this.customChoiceTwo = '0';
 
         const status = this.currentRegistration[0].customChoice.toString(10);
-        console.log(status);
-        console.log(typeof status);
+
         if (status === '1' || status === '2' || status === '3') {
           debugger;
           this.customChoiceOne = status;
@@ -144,6 +143,8 @@ export default {
       this.$v.$touch();
       console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
+
+      this.valid = this.customChoiceOne !== 0;
     },
     prevStep() {
       this.$emit('prevStep');
