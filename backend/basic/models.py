@@ -62,6 +62,8 @@ class EventLocation(TimeStampMixin):
     registration = models.ForeignKey("Registration", on_delete=models.PROTECT, null=True, blank=True)
     is_public = models.BooleanField(default=0)
     capacity = models.IntegerField(blank=True, null=True)
+    per_person_fee = models.FloatField(blank=True, null=True)
+    fix_fee = models.FloatField(blank=True, null=True)
     capacity_corona = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
