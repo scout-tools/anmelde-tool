@@ -16,10 +16,23 @@
         <v-form v-model="valid">
           <v-container>
             <v-row>
+              <v-col cols="6"  sm="6">
+                <v-select
+                  autofocus
+                  :items="event_location_types"
+                  item-text="state"
+                  item-value="abbr"
+                  v-model="data.locationType"
+                  required
+                  label="Type"
+                  prepend-icon="mdi-home">
+                </v-select>
+              </v-col>
+            </v-row>
+            <v-row>
               <v-col cols="12" sm="4">
                 <v-text-field
                   v-model="data.name"
-                  autofocus
                   :counter="20"
                   :error-messages="nameErrors"
                   label="Name der Schlafstätte"
@@ -73,7 +86,7 @@
                 <v-text-field
                   v-model="data.capacity"
                   :error-messages="capacityError"
-                  label="Im Haus"
+                  label="Schlafplätze"
                   prepend-icon="mdi-home"
                 >
                   <template slot="append">
@@ -85,7 +98,7 @@
                       </template>
                       <span>
                         {{
-                          'Schlafplätze drinnen, in Betten oder auf dem Boden.'
+                          'Schlafplätze'
                         }}
                       </span>
                     </v-tooltip>
@@ -94,30 +107,9 @@
               </v-col>
               <v-col cols="12" sm="4" md="3">
                 <v-text-field
-                  v-model="data.capacity"
+                  v-model="data.capacityCorona"
                   :error-messages="capacityError"
-                  label="Zeltplatz"
-                  prepend-icon="mdi-tent"
-                >
-                  <template slot="append">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon color="success" dark v-bind="attrs" v-on="on">
-                          mdi-help-circle-outline
-                        </v-icon>
-                      </template>
-                      <span>
-                        {{ ' Schlafplätze draußen.' }}
-                      </span>
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="12" sm="4" md="3">
-                <v-text-field
-                  v-model="data.capacity"
-                  :error-messages="capacityError"
-                  label="Im Haus (Corona)"
+                  label="Schlafplätze (Corona)"
                   required
                   prepend-icon="mdi-virus"
                 >
@@ -131,30 +123,6 @@
                       <span>
                         {{
                           'Wie viele Schlafplätze hattet ihr im September 2020 drinnen.'
-                        }}
-                      </span>
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="12" sm="4" md="3">
-                <v-text-field
-                  v-model="data.capacity"
-                  :error-messages="capacityError"
-                  label="Zeltplatz (Corona)"
-                  required
-                  prepend-icon="mdi-virus"
-                >
-                  <template slot="append">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon color="success" dark v-bind="attrs" v-on="on">
-                          mdi-help-circle-outline
-                        </v-icon>
-                      </template>
-                      <span>
-                        {{
-                          'Wie viele Schlafplätze hattet ihr im September 2020 draußen'
                         }}
                       </span>
                     </v-tooltip>
@@ -337,8 +305,8 @@ import {
   minLength,
   numeric,
 } from 'vuelidate/lib/validators';
-import ZipCodeField from '@/components/field/ZipCodeField.vue';
 import axios from 'axios';
+import ZipCodeField from '@/components/field/ZipCodeField.vue';
 
 export default {
   props: ['isOpen'],
@@ -352,6 +320,7 @@ export default {
     switch1: false,
     data: {
       name: '',
+      locationType: '',
       description: '',
       address: '',
       zipCode: 6,
@@ -359,6 +328,7 @@ export default {
       contactEmail: '',
       contactPhone: '',
       capacity: null,
+      capacityCorona: null,
     },
     showError: false,
     showSuccess: false,
@@ -394,6 +364,11 @@ export default {
     },
   },
   computed: {
+    event_location_types() {
+      return [
+        { state: 'Zeltplatz', abbr: 1 },
+        { state: 'Heim', abbr: 2 }];
+    },
     capacityError() {
       return [];
     },
@@ -466,6 +441,11 @@ export default {
     openDialog() {
       this.active = true;
     },
+    openDialogEdit(input) {
+      this.data = input;
+      this.active = true;
+      this.isEditWindow = true;
+    },
     closeDialog() {
       this.active = false;
       this.$v.$reset();
@@ -491,7 +471,25 @@ export default {
       }
     },
     async callCreateEventLocationPost() {
-      await axios.post(`${this.API_URL}basic/event-location/`, this.data);
+      this.data.registration = this.$route.params.id;
+      if (!this.data.id) {
+        axios
+          .post(`${this.API_URL}basic/event-location/`, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
+      } else {
+        axios
+          .put(
+            `${this.API_URL}basic/event-location/${this.data.id}/`,
+            this.data,
+          )
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
+      }
     },
   },
 };
