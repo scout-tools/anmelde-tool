@@ -59,7 +59,7 @@
                   v-model="data.description"
                   :counter="100"
                   :error-messages="descriptionErrors"
-                  label="Beschreibung der Schlafstätte"
+                  label="Beschreibung/Hiweise zur Schlafstätte"
                   prepend-icon="mdi-card-text"
                 >
                   <template slot="append">
@@ -71,8 +71,7 @@
                       </template>
                       <span>
                         {{
-                          'Worum handelt es sich (z.B. Jugendherberge' +
-                          ', Stammesheim, Bruchbude etc.)'
+                          'Möchtest du noch etwas hinzufügen? Hast du Anmerkungen?'
                         }}
                       </span>
                     </v-tooltip>
@@ -149,7 +148,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'genaue Adresse der Schlafstätte' }}
+                        {{ 'Die genaue Adresse der Schlafstätte.' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -173,7 +172,7 @@
                   v-model="data.perPersonFee"
                   :error-messages="perPersonFeeErrors"
                   :disabled="feeNotKnowen"
-                  label="Kosten pro Person"
+                  label="Kosten pro Person pro Nacht"
                   prepend-icon="mdi-currency-eur"
                 >
                   <template slot="append">
@@ -216,7 +215,7 @@
               <v-col>
                 <v-switch
                   v-model="feeNotKnowen"
-                  label="Ich kenne keine Preisliste "
+                  label="Ich kenne die Preise nicht"
                 ></v-switch>
               </v-col>
             </v-row>
@@ -238,7 +237,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Name der Kontaktperson' }}
+                        {{ 'Name der Kontaktperson.' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -259,7 +258,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'E-Mail der Kontaktperson' }}
+                        {{ 'E-Mail der Kontaktperson.' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -280,7 +279,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Telefonnummer der Kontaktperson' }}
+                        {{ 'Telefonnummer der Kontaktperson.' }}
                       </span>
                     </v-tooltip>
                   </template>

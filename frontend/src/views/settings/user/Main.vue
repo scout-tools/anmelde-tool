@@ -21,7 +21,7 @@
                     <v-col cols="12" sm="6">
                       <v-text-field
                         v-model="scoutName"
-                        label="Fahrtenleitung*"
+                        label="Fahrtenname*"
                         prepend-icon="mdi-account-circle"
                         @change="updateData"
                         :error-messages="scoutNameErrors"

@@ -224,6 +224,7 @@ class Registration(TimeStampMixin):
     responsible_persons = models.ManyToManyField(User)
     event = models.ForeignKey(Event, on_delete=models.PROTECT, null=True, blank=True)
     free_text = models.CharField(max_length=1000, blank=True)
+    custom_choice = models.IntegerField(default=0)
     is_confirmed = models.BooleanField(default=0)
     is_accepted = models.BooleanField(default=0)
 
@@ -394,3 +395,17 @@ class Tent(TimeStampMixin):
 
     def __repr__(self):
         return self.__str__()
+
+
+class PostalAddress(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
+    street = models.CharField(max_length=100, blank=True)
+    addressAddition = models.CharField(max_length=100, blank=True)
+    zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
+    registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)

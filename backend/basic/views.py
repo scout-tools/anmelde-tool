@@ -88,6 +88,8 @@ class RegistrationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Registration.objects.all()
     serializer_class = RegistrationSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('id',)
 
     def create(self, request, *args, **kwargs):
         if 'event' not in request.data:
@@ -173,8 +175,10 @@ class ZipCodeViewSet(viewsets.ReadOnlyModelViewSet):
 
 class ParticipantGroupViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = ParticipantGroup.objects.all()
+    queryset = ParticipantGroup.objects.all().order_by('-updated_at')
     serializer_class = ParticipantGroupSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('registration',)
 
 
 class RoleViewSet(viewsets.ModelViewSet):

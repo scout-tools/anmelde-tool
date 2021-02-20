@@ -30,8 +30,8 @@
                   </template>
                   <span>
                     {{
-                      'Gib hier den Vornamen ein, ' +
-                      'an den das Paket geschickt wird.'
+                      'Gib hier den Vornamen der Person ein, ' +
+                      'die das Paket erhält.'
                     }}
                   </span>
                 </v-tooltip>
@@ -58,7 +58,8 @@
                   </template>
                   <span>
                     {{
-                      'Gib hier den Nachnamen ein, an den das Paket geschickt wird.'
+                      'Gib hier den Nachnamen der Person ein, ' +
+                      'die das Paket erhält.'
                     }}
                   </span>
                 </v-tooltip>
@@ -84,7 +85,10 @@
                     </v-icon>
                   </template>
                   <span>
-                    {{ 'Trage bitte Straße und Hausnummer ein.' }}
+                    {{
+                      'Gib hier die Straße und die Hausnummer der Person ein, ' +
+                      'die das Paket erhält.'
+                    }}
                   </span>
                 </v-tooltip>
               </template>
@@ -108,7 +112,11 @@
                     </v-icon>
                   </template>
                   <span>
-                    {{ 'Trage bitte den Adresszusatz ein.' }}
+                    {{
+                      'Gib hier den Adresszusatz und die ' +
+                      'Hausnummer der Person ein, ' +
+                      'die das Paket erhält.'
+                    }}
                   </span>
                 </v-tooltip>
               </template>
@@ -328,9 +336,6 @@ export default {
       };
     },
     beforeTabShow() {},
-  },
-  created() {
-    this.$store.commit('setDpvAddedLocation', false);
   },
 };
 </script>
