@@ -108,7 +108,7 @@
               <v-col cols="12" sm="4" md="3">
                 <v-text-field
                   v-model="data.capacityCorona"
-                  :error-messages="capacityError"
+                  :error-messages="capacityCoronaError"
                   label="Schlafplätze (Corona)"
                   required
                   prepend-icon="mdi-virus"
@@ -169,8 +169,9 @@
             <v-row>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="data.address"
-                  :error-messages="addressErrors"
+                  v-model="data.perPersonFee"
+                  :error-messages="perPersonFeeErrors"
+                  :disabled="feeNotKnowen"
                   label="Kosten pro Person"
                   prepend-icon="mdi-currency-eur"
                 >
@@ -190,8 +191,9 @@
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="data.address"
-                  :error-messages="addressErrors"
+                  v-model="data.fixFee"
+                  :disabled="feeNotKnowen"
+                  :error-messages="fixFeeErrors"
                   label="Fixkosten"
                   prepend-icon="mdi-currency-eur"
                 >
@@ -212,7 +214,7 @@
               </v-col>
               <v-col>
                 <v-switch
-                  v-model="switch1"
+                  v-model="feeNotKnowen"
                   label="Ich kenne keine Preisliste "
                 ></v-switch>
               </v-col>
@@ -317,7 +319,7 @@ export default {
     API_URL: process.env.VUE_APP_API,
     active: false,
     valid: true,
-    switch1: false,
+    feeNotKnowen: false,
     data: {
       name: '',
       locationType: '',
@@ -329,6 +331,8 @@ export default {
       contactPhone: '',
       capacity: null,
       capacityCorona: null,
+      perPersonFee: 0,
+      fixFee: 0,
     },
     showError: false,
     showSuccess: false,
@@ -372,6 +376,15 @@ export default {
     capacityError() {
       return [];
     },
+    perPersonFeeErrors() {
+      return [];
+    },
+    fixFeeErrors() {
+      return [];
+    },
+    capacityCoronaError() {
+      return [];
+    },
     contactNameErrors() {
       return [];
     },
@@ -411,17 +424,6 @@ export default {
       }
       return errors;
     },
-    cityErrors() {
-      const errors = [];
-      if (!this.$v.data.city.$dirty) return errors;
-      if (!this.$v.data.city.required) {
-        errors.push('Stadt is required.');
-      }
-      if (!this.$v.data.city.maxLength) {
-        errors.push('Stadt must be at most 30 characters long');
-      }
-      return errors;
-    },
     zipCodeErrors() {
       const errors = [];
       if (!this.$v.data.zipCode.$dirty) return errors;
@@ -443,6 +445,7 @@ export default {
     },
     openDialogEdit(input) {
       this.data = input;
+      this.feeNotKnowen = this.data.fixFee == null && this.data.perPersonFee == null;
       this.active = true;
       this.isEditWindow = true;
     },
@@ -472,6 +475,16 @@ export default {
     },
     async callCreateEventLocationPost() {
       this.data.registration = this.$route.params.id;
+      if (this.feeNotKnowen) {
+        this.data.fixFee = null;
+        this.data.perPersonFee = null;
+      }
+      if (this.data.perPersonFee === '') {
+        this.data.perPersonFee = null;
+      }
+      if (this.data.fixFee === '') {
+        this.data.fixFee = null;
+      }
       if (!this.data.id) {
         axios
           .post(`${this.API_URL}basic/event-location/`, this.data)
