@@ -98,6 +98,10 @@ export default {
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
+    event_location_types: [
+      { state: 'Zeltplatz Vorschlag', abbr: 3 },
+      { state: 'Heim Vorschlag', abbr: 4 }],
+    show_event_location_types: [3, 4],
     valid: true,
     radioGroup: 0,
     radioGroup2: 0,
@@ -112,6 +116,7 @@ export default {
   },
   methods: {
     newLocation() {
+      this.$refs.newLocationDialog.event_location_types = this.event_location_types;
       this.$refs.newLocationDialog.openDialog();
     },
     onCloseWindow() {
@@ -145,6 +150,9 @@ export default {
         .then((values) => {
           [this.items] = values;
           this.isLoading = false;
+          this.items = this.items.filter(
+            (item) => this.show_event_location_types.includes(item.locationType),
+          );
           console.log(this.items);
         })
         .catch((error) => {
@@ -162,18 +170,13 @@ export default {
       this.getLocations();
     },
     editLocation(id) {
+      this.$refs.newLocationDialog.event_location_types = this.event_location_types;
       this.$refs.newLocationDialog.openDialogEdit(
         this.items.filter((i) => i.id === id)[0],
       );
     },
     deleteLocation(item) {
       this.$refs.deleteLocationModal.show(item);
-    },
-    getData() {
-      return {
-        name: this.data.name,
-        description: this.data.description,
-      };
     },
     beforeTabShow() {
       this.onRefresh();

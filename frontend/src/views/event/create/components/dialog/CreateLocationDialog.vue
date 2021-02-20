@@ -24,6 +24,7 @@
                   item-value="abbr"
                   v-model="data.locationType"
                   required
+                  :error-messages="typeErrors"
                   label="Type"
                   prepend-icon="mdi-home">
                 </v-select>
@@ -320,6 +321,8 @@ export default {
     active: false,
     valid: true,
     feeNotKnowen: false,
+    event_location_types: [
+      { state: 'No data. PLS Set data', abbr: 0 }],
     data: {
       name: '',
       locationType: '',
@@ -340,6 +343,9 @@ export default {
   }),
   validations: {
     data: {
+      locationType: {
+        required,
+      },
       name: {
         required,
         minLength: minLength(4),
@@ -368,11 +374,6 @@ export default {
     },
   },
   computed: {
-    event_location_types() {
-      return [
-        { state: 'Zeltplatz', abbr: 1 },
-        { state: 'Heim', abbr: 2 }];
-    },
     capacityError() {
       return [];
     },
@@ -394,6 +395,14 @@ export default {
     contactEmailErrors() {
       return [];
     },
+    typeErrors() {
+      const errors = [];
+      if (!this.$v.data.locationType.$dirty) return errors;
+      if (!this.$v.data.locationType.required) {
+        errors.push('Type is required.');
+      }
+      return errors;
+    },
     nameErrors() {
       const errors = [];
       if (!this.$v.data.name.$dirty) return errors;
@@ -402,6 +411,9 @@ export default {
       }
       if (!this.$v.data.name.maxLength) {
         errors.push('Name must be at most 20 characters long');
+      }
+      if (!this.$v.data.name.minLength) {
+        errors.push('Name must be at leat 4 characters long');
       }
       return errors;
     },
