@@ -123,11 +123,9 @@ export default {
         const status = this.currentRegistration[0].customChoice.toString(10);
 
         if (status === '1' || status === '2' || status === '3') {
-          debugger;
           this.customChoiceOne = status;
         }
         if (status === '4' || status === '5' || status === '6') {
-          debugger;
           this.customChoiceTwo = status;
         }
         if (status === '0') {
