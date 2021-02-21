@@ -253,6 +253,15 @@ export default {
     refresh() {
       this.loadData();
     },
+    resetNull() {
+      console.log(this.data.methodOfTravels);
+      this.data.methodOfTravels.forEach((i) => {
+        if (i.numberOfPersons.isEmpty) {
+          // eslint-disable-next-line no-param-reassign
+          i.numberOfPersons = 0;
+        }
+      });
+    },
   },
 };
 </script>
