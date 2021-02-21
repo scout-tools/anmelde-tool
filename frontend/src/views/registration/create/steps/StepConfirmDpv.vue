@@ -41,59 +41,126 @@
               <li v-for="item in currentRegistrationSummary[0].groupParticipants"
                   :key="item.participantRoleId">
                 {{ item.participantRoleId_Name }}:
-                <b>{{ item.participantRoleId }}</b>
+                <b>{{ item.registered }}</b>
               </li>
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel>
             <v-expansion-panel-header>
-              Eigene Schlafstätte {Heim/Lagerplatz/beides}
+              Eigene Schlafstätte: <b>{{
+              currentRegistrationSummary[0].locations.filter(
+                      (item) => ownLocationTypeIds.includes(item.locationType_Id),
+                    ).map(x => x.name).join(", ")
+              }}</b>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              Heim/Lagerplatz: {ja/nein}
-(wenn ja)
-=>Zu Daten des Heims, sonst
+              <v-list>
+                <v-list-item-group color="primary">
+                  <v-list-item
+                    v-for="(item, i) in currentRegistrationSummary[0].locations.filter(
+                      (item) => ownLocationTypeIds.includes(item.locationType_Id),
+                    )"
+                    :key="i"
+                  >
+                    <v-list-item-content>
+                      <v-list-item-title
+                        v-text="item.name"
+                      ></v-list-item-title>
+                      <v-list-item-subtitle>
 Daten des Heims:
-Adresse: {Straße, Hausnummer, Postleitzahl, Stadt}
-Schlafplatzanzahl:
--Haus (ohne Corona/mit Corona): {Zahl Im Haus/Zahl Im Haus Corona}
--Zeltplatz (ohne Corona/mit Corona): {Zahl Zeltplatz/Zahl Zeltplatz mit Corona}
-Kosten:
--Pro Person: {Zahl der Kosten pro Person}
--Fixkosten: {Zahl von Fixkosten}
-Die Kontaktperson für Haus/Lagerplatz {Name der Kontaktperson} ist wie folgt zu erreichen:
-              {E-mail und/oder Telefonnummer}
+Adresse: <b>{{ item.address }}</b>, <b>{{ item.zipCode_ZipCode }}</b><br>
+Schlafplatzanzahl:<br>
+- Haus (ohne Corona/mit Corona): <b>{{ item.capacity }}</b>/<b>{{ item.capacityCorona }}</b><br>
+Kosten:<br>
+- Pro Person: <b>{{ item.perPersonFee }}</b> Euro<br>
+- Fixkosten: <b>{{ item.fixFee }}</b> Euro<br>
+Die Kontaktperson für Haus/Lagerplatz <b>{{ item.contactName }}</b> ist wie folgt zu erreichen:<br>
+<b>{{ item.contactEmail }}</b>/<b>{{ item.contactPhone }}</b><br>
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel>
             <v-expansion-panel-header>
-              Da wollen wir hin {weg/hier}
+              Da wollen wir hin:
+              <b>
+                <div v-if="currentRegistrationSummary[0].customChoice === 1">
+                  Hier bleiben
+                </div>
+                <div v-if="[4, 5, 6].includes(currentRegistrationSummary[0].customChoice)">
+                  Weg gehen
+                </div>
+                <div v-if="[7, 8, 9].includes(currentRegistrationSummary[0].customChoice)">
+                  Beides ok
+                </div>
+              </b>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-Dort geht es für deinen Stamm hin:
-Hier gibt es folgende Möglichkeiten:
-{Wir wollen bei uns im Heim bleiben und besucht werden/Wir wollen einen anderen Stamm besuchen und
-              stellen unser Heim zur Verfügung/wir bleiben da, fahren aber auch gerne weg}
+              Dort geht es für deinen Stamm hin:
+              <b>
+                <div v-if="currentRegistrationSummary[0].customChoice === 1">
+                  Wir wollen bei uns im Heim bleiben und besucht werden
+                </div>
+                <div v-if="[4, 5, 6].includes(currentRegistrationSummary[0].customChoice)">
+                  Wir wollen einen anderen Stamm besuchen
+                </div>
+                <div v-if="[7, 8, 9].includes(currentRegistrationSummary[0].customChoice)">
+                  Wir stellen unser Heim zur Verfügung/wir bleiben da, fahren aber auch gerne weg
+                </div>
+              </b>
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel>
             <v-expansion-panel-header>
-              Zusätzliche Schlafstätte {Name}
+              Zusätzliche Schlafstätten: <b>{{
+              currentRegistrationSummary[0].locations.filter(
+                      (item) => suggestionLocationTypeIds.includes(item.locationType_Id),
+                    ).map(x => x.name).join(", ")
+              }}</b>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-Du hast ein zusätzliches Heim eingetragen mit folgenden Daten:
-Name: {Name der Schlafstätte}
-Kontakt: {Name Kontaktperson} ist zu erreichen unter {E-Mail und/oder Telefonnummer}
+Du hast diese zusätzlichen Heime eingetragen mit folgenden Daten:
+              <v-list>
+                <v-list-item-group color="primary">
+                  <v-list-item
+                    v-for="(item, i) in currentRegistrationSummary[0].locations.filter(
+                      (item) => suggestionLocationTypeIds.includes(item.locationType_Id),
+                    )"
+                    :key="i"
+                  >
+                    <v-list-item-content>
+                      <v-list-item-title
+                        v-text="item.name"
+                      ></v-list-item-title>
+                      <v-list-item-subtitle>
+                        Kontakt: <b>{{ item.contactName }}</b> ist zu erreichen unter
+                        <b>{{item.contactEmail}}</b> und/oder <b>{{item.contactPhone}}</b>
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel>
             <v-expansion-panel-header>
-              Paket {Vor-Nachnamen}
+              Paket: <b>{{currentRegistrationSummary[0].postaladdress[0].firstName}} -
+            {{currentRegistrationSummary[0].postaladdress[0].lastName}}</b>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
 Für ein Paket an deinen Stamm hast Du folgende Adresse angegeben:
-Name und Adresse: {Vorname, Nachname, Straße und Hausnummer,
-              Postleitzahl und Ort, evtl. Adresszusatz}
+      <br> <b>{{currentRegistrationSummary[0].postaladdress[0].firstName}}
+              {{currentRegistrationSummary[0].postaladdress[0].lastName}},
+              {{currentRegistrationSummary[0].postaladdress[0].street}},
+              {{currentRegistrationSummary[0].postaladdress[0].zipCode_ZipCode}},
+              {{currentRegistrationSummary[0].postaladdress[0].addressAddition}}
+              </b>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -136,6 +203,8 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
+    suggestionLocationTypeIds: [3, 4],
+    ownLocationTypeIds: [1, 2],
     data: {
       checkbox1: false,
     },

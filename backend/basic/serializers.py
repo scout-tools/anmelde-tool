@@ -428,6 +428,8 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
     tents = serializers.SerializerMethodField('get_tents')
     tents_detailed = serializers.SerializerMethodField('get_tents_detailed')
     responsible_persons = serializers.SerializerMethodField('get_responsible_persons')
+    locations = serializers.SerializerMethodField('get_locations')
+    postaladdress = serializers.SerializerMethodField('get_postaladdress')
 
 
     scout_organisation = serializers.SlugRelatedField(
@@ -460,8 +462,40 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
             'travel_method',
             'travel_method_detailed',
             'tents',
-            'tents_detailed'
+            'tents_detailed',
+            'postaladdress',
+            'locations',
+            'custom_choice'
         )
+
+    def get_locations(self, obj):
+        result = obj.eventlocation_set.values("name",
+                                              "address",
+                                              "description",
+                                              "description",
+                                              "contact_name",
+                                              "contact_email",
+                                              "contact_phone",
+                                              "capacity",
+                                              "per_person_fee",
+                                              "fix_fee",
+                                              "capacity_corona",
+                                              "zip_code__zip_code",
+                                              "location_type__name",
+                                              "location_type__id",
+                                              )
+
+        return result
+
+    def get_postaladdress(self, obj):
+        result = obj.postaladdress_set.values("first_name",
+                                              "last_name",
+                                              "street",
+                                              "addressAddition",
+                                              "zip_code__zip_code",
+                                              )
+
+        return result
 
     def get_responsible_persons(self, obj):
         result = obj.responsible_persons.values('username',
