@@ -1,0 +1,80 @@
+<mjml>
+  <mj-body background-color="#ccd3e0">
+    <mj-section background-color="#084B8A" padding-bottom="20px" padding-top="20px">
+      <mj-column width="20%" background-color="#084B8A">
+        <mj-image src="https://cloud.dpbm.de/apps/files_sharing/publicpreview/wEjjbJ7fx4dqCzL?file=bufa%2520logo-38.jpg" alt="" align="left" border="none" width="100px" padding-left="10px" padding-right="10px" padding-bottom="10px" padding-top="10px"></mj-image>
+      </mj-column>
+      <mj-column width="80%" background-color="#084B8A">
+        <mj-text align="left" font-size="36px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="28px">Mosaikersleben</mj-text>
+        <mj-text align="left" font-size="14px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="9px">Bundesfahrt 2021</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-image src="https://cloud.dpbm.de/apps/files_sharing/publicpreview/BRk34pyetQLyx7j?x=2670&y=1206&a=true&file=20200820-IMG_5592.jpg" alt="" align="center" padding-left="0px" padding-right="0px" padding-bottom="0px" padding-top="0px"></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FFF" padding-bottom="0px" padding-top="0">
+      <mj-column width="100%">
+        <mj-text align="left" font-size="14px" color="#333333" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">
+          <p style="font-size:16px"><strong>Liebe_r {{ responsible_persons }}</strong></p>
+          <p>wir freuen uns, dass ihr euch als Stamm {{ scout_organisation }} für die Bundesfahrt 2021
+            angemeldet habt! </p>
+
+          <p>Für die Fahrt hast du {{ total_participants }} Teilnehmer_innen angemeldet. Wenn du deine
+            Anmeldung ändern möchtest kannts du das bis zum 18.04.2021 noch machen.
+          </p>
+          <p>
+            Alles wichtige nochmal im Überblick:
+          </p>
+          <p>
+            31. Juli - 7. August - Aufbaulager
+          </p>
+          <p>
+            4. - 7. August - Kaperfahrt
+          </p>
+          <p>
+            7. - 11. August - Mosaikersleben
+          </p>
+          <p>
+            13. Juni - Anmeldeschluss für Aufbaulager, Saints Way und Programmangebote
+          </p>
+          <p>
+            Wenn du noch Rückfragen hast kannst du dich gerne bei uns über die Mail
+            bundesfahrt@dpbm.de melden.
+          </p>
+          <p>
+            Wir freuen uns euch im Sommer zu sehen!
+          </p>
+          <p>
+            Euer Planungsteam
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FFF" padding-bottom="5px" padding-top="0">
+      <mj-column width="100%">
+        <mj-image src="https://cloud.dpbm.de/apps/files_sharing/publicpreview/WrmqmsTKd5eN5iY?x=2362&y=1206&a=true&file=20200821-IMG_6069.jpg" alt="" align="center" border="none" width="700px" padding-left="0px" padding-right="0px" padding-bottom="0px" padding-top="0px"></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FFF" padding-bottom="15px">
+      <mj-column>
+        <mj-text align="center" color="#333333" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
+          <p>Bei Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.</p>
+          <br></br>
+          <p><strong>Mosaikersleben, die Bundesfahrt des Deutschen Pfadfinderbund Mosaik.</strong></p>
+          <p>
+            Deutscher Pfadfinderbund Mosaik</p>
+          <p>
+            Robert-Perthel-Str. 79</p>
+          <p>
+            50739 Köln</p>
+          <p>
+            bundesfahrt@dpbm.de</p>
+          <p>
+            www.bundesfahrt.de</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

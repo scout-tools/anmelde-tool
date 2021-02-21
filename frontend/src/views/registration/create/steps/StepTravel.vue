@@ -100,6 +100,7 @@ export default {
     },
     onSaveTravelHandler() {
       if (this.$refs.kaperfahrtTravelpicker) {
+        this.$refs.kaperfahrtTravelpicker.resetNull();
         if (this.$refs.kaperfahrtTravelpicker.done) {
           const methodOfTravel = this.$refs.kaperfahrtTravelpicker.getData();
 
@@ -140,6 +141,7 @@ export default {
       ) {
         this.$refs.kaperfahrtTravelpicker.refresh();
       }
+      this.errorNotFinished = false;
     },
   },
 };
