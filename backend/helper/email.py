@@ -14,7 +14,6 @@ class MailType(Enum):
     ForeignLogin = 1
     ResponsiblePerson = 2
     RegistrationSummary = 3
-    RegistrationSummaryBundesfahrt = 4
 
 
 def get_mail(mail_type: MailType, data, event_id=None):
@@ -26,8 +25,6 @@ def get_mail(mail_type: MailType, data, event_id=None):
         mail = 'responsible_person'
     elif mail_type is MailType.RegistrationSummary:
         mail = 'registration'
-    elif mail_type is MailType.RegistrationSummaryBundesfahrt:
-        mail = 'registrationBundesfahrt'
     else:
         return None
 
@@ -94,19 +91,6 @@ def send_registration_summary(data):
     plain_renderend, html_rendered = get_mail(MailType.RegistrationSummary, data, data['event_id'])
 
     subject = "Registrierung beim Anmelde-Tool vollständig abgeschlossen"
-    recipients = [data['email']]
-
-    try:
-        send_email(plain_renderend, html_rendered, subject, recipients)
-        return "Email Is Sent"
-    except Exception as e:
-        print("Email not sent ", e)
-
-
-def send_registration_summary_bundesfahrt(data):
-    plain_renderend, html_rendered = get_mail(MailType.RegistrationSummaryBundesfahrt, data, data['event_id'])
-
-    subject = "Registrierung beim Anmelde-Tool für die Bundesfahrt vollständig abgeschlossen"
     recipients = [data['email']]
 
     try:

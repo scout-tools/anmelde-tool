@@ -11,7 +11,7 @@
     </mj-section>
     <mj-section>
       <mj-column>
-        <mj-image src="https://cloud.dpbm.de/apps/files_sharing/publicpreview/BRk34pyetQLyx7j?x=2670&y=1206&a=true&file=20200820-IMG_5592.jpg" alt="" align="center" border="none" padding-left="0px" padding-right="0px" padding-bottom="0px" padding-top="0px"></mj-image>
+        <mj-image src="https://cloud.dpbm.de/apps/files_sharing/publicpreview/BRk34pyetQLyx7j?x=2670&y=1206&a=true&file=20200820-IMG_5592.jpg" alt="" align="center" padding-left="0px" padding-right="0px" padding-bottom="0px" padding-top="0px"></mj-image>
       </mj-column>
     </mj-section>
     <mj-section background-color="#FFF" padding-bottom="0px" padding-top="0">

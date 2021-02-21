@@ -321,11 +321,14 @@
               <v-combobox
                 v-model="eatHabitText"
                 v-show="!isEditWindow"
+                :error-messages="eatHabitTypeErrors"
                 label="weitere Allergien und Unverträglichkeiten (Freitext)"
                 prepend-icon="mdi-food"
                 clearable
                 multiple
                 chips
+                @input="$v.eatHabitText.$touch()"
+                @blur="$v.eatHabitText.$touch()"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -431,6 +434,23 @@ const scoutGroupStartValidator = (groupObjOrGroupName) => {
   return validStarts.includes(name.trim().split(' ')[0]);
 };
 
+const eatHabitStartValidator = (habit) => {
+  if (!habit) {
+    return false;
+  }
+  let oneFalse = 0;
+  habit.forEach((h) => {
+    if (!h.startsWith('Kein')) oneFalse += 1;
+    return oneFalse;
+  });
+  return oneFalse === 0;
+};
+
+const phoneNumStartValidator = (number) => {
+  if (!number) return false;
+  return number.startsWith('0');
+};
+
 export default {
   props: ['isOpen'],
   data: () => ({
@@ -521,6 +541,7 @@ export default {
         required,
         integer,
         minValue: minValue(1),
+        phoneNumStartValidator,
       },
       age: {
         required,
@@ -539,6 +560,9 @@ export default {
       participantRole: {
         required,
       },
+    },
+    eatHabitText: {
+      eatHabitStartValidator,
     },
   },
   computed: {
@@ -632,6 +656,11 @@ export default {
       ) {
         errors.push('Telefonnummer darf nur aus Zahlen bestehen.'); // eslint-disable-line
       }
+      if (!this.$v.data.phoneNumber.phoneNumStartValidator) {
+        errors.push(
+          'Die Telefonnummer muss mit 0 beginnen.',
+        );
+      }
       return errors;
     },
     participantRoleErrors() {
@@ -660,6 +689,15 @@ export default {
 
       if (!this.$v.data.zipCode.required) {
         errors.push('Stadt ist erforderlich.');
+      }
+      return errors;
+    },
+    eatHabitTypeErrors() {
+      const errors = [];
+      if (!this.$v.eatHabitText.eatHabitStartValidator) {
+        errors.push(
+          'Die Essensgewohnheiten müssen mit Kein(e/r) starten.',
+        );
       }
       return errors;
     },
