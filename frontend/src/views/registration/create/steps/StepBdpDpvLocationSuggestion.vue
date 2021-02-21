@@ -24,7 +24,7 @@
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title
-                  v-text="item.name + ' - ' + item.description"
+                  v-text="item.name"
                 ></v-list-item-title>
               </v-list-item-content>
               <v-list-item-action>
@@ -41,7 +41,7 @@
             <v-list-item
               v-if="!items.length"
             >
-              Bisher hast du noch kein Ort hinzugefügt.
+              Bisher hast du noch kein Vorschläge hinzugefügt.
             </v-list-item>
           </v-list-item-group>
         </v-list>
@@ -99,8 +99,8 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     event_location_types: [
-      { state: 'Zeltplatz Vorschlag', abbr: 3 },
-      { state: 'Heim Vorschlag', abbr: 4 }],
+      { state: 'Fremden Zeltplatz vorschlagen', abbr: 3 },
+      { state: 'Fremdes Heim vorschlagen', abbr: 4 }],
     show_event_location_types: [3, 4],
     valid: true,
     radioGroup: 0,

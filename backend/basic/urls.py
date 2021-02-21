@@ -25,6 +25,7 @@ router.register(r'role', views.RoleViewSet)
 router.register(r'method-of-travel', views.MethodOfTravelViewSet)
 router.register(r'event-overview', views.EventOverviewViewSet)
 router.register(r'check-event', views.EventCodeCheckerViewSet, basename="event-code")
+router.register(r'postal-address', views.PostalAddressViewSet)
 
 event_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
 event_router.register(r'participants', views.EventParticipantsViewSet,

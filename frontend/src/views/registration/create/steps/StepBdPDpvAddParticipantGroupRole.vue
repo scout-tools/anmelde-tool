@@ -9,7 +9,10 @@
         <br />
         Diese Anmeldung bezieht sich auf das gesamte Wochenende. Personen, die
         früher fahren oder später kommen zählen als vollwertige teilnehmende
-        Person.
+        Person.<br>
+        <br>
+        Vergiss nicht dich selbst auch mitzuzählen.
+        <v-icon class="mx-2" color="red">mdi-account-alert</v-icon>
       </p>
       <v-form v-model="valid">
         <v-divider class="py-3 mt-5" />

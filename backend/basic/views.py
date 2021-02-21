@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
-    TentType, EatHabit, TravelTag
+    TentType, EatHabit, TravelTag, PostalAddress
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
@@ -20,7 +20,7 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, \
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
     EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
-    RegistrationSummarySerializer, TravelTagSerializer
+    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission
@@ -271,6 +271,14 @@ class TentTypeViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = TentType.objects.all()
     serializer_class = TentTypeSerializer
+
+
+class PostalAddressViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = PostalAddress.objects.all()
+    serializer_class = PostalAddressSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('registration',)
 
 
 class TravelTagViewSet(viewsets.ReadOnlyModelViewSet):

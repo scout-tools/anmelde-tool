@@ -168,6 +168,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 
@@ -185,14 +186,13 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    radioGroup: 0,
-    radioGroup2: 0,
     data: {
       firstName: null,
       lastName: null,
       street: null,
       addressAddition: null,
       zipCode: null,
+      registration: null,
     },
   }),
   validations: {
@@ -217,16 +217,12 @@ export default {
         minLength: minLength(1),
       },
       addressAddition: {
-        minLength: minLength(2),
         maxLength: maxLength(30),
       },
     },
   },
   computed: {
     ...mapGetters([
-      'isAuthenticated',
-      'getJwtData',
-      'hierarchyMapping',
       'zipCodeMapping',
     ]),
     firstNameErrors() {
@@ -295,18 +291,12 @@ export default {
     },
   },
   watch: {
-    radioGroup(value) {
-      this.$store.commit('setDpvAddedLocation', value === '1');
+    postalAddress(value) {
+      this.data = value;
     },
   },
   methods: {
     customText: (item) => `${item.zipCode} — ${item.city}`,
-    newLocation() {
-      this.$refs.newLocationDialog.openDialog();
-    },
-    onCloseWindow() {
-      // this.$store.commit('setDpvAddedLocation', true);
-    },
     validate() {
       this.$v.$touch();
       console.log(!this.$v.$error);
@@ -320,22 +310,56 @@ export default {
       if (!this.valid) {
         return;
       }
-      this.$emit('nextStep');
+      this.savePostalAddress();
     },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
+    savePostalAddress() {
+      this.data.registration = this.$route.params.id;
+
+      if (this.data.id) {
+        this.putPostalAddress().then(() => {
+          this.$emit('nextStep');
+        });
+      } else {
+        this.postPostalAddress().then(() => {
+          this.$emit('nextStep');
+        });
       }
-      this.$emit('submit');
     },
-    getData() {
-      return {
-        name: this.data.name,
-        description: this.data.description,
-      };
+    beforeTabShow() {
+      this.loadData();
     },
-    beforeTabShow() {},
+    async getPostalAddress() {
+      const registrationId = this.$route.params.id;
+      const res = await axios.get(
+        `${process.env.VUE_APP_API}basic/postal-address/?registration=${registrationId}`,
+      );
+      return res.data;
+    },
+    async postPostalAddress() {
+      const res = await axios
+        .post(`${process.env.VUE_APP_API}basic/postal-address/`, this.data);
+      return res.data;
+    },
+    async putPostalAddress() {
+      const id = this.data.id; // eslint-disable-line
+      const res = await axios
+        .put(`${process.env.VUE_APP_API}basic/postal-address/${id}/`, this.data);
+      return res.data;
+    },
+    loadData() {
+      this.isLoading = true;
+      Promise.all([this.getPostalAddress()])
+        .then((values) => {
+          if (values[0] && values[0].length) {
+            this.data = values[0][0]; // eslint-disable-line
+          }
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isLoading = false;
+        });
+    },
   },
 };
 </script>

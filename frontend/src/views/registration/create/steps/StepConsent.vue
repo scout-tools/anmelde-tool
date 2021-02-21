@@ -27,7 +27,7 @@
       <v-row>
         <v-checkbox
           v-model="data.checkbox1"
-          :label="`Ich stimme den Bedinungen zu und möchte mit der Anmeldung beginnen.`"
+          :label="`Ich stimme den Bedingungen zu und möchte mit der Anmeldung beginnen.`"
           :error-messages="checkbox1Errors"
         >
         </v-checkbox>

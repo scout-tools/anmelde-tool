@@ -406,6 +406,6 @@ class PostalAddress(TimeStampMixin):
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     street = models.CharField(max_length=100, blank=True)
-    addressAddition = models.CharField(max_length=100, blank=True)
+    address_addition = models.CharField(max_length=100, blank=True)
     zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)

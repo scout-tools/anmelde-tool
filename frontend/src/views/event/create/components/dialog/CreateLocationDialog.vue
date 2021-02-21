@@ -16,7 +16,7 @@
         <v-form v-model="valid">
           <v-container>
             <v-row>
-              <v-col cols="6"  sm="6">
+              <v-col cols="6" sm="6">
                 <v-select
                   autofocus
                   :items="event_location_types"
@@ -26,7 +26,8 @@
                   required
                   :error-messages="typeErrors"
                   label="Type"
-                  prepend-icon="mdi-home">
+                  prepend-icon="mdi-home"
+                >
                 </v-select>
               </v-col>
             </v-row>
@@ -58,7 +59,6 @@
                 <v-text-field
                   v-model="data.description"
                   :counter="100"
-                  :error-messages="descriptionErrors"
                   label="Beschreibung/Hiweise zur Schlafstätte"
                   prepend-icon="mdi-card-text"
                 >
@@ -82,11 +82,11 @@
             <v-subheader class="my-0"> Anzahl Schlafplätze </v-subheader>
             <v-divider class="my-0" />
             <v-row>
-              <v-col cols="12" sm="4" md="3">
+              <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="data.capacity"
                   :error-messages="capacityError"
-                  label="Schlafplätze"
+                  label="Anzahl Schlafplätze"
                   prepend-icon="mdi-home"
                 >
                   <template slot="append">
@@ -98,18 +98,18 @@
                       </template>
                       <span>
                         {{
-                          'Schlafplätze'
+                          'Wie viele Schlafplätze können im dort schlafen?'
                         }}
                       </span>
                     </v-tooltip>
                   </template>
                 </v-text-field>
               </v-col>
-              <v-col cols="12" sm="4" md="3">
+              <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="data.capacityCorona"
                   :error-messages="capacityCoronaError"
-                  label="Schlafplätze (Corona)"
+                  label="Anzahl Schlafplätze (Corona)"
                   required
                   prepend-icon="mdi-virus"
                 >
@@ -122,7 +122,7 @@
                       </template>
                       <span>
                         {{
-                          'Wie viele Schlafplätze hattet ihr im September 2020 drinnen.'
+                          'Wie viele Schlafplätze gab es dort im September 2020 ?'
                         }}
                       </span>
                     </v-tooltip>
@@ -133,7 +133,7 @@
             <v-subheader class="my-0"> Adresse </v-subheader>
             <v-divider class="my-0" />
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="data.address"
                   :error-messages="addressErrors"
@@ -154,14 +154,34 @@
                   </template>
                 </v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <zip-code-field
-                  :counter="5"
-                  :error-messages="zipCodeErrors"
-                  label="Stadt/Postleitzahl"
-                  required
-                  @blur="$v.data.zipCode.$touch()"
-                />
+              <v-col cols="12" sm="6">
+              <v-autocomplete
+                v-model="data.zipCode"
+                :items="zipCodeMapping"
+                :item-text="customText"
+                required
+                :error-messages="zipCodeErrors"
+                item-value="id"
+                label="Stadt / Postleitzahl"
+                placeholder="Wähle Stadt oder Postleitzahl."
+                prepend-icon="mdi-city"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{
+                        'Trage bitte den Wohnort oder die Postleitzahl ' +
+                        'des Wohnorts ein und wähle die richtige Option aus.'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-autocomplete>
               </v-col>
             </v-row>
             <v-subheader class="my-0"> Kosten </v-subheader>
@@ -172,7 +192,7 @@
                   v-model="data.perPersonFee"
                   :error-messages="perPersonFeeErrors"
                   :disabled="feeNotKnowen"
-                  label="Kosten pro Person pro Nacht"
+                  label="Kosten pro Person pro Nacht."
                   prepend-icon="mdi-currency-eur"
                 >
                   <template slot="append">
@@ -183,7 +203,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Kosten pro Person pro Nacht' }}
+                        {{ 'Kosten pro Person pro Nacht.' }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -205,8 +225,10 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Gib hier die Fixkosten ein, die für ein ' +
-                        'Wochenende entstehen (Strom, Miete, etc.).' }}
+                        {{
+                          'Gib hier die Fixkosten ein, die für ein ' +
+                          'Wochenende entstehen (Strom, Miete, etc.).'
+                        }}
                       </span>
                     </v-tooltip>
                   </template>
@@ -219,7 +241,9 @@
                 ></v-switch>
               </v-col>
             </v-row>
-            <v-subheader class="my-0"> Kontakt Haus-/Zeltplatzvermietung </v-subheader>
+            <v-subheader class="my-0">
+              Kontakt Haus-/Zeltplatzvermietung
+            </v-subheader>
             <v-divider class="my-0" />
             <v-row>
               <v-col cols="12" sm="6" md="4">
@@ -303,38 +327,34 @@
 <script>
 import {
   required,
-  maxLength,
   minLength,
   numeric,
+  requiredIf,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
-import ZipCodeField from '@/components/field/ZipCodeField.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   props: ['isOpen'],
-  components: {
-    ZipCodeField,
-  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
     valid: true,
     feeNotKnowen: false,
-    event_location_types: [
-      { state: 'No data. PLS Set data', abbr: 0 }],
+    event_location_types: [{ state: 'No data. PLS Set data', abbr: 0 }],
     data: {
       name: '',
       locationType: '',
       description: '',
       address: '',
-      zipCode: 6,
+      zipCode: null,
       contactName: '',
       contactEmail: '',
       contactPhone: '',
       capacity: null,
       capacityCorona: null,
-      perPersonFee: 0,
-      fixFee: 0,
+      perPersonFee: null,
+      fixFee: null,
     },
     showError: false,
     showSuccess: false,
@@ -347,58 +367,116 @@ export default {
       },
       name: {
         required,
-        minLength: minLength(4),
-        maxLength: maxLength(20),
-      },
-      description: {
-        maxLength: maxLength(100),
       },
       address: {
         required,
-        maxLength: maxLength(30),
       },
       zipCode: {
         required,
+        minLength: minLength(1),
+      },
+      capacity: {
+        required,
+        numeric,
+      },
+      capacityCorona: {
+        required,
+        numeric,
+      },
+      perPersonFee: {
+        numeric,
+      },
+      fixFee: {
         numeric,
       },
       contactName: {
-        maxLength: maxLength(30),
+        required,
       },
       contactEmail: {
-        maxLength: maxLength(30),
+        required: requiredIf((main) => { // eslint-disable-line
+          // eslint-disable-next-line
+          return !main.contactPhone;
+        }),
       },
       contactPhone: {
-        maxLength: maxLength(30),
+        required: requiredIf((main) => { // eslint-disable-line
+          // eslint-disable-next-line
+          return !main.contactEmail;
+        }),
       },
     },
   },
   computed: {
+    ...mapGetters([
+      'zipCodeMapping',
+    ]),
     capacityError() {
-      return [];
+      const errors = [];
+      if (!this.$v.data.capacity.$dirty) return errors;
+      if (!this.$v.data.capacity.required) {
+        errors.push('Ist verpflichtend.');
+      }
+      if (!this.$v.data.capacity.numeric) {
+        errors.push('Muss numerisch sein.');
+      }
+      return errors;
     },
     perPersonFeeErrors() {
-      return [];
+      const errors = [];
+      if (!this.$v.data.perPersonFee.$dirty) return errors;
+      if (!this.$v.data.perPersonFee.numeric) {
+        errors.push('Ist verpflichtend.');
+      }
+      return errors;
     },
     fixFeeErrors() {
-      return [];
+      const errors = [];
+      if (!this.$v.data.fixFee.$dirty) return errors;
+      if (!this.$v.data.fixFee.numeric) {
+        errors.push('Ist verpflichtend.');
+      }
+      return errors;
     },
     capacityCoronaError() {
-      return [];
+      const errors = [];
+      if (!this.$v.data.capacityCorona.$dirty) return errors;
+      if (!this.$v.data.capacityCorona.required) {
+        errors.push('Ist verpflichtend.');
+      }
+      if (!this.$v.data.capacityCorona.numeric) {
+        errors.push('Muss numerisch sein.');
+      }
+      return errors;
     },
     contactNameErrors() {
-      return [];
+      const errors = [];
+      if (!this.$v.data.contactName.$dirty) return errors;
+      if (!this.$v.data.contactName.required) {
+        errors.push('Ist verpflichtend.');
+      }
+      return errors;
     },
     contactPhoneErros() {
-      return [];
+      const errors = [];
+      if (!this.$v.data.contactPhone.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.data.contactPhone.required &&
+        errors.push('Telefonnummer oder E-Mail ist verpflichtend');
+      return errors;
     },
     contactEmailErrors() {
-      return [];
+      const errors = [];
+      if (!this.$v.data.contactEmail.$dirty) return errors;
+      // eslint-disable-next-line
+      !this.$v.data.contactEmail.required &&
+        errors.push('Telefonnummer oder E-Mail ist verpflichtend');
+      return errors;
     },
     typeErrors() {
       const errors = [];
       if (!this.$v.data.locationType.$dirty) return errors;
       if (!this.$v.data.locationType.required) {
-        errors.push('Type is required.');
+        errors.push('Ist verpflichtend.');
       }
       return errors;
     },
@@ -406,21 +484,7 @@ export default {
       const errors = [];
       if (!this.$v.data.name.$dirty) return errors;
       if (!this.$v.data.name.required) {
-        errors.push('Name is required.');
-      }
-      if (!this.$v.data.name.maxLength) {
-        errors.push('Name must be at most 20 characters long');
-      }
-      if (!this.$v.data.name.minLength) {
-        errors.push('Name must be at leat 4 characters long');
-      }
-      return errors;
-    },
-    descriptionErrors() {
-      const errors = [];
-      if (!this.$v.data.description.$dirty) return errors;
-      if (!this.$v.data.description.maxLength) {
-        errors.push('description must be at most 100 characters long');
+        errors.push('Ist verpflichtend.');
       }
       return errors;
     },
@@ -428,29 +492,26 @@ export default {
       const errors = [];
       if (!this.$v.data.address.$dirty) return errors;
       if (!this.$v.data.address.required) {
-        errors.push('Adresse is required.');
-      }
-      if (!this.$v.data.address.maxLength) {
-        errors.push('Adresse must be at most 20 characters long');
+        errors.push('Ist verpflichtend.');
       }
       return errors;
     },
     zipCodeErrors() {
       const errors = [];
       if (!this.$v.data.zipCode.$dirty) return errors;
+
+      if (!this.$v.data.zipCode.minLength) {
+        errors.push('Stadt ist erforderlich.');
+      }
+
       if (!this.$v.data.zipCode.required) {
-        errors.push('PLZ is required.');
-      }
-      if (!this.$v.data.zipCode.numeric) {
-        errors.push('PLZ muss eine Zahl sein.');
-      }
-      if (!this.$v.data.zipCode.minLength || !this.$v.data.zipCode.maxLength) {
-        errors.push('PLZ muss eine 5-stellige Zahl sein.');
+        errors.push('Stadt ist erforderlich.');
       }
       return errors;
     },
   },
   methods: {
+    customText: (item) => `${item.zipCode} — ${item.city}`,
     openDialog() {
       this.active = true;
     },
