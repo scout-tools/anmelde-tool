@@ -59,7 +59,7 @@
         <v-list-item
           v-if="!location.length"
         >
-          Bisher hast du noch niemanden hinzugefügt.
+          Bisher hast du noch kein Haus/Zeltplatz hinzugefügt.
         </v-list-item>
         </v-container>
       </v-list-item-group>
