@@ -217,7 +217,6 @@ export default {
         minLength: minLength(1),
       },
       addressAddition: {
-        minLength: minLength(2),
         maxLength: maxLength(30),
       },
     },
@@ -351,7 +350,6 @@ export default {
       this.isLoading = true;
       Promise.all([this.getPostalAddress()])
         .then((values) => {
-          debugger;
           if (values[0] && values[0].length) {
             this.data = values[0][0]; // eslint-disable-line
           }

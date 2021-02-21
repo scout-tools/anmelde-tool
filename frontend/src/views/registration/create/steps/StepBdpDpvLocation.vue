@@ -118,7 +118,6 @@ export default {
   watch: {
     location(value) {
       this.$store.commit('setDpvAddedLocation', value.length);
-      debugger;
       if (value && value.length) {
         this.radioGroup = '1';
       } else {
