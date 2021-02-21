@@ -118,15 +118,18 @@ export default {
   watch: {
     location(value) {
       this.$store.commit('setDpvAddedLocation', value.length);
+      debugger;
+      if (value && value.length) {
+        this.radioGroup = '1';
+      } else {
+        this.radioGroup = '2';
+      }
     },
   },
   methods: {
     newLocation() {
       this.$refs.newLocationDialog.event_location_types = this.event_location_types;
       this.$refs.newLocationDialog.openDialog();
-    },
-    onCloseWindow() {
-      // this.$store.commit('setDpvAddedLocation', true);
     },
     validate() {
       this.$v.$touch();
@@ -144,13 +147,6 @@ export default {
         return;
       }
       this.$emit('nextStep');
-    },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-      this.$emit('submit');
     },
     getLocation() {
       this.isLoading = true;

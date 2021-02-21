@@ -3,7 +3,7 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy,\
     Registration, ZipCode, ParticipantGroup,\
     Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal,\
     EatHabitType, EatHabit, TravelType,\
-    TentType, EventTag, EventRoleMapping, EventRole
+    TentType, EventTag, EventRoleMapping, EventRole, PostalAddress
 
 
 admin.site.register(Event)
@@ -24,6 +24,7 @@ admin.site.register(Tent)
 admin.site.register(EventTag)
 admin.site.register(EventRoleMapping)
 admin.site.register(EventRole)
+admin.site.register(PostalAddress)
 
 
 @admin.register(ScoutHierarchy)

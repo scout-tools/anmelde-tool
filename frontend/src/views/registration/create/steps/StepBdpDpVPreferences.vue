@@ -34,7 +34,7 @@
 
       <v-expand-transition>
         <v-container
-          v-show="!dpvAddedLocation || customChoiceOne === '2' || customChoiceOne === '3'"
+          v-show="!dpvAddedLocation || customChoiceOne === '2'"
         >
           <v-divider class="my-4" />
           <v-radio-group v-model="customChoiceTwo">
@@ -52,6 +52,31 @@
             <v-radio
               label="Uns ist beides recht."
               value="6">
+            </v-radio>
+          </v-radio-group>
+        </v-container>
+      </v-expand-transition>
+
+      <v-expand-transition>
+        <v-container
+          v-show="!dpvAddedLocation || customChoiceOne === '3'"
+        >
+          <v-divider class="my-4" />
+          <v-radio-group v-model="customChoiceThree">
+            <v-radio
+              label="Wir möchten gern in der Nähe unserer Stadt bleiben.
+              (Mit der Regio kommt man gut hin) "
+              value="7"
+            ></v-radio>
+            <v-radio
+              label="Wir fahren gern weit weg.
+              (Im Zweifel quer durch ganz Deutschland) "
+              value="8"
+            >
+            </v-radio>
+            <v-radio
+              label="Uns ist beides recht."
+              value="9">
             </v-radio>
           </v-radio-group>
         </v-container>
@@ -100,6 +125,7 @@ export default {
     valid: true,
     customChoiceOne: '0',
     customChoiceTwo: '0',
+    customChoiceThree: '0',
     snackbar: false,
     currentRegistration: [],
     textSnackbar:
@@ -108,10 +134,24 @@ export default {
   computed: {
     ...mapGetters(['dpvAddedLocation']),
     customChoice() {
+      let returnValue = 0;
       const one = parseInt(this.customChoiceOne, 10);
       const two = parseInt(this.customChoiceTwo, 10);
+      const three = parseInt(this.customChoiceThree, 10);
 
-      return Math.max(one, two);
+      if (one === 1) {
+        returnValue = one;
+      }
+
+      if (one === 2) {
+        returnValue = two;
+      }
+
+      if (one === 3) {
+        returnValue = three;
+      }
+
+      return returnValue;
     },
   },
   watch: {
@@ -119,6 +159,7 @@ export default {
       if (this.currentRegistration && this.currentRegistration.length) {
         this.customChoiceOne = '0';
         this.customChoiceTwo = '0';
+        this.customChoiceThree = '0';
 
         const status = this.currentRegistration[0].customChoice.toString(10);
 
@@ -126,11 +167,17 @@ export default {
           this.customChoiceOne = status;
         }
         if (status === '4' || status === '5' || status === '6') {
+          this.customChoiceOne = '2';
           this.customChoiceTwo = status;
+        }
+        if (status === '7' || status === '8' || status === '9') {
+          this.customChoiceOne = '3';
+          this.customChoiceThree = status;
         }
         if (status === '0') {
           this.customChoiceOne = status;
           this.customChoiceTwo = status;
+          this.customChoiceThree = status;
         }
       }
     },

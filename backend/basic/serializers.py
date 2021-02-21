@@ -3,7 +3,7 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from rest_framework import serializers
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, \
     ParticipantGroup, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
-    EatHabitType, EatHabit, TravelType, TentType, TravelTag
+    EatHabitType, EatHabit, TravelType, TentType, TravelTag, PostalAddress
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
 from django.db.models import Sum, Count, F, Q, Func, Subquery, Case, When
@@ -515,3 +515,9 @@ class RegistrationParticipantsSerializer(serializers.ModelSerializer):
             'event',
             'participantpersonal_set'
         )
+
+
+class PostalAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostalAddress
+        fields = '__all__'
