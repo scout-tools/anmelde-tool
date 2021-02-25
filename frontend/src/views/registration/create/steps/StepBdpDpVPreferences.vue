@@ -4,10 +4,11 @@
       <v-expand-transition>
         <v-container>
           <v-row v-if="dpvAddedLocation">
-            <v-subheader>
-              Sehr cool. Du hast einen Lagerplatz hinzugefügt.
-            </v-subheader>
-            <v-radio-group v-model="radioGroup">
+            <p>
+              Sehr cool. Wo wollt ihr das stadt&amp;spiel spielen?
+              Du hast ein Heim / Zeltplatz hinzugefügt.
+            </p>
+            <v-radio-group v-model="customChoiceOne">
               <v-radio
                 label="Wir wollen bei uns im Heim bleiben und besucht werden."
                 value="1"
@@ -17,46 +18,83 @@
                 und stellen unser Heim zur Verfügung."
                 value="2"
               ></v-radio>
-              <v-radio label="Uns ist beides recht." value="3"></v-radio>
+              <v-radio
+                label="Uns ist beides recht."
+                value="3">
+              </v-radio>
             </v-radio-group>
           </v-row>
-
           <v-row v-else>
-            <v-subheader>
-              Du hast kein Heim oder einen Lagerplatz,
-              was du uns zur Verfügung stellen kannst. Welche Präferenzen hast du? <br>
-            </v-subheader>
-            <v-radio-group v-model="radioGroup">
-              <v-radio
-                label="Wir wollen bei uns in der Stadt oder im direktem Umfeld bleiben."
-                value="1"
-              ></v-radio>
-              <v-radio
-                label="Wir wollen nicht bei uns in der Stadt
-                bleiben."
-                value="2"
-              ></v-radio>
-              <v-radio label="Uns ist beides recht." value="3"></v-radio>
-            </v-radio-group>
+            <p>
+              Wo wollt ihr das stadt&amp;spiel spielen?
+            </p>
           </v-row>
         </v-container>
       </v-expand-transition>
 
       <v-expand-transition>
-        <v-container v-show="radioGroup === '2' || radioGroup === '3'">
+        <v-container
+          v-show="!dpvAddedLocation || customChoiceOne === '2'"
+        >
           <v-divider class="my-4" />
-          <v-radio-group v-model="radioGroup2">
-            <v-radio label="Wir fahren gern weit weg.
-              (Im Zweifel gern quer durch ganz Deutschland) " value="3">
-            </v-radio>
+          <v-radio-group v-model="customChoiceTwo">
             <v-radio
               label="Wir möchten gern in der Nähe unserer Stadt bleiben.
               (Mit der Regio kommt man gut hin) "
-              value="5"
+              value="4"
             ></v-radio>
+            <v-radio
+              label="Wir fahren gern weit weg.
+              (Im Zweifel quer durch ganz Deutschland) "
+              value="5"
+            >
+            </v-radio>
+            <v-radio
+              label="Uns ist beides recht."
+              value="6">
+            </v-radio>
           </v-radio-group>
         </v-container>
       </v-expand-transition>
+
+      <v-expand-transition>
+        <v-container
+          v-show="!dpvAddedLocation || customChoiceOne === '3'"
+        >
+          <v-divider class="my-4" />
+          <v-radio-group v-model="customChoiceThree">
+            <v-radio
+              label="Wir möchten gern in der Nähe unserer Stadt bleiben.
+              (Mit der Regio kommt man gut hin) "
+              value="7"
+            ></v-radio>
+            <v-radio
+              label="Wir fahren gern weit weg.
+              (Im Zweifel quer durch ganz Deutschland) "
+              value="8"
+            >
+            </v-radio>
+            <v-radio
+              label="Uns ist beides recht."
+              value="9">
+            </v-radio>
+          </v-radio-group>
+        </v-container>
+      </v-expand-transition>
+
+      <p
+        class="text-center"
+        v-if="customChoiceTwo !== '0'"
+        style="border-style: solid; border-color: red"
+      >
+        <v-icon color="pink darken-1" large class="ma-2">
+          mdi-unicorn mdi-spin
+        </v-icon>
+        {{ textSnackbar }}
+        <v-icon color="pink darken-1" large class="ma-2">
+          mdi-unicorn mdi-flip-h mdi-spin
+        </v-icon>
+      </p>
 
       <prev-next-buttons
         :position="position"
@@ -66,65 +104,92 @@
         @submitStep="submitStep()"
       />
     </v-container>
-    <v-snackbar
-      top
-      v-model="snackbar"
-    >
-      {{ textSnackbar}}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="green"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
-          Schließen
-        </v-btn>
-      </template>
-    </v-snackbar>
-    <create-location-dialog ref="newLocationDialog" @close="getEvents()" />
   </v-form>
 </template>
 
 <script>
+import axios from 'axios';
 import { mapGetters } from 'vuex';
 
-import CreateLocationDialog from '@/views/event/create/components/dialog/CreateLocationDialog.vue';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepBdpDpvLocation',
-  displayName: 'Wo soll es hingehen?',
+  name: 'StepBdpDpVPreferences',
+  displayName: 'Wohin geht es?',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
-    CreateLocationDialog,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    radioGroup: 0,
-    radioGroup2: 0,
+    customChoiceOne: '0',
+    customChoiceTwo: '0',
+    customChoiceThree: '0',
     snackbar: false,
-    textSnackbar: 'Wir geben uns größte Mühe alles zu beachten, aber können nichts versprechen. ',
-    data: {
-      value1: true,
-      value2: false,
-    },
+    currentRegistration: [],
+    textSnackbar:
+      'Wir geben uns größte Mühe alle Wünsche zu berücksichtigen, können aber nichts versprechen.',
   }),
   computed: {
     ...mapGetters(['dpvAddedLocation']),
+    customChoice() {
+      let returnValue = 0;
+      const one = parseInt(this.customChoiceOne, 10);
+      const two = parseInt(this.customChoiceTwo, 10);
+      const three = parseInt(this.customChoiceThree, 10);
+
+      if (one === 1) {
+        returnValue = one;
+      }
+
+      if (one === 2) {
+        returnValue = two;
+      }
+
+      if (one === 3) {
+        returnValue = three;
+      }
+
+      return returnValue;
+    },
+  },
+  watch: {
+    currentRegistration() {
+      if (this.currentRegistration && this.currentRegistration.length) {
+        this.customChoiceOne = '0';
+        this.customChoiceTwo = '0';
+        this.customChoiceThree = '0';
+
+        const status = this.currentRegistration[0].customChoice.toString(10);
+
+        if (status === '1' || status === '2' || status === '3') {
+          this.customChoiceOne = status;
+        }
+        if (status === '4' || status === '5' || status === '6') {
+          this.customChoiceOne = '2';
+          this.customChoiceTwo = status;
+        }
+        if (status === '7' || status === '8' || status === '9') {
+          this.customChoiceOne = '3';
+          this.customChoiceThree = status;
+        }
+        if (status === '0') {
+          this.customChoiceOne = status;
+          this.customChoiceTwo = status;
+          this.customChoiceThree = status;
+        }
+      }
+    },
   },
   validations: {},
   methods: {
-    newLocation() {
-      this.$refs.newLocationDialog.openDialog();
-    },
     validate() {
       this.$v.$touch();
       console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
+
+      this.valid = this.customChoiceOne !== 0;
     },
     prevStep() {
       this.$emit('prevStep');
@@ -135,20 +200,39 @@ export default {
         return;
       }
       this.snackbar = true;
-      this.$emit('nextStep');
+      this.patchRegiststration().then(() => {
+        this.$emit('nextStep');
+      });
     },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-      this.$emit('submit');
+    async patchRegiststration() {
+      const registrationId = this.$route.params.id;
+      return axios.patch(`${process.env.VUE_APP_API}basic/registration/${registrationId}/`, {
+        customChoice: this.customChoice,
+      });
     },
-    getData() {
-      return {
-        name: this.data.name,
-        description: this.data.description,
-      };
+    beforeTabShow() {
+      this.loadData();
+    },
+    async getRegistration() {
+      const registrationId = this.$route.params.id;
+      const res = await axios.get(
+        `${
+          this.API_URL
+        }basic/registration/?id=${registrationId}&timestamp=${new Date().getTime()}`,
+      );
+      return res.data;
+    },
+    loadData() {
+      this.isLoading = true;
+      Promise.all([this.getRegistration()])
+        .then((values) => {
+          [this.currentRegistration] = values;
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isLoading = false;
+        });
     },
   },
 };

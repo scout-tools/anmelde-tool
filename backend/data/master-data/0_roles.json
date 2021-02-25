@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "id": 1,
-            "name": "Kein Teilnahmer",
+            "name": "Teilnehmende",
             "description": ""
         }
     },
@@ -13,7 +13,7 @@
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Teilnahmer",
+            "name": "Gruppenleitung",
             "description": ""
         }
     },
@@ -22,7 +22,7 @@
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "Gruppenführer",
+            "name": "Stammesvertretung",
             "description": ""
         }
     },
@@ -31,7 +31,7 @@
         "pk": 4,
         "fields": {
             "id": 4,
-            "name": "Freie Helfer",
+            "name": "Helferlein",
             "description": ""
         }
     },
@@ -40,7 +40,7 @@
         "pk": 5,
         "fields": {
             "id": 5,
-            "name": "Nur Mosaikers Leben",
+            "name": "Mosaikersleben",
             "description": ""
         }
     },
@@ -49,7 +49,52 @@
         "pk": 6,
         "fields": {
             "id": 6,
-            "name": "Kaperfahrt und Mosaikers Leben",
+            "name": "Kaperfahrt und Mosaikersleben",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "name": "Tagesgast: Nur Sonntag",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 8,
+        "fields": {
+            "id": 8,
+            "name": "Tagesgast: Nur Montag",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 9,
+        "fields": {
+            "id": 9,
+            "name": "Tagesgast: Nur Dienstag",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 10,
+        "fields": {
+            "id": 10,
+            "name": "Tagesgast: Sonntag auf Montag",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.role",
+        "pk": 11,
+        "fields": {
+            "id": 11,
+            "name": "Tagesgast: Montag auf Dienstag",
             "description": ""
         }
     }

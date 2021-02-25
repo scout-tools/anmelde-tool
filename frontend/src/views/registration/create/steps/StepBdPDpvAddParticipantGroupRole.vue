@@ -1,17 +1,21 @@
 <template>
   <v-form ref="formParticipantGroupRole" v-model="valid">
     <v-container>
-      <span class="subtitle-2">
-        Du kannst die Anzahl der Teilnehmenden bis zum 01.Mai 2021 anpassen. <br>
+      <p>
+        Du kannst die Anzahl der Teilnehmenden bis zum 01.Mai 2021 anpassen.
         <br />
-        Dafür kannst du dich jederzeit wieder einloggen. <br>
+        <br />
+        Dafür kannst du dich jederzeit wieder einloggen. <br />
+        <br />
+        Diese Anmeldung bezieht sich auf das gesamte Wochenende. Personen, die
+        früher fahren oder später kommen zählen als vollwertige teilnehmende
+        Person.<br>
         <br>
-        Diese Anmeldung bezieht sich auf das gesamte Wochenende.
-        Personen, die früher fahren oder später kommen zählen als
-        vollwertige teilnehmende Person
-      </span
-      >
+        Vergiss nicht dich selbst auch mitzuzählen.
+        <v-icon class="mx-2" color="red">mdi-account-alert</v-icon>
+      </p>
       <v-form v-model="valid">
+        <v-divider class="py-3 mt-5" />
         <v-row>
           <v-col col="12">
             <v-slider
@@ -22,19 +26,16 @@
               max="200"
               thumb-label="always"
             >
-              <template slot="append">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="success" dark v-bind="attrs" v-on="on">
-                      mdi-help-circle-outline
-                    </v-icon>
-                  </template>
-                  <span> {{tooltip.normal}} </span>
-                </v-tooltip>
-              </template>
             </v-slider>
+            <v-row class="ml-5">
+              <p>
+                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                {{ tooltip.normal }}
+              </p>
+            </v-row>
           </v-col>
         </v-row>
+        <v-divider class="py-4 ma-0" />
         <v-row>
           <v-col col="12">
             <v-slider
@@ -45,20 +46,16 @@
               max="30"
               thumb-label="always"
               type="number"
-            >
-              <template slot="append">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="success" dark v-bind="attrs" v-on="on">
-                      mdi-help-circle-outline
-                    </v-icon>
-                  </template>
-                  <span> {{tooltip.groupLeader}} </span>
-                </v-tooltip>
-              </template></v-slider
-            >
+            />
+            <v-row class="ml-5">
+              <p>
+                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                {{ tooltip.groupLeader }}
+              </p>
+            </v-row>
           </v-col>
         </v-row>
+        <v-divider class="py-4 ma-0" />
         <v-row>
           <v-col col="12">
             <v-slider
@@ -66,23 +63,19 @@
               color="blue"
               label="Stammesvertretung"
               min="1"
-              max="5"
+              max="3"
               thumb-label="always"
               type="number"
-            >
-              <template slot="append">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="success" dark v-bind="attrs" v-on="on">
-                      mdi-help-circle-outline
-                    </v-icon>
-                  </template>
-                  <span> {{tooltip.stammes}} </span>
-                </v-tooltip>
-              </template></v-slider
-            >
+            />
+            <v-row class="ml-5">
+              <p>
+                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                {{ tooltip.stammes }}
+              </p>
+            </v-row>
           </v-col>
         </v-row>
+        <v-divider class="py-4 ma-0" />
         <v-row>
           <v-col col="12">
             <v-slider
@@ -93,20 +86,16 @@
               max="50"
               thumb-label="always"
               type="number"
-            >
-              <template slot="append">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="success" dark v-bind="attrs" v-on="on">
-                      mdi-help-circle-outline
-                    </v-icon>
-                  </template>
-                  <span> {{tooltip.helper}} </span>
-                </v-tooltip>
-              </template></v-slider
-            >
+            />
+            <v-row class="ml-5">
+              <p>
+                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                {{ tooltip.helper }}
+              </p>
+            </v-row>
           </v-col>
         </v-row>
+        <v-divider class="py-4 ma-0" />
         <v-row>
           <v-col col="12">
             <v-slider
@@ -118,11 +107,11 @@
               type="number"
               readonly
             >
-            </v-slider
-            >
+            </v-slider>
           </v-col>
         </v-row>
       </v-form>
+      <v-divider class="py-4 ma-0" />
       {{
         `Du hast ${total} Personen angemeldet. Das entspricht einem Stammesbeitrag von maximal ${
           total * 10
@@ -142,12 +131,14 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 // import RolePicker from '../components/RolePicker..vue';
 
 export default {
   name: 'StepAddParticipantGroupRole',
-  displayName: 'Teilnehmer_innen Rolle',
+  displayName: 'Teilnehmende',
 
   components: {
     // RolePicker,
@@ -155,14 +146,19 @@ export default {
   },
   props: ['position', 'maxPos'],
   data: () => ({
+    API_URL: process.env.VUE_APP_API,
     tooltip: {
-      normal: 'Das sind die allgemeinen Gruppenkinder, die aktiv am Spiel teilnehmen',
-      helper: 'Auch diese nehmen aktiv am Spiel teil, sollten aber Aufsichtspflichten erfüllen',
-      stammes: 'Hier sind lediglich wenige Menschen pro Stamm notwendig (max. 3, eher weniger), sie sind aktive Spieler_innen mit Koordinationsaufgaben',
-      groupLeader: 'Alle, die keine Lust haben auf der aktiven Spielseite zu stehen, sondern lieber hinter oder auf der Bühne die Fäden ziehen wollen, können sich hier melden',
+      normal:
+        'Das sind die Kinder/Jugendlichen in den Gruppen, die aktiv am Spiel teilnehmen.',
+      groupLeader:
+        'Auch diese nehmen aktiv am Spiel teil und haben die Aufsichtspflicht.',
+      stammes:
+        'Hier sind lediglich wenige Menschen pro Stamm notwendig (max. 3, eher weniger), auch sie nehmen aktiv am Spiel teil und haben Koordinationsaufgaben.',
+      helper:
+        'Alle, die keine Lust haben auf der aktiven Spielseite zu stehen, sondern lieber hinter oder auf der Bühne die Fäden ziehen wollen, können sich hier melden.',
       total: 'Many ist eine Tomate',
     },
-    displayName: 'Essen',
+    displayName: 'Essgewohnheiten',
     normal: 0,
     helper: 0,
     stammes: 0,
@@ -172,16 +168,31 @@ export default {
   validations: {},
   computed: {
     total() {
-      return this.normal + this.helper + this.stammes + this.groupLeader;
+      return (
+        this.normal + // eslint-disable-line
+        this.helper + // eslint-disable-line
+        this.stammes + // eslint-disable-line
+        this.groupLeader
+      );
     },
     maxHelper() {
-      return this.total - this.stammes - this.groupLeader;
+      return (
+        this.total - // eslint-disable-line
+        this.stammes - // eslint-disable-line
+        this.groupLeader
+      );
     },
     maxStammes() {
-      return this.total - this.helper - this.groupLeader;
+      return (
+        this.total - // eslint-disable-line
+        this.helper - // eslint-disable-line
+        this.groupLeader
+      );
     },
     maxGroupLeader() {
-      return this.total - this.helper - this.stammes;
+      return (
+        this.total - this.helper - this.stammes
+      );
     },
   },
   methods: {
@@ -195,17 +206,102 @@ export default {
         return;
       }
 
-      this.addMeatEaters();
+      this.saveData();
     },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
+    beforeTabShow() {
+      this.loadData();
+    },
+    loadData() {
+      this.isLoading = true;
+      Promise.all([this.getParticipant()])
+        .then((values) => {
+          this.processData(values[0]);
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isLoading = false;
+        });
+    },
+    async getParticipant() {
+      const registrationId = this.$route.params.id;
+      const res = await axios.get(
+        `${
+          this.API_URL
+        }basic/participant-group/?registration=${registrationId}&timestamp=${new Date().getTime()}`,
+      );
+      return res.data;
+    },
+    processData(items) {
+      const obj1 = items.filter((item) => item.participantRole === 1);
+      if (obj1 && obj1.length) {
+        this.normal = obj1[0].numberOfPersons;
       }
-      this.$emit('submit');
+
+      const obj2 = items.filter((item) => item.participantRole === 2);
+      if (obj2 && obj2.length) {
+        this.groupLeader = obj2[0].numberOfPersons;
+      }
+
+      const obj3 = items.filter((item) => item.participantRole === 3);
+      if (obj3 && obj3.length) {
+        this.stammes = obj3[0].numberOfPersons;
+      }
+
+      const obj4 = items.filter((item) => item.participantRole === 4);
+      if (obj4 && obj4.length) {
+        this.helper = obj4[0].numberOfPersons;
+      }
     },
-    addMeatEaters() {
-      this.$emit('nextStep');
+    saveData() {
+      const promises = [];
+      const registrationId = this.$route.params.id;
+      console.log(registrationId);
+      const myUrl = `${this.API_URL}basic/participant-group/`;
+
+      if (this.normal > 0) {
+        promises.push(
+          axios.post(myUrl, {
+            participant_role: 1,
+            numberOfPersons: this.normal,
+            registration: registrationId,
+          }),
+        );
+      }
+
+      if (this.groupLeader > 0) {
+        promises.push(
+          axios.post(myUrl, {
+            participant_role: 2,
+            numberOfPersons: this.groupLeader,
+            registration: registrationId,
+          }),
+        );
+      }
+
+      if (this.stammes > 0) {
+        promises.push(
+          axios.post(myUrl, {
+            participant_role: 3,
+            numberOfPersons: this.stammes,
+            registration: registrationId,
+          }),
+        );
+      }
+
+      if (this.helper > 0) {
+        promises.push(
+          axios.post(myUrl, {
+            participant_role: 4,
+            numberOfPersons: this.helper,
+            registration: registrationId,
+          }),
+        );
+      }
+
+      Promise.all(promises).then(() => {
+        this.$emit('nextStep');
+      });
     },
   },
 };

@@ -14,7 +14,7 @@
             class="white--text subheading mb-3"
             style="font-weight: 900; text-shadow: 2px 2px #000000"
           >
-            Einfach. Schnell. Übersichtlich
+            Einfach. Schnell. Übersichtlich.
           </div>
           <v-btn
             class="mt-10"
@@ -23,7 +23,7 @@
             @click="$router.push({ name: 'loginParticipants' })"
           >
             <v-icon left>mdi-calendar-plus</v-icon>
-            Zu einem Lager Anmelden
+            Zu einer Fahrt Anmelden
           </v-btn>
         </v-layout>
       </v-parallax>
@@ -33,7 +33,7 @@
       <v-container>
         <v-layout column align-center justify-center class="white--text">
           <v-flex xs12 class="text-xs-center">
-            <img height="200px" src="@/assets/logo_bdp_dpv_color.png"/>
+            <img height="200px" :src="logoPath"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -44,10 +44,10 @@
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
             <h2 class="headline">
-                Der Beste Weg um große Anmeldezahlen Übersichtlich zu gestalten
+                Der Beste Weg um große Anmeldezahlen Übersichtlich zu gestalten.
             </h2>
             <span class="subheading">
-                Kein E-Mail Krieg. Keine Missverständnisse. Zeit für das wesentliche
+                Kein E-Mail Krieg. Keine Missverständnisse. Zeit für das Wesentliche.
             </span>
           </div>
         </v-flex>
@@ -63,9 +63,14 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Schneller und Einfacher gab es keine Anmeldung für ein Pfadfinder_innen Lager.
-                    Einloggen innerhalb von Sekunden ohne ein extra Passwort und du wirst durch
-                    den Anmeldeprozess begleitet
+                    Schneller und einfacher war eine Anmeldung für ein Fahrt
+                    noch nie.
+                    Die Anmeldung deiner Teilnehmer klappt innerhalb
+                    von Minuten. Kein extra Passwort.
+                    Der Anmeldeprozess ist gut erklärt, so dass Keine
+                    Fragen offen bleiben. Falls sich eine Änderung
+                    ergeben hat, können die Daten bis zum Anmeldeschluss
+                    einfach noch schnell angepasst werden.
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -80,8 +85,8 @@
                   <v-card-text>
                     Wer kennt es nicht? Du bekommst eine Anmeldung per E-Mail
                     und einige Informationen fehlen.
-                    Es beginnt eine E-Mail Unterhaltung und das kostet wertvolle Zeit und nerven.
-                    Eine Anmeldung über das Anmelde-Tool ist immer Vollständig.
+                    Es beginnt eine E-Mail Unterhaltung und das kostet wertvolle Zeit und Nerven.
+                    Eine Anmeldung über das Anmelde-Tool ist immer vollständig.
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -125,6 +130,14 @@ export default {
     email: '',
     subscribed: false,
   }),
+  computed: {
+    logoPath() {
+      if (process.env.VUE_APP_ENV === 'DEV') {
+        return require('../../assets/logo_dpv_beta.png'); // eslint-disable-line
+      }
+      return require('../../assets/logo_bdp_dpv_color.png'); // eslint-disable-line
+    },
+  },
 };
 </script>
 

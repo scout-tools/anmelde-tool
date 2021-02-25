@@ -11,7 +11,7 @@
       <v-row>
         <v-checkbox
           v-model="data.checkbox1"
-          :label="`Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zum Lager an.`"
+          :label="`Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zur Fahrt an.`"
         >
         </v-checkbox>
       </v-row>
@@ -34,7 +34,7 @@ import { required } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepNameDescription',
+  name: 'StepConfirm',
   displayName: 'Zusammenfassung und Bestätigung',
   props: ['position', 'maxPos'],
   components: {
@@ -88,6 +88,8 @@ export default {
         name: this.data.name,
         description: this.data.description,
       };
+    },
+    beforeTabShow() {
     },
   },
 };

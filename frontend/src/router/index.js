@@ -10,8 +10,8 @@ import LandingPage from '@/views/landingPage/Main.vue';
 import CreateEvent from '@/views/event/create/Main.vue';
 import LoginParticipantsMain from '@/views/login/LoginParticipants.vue';
 import LoginInteralsMain from '@/views/login/LoginInterals.vue';
-import Impressum from '@/views/impressum/Main.vue';
-import Contact from '@/views/contact/Main.vue';
+import Impressum from '@/views/footer/Impressum.vue';
+import Datenschutz from '@/views/footer/Datenschutz.vue';
 
 Vue.use(VueRouter);
 
@@ -75,9 +75,9 @@ const routes = [
     component: Impressum,
   },
   {
-    path: '/contact',
-    name: 'contact',
-    component: Contact,
+    path: '/datenschutz',
+    name: 'datenschutz',
+    component: Datenschutz,
   },
 ];
 

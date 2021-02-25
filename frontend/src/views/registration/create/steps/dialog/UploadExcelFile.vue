@@ -7,7 +7,7 @@
   >
     <v-card>
       <v-toolbar dark color="primary">
-        <v-btn icon dark @click="active = false">
+        <v-btn icon dark @click="closeDialog">
           <v-icon>mdi-close</v-icon>
         </v-btn>
         <v-toolbar-title>Excel Datei importieren</v-toolbar-title>
@@ -15,7 +15,7 @@
       </v-toolbar>
       <v-sheet class="ma-5">
         <v-header>
-          Lade deine Excel Datei hoch um dir die Manuelle eingabe zu erleichern
+          Lade hier deine Excel Datei hoch, um dir die manuelle Eingabe zu erleichtern.
         </v-header>
         <v-card class="ma-4 pa-3">
         <input type="file" @change="onFileChange" />
@@ -117,19 +117,12 @@ export default {
     onClickOk() {
       this.active = false;
     },
-    onClickCancel() {
-      this.active = false;
-    },
     openDialog() {
       this.active = true;
     },
     closeDialog() {
       this.active = false;
-      this.$v.$reset();
-      Object.keys(this.data).forEach((key) => {
-        this.data[key] = '';
-      });
-      this.$emit('close');
+      this.$emit('refresh');
     },
     fillParticipant(input) {
       const newInput = this.map(input);

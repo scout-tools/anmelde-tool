@@ -6,17 +6,17 @@
         <span class="subtitle-1"> Gebe die Anzahl der Teilnehmenden an. </span>
       </v-row>
       <v-row class="mb-6">
-        <span class="subtitle-2">
-          Du kannst dies Antahl der Teilnehmenden bis zum 1. Mai 2021
-          anpassen. <br/>
-          Dafür kannst du dich dafür jederzeit wieder einloggen.</span
-        >
+        <p>
+          Du kannst dies Antahl der Teilnehmenden bis zum 1. Mai 2021 anpassen.
+          <br />
+          Dafür kannst du dich dafür jederzeit wieder einloggen.
+        </p>
       </v-row>
       <template v-for="(item, index) in getActiveAgeGroups">
         <v-row :key="`agegroup-${index}`">
           <v-text-field
             v-model="data[item.id]"
-            :label="`Anzahl ${item.name}`"
+            :label="`Anzahl: ${item.description}`"
             required
           >
           </v-text-field>
@@ -42,9 +42,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { required, minLength, minValue } from 'vuelidate/lib/validators';
+// import { required, minLength, minValue } from 'vuelidate/lib/validators';
 
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
@@ -61,15 +61,6 @@ export default {
     isLoading: false,
     data: {},
   }),
-  validations: {
-    data: {
-      required,
-      minLength: minLength(1),
-      $each: {
-        minValue: minValue(1),
-      },
-    },
-  },
   computed: {
     ...mapGetters([
       'isAuthenticated',
@@ -85,12 +76,14 @@ export default {
     },
     getActiveAgeGroups() {
       if (
-        this.ageGroupMapping
-        && this.currentEvent
-        && this.currentEvent.ageGroups
-        && this.currentEvent.ageGroups.length
+        this.ageGroupMapping && // eslint-disable-line
+        this.currentEvent && // eslint-disable-line
+        this.currentEvent.ageGroups && // eslint-disable-line
+        this.currentEvent.ageGroups.length
       ) {
-        return this.ageGroupMapping.filter((item) => this.currentEvent.ageGroups.includes(item.id));
+        return this.ageGroupMapping.filter((item) =>
+          this.currentEvent.ageGroups.includes(item.id), // eslint-disable-line
+        );  // eslint-disable-line
       }
       return [];
     },
@@ -107,38 +100,30 @@ export default {
       this.$emit('prevStep');
     },
     nextStep() {
-      this.validate();
       if (!this.valid) {
         return;
       }
 
-      this.addParticipants();
-    },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-      this.$emit('submit');
+      this.$emit('nextStep');
     },
     addParticipants() {
-      const promises = [];
-      const registrationId = this.$route.params.id;
-      const myUrl = `${this.API_URL}basic/participant-group/`;
-      const valueArray = Object.values(this.data);
-      Object.keys(this.data).forEach((element, index) => {
-        const paramsData = {
-          ageGroup: parseInt(element, 10),
-          numberOfPersons: parseInt(valueArray[index], 10),
-          registration: parseInt(registrationId, 10),
-        };
-        promises.push(axios.post(myUrl, paramsData));
-      });
-
-      Promise.all(promises).then(() => {
-        this.$emit('nextStep');
-      });
+      // const promises = [];
+      // const registrationId = this.$route.params.id;
+      // const myUrl = `${this.API_URL}basic/participant-group/`;
+      // const valueArray = Object.values(this.data);
+      // Object.keys(this.data).forEach((element, index) => {
+      //   const paramsData = {
+      //     ageGroup: parseInt(element, 10),
+      //     numberOfPersons: parseInt(valueArray[index], 10),
+      //     registration: parseInt(registrationId, 10),
+      //   };
+      //   promises.push(axios.post(myUrl, paramsData));
+      // });
+      // Promise.all(promises).then(() => {
+      //   this.$emit('nextStep');
+      // });
     },
+    beforeTabShow() {},
   },
 };
 </script>

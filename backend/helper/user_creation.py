@@ -29,12 +29,12 @@ def login_or_create_user(data):
     return data
 
 
-def CreateUserExternally(email):
+def CreateUserExternally(email, event_data):
     password = User.objects.make_random_password()
     RegisterUser(email, password, '', '')
     data = {'username': email.split('@', 1)[0],
             'user': email,
             'email': email,
             'password': password}
-    send_external_registration_mail(data)
-
+    send_external_registration_mail(data, event_data)
+    return data

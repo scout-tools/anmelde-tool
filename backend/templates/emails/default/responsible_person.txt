@@ -1,0 +1,9 @@
+[https://anmelde-tool.de/assets/EmailBild.jpg]
+
+Hey {{ username }}
+
+Du wurdest von {{ foreign_name }} ({{ foreign_email }}) als Verantwortliche Person bei der {{ event }} hinterlegt
+
+Damit kannst du die Regestrierung inklusive der Anmeldezahlen, Essensvorlieben, An und Abreise und so weiter verändern.
+Bei Fragen oder Problemen, kannst du dich gerne an support@anmelde-tool.de wenden
+Gut Pfad!

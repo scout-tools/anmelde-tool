@@ -103,9 +103,9 @@ export default {
       ) {
         const roles = eventOverview.participantRole;
         const hasRole = roles.some((role) => role.eventRoleId === id);
-        const isLagerleitung = roles.some((role) => role.eventRoleId === 1);
+        const isFahrtenleitung = roles.some((role) => role.eventRoleId === 1);
 
-        return hasRole || isLagerleitung;
+        return hasRole || isFahrtenleitung;
       }
       return 1;
     },

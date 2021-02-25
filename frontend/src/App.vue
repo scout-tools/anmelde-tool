@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div id="app">
-      <main-comp class="mt-100p"/>
+      <main-comp/>
     </div>
   </v-app>
 </template>
@@ -27,5 +27,9 @@ export default {
 <style>
 .top-margin {
   margin-top: 70px !important;
+}
+
+#app {
+  background-color: rgba(240, 236, 236, 0.185);
 }
 </style>

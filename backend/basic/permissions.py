@@ -9,42 +9,42 @@ def get_eventrole(request, view, event_role_id):
 
 
 class IsEventMaster(permissions.BasePermission):
-    message = 'Nur für die Lagerleitung.'
+    message = 'Nur für die Fahrtenleitung.'
 
     def has_permission(self, request, view):
         return get_eventrole(request, view, [1, ])
 
 
 class IsEventCashMaster(permissions.BasePermission):
-    message = 'Nur für das Kassenteam oder Lagerleitung.'
+    message = 'Nur für das Kassenteam oder Fahrtenleitung.'
 
     def has_permission(self, request, view):
         return get_eventrole(request, view, [1, 2])
 
 
 class IsKitchenMaster(permissions.BasePermission):
-    message = 'Nur für das Kücheteam oder Lagerleitung.'
+    message = 'Nur für das Kücheteam oder Fahrtenleitung.'
 
     def has_permission(self, request, view):
         return get_eventrole(request, view, [1, 3])
 
 
 class IsProgramMaster(permissions.BasePermission):
-    message = 'Nur für das Programmtean oder Lagerleitung.'
+    message = 'Nur für das Programmtean oder Fahrtenleitung.'
 
     def has_permission(self, request, view):
         return get_eventrole(request, view, [1, 4])
 
 
 class IsLogisticMaster(permissions.BasePermission):
-    message = 'Nur für das Logistikteam oder Lagerleitung.'
+    message = 'Nur für das Logistikteam oder Fahrtenleitung.'
 
     def has_permission(self, request, view):
         return get_eventrole(request, view, [1, 5])
 
 
 class IsSocialMediaPermission(permissions.BasePermission):
-    message = 'Nur für das Öffentlichkeitsteam oder Lagerleitung.'
+    message = 'Nur für das Öffentlichkeitsteam oder Fahrtenleitung.'
 
     def has_permission(self, request, view):
         return get_eventrole(request, view, [1, 6])
