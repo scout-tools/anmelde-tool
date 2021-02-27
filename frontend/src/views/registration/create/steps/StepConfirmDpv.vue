@@ -288,9 +288,10 @@ export default {
       return this.$route.params.id;
     },
     locationsArray() {
+      console.log(this.currentRegistrationSummary);
       if (
-        this.currentRegistrationSummary[0] && // eslint-disable-line
-        this.currentRegistrationSummary[0].length
+        this.currentRegistrationSummary && // eslint-disable-line
+        this.currentRegistrationSummary.length
       ) {
         return this.currentRegistrationSummary[0].locations;
       }
