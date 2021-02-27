@@ -3,8 +3,10 @@
     <v-container class="px-0" fluid>
       <v-container>
         <p>
-          Wir würden uns freuen, wenn Du hier noch weitere Heime und/oder
-          Lagerplätze einträgst, die sich für das Spiel eignen.
+          Wir würden uns freuen, wenn du noch weitere Heime/Lagerplätze hinzufügst.
+          <br>
+Wichtig wären uns der Name des Ortes und eine Kontakperson mit EMail oder Telefonnummer.<br>
+          Alles andere kannst du freiwillig angeben.
         </p>
 
         <v-divider class="my-2" />

@@ -135,6 +135,15 @@
                 >
                   Beides ok
                 </div>
+                <div
+                  v-if="
+                    [10,11,12].includes(
+                      currentRegistrationSummary[0].customChoice,
+                    )
+                  "
+                >
+                  Weg gehen
+                </div>
               </b>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
@@ -150,7 +159,7 @@
                     )
                   "
                 >
-                  Wir wollen einen anderen Stamm besuchen
+                  Wir wollen einen anderen Stamm besuchen und stellen unser Heim zur Verfügung.
                 </div>
                 <div
                   v-if="
@@ -161,6 +170,15 @@
                 >
                   Wir stellen unser Heim zur Verfügung/wir bleiben da, fahren
                   aber auch gerne weg
+                </div>
+                <div
+                  v-if="
+                    [10,11,12].includes(
+                      currentRegistrationSummary[0].customChoice,
+                    )
+                  "
+                >
+                  Wir wollen einen anderen Stamm besuchen.
                 </div>
               </b>
             </v-expansion-panel-content>
