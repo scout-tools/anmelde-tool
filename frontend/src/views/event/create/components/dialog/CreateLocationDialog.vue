@@ -25,7 +25,7 @@
                   v-model="data.locationType"
                   required
                   :error-messages="typeErrors"
-                  label="Type"
+                  label="Kategorie"
                   prepend-icon="mdi-home"
                 >
                 </v-select>

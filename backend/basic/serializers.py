@@ -491,7 +491,7 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
         result = obj.postaladdress_set.values("first_name",
                                               "last_name",
                                               "street",
-                                              "addressAddition",
+                                              "address_addition",
                                               "zip_code__zip_code",
                                               )
 
