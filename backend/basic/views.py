@@ -149,7 +149,8 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 
         # send to each new responsible person a notification
         for user_email in new_responsible_persons:
-            if user_email is not request.user.username:
+            print(user_email, request.user.username)
+            if user_email != request.user.username:
                 data = event_data
                 user = User.objects.filter(username=user_email).first()
                 if user is None:
