@@ -89,23 +89,11 @@
                     "
                     class="ml-4"
                   >
-                    <router-link
-                      :to="{
-                        name: 'registrationCreate',
-                        params: { id: getRegisteredId(item) },
-                      }"
-                      style="text-decoration: none"
-                      v-if="item.isRegistered.length"
-                    >
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn icon v-bind="attrs" v-on="on">
-                            <v-icon fab color="primary"> mdi-pencil </v-icon>
-                          </v-btn>
-                        </template>
-                        <span>Fahrtenanmeldung bearbeiten</span>
-                      </v-tooltip>
-                    </router-link>
+                    <v-btn icon
+                           v-if="item.isRegistered.length"
+                           @click="editRegistration(getRegisteredId(item))">
+                      <v-icon fab color="primary"> mdi-pencil </v-icon>
+                    </v-btn>
                   </v-list-item-action>
 
                   <v-list-item-action>
@@ -151,6 +139,7 @@
         </v-layout>
       </v-flex>
     </v-row>
+    <confirm-registration-edit-modal ref="confirmRegistrationEditModal"/>
   </v-container>
 </template>
 
@@ -158,9 +147,15 @@
 import axios from 'axios';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
+// eslint-disable-next-line import/extensions
+import ConfirmRegistrationEditModal from '@/views/registration/create/steps/dialog/ConfirmRegistrationEditModal';
 
 export default {
+  components: { ConfirmRegistrationEditModal },
   data: () => ({
+    components: {
+      ConfirmRegistrationEditModal,
+    },
     API_URL: process.env.VUE_APP_API,
     items: [],
     isLoading: true,
@@ -195,6 +190,9 @@ export default {
     },
   },
   methods: {
+    editRegistration(item) {
+      this.$refs.confirmRegistrationEditModal.show(item);
+    },
     getHeaderText(header, roles) {
       if (roles && roles.length) {
         return `${header} (Deine Rolle: ${roles[0].eventRole_Name})`;
