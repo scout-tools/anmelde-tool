@@ -163,6 +163,10 @@ export default {
     helper: 0,
     stammes: 0,
     groupLeader: 0,
+    normalId: null,
+    helperId: null,
+    stammesId: null,
+    groupLeaderId: null,
     valid: false,
   }),
   validations: {},
@@ -235,22 +239,34 @@ export default {
     processData(items) {
       const obj1 = items.filter((item) => item.participantRole === 1);
       if (obj1 && obj1.length) {
+        this.normalId = obj1[0].id;
         this.normal = obj1[0].numberOfPersons;
+      } else {
+        this.normalId = null;
       }
 
       const obj2 = items.filter((item) => item.participantRole === 2);
       if (obj2 && obj2.length) {
+        this.groupLeaderId = obj2[0].id;
         this.groupLeader = obj2[0].numberOfPersons;
+      } else {
+        this.groupLeaderId = null;
       }
 
       const obj3 = items.filter((item) => item.participantRole === 3);
       if (obj3 && obj3.length) {
+        this.stammesId = obj3[0].id;
         this.stammes = obj3[0].numberOfPersons;
+      } else {
+        this.stammesId = null;
       }
 
       const obj4 = items.filter((item) => item.participantRole === 4);
       if (obj4 && obj4.length) {
+        this.helperId = obj4[0].id;
         this.helper = obj4[0].numberOfPersons;
+      } else {
+        this.helperId = null;
       }
     },
     saveData() {
@@ -258,7 +274,16 @@ export default {
       const registrationId = this.$route.params.id;
       const myUrl = `${this.API_URL}basic/participant-group/`;
 
-      if (this.normal > 0) {
+      if (this.normalId !== null) {
+        promises.push(
+          axios.patch(`${myUrl + this.normalId}/`, {
+            id: this.normalId,
+            participant_role: 1,
+            numberOfPersons: this.normal,
+            registration: registrationId,
+          }),
+        );
+      } else {
         promises.push(
           axios.post(myUrl, {
             participant_role: 1,
@@ -267,8 +292,15 @@ export default {
           }),
         );
       }
-
-      if (this.groupLeader > 0) {
+      if (this.groupLeaderId !== null) {
+        promises.push(
+          axios.patch(`${myUrl + this.groupLeaderId}/`, {
+            participant_role: 2,
+            numberOfPersons: this.groupLeader,
+            registration: registrationId,
+          }),
+        );
+      } else {
         promises.push(
           axios.post(myUrl, {
             participant_role: 2,
@@ -278,7 +310,15 @@ export default {
         );
       }
 
-      if (this.stammes > 0) {
+      if (this.stammesId !== null) {
+        promises.push(
+          axios.patch(`${myUrl + this.stammesId}/`, {
+            participant_role: 3,
+            numberOfPersons: this.stammes,
+            registration: registrationId,
+          }),
+        );
+      } else {
         promises.push(
           axios.post(myUrl, {
             participant_role: 3,
@@ -288,7 +328,15 @@ export default {
         );
       }
 
-      if (this.helper > 0) {
+      if (this.helperId !== null) {
+        promises.push(
+          axios.patch(`${myUrl + this.helperId}/`, {
+            participant_role: 4,
+            numberOfPersons: this.helper,
+            registration: registrationId,
+          }),
+        );
+      } else {
         promises.push(
           axios.post(myUrl, {
             participant_role: 4,
