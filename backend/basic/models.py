@@ -171,7 +171,7 @@ class Event(TimeStampMixin):
     min_helper = models.IntegerField(blank=True, null=True)
     min_participation = models.IntegerField(blank=True, null=True)
     max_participation = models.IntegerField(blank=True, null=True)
-    invitation_code = models.CharField(max_length=6, blank=True)
+    invitation_code = models.CharField(max_length=20, blank=True)
     max_scout_orga_level = models.ForeignKey(ScoutOrgaLevel, on_delete=models.PROTECT, null=True, blank=True)
     is_public = models.BooleanField(default=0)
 
@@ -391,7 +391,7 @@ class Tent(TimeStampMixin):
     used_by_scout_groups = models.ManyToManyField(ScoutHierarchy, blank=True)
 
     def __str__(self):
-        return "{} - {} - {}".format(self.registration, self.used_by_scout_groups)
+        return "{} - {}".format(self.registration, self.used_by_scout_groups)
 
     def __repr__(self):
         return self.__str__()
@@ -406,6 +406,6 @@ class PostalAddress(TimeStampMixin):
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     street = models.CharField(max_length=100, blank=True)
-    address_addition = models.CharField(max_length=100, blank=True)
+    address_addition = models.CharField(max_length=100, blank=True, null=True)
     zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)

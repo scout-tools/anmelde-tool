@@ -3,6 +3,8 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from pathlib import Path
 from enum import Enum
+import threading
+from threading import Thread
 
 url = getattr(settings, 'FRONT_URL', '')
 sender = f'Anmelde-Tool <{getattr(settings, "EMAIL_HOST_USER")}>'
@@ -49,11 +51,7 @@ def send_auth_mail(user):
     subject = "Willkommen beim Anmelde-Tool"
     recipients = [user['email']]
 
-    try:
-        send_email(plain_renderend, html_rendered, subject, recipients)
-        return "Email Is Sent"
-    except Exception as e:
-        print("Email not sent ", e)
+    return send_email(plain_renderend, html_rendered, subject, recipients)
 
 
 def send_external_registration_mail(user, event_data):
@@ -67,11 +65,7 @@ def send_external_registration_mail(user, event_data):
     subject = f"Willkommen beim Anmelde-Tool, du wurdest von {event_data['foreign_name']} registriert"
     recipients = [user['email']]
 
-    try:
-        send_email(plain_renderend, html_rendered, subject, recipients)
-        return "Email Is Sent"
-    except Exception as e:
-        print("Email not sent ", e)
+    return send_email(plain_renderend, html_rendered, subject, recipients)
 
 
 def send_responsible_person_mail(data):
@@ -80,11 +74,7 @@ def send_responsible_person_mail(data):
     subject = "Anmelde-Tool: Du wurdest einer Verantwortlichkeit zugewiesen"
     recipients = [data['email']]
 
-    try:
-        send_email(plain_renderend, html_rendered, subject, recipients)
-        return "Email Is Sent"
-    except Exception as e:
-        print("Email not sent ", e)
+    return send_email(plain_renderend, html_rendered, subject, recipients)
 
 
 def send_registration_summary(data):
@@ -93,19 +83,26 @@ def send_registration_summary(data):
     subject = "Registrierung beim Anmelde-Tool vollständig abgeschlossen"
     recipients = [data['email']]
 
-    try:
-        send_email(plain_renderend, html_rendered, subject, recipients)
-        return "Email Is Sent"
-    except Exception as e:
-        print("Email not sent ", e)
+    return send_email(plain_renderend, html_rendered, subject, recipients)
 
 
-def send_email(body_plain, body_html, subject, recipients):
-    send_mail(
-        subject,
-        body_plain,
-        sender,
-        recipients,
-        fail_silently=False,
-        html_message=body_html,
-    )
+def send_email(plain_renderend, html_rendered, subject, recipients):
+    EmailThread(plain_renderend, html_rendered, subject, recipients).start()
+
+
+class EmailThread(threading.Thread):
+    def __init__(self, body_plain, body_html, subject, recipients):
+        self.subject = subject
+        self.recipient_list = recipients
+        self.html_content = body_html
+        self.body_plain = body_plain
+        threading.Thread.__init__(self)
+
+    def run(self):
+        send_mail(
+            self.subject,
+            self.body_plain,
+            sender,
+            self.recipient_list,
+            fail_silently=False,
+            html_message=self.html_content)
