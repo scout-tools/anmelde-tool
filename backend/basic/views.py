@@ -114,12 +114,15 @@ class RegistrationViewSet(viewsets.ModelViewSet):
         if "responsible_persons" in request.data or not partial:
             queryset_event = Event.objects.all()
             event = get_object_or_404(queryset_event, pk=request.data['event'])
-            registration = Registration.objects.get(pk=pk)
+            queryset_registration = Registration.objects.all()
+            registration = get_object_or_404(queryset_registration, pk=pk)
+
             self.add_responsible_person(event, request, registration)
 
         response = super().update(request, pk, partial=partial)
 
-        if not registration.is_confirmed and 'is_confirmed' in response.data and response.data['is_confirmed']:
+        if registration is not None and not registration.is_confirmed and 'is_confirmed' in response.data and \
+                response.data['is_confirmed']:
             create_registration_summary(response.data)
         return response
 
