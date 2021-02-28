@@ -112,17 +112,18 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 
     def update(self, request, pk=None, partial=False):
         if "responsible_persons" in request.data or not partial:
-            queryset = Event.objects.all()
-            event = get_object_or_404(queryset, pk=request.data['event'])
-            self.add_responsible_person(event, request, pk)
+            queryset_event = Event.objects.all()
+            event = get_object_or_404(queryset_event, pk=request.data['event'])
+            registration = Registration.objects.get(pk=pk)
+            self.add_responsible_person(event, request, registration)
 
         response = super().update(request, pk, partial=partial)
 
-        if 'is_confirmed' in response.data and response.data['is_confirmed']:
+        if not registration.is_confirmed and 'is_confirmed' in response.data and response.data['is_confirmed']:
             create_registration_summary(response.data)
         return response
 
-    def add_responsible_person(self, event, request, pk=None):
+    def add_responsible_person(self, event, request, registration=None):
         event_data = {'event': event.name,
                       'event_id': event.id,
                       'foreign_email': request.user.username,
@@ -130,16 +131,11 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                       }
 
         # Check responsible person
-        if 'responsible_persons' not in request.data:
-            request.data['responsible_persons'] = [request.user.username]
-        elif request.user.username not in request.data['responsible_persons']:
-            request.data['responsible_persons'].append(request.user.username)
         emails = request.data['responsible_persons']
 
         # Check if responsible person already exists
         new_responsible_persons = []
-        if pk is not None:
-            registration = Registration.objects.get(pk=pk)
+        if registration is not None:
             existing_responsible_persons = registration.responsible_persons.values_list('username', flat=True)
 
             for email in emails:
