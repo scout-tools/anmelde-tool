@@ -9,16 +9,10 @@
             alles richtig ist und klicke anschließend auf Absenden:
           </p>
           <p>
-            Du
-            <b>{{
-              currentRegistrationSummary[0].responsiblePersons[0]
-                .userextended_ScoutName
-            }}</b>
-            hast
-            <b>{{ currentRegistrationSummary[0].scoutOrganisation }}</b>
+            Du <b>{{ scoutName }}</b> hast <b>{{ scoutOrganisation }}</b>
             für das BdP-DPV stadt&spiel für das Wochenende vom 17.-19.September
             2021 mit insgesamt
-            <b>{{ currentRegistrationSummary[0].totalParticipants }}</b>
+            <b>{{ totalParticipants }}</b>
             Teilnehmende angemeldet.
           </p>
         </span>
@@ -26,30 +20,20 @@
           <v-expansion-panel>
             <v-expansion-panel-header>
               Verantwortliche Person:
-              <b>{{
-                currentRegistrationSummary[0].responsiblePersons[0]
-                  .userextended_ScoutName
-              }}</b>
+              <b>{{ scoutName }}</b>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               E-Mail-Adresse:
-              <b>{{
-                currentRegistrationSummary[0].responsiblePersons[0].username
-              }}</b
+              <b>{{ email }}</b
               ><br />
               Telefon/Handy (freiwillig):
-              <b
-                >{{
-                  currentRegistrationSummary[0].responsiblePersons[0]
-                    .userextended_MobileNumber
-                }} </b
-              ><br />
+              <b>{{ phone }} </b><br />
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel>
             <v-expansion-panel-header>
               Teilnehmende insgesamt:
-              <b>{{ currentRegistrationSummary[0].totalParticipants }}</b>
+              <b>{{ totalParticipants }}</b>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               Das sind die Daten deines Stammes<br />
@@ -65,23 +49,13 @@
           <v-expansion-panel>
             <v-expansion-panel-header>
               Eigene Schlafstätte:
-              <b>{{
-                locationsArray
-                  .filter((item) =>
-                    ownLocationTypeIds.includes(item.locationType_Id),
-                  )
-                  .map((x) => x.name)
-                  .join(', ')
-              }}</b>
+              <b>{{ ownLocationsString }}</b>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-list>
                 <v-list-item-group color="primary">
                   <v-list-item
-                    v-for="(item, i) in locationsArray.filter((item) =>
-                      ownLocationTypeIds.includes(item.locationType_Id),
-                    )"
-                    :key="i"
+                    v-for="(item, i) in ownLocations" :key="i"
                   >
                     <v-list-item-content>
                       <v-list-item-title v-text="item.name"></v-list-item-title>
@@ -114,33 +88,21 @@
             <v-expansion-panel-header>
               Da wollen wir hin:
               <b>
-                <div v-if="currentRegistrationSummary[0].customChoice === 1">
+                <div v-if="currentRegistration.customChoice === 1">
                   Hier bleiben
                 </div>
                 <div
-                  v-if="
-                    [4, 5, 6].includes(
-                      currentRegistrationSummary[0].customChoice,
-                    )
-                  "
+                  v-if="[4, 5, 6].includes(currentRegistration.customChoice)"
                 >
                   Weg gehen
                 </div>
                 <div
-                  v-if="
-                    [7, 8, 9].includes(
-                      currentRegistrationSummary[0].customChoice,
-                    )
-                  "
+                  v-if="[7, 8, 9].includes(currentRegistration.customChoice)"
                 >
                   Beides ok
                 </div>
                 <div
-                  v-if="
-                    [10,11,12].includes(
-                      currentRegistrationSummary[0].customChoice,
-                    )
-                  "
+                  v-if="[10, 11, 12].includes(currentRegistration.customChoice)"
                 >
                   Weg gehen
                 </div>
@@ -149,17 +111,14 @@
             <v-expansion-panel-content>
               Dort geht es für deinen Stamm hin:
               <b>
-                <div v-if="currentRegistrationSummary[0].customChoice === 1">
+                <div v-if="currentRegistration.customChoice === 1">
                   Wir wollen bei uns im Heim bleiben und besucht werden
                 </div>
                 <div
-                  v-if="
-                    [4, 5, 6].includes(
-                      currentRegistrationSummary[0].customChoice,
-                    )
-                  "
+                  v-if="[4, 5, 6].includes(currentRegistration.customChoice)"
                 >
-                  Wir wollen einen anderen Stamm besuchen und stellen unser Heim zur Verfügung.
+                  Wir wollen einen anderen Stamm besuchen und stellen unser Heim
+                  zur Verfügung.
                 </div>
                 <div
                   v-if="
@@ -173,7 +132,7 @@
                 </div>
                 <div
                   v-if="
-                    [10,11,12].includes(
+                    [10, 11, 12].includes(
                       currentRegistrationSummary[0].customChoice,
                     )
                   "
@@ -186,23 +145,14 @@
           <v-expansion-panel>
             <v-expansion-panel-header>
               Zusätzliche Schlafstätten:
-              <b>{{
-                locationsArray
-                  .filter((item) =>
-                    suggestionLocationTypeIds.includes(item.locationType_Id),
-                  )
-                  .map((x) => x.name)
-                  .join(', ')
-              }}</b>
+              <b>{{ suggestionLocationsString }}</b>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               Du hast diese zusätzlichen Heime eingetragen mit folgenden Daten:
               <v-list>
                 <v-list-item-group color="primary">
                   <v-list-item
-                    v-for="(item, i) in locationsArray.filter((item) =>
-                      suggestionLocationTypeIds.includes(item.locationType_Id),
-                    )"
+                    v-for="(item, i) in suggestionLocations"
                     :key="i"
                   >
                     <v-list-item-content>
@@ -305,8 +255,90 @@ export default {
     id() {
       return this.$route.params.id;
     },
+    ownLocations() {
+      if (this.locationsArray && this.locationsArray.length) {
+        return this.locationsArray.filter(
+          (item) => this.ownLocationTypeIds.includes(item.locationType_Id),
+        );
+      }
+      return [];
+    },
+    ownLocationsString() {
+      if (this.ownLocations && this.ownLocations.length) {
+        return this.ownLocations.map((x) => x.name).join(', ');
+      }
+      return ['Keine'];
+    },
+    suggestionLocations() {
+      if (this.locationsArray && this.locationsArray.length) {
+        return this.locationsArray.filter(
+          (item) => this.suggestionLocationTypeIds.includes(item.locationType_Id),
+        );
+      }
+      return [];
+    },
+    suggestionLocationsString() {
+      if (this.suggestionLocations && this.suggestionLocations.length) {
+        return this.suggestionLocations.map((x) => x.name).join(', ');
+      }
+      return ['Keine'];
+    },
+    currentRegistration() {
+      if (
+        this.currentRegistrationSummary && // eslint-disable-line
+        this.currentRegistrationSummary.length && // eslint-disable-line
+        this.currentRegistrationSummary[0]
+      ) {
+        return this.currentRegistrationSummary[0];
+      }
+      return null;
+    },
+    responsiblePersons() {
+      if (this.currentRegistration) {
+        return this.currentRegistration.responsiblePersons;
+      }
+      return null;
+    },
+    scoutName() {
+      if (
+        this.responsiblePersons && // eslint-disable-line
+        this.responsiblePersons.length // eslint-disable-line
+      ) {
+        return this.responsiblePersons[0].userextended_ScoutName;
+      }
+      return null;
+    },
+    scoutOrganisation() {
+      return this.currentRegistrationSummary.scoutOrganisation;
+    },
+    totalParticipants() {
+      if (
+        this.currentRegistrationSummary && // eslint-disable-line
+        this.currentRegistrationSummary.length // eslint-disable-line
+      ) {
+        return this.currentRegistrationSummary.totalParticipants;
+      }
+      return null;
+    },
+    email() {
+      if (
+        this.responsiblePersons && // eslint-disable-line
+        this.responsiblePersons.length // eslint-disable-line
+      ) {
+        return this.responsiblePersons[0].username;
+      }
+      return null;
+    },
+    phone() {
+      if (
+        this.responsiblePersons && // eslint-disable-line
+        this.responsiblePersons.length // eslint-disable-line
+      ) {
+        return this.responsiblePersons[0].userextended_MobileNumber;
+      }
+      return null;
+    },
     locationsArray() {
-      console.log(this.currentRegistrationSummary);
       if (
         this.currentRegistrationSummary && // eslint-disable-line
         this.currentRegistrationSummary.length

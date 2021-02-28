@@ -796,7 +796,6 @@ export default {
     validate() {
       this.$v.$touch();
       this.valid = !this.$v.$anyError;
-      console.log(this.$v);
     },
     onClickOkay() {
       this.validate();

@@ -126,7 +126,6 @@ export default {
     },
     validate() {
       this.$v.$touch();
-      console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
     },
     prevStep() {
@@ -155,7 +154,6 @@ export default {
           this.items = this.items.filter(
             (item) => this.show_event_location_types.includes(item.locationType),
           );
-          console.log(this.items);
         })
         .catch((error) => {
           this.errormsg = error.response.data.message;

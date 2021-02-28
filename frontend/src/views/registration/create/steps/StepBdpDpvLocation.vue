@@ -156,7 +156,6 @@ export default {
           this.location = this.location.filter((item) =>
             this.show_event_location_types.includes(item.locationType), // eslint-disable-line
           ); // eslint-disable-line
-          console.log(this.location);
         })
         .catch((error) => {
           console.log(error);
