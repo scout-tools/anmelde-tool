@@ -40,7 +40,6 @@
                       <v-text-field
                         v-model="invitationCode"
                         label="Code aus der Einladung"
-                        counter="6"
                         prepend-inner-icon="mdi-lock"
                         :error-messages="invitationCodeErrors"
                       >
