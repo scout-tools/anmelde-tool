@@ -111,12 +111,12 @@ class RegistrationViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def update(self, request, pk=None, partial=False):
+        queryset_registration = Registration.objects.all()
+        registration = get_object_or_404(queryset_registration, pk=pk)
+
         if "responsible_persons" in request.data or not partial:
             queryset_event = Event.objects.all()
             event = get_object_or_404(queryset_event, pk=request.data['event'])
-            queryset_registration = Registration.objects.all()
-            registration = get_object_or_404(queryset_registration, pk=pk)
-
             self.add_responsible_person(event, request, registration)
 
         response = super().update(request, pk, partial=partial)
@@ -149,7 +149,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 
         # send to each new responsible person a notification
         for user_email in new_responsible_persons:
-            if user_email is not request.user.username:
+            if user_email != request.user.username:
                 data = event_data
                 user = User.objects.filter(username=user_email).first()
                 if user is None:

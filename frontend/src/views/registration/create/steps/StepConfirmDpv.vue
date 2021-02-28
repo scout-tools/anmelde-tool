@@ -38,7 +38,7 @@
             <v-expansion-panel-content>
               Das sind die Daten deines Stammes<br />
               <li
-                v-for="item in currentRegistrationSummary[0].groupParticipants"
+                v-for="item in groupParticipants"
                 :key="item.participantRoleId"
               >
                 {{ item.participantRoleId_Name }}:
@@ -88,21 +88,21 @@
             <v-expansion-panel-header>
               Da wollen wir hin:
               <b>
-                <div v-if="currentRegistration.customChoice === 1">
+                <div v-if="customChoice === 1">
                   Hier bleiben
                 </div>
                 <div
-                  v-if="[4, 5, 6].includes(currentRegistration.customChoice)"
+                  v-if="[4, 5, 6].includes(customChoice)"
                 >
                   Weg gehen
                 </div>
                 <div
-                  v-if="[7, 8, 9].includes(currentRegistration.customChoice)"
+                  v-if="[7, 8, 9].includes(customChoice)"
                 >
                   Beides ok
                 </div>
                 <div
-                  v-if="[10, 11, 12].includes(currentRegistration.customChoice)"
+                  v-if="[10, 11, 12].includes(customChoice)"
                 >
                   Weg gehen
                 </div>
@@ -111,20 +111,18 @@
             <v-expansion-panel-content>
               Dort geht es für deinen Stamm hin:
               <b>
-                <div v-if="currentRegistration.customChoice === 1">
+                <div v-if="customChoice === 1">
                   Wir wollen bei uns im Heim bleiben und besucht werden
                 </div>
                 <div
-                  v-if="[4, 5, 6].includes(currentRegistration.customChoice)"
+                  v-if="[4, 5, 6].includes(customChoice)"
                 >
                   Wir wollen einen anderen Stamm besuchen und stellen unser Heim
                   zur Verfügung.
                 </div>
                 <div
                   v-if="
-                    [7, 8, 9].includes(
-                      currentRegistrationSummary[0].customChoice,
-                    )
+                    [7, 8, 9].includes(customChoice)
                   "
                 >
                   Wir stellen unser Heim zur Verfügung/wir bleiben da, fahren
@@ -132,9 +130,7 @@
                 </div>
                 <div
                   v-if="
-                    [10, 11, 12].includes(
-                      currentRegistrationSummary[0].customChoice,
-                    )
+                    [10, 11, 12].includes(customChoice)
                   "
                 >
                   Wir wollen einen anderen Stamm besuchen.
@@ -255,6 +251,12 @@ export default {
     id() {
       return this.$route.params.id;
     },
+    customChoice() {
+      if (this.currentRegistration) {
+        return this.currentRegistration.customChoice;
+      }
+      return null;
+    },
     ownLocations() {
       if (this.locationsArray && this.locationsArray.length) {
         return this.locationsArray.filter(
@@ -292,6 +294,12 @@ export default {
         return this.currentRegistrationSummary[0];
       }
       return null;
+    },
+    groupParticipants() {
+      if (this.currentRegistration) {
+        return this.currentRegistration.groupParticipants;
+      }
+      return [];
     },
     responsiblePersons() {
       if (this.currentRegistration) {

@@ -59,7 +59,7 @@
                 <v-text-field
                   v-model="data.description"
                   :counter="100"
-                  label="Beschreibung/Hiweise zur Schlafstätte"
+                  label="Beschreibung/Hinweise zur Schlafstätte"
                   prepend-icon="mdi-card-text"
                 >
                   <template slot="append">
