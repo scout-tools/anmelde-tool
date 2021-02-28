@@ -5,8 +5,8 @@
         <v-container>
           <v-row v-if="dpvAddedLocation">
             <p>
-              Sehr cool. Wo wollt ihr das stadt&amp;spiel spielen?
-              Du hast ein Heim / Zeltplatz hinzugefügt.
+              Sehr cool. Du hast ein Heim / Zeltplatz hinzugefügt.
+              Wo wollt ihr das stadt&amp;spiel spielen?
             </p>
             <v-radio-group v-model="customChoiceOne">
               <v-radio
@@ -34,7 +34,7 @@
 
       <v-expand-transition>
         <v-container
-          v-show="!dpvAddedLocation || customChoiceOne === '2'"
+          v-show="customChoiceOne === '2'"
         >
           <v-divider class="my-4" />
           <v-radio-group v-model="customChoiceTwo">
@@ -59,7 +59,7 @@
 
       <v-expand-transition>
         <v-container
-          v-show="!dpvAddedLocation || customChoiceOne === '3'"
+          v-show="customChoiceOne === '3'"
         >
           <v-divider class="my-4" />
           <v-radio-group v-model="customChoiceThree">
@@ -77,6 +77,33 @@
             <v-radio
               label="Uns ist beides recht."
               value="9">
+            </v-radio>
+          </v-radio-group>
+        </v-container>
+      </v-expand-transition>
+      <v-expand-transition>
+        <v-container
+          v-if="!dpvAddedLocation"
+        >
+          <p>
+          Sehr cool. Du hast kein Heim / Zeltplatz hinzugefügt.
+          </p>
+          <v-divider class="my-4" />
+          <v-radio-group v-model="customChoiceFour">
+            <v-radio
+              label="Wir möchten gern in der Nähe unserer Stadt bleiben.
+              (Mit der Regio kommt man gut hin) "
+              value="10"
+            ></v-radio>
+            <v-radio
+              label="Wir fahren gern weit weg.
+              (Im Zweifel quer durch ganz Deutschland) "
+              value="11"
+            >
+            </v-radio>
+            <v-radio
+              label="Uns ist beides recht."
+              value="12">
             </v-radio>
           </v-radio-group>
         </v-container>
@@ -126,6 +153,7 @@ export default {
     customChoiceOne: '0',
     customChoiceTwo: '0',
     customChoiceThree: '0',
+    customChoiceFour: '0',
     snackbar: false,
     currentRegistration: [],
     textSnackbar:
@@ -138,17 +166,23 @@ export default {
       const one = parseInt(this.customChoiceOne, 10);
       const two = parseInt(this.customChoiceTwo, 10);
       const three = parseInt(this.customChoiceThree, 10);
+      const four = parseInt(this.customChoiceFour, 10);
 
-      if (one === 1) {
-        returnValue = one;
+      if (this.dpvAddedLocation) {
+        if (one === 1) {
+          returnValue = one;
+        }
+
+        if (one === 2) {
+          returnValue = two;
+        }
+
+        if (one === 3) {
+          returnValue = three;
+        }
       }
-
-      if (one === 2) {
-        returnValue = two;
-      }
-
-      if (one === 3) {
-        returnValue = three;
+      if (!this.dpvAddedLocation) {
+        returnValue = four;
       }
 
       return returnValue;
@@ -160,6 +194,7 @@ export default {
         this.customChoiceOne = '0';
         this.customChoiceTwo = '0';
         this.customChoiceThree = '0';
+        this.customChoiceFour = '0';
 
         const status = this.currentRegistration[0].customChoice.toString(10);
 
@@ -174,10 +209,14 @@ export default {
           this.customChoiceOne = '3';
           this.customChoiceThree = status;
         }
+        if (status === '10' || status === '11' || status === '12') {
+          this.customChoiceFour = status;
+        }
         if (status === '0') {
           this.customChoiceOne = status;
           this.customChoiceTwo = status;
           this.customChoiceThree = status;
+          this.customChoiceFour = status;
         }
       }
     },

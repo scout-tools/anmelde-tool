@@ -256,7 +256,6 @@ export default {
     saveData() {
       const promises = [];
       const registrationId = this.$route.params.id;
-      console.log(registrationId);
       const myUrl = `${this.API_URL}basic/participant-group/`;
 
       if (this.normal > 0) {

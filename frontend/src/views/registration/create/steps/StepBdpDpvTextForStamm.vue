@@ -71,7 +71,6 @@ export default {
   methods: {
     validate() {
       this.$v.$touch();
-      console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
     },
     prevStep() {
@@ -82,8 +81,7 @@ export default {
       if (!this.valid) {
         return;
       }
-      this.patchRegiststration().then((item) => {
-        console.log(item);
+      this.patchRegiststration().then(() => {
         this.$emit('nextStep');
       });
     },

@@ -3,8 +3,10 @@
     <v-container class="px-0" fluid>
       <v-container>
         <p>
-          Wir würden uns freuen, wenn Du hier noch weitere Heime und/oder
-          Lagerplätze einträgst, die sich für das Spiel eignen.
+          Wir würden uns freuen, wenn du noch weitere Heime/Lagerplätze hinzufügst.
+          <br>
+Wichtig wären uns der Name des Ortes und eine Kontakperson mit EMail oder Telefonnummer.<br>
+          Alles andere kannst du freiwillig angeben.
         </p>
 
         <v-divider class="my-2" />
@@ -124,7 +126,6 @@ export default {
     },
     validate() {
       this.$v.$touch();
-      console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
     },
     prevStep() {
@@ -153,7 +154,6 @@ export default {
           this.items = this.items.filter(
             (item) => this.show_event_location_types.includes(item.locationType),
           );
-          console.log(this.items);
         })
         .catch((error) => {
           this.errormsg = error.response.data.message;

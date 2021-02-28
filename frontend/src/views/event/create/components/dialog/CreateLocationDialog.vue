@@ -25,7 +25,7 @@
                   v-model="data.locationType"
                   required
                   :error-messages="typeErrors"
-                  label="Type"
+                  label="Kategorie"
                   prepend-icon="mdi-home"
                 >
                 </v-select>
@@ -98,7 +98,7 @@
                       </template>
                       <span>
                         {{
-                          'Wie viele Schlafplätze können im dort schlafen?'
+                          'Wie viele Schlafplätze können dort schlafen?'
                         }}
                       </span>
                     </v-tooltip>
