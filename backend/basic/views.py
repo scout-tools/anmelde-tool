@@ -175,7 +175,7 @@ class ZipCodeSearchFilter(FilterSet):
 
     def get_zip_city(self, queryset, field_name, value):
         cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
-        if cities.count() > 50:
+        if cities.count() > 100:
             return ZipCode.objects.none()
         return cities
 
