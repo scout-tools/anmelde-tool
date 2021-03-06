@@ -8,7 +8,7 @@ from rest_framework import status, viewsets, mixins
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
-
+from django.core.exceptions import PermissionDenied
 from helper.user_creation import CreateUserExternally
 from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
@@ -175,8 +175,9 @@ class ZipCodeSearchFilter(FilterSet):
 
     def get_zip_city(self, queryset, field_name, value):
         cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
-        if cities.count() > 100:
-            return ZipCode.objects.none()
+        print(cities.count())
+        if cities.count() > 250:
+            raise PermissionDenied('Too many results!!!')
         return cities
 
 
