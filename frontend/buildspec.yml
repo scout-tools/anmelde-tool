@@ -9,6 +9,7 @@ phases:
   pre_build:
     commands:
       - echo Pre_build Phase
+      - cd frontend/
       - npm install
   build:
     commands:
