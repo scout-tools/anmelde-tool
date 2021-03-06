@@ -1,6 +1,8 @@
 # views.py
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from django_filters import FilterSet, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets, mixins
 from rest_framework.exceptions import PermissionDenied
@@ -164,12 +166,25 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                 registration_responsible_person(data)
 
 
+class ZipCodeSearchFilter(FilterSet):
+    zip_city = CharFilter(field_name='zip_city', method='get_zip_city')
+
+    class Meta:
+        model = ZipCode
+        fields = ['zip_code', 'city']
+
+    def get_zip_city(self, queryset, field_name, value):
+        cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
+        if cities.count() > 50:
+            return ZipCode.objects.none()
+        return cities
+
+
 class ZipCodeViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ZipCode.objects.all()
     serializer_class = ZipCodeSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['zip_code']
+    filterset_class = ZipCodeSearchFilter
 
 
 class ParticipantGroupViewSet(viewsets.ModelViewSet):
