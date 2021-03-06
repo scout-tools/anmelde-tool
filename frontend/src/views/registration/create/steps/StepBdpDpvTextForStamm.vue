@@ -9,6 +9,7 @@
         class="ma-6"
         counter
         solo
+        auto-grow
         prepend-icon="mdi-forum"
         label="Nachricht für den Partnerstamm"
         placeholder="Hier den Text eintippen"
