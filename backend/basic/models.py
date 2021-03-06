@@ -171,9 +171,10 @@ class Event(TimeStampMixin):
     min_helper = models.IntegerField(blank=True, null=True)
     min_participation = models.IntegerField(blank=True, null=True)
     max_participation = models.IntegerField(blank=True, null=True)
-    invitation_code = models.CharField(max_length=6, blank=True)
+    invitation_code = models.CharField(max_length=20, blank=True)
     max_scout_orga_level = models.ForeignKey(ScoutOrgaLevel, on_delete=models.PROTECT, null=True, blank=True)
     is_public = models.BooleanField(default=0)
+    email_id = models.IntegerField(blank=True, default=0)
 
     # ToDo: add pdf attatchment
     # ToDo: add html description
@@ -223,7 +224,7 @@ class Registration(TimeStampMixin):
     scout_organisation = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
     responsible_persons = models.ManyToManyField(User)
     event = models.ForeignKey(Event, on_delete=models.PROTECT, null=True, blank=True)
-    free_text = models.CharField(max_length=1000, blank=True)
+    free_text = models.TextField(max_length=10000, blank=True, null=True)
     custom_choice = models.IntegerField(default=0)
     is_confirmed = models.BooleanField(default=0)
     is_accepted = models.BooleanField(default=0)
@@ -391,7 +392,7 @@ class Tent(TimeStampMixin):
     used_by_scout_groups = models.ManyToManyField(ScoutHierarchy, blank=True)
 
     def __str__(self):
-        return "{} - {} - {}".format(self.registration, self.used_by_scout_groups)
+        return "{} - {}".format(self.registration, self.used_by_scout_groups)
 
     def __repr__(self):
         return self.__str__()
@@ -406,6 +407,6 @@ class PostalAddress(TimeStampMixin):
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     street = models.CharField(max_length=100, blank=True)
-    address_addition = models.CharField(max_length=100, blank=True)
+    address_addition = models.CharField(max_length=100, blank=True, null=True)
     zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)

@@ -15,7 +15,6 @@
       <v-row>
         <v-text-field
           v-model="data.invitationCode"
-          :counter="6"
           :error-messages="invitationCodeErrors"
           label="Verifizierungscode"
           required
@@ -34,8 +33,6 @@
 import { alphaNum } from 'vuelidate/lib/validators';
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
-const emptyOrLengthSix = (value) => value.length === 6 || value.length === 0;
-
 export default {
   name: 'StepInvitationCode',
   props: ['position', 'maxPos'],
@@ -52,7 +49,6 @@ export default {
   validations: {
     data: {
       invitationCode: {
-        emptyOrLengthSix,
         alphaNum,
       },
     },
@@ -63,9 +59,6 @@ export default {
       if (!this.$v.data.invitationCode.$dirty) return errors;
       if (!this.$v.data.invitationCode.alphaNum) {
         errors.push('Der Einladungscode muss aus Zahlen und Buchstaben bestehen,');
-      }
-      if (!this.$v.data.invitationCode.emptyOrLengthSix) {
-        errors.push('Der Einladungscode muss entweder leer sein oder aus 6 Stellen bestehen.');
       }
       return errors;
     },

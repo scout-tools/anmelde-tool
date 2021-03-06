@@ -59,7 +59,7 @@
         <v-list-item
           v-if="!location.length"
         >
-          Bisher hast du noch niemanden hinzugefügt.
+          Bisher hast du noch kein Haus/Zeltplatz hinzugefügt.
         </v-list-item>
         </v-container>
       </v-list-item-group>
@@ -107,7 +107,7 @@ export default {
     value: '0',
     event_location_types: [
       { state: 'Eigener Zeltplatz', abbr: 1 },
-      { state: 'Eigener Heim', abbr: 2 },
+      { state: 'Eigenes Heim', abbr: 2 },
     ],
     show_event_location_types: [1, 2],
     addOwnLocation: 0,
@@ -132,7 +132,6 @@ export default {
     },
     validate() {
       this.$v.$touch();
-      console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
 
       this.valid = this.radioGroup === '2' || this.location.length;
@@ -156,7 +155,6 @@ export default {
           this.location = this.location.filter((item) =>
             this.show_event_location_types.includes(item.locationType), // eslint-disable-line
           ); // eslint-disable-line
-          console.log(this.location);
         })
         .catch((error) => {
           console.log(error);

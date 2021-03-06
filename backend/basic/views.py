@@ -1,12 +1,14 @@
 # views.py
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from django_filters import FilterSet, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets, mixins
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
-
+from django.core.exceptions import PermissionDenied
 from helper.user_creation import CreateUserExternally
 from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
@@ -111,18 +113,22 @@ class RegistrationViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def update(self, request, pk=None, partial=False):
+        queryset_registration = Registration.objects.all()
+        registration = get_object_or_404(queryset_registration, pk=pk)
+
         if "responsible_persons" in request.data or not partial:
-            queryset = Event.objects.all()
-            event = get_object_or_404(queryset, pk=request.data['event'])
-            self.add_responsible_person(event, request, pk)
+            queryset_event = Event.objects.all()
+            event = get_object_or_404(queryset_event, pk=request.data['event'])
+            self.add_responsible_person(event, request, registration)
 
         response = super().update(request, pk, partial=partial)
 
-        if 'is_confirmed' in response.data and response.data['is_confirmed']:
+        if registration is not None and not registration.is_confirmed and 'is_confirmed' in response.data and \
+                response.data['is_confirmed']:
             create_registration_summary(response.data)
         return response
 
-    def add_responsible_person(self, event, request, pk=None):
+    def add_responsible_person(self, event, request, registration=None):
         event_data = {'event': event.name,
                       'event_id': event.id,
                       'foreign_email': request.user.username,
@@ -130,16 +136,11 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                       }
 
         # Check responsible person
-        if 'responsible_persons' not in request.data:
-            request.data['responsible_persons'] = [request.user.username]
-        elif request.user.username not in request.data['responsible_persons']:
-            request.data['responsible_persons'].append(request.user.username)
         emails = request.data['responsible_persons']
 
         # Check if responsible person already exists
         new_responsible_persons = []
-        if pk is not None:
-            registration = Registration.objects.get(pk=pk)
+        if registration is not None:
             existing_responsible_persons = registration.responsible_persons.values_list('username', flat=True)
 
             for email in emails:
@@ -150,7 +151,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 
         # send to each new responsible person a notification
         for user_email in new_responsible_persons:
-            if user_email is not request.user.username:
+            if user_email != request.user.username:
                 data = event_data
                 user = User.objects.filter(username=user_email).first()
                 if user is None:
@@ -165,12 +166,26 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                 registration_responsible_person(data)
 
 
+class ZipCodeSearchFilter(FilterSet):
+    zip_city = CharFilter(field_name='zip_city', method='get_zip_city')
+
+    class Meta:
+        model = ZipCode
+        fields = ['zip_code', 'city']
+
+    def get_zip_city(self, queryset, field_name, value):
+        cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
+        print(cities.count())
+        if cities.count() > 250:
+            raise PermissionDenied('Too many results!!!')
+        return cities
+
+
 class ZipCodeViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ZipCode.objects.all()
     serializer_class = ZipCodeSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['zip_code']
+    filterset_class = ZipCodeSearchFilter
 
 
 class ParticipantGroupViewSet(viewsets.ModelViewSet):
@@ -206,7 +221,7 @@ class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantPersonalViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]  # ToDo: implement IsResponsiblePersonPermission
+    permission_classes = [IsAuthenticated,IsResponsiblePersonPermission]
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
 
@@ -346,7 +361,7 @@ class EventParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]  # ToDo: implement IsResponsiblePersonPermission
+    permission_classes = [IsAuthenticated,IsResponsiblePersonPermission]
     serializer_class = RegistrationParticipantsSerializer
 
     def get_queryset(self):
@@ -358,7 +373,7 @@ class RegistrationParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]  # ToDo: implement IsResponsiblePersonPermission
+    permission_classes = [IsAuthenticated,IsResponsiblePersonPermission]
     serializer_class = RegistrationSummarySerializer
 
     def get_queryset(self):

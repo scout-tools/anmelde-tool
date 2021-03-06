@@ -182,6 +182,11 @@ export default {
         is_confirmed: true,
       });
     },
+    unConfirmRegistration() {
+      return axios.patch(`${process.env.VUE_APP_API}basic/registration/${this.id}/`, {
+        is_confirmed: false,
+      });
+    },
     getEvent(id) {
       this.isLoading = true;
       Promise.all([this.getEventData(id)])
@@ -210,6 +215,7 @@ export default {
         .then((res) => {
           this.currentRegistration = res.data;
           this.getEvent(res.data.event);
+          this.unConfirmRegistration();
         })
         .catch(() => {
           this.showError = true;
