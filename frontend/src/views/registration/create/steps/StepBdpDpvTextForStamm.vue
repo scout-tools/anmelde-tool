@@ -13,8 +13,8 @@
       ></v-textarea>
 
       <v-subheader>
-        Hinweis: Auch diese Nachricht kannst Du noch bis zum 01.Mai.2021
-        anpassen, wenn Du sie mit deinem Stamm gemeinsam schreiben möchtest.
+        Hinweis: Auch diese Nachricht kannst du noch bis zum 01.Mai.2021
+        anpassen, wenn du sie mit deinem Stamm gemeinsam schreiben möchtest.
       </v-subheader>
       <v-divider class="my-3" />
 
