@@ -98,7 +98,7 @@
                       </template>
                       <span>
                         {{
-                          'Wie viele Schlafplätze können dort schlafen?'
+                          'Wie viele Teilnehmer können dort schlafen?'
                         }}
                       </span>
                     </v-tooltip>
@@ -122,7 +122,7 @@
                       </template>
                       <span>
                         {{
-                          'Wie viele Schlafplätze gab es dort im September 2020 ?'
+                          'Wie viele Schlafplätze gab es dort im September 2020?'
                         }}
                       </span>
                     </v-tooltip>
