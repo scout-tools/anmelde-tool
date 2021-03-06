@@ -1,12 +1,14 @@
 # views.py
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from django_filters import FilterSet, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets, mixins
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
-
+from django.core.exceptions import PermissionDenied
 from helper.user_creation import CreateUserExternally
 from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
@@ -164,12 +166,26 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                 registration_responsible_person(data)
 
 
+class ZipCodeSearchFilter(FilterSet):
+    zip_city = CharFilter(field_name='zip_city', method='get_zip_city')
+
+    class Meta:
+        model = ZipCode
+        fields = ['zip_code', 'city']
+
+    def get_zip_city(self, queryset, field_name, value):
+        cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
+        print(cities.count())
+        if cities.count() > 250:
+            raise PermissionDenied('Too many results!!!')
+        return cities
+
+
 class ZipCodeViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ZipCode.objects.all()
     serializer_class = ZipCodeSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['zip_code']
+    filterset_class = ZipCodeSearchFilter
 
 
 class ParticipantGroupViewSet(viewsets.ModelViewSet):
@@ -205,7 +221,7 @@ class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantPersonalViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]  # ToDo: implement IsResponsiblePersonPermission
+    permission_classes = [IsAuthenticated,IsResponsiblePersonPermission]
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
 
@@ -345,7 +361,7 @@ class EventParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]  # ToDo: implement IsResponsiblePersonPermission
+    permission_classes = [IsAuthenticated,IsResponsiblePersonPermission]
     serializer_class = RegistrationParticipantsSerializer
 
     def get_queryset(self):
@@ -357,7 +373,7 @@ class RegistrationParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]  # ToDo: implement IsResponsiblePersonPermission
+    permission_classes = [IsAuthenticated,IsResponsiblePersonPermission]
     serializer_class = RegistrationSummarySerializer
 
     def get_queryset(self):

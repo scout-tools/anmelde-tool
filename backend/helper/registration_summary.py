@@ -1,3 +1,5 @@
+from django.utils.formats import date_format
+
 from .email import send_responsible_person_mail, send_registration_summary
 from basic.serializers import RegistrationSummarySerializer
 from basic.models import Registration
@@ -18,10 +20,11 @@ def create_registration_summary(data):
     for person in registration.responsible_persons.all():
         result = {
             'responsible_person': person.userextended.scout_name if person.userextended.scout_name is not None else person.username,
-            'end_date': registration.event.end_time.date(),
+            'end_date': date_format(registration.event.registration_deadline),
             'scout_organisation': registration.scout_organisation,
             'event': registration.event.name,
             'event_id': registration.event.id,
+            'email_id': registration.event.email_id,
             'responsible_persons': list(registration.responsible_persons.all().values_list('username', flat=True)),
             'total_participants': total_participants,
             'total_fee': total_fee,
