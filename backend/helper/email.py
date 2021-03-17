@@ -18,7 +18,7 @@ class MailType(Enum):
     RegistrationSummary = 3
 
 
-def get_mail(mail_type: MailType, data, event_id=None):
+def get_mail(mail_type: MailType, data, email_id=0):
     if mail_type is MailType.Login:
         mail = 'login_mail'
     elif mail_type is MailType.ForeignLogin:
@@ -30,8 +30,8 @@ def get_mail(mail_type: MailType, data, event_id=None):
     else:
         return None
 
-    if event_id is not None:
-        path = f'{event_id}/{mail}'
+    if email_id != 0:
+        path = f'{email_id}/{mail}'
         if not Path(f'{email_directory}/{path}.html').exists():
             path = f'default/{mail}'
     else:
@@ -78,7 +78,7 @@ def send_responsible_person_mail(data):
 
 
 def send_registration_summary(data):
-    plain_renderend, html_rendered = get_mail(MailType.RegistrationSummary, data, data['event_id'])
+    plain_renderend, html_rendered = get_mail(MailType.RegistrationSummary, data, data['email_id'])
 
     subject = "Registrierung beim Anmelde-Tool vollständig abgeschlossen"
     recipients = [data['email']]
