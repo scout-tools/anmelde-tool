@@ -111,7 +111,7 @@
 
       <p
         class="text-center"
-        v-if="customChoiceTwo !== '0'"
+        v-if="customChoice !== 0"
         style="border-style: solid; border-color: red"
       >
         <v-icon color="pink darken-1" large class="ma-2">
