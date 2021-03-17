@@ -77,7 +77,6 @@
     </v-container>
     <create-location-dialog
       ref="newLocationDialog"
-      @close="onCloseWindow()"
       @refresh="onRefresh()"
     />
     <delete-location-modal ref="deleteLocationModal" @refresh="onRefresh()" />

@@ -228,7 +228,7 @@ export default {
       console.log(!this.$v.$error);
       this.valid = !this.$v.$error;
 
-      this.valid = this.customChoiceOne !== 0;
+      this.valid = this.customChoice !== 0;
     },
     prevStep() {
       this.$emit('prevStep');
