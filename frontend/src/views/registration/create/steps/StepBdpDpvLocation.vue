@@ -116,7 +116,7 @@ export default {
   validations: {},
   watch: {
     location(value) {
-      this.$store.commit('setDpvAddedLocation', value.length);
+      this.$store.commit('setDpvAddedLocation', !!value.length);
       if (value && value.length) {
         this.radioGroup = '1';
       } else {
