@@ -5,7 +5,7 @@
         <v-container>
           <v-row v-if="dpvAddedLocation">
             <p>
-              Sehr cool. Du hast ein Heim / Zeltplatz hinzugefügt.
+              Sehr cool. Du hast ein Heim / Zeltplatz hinzugefügt.1
               Wo wollt ihr das stadt&amp;spiel spielen?
             </p>
             <v-radio-group v-model="customChoiceOne">
@@ -24,19 +24,13 @@
               </v-radio>
             </v-radio-group>
           </v-row>
-          <v-row v-else>
-            <p>
-              Wo wollt ihr das stadt&amp;spiel spielen?
-            </p>
-          </v-row>
         </v-container>
       </v-expand-transition>
 
       <v-expand-transition>
         <v-container
-          v-show="customChoiceOne === '2'"
+          v-show="customChoiceOne === '2' && dpvAddedLocation"
         >
-          <v-divider class="my-4" />
           <v-radio-group v-model="customChoiceTwo">
             <v-radio
               label="Wir möchten gern in der Nähe unserer Stadt bleiben.
@@ -59,9 +53,8 @@
 
       <v-expand-transition>
         <v-container
-          v-show="customChoiceOne === '3'"
+          v-show="customChoiceOne === '3'  && dpvAddedLocation"
         >
-          <v-divider class="my-4" />
           <v-radio-group v-model="customChoiceThree">
             <v-radio
               label="Wir möchten gern in der Nähe unserer Stadt bleiben.
@@ -86,7 +79,7 @@
           v-if="!dpvAddedLocation"
         >
           <p>
-          Sehr cool. Du hast kein Heim / Zeltplatz hinzugefügt.
+          Du hast kein Heim / Zeltplatz hinzugefügt.
           </p>
           <v-divider class="my-4" />
           <v-radio-group v-model="customChoiceFour">
