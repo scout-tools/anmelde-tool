@@ -19,5 +19,5 @@ phases:
       - python manage.py test
   post_build:
     commands:
-      - if [ $CODEBUILD_BUILD_SUCCEEDING = 1 ]; then echo Build completed on `date`; echo Starting deployment; zappa deploy dev; else echo Build failed ignoring deployment; fi
+      - if [ $CODEBUILD_BUILD_SUCCEEDING = 1 ]; then echo Build completed on `date`; echo Starting deployment; zappa update dev; else echo Build failed ignoring deployment; fi
       - echo "Deployment completed"
