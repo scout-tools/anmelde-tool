@@ -6,6 +6,7 @@ import VueGoogleCharts from 'vue-google-charts';
 import VueLodash from 'vue-lodash';
 import lodash from 'lodash';
 import AsyncComputed from 'vue-async-computed';
+import VueHtml2pdf from 'vue-html2pdf';
 
 import App from './App.vue';
 import router from './router';
@@ -22,6 +23,7 @@ Vue.use(VueJwtDecode);
 Vue.use(VuetifyMoney);
 Vue.use(VueGoogleCharts);
 Vue.use(AsyncComputed);
+Vue.use(VueHtml2pdf);
 
 Vue.use(VueLodash, { lodash });
 
