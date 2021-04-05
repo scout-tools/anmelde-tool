@@ -6,7 +6,7 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration
     EatHabitType, EatHabit, TravelType, TentType, TravelTag, PostalAddress
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
-from django.db.models import Sum, Count, F, Q, Func, Subquery, Case, When
+from django.db.models import Sum, Count, F, Q, Case, When, Value, CharField
 from django.db.models.functions import Coalesce
 from itertools import combinations
 
@@ -137,10 +137,16 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
                       When(scout_organisation__parent__level=3,
                            then=F('scout_organisation__parent__name')),
                       When(scout_organisation__level=3,
-                           then=F('scout_organisation__name')))
+                           then=F('scout_organisation__name'))),
+            verband=Case(When(Q(bund__exact="BdP"), then=Value('BdP')),
+                         default=Value('DPV'),
+                         output_field=CharField())
         ).values('scout_organisation__name',
                  'participants',
                  'bund',
+                 'verband',
+                 'custom_choice',
+                 city=F('scout_organisation__zip_code__city'),
                  lon=F('scout_organisation__zip_code__lon'),
                  lat=F('scout_organisation__zip_code__lat'),
                  )
@@ -431,7 +437,6 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
     locations = serializers.SerializerMethodField('get_locations')
     postaladdress = serializers.SerializerMethodField('get_postaladdress')
 
-
     scout_organisation = serializers.SlugRelatedField(
         many=False,
         read_only=False,
@@ -516,8 +521,8 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
     def get_group_participants(self, obj):
         result = obj.participantgroup_set.values('participant_role_id').annotate(
             registered=Coalesce(Sum('number_of_persons'), 0)).values(
-                "participant_role_id__name", "participant_role_id", "registered"
-            )
+            "participant_role_id__name", "participant_role_id", "registered"
+        )
 
         return result
 
