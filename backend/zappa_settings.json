@@ -2,7 +2,6 @@
   "dev": {
     "aws_region": "eu-central-1",
     "django_settings": "backend.settings",
-    "profile_name": "default",
     "project_name": "backend",
     "runtime": "python3.7",
     "s3_bucket": "zappa-anmelde-tool-dev",
