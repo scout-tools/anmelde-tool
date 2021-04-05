@@ -17,7 +17,17 @@
       ]
     },
     "domain": "dev.api.anmelde-tool.de",
-    "certificate_arn": "arn:aws:acm:us-east-1:279802340071:certificate/38908ff3-922f-477d-94ac-81208adfa50f"
+    "certificate_arn": "arn:aws:acm:us-east-1:279802340071:certificate/38908ff3-922f-477d-94ac-81208adfa50f",
+    "exclude": [
+      ".git/*",
+      ".gitignore",
+      "boto3*",
+      "*botocore*",
+      "README.md",
+      "venv",
+      ".ebextension",
+      "staticfiles/*"
+    ]
   }
 }
 
