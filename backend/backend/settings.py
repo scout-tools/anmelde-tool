@@ -39,6 +39,7 @@ ALLOWED_HOSTS = [
     'localhost',
     'anmeldetool-backend-dev.eba-sb52mfq3.eu-central-1.elasticbeanstalk.com',
     'anmeldetoolbackenddev-prod.eu-central-1.elasticbeanstalk.com',
+    '1agdtsauoj.execute-api.eu-central-1.amazonaws.com',
     'dev.api.anmelde-tool.de',
     'api.anmelde-tool.de'
 ]

@@ -1,0 +1,24 @@
+{
+  "dev": {
+    "aws_region": "eu-central-1",
+    "django_settings": "backend.settings",
+    "profile_name": "scout-tools",
+    "project_name": "backend",
+    "runtime": "python3.7",
+    "s3_bucket": "zappa-anmelde-tool-dev",
+    "vpc_config": {
+      "SubnetIds": [
+        "subnet-9aca14e6",
+        "subnet-ac1675c6",
+        "subnet-969f32da"
+      ],
+      "SecurityGroupIds": [
+        "sg-2db5c452",
+        "sg-0433ba6dc96964768"
+      ]
+    },
+    "domain": "dev.api.anmelde-tool.de",
+    "certificate_arn": "arn:aws:acm:us-east-1:279802340071:certificate/38908ff3-922f-477d-94ac-81208adfa50f"
+  }
+}
+
