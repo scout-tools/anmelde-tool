@@ -1,6 +1,10 @@
 # views.py
+import io
+
+import xlsxwriter
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.db.models import Q, Case, When, F
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters import FilterSet, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -378,3 +382,62 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return get_dataset(self.kwargs, 'registration_pk', Registration)
+
+
+class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = ParticipantGroup.objects.all().order_by('-updated_at')
+
+    def get_bund_name(self, scout_organisation):
+        print(scout_organisation)
+        if scout_organisation.level_id > 3:
+            return self.get_bund_name(scout_organisation.parent)
+        elif scout_organisation.level_id < 3:
+            raise Exception("To low value")
+        else:
+            return scout_organisation.name
+
+    def retrieve(self, request, pk):
+        output = io.BytesIO()
+
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        groups = Registration.objects.filter(event_id=pk).values(
+            "scout_organisation__name",
+            "custom_choice").annotate(
+            bund=Case(When(scout_organisation__parent__parent__parent__level=3,
+                           then=F('scout_organisation__parent__parent__parent__name')),
+                      When(scout_organisation__parent__parent__level=3,
+                           then=F('scout_organisation__parent__parent__name')),
+                      When(scout_organisation__parent__level=3,
+                           then=F('scout_organisation__parent__name')),
+                      When(scout_organisation__level=3,
+                           then=F('scout_organisation__name')))
+        )
+
+        worksheet.write(0, 0, "Stamm")
+        worksheet.write(0, 1, "Bund")
+        worksheet.write(0, 2, "Präferenz")
+        for row_num, group in enumerate(groups.iterator()):
+            worksheet.write(row_num + 1, 0, group['scout_organisation__name'])
+            custom_choice = group['custom_choice']
+            if custom_choice == 5 or custom_choice == 8 or custom_choice == 11:
+                worksheet.write(row_num + 1, 2, "weit weg")
+            elif custom_choice == 4 or custom_choice == 7 or custom_choice == 10:
+                worksheet.write(row_num + 1, 2, "in der Nähe")
+            else:
+                worksheet.write(row_num + 1, 2, "egal")
+            worksheet.write(row_num + 1, 1, group['bund'])
+
+        workbook.close()
+        output.seek(0)
+
+        filename = 'django_simple.xlsx'
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+        return response
