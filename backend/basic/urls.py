@@ -28,6 +28,7 @@ router.register(r'check-event', views.EventCodeCheckerViewSet, basename="event-c
 router.register(r'postal-address', views.PostalAddressViewSet)
 router.register(r'xlsx-generator/travel-preference', views.TravelPreferenceXlsxViewSet)
 router.register(r'xlsx-generator/text-package-address', views.TextAndPackageAddressXlsxViewSet)
+router.register(r'xlsx-generator/event_locations_fee', views.EventLocationFeeXlsxViewSet)
 
 event_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
 event_router.register(r'participants', views.EventParticipantsViewSet,

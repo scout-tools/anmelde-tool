@@ -389,15 +389,6 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ParticipantGroup.objects.all().order_by('-updated_at')
 
-    def get_bund_name(self, scout_organisation):
-        print(scout_organisation)
-        if scout_organisation.level_id > 3:
-            return self.get_bund_name(scout_organisation.parent)
-        elif scout_organisation.level_id < 3:
-            raise Exception("To low value")
-        else:
-            return scout_organisation.name
-
     def retrieve(self, request, pk):
         output = io.BytesIO()
 
@@ -452,15 +443,6 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
 class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ParticipantGroup.objects.all().order_by('-updated_at')
-
-    def get_bund_name(self, scout_organisation):
-        print(scout_organisation)
-        if scout_organisation.level_id > 3:
-            return self.get_bund_name(scout_organisation.parent)
-        elif scout_organisation.level_id < 3:
-            raise Exception("To low value")
-        else:
-            return scout_organisation.name
 
     def retrieve(self, request, pk):
         output = io.BytesIO()
@@ -520,6 +502,51 @@ class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
         output.seek(0)
 
         filename = f"text_package_address{int(time.time())}.xlsx"
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+        return response
+
+class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = ParticipantGroup.objects.all().order_by('-updated_at')
+
+    def retrieve(self, request, pk):
+        output = io.BytesIO()
+
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        locations = EventLocation.objects.filter(registration__event_id=pk).values(
+            "name",
+            "address",
+            "fix_fee",
+            "per_person_fee")
+
+        worksheet.set_column(0, 1, 25)
+        worksheet.set_column(2, 3, 10)
+
+        worksheet.write(0, 0, "Export-Timestamp")
+        worksheet.write(0, 1, time.ctime())
+
+
+        worksheet.write(1, 0, "Name")
+        worksheet.write(1, 1, "Adresse")
+        worksheet.write(1, 2, "Fixkosten")
+        worksheet.write(1, 3, "Kosten p.P.")
+        for row_num, location in enumerate(locations.iterator()):
+            worksheet.write(row_num + 2, 0, location['name'])
+            worksheet.write(row_num + 2, 1, location['address'])
+            worksheet.write(row_num + 2, 2, location['fix_fee'])
+            worksheet.write(row_num + 2, 3, location['per_person_fee'])
+
+        workbook.close()
+        output.seek(0)
+
+        filename = f"event_location_fee{int(time.time())}.xlsx"
         response = HttpResponse(
             output,
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
