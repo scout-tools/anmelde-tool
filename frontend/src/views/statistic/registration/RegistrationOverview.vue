@@ -100,6 +100,9 @@ export default {
   }),
 
   computed: {
+    eventId() {
+      return this.$route.params.id;
+    },
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
     },
@@ -152,7 +155,7 @@ export default {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
     getMessages() {
-      const path = `${this.API_URL}basic/registration-stats/`;
+      const path = `${this.API_URL}basic/event/${this.eventId}/registration-stats/`;
       axios
         .get(path)
         .then((res) => {
