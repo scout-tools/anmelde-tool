@@ -22,7 +22,7 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, \
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
     EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
-    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer
+    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission
@@ -378,3 +378,8 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return get_dataset(self.kwargs, 'registration_pk', Registration)
+
+
+class RegistrationStatViewSet(viewsets.ModelViewSet):
+    queryset = Registration.objects.all()
+    serializer_class = RegistrationStatSerializer

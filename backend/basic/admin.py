@@ -1,16 +1,15 @@
 from django.contrib import admin
-from .models import Event, AgeGroup, EventLocation, ScoutHierarchy,\
-    Registration, ZipCode, ParticipantGroup,\
-    Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal,\
-    EatHabitType, EatHabit, TravelType,\
+from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, \
+    Registration, ZipCode, ParticipantGroup, \
+    Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
+    EatHabitType, EatHabit, TravelType, \
     TentType, EventTag, EventRoleMapping, EventRole, PostalAddress
-
 
 admin.site.register(Event)
 admin.site.register(AgeGroup)
 admin.site.register(EventLocation)
 admin.site.register(Registration)
-admin.site.register(ZipCode)
+
 admin.site.register(ParticipantGroup)
 admin.site.register(Role)
 admin.site.register(MethodOfTravel)
@@ -31,3 +30,9 @@ admin.site.register(PostalAddress)
 class ScoutHierarchyAdmin(admin.ModelAdmin):
     list_display = ('name', 'level', 'zip_code', 'parent', 'level')
     list_filter = ('parent', 'level')
+
+
+@admin.register(ZipCode)
+class ZipCodeAdmin(admin.ModelAdmin):
+    list_display = ('zip_code', 'city')
+    search_fields = ('zip_code', 'city')
