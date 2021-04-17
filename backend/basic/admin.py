@@ -9,7 +9,6 @@ admin.site.register(Event)
 admin.site.register(AgeGroup)
 admin.site.register(EventLocation)
 admin.site.register(Registration)
-
 admin.site.register(ParticipantGroup)
 admin.site.register(Role)
 admin.site.register(MethodOfTravel)
@@ -30,7 +29,7 @@ admin.site.register(PostalAddress)
 class ScoutHierarchyAdmin(admin.ModelAdmin):
     list_display = ('name', 'level', 'zip_code', 'parent', 'level')
     list_filter = ('parent', 'level')
-
+    search_fields = ('name',)
 
 @admin.register(ZipCode)
 class ZipCodeAdmin(admin.ModelAdmin):

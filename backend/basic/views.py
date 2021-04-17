@@ -1,6 +1,11 @@
 # views.py
+import io
+import time
+
+import xlsxwriter
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.db.models import Q, Case, When, F
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters import FilterSet, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -383,3 +388,173 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 class RegistrationStatViewSet(viewsets.ModelViewSet):
     queryset = Registration.objects.all()
     serializer_class = RegistrationStatSerializer
+
+class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = ParticipantGroup.objects.all().order_by('-updated_at')
+
+    def retrieve(self, request, pk):
+        output = io.BytesIO()
+
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        groups = Registration.objects.filter(event_id=pk).values(
+            "scout_organisation__name",
+            "custom_choice").annotate(
+            bund=Case(When(scout_organisation__parent__parent__parent__level=3,
+                           then=F('scout_organisation__parent__parent__parent__name')),
+                      When(scout_organisation__parent__parent__level=3,
+                           then=F('scout_organisation__parent__parent__name')),
+                      When(scout_organisation__parent__level=3,
+                           then=F('scout_organisation__parent__name')),
+                      When(scout_organisation__level=3,
+                           then=F('scout_organisation__name')))
+        )
+
+        worksheet.set_column(0, 2, 25)
+
+        worksheet.write(0, 0, "Export-Timestamp")
+        worksheet.write(0, 1, time.ctime())
+
+        worksheet.write(1, 0, "Stamm")
+        worksheet.write(1, 1, "Bund")
+        worksheet.write(1, 2, "Präferenz")
+        for row_num, group in enumerate(groups.iterator()):
+            worksheet.write(row_num + 2, 0, group['scout_organisation__name'])
+            custom_choice = group['custom_choice']
+            if custom_choice == 5 or custom_choice == 8 or custom_choice == 11:
+                worksheet.write(row_num + 2, 2, "weit weg")
+            elif custom_choice == 4 or custom_choice == 7 or custom_choice == 10:
+                worksheet.write(row_num + 2, 2, "in der Nähe")
+            else:
+                worksheet.write(row_num + 2, 2, "egal")
+            worksheet.write(row_num + 2, 1, group['bund'])
+
+        workbook.close()
+        output.seek(0)
+
+        filename = f"group_custom_choice_{int(time.time())}.xlsx"
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+        return response
+
+
+class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = ParticipantGroup.objects.all().order_by('-updated_at')
+
+    def retrieve(self, request, pk):
+        output = io.BytesIO()
+
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        groups = Registration.objects.filter(event_id=pk).values(
+            "scout_organisation__name",
+            "postaladdress__street",
+            "postaladdress__first_name",
+            "postaladdress__last_name",
+            "postaladdress__address_addition",
+            "postaladdress__zip_code__zip_code",
+            "postaladdress__zip_code__city",
+            "free_text").annotate(
+            bund=Case(When(scout_organisation__parent__parent__parent__level=3,
+                           then=F('scout_organisation__parent__parent__parent__name')),
+                      When(scout_organisation__parent__parent__level=3,
+                           then=F('scout_organisation__parent__parent__name')),
+                      When(scout_organisation__parent__level=3,
+                           then=F('scout_organisation__parent__name')),
+                      When(scout_organisation__level=3,
+                           then=F('scout_organisation__name')))
+        )
+
+        worksheet.set_column(0, 1, 25)
+        worksheet.set_column(2, 3, 10)
+        worksheet.set_column(4, 7, 20)
+        worksheet.set_column(6, 6, 8)
+        worksheet.set_column(8, 8, 40)
+
+        worksheet.write(0, 0, "Export-Timestamp")
+        worksheet.write(0, 1, time.ctime())
+
+        worksheet.write(1, 0, "Stamm")
+        worksheet.write(1, 1, "Bund")
+        worksheet.write(1, 2, "First")
+        worksheet.write(1, 3, "Last")
+        worksheet.write(1, 4, "Street")
+        worksheet.write(1, 5, "Add.")
+        worksheet.write(1, 6, "Plz")
+        worksheet.write(1, 7, "Stadt")
+        worksheet.write(1, 8, "Text")
+        for row_num, group in enumerate(groups.iterator()):
+            worksheet.write(row_num + 2, 0, group['scout_organisation__name'])
+            worksheet.write(row_num + 2, 1, group['bund'])
+            worksheet.write(row_num + 2, 2, group['postaladdress__first_name'])
+            worksheet.write(row_num + 2, 3, group['postaladdress__last_name'])
+            worksheet.write(row_num + 2, 4, group['postaladdress__street'])
+            worksheet.write(row_num + 2, 5, group['postaladdress__address_addition'])
+            worksheet.write(row_num + 2, 6, group['postaladdress__zip_code__zip_code'])
+            worksheet.write(row_num + 2, 7, group['postaladdress__zip_code__city'])
+            worksheet.write(row_num + 2, 8, group['free_text'])
+
+        workbook.close()
+        output.seek(0)
+
+        filename = f"text_package_address{int(time.time())}.xlsx"
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+        return response
+
+
+class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = ParticipantGroup.objects.all().order_by('-updated_at')
+
+    def retrieve(self, request, pk):
+        output = io.BytesIO()
+
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        locations = EventLocation.objects.filter(registration__event_id=pk).values(
+            "name",
+            "address",
+            "fix_fee",
+            "per_person_fee")
+
+        worksheet.set_column(0, 1, 25)
+        worksheet.set_column(2, 3, 10)
+
+        worksheet.write(0, 0, "Export-Timestamp")
+        worksheet.write(0, 1, time.ctime())
+
+        worksheet.write(1, 0, "Name")
+        worksheet.write(1, 1, "Adresse")
+        worksheet.write(1, 2, "Fixkosten")
+        worksheet.write(1, 3, "Kosten p.P.")
+        for row_num, location in enumerate(locations.iterator()):
+            worksheet.write(row_num + 2, 0, location['name'])
+            worksheet.write(row_num + 2, 1, location['address'])
+            worksheet.write(row_num + 2, 2, location['fix_fee'])
+            worksheet.write(row_num + 2, 3, location['per_person_fee'])
+
+        workbook.close()
+        output.seek(0)
+
+        filename = f"event_location_fee{int(time.time())}.xlsx"
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+        return response
