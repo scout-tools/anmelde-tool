@@ -1,0 +1,21 @@
+version: 0.2
+
+env:
+  variables:
+    FRONT_URL: 'http://localhost:8000/'
+
+phases:
+  pre_build:
+    commands:
+      - echo "Before running tests"
+      - cd backend/
+      - pip install -r requirements.txt
+      - rm -r .ebextensions
+  build:
+    commands:
+      - echo "Running all unit tests"
+      - python manage.py test
+  post_build:
+    commands:
+      - if [ $CODEBUILD_BUILD_SUCCEEDING = 1 ]; then echo Build completed on `date`; echo Starting deployment; zappa update dev; else echo Build failed ignoring deployment; fi
+      - echo "Deployment completed"

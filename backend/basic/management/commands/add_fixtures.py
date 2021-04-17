@@ -1,6 +1,8 @@
-from django.core.management.base import BaseCommand
-import glob, os
+import glob
+import os
+
 from django.core.management import call_command
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -11,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for dir in options['directory']:
-            files = glob.glob(os.path.join(dir, '*.json'))
+            files = sorted(glob.glob(os.path.join(dir, '*.json')))
             print(files)
             for file in files:
                 print(file)
