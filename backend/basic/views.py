@@ -27,7 +27,7 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, \
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
     EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
-    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer
+    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission
@@ -385,6 +385,10 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
         return get_dataset(self.kwargs, 'registration_pk', Registration)
 
 
+class RegistrationStatViewSet(viewsets.ModelViewSet):
+    queryset = Registration.objects.all()
+    serializer_class = RegistrationStatSerializer
+
 class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ParticipantGroup.objects.all().order_by('-updated_at')
@@ -413,7 +417,6 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
         worksheet.write(0, 0, "Export-Timestamp")
         worksheet.write(0, 1, time.ctime())
 
-
         worksheet.write(1, 0, "Stamm")
         worksheet.write(1, 1, "Bund")
         worksheet.write(1, 2, "Präferenz")
@@ -439,6 +442,7 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
         return response
+
 
 class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
@@ -510,6 +514,7 @@ class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
 
         return response
 
+
 class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ParticipantGroup.objects.all().order_by('-updated_at')
@@ -531,7 +536,6 @@ class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
 
         worksheet.write(0, 0, "Export-Timestamp")
         worksheet.write(0, 1, time.ctime())
-
 
         worksheet.write(1, 0, "Name")
         worksheet.write(1, 1, "Adresse")
