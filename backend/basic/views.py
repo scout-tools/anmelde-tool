@@ -390,7 +390,7 @@ class RegistrationStatViewSet(viewsets.ModelViewSet):
     serializer_class = RegistrationStatSerializer
 
 class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsEventMaster]
     queryset = ParticipantGroup.objects.all().order_by('-updated_at')
 
     def retrieve(self, request, pk):
@@ -445,7 +445,7 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
 
 
 class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsEventMaster]
     queryset = ParticipantGroup.objects.all().order_by('-updated_at')
 
     def retrieve(self, request, pk):
@@ -516,7 +516,7 @@ class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
 
 
 class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsEventMaster]
     queryset = ParticipantGroup.objects.all().order_by('-updated_at')
 
     def retrieve(self, request, pk):
