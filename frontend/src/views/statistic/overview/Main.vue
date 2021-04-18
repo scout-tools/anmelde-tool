@@ -72,7 +72,7 @@ import RegistrationMain from '@/views/statistic/registration/Main.vue';
 import CashMain from '@/views/statistic/cash/Main.vue';
 import ProgramMain from '@/views/statistic/program/Main.vue';
 import KitchenMain from '@/views/statistic/kitchen/Main.vue';
-import PdfGenerationMain from '@/views/statistic/downlaods/PdfGenerationInterface.vue';
+import PdfGenerationMain from '@/views/statistic/downlaods/Main.vue';
 import { mapGetters } from 'vuex';
 
 export default {
