@@ -12,6 +12,7 @@ import LoginParticipantsMain from '@/views/login/LoginParticipants.vue';
 import LoginInteralsMain from '@/views/login/LoginInterals.vue';
 import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
+import pdfGeneration from '@/views/pdfGeneration/Main.vue';
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,11 @@ const routes = [
     path: '/',
     name: 'landing',
     component: LandingPage,
+  },
+  {
+    path: '/generate-pdf',
+    name: 'generatePdf',
+    component: pdfGeneration,
   },
   {
     path: '/login-participants',
