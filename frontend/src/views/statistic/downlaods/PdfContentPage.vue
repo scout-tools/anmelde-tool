@@ -41,19 +41,6 @@ export default {
       const result = await axios.get(`${this.API_URL}basic/event/4/participants/`);
       console.log(result);
       this.allGroups = result.data[0].scoutOrganisations;
-      // for (let i = 0; i < 30; i += 1) {
-      //   this.allGroups = this.allGroups.concat(result.data[0].scoutOrganisations);
-      //   this.allGroups.push({
-      //     scoutOrganisation_Name: 'Aufbaugr. Schwäb. Toskana',
-      //     customChoice: 0,
-      //     participants: 0,
-      //     bund: 'BdP',
-      //     verband: 'BdP',
-      //     city: 'Zaberfeld',
-      //     lon: 8.90838426670973,
-      //     lat: 49.0626100921362,
-      //   });
-      // }
       this.sliceGroups();
       await this.setCurrent(0);
     },
