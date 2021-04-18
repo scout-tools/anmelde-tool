@@ -77,7 +77,6 @@ Wichtig wären uns der Name des Ortes und eine Kontakperson mit EMail oder Telef
     />
     <create-location-dialog
       ref="newLocationDialog"
-      @close="onCloseWindow()"
       @refresh="onRefresh()"
     />
   </v-form>
@@ -120,9 +119,6 @@ export default {
     newLocation() {
       this.$refs.newLocationDialog.event_location_types = this.event_location_types;
       this.$refs.newLocationDialog.openDialog();
-    },
-    onCloseWindow() {
-      // this.$store.commit('setDpvAddedLocation', true);
     },
     validate() {
       this.$v.$touch();
