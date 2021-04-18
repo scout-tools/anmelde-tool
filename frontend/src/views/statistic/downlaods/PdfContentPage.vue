@@ -41,7 +41,6 @@ export default {
   methods: {
     async loadData() {
       const result = await axios.get(`${this.API_URL}basic/event/4/participants/`);
-      console.log(result);
       this.allGroups = result.data[0].scoutOrganisations;
       this.sliceGroups();
       await this.setCurrent(0);
@@ -50,7 +49,7 @@ export default {
       this.allGroups.forEach(((value, index) => {
         const chunkIndex = Math.floor(index / this.groupsPerDocument); // calculates current doc
         if (!this.groupParts[chunkIndex]) {
-          this.groupParts[chunkIndex] = []; // starts a new chunk
+          this.groupParts[chunkIndex] = []; // starts a new doc
         }
         this.groupParts[chunkIndex].push(value);
       }));
@@ -59,7 +58,7 @@ export default {
       this.current = this.groupParts[index];
       // Forces DOM update
       await this.$forceUpdate();
-      // Waits to ensure correct loading from next chunk
+      // Waits to ensure correct loading from next document
       return new Promise((resolve) => {
         this.$nextTick(() => {
           setTimeout(() => {
