@@ -585,7 +585,9 @@ class RegistrationStatSerializer(serializers.ModelSerializer):
             'number_participant',
             'number_helper',
             'stamm_city',
-            'responsible_persons'
+            'responsible_persons',
+            'created_at',
+            'updated_at',
         )
 
     def get_bund_name(self, obj):
