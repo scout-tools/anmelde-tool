@@ -15,7 +15,9 @@
             Bund: {{ group.bund }}
             <span v-if="group.bund !== 'BdP'"> ({{ group.verband }})</span>
           </h5>
-          <h5> Ort: {{ group.city }} </h5>  <!--<u v-if="group.customChoice == 9">  </u> !-->
+          <h5>
+            <span :class="group.choice"> Ort: {{ group.city }} </span>
+          </h5>
           <h5> Teilnehmer: {{ group.participants }} </h5>
         </v-card-text>
       </v-card>
@@ -82,6 +84,14 @@ export default {
 
   .v-card.v-sheet.dpv-color {
     border: 5px solid blue !important
+  }
+
+  .v-card h5  span.will_bleiben {
+    border-bottom: 2px solid;
+  }
+
+  .v-card h5 span.heim_aber_egal {
+    border-bottom: 3px dotted;
   }
 }
 </style>
