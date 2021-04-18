@@ -77,12 +77,12 @@ import { mapGetters } from 'vuex';
 
 export default {
   components: {
-    PdfGenerationMain,
     MapsMain,
     RegistrationMain,
     CashMain,
     KitchenMain,
     ProgramMain,
+    PdfGenerationMain,
   },
   computed: {
     ...mapGetters([
