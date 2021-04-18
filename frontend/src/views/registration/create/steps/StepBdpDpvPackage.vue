@@ -167,7 +167,7 @@
         @submitStep="submitStep()"
       />
     </v-container>
-    <create-location-dialog ref="newLocationDialog" @close="onCloseWindow()" />
+    <create-location-dialog ref="newLocationDialog"/>
   </v-form>
 </template>
 
@@ -325,7 +325,6 @@ export default {
             this.tooMuchData = true;
             this.zipCodeResponse = [];
           }
-          console.log(err.response.status);
         })
         .finally(() => {
           this.isZipLoading = false;
