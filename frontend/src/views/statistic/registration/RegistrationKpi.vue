@@ -1,17 +1,17 @@
 <template>
   <v-container fluid>
-    <v-row class="">
+    <v-row class="center text-center justify-center">
       <v-card class="mx-auto pa-0" flat>
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <v-row class="pa-0">
-              <v-col cols=6>
+              <v-col cols=12 md="6">
               <kpi-card
                 :data="kpiCardOne"
                 color="red lighten-1"
               />
               </v-col>
-              <v-col cols=6>
+              <v-col cols=12 md="6">
               <kpi-card
                 :data="kpiCardTwo"
                 color="blue lighten-1"
@@ -19,13 +19,13 @@
               </v-col>
             </v-row>
             <v-row class="pa-0">
-              <v-col cols=6>
+              <v-col cols=12 md="6">
               <kpi-card-list
                 :data="kpiCardThree"
                 color="teal lighten-1"
               />
               </v-col>
-              <v-col cols=6>
+              <v-col cols=12 md="6">
               <kpi-card-list
                 :data="kpiCardFour"
                 color="light-green lighten-1"
@@ -83,15 +83,19 @@ export default {
     kpiCardThree() {
       return {
         header: 'Letzen Anmeldungen',
+        dataOne: this.confirmedData,
         subheader: 'Nach Bestätigundsdatum',
-        dataOne: this._.orderBy(this.confirmedData, ['updated_at'], ['desc']).slice(0, 5),
+        rankField: 'updatedAt',
+        rankOrder: 'desc',
       };
     },
     kpiCardFour() {
       return {
         header: 'Größte Anmeldungen',
         subheader: 'nach Gesamtteilnehmer',
-        dataOne: this._.orderBy(this.confirmedData, ['numberParticipant'], ['asc']).slice(0, 5),
+        dataOne: this.confirmedData,
+        rankField: 'numberParticipant',
+        rankOrder: 'desc',
       };
     },
   },
