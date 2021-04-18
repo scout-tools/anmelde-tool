@@ -39,7 +39,7 @@
         :expanded.sync="expanded"
         show-expand
         hide-default-footer
-        :item-class="row_classes"
+        :item-class="rowClasses"
       >
         <template v-slot:item.isConfirmed="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
