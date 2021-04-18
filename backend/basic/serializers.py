@@ -118,7 +118,6 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
         )
 
     def get_bund_name(self, scout_organisation):
-        print(scout_organisation)
         if scout_organisation.level_id > 3:
             return self.get_bund_name(scout_organisation.parent)
         elif scout_organisation.level_id < 3:
@@ -140,12 +139,24 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
                            then=F('scout_organisation__name'))),
             verband=Case(When(Q(bund__exact="BdP"), then=Value('BdP')),
                          default=Value('DPV'),
-                         output_field=CharField())
+                         output_field=CharField()),
+            choice=Case(When(custom_choice=1, then=Value('will_bleiben')),
+                        When(custom_choice=4, then=Value('weit_weg')),
+                        When(custom_choice=5, then=Value('weit_weg')),
+                        When(custom_choice=6, then=Value('weit_weg')),
+                        When(custom_choice=7, then=Value('heim_aber_egal')),
+                        When(custom_choice=8, then=Value('heim_aber_egal')),
+                        When(custom_choice=9, then=Value('heim_aber_egal')),
+                        When(custom_choice=10, then=Value('kein_heim')),
+                        When(custom_choice=11, then=Value('kein_heim')),
+                        When(custom_choice=12, then=Value('kein_heim')),
+                        output_field=CharField(),
+                        default=Value('egal'))
         ).values('scout_organisation__name',
                  'participants',
                  'bund',
                  'verband',
-                 'custom_choice',
+                 'choice',
                  city=F('scout_organisation__zip_code__city'),
                  lon=F('scout_organisation__zip_code__lon'),
                  lat=F('scout_organisation__zip_code__lat'),
@@ -330,8 +341,8 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
 
     def get_num_vegetarien(self, obj):
         return obj.registration_set.aggregate(veggi_group=Coalesce(Sum('participantgroup__eathabit__number_of_persons',
-                                                                       filter=
-                                                                       Q(participantgroup__eathabit__eat_habit_type=1)),
+                                                                       filter=Q(
+                                                                           participantgroup__eathabit__eat_habit_type=1)),
                                                                    0)
                                                           + Count('participantpersonal',
                                                                   filter=Q(participantpersonal__eat_habit_type=1)))[
@@ -339,8 +350,8 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
 
     def get_num_vegan(self, obj):
         return obj.registration_set.aggregate(vegan_total=Coalesce(Sum('participantgroup__eathabit__number_of_persons',
-                                                                       filter=
-                                                                       Q(participantgroup__eathabit__eat_habit_type=2)),
+                                                                       filter=Q(
+                                                                           participantgroup__eathabit__eat_habit_type=2)),
                                                                    0)
                                                           + Count('participantpersonal',
                                                                   filter=Q(participantpersonal__eat_habit_type=2)))[
@@ -560,3 +571,87 @@ class PostalAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostalAddress
         fields = '__all__'
+
+
+class RegistrationStatSerializer(serializers.ModelSerializer):
+    number_participant = serializers.SerializerMethodField()
+    number_helper = serializers.SerializerMethodField()
+    bund_name = serializers.SerializerMethodField()
+    verband_name = serializers.SerializerMethodField()
+    stamm_city = serializers.SerializerMethodField()
+    responsible_persons = serializers.SerializerMethodField('get_responsible_persons')
+
+    scout_organisation = serializers.SlugRelatedField(
+        many=False,
+        read_only=False,
+        queryset=ScoutHierarchy.objects.all(),
+        slug_field='name'
+    )
+
+    class Meta:
+        model = Registration
+        fields = (
+            'id',
+            'is_confirmed',
+            'scout_organisation',
+            'bund_name',
+            'verband_name',
+            'number_participant',
+            'number_helper',
+            'stamm_city',
+            'responsible_persons'
+        )
+
+    def get_bund_name(self, obj):
+        partent_id = obj.scout_organisation.parent.id
+        partent_one = ScoutHierarchy.objects.filter(id=partent_id).first()
+        if (partent_one.level.id == 3):
+            return partent_one.name
+        else:
+            partent_two = ScoutHierarchy.objects.filter(id=partent_one.parent.id).first()
+            return partent_two.name
+
+    def get_verband_name(self, obj):
+        partent_id = obj.scout_organisation.parent.id
+        partent_one = ScoutHierarchy.objects.filter(id=partent_id).first()
+
+        if (partent_one.level.id == 3):
+            return 'BdP' if partent_one.id == 1 else 'DPV'
+        else:
+            partent_two = ScoutHierarchy.objects.filter(id=partent_one.parent.id).first()
+            return 'BdP' if partent_two.id == 1 else 'DPV'
+
+    def get_stamm_city(self, obj):
+        zip_code = obj.scout_organisation.zip_code
+        items = ZipCode.objects.filter(id=zip_code.id).first()
+
+        return items.city
+
+    def get_number_participant(self, obj):
+        items = ParticipantGroup.objects.filter(registration_id=obj.id)
+
+        sum_participant = items.aggregate(
+            Sum('number_of_persons'))['number_of_persons__sum']
+
+        return sum_participant
+
+    def get_number_helper(self, obj):
+        items = ParticipantGroup.objects.filter(
+            registration_id=obj.id
+        )
+
+        helper = items.filter(
+            participant_role=4
+        )
+
+        sum_helper = helper.aggregate(
+            Sum('number_of_persons')
+        )['number_of_persons__sum']
+
+        return sum_helper
+
+    def get_responsible_persons(self, obj):
+        result = obj.responsible_persons.values('username',
+                                                "userextended__scout_name",
+                                                "userextended__mobile_number")
+        return result
