@@ -390,16 +390,16 @@ class RegistrationStatViewSet(viewsets.ModelViewSet):
     serializer_class = RegistrationStatSerializer
 
 class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsEventMaster]
     queryset = ParticipantGroup.objects.all().order_by('-updated_at')
 
-    def retrieve(self, request, pk):
+    def list(self, request, event_pk):
         output = io.BytesIO()
 
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
 
-        groups = Registration.objects.filter(event_id=pk).values(
+        groups = Registration.objects.filter(event_id=event_pk).values(
             "scout_organisation__name",
             "custom_choice").annotate(
             bund=Case(When(scout_organisation__parent__parent__parent__level=3,
@@ -445,16 +445,16 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
 
 
 class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsEventMaster]
     queryset = ParticipantGroup.objects.all().order_by('-updated_at')
 
-    def retrieve(self, request, pk):
+    def list(self, request, event_pk):
         output = io.BytesIO()
 
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
 
-        groups = Registration.objects.filter(event_id=pk).values(
+        groups = Registration.objects.filter(event_id=event_pk).values(
             "scout_organisation__name",
             "postaladdress__street",
             "postaladdress__first_name",
@@ -516,16 +516,16 @@ class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
 
 
 class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsEventMaster]
     queryset = ParticipantGroup.objects.all().order_by('-updated_at')
 
-    def retrieve(self, request, pk):
+    def list(self, request, event_pk):
         output = io.BytesIO()
 
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
 
-        locations = EventLocation.objects.filter(registration__event_id=pk).values(
+        locations = EventLocation.objects.filter(registration__event_id=event_pk).values(
             "name",
             "address",
             "fix_fee",
