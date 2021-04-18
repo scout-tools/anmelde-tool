@@ -38,9 +38,14 @@ export default {
     groupParts: [],
     current: [],
   }),
+  computed: {
+    eventId() {
+      return this.$route.params.id;
+    },
+  },
   methods: {
     async loadData() {
-      const result = await axios.get(`${this.API_URL}basic/event/4/participants/`);
+      const result = await axios.get(`${this.API_URL}basic/event/${this.eventId}/participants/`);
       this.allGroups = result.data[0].scoutOrganisations;
       this.sliceGroups();
       await this.setCurrent(0);
