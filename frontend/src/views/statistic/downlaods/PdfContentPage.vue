@@ -15,7 +15,9 @@
             Bund: {{ group.bund }}
             <span v-if="group.bund !== 'BdP'"> ({{ group.verband }})</span>
           </h5>
-          <h5> Ort: {{ group.city }} </h5>
+          <h5>
+            <span :class="group.choice"> Ort: {{ group.city }} </span>
+          </h5>
           <h5> Teilnehmer: {{ group.participants }} </h5>
         </v-card-text>
       </v-card>
@@ -39,21 +41,7 @@ export default {
   methods: {
     async loadData() {
       const result = await axios.get(`${this.API_URL}basic/event/4/participants/`);
-      console.log(result);
       this.allGroups = result.data[0].scoutOrganisations;
-      // for (let i = 0; i < 30; i += 1) {
-      //   this.allGroups = this.allGroups.concat(result.data[0].scoutOrganisations);
-      //   this.allGroups.push({
-      //     scoutOrganisation_Name: 'Aufbaugr. Schwäb. Toskana',
-      //     customChoice: 0,
-      //     participants: 0,
-      //     bund: 'BdP',
-      //     verband: 'BdP',
-      //     city: 'Zaberfeld',
-      //     lon: 8.90838426670973,
-      //     lat: 49.0626100921362,
-      //   });
-      // }
       this.sliceGroups();
       await this.setCurrent(0);
     },
@@ -61,7 +49,7 @@ export default {
       this.allGroups.forEach(((value, index) => {
         const chunkIndex = Math.floor(index / this.groupsPerDocument); // calculates current doc
         if (!this.groupParts[chunkIndex]) {
-          this.groupParts[chunkIndex] = []; // starts a new chunk
+          this.groupParts[chunkIndex] = []; // starts a new doc
         }
         this.groupParts[chunkIndex].push(value);
       }));
@@ -70,7 +58,7 @@ export default {
       this.current = this.groupParts[index];
       // Forces DOM update
       await this.$forceUpdate();
-      // Waits to ensure correct loading from next chunk
+      // Waits to ensure correct loading from next document
       return new Promise((resolve) => {
         this.$nextTick(() => {
           setTimeout(() => {
@@ -92,8 +80,17 @@ export default {
   .v-card.v-sheet.bdp-color {
     border: 5px solid yellow !important
   }
+
   .v-card.v-sheet.dpv-color {
     border: 5px solid blue !important
+  }
+
+  .v-card h5  span.will_bleiben {
+    border-bottom: 2px solid;
+  }
+
+  .v-card h5 span.heim_aber_egal {
+    border-bottom: 3px dotted;
   }
 }
 </style>

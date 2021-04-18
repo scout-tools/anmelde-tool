@@ -366,7 +366,7 @@ class EventParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated,IsResponsiblePersonPermission]
+    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
     serializer_class = RegistrationParticipantsSerializer
 
     def get_queryset(self):
@@ -378,7 +378,7 @@ class RegistrationParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated,IsResponsiblePersonPermission]
+    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
     serializer_class = RegistrationSummarySerializer
 
     def get_queryset(self):
@@ -386,8 +386,16 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationStatViewSet(viewsets.ModelViewSet):
-    queryset = Registration.objects.all()
+    permission_classes = [IsAuthenticated, IsEventMaster]
     serializer_class = RegistrationStatSerializer
+
+    def get_queryset(self):
+        event_id = self.kwargs.get("event_pk", None)
+        if (event_id):
+            return Registration.objects.filter(event_id=event_id)
+        else:
+            return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
+
 
 class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, IsEventMaster]
