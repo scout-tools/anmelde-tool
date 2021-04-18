@@ -44,7 +44,6 @@ export default {
         [this.data.rankField],
         [this.data.rankOrder],
       ).slice(0, 5);
-      debugger;
       return xx;
     },
   },
