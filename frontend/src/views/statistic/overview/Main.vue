@@ -38,16 +38,22 @@
                 Programm
                 <v-icon>mdi-run-fast</v-icon>
               </v-tab>
+
+              <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-6">
+                Downloads
+                <v-icon>mdi-file-download</v-icon>
+              </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-              <v-tab-item v-for="i in 5" :key="i" :value="'tab-' + i">
+              <v-tab-item v-for="i in 6" :key="i" :value="'tab-' + i">
                 <v-card-text>
                   <registration-main v-if="i === 1" />
                   <maps-main v-if="i === 2" />
                   <cash-main v-if="i === 3" />
                   <kitchen-main v-if="i === 4" />
                   <program-main v-if="i === 5" />
+                  <pdf-generation-main v-if="i === 6"/>
                 </v-card-text>
               </v-tab-item>
             </v-tabs-items>
@@ -66,6 +72,7 @@ import RegistrationMain from '@/views/statistic/registration/Main.vue';
 import CashMain from '@/views/statistic/cash/Main.vue';
 import ProgramMain from '@/views/statistic/program/Main.vue';
 import KitchenMain from '@/views/statistic/kitchen/Main.vue';
+import PdfGenerationMain from '@/views/statistic/downlaods/Main.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -75,6 +82,7 @@ export default {
     CashMain,
     KitchenMain,
     ProgramMain,
+    PdfGenerationMain,
   },
   computed: {
     ...mapGetters([

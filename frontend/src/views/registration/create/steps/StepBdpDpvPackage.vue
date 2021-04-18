@@ -167,7 +167,7 @@
         @submitStep="submitStep()"
       />
     </v-container>
-    <create-location-dialog ref="newLocationDialog" @close="onCloseWindow()" />
+    <create-location-dialog ref="newLocationDialog"/>
   </v-form>
 </template>
 

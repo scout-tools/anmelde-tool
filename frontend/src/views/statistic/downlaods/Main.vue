@@ -1,18 +1,18 @@
 <template>
   <v-tabs vertical icons-and-text class="pa-0">
-    <v-tab class="pa-0">
-      <v-icon left> mdi-table-headers-eye </v-icon>
-      KPI
-    </v-tab>
     <v-tab>
-      <v-icon left> mdi-table </v-icon>
-      Tabelle
+      <v-icon left> mdi-microsoft-excel </v-icon>
+      Excel
+    </v-tab>
+    <v-tab class="pa-0">
+      <v-icon left> mdi-file-pdf </v-icon>
+      PDFs
     </v-tab>
 
     <v-tab-item>
       <v-card flat>
         <v-card-text>
-          <registration-kpi />
+          <file-download />
         </v-card-text>
       </v-card>
     </v-tab-item>
@@ -20,7 +20,7 @@
     <v-tab-item>
       <v-card flat>
         <v-card-text>
-          <registration-overview />
+          <pdf-generation-interface />
         </v-card-text>
       </v-card>
     </v-tab-item>
@@ -28,13 +28,13 @@
 </template>
 
 <script>
-import RegistrationOverview from './RegistrationOverview.vue';
-import RegistrationKpi from './RegistrationKpi.vue';
+import PdfGenerationInterface from './PdfGenerationInterface.vue';
+import FileDownload from './FileDownload.vue';
 
 export default {
   components: {
-    RegistrationKpi,
-    RegistrationOverview,
+    PdfGenerationInterface,
+    FileDownload,
   },
 };
 </script>

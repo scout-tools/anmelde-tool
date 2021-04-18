@@ -13,15 +13,21 @@
       <v-list-item-icon>
         <v-icon>mdi-account-group</v-icon>
       </v-list-item-icon>
-      <v-list-item-subtitle
-        v-if="data.rankField === 'updatedAt'"
-        v-text="formatData(item[data.rankField])"
-      />
-      <v-list-item-subtitle
-        v-if="data.rankField !== 'updatedAt'"
-        v-text="item[data.rankField]"
-      />
-      <v-list-item-subtitle>{{ item.scoutOrganisation }} </v-list-item-subtitle>
+      <v-list-item-content>
+        <v-list-item-subtitle
+          class="font-weight-bold"
+          v-if="data.rankField === 'updatedAt'"
+          v-text="formatData(item[data.rankField])"
+        />
+        <v-list-item-subtitle
+          class="font-weight-bold"
+          v-if="data.rankField !== 'updatedAt'"
+          v-text="item[data.rankField]"
+        />
+        <v-list-item-subtitle
+          >{{ `${item.scoutOrganisation} (${item.verbandName})` }}
+        </v-list-item-subtitle>
+      </v-list-item-content>
     </v-list-item>
 
     <!-- <v-divider></v-divider>

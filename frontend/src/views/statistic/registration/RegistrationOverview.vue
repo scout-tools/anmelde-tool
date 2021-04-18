@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="pa-0">
     <v-row class="center text-center justify-center">
       <v-card class="mx-auto pa-0" flat>
         <v-card-text class="pa-0">
@@ -31,10 +31,11 @@
         </v-card-text>
       </v-card>
     </v-row>
-    <v-row justify="center">
+    <v-row justify="center" class="overflow-y: auto">
       <v-data-table
         :headers="headers"
         :items="getItems"
+        :items-per-page="itemsPerPage"
         :expanded.sync="expanded"
         show-expand
         hide-default-footer
@@ -67,7 +68,6 @@
     </v-row>
   </v-container>
 </template>
-
 <script>
 import { serviceMixin } from '@/mixins/serviceMixin';
 
@@ -91,6 +91,7 @@ export default {
     API_URL: process.env.VUE_APP_API,
     showError: false,
     responseObj: null,
+    itemsPerPage: 1000,
   }),
 
   computed: {
