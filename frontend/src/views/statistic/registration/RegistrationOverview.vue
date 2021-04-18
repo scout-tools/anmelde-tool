@@ -35,11 +35,10 @@
       <v-data-table
         :headers="headers"
         :items="getItems"
-        :items-per-page="itemsPerPage"
         :expanded.sync="expanded"
         show-expand
         hide-default-footer
-        :item-class="row_classes"
+        :item-class="rowClasses"
       >
         <template v-slot:item.isConfirmed="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
@@ -52,9 +51,9 @@
           <td v-html="getNumberParticipant(item)" disabled></td>
         </template>
         <template v-slot:expanded-item="{ item }">
-      <td :colspan="headers.length">
-        <pre>{{getBody(item)}}</pre>
-      </td>
+          <td :colspan="headers.length">
+            <pre>{{ getBody(item) }}</pre>
+          </td>
         </template>
         <template slot="body.append">
           <tr>
@@ -68,14 +67,14 @@
     </v-row>
   </v-container>
 </template>
+
 <script>
-import axios from 'axios';
+import { serviceMixin } from '@/mixins/serviceMixin';
 
 export default {
+  mixins: [serviceMixin],
   data: () => ({
     data: [],
-    search: '',
-    timeout: 3000,
     expanded: [],
     filter: {
       withDpv: true,
@@ -90,16 +89,14 @@ export default {
       { text: '', value: 'data-table-expand' },
     ],
     API_URL: process.env.VUE_APP_API,
-    dialog: false,
     showError: false,
-    showSuccess: false,
     responseObj: null,
-    itemsPerPage: 30,
-    isCreate: true,
-    isUpdate: false,
   }),
 
   computed: {
+    eventId() {
+      return this.$route.params.id;
+    },
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
     },
@@ -112,14 +109,20 @@ export default {
 
       data = data.filter(
         (item) =>
-          !(item.verbandName === 'DPV' && // eslint-disable-line
-          !this.filter.withDpv),
+          // eslint-disable-next-line
+          !(
+            item.verbandName === 'DPV' && // eslint-disable-line
+            !this.filter.withDpv
+          ),
       );
 
       data = data.filter(
         (item) =>
-          !(item.verbandName === 'BdP' && // eslint-disable-line
-          !this.filter.withBdp),
+          // eslint-disable-next-line
+          !(
+            item.verbandName === 'BdP' && // eslint-disable-line
+            !this.filter.withBdp
+          ),
       );
       return data;
     },
@@ -139,10 +142,13 @@ export default {
 
   methods: {
     getBody(item) {
-      console.log(item);
-      return `Stadt: ${item.stammCity}\nVerantwortlich: ${JSON.stringify(item.responsiblePersons).replaceAll('","', '\n\t').replaceAll('[{"', '\n\t')}`;
+      return `Stadt: ${item.stammCity}\nVerantwortlich: ${JSON.stringify(
+        item.responsiblePersons,
+      )
+        .replaceAll('","', '\n\t')
+        .replaceAll('[{"', '\n\t')}`;
     },
-    row_classes(item) {
+    rowClasses(item) {
       if (item.verbandName === 'DPV') {
         return 'dpv-blue';
       }
@@ -151,21 +157,14 @@ export default {
     getNumberParticipant(item) {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
-    getMessages() {
-      const path = `${this.API_URL}basic/registration-stats/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.showSuccess = true;
-          this.data = res.data;
-        })
-        .catch(() => {
-          this.showError = true;
-        });
+    getData(eventId) {
+      this.getRegistrationStats(eventId).then((responseObj) => {
+        this.data = responseObj.data;
+      });
     },
   },
   created() {
-    this.getMessages();
+    this.getData(this.eventId);
   },
 };
 </script>

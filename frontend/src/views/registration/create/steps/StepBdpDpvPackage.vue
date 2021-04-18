@@ -325,7 +325,6 @@ export default {
             this.tooMuchData = true;
             this.zipCodeResponse = [];
           }
-          console.log(err.response.status);
         })
         .finally(() => {
           this.isZipLoading = false;
