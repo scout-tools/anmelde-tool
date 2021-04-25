@@ -16,6 +16,7 @@ class MailType(Enum):
     ForeignLogin = 1
     ResponsiblePerson = 2
     RegistrationSummary = 3
+    RegistrationReminder = 4
 
 
 def get_mail(mail_type: MailType, data, email_id=0):
@@ -27,6 +28,11 @@ def get_mail(mail_type: MailType, data, email_id=0):
         mail = 'responsible_person'
     elif mail_type is MailType.RegistrationSummary:
         mail = 'registration'
+    elif mail_type is MailType.RegistrationReminder:
+        if data['confirmed']:
+            mail = 'reminder_mail'
+        else:
+            mail = 'reminder_mail_not_confirmed'
     else:
         return None
 
@@ -81,6 +87,19 @@ def send_registration_summary(data):
     plain_renderend, html_rendered = get_mail(MailType.RegistrationSummary, data, data['email_id'])
 
     subject = "Registrierung beim Anmelde-Tool vollständig abgeschlossen"
+    recipients = [data['email']]
+
+    return send_email(plain_renderend, html_rendered, subject, recipients)
+
+
+def send_registration_reminder(data):
+    plain_renderend, html_rendered = get_mail(MailType.RegistrationReminder, data, data['email_id'])
+
+    if data['confirmed']:
+        subject = "Erinnerung: Deine Registrierung beim stadt&spiel"
+    else:
+        subject = "Erinnerung: Deine unvollständige Registrierung beim stadt&spiel. Bitte bestätigen!"
+
     recipients = [data['email']]
 
     return send_email(plain_renderend, html_rendered, subject, recipients)
