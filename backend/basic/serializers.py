@@ -437,6 +437,7 @@ class EventProgramMasterSerializer(serializers.ModelSerializer):
 
 class RegistrationSummarySerializer(serializers.ModelSerializer):
     total_participants = serializers.SerializerMethodField('get_total_participants')
+    total_volunteers = serializers.SerializerMethodField('get_total_volunteers')
     total_fee = serializers.SerializerMethodField('get_total_fee')
     group_participants = serializers.SerializerMethodField('get_group_participants')
     personal_participants = serializers.SerializerMethodField('get_personal_participants')
@@ -470,6 +471,7 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
             'responsible_persons',
             'free_text',
             'total_participants',
+            'total_volunteers',
             'total_fee',
             'group_participants',
             'personal_participants',
@@ -522,6 +524,15 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
     def get_total_participants(self, obj):
         num_group = obj.participantgroup_set.aggregate(num=Coalesce(Sum('number_of_persons'), 0))['num']
         num_pers = obj.participantpersonal_set.count()
+        result = num_group + num_pers
+        self.total_participants = result
+        return result
+
+    def get_total_volunteers(self, obj):
+        num_group = \
+            obj.participantgroup_set.filter(participant_role=4) \
+                .aggregate(num=Coalesce(Sum('number_of_persons'), 0))['num']
+        num_pers = obj.participantpersonal_set.filter(participant_role=4).count()
         result = num_group + num_pers
         self.total_participants = result
         return result

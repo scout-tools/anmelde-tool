@@ -45,7 +45,9 @@ event_router.register(r'xlsx-generator/travel-preference', views.TravelPreferenc
 event_router.register(r'xlsx-generator/text-package-address', views.TextAndPackageAddressXlsxViewSet,
                       basename='text-package-address')
 event_router.register(r'registration-stats', views.RegistrationStatViewSet,
-                      basename='registration-stats')
+                      basename='registration-stats-details')
+event_router.register(r'registration-reminder', views.ReminderMailViewSet,
+                      basename='registration-reminder-details')
 
 registration_router = routers.NestedSimpleRouter(router, r'registration', lookup='registration')
 registration_router.register(r'participants', views.RegistrationParticipantsViewSet, basename='participants')

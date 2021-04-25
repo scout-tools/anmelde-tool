@@ -9,9 +9,10 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters import FilterSet, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status, viewsets, mixins
+from rest_framework import status, viewsets, mixins, generics
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 from django.core.exceptions import PermissionDenied
 from helper.user_creation import CreateUserExternally
@@ -32,7 +33,8 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission
 
-from helper.registration_summary import registration_responsible_person, create_registration_summary
+from helper.registration_summary import registration_responsible_person, create_registration_summary, \
+    create_reminder_registration
 
 
 def get_dataset(kwargs, pk, dataset):
@@ -226,7 +228,7 @@ class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantPersonalViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated,IsResponsiblePersonPermission]
+    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
 
@@ -566,3 +568,23 @@ class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
         return response
+
+
+class ReminderMailViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated, IsEventMaster]
+
+    def create(self, request, *args, **kwargs):
+        queryset = get_event(self.kwargs)
+        if 'code' in request.query_params:
+            code = request.query_params.get('code', None)
+        else:
+            return Response({'code': 'missing query param'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if code != 'A1B2C3D4':
+            raise PermissionDenied('wrong code for reminder mails')
+
+        for registration in queryset:
+            print(registration)
+            create_reminder_registration(registration)
+
+        return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)
