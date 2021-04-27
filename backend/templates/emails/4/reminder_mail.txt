@@ -1,18 +1,23 @@
 [https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/EmailBild.jpg]
 
-- Deine Registrierung -
+Moin und Servus,
 
-Hey {{ responsible_person }}
+wir freuen uns, dass du deinen Stamm zum stadt & spiel angemeldet hast.
 
-Willkommen beim stadt & spiel.
-Du oder eine andere Verantwortliche Person hat erfolgreich die Registrierung für die stadt & spiel Aktion durchgeführt, darüber freuen wir uns sehr. Die Registrierung kann bis zum 1. Mai 2021 geändert
-werden.
-Hier sind die Daten nochmal zusammengefasst:
+Das sind deine bisherigen Daten:
 
-Stamm {{ scout_organisation }} Veranstaltung {{ event }} Verantwortliche Personen {{ responsible_persons }} Anzahl Teilnehmer {{ total_participants }} Gesamt Betrag {{ total_fee }} €
+Stamm {{ scout_organisation }} Verantwortliche Personen {{ responsible_persons }} Anzahl Teilnehmer {{ total_participants }} Anzahl Helfer {{ total_volunteers }}
 
-Viele Grüße und Gut Pfad,
-das stadt & spiel Team
+Bis zum 01.Mai hast du noch Zeit, deine Daten anzupassen:
+
+Klicke hier [https://anmelde-tool.de/]
+
+Nach dem 01. Mai kannst du die Daten nicht mehr ändern.
+
+Bis zum Juni stellen wir euch euer Stammes-Match vor, damit ihr in die gemeinsame Planung einsteigen könnt. Wenn du noch Fragen hast, dann melde dich unter info@bdp.dpv.de.
+
+
+Dein stadt&spiel Planungsteam
 
 [https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/BdP-DPV+Logo+(Transparent).png]
 
