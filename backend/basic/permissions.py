@@ -50,6 +50,13 @@ class IsSocialMediaPermission(permissions.BasePermission):
         return get_eventrole(request, view, [1, 6])
 
 
+class IsTeamMemberPermission(permissions.BasePermission):
+    message = 'Nur für das Planungsteam'
+
+    def has_permission(self, request, view):
+        return get_eventrole(request, view, [1, 2, 3, 4, 5, 6])
+
+
 class IsResponsiblePersonPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
