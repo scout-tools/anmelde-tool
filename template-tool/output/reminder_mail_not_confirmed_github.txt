@@ -1,0 +1,36 @@
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/EmailBild.jpg]
+
+Moin und Servus,
+
+wir freuen uns, dass du deinen Stamm zum stadt & spiel angemeldet hast.
+
+Du hast allerdings deine Anmeldug noch nicht abgschlossen!
+
+Dafür musst du den Anmeldeprozess bis zum Ende durchgehen und unter Punkt 8) Zusammenfassung und Bestätigung auf Abschließen klicken. Daraufhin bekommst du auch eine Bestätigungs Email.
+
+Das sind deine bisherigen Daten:
+
+Stamm {{ scout_organisation }} Verantwortliche Personen {{ responsible_persons }} Anzahl Teilnehmer {{ total_participants }} Anzahl Helfer {{ total_volunteers }}
+
+Bis zum 01.Mai hast du noch Zeit, deine Daten anzupassen:
+
+Klicke hier [https://anmelde-tool.de/]
+
+Nach dem 01. Mai kannst du die Daten nicht mehr ändern.
+
+Bis zum Juni stellen wir euch euer Stammes-Match vor, damit ihr in die gemeinsame Planung einsteigen könnt. Wenn du noch Fragen hast, dann melde dich unter info@bdp.dpv.de.
+
+
+Dein stadt&spiel Planungsteam
+
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/BdP-DPV+Logo+(Transparent).png]
+
+Bei Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.
+
+[https://www.mailjet.com/images/theme/v1/icons/ico-social/web.png] [https://bdp-dpv.de/]
+
+[https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png] [https://www.instagram.com/bdp_dpv/]
+
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/telegramm.png] [https://t.me/bdp_dpv]
+
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/mail.png] [info@bdp-dpv.de]

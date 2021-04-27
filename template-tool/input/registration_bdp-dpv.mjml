@@ -2,12 +2,18 @@
   <mj-body background-color="#ffffff">
     <mj-section background-color="#ffffff" padding-bottom="0px" padding-top="0">
       <mj-column vertical-align="top" width="100%">
-        <mj-image src="https://anmelde-tool.de/assets/logo_bdp_dpv_color.png" alt="" align="center" border="none" width="600px" padding-left="0px" padding-right="0px" padding-bottom="0px" padding-top="0"></mj-image>
+        <mj-image src="https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/EmailBild.jpg" alt="" align="center" border="none" width="600px" padding-left="0px" padding-right="0px" padding-bottom="0px" padding-top="0"></mj-image>
       </mj-column>
     </mj-section>
-    <mj-section background-color="#808080" padding-bottom="20px" padding-top="20px">
+    <mj-section background-color="#009FE3" padding-bottom="0px" padding-top="0">
+      <mj-column vertical-align="top" width="100%">
+        <mj-text align="left" color="#ffffff" font-size="45px" font-weight="bold" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="30px" padding-top="50px">Deine Registrierung</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#009fe3" padding-bottom="20px" padding-top="20px">
       <mj-column vertical-align="middle" width="100%">
-        <mj-text align="left" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px"><span style="color:#ffffff">Hey {{ responsible_person }}</span><br /><br /> Du oder eine andere Verantwortliche Person hat erfolgreich die Registrierung für die stadt &amp; spiel Aktion durchgeführt, darüber freuen wir uns sehr. Die Registrierung kann bis zum {{ end_date }} geändert werden.</mj-text>
+        <mj-text align="left" color="#ffffff" font-size="22px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px"><span style="color:#FEEB35">Hey {{ responsible_person }}</span><br /><br /> Willkommen beim stadt &amp; spiel.</mj-text>
+        <mj-text align="left" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">Du oder eine andere Verantwortliche Person hat erfolgreich die Registrierung für die stadt &amp; spiel Aktion durchgeführt, darüber freuen wir uns sehr. Die Registrierung kann bis zum 1. Mai 2021 geändert werden.</mj-text>
         <mj-text align="left" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">Hier sind die Daten nochmal zusammengefasst:</mj-text>
         <mj-table width="75%" align="center" color="#ffffff" font-size="15px" padding="1% 1% 1% 1%" padding-top="25px">
           <tr style="text-align:center;">
@@ -18,7 +24,7 @@
             <th style="border-right:2px solid #ecedee; text-align:left; padding-bottom:20px;">Veranstaltung</th>
             <td style="text-align:right; padding-bottom:20px;">{{ event }}</td>
           </tr>
-          <tr >
+          <tr>
             <th style="border-right:2px solid #ecedee; text-align:left; padding-bottom:20px;">Verantwortliche Personen</th>
             <td style="text-align:right; padding-bottom:20px;">{{ responsible_persons }}</td>
           </tr>
@@ -31,8 +37,19 @@
             <td style="text-align:right; padding-bottom:20px;">{{ total_fee }} &#8364;</td>
           </tr>
         </mj-table>
-        <mj-text align="center" color="#ffffff" font-size="12px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">Bei anderen Problemen, kannst du dich gerne an support@anmelde-tool.de wenden</mj-text>
-        <mj-text align="center" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">Gut Pfad!</mj-text>
+      </mj-column>
+      <mj-column>
+        <mj-image align="center" padding-bottom="0px" padding-left="00px" padding-right="00px" padding-top="0px" src="https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/BdP-DPV+Logo+(Transparent).png"></mj-image>
+      </mj-column>
+      <mj-column>
+        <mj-text align="left" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">
+          Bei Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#009FE3" padding-bottom="0px" padding-top="0">
+      <mj-column vertical-align="middle" width="100%">
+        <mj-text align="left" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">Viele Grüße und Gut Pfad, <br />das Team vom stadt &amp; spiel </mj-text>
       </mj-column>
     </mj-section>
   </mj-body>
