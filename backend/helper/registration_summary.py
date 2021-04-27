@@ -25,7 +25,7 @@ def create_registration_summary(data):
             'event': registration.event.name,
             'event_id': registration.event.id,
             'email_id': registration.event.email_id,
-            'responsible_persons': list(registration.responsible_persons.all().values_list('username', flat=True)),
+            'responsible_persons': ', '.join(registration.responsible_persons.all().values_list('userextended__scout_name', flat=True)),
             'total_participants': total_participants,
             'total_fee': total_fee,
             'email': person.username
@@ -46,7 +46,7 @@ def create_reminder_registration(registration):
             'event': registration.event.name,
             'event_id': registration.event.id,
             'email_id': registration.event.email_id,
-            'responsible_persons': list(registration.responsible_persons.all().values_list('username', flat=True)),
+            'responsible_persons': ', '.join(registration.responsible_persons.all().values_list('userextended__scout_name', flat=True)),
             'total_participants': total_participants,
             'total_volunteers': total_volunteers,
             'email': person.username,

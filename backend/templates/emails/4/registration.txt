@@ -1,12 +1,27 @@
-[https://anmelde-tool.de/assets/logo_bdp_dpv_color.png]
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/EmailBild.jpg]
+
+- Deine Registrierung -
 
 Hey {{ responsible_person }}
 
-Du oder eine andere Verantwortliche Person hat erfolgreich die Registrierung für die stadt & spiel Aktion durchgeführt, darüber freuen wir uns sehr. Die Registrierung kann bis zum {{ end_date }}
-geändert werden.
+Willkommen beim stadt & spiel.
+Du oder eine andere Verantwortliche Person hat erfolgreich die Registrierung für die stadt & spiel Aktion durchgeführt, darüber freuen wir uns sehr. Die Registrierung kann bis zum 1. Mai 2021 geändert
+werden.
 Hier sind die Daten nochmal zusammengefasst:
 
 Stamm {{ scout_organisation }} Veranstaltung {{ event }} Verantwortliche Personen {{ responsible_persons }} Anzahl Teilnehmer {{ total_participants }} Gesamt Betrag {{ total_fee }} €
 
-Bei anderen Problemen, kannst du dich gerne an support@anmelde-tool.de wenden
-Gut Pfad!
+Viele Grüße und Gut Pfad,
+das stadt & spiel Team
+
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/BdP-DPV+Logo+(Transparent).png]
+
+Bei Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.
+
+[https://www.mailjet.com/images/theme/v1/icons/ico-social/web.png] [https://bdp-dpv.de/]
+
+[https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png] [https://www.instagram.com/bdp_dpv/]
+
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/telegramm.png] [https://t.me/bdp_dpv]
+
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/mail.png] [info@bdp-dpv.de]

@@ -574,7 +574,8 @@ class ReminderMailViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, IsEventMaster]
 
     def create(self, request, *args, **kwargs):
-        queryset = get_event(self.kwargs)
+        queryset = get_dataset(self.kwargs, 'event_pk', Registration)
+
         if 'code' in request.query_params:
             code = request.query_params.get('code', None)
         else:
@@ -584,7 +585,6 @@ class ReminderMailViewSet(viewsets.ViewSet):
             raise PermissionDenied('wrong code for reminder mails')
 
         for registration in queryset:
-            print(registration)
             create_reminder_registration(registration)
 
         return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)

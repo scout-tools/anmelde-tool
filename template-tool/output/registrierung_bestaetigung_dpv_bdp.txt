@@ -22,6 +22,6 @@ Bei Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.
 
 [https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png] [https://www.instagram.com/bdp_dpv/]
 
-[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/telegramm.svg] [https://web.telegram.org/#/im?p=@bdp_dpv]
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/telegramm.png] [https://t.me/bdp_dpv]
 
 [https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/mail.png] [info@bdp-dpv.de]
