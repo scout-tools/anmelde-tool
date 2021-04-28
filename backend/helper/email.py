@@ -118,8 +118,8 @@ class EmailThread(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        email = EmailMultiAlternatives(self.subject, self.body_plain, sender, self.recipient_list,
+        email = EmailMultiAlternatives(self.subject, self.html_content, sender, self.recipient_list,
                                        reply_to=('support@anmelde-tool.de',))
-        email.attach_alternative(self.html_content, 'text/html')
+        # email.attach_alternative(self.html_content, 'text/html')
         email.content_subtype = 'html'
         email.send()
