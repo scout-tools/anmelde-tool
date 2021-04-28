@@ -1,35 +1,26 @@
 <template>
-  <v-container fluid>
-    <v-row class="center text-center justify-center">
+  <v-container fluid class="pa-0">
+    <v-row class="center text-center justify-center pa-0">
       <v-card class="mx-auto pa-0" flat>
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <v-row class="pa-0">
-              <v-col cols=12 md="6">
-              <kpi-card
-                :data="kpiCardOne"
-                color="red lighten-1"
-              />
+              <v-col cols="12" md="6">
+                <kpi-card :data="kpiCardOne" color="red lighten-1" />
               </v-col>
-              <v-col cols=12 md="6">
-              <kpi-card
-                :data="kpiCardTwo"
-                color="blue lighten-1"
-              />
+              <v-col cols="12" md="6">
+                <kpi-card :data="kpiCardTwo" color="blue lighten-1" />
               </v-col>
             </v-row>
             <v-row class="pa-0">
-              <v-col cols=12 md="6">
-              <kpi-card-list
-                :data="kpiCardThree"
-                color="teal lighten-1"
-              />
+              <v-col cols="12" md="6">
+                <kpi-card-list :data="kpiCardThree" color="teal lighten-1" />
               </v-col>
-              <v-col cols=12 md="6">
-              <kpi-card-list
-                :data="kpiCardFour"
-                color="light-green lighten-1"
-              />
+              <v-col cols="12" md="6">
+                <kpi-card-list
+                  :data="kpiCardFour"
+                  color="light-green lighten-1"
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -41,8 +32,8 @@
 
 <script>
 import { serviceMixin } from '@/mixins/serviceMixin';
-import kpiCard from './components/kpiCard.vue';
-import kpiCardList from './components/kpiCardList.vue';
+import kpiCard from '@/components/kpi/Card.vue';
+import kpiCardList from '@/components/kpi/CardList.vue';
 
 export default {
   mixins: [serviceMixin],
@@ -64,8 +55,14 @@ export default {
       return {
         header: 'Anmeldungen',
         subheader: 'Bestätigt',
-        dataOne: this.confirmedData.reduce((accum, item) => accum + item.numberParticipant, 0),
-        dataTwo: this.confirmedData.reduce((accum, item) => accum + item.numberHelper, 0),
+        dataOne: this.confirmedData.reduce(
+          (accum, item) => accum + item.numberParticipant,
+          0,
+        ),
+        dataTwo: this.confirmedData.reduce(
+          (accum, item) => accum + item.numberHelper,
+          0,
+        ),
         dataOneName: 'Teilnehmer',
         dataTwoName: 'Helfer',
       };
@@ -74,8 +71,10 @@ export default {
       return {
         header: 'Anzahl Stämme',
         subheader: 'aus den Bünden',
-        dataOne: this.confirmedData.filter((item) => item.verbandName === 'BdP').length,
-        dataTwo: this.confirmedData.filter((item) => item.verbandName === 'DPV').length,
+        dataOne: this.confirmedData.filter((item) => item.verbandName === 'BdP')
+          .length,
+        dataTwo: this.confirmedData.filter((item) => item.verbandName === 'DPV')
+          .length,
         dataOneName: 'BdP',
         dataTwoName: 'DPV',
       };

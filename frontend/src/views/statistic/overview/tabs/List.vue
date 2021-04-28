@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="pa-0">
     <v-row class="center text-center justify-center">
       <v-card class="mx-auto pa-0" flat>
         <v-card-text class="pa-0">
@@ -31,12 +31,11 @@
         </v-card-text>
       </v-card>
     </v-row>
-    <v-row justify="center">
+    <v-row justify="center" class="overflow-y: auto">
       <v-data-table
         :headers="headers"
         :items="getItems"
-        :expanded.sync="expanded"
-        show-expand
+        :items-per-page="itemsPerPage"
         hide-default-footer
         :item-class="rowClasses"
       >
@@ -47,19 +46,18 @@
             }}</v-icon
           >
         </template>
+        <template v-slot:item.createdAt="{ item }">
+          {{
+            moment(item.createdAt).format('DD.MM.YYYY')
+          }}
+        </template>
         <template v-slot:item.numberParticipant="{ item }">
           <td v-html="getNumberParticipant(item)" disabled></td>
-        </template>
-        <template v-slot:expanded-item="{ item }">
-          <td :colspan="headers.length">
-            <pre>{{ getBody(item) }}</pre>
-          </td>
         </template>
         <template slot="body.append">
           <tr>
             <th>Summe</th>
-            <th></th>
-            <th></th>
+            <th colspan="3">{{ getTotalStamm }}</th>
             <th>{{ getTotalParticipant }}</th>
           </tr>
         </template>
@@ -70,6 +68,7 @@
 
 <script>
 import { serviceMixin } from '@/mixins/serviceMixin';
+import moment from 'moment'; // eslint-disable-line
 
 export default {
   mixins: [serviceMixin],
@@ -83,6 +82,7 @@ export default {
     },
     headers: [
       { text: 'Bestätigt', value: 'isConfirmed' },
+      { text: 'Datum', value: 'createdAt' },
       { text: 'Bund', value: 'bundName' },
       { text: 'Name', value: 'scoutOrganisation' },
       { text: 'Teilnehmer (Helfer)', value: 'numberParticipant' },
@@ -91,6 +91,7 @@ export default {
     API_URL: process.env.VUE_APP_API,
     showError: false,
     responseObj: null,
+    itemsPerPage: 1000,
   }),
 
   computed: {
@@ -137,6 +138,12 @@ export default {
       );
 
       return `${numberParticipant || 0} (${numberHelper || 0})`;
+    },
+    getTotalStamm() {
+      const numberStammDpv = this.getItems.filter((item) => item.verbandName === 'DPV').length;
+      const numberStammBdp = this.getItems.filter((item) => item.verbandName === 'BdP').length;
+
+      return `Stämme DPV: ${numberStammDpv || 0} - Stämme BdP:${numberStammBdp || 0}`;
     },
   },
 
