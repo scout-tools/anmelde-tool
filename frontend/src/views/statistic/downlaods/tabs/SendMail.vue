@@ -93,7 +93,7 @@ export default {
       this.getAgeGroups();
     },
     getAgeGroups() {
-      const path = `${this.API_URL}/basic/event/${this.eventId}/registration-reminder/?code=${this.code}`;
+      const path = `${this.API_URL}basic/event/${this.eventId}/registration-reminder/?code=${this.code}`;
       axios.post(path).then(() => {
         this.finished = true;
       });
