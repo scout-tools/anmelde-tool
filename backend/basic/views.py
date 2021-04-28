@@ -9,9 +9,10 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters import FilterSet, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status, viewsets, mixins
+from rest_framework import status, viewsets, mixins, generics
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 from django.core.exceptions import PermissionDenied
 from helper.user_creation import CreateUserExternally
@@ -30,9 +31,10 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
-    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission
+    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission
 
-from helper.registration_summary import registration_responsible_person, create_registration_summary
+from helper.registration_summary import registration_responsible_person, create_registration_summary, \
+    create_reminder_registration
 
 
 def get_dataset(kwargs, pk, dataset):
@@ -92,7 +94,8 @@ class ScoutHierachyGroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes_by_action = {'create': [IsAuthenticated],
+                                    'default': [IsAuthenticated, IsResponsiblePersonPermission]}
     queryset = Registration.objects.all()
     serializer_class = RegistrationSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -170,6 +173,14 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                     data.update(user_data)
                 registration_responsible_person(data)
 
+    def get_permissions(self):
+        try:
+            # return permission_classes depending on `action`
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            # action is not set return default permission_classes
+            return [permission() for permission in self.permission_classes_by_action['default']]
+
 
 class ZipCodeSearchFilter(FilterSet):
     zip_city = CharFilter(field_name='zip_city', method='get_zip_city')
@@ -226,7 +237,7 @@ class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantPersonalViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated,IsResponsiblePersonPermission]
+    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
 
@@ -386,15 +397,11 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationStatViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsEventMaster]
+    permission_classes = [IsAuthenticated, IsTeamMemberPermission]
     serializer_class = RegistrationStatSerializer
 
     def get_queryset(self):
-        event_id = self.kwargs.get("event_pk", None)
-        if (event_id):
-            return Registration.objects.filter(event_id=event_id)
-        else:
-            return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
+        return get_dataset(self.kwargs, 'event_pk', Registration)
 
 
 class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
@@ -566,3 +573,23 @@ class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
         return response
+
+
+class ReminderMailViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated, IsEventMaster]
+
+    def create(self, request, *args, **kwargs):
+        queryset = get_dataset(self.kwargs, 'event_pk', Registration)
+
+        if 'code' in request.query_params:
+            code = request.query_params.get('code', None)
+        else:
+            return Response({'code': 'missing query param'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if code != 'A1B2C3D4':
+            raise PermissionDenied('wrong code for reminder mails')
+
+        for registration in queryset:
+            create_reminder_registration(registration)
+
+        return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)
