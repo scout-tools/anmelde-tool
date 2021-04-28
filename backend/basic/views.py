@@ -31,7 +31,7 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
-    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission
+    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission
 
 from helper.registration_summary import registration_responsible_person, create_registration_summary, \
     create_reminder_registration
@@ -94,7 +94,8 @@ class ScoutHierachyGroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes_by_action = {'create': [IsAuthenticated],
+                                    'default': [IsAuthenticated, IsResponsiblePersonPermission]}
     queryset = Registration.objects.all()
     serializer_class = RegistrationSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -171,6 +172,14 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                                  }
                     data.update(user_data)
                 registration_responsible_person(data)
+
+    def get_permissions(self):
+        try:
+            # return permission_classes depending on `action`
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            # action is not set return default permission_classes
+            return [permission() for permission in self.permission_classes_by_action['default']]
 
 
 class ZipCodeSearchFilter(FilterSet):
@@ -388,15 +397,11 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationStatViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsEventMaster]
+    permission_classes = [IsAuthenticated, IsTeamMemberPermission]
     serializer_class = RegistrationStatSerializer
 
     def get_queryset(self):
-        event_id = self.kwargs.get("event_pk", None)
-        if (event_id):
-            return Registration.objects.filter(event_id=event_id)
-        else:
-            return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
+        return get_dataset(self.kwargs, 'event_pk', Registration)
 
 
 class TravelPreferenceXlsxViewSet(viewsets.ViewSet):

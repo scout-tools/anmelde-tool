@@ -60,7 +60,8 @@ class IsTeamMemberPermission(permissions.BasePermission):
 class IsResponsiblePersonPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        pk = view.kwargs.get("registration_pk") or request.data['registration']
+        pk = view.kwargs.get("registration_pk") or view.kwargs.get("pk") or view.kwargs.get("pk") or \
+             ('registration' in request.data and request.data['registration'])
         if pk is None:
             raise NoRegistationId()
         return Registration.objects.filter(id=pk, responsible_persons=request.user).exists()
