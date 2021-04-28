@@ -53,6 +53,14 @@ def get_event(kwargs):
         return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
 
 
+def get_registrations_from_event(kwargs):
+    event_id = kwargs.get("event_pk", None)
+    if event_id is not None:
+        return Registration.objects.filter(event=event_id)
+    else:
+        return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
+
+
 class EventViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
@@ -401,7 +409,7 @@ class RegistrationStatViewSet(viewsets.ModelViewSet):
     serializer_class = RegistrationStatSerializer
 
     def get_queryset(self):
-        return get_dataset(self.kwargs, 'event_pk', Registration)
+        return get_registrations_from_event(self.kwargs)
 
 
 class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
@@ -579,7 +587,7 @@ class ReminderMailViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, IsEventMaster]
 
     def create(self, request, *args, **kwargs):
-        queryset = get_dataset(self.kwargs, 'event_pk', Registration)
+        queryset = get_registrations_from_event(kwargs)
 
         if 'code' in request.query_params:
             code = request.query_params.get('code', None)
