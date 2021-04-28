@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from pathlib import Path
 from enum import Enum
@@ -109,6 +109,7 @@ def send_email(plain_renderend, html_rendered, subject, recipients):
     EmailThread(plain_renderend, html_rendered, subject, recipients).start()
 
 
+
 class EmailThread(threading.Thread):
     def __init__(self, body_plain, body_html, subject, recipients):
         self.subject = subject
@@ -118,10 +119,9 @@ class EmailThread(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        send_mail(
-            self.subject,
-            self.body_plain,
-            sender,
-            self.recipient_list,
-            fail_silently=False,
-            html_message=self.html_content)
+
+        email = EmailMultiAlternatives(self.subject, self.html_content, sender, self.recipient_list,
+                                       reply_to=('support@anmelde-tool.de',))
+        # email.attach_alternative(self.body_plain, 'text/plain')
+        email.content_subtype = 'html'  # this is the crucial part
+        email.send()
