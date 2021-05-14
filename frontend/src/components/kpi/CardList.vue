@@ -70,7 +70,6 @@ export default {
   },
   methods: {
     formatData(item) {
-      debugger;
       return moment(item).format(this.dateFormat);
     },
   },
