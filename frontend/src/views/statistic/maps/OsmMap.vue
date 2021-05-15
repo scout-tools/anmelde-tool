@@ -69,7 +69,7 @@ export default {
       return item.bund === 'BdP' ? 'red' : 'blue';
     },
     getRadius(item) {
-      return item.participants * 30 + 5000;
+      return item.participants * 20 + 2000;
     },
     createContent(item) {
       return `${item.bund},
