@@ -48,7 +48,7 @@
         </template>
         <template v-slot:item.createdAt="{ item }">
           {{
-            moment(item.createdAt).format('DD.MM.YYYY')
+            getDateFormat(item.createdAt)
           }}
         </template>
         <template v-slot:item.numberParticipant="{ item }">
@@ -168,6 +168,9 @@ export default {
       this.getRegistrationStats(eventId).then((responseObj) => {
         this.data = responseObj.data;
       });
+    },
+    getDateFormat(value) {
+      return moment(value).format('DD.MM.YYYY');
     },
   },
   created() {
