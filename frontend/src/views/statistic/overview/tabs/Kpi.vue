@@ -82,7 +82,7 @@ export default {
     kpiCardThree() {
       return {
         header: 'Letzen Anmeldungen',
-        dataOne: this.confirmedData,
+        dataOne: this.sortByKey(this.confirmedData, 'createdAt'),
         subheader: 'Nach Bestätigundsdatum',
         rankField: 'updatedAt',
         rankOrder: 'desc',
@@ -105,6 +105,13 @@ export default {
     getData(eventId) {
       this.getRegistrationStats(eventId).then((responseObj) => {
         this.data = responseObj.data;
+      });
+    },
+    sortByKey(array, key) {
+      return array.sort((a, b) => {
+        const x = a[key];
+        const y = b[key];
+        return x > y ? -1 : x < y ? 1 : 0; // eslint-disable-line
       });
     },
   },

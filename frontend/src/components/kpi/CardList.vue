@@ -19,7 +19,7 @@
             <v-list-item-subtitle
               class="font-weight-bold"
               v-if="data.rankField === 'updatedAt'"
-              v-text="formatData(item[data.rankField])"
+              v-text="formatData(item)"
             />
             <v-list-item-subtitle
               class="font-weight-bold"
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     formatData(item) {
-      return moment(item).format(this.dateFormat);
+      return moment(item.createdAt).format('DD.MM.YYYY');
     },
   },
   data() {
