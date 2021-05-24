@@ -487,6 +487,20 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
 
             worksheet.write(row_num + 2, 2, options.get(custom_choice))
 
+            options = {1: 'Heim, Zuhause',
+                       4: 'Heim, auswärts, nah',
+                       5: 'Heim, auswärts, weit weg',
+                       6: 'Heim, auswärts, Distanz egal',
+                       7: 'Heim, egal wo, lieber nah',
+                       8: 'Heim, egal wo, lieber weit',
+                       9: 'Heim, egal wo, Distanz egal',
+                       10: 'Kein Heim, lieber nah',
+                       11: 'Kein Heim, lieber weit',
+                       12: 'Kein Heim, Distanz egal',
+                       }
+
+            worksheet.write(row_num + 2, 2, options.get(custom_choice))
+
             print('eventlocation: ', group['eventlocation'])
             if group['eventlocation']:
                 worksheet.write(row_num + 2, 5, 'x')
