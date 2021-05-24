@@ -455,6 +455,18 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
                            then=F('scout_organisation__name')))
         )
 
+        options = {1: 'Heim, Zuhause',
+                   4: 'Heim, auswärts, nah',
+                   5: 'Heim, auswärts, weit weg',
+                   6: 'Heim, auswärts, Distanz egal',
+                   7: 'Heim, egal wo, lieber nah',
+                   8: 'Heim, egal wo, lieber weit',
+                   9: 'Heim, egal wo, Distanz egal',
+                   10: 'Kein Heim, lieber nah',
+                   11: 'Kein Heim, lieber weit',
+                   12: 'Kein Heim, Distanz egal',
+                   }
+
         worksheet.set_column(0, 2, 25)
 
         worksheet.write(0, 0, "Export-Timestamp")
@@ -466,40 +478,13 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
         worksheet.write(1, 3, "Ort")
         worksheet.write(1, 4, "Präferenz")
         worksheet.write(1, 5, "Hat Heim")
+
         for row_num, group in enumerate(groups.iterator()):
             worksheet.write(row_num + 2, 0, group['scout_organisation__name'])
             worksheet.write(row_num + 2, 1, group['bund'])
             worksheet.write(row_num + 2, 2, group['scout_organisation__zip_code__zip_code'])
             worksheet.write(row_num + 2, 3, group['scout_organisation__zip_code__city'])
-            custom_choice = group['custom_choice']
-
-            options = {1: 'Heim, Zuhause',
-                       4: 'Heim, auswärts, nah',
-                       5: 'Heim, auswärts, weit weg',
-                       6: 'Heim, auswärts, Distanz egal',
-                       7: 'Heim, egal wo, lieber nah',
-                       8: 'Heim, egal wo, lieber weit',
-                       9: 'Heim, egal wo, Distanz egal',
-                       10: 'Kein Heim, lieber nah',
-                       11: 'Kein Heim, lieber weit',
-                       12: 'Kein Heim, Distanz egal',
-                       }
-
-            worksheet.write(row_num + 2, 2, options.get(custom_choice))
-
-            options = {1: 'Heim, Zuhause',
-                       4: 'Heim, auswärts, nah',
-                       5: 'Heim, auswärts, weit weg',
-                       6: 'Heim, auswärts, Distanz egal',
-                       7: 'Heim, egal wo, lieber nah',
-                       8: 'Heim, egal wo, lieber weit',
-                       9: 'Heim, egal wo, Distanz egal',
-                       10: 'Kein Heim, lieber nah',
-                       11: 'Kein Heim, lieber weit',
-                       12: 'Kein Heim, Distanz egal',
-                       }
-
-            worksheet.write(row_num + 2, 2, options.get(custom_choice))
+            worksheet.write(row_num + 2, 4, options.get(group['custom_choice']))
 
             print('eventlocation: ', group['eventlocation'])
             if group['eventlocation']:
