@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
-    TentType, EatHabit, TravelTag, PostalAddress
+    TentType, EatHabit, TravelTag, PostalAddress, EventRoleMapping
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
@@ -31,7 +31,8 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
-    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission
+    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission, \
+    IsOrganisationLeader
 
 from helper.registration_summary import registration_responsible_person, create_registration_summary, \
     create_reminder_registration
@@ -51,6 +52,14 @@ def get_event(kwargs):
         return Event.objects.filter(id=event_id)
     else:
         return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
+
+
+def filter_data(user, kwargs, data):
+    event_id = kwargs.get("event_pk", None)
+    role = EventRoleMapping.objects.filter(event_id=event_id, user=user)
+    # parent_level =
+    queryset = data.objects.filter()
+    return
 
 
 def get_registrations_from_event(kwargs):
@@ -411,11 +420,13 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationStatViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsTeamMemberPermission]
+    permission_classes = [IsAuthenticated, IsTeamMemberPermission, IsOrganisationLeader]
     serializer_class = RegistrationStatSerializer
 
     def get_queryset(self):
-        return get_registrations_from_event(self.kwargs)
+        queryset = get_registrations_from_event(self.kwargs)
+        queryset = filter_data(self.request.user, self.kwargs, queryset)
+        return queryset
 
 
 class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
