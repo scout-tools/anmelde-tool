@@ -180,7 +180,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                     data.update(CreateUserExternally(user_email, event_data))
                 else:
                     user_data = {'username': user.userextended.scout_name if user.userextended is not None else
-                    user.username.split('@', 1)[0],
+                                 user.username.split('@', 1)[0],
                                  'user': user.username,
                                  'email': user.username,
                                  }
@@ -455,12 +455,20 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
             worksheet.write(row_num + 2, 0, group['scout_organisation__name'])
             worksheet.write(row_num + 2, 1, group['bund'])
             custom_choice = group['custom_choice']
-            if custom_choice == 5 or custom_choice == 8 or custom_choice == 11:
-                worksheet.write(row_num + 2, 2, "weit weg")
-            elif custom_choice == 4 or custom_choice == 7 or custom_choice == 10:
-                worksheet.write(row_num + 2, 2, "in der Nähe")
-            else:
-                worksheet.write(row_num + 2, 2, "egal")
+
+            options = {1: 'Heim, Zuhause',
+                       4: 'Heim, auswärts, nah',
+                       5: 'Heim, auswärts, weit weg',
+                       6: 'Heim, auswärts, Distanz egal',
+                       7: 'Heim, egal wo, lieber nah',
+                       8: 'Heim, egal wo, lieber weit',
+                       9: 'Heim, egal wo, Distanz egal',
+                       10: 'Kein Heim, lieber nah',
+                       11: 'Kein Heim, lieber weit',
+                       12: 'Kein Heim, Distanz egal',
+                       }
+
+            worksheet.write(row_num + 2, 2, options.get(custom_choice))
 
             print('eventlocation: ', group['eventlocation'])
             if group['eventlocation']:

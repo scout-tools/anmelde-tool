@@ -163,7 +163,7 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
                         When(custom_choice=7, then=Value('Heim, egal wo, lieber nah')),
                         When(custom_choice=8, then=Value('Heim, egal wo, lieber weit')),
                         When(custom_choice=9, then=Value('Heim, egal wo, Distanz egal')),
-                        When(custom_choice=10, then=Value('Kein Heim, lieber nah ')),
+                        When(custom_choice=10, then=Value('Kein Heim, lieber nah')),
                         When(custom_choice=11, then=Value('Kein Heim, lieber weit')),
                         When(custom_choice=12, then=Value('Kein Heim, Distanz egal')),
                         output_field=CharField(),
