@@ -643,6 +643,48 @@ class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
         return response
 
 
+class RegistrationGroupsViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated, IsEventMaster]
+    queryset = ParticipantGroup.objects.all().order_by('-updated_at')
+
+    def list(self, request, event_pk):
+        output = io.BytesIO()
+
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        groups = ParticipantGroup.objects.filter(registration__event_id=event_pk).values(
+            "participant_role__name",
+            "number_of_persons",
+            "registration__scout_organisation__name")
+        worksheet.set_column(0, 1, 25)
+        worksheet.set_column(2, 3, 10)
+
+        worksheet.write(0, 0, "Export-Timestamp")
+        worksheet.write(0, 1, time.ctime())
+
+        worksheet.write(1, 0, "Stamm")
+        worksheet.write(1, 1, "Personen Gruppe")
+        worksheet.write(1, 2, "Anzahl")
+
+        for row_num, group in enumerate(groups.iterator()):
+            worksheet.write(row_num + 2, 0, group['registration__scout_organisation__name'])
+            worksheet.write(row_num + 2, 1, group['participant_role__name'])
+            worksheet.write(row_num + 2, 2, group['number_of_persons'])
+
+        workbook.close()
+        output.seek(0)
+
+        filename = f"registration_groups_{int(time.time())}.xlsx"
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+        return response
+
+
 class ReminderMailViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, IsEventMaster]
 
