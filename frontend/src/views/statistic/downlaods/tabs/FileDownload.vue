@@ -32,6 +32,17 @@
         Packet Adressen
       </v-btn>
     </v-row>
+    <v-row>
+      <v-btn
+        class="ma-2"
+        @click="clickDownload('registration-groups')"
+        download
+        color="primary"
+      >
+        <v-icon left> mdi-microsoft-excel </v-icon>
+        Teilnehmer
+      </v-btn>
+    </v-row>
   </v-container>
 </template>
 

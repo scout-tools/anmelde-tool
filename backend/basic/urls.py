@@ -44,6 +44,8 @@ event_router.register(r'xlsx-generator/travel-preference', views.TravelPreferenc
                       basename='travel-preference')
 event_router.register(r'xlsx-generator/text-package-address', views.TextAndPackageAddressXlsxViewSet,
                       basename='text-package-address')
+event_router.register(r'xlsx-generator/registration-groups', views.RegistrationGroupsViewSet,
+                      basename='registration-groups')
 event_router.register(r'registration-stats', views.RegistrationStatViewSet,
                       basename='registration-stats-details')
 event_router.register(r'registration-reminder', views.ReminderMailViewSet,
