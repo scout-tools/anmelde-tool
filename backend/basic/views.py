@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
-    TentType, EatHabit, TravelTag, PostalAddress
+    TentType, EatHabit, TravelTag, PostalAddress, EventRoleMapping
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
@@ -31,7 +31,8 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
-    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission
+    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission, \
+    IsOrganisationLeader
 
 from helper.registration_summary import registration_responsible_person, create_registration_summary, \
     create_reminder_registration
@@ -51,6 +52,14 @@ def get_event(kwargs):
         return Event.objects.filter(id=event_id)
     else:
         return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
+
+
+def filter_data(user, kwargs, data):
+    event_id = kwargs.get("event_pk", None)
+    role = EventRoleMapping.objects.filter(event_id=event_id, user=user)
+    # parent_level =
+    queryset = data.objects.filter()
+    return
 
 
 def get_registrations_from_event(kwargs):
@@ -180,7 +189,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                     data.update(CreateUserExternally(user_email, event_data))
                 else:
                     user_data = {'username': user.userextended.scout_name if user.userextended is not None else
-                                 user.username.split('@', 1)[0],
+                    user.username.split('@', 1)[0],
                                  'user': user.username,
                                  'email': user.username,
                                  }
@@ -411,11 +420,13 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationStatViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsTeamMemberPermission]
+    permission_classes = [IsAuthenticated, IsTeamMemberPermission, IsOrganisationLeader]
     serializer_class = RegistrationStatSerializer
 
     def get_queryset(self):
-        return get_registrations_from_event(self.kwargs)
+        queryset = get_registrations_from_event(self.kwargs)
+        queryset = filter_data(self.request.user, self.kwargs, queryset)
+        return queryset
 
 
 class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
@@ -444,6 +455,18 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
                            then=F('scout_organisation__name')))
         )
 
+        options = {1: 'Heim, Zuhause',
+                   4: 'Heim, auswärts, nah',
+                   5: 'Heim, auswärts, weit weg',
+                   6: 'Heim, auswärts, Distanz egal',
+                   7: 'Heim, egal wo, lieber nah',
+                   8: 'Heim, egal wo, lieber weit',
+                   9: 'Heim, egal wo, Distanz egal',
+                   10: 'Kein Heim, lieber nah',
+                   11: 'Kein Heim, lieber weit',
+                   12: 'Kein Heim, Distanz egal',
+                   }
+
         worksheet.set_column(0, 2, 25)
 
         worksheet.write(0, 0, "Export-Timestamp")
@@ -455,26 +478,13 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
         worksheet.write(1, 3, "Ort")
         worksheet.write(1, 4, "Präferenz")
         worksheet.write(1, 5, "Hat Heim")
+
         for row_num, group in enumerate(groups.iterator()):
             worksheet.write(row_num + 2, 0, group['scout_organisation__name'])
             worksheet.write(row_num + 2, 1, group['bund'])
             worksheet.write(row_num + 2, 2, group['scout_organisation__zip_code__zip_code'])
             worksheet.write(row_num + 2, 3, group['scout_organisation__zip_code__city'])
-            custom_choice = group['custom_choice']
-
-            options = {1: 'Heim, Zuhause',
-                       4: 'Heim, auswärts, nah',
-                       5: 'Heim, auswärts, weit weg',
-                       6: 'Heim, auswärts, Distanz egal',
-                       7: 'Heim, egal wo, lieber nah',
-                       8: 'Heim, egal wo, lieber weit',
-                       9: 'Heim, egal wo, Distanz egal',
-                       10: 'Kein Heim, lieber nah',
-                       11: 'Kein Heim, lieber weit',
-                       12: 'Kein Heim, Distanz egal',
-                       }
-
-            worksheet.write(row_num + 2, 2, options.get(custom_choice))
+            worksheet.write(row_num + 2, 4, options.get(group['custom_choice']))
 
             print('eventlocation: ', group['eventlocation'])
             if group['eventlocation']:
