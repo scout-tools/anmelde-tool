@@ -420,7 +420,7 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationStatViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsTeamMemberPermission, IsOrganisationLeader]
+    permission_classes = [IsAuthenticated, IsTeamMemberPermission]  # IsOrganisationLeader
     serializer_class = RegistrationStatSerializer
 
     def get_queryset(self):
@@ -598,7 +598,6 @@ class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
             "capacity_corona",
             "capacity",
             "location_type__name",
-            "registration__scout_organisation",
             "registration__scout_organisation__name") \
             .annotate(bund=Case(When(registration__scout_organisation__parent__parent__parent__level=3,
                                      then=F('registration__scout_organisation__parent__parent__parent__name')),
@@ -628,7 +627,7 @@ class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
         worksheet.write(1, 10, "Schlafplatz unter Corona Bedinungen")
 
         for row_num, location in enumerate(locations.iterator()):
-            worksheet.write(row_num + 2, 0, location['registration__scout_organisation'])
+            worksheet.write(row_num + 2, 0, location['registration__scout_organisation__name'])
             worksheet.write(row_num + 2, 1, location['bund'])
             worksheet.write(row_num + 2, 2, location['name'])
             worksheet.write(row_num + 2, 3, location['address'])
