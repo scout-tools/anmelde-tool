@@ -142,6 +142,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 LANGUAGE_CODE = 'de-de'
 
@@ -183,13 +184,10 @@ else:
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 CORS_ORIGIN_WHITELIST = [
-    "https://inspirator.dpbm.de",
-    "https://dpbm.de",
+    "https://localhost:8000",
     "https://localhost:8080",
-    "https://127.0.0.1:8080",
-]
-CORS_ORIGIN_REGEX_WHITELIST = [
-    'http://localhost:8080',
+    "http://localhost:8000",
+    "http://localhost:8080",
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
