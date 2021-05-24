@@ -189,7 +189,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                     data.update(CreateUserExternally(user_email, event_data))
                 else:
                     user_data = {'username': user.userextended.scout_name if user.userextended is not None else
-                                 user.username.split('@', 1)[0],
+                    user.username.split('@', 1)[0],
                                  'user': user.username,
                                  'email': user.username,
                                  }
