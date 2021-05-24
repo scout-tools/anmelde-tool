@@ -2,7 +2,7 @@
   <div>
     <section>
       <v-parallax
-        :src="imageLink.main">
+        :src="require('@/assets/Italien-Robert-9_klein.jpg')">
         <v-layout column align-center justify-center class="white--text">
           <h1
             class="white--text mb-2 display-1"
@@ -117,16 +117,6 @@
 export default {
   data: () => ({
     title: 'Endorfine',
-    imageLink: {
-      sub_main:
-        'https://wiki.hratuga.de/files/public-docs/2018-05-Fu%CC%88hrungstippel-63-klein.jpg',
-      main:
-        'https://wiki.hratuga.de/files/public-docs/Italien-Robert-9_klein.jpg',
-      logo:
-        'https://wiki.hratuga.de/files/public-docs/logo_bdp_dpv.png',
-      social_cover:
-        'https://firebasestorage.googleapis.com/v0/b/endorfinevue.appspot.com/o/assets%2Fo-NIGHTCLUB-facebook.jpg?alt=media&token=cefc5c4c-9714-41da-9c22-f63caf5e89a4',
-    },
     email: '',
     subscribed: false,
   }),

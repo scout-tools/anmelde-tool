@@ -110,7 +110,7 @@ export default {
       isLoading: true,
       data: {
         event: {
-          responsiblePersons: ['robert@hratuga.de'],
+          responsiblePersons: [''],
         },
       },
     };
