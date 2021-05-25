@@ -58,7 +58,7 @@ def filter_data(user, kwargs, data):
     event_id = kwargs.get("event_pk", None)
     role = EventRoleMapping.objects.filter(event_id=event_id, user=user)
     # parent_level =
-    queryset = data.objects.filter()
+    # queryset = data.objects.filter()
     return
 
 
@@ -425,7 +425,7 @@ class RegistrationStatViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = get_registrations_from_event(self.kwargs)
-        queryset = filter_data(self.request.user, self.kwargs, queryset)
+        # queryset = filter_data(self.request.user, self.kwargs, queryset)
         return queryset
 
 
