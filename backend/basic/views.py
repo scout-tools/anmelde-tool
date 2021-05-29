@@ -708,6 +708,20 @@ class ReminderMailViewSet(viewsets.ViewSet):
         if code != 'A1B2C3D4':
             raise PermissionDenied('wrong code for reminder mails')
 
+        email_type = 'unconfirmed'
+        if 'type' in request.query_params:
+            email_type = request.query_params.get('type', None)
+
+        print(email_type)
+        if email_type == 'unconfirmed':
+            queryset = queryset.filter(is_confirmed=False)
+        elif email_type == 'confirmed':
+            queryset = queryset.filter(is_confirmed=True)
+        elif email_type == 'all':
+            queryset = queryset
+        else:
+            return Response({'type': 'no valid type given'}, status=status.HTTP_400_BAD_REQUEST)
+
         for registration in queryset:
             create_reminder_registration(registration)
 
