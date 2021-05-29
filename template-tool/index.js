@@ -2,7 +2,7 @@ import { readFile, writeFile } from 'fs';
 import mjml2html from 'mjml';
 import { htmlToText } from 'html-to-text';
 
-const ary =  ['token_mail']
+const ary =  ['reminder_mail_not_confirmed']
 
 const path = `input/${ary[0]}.mjml`
 
