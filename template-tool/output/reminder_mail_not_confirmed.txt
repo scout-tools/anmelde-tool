@@ -16,7 +16,7 @@ Bis einschließlich zum {{ end_date }} 23:59 Uhr hast du noch Zeit, deine Daten 
 
 Klicke hier [https://anmelde-tool.de/]
 
-Nach dem {{ end_date }} kannst du die Daten nicht mehr ändern.
+Nach dem {{ end_data }} kannst du die Daten nicht mehr ändern.
 
 Bis Anfang Juni stellen wir euch euer Stammes-Match vor, damit ihr in die gemeinsame Planung einsteigen könnt. Wenn du noch Fragen hast, dann melde dich unter info@bdp-dpv.de [info@bdp-dpv.de].
 

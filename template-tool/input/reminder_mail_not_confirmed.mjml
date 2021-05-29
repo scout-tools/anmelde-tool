@@ -27,10 +27,10 @@
             <td style="text-align:right; padding-bottom:20px;">{{ total_volunteers }}</td>
           </tr>
         </mj-table>
-        <mj-text align="left" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">Bis zum 01.Mai hast du noch Zeit, deine Daten anzupassen:</mj-text>
+        <mj-text align="left" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">Bis einschließlich zum {{ end_date }} 23:59 Uhr hast du noch Zeit, deine Daten anzupassen:</mj-text>
         <mj-button background-color="#FEEB35" color="#000000" font-size="16px" align="center" padding="15px 30px" border-radius="3px" href="https://anmelde-tool.de/" padding-left="25px" padding-right="25px" padding-bottom="10px">Klicke hier</mj-button>
         <mj-text align="left" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">
-          Nach dem 01. Mai kannst du die Daten nicht mehr ändern.<br /> <br /> Bis zum Juni stellen wir euch euer Stammes-Match vor, damit ihr in die gemeinsame Planung einsteigen könnt. Wenn du noch Fragen hast, dann melde dich unter info@bdp.dpv.de. <br />
+          Nach dem {{ end_data }} kannst du die Daten nicht mehr ändern.<br /> <br /> Bis Anfang Juni stellen wir euch euer Stammes-Match vor, damit ihr in die gemeinsame Planung einsteigen könnt. Wenn du noch Fragen hast, dann melde dich unter <a href="mailto:info@bdp-dpv.de">info@bdp-dpv.de</a>.<br />
         </mj-text>
       </mj-column>
     </mj-section>
@@ -53,7 +53,7 @@
         <mj-social icon-size="25%">
           <mj-social-element name="web" href="https://bdp-dpv.de/" />
           <mj-social-element name="instagram" href="https://www.instagram.com/bdp_dpv/" />
-          <mj-social-element href="https://web.telegram.org/#/im?p=@bdp_dpv" src="https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/telegramm.svg" />
+          <mj-social-element href="https://t.me/bdp_dpv" src="https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/telegramm.png" />
           <mj-social-element href="mailto:info@bdp-dpv.de" src="https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/mail.png" />
         </mj-social>
       </mj-column>
