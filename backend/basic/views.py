@@ -214,7 +214,6 @@ class ZipCodeSearchFilter(FilterSet):
 
     def get_zip_city(self, queryset, field_name, value):
         cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
-        print(cities.count())
         if cities.count() > 250:
             raise PermissionDenied('Too many results!!!')
         return cities
@@ -486,7 +485,6 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
             worksheet.write(row_num + 2, 3, group['scout_organisation__zip_code__city'])
             worksheet.write(row_num + 2, 4, options.get(group['custom_choice']))
 
-            print('eventlocation: ', group['eventlocation'])
             if group['eventlocation']:
                 worksheet.write(row_num + 2, 5, 'x')
 
@@ -513,7 +511,6 @@ class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
 
-        registration = Registration.objects.filter(event_id=event_pk)
         groups = Registration.objects.filter(event_id=event_pk).values(
             "scout_organisation__name",
             "postaladdress__street",
@@ -592,7 +589,7 @@ class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
             "zip_code__city",
             "contact_name",
             "contact_email",
-            "contact_email",
+            "contact_phone",
             "fix_fee",
             "per_person_fee",
             "capacity_corona",
@@ -608,36 +605,41 @@ class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
                                 When(registration__scout_organisation__level=3,
                                      then=F('registration__scout_organisation__name'))))
 
-        worksheet.set_column(0, 1, 25)
-        worksheet.set_column(2, 3, 10)
+        worksheet.set_column(0, 13, 25)
 
         worksheet.write(0, 0, "Export-Timestamp")
         worksheet.write(0, 1, time.ctime())
 
         worksheet.write(1, 0, "Stamm")
         worksheet.write(1, 1, "Bund")
-        worksheet.write(1, 2, "Name")
-        worksheet.write(1, 3, "Adresse")
-        worksheet.write(1, 4, "Postleitzahl")
-        worksheet.write(1, 5, "Stadt")
-        worksheet.write(1, 6, "Typ")
-        worksheet.write(1, 7, "Fixkosten")
-        worksheet.write(1, 8, "Kosten p.P.")
-        worksheet.write(1, 9, "Schlafplatz")
-        worksheet.write(1, 10, "Schlafplatz unter Corona Bedinungen")
+        worksheet.write(1, 2, "Kontakt")
+        worksheet.write(1, 3, "Email")
+        worksheet.write(1, 4, "Telefon")
+        worksheet.write(1, 5, "Name")
+        worksheet.write(1, 6, "Adresse")
+        worksheet.write(1, 7, "Postleitzahl")
+        worksheet.write(1, 8, "Stadt")
+        worksheet.write(1, 9, "Typ")
+        worksheet.write(1, 10, "Fixkosten")
+        worksheet.write(1, 11, "Kosten p.P.")
+        worksheet.write(1, 12, "Schlafplatz")
+        worksheet.write(1, 13, "Schlafplatz unter Corona Bedinungen")
 
         for row_num, location in enumerate(locations.iterator()):
             worksheet.write(row_num + 2, 0, location['registration__scout_organisation__name'])
             worksheet.write(row_num + 2, 1, location['bund'])
-            worksheet.write(row_num + 2, 2, location['name'])
-            worksheet.write(row_num + 2, 3, location['address'])
-            worksheet.write(row_num + 2, 4, location['zip_code__zip_code'])
-            worksheet.write(row_num + 2, 5, location['zip_code__city'])
-            worksheet.write(row_num + 2, 6, location['location_type__name'])
-            worksheet.write(row_num + 2, 7, location['fix_fee'])
-            worksheet.write(row_num + 2, 8, location['per_person_fee'])
-            worksheet.write(row_num + 2, 9, location['capacity'])
-            worksheet.write(row_num + 2, 10, location['capacity_corona'])
+            worksheet.write(row_num + 2, 2, location['contact_name'])
+            worksheet.write(row_num + 2, 3, location['contact_email'])
+            worksheet.write(row_num + 2, 4, location['contact_phone'])
+            worksheet.write(row_num + 2, 5, location['name'])
+            worksheet.write(row_num + 2, 6, location['address'])
+            worksheet.write(row_num + 2, 7, location['zip_code__zip_code'])
+            worksheet.write(row_num + 2, 8, location['zip_code__city'])
+            worksheet.write(row_num + 2, 9, location['location_type__name'])
+            worksheet.write(row_num + 2, 10, location['fix_fee'])
+            worksheet.write(row_num + 2, 11, location['per_person_fee'])
+            worksheet.write(row_num + 2, 12, location['capacity'])
+            worksheet.write(row_num + 2, 13, location['capacity_corona'])
 
         workbook.close()
         output.seek(0)
@@ -662,24 +664,105 @@ class RegistrationGroupsViewSet(viewsets.ViewSet):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
 
-        groups = ParticipantGroup.objects.filter(registration__event_id=event_pk).values(
-            "participant_role__name",
-            "number_of_persons",
-            "registration__scout_organisation__name")
-        worksheet.set_column(0, 1, 25)
-        worksheet.set_column(2, 3, 10)
+        groups = Registration.objects.filter(event_id=event_pk).values(
+            'id',
+            "scout_organisation__name",
+            "scout_organisation__zip_code__zip_code",
+            "scout_organisation__zip_code__city",
+            "custom_choice", ).annotate(
+            bund=Case(When(scout_organisation__parent__parent__parent__level=3,
+                           then=F('scout_organisation__parent__parent__parent__name')),
+                      When(scout_organisation__parent__parent__level=3,
+                           then=F('scout_organisation__parent__parent__name')),
+                      When(scout_organisation__parent__level=3,
+                           then=F('scout_organisation__parent__name')),
+                      When(scout_organisation__level=3,
+                           then=F('scout_organisation__name')))
+        )
+
+        options = {1: 'Heim, Zuhause',
+                   4: 'Heim, auswärts, nah',
+                   5: 'Heim, auswärts, weit weg',
+                   6: 'Heim, auswärts, Distanz egal',
+                   7: 'Heim, egal wo, lieber nah',
+                   8: 'Heim, egal wo, lieber weit',
+                   9: 'Heim, egal wo, Distanz egal',
+                   10: 'Kein Heim, lieber nah',
+                   11: 'Kein Heim, lieber weit',
+                   12: 'Kein Heim, Distanz egal',
+                   }
 
         worksheet.write(0, 0, "Export-Timestamp")
         worksheet.write(0, 1, time.ctime())
 
+        worksheet.set_column(0, 25, 25)
+
         worksheet.write(1, 0, "Stamm")
-        worksheet.write(1, 1, "Personen Gruppe")
-        worksheet.write(1, 2, "Anzahl")
+        worksheet.write(1, 1, "Bund")
+        worksheet.write(1, 2, "Plz")
+        worksheet.write(1, 3, "Ort")
+        worksheet.write(1, 4, "Präferenz")
+        worksheet.write(1, 5, "Stammesvertretung")
+        worksheet.write(1, 6, "Helferlein")
+        worksheet.write(1, 7, "Teilnehmende")
+        worksheet.write(1, 8, "Gruppenleitung")
+        worksheet.write(1, 9, "Name Des Schlafplatzes 1")
+        worksheet.write(1, 10, "Typ")
+        worksheet.write(1, 11, "Fixkosten")
+        worksheet.write(1, 12, "Kosten p.P.")
+        worksheet.write(1, 13, "Schlafplätze")
+        worksheet.write(1, 14, "Schlafplätze unter Corona Bedinungen")
+        worksheet.write(1, 15, "Name Des Schlafplatzes 2")
+        worksheet.write(1, 16, "Typ")
+        worksheet.write(1, 17, "Fixkosten")
+        worksheet.write(1, 18, "Kosten p.P.")
+        worksheet.write(1, 19, "Schlafplätze")
+        worksheet.write(1, 20, "Schlafplätze unter Corona Bedinungen")
 
         for row_num, group in enumerate(groups.iterator()):
-            worksheet.write(row_num + 2, 0, group['registration__scout_organisation__name'])
-            worksheet.write(row_num + 2, 1, group['participant_role__name'])
-            worksheet.write(row_num + 2, 2, group['number_of_persons'])
+            participant_group = ParticipantGroup.objects.filter(registration__id=group['id']).values(
+                "participant_role__name",
+                "number_of_persons", )
+
+            stammesvertretung = 0
+            helferlein = 0
+            teilnehmende = 0
+            gruppenleitung = 0
+            for participants in participant_group:
+                if participants['participant_role__name'] == 'Gruppenleitung':
+                    gruppenleitung = participants['number_of_persons']
+                elif participants['participant_role__name'] == 'Stammesvertretung':
+                    stammesvertretung = participants['number_of_persons']
+                elif participants['participant_role__name'] == 'Helferlein':
+                    helferlein = participants['number_of_persons']
+                elif participants['participant_role__name'] == 'Teilnehmende':
+                    teilnehmende = participants['number_of_persons']
+
+            locations = EventLocation.objects.filter(registration__id=group['id']).values(
+                "name",
+                "fix_fee",
+                "per_person_fee",
+                "capacity_corona",
+                "capacity",
+                "location_type__name")
+
+            worksheet.write(row_num + 2, 0, group['scout_organisation__name'])
+            worksheet.write(row_num + 2, 1, group['bund'])
+            worksheet.write(row_num + 2, 2, group['scout_organisation__zip_code__zip_code'])
+            worksheet.write(row_num + 2, 3, group['scout_organisation__zip_code__city'])
+            worksheet.write(row_num + 2, 4, options.get(group['custom_choice']))
+            worksheet.write(row_num + 2, 5, stammesvertretung)
+            worksheet.write(row_num + 2, 6, helferlein)
+            worksheet.write(row_num + 2, 7, teilnehmende)
+            worksheet.write(row_num + 2, 8, gruppenleitung)
+
+            for col_num, loc in enumerate(locations.iterator()):
+                worksheet.write(row_num + 2, 9 + col_num * 6, loc['name'])
+                worksheet.write(row_num + 2, 10 + col_num * 6, loc['location_type__name'])
+                worksheet.write(row_num + 2, 11 + col_num * 6, loc['fix_fee'])
+                worksheet.write(row_num + 2, 12 + col_num * 6, loc['per_person_fee'])
+                worksheet.write(row_num + 2, 13 + col_num * 6, loc['capacity'])
+                worksheet.write(row_num + 2, 14 + col_num * 6, loc['capacity_corona'])
 
         workbook.close()
         output.seek(0)
@@ -712,7 +795,6 @@ class ReminderMailViewSet(viewsets.ViewSet):
         if 'type' in request.query_params:
             email_type = request.query_params.get('type', None)
 
-        print(email_type)
         if email_type == 'unconfirmed':
             queryset = queryset.filter(is_confirmed=False)
         elif email_type == 'confirmed':
