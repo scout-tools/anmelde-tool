@@ -30,7 +30,7 @@
         <mj-text align="left" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">Bis einschließlich zum {{ end_date }} 23:59 Uhr hast du noch Zeit, deine Daten anzupassen:</mj-text>
         <mj-button background-color="#FEEB35" color="#000000" font-size="16px" align="center" padding="15px 30px" border-radius="3px" href="https://anmelde-tool.de/" padding-left="25px" padding-right="25px" padding-bottom="10px">Klicke hier</mj-button>
         <mj-text align="left" color="#ffffff" font-size="15px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">
-          Nach dem {{ end_data }} kannst du die Daten nicht mehr ändern.<br /> <br /> Bis Anfang Juni stellen wir euch euer Stammes-Match vor, damit ihr in die gemeinsame Planung einsteigen könnt. Wenn du noch Fragen hast, dann melde dich unter <a href="mailto:info@bdp-dpv.de">info@bdp-dpv.de</a>.<br />
+          Nach dem {{ end_date }} kannst du die Daten nicht mehr ändern.<br /> <br /> Bis Anfang Juni stellen wir euch euer Stammes-Match vor, damit ihr in die gemeinsame Planung einsteigen könnt. Wenn du noch Fragen hast, dann melde dich unter <a href="mailto:info@bdp-dpv.de">info@bdp-dpv.de</a>.<br />
         </mj-text>
       </mj-column>
     </mj-section>
