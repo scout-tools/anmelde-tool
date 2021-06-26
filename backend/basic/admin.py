@@ -4,7 +4,7 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, \
     Registration, ZipCode, ParticipantGroup, \
     Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
     EatHabitType, EatHabit, TravelType, \
-    TentType, EventTag, EventRoleMapping, EventRole, PostalAddress
+    TentType, EventTag, EventRoleMapping, EventRole, PostalAddress, RegistrationMatching
 
 admin.site.register(Event)
 admin.site.register(AgeGroup)
@@ -41,3 +41,12 @@ class ZipCodeAdmin(admin.ModelAdmin):
 @admin.register(EventLocation)
 class EventLocationAdmin(admin.ModelAdmin):
     list_display = ('name', 'location_type', 'registration', 'zip_code')
+
+
+@admin.register(RegistrationMatching)
+class RegistrationMatchingAdmin(admin.ModelAdmin):
+    search_fields = ('registrations', 'event_location')
+    list_display = ('event', 'Registrations', 'event_location')
+
+    def Registrations(self, obj):
+        return ", ".join([repr(r) for r in obj.registrations.all()])

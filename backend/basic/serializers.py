@@ -550,7 +550,22 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
                 .aggregate(num=Coalesce(Sum('number_of_persons'), 0))['num']
         num_pers = obj.participantpersonal_set.filter(participant_role=4).count()
         result = num_group + num_pers
-        self.total_participants = result
+        return result
+
+    def get_total_groupleader(self, obj):
+        num_group = \
+            obj.participantgroup_set.filter(participant_role=2).aggregate(num=Coalesce(Sum('number_of_persons'), 0))[
+                'num']
+        num_pers = obj.participantpersonal_set.filter(participant_role=2).count()
+        result = num_group + num_pers
+        return result
+
+    def get_total_leader(self, obj):
+        num_group = \
+            obj.participantgroup_set.filter(participant_role=3).aggregate(num=Coalesce(Sum('number_of_persons'), 0))[
+                'num']
+        num_pers = obj.participantpersonal_set.filter(participant_role=3).count()
+        result = num_group + num_pers
         return result
 
     def get_total_fee(self, obj):
