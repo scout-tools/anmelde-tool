@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
-    TentType, EatHabit, TravelTag, PostalAddress, EventRoleMapping
+    TentType, EatHabit, TravelTag, PostalAddress, EventRoleMapping, RegistrationMatching
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
@@ -35,7 +35,7 @@ from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsPr
     IsOrganisationLeader
 
 from helper.registration_summary import registration_responsible_person, create_registration_summary, \
-    create_reminder_registration
+    create_reminder_registration, create_matching_mail
 
 
 def get_dataset(kwargs, pk, dataset):
@@ -49,7 +49,7 @@ def get_dataset(kwargs, pk, dataset):
 def get_event(kwargs):
     event_id = kwargs.get("event_pk", None)
     if event_id is not None:
-        return Event.objects.filter(id=event_id)
+        return Event.objects.get(id=event_id)
     else:
         return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
 
@@ -781,7 +781,8 @@ class ReminderMailViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, IsEventMaster]
 
     def create(self, request, *args, **kwargs):
-        queryset = get_registrations_from_event(kwargs)
+        registrations = get_registrations_from_event(kwargs)
+        event = get_event(kwargs)
 
         if 'code' in request.query_params:
             code = request.query_params.get('code', None)
@@ -791,20 +792,51 @@ class ReminderMailViewSet(viewsets.ViewSet):
         if code != 'A1B2C3D4':
             raise PermissionDenied('wrong code for reminder mails')
 
-        email_type = 'unconfirmed'
+        email_receiver = 'all'
+        email_type = 'reminder'
         if 'type' in request.query_params:
             email_type = request.query_params.get('type', None)
 
-        if email_type == 'unconfirmed':
-            queryset = queryset.filter(is_confirmed=False)
-        elif email_type == 'confirmed':
-            queryset = queryset.filter(is_confirmed=True)
-        elif email_type == 'all':
-            queryset = queryset
-        else:
-            return Response({'type': 'no valid type given'}, status=status.HTTP_400_BAD_REQUEST)
+        if 'receiver' in request.query_params:
+            email_receiver = request.query_params.get('receiver', None)
 
-        for registration in queryset:
-            create_reminder_registration(registration)
+        if email_type == 'reminder':
+            if email_type == 'reminder':
+                if email_receiver == 'unconfirmed':
+                    registrations = registrations.filter(is_confirmed=False)
+                elif email_receiver == 'confirmed':
+                    registrations = registrations.filter(is_confirmed=True)
+                elif email_receiver == 'all':
+                    registrations = registrations
+                else:
+                    return Response({'type': f'no valid receiver "{email_receiver}" given'},
+                                    status=status.HTTP_400_BAD_REQUEST)
+
+                for registration in registrations:
+                    create_reminder_registration(registration)
+
+        elif email_type == 'matching':
+            matchings = RegistrationMatching.objects.filter(event=event)
+            registation_of_matching = []
+            for i in matchings.all():
+                for x in i.registrations.all():
+                    registation_of_matching.append(x)
+
+            if email_receiver == 'matched':
+                registrations = registation_of_matching
+            elif email_receiver == 'unmatched':
+                registrations = [x for x in registrations if x not in registation_of_matching]
+            elif email_receiver == 'all':
+                registrations = registrations
+            else:
+                return Response({'type': f'no valid receiver "{email_receiver}" given'},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            for registration in registrations:
+                matching = matchings.filter(registrations__in=[registration]).first()
+                create_matching_mail(matching, registration, email_receiver)
+
+        else:
+            return Response({'receiver': f'no valid type "{email_type}" given'}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)

@@ -233,7 +233,7 @@ class Registration(TimeStampMixin):
         return "{} - {}".format(self.scout_organisation, self.event)
 
     def __repr__(self):
-        return self.__str__()
+        return "{}".format(self.scout_organisation)
 
 
 class ParticipantGroup(TimeStampMixin):
@@ -410,3 +410,19 @@ class PostalAddress(TimeStampMixin):
     address_addition = models.CharField(max_length=100, blank=True, null=True)
     zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
+
+
+class RegistrationMatching(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    registrations = models.ManyToManyField(Registration)
+    sleeping_location = models.ForeignKey(EventLocation, on_delete=models.CASCADE, null=True, blank=True)
+    event_location = models.ForeignKey(ZipCode, on_delete=models.CASCADE, blank=True, null=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return "{} - {}".format(self.event, ", ".join(r.scout_organisation.name for r in self.registrations.all()),
+                                self.sleeping_location)
