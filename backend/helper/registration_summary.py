@@ -14,11 +14,10 @@ def registration_responsible_person(data):
 
 
 def get_verband_name(parent_one):
-    if (parent_one.level.id == 3):
+    if parent_one.level.id == 3:
         return 'BdP' if parent_one.id == 1 else 'DPV'
     else:
-        partent_two = ScoutHierarchy.objects.filter(id=parent_one.parent.id).first()
-        return 'BdP' if partent_two.id == 1 else 'DPV'
+        return get_verband_name(parent_one.parent)
 
 
 def create_registration_summary(data):
