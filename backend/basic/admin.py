@@ -6,9 +6,7 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, \
     EatHabitType, EatHabit, TravelType, \
     TentType, EventTag, EventRoleMapping, EventRole, PostalAddress, RegistrationMatching
 
-admin.site.register(Event)
 admin.site.register(AgeGroup)
-admin.site.register(Registration)
 admin.site.register(ParticipantGroup)
 admin.site.register(Role)
 admin.site.register(MethodOfTravel)
@@ -41,6 +39,13 @@ class ZipCodeAdmin(admin.ModelAdmin):
 @admin.register(EventLocation)
 class EventLocationAdmin(admin.ModelAdmin):
     list_display = ('name', 'location_type', 'registration', 'zip_code')
+    search_fields = ('name',)
+
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'location')
+    search_fields = ('name',)
 
 
 @admin.register(RegistrationMatching)
@@ -50,3 +55,13 @@ class RegistrationMatchingAdmin(admin.ModelAdmin):
 
     def Registrations(self, obj):
         return ", ".join([repr(r) for r in obj.registrations.all()])
+
+
+@admin.register(Registration)
+class RegistrationAdmin(admin.ModelAdmin):
+    list_display = ('scout_organisation', 'event', 'responsible_persons')
+    search_fields = ('scout_organisation', 'event')
+    autocomplete_fields = ('scout_organisation', 'event', 'responsible_persons')
+
+    def responsible_persons(self, obj):
+        return ", ".join([repr(r) for r in obj.responsible_persons.all()])
