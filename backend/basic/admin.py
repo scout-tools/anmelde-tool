@@ -34,11 +34,13 @@ class ZipCodeAdmin(admin.ModelAdmin):
     list_display = ('zip_code', 'city')
     search_fields = ('zip_code', 'city')
 
+
 @admin.register(ParticipantGroup)
 class ParticipantGroupAdmin(admin.ModelAdmin):
-    list_display = ('registration', 'number_of_persons')
-    search_fields = ('registration__scout_organisation__name', )
+    list_display = ('registration', 'number_of_persons', 'participant_role')
+    search_fields = ('registration__scout_organisation__name', 'registration__event__name')
     autocomplete_fields = ('registration',)
+
 
 @admin.register(EventLocation)
 class EventLocationAdmin(admin.ModelAdmin):
