@@ -8,7 +8,7 @@ Hier erhaltet ihr nun einige wichtige Infos von uns. Bitte lest euch die Mail al
 
  1. Das wichtigste zuerst: {{ text_matching }}
  2. Ihr werden das Spiel in {{ location }} spielen und dort voraussichtlich {{ sleeping_location }} schlafen.
- 3. {{ text_location }}
+    {{ text_location }}
 
 Nun brauchen wir noch einige Infos von euch – Achtung, bitte Antwort an uns: stadt@bdp-dpv.de [stadt@bdp-dpv.de]
 

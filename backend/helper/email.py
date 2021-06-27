@@ -5,6 +5,8 @@ from pathlib import Path
 from enum import Enum
 import threading
 from threading import Thread
+from django.template.context import make_context
+from django.template.loader import get_template
 
 url = getattr(settings, 'FRONT_URL', '')
 sender = f'Anmelde-Tool <{getattr(settings, "EMAIL_HOST_USER")}>'
@@ -49,8 +51,10 @@ def get_mail(mail_type: MailType, data, email_id=0):
     else:
         path = f'default/{mail}'
 
+    project_tpl = get_template(f'{email_directory}/{path}.html')
+    html_rendered = project_tpl.template.render(make_context(data, autoescape=False))
     plain_renderend = render_to_string(f'{path}.txt', data)
-    html_rendered = render_to_string(f'{path}.html', data)
+    # html_rendered = render_to_string(f'{path}.html', data)
     return plain_renderend, html_rendered
 
 

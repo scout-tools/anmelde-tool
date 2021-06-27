@@ -35,7 +35,8 @@ from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsPr
     IsOrganisationLeader
 
 from helper.registration_summary import registration_responsible_person, create_registration_summary, \
-    create_reminder_registration, create_matching_mail
+    create_reminder_registration
+from helper.registration_matching_mail import create_matching_mail
 
 
 def get_dataset(kwargs, pk, dataset):

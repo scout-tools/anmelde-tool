@@ -46,6 +46,7 @@ class ParticipantGroupAdmin(admin.ModelAdmin):
 class EventLocationAdmin(admin.ModelAdmin):
     list_display = ('name', 'location_type', 'registration', 'zip_code')
     search_fields = ('name',)
+    autocomplete_fields = ('registration', 'zip_code')
 
 
 @admin.register(Event)
