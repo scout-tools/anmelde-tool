@@ -50,18 +50,19 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(RegistrationMatching)
 class RegistrationMatchingAdmin(admin.ModelAdmin):
-    search_fields = ('registrations', 'event_location')
-    list_display = ('event', 'Registrations', 'event_location')
+    search_fields = ('registrations__scout_organisation__name', 'event_location__city')
+    list_display = ('event', 'Matched_Scout_Hierachies', 'event_location')
+    autocomplete_fields = ('registrations', 'event', 'event_location', 'sleeping_location')
 
-    def Registrations(self, obj):
+    def Matched_Scout_Hierachies(self, obj):
         return ", ".join([repr(r) for r in obj.registrations.all()])
 
 
 @admin.register(Registration)
 class RegistrationAdmin(admin.ModelAdmin):
-    list_display = ('scout_organisation', 'event', 'responsible_persons')
-    search_fields = ('scout_organisation', 'event')
+    list_display = ('scout_organisation', 'event', 'Responsible_Persons')
+    search_fields = ('scout_organisation__name', 'event__name')
     autocomplete_fields = ('scout_organisation', 'event', 'responsible_persons')
 
-    def responsible_persons(self, obj):
-        return ", ".join([repr(r) for r in obj.responsible_persons.all()])
+    def Responsible_Persons(self, obj):
+        return ", ".join([str(r) for r in obj.responsible_persons.all()])
