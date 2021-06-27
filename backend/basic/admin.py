@@ -7,7 +7,6 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, \
     TentType, EventTag, EventRoleMapping, EventRole, PostalAddress, RegistrationMatching
 
 admin.site.register(AgeGroup)
-admin.site.register(ParticipantGroup)
 admin.site.register(Role)
 admin.site.register(MethodOfTravel)
 admin.site.register(ScoutOrgaLevel)
@@ -35,6 +34,11 @@ class ZipCodeAdmin(admin.ModelAdmin):
     list_display = ('zip_code', 'city')
     search_fields = ('zip_code', 'city')
 
+@admin.register(ParticipantGroup)
+class ParticipantGroupAdmin(admin.ModelAdmin):
+    list_display = ('registration', 'number_of_persons')
+    search_fields = ('registration__scout_organisation__name', )
+    autocomplete_fields = ('registration',)
 
 @admin.register(EventLocation)
 class EventLocationAdmin(admin.ModelAdmin):
