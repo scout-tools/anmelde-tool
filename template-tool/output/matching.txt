@@ -1,0 +1,48 @@
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/EmailBild.jpg]
+
+Lieber {{ scout_organisation }},
+
+ihr habt euch für das stadt & spiel angemeldet. Wir freuen uns, dass ihr dabei seid!
+
+Hier erhaltet ihr nun einige wichtige Infos von uns. Bitte lest euch die Mail also gut durch.
+
+ 1. Das wichtigste zuerst: {{ text_matching }}
+ 2. Ihr werden das Spiel in {{ location }} spielen und dort voraussichtlich {{ sleeping_location }} schlafen.
+    {{ text_location }}
+
+Nun brauchen wir noch einige Infos von euch – Achtung, bitte Antwort an uns: stadt@bdp-dpv.de [stadt@bdp-dpv.de]
+
+hr habt folgende Teilnehmende angemeldet:
+
+Stammeleitung {{ total_leader }} Gruppenleiter {{ total_groupleader }} Anzahl Helfer {{ total_volunteers }} Gesamt Teilnehmer {{ total_participants }}
+
+Daraus ergibt sich folgender TN-Beitrag: {{ total_costs }}
+
+Bis zum {{ final_date}} habt ihr Zeit uns Rückmeldung zu geben, ob die TN-Zahl passt. Danach müsst ihr, auch wenn nicht alle TN kommen, für alle zahlen.
+
+{{ text_helper }}
+
+Im Anhang findet ihr:
+
+ 1. Einen Zeitplan
+ 2. Eine Checkliste
+
+Wenn ihr mögt:
+ 1. Eine Einladung für die Teilnehmenden. Hier bitte Ort, Zeiten und Kosten anpassen, dies ist kombiniert mit einer Teilnehmenden-Einverständniserklärung und Fotoerlaubnis.
+ 2. Eine Packliste
+
+Zum Schluss noch ein kleiner Gruß von {{ single_plural_scouthierachy }}:
+
+{{ text_scouthierachies }}
+
+Wir freuen uns auf euch! Wenn ihr Fragen habt, dann schreibt uns gern: stadt@bdp-dpv.de [stadt@bdp-dpv.de]
+
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/BdP-DPV+Logo+(Transparent).png]
+
+[https://www.mailjet.com/images/theme/v1/icons/ico-social/web.png] [https://bdp-dpv.de/]
+
+[https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png] [https://www.instagram.com/bdp_dpv/]
+
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/telegramm.png] [https://t.me/bdp_dpv]
+
+[https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/mail.png] [info@bdp-dpv.de]

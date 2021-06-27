@@ -124,7 +124,7 @@ def send_matching(data):
         subject = "Neuigkeiten vom stadt&spiel, euer Zielort steht leider noch nicht fest"
 
     recipients = [data['email']]
-    attachments = ('Checkliste.docx', 'Einladung.docx', 'stadt&spiel_Packliste.docx', 'Zeitplan.pdf')
+    attachments = ('Checkliste.pdf', 'Einladung.docx', 'stadt&spiel_Packliste.docx', 'Zeitplan.pdf')
     return send_email(plain_renderend, html_rendered, subject, recipients, reply_to=('stadt@bdp-dpv.de',),
                       attachments=attachments)
 
