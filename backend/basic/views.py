@@ -668,6 +668,8 @@ class RegistrationGroupsViewSet(viewsets.ViewSet):
         groups = Registration.objects.filter(event_id=event_pk).values(
             'id',
             "scout_organisation__name",
+            "responsible_persons__userextended__scout_name",
+            "responsible_persons__username",
             "scout_organisation__zip_code__zip_code",
             "scout_organisation__zip_code__city",
             "custom_choice", ).annotate(
@@ -700,25 +702,27 @@ class RegistrationGroupsViewSet(viewsets.ViewSet):
 
         worksheet.write(1, 0, "Stamm")
         worksheet.write(1, 1, "Bund")
-        worksheet.write(1, 2, "Plz")
-        worksheet.write(1, 3, "Ort")
-        worksheet.write(1, 4, "Präferenz")
-        worksheet.write(1, 5, "Stammesvertretung")
-        worksheet.write(1, 6, "Helferlein")
-        worksheet.write(1, 7, "Teilnehmende")
-        worksheet.write(1, 8, "Gruppenleitung")
-        worksheet.write(1, 9, "Name Des Schlafplatzes 1")
-        worksheet.write(1, 10, "Typ")
-        worksheet.write(1, 11, "Fixkosten")
-        worksheet.write(1, 12, "Kosten p.P.")
-        worksheet.write(1, 13, "Schlafplätze")
-        worksheet.write(1, 14, "Schlafplätze unter Corona Bedinungen")
-        worksheet.write(1, 15, "Name Des Schlafplatzes 2")
-        worksheet.write(1, 16, "Typ")
-        worksheet.write(1, 17, "Fixkosten")
-        worksheet.write(1, 18, "Kosten p.P.")
-        worksheet.write(1, 19, "Schlafplätze")
-        worksheet.write(1, 20, "Schlafplätze unter Corona Bedinungen")
+        worksheet.write(1, 2, "Veranwortliche Person")
+        worksheet.write(1, 3, "Email")
+        worksheet.write(1, 4, "Plz")
+        worksheet.write(1, 5, "Ort")
+        worksheet.write(1, 6, "Präferenz")
+        worksheet.write(1, 7, "Stammesvertretung")
+        worksheet.write(1, 8, "Helferlein")
+        worksheet.write(1, 9, "Teilnehmende")
+        worksheet.write(1, 10, "Gruppenleitung")
+        worksheet.write(1, 11, "Name Des Schlafplatzes 1")
+        worksheet.write(1, 12, "Typ")
+        worksheet.write(1, 13, "Fixkosten")
+        worksheet.write(1, 14, "Kosten p.P.")
+        worksheet.write(1, 15, "Schlafplätze")
+        worksheet.write(1, 16, "Schlafplätze unter Corona Bedinungen")
+        worksheet.write(1, 17, "Name Des Schlafplatzes 2")
+        worksheet.write(1, 18, "Typ")
+        worksheet.write(1, 19, "Fixkosten")
+        worksheet.write(1, 20, "Kosten p.P.")
+        worksheet.write(1, 21, "Schlafplätze")
+        worksheet.write(1, 22, "Schlafplätze unter Corona Bedinungen")
 
         for row_num, group in enumerate(groups.iterator()):
             participant_group = ParticipantGroup.objects.filter(registration__id=group['id']).values(
@@ -749,21 +753,23 @@ class RegistrationGroupsViewSet(viewsets.ViewSet):
 
             worksheet.write(row_num + 2, 0, group['scout_organisation__name'])
             worksheet.write(row_num + 2, 1, group['bund'])
-            worksheet.write(row_num + 2, 2, group['scout_organisation__zip_code__zip_code'])
-            worksheet.write(row_num + 2, 3, group['scout_organisation__zip_code__city'])
-            worksheet.write(row_num + 2, 4, options.get(group['custom_choice']))
-            worksheet.write(row_num + 2, 5, stammesvertretung)
-            worksheet.write(row_num + 2, 6, helferlein)
-            worksheet.write(row_num + 2, 7, teilnehmende)
-            worksheet.write(row_num + 2, 8, gruppenleitung)
+            worksheet.write(row_num + 2, 2, group['responsible_persons__userextended__scout_name'])
+            worksheet.write(row_num + 2, 3, group['responsible_persons__username'])
+            worksheet.write(row_num + 2, 4, group['scout_organisation__zip_code__zip_code'])
+            worksheet.write(row_num + 2, 5, group['scout_organisation__zip_code__city'])
+            worksheet.write(row_num + 2, 6, options.get(group['custom_choice']))
+            worksheet.write(row_num + 2, 7, stammesvertretung)
+            worksheet.write(row_num + 2, 8, helferlein)
+            worksheet.write(row_num + 2, 9, teilnehmende)
+            worksheet.write(row_num + 2, 10, gruppenleitung)
 
             for col_num, loc in enumerate(locations.iterator()):
-                worksheet.write(row_num + 2, 9 + col_num * 6, loc['name'])
-                worksheet.write(row_num + 2, 10 + col_num * 6, loc['location_type__name'])
-                worksheet.write(row_num + 2, 11 + col_num * 6, loc['fix_fee'])
-                worksheet.write(row_num + 2, 12 + col_num * 6, loc['per_person_fee'])
-                worksheet.write(row_num + 2, 13 + col_num * 6, loc['capacity'])
-                worksheet.write(row_num + 2, 14 + col_num * 6, loc['capacity_corona'])
+                worksheet.write(row_num + 2, 11 + col_num * 6, loc['name'])
+                worksheet.write(row_num + 2, 12 + col_num * 6, loc['location_type__name'])
+                worksheet.write(row_num + 2, 13 + col_num * 6, loc['fix_fee'])
+                worksheet.write(row_num + 2, 14 + col_num * 6, loc['per_person_fee'])
+                worksheet.write(row_num + 2, 15 + col_num * 6, loc['capacity'])
+                worksheet.write(row_num + 2, 16 + col_num * 6, loc['capacity_corona'])
 
         workbook.close()
         output.seek(0)
