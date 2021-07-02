@@ -100,13 +100,18 @@ def create_matching_mail(match: RegistrationMatching, registration: Registration
                           f'Wenn das möglich ist, dann bitte auch eine Mailadresse und wenn möglich Handynummer an uns' \
                           f', sowie den <a href="{doodle_link}" style="color:#ffffff">Doodle-Link</a>'
 
-        single_plural_scouthierachy = "eurem Partnerstamm" if other_registrations == 1 else "euren Partnerstämmen"
-        text_scouthierachies = ""
-        for reg in other_registrations:
+        if len(other_registrations) > 0:
+            single_plural_scouthierachy = "Zum Schluss noch ein kleiner Gruß von"
+            single_plural_scouthierachy += "eurem Partnerstamm:" if other_registrations == 1 else "euren Partnerstämmen:"
+            text_scouthierachies = ""
+            for reg in other_registrations:
 
-            if not reg.free_text:
-                reg.free_text = "Der Stamm hat leider keine Nachricht hinterlassen."
-            text_scouthierachies += f'<p>{reg.scout_organisation.name}:<br>{reg.free_text}</p>'
+                if not reg.free_text:
+                    reg.free_text = "Der Stamm hat leider keine Nachricht hinterlassen."
+                text_scouthierachies += f'<p>{reg.scout_organisation.name}:<br>{reg.free_text}</p>'
+        else:
+            single_plural_scouthierachy = ""
+            text_scouthierachies = ""
 
         final_date = date_format(datetime.datetime.now() + datetime.timedelta(days=7))
 

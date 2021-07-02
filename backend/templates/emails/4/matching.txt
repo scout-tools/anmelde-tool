@@ -29,7 +29,7 @@ Wenn ihr mögt:
  1. Eine Einladung für die Teilnehmenden. Hier bitte Ort, Zeiten und Kosten anpassen, dies ist kombiniert mit einer Teilnehmenden-Einverständniserklärung und Fotoerlaubnis.
  2. Eine Packliste
 
-Zum Schluss noch ein kleiner Gruß von {{ single_plural_scouthierachy }}:
+{{ single_plural_scouthierachy }}
 
 {{ text_scouthierachies }}
 
