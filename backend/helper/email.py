@@ -118,10 +118,7 @@ def send_registration_reminder(data):
 def send_matching(data):
     plain_renderend, html_rendered = get_mail(MailType.RegistrationMatching, data, data['email_id'])
 
-    if data['recipient_matched']:
-        subject = "Neuigkeiten vom stadt&spiel, euer Zielort steht fest"
-    else:
-        subject = "Neuigkeiten vom stadt&spiel, euer Zielort steht leider noch nicht fest"
+    subject = "Neuigkeiten vom stadt&spiel"
 
     recipients = [data['email']]
     attachments = ('Checkliste.pdf', 'Einladung.docx', 'stadt&spiel_Packliste.docx', 'Zeitplan.pdf')

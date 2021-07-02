@@ -1,14 +1,12 @@
 [https://scout-anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/assets/EmailBild.jpg]
 
-Lieber {{ scout_hierachy }},
+Lieber {{ scout_organisation }},
 
 ihr habt euch für das stadt & spiel angemeldet. Wir freuen uns, dass ihr dabei seid!
 
 Hier erhaltet ihr nun einige wichtige Infos von uns. Bitte lest euch die Mail also gut durch.
 
- 1. Das wichtigste zuerst: {{ text_matching }}
- 2. Ihr werden das Spiel in {{ location }} spielen und dort voraussichtlich {{ sleeping_location }} schlafen.
- 3. {{ text_location }}
+{{ text_matching }} {{ sleeping_location }} {{ text_location }}
 
 Nun brauchen wir noch einige Infos von euch – Achtung, bitte Antwort an uns: stadt@bdp-dpv.de [stadt@bdp-dpv.de]
 
@@ -16,9 +14,9 @@ hr habt folgende Teilnehmende angemeldet:
 
 Stammeleitung {{ total_leader }} Gruppenleiter {{ total_groupleader }} Anzahl Helfer {{ total_volunteers }} Gesamt Teilnehmer {{ total_participants }}
 
-Daraus ergibt sich folgender maximaler TN-Beitrag: {{ total_costs }}
+Daraus ergibt sich folgender TN-Beitrag: {{ total_costs }}€
 
-Bis zum {{ final_date}} habt ihr Zeit uns Rückmeldung zu geben, ob die TN-Zahl passt. Danach müsst ihr, auch wenn nicht alle TN kommen für alle zahlen.
+Bis zum {{ final_date}} habt ihr Zeit uns Rückmeldung zu geben, ob die TN-Zahl passt. Danach müsst ihr, auch wenn nicht alle TN kommen, für alle zahlen.
 
 {{ text_helper }}
 
@@ -28,11 +26,10 @@ Im Anhang findet ihr:
  2. Eine Checkliste
 
 Wenn ihr mögt:
- 1. Eine Einladung für die Teilnehmenden. Hier bitte Ort, Zeiten und Kosten anpassen.
- 2. Eine Teilnehmenden-Einverständniserklärung und Fotoerlaubnis.
- 3. Eine Packliste
+ 1. Eine Einladung für die Teilnehmenden. Hier bitte Ort, Zeiten und Kosten anpassen, dies ist kombiniert mit einer Teilnehmenden-Einverständniserklärung und Fotoerlaubnis.
+ 2. Eine Packliste
 
-Zum Schluss noch ein kleiner Gruß von {{ single_plural_scouthierachy }}.
+Zum Schluss noch ein kleiner Gruß von {{ single_plural_scouthierachy }}:
 
 {{ text_scouthierachies }}
 

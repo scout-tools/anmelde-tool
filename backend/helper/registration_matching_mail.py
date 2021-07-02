@@ -22,33 +22,53 @@ def create_matching_mail(match: RegistrationMatching, registration: Registration
     doodle_link = 'https://doodle.com/poll/q9x5b3c62rk5fyrm?utm_source=poll&utm_medium=link'
     if match:
         other_registrations = match.registrations.exclude(id=registration.id)
-        if len(other_registrations) > 1:
-            text_matching = "Eure Partnerstämme sind"
-        else:
-            text_matching = "Eure Partnerstamm ist der"
+        text_matching = ""
+        if len(other_registrations) > 0:
+            text_matching += "<li>Das wichtigste zuerst: "
 
-        for counter, other_registration in enumerate(other_registrations):
-            if counter > 0:
-                text_matching += " und"
-            verband = get_verband_name(other_registration.scout_organisation)
-            text_matching += f" {other_registration.scout_organisation.name} aus dem {verband}"
-            resp_person = other_registration.responsible_persons.first()
-            if resp_person is not None:
-                text_matching += f", Kontakt {resp_person.userextended.scout_name}, " \
-                                 f"<a href='mailto:{resp_person.username}' style='color:#ffffff'>{resp_person.username}</a>"
-        text_matching += "."
+            if len(other_registrations) > 1:
+                text_matching += "Eure Partnerstämme sind"
+            else:
+                text_matching += "Eure Partnerstamm ist der"
 
-        location = match.event_location.city
-        if match.sleeping_location.location_type is not None and 'Zelt' in match.sleeping_location.location_type.name:
-            sleeping_location = f"auf dem Lagerplatz {match.sleeping_location.name}"
-        elif match.sleeping_location.location_type is not None and 'Heim' in match.sleeping_location.location_type.name:
-            sleeping_location = f"im Heim {match.sleeping_location.name}"
+            for counter, other_registration in enumerate(other_registrations):
+                if counter > 0:
+                    text_matching += " und"
+                verband = get_verband_name(other_registration.scout_organisation)
+                text_matching += f" {other_registration.scout_organisation.name} aus dem {verband}"
+                resp_person = other_registration.responsible_persons.first()
+                if resp_person is not None:
+                    text_matching += f", Kontakt {resp_person.userextended.scout_name}, " \
+                                     f"<a href='mailto:{resp_person.username}' style='color:#ffffff'>{resp_person.username}</a>"
+            text_matching += ".</li>"
+
+        sleeping_location = ""
+        if match.event_location is not None:
+            sleeping_location += f"<li> Ihr werden das Spiel in {match.event_location.city} spielen"
+
+        if match.sleeping_location is not None:
+            sleeping_location += " und dort voraussichtlich "
+
+            if match.sleeping_location.location_type is not None and 'Zelt' in match.sleeping_location.location_type.name:
+                sleeping_location += f"auf dem Lagerplatz {match.sleeping_location.name}"
+            elif match.sleeping_location.location_type is not None and 'Heim' in match.sleeping_location.location_type.name:
+                sleeping_location += f"im Heim {match.sleeping_location.name}"
+            else:
+                sleeping_location = f"im {match.sleeping_location.name}"
+            if match.sleeping_location.zip_code is not None:
+                sleeping_location += f", {match.sleeping_location.address}," \
+                                     f" {match.sleeping_location.zip_code.zip_code}," \
+                                     f" {match.sleeping_location.zip_code.city}"
+
+            sleeping_location += " schlafen.</li>"
         else:
-            sleeping_location = f"im {match.sleeping_location.name}"
-        if match.sleeping_location.zip_code is not None:
-            sleeping_location += f", {match.sleeping_location.address}," \
-                                 f" {match.sleeping_location.zip_code.zip_code}," \
-                                 f" {match.sleeping_location.zip_code.city}"
+            if match.event_location is not None:
+                sleeping_location += ". </li>"
+            sleeping_location += "<li>Wir klären grad noch die letzten Details zu den Schlafplätzen und melden uns, " \
+                                 "sobald diese feststehen. </li>"
+        if len(other_registrations) == 0:
+            sleeping_location += "<li>Genauso verhält es sich mit eurem Partnerstamm. " \
+                                 "Sobald wir diese zugeteilt haben, melden wir uns. </li>"
 
         if registration.eventlocation_set.count() > 0:
             location_registration: EventLocation = EventLocation.objects.filter(registration=registration)
@@ -101,7 +121,6 @@ def create_matching_mail(match: RegistrationMatching, registration: Registration
                 'email_id': registration.event.email_id,
                 'total_costs': total_costs,
                 'text_matching': text_matching,
-                'location': location,
                 'email': person.username,
                 'sleeping_location': sleeping_location,
                 'text_location': text_location,

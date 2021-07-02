@@ -183,8 +183,8 @@
       >ihr habt euch für das stadt &amp; spiel angemeldet. Wir freuen uns, dass ihr dabei seid!
           <p /> Hier erhaltet ihr nun einige wichtige Infos von uns. Bitte lest euch die Mail also gut durch.
           <ol>
-            <li>Das wichtigste zuerst: {{ text_matching }}</li>
-            <li>Ihr werden das Spiel in {{ location }} spielen und dort voraussichtlich {{ sleeping_location }} schlafen.</li>
+            {{ text_matching }}
+            {{ sleeping_location }}
             {{ text_location }}
           </ol>
           Nun brauchen wir noch einige Infos von euch – Achtung, bitte Antwort an uns: <a href="mailto:stadt@bdp-dpv.de" style="color:#ffffff">stadt@bdp-dpv.de</a>
@@ -232,7 +232,7 @@
                   
       <div
          style="font-family:open Sans Helvetica, Arial, sans-serif;font-size:15px;line-height:1;text-align:left;color:#ffffff;"
-      >Daraus ergibt sich folgender TN-Beitrag: {{ total_costs }}
+      >Daraus ergibt sich folgender TN-Beitrag: {{ total_costs }}&#8364;
           <p />
           Bis zum {{ final_date}} habt ihr Zeit uns Rückmeldung zu geben, ob die TN-Zahl passt. Danach müsst ihr, auch wenn nicht alle TN kommen, für alle zahlen.
           <p />
