@@ -57,8 +57,8 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(RegistrationMatching)
 class RegistrationMatchingAdmin(admin.ModelAdmin):
-    search_fields = ('registrations__scout_organisation__name', 'event_location__city')
-    list_display = ('event', 'Matched_Scout_Hierachies', 'event_location')
+    search_fields = ('registrations__scout_organisation__name', 'event_location__city', 'sleeping_location')
+    list_display = ('event', 'Matched_Scout_Hierachies', 'event_location', 'sleeping_location')
     autocomplete_fields = ('registrations', 'event', 'event_location', 'sleeping_location')
 
     def Matched_Scout_Hierachies(self, obj):
@@ -67,7 +67,7 @@ class RegistrationMatchingAdmin(admin.ModelAdmin):
 
 @admin.register(Registration)
 class RegistrationAdmin(admin.ModelAdmin):
-    list_display = ('scout_organisation', 'event', 'Responsible_Persons')
+    list_display = ('scout_organisation', 'event', 'Responsible_Persons',)
     search_fields = ('scout_organisation__name', 'event__name')
     autocomplete_fields = ('scout_organisation', 'event', 'responsible_persons')
 

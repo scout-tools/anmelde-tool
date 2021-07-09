@@ -424,5 +424,5 @@ class RegistrationMatching(TimeStampMixin):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return "{} - {}".format(self.event, ", ".join(r.scout_organisation.name for r in self.registrations.all()),
-                                self.sleeping_location)
+        return "{} - {} - {}".format(self.event, ", ".join(r.scout_organisation.name for r in self.registrations.all()),
+                                     self.sleeping_location)
