@@ -52,5 +52,41 @@
             "name": "Öffentlichkeit",
             "description": ""
         }
+    },
+    {
+        "model": "basic.EventRole",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "name": "Verbandsführung",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.EventRole",
+        "pk": 8,
+        "fields": {
+            "id": 8,
+            "name": "Bundesführung",
+            "description": ""
+        }
+    },
+    {
+        "model": "basic.EventRole",
+        "pk": 9,
+        "fields": {
+            "id": 9,
+            "name": "Ringführung",
+            "description": ""
+        }
+    },
+        {
+        "model": "basic.EventRole",
+        "pk": 10,
+        "fields": {
+            "id": 10,
+            "name": "Landesverbandsführung",
+            "description": ""
+        }
     }
 ]

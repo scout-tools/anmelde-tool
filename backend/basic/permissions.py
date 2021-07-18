@@ -57,6 +57,20 @@ class IsTeamMemberPermission(permissions.BasePermission):
         return get_eventrole(request, view, [1, 2, 3, 4, 5, 6])
 
 
+class IsTeamMemberPermission(permissions.BasePermission):
+    message = 'Nur für das Planungsteam'
+
+    def has_permission(self, request, view):
+        return get_eventrole(request, view, [1, 2, 3, 4, 5, 6])
+
+
+class IsOrganisationLeader(permissions.BasePermission):
+    message = 'Nur für eine Organisationsführung'
+
+    def has_permission(self, request, view):
+        return get_eventrole(request, view, [7, 8, 9, 10])
+
+
 class IsResponsiblePersonPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
