@@ -426,3 +426,18 @@ class RegistrationMatching(TimeStampMixin):
     def __str__(self):
         return "{} - {} - {}".format(self.event, ", ".join(r.scout_organisation.name for r in self.registrations.all()),
                                      self.sleeping_location)
+
+class Workshop(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    title = models.CharField(max_length=100, blank=True)
+    free_text = models.CharField(max_length=1000, blank=True)
+    costs = models.DecimalField(max_digits=3, decimal_places=3, default=0.000)
+    supervisor = models.ForeignKey(ParticipantPersonal, on_delete=models.PROTECT, null=True)
+    registration = models.ForeignKey("Registration", on_delete=models.PROTECT, null=True, blank=True)
+
+    def __str__(self):
+        return self.title

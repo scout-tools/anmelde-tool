@@ -20,7 +20,8 @@ from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
-    TentType, EatHabit, TravelTag, PostalAddress, EventRoleMapping, RegistrationMatching
+    TentType, EatHabit, TravelTag, PostalAddress, EventRoleMapping, RegistrationMatching, \
+    Workshop
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
@@ -28,7 +29,8 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, \
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
     EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
-    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer
+    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer, \
+    WorkshopSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission, \
@@ -847,3 +849,14 @@ class ReminderMailViewSet(viewsets.ViewSet):
             return Response({'receiver': f'no valid type "{email_type}" given'}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)
+
+class WorkshopViewSet(viewsets.ModelViewSet):
+#     permission_classes = [IsAuthenticated]
+    queryset = Workshop.objects.all()
+    serializer_class = WorkshopSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('registration',)
+
+#     def get_queryset(self):
+#         print(self)
+#         return Workshop.objects.all()
