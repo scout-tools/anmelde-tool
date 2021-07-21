@@ -16,11 +16,6 @@
             Die folgenden Daten sind nur für das Planungsteam und die Administrator_innen
             sichtbar. <br />
           </p>
-          <p>
-            <br />
-            Hinweis: Vergiss nicht dich als Fahrtenleitung auch selbst anzumelden.
-            <br />
-          </p>
         </span>
       </v-row>
       <v-divider class="text-left my-2" />
@@ -38,8 +33,8 @@
           v-model="data.checkbox2"
           v-if="isBundesfahrt"
           :label="`Hiermit bestätige ich, dass alle Teilnehmer_innen,
-          die ich auf diesem Wege zur Bundesfahrt anmelde die
-          „Datenschutzhinweise zur Bundesfahrt 2021 des DPBM“ zur
+          die ich auf diesem Wege zum ${currentEvent.name } anmelde die
+          „Datenschutzhinweise zur
           Kenntnis genommen und diesen zugestimmt haben.`"
           :error-messages="checkbox2Errors"
         >

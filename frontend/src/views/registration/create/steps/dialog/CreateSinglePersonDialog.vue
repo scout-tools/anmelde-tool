@@ -103,95 +103,40 @@
                 </template>
               </v-text-field>
             </v-col>
-          </v-row>
-
-          <v-divider class="my-3" />
-          <v-subheader> Alter / Gruppe </v-subheader>
-          <v-row>
             <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="data.age"
-                :error-messages="ageErrors"
-                label="Alter zum Fahrtenbeginn"
-                suffix="Jahre"
-                prepend-icon="mdi-human-child"
-                required
-                @input="$v.data.age.$touch()"
-                @blur="$v.data.age.$touch()"
-              >
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{
-                        'Trage bitte das Alter des_der Teilnehmer_in ' +
-                        'zum Start der Fahrt ein (4. bzw. 7. August 2021).'
-                      }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-combobox
-                v-model="data.scoutGroup"
-                :items="scoutHierarchyGroups"
-                :error-messages="scoutGroupsErrors"
-                item-text="name"
-                item-value="name"
-                required
-                :rules="[requiredField, validScoutGroup]"
-                label="Gruppe"
-                prepend-icon="mdi-account-group"
-                @input="$v.data.scoutGroup.$touch()"
-                @blur="$v.data.scoutGroup.$touch()"
-              >
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{
-                        'Bitte gib die zugehörige Gruppe zu deinem_r ' +
-                        'Teilnehmer_in an. Wähle dazu ' +
-                        'eine vorhandene Gruppe aus der Liste aus oder trage den ' +
-                        'Gruppennamen in das Feld ein.'
-                      }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-combobox>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-switch
-                v-model="data.isGroupLeader"
-                label="Teil der Gruppenführung"
-              >
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{
-                        'Bitte aktiviere die Option, ' +
-                        'wenn dein_e Teilnehmer_in ' +
-                        'Gruppenführer_in/-leiter_in, Gruppenhelfer_in ' +
-                        'oder ähnliches ist.'
-                      }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-switch>
+    <v-menu
+      ref="menu"
+      v-model="menu"
+      :close-on-content-click="false"
+      transition="scale-transition"
+      offset-y
+      min-width="auto"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-text-field
+          v-model="computedDateFormattedMomentjs"
+          label="Geburtstag"
+          prepend-icon="mdi-calendar"
+          readonly
+          v-bind="attrs"
+          v-on="on"
+        ></v-text-field>
+      </template>
+      <v-date-picker
+        v-model="date"
+        :active-picker.sync="activePicker"
+        :max="(new Date(new Date('2010-01-01T03:24:00') - (
+          new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+        min="1950-01-01"
+        @change="save"
+      ></v-date-picker>
+    </v-menu>
+    </v-col>
+    <v-col
+      cols="12"
+      sm="6"
+      md="4"
+    >
             </v-col>
           </v-row>
 
@@ -283,81 +228,12 @@
               </v-text-field>
             </v-col>
           </v-row>
-
           <v-divider />
-          <v-subheader>
-            Essgewohnheiten / Allergien und Unverträglichkeiten
-          </v-subheader>
-          <v-row>
-            <v-col cols="12" sm="6">
-              <v-autocomplete
-                v-model="data.eatHabitType"
-                :items="eatHabitTypeMapping"
-                label="Essgewohnheiten / Allergien und Unverträglichkeiten"
-                item-text="name"
-                item-value="name"
-                prepend-icon="mdi-food"
-                multiple
-                clearable
-                chips
-              >
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{
-                        'Bitte wähle aus den angezeigten Essgewohnheiten. ' +
-                        'Weitere Essgewohnheiten können einfach durch Eingabe ' +
-                        'im Feld angegeben werden.'
-                      }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-autocomplete>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-combobox
-                v-model="eatHabitText"
-                v-show="!isEditWindow"
-                :error-messages="eatHabitTypeErrors"
-                label="weitere Allergien und Unverträglichkeiten (Freitext)"
-                prepend-icon="mdi-food"
-                clearable
-                multiple
-                chips
-                @input="$v.eatHabitText.$touch()"
-                @blur="$v.eatHabitText.$touch()"
-              >
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{ 'Trage bitte hier ein, auf welche ' +
-                      'Besonderheiten die Küche noch achten soll. ' +
-                      'Trage hier nur etwas ein, wenn die Optionen ' +
-                      'des anderen Feldes nicht ausreichen' }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-combobox>
-            </v-col>
-          </v-row>
-          <v-divider />
-          <v-subheader>
-            Teilnahme
-          </v-subheader>
+          <v-subheader> Tagesgast </v-subheader>
           <v-row>
             <v-col cols="12" sm="6">
               <v-container fluid>
-                <v-switch v-model="isDayGuest" label="Tagesgast?">
+                <v-switch v-model="isDayGuest" label="Tagesgast am Samstag">
                   <template slot="append">
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
@@ -371,32 +247,6 @@
                     </v-tooltip>
                   </template>
                 </v-switch>
-                <v-select
-                  v-model="data.participantRole"
-                  prepend-icon="mdi-tent"
-                  :items="getRoleItems"
-                  :error-messages="participantRoleErrors"
-                  item-text="name"
-                  item-value="id"
-                  :label="getParticipantRoleLabel"
-                  required
-                  @input="$v.data.participantRole.$touch()"
-                >
-                  <template slot="append">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon color="success" dark v-bind="attrs" v-on="on">
-                          mdi-help-circle-outline
-                        </v-icon>
-                      </template>
-                      <span>
-                        {{
-                          'An welchen Teilfahrten nimmt der Teilnehmende teil?'
-                        }}
-                      </span>
-                    </v-tooltip>
-                  </template>
-                </v-select>
               </v-container>
             </v-col>
           </v-row>
@@ -422,7 +272,7 @@ import {
   minValue,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
-// import moment from 'moment';
+import moment from 'moment';
 import { mapGetters } from 'vuex';
 
 const scoutGroupStartValidator = (groupObjOrGroupName) => {
@@ -450,6 +300,7 @@ const eatHabitStartValidator = (habit) => {
 
 const phoneNumStartValidator = (number) => {
   if (!number) return false;
+  console.log(number);
   return number.startsWith('0');
 };
 
@@ -467,7 +318,13 @@ export default {
     isDayGuest: false,
     isZipLoading: false,
     zipCodeResponse: [],
+    activePicker: null,
     search: null,
+    date: (new Date(Date.now() - (
+      new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    menu: false,
+    modal: false,
+    menu2: false,
     data: {
       firstName: null,
       lastName: null,
@@ -477,7 +334,7 @@ export default {
       age: null,
       registration: null,
       eatHabitType: [],
-      scoutGroup: null,
+      scoutGroup: 'Test',
       isGroupLeader: false,
       participantRole: 5,
     },
@@ -523,6 +380,11 @@ export default {
     timeout: 7000,
   }),
   watch: {
+    menu(val) {
+      val && this.$nextTick(() => { // eslint-disable-line
+        this.activePicker = 'YEAR';
+      });
+    },
     search(searchString) {
       // still loading
       if (this.isZipLoading) return;
@@ -563,10 +425,6 @@ export default {
         minLength: minLength(2),
         maxLength: maxLength(20),
       },
-      scoutGroup: {
-        required,
-        scoutGroupStartValidator,
-      },
       phoneNumber: {
         required,
         integer,
@@ -587,25 +445,15 @@ export default {
         required,
         minLength: minLength(1),
       },
-      participantRole: {
-        required,
-      },
     },
     eatHabitText: {
       eatHabitStartValidator,
     },
   },
   computed: {
-    ...mapGetters([
-      'isAuthenticated',
-      'getJwtData',
-      'hierarchyMapping',
-    ]),
-    getParticipantRoleLabel() {
-      return this.isDayGuest ? 'Tagesgast: Welcher Tag?' : 'Mosaikersleben und/oder Kaperfahrt';
-    },
-    getRoleItems() {
-      return this.roleItems.filter((item) => item.dayGuest !== this.isDayGuest);
+    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
+    computedDateFormattedMomentjs() {
+      return this.date ? moment(this.date).format('DD.MM.YYYY') : '';
     },
     firstNameErrors() {
       const errors = [];
@@ -649,19 +497,6 @@ export default {
       }
       return errors;
     },
-    scoutGroupsErrors() {
-      const errors = [];
-      if (!this.$v.data.scoutGroup.$dirty) return errors;
-      if (!this.$v.data.scoutGroup.required) {
-        errors.push('Es muss mindestens eine Gruppe ausgewählt werden.');
-      }
-      if (!this.$v.data.scoutGroup.scoutGroupStartValidator) {
-        errors.push(
-          'Der Gruppenname muss mit Meute, Sippe oder Roverrunde beginnen.',
-        );
-      }
-      return errors;
-    },
     ageErrors() {
       const errors = [];
       if (!this.$v.data.age.$dirty) return errors;
@@ -686,17 +521,7 @@ export default {
         errors.push('Telefonnummer darf nur aus Zahlen bestehen.'); // eslint-disable-line
       }
       if (!this.$v.data.phoneNumber.phoneNumStartValidator) {
-        errors.push(
-          'Die Telefonnummer muss mit 0 beginnen.',
-        );
-      }
-      return errors;
-    },
-    participantRoleErrors() {
-      const errors = [];
-      if (!this.$v.data.participantRole.$dirty) return errors;
-      if (!this.$v.data.participantRole.required) {
-        errors.push('Es muss mindestens eine Fahrt ausgewählt werden.');
+        errors.push('Die Telefonnummer muss mit 0 beginnen.');
       }
       return errors;
     },
@@ -724,9 +549,7 @@ export default {
     eatHabitTypeErrors() {
       const errors = [];
       if (!this.$v.eatHabitText.eatHabitStartValidator) {
-        errors.push(
-          'Die Essensgewohnheiten müssen mit Kein(e/r) starten.',
-        );
+        errors.push('Die Essensgewohnheiten müssen mit Kein(e/r) starten.');
       }
       return errors;
     },
@@ -737,6 +560,9 @@ export default {
       const response = await axios.get(path);
 
       return response.data;
+    },
+    save(date) {
+      this.$refs.menu.save(date);
     },
     customText: (item) => `${item.zipCode} — ${item.city}`,
     requiredField(value) {
@@ -767,7 +593,7 @@ export default {
         age: null,
         registration: null,
         eatHabitType: [],
-        scoutGroup: null,
+        scoutGroup: 'Test',
         isGroupLeader: false,
         roles: [],
         participantRole: 5,
@@ -830,6 +656,7 @@ export default {
     },
     validate() {
       this.$v.$touch();
+      console.log(this.$v);
       this.valid = !this.$v.$anyError;
     },
     onClickOkay() {

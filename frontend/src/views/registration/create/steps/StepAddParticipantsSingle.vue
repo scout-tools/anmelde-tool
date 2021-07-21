@@ -13,9 +13,9 @@
         <v-icon left> mdi-plus </v-icon>
         Teilnehmer_in hinzufügen
       </v-btn>
-      <v-btn class="ma-2" color="primary" disabled @click="openExcelDialog">
+      <v-btn class="ma-2" color="primary" @click="openExcelDialog">
         <v-icon left> mdi-plus </v-icon>
-        Excel Datei hochladen (coming soon)
+        Excel Datei hochladen
       </v-btn>
       <v-list v-if="!isLoading">
         <v-subheader>Teilnehmer_innen</v-subheader>
@@ -29,7 +29,7 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title
-                v-text="item.scoutGroup + ' - ' + item.firstName"
+                v-text="getDisplayName(item)"
               ></v-list-item-title>
             </v-list-item-content>
             <v-list-item-action>
@@ -142,6 +142,13 @@ export default {
     },
   },
   methods: {
+    getDisplayName(item) {
+      let returnString = `${item.firstName} ${item.lastName}`;
+      if (item.scoutName) {
+        returnString = `${returnString} (${item.scoutName})`;
+      }
+      return returnString;
+    },
     getParticipants() {
       this.isLoading = true;
       Promise.all([this.loadParticipants()])

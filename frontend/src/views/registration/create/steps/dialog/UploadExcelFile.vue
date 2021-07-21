@@ -138,11 +138,9 @@ export default {
         age: null,
         registration: null,
         eatHabitType: [],
-        scoutGroup: null,
+        scoutGroup: 'Test',
         isGroupLeader: false,
-        roles: ['1'],
-        id: 0,
-        zipCodeId: 0,
+        participantRole: 5,
       };
       dto.firstName = input.Vorname;
       dto.lastName = input.Nachname;
@@ -150,7 +148,7 @@ export default {
       dto.zipCode = input.Postleitzahl;
       dto.phoneNumber = input.Telefonnummer;
       dto.age = input.Alter;
-      dto.scoutGroup = input.scoutGroup;
+      dto.scoutGroup = 'Test';
       dto.isGroupLeader = false;
       if (input.Vegetarisch === 'x') {
         dto.eatHabitType.push('Kein Fleisch(vegetarisch)');
