@@ -75,12 +75,13 @@ import StepFood from './steps/StepFood.vue';
 import StepBdpDpvLocation from './steps/StepBdpDpvLocation.vue';
 import StepBdpDpVPreferences from './steps/StepBdpDpVPreferences.vue';
 import StepTents from './steps/StepTents.vue';
-import StepTravel from './steps/StepTravel.vue';
+// import StepTravel from './steps/StepTravel.vue';
 import StepAddParticipantGroupRole from './steps/StepBdPDpvAddParticipantGroupRole.vue';
 import StepBdpDpvTextForStamm from './steps/StepBdpDpvTextForStamm.vue';
-import StepTravelBack from './steps/StepTravelBack.vue';
+// import StepTravelBack from './steps/StepTravelBack.vue';
 import StepTravelBundesfahrt from './steps/StepTravelBundesfahrt.vue';
 import StepBdpDpvLocationSuggestion from './steps/StepBdpDpvLocationSuggestion.vue';
+import StepWorkshop from './steps/StepWorkshop.vue';
 
 export default {
   components: {
@@ -97,6 +98,7 @@ export default {
     StepBdpDpvLocationSuggestion,
     StepTravelBundesfahrt,
     StepBdpDpvPackage,
+    StepWorkshop,
   },
   props: ['scoutOrganisation'],
   data() {
@@ -130,9 +132,7 @@ export default {
           StepConsent,
           StepAddParticipantsSingle,
           StepTents,
-          StepTravel,
-          StepTravelBundesfahrt,
-          StepTravelBack,
+          StepWorkshop,
           StepConfirmBundesfahrt,
         ];
       }
