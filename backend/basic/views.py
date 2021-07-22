@@ -30,7 +30,7 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
     EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
     RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer, \
-    WorkshopSerializer
+    WorkshopSerializer, WorkshopStatsSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission, \
@@ -851,12 +851,13 @@ class ReminderMailViewSet(viewsets.ViewSet):
         return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)
 
 class WorkshopViewSet(viewsets.ModelViewSet):
-#     permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = Workshop.objects.all()
     serializer_class = WorkshopSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('registration',)
 
-#     def get_queryset(self):
-#         print(self)
-#         return Workshop.objects.all()
+class WorkshopStatsViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = WorkshopStatsSerializer
+    queryset = Workshop.objects.all()

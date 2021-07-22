@@ -704,3 +704,18 @@ class WorkshopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Workshop
         fields = '__all__'
+
+class WorkshopStatsSerializer(serializers.ModelSerializer):
+    supervisor_name = serializers.SerializerMethodField('get_supervisor_name')
+    class Meta:
+        model = Workshop
+        fields =('id', 'title', 'free_text', 'costs', 'supervisor_name', 'registration')
+
+    def get_supervisor_name(self, obj):
+        supervisor_name = ''
+        if (obj.supervisor):
+            supervisor = ParticipantPersonal.objects.filter(id=obj.supervisor.id).first()
+            supervisor_name = f"{supervisor.first_name} {supervisor.last_name}"
+            if (supervisor.scout_name):
+                supervisor_name += f" ({supervisor.scout_name})"
+        return supervisor_name
