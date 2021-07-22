@@ -435,7 +435,7 @@ class Workshop(TimeStampMixin):
         verbose_name='ID')
     title = models.CharField(max_length=100, blank=True)
     free_text = models.CharField(max_length=1000, blank=True)
-    costs = models.DecimalField(max_digits=3, decimal_places=3, default=0.000)
+    costs = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     supervisor = models.ForeignKey(ParticipantPersonal, on_delete=models.PROTECT, null=True)
     registration = models.ForeignKey("Registration", on_delete=models.PROTECT, null=True, blank=True)
 
