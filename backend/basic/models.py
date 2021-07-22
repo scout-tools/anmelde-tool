@@ -192,7 +192,7 @@ class EventRole(TimeStampMixin):
         primary_key=True,
         serialize=False,
         verbose_name='ID')
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=40)
     description = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
@@ -233,7 +233,7 @@ class Registration(TimeStampMixin):
         return "{} - {}".format(self.scout_organisation, self.event)
 
     def __repr__(self):
-        return self.__str__()
+        return "{}".format(self.scout_organisation)
 
 
 class ParticipantGroup(TimeStampMixin):
@@ -278,7 +278,7 @@ class ParticipantPersonal(TimeStampMixin):
         serialize=False,
         verbose_name='ID')
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
-    scout_name = models.CharField(max_length=100, blank=True)
+    scout_name = models.CharField(max_length=100, blank=True, null=True)
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     street = models.CharField(max_length=100, blank=True)
@@ -290,6 +290,8 @@ class ParticipantPersonal(TimeStampMixin):
     age_group = models.ForeignKey(AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
     eat_habit_type = models.ManyToManyField(EatHabitType, blank=True)
     participant_role = models.ForeignKey(Role, on_delete=models.PROTECT, default=0)
+    email = models.EmailField(null=True)
+    birthday = models.DateField(null=True)
 
     def __str__(self):
         return "{} - {}".format(self.registration, self.first_name)
@@ -410,3 +412,34 @@ class PostalAddress(TimeStampMixin):
     address_addition = models.CharField(max_length=100, blank=True, null=True)
     zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
+
+
+class RegistrationMatching(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    registrations = models.ManyToManyField(Registration)
+    sleeping_location = models.ForeignKey(EventLocation, on_delete=models.CASCADE, null=True, blank=True)
+    event_location = models.ForeignKey(ZipCode, on_delete=models.CASCADE, blank=True, null=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return "{} - {} - {}".format(self.event, ", ".join(r.scout_organisation.name for r in self.registrations.all()),
+                                     self.sleeping_location)
+
+class Workshop(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    title = models.CharField(max_length=100, blank=True)
+    free_text = models.CharField(max_length=1000, blank=True)
+    costs = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    supervisor = models.ForeignKey(ParticipantPersonal, on_delete=models.PROTECT, null=True)
+    registration = models.ForeignKey("Registration", on_delete=models.PROTECT, null=True, blank=True)
+
+    def __str__(self):
+        return self.title

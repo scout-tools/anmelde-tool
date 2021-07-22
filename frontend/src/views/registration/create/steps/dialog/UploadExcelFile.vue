@@ -16,6 +16,8 @@
       <v-sheet class="ma-5">
         <v-header>
           Lade hier deine Excel Datei hoch, um dir die manuelle Eingabe zu erleichtern.
+          Die Datei muss in einem bestimmten Format sein.
+          <a target="_blank" href="https://cloud.dpbm.de/s/ZTm4KL2JqtJN9DP">Link zur Bundescloud</a>
         </v-header>
         <v-card class="ma-4 pa-3">
         <input type="file" @change="onFileChange" />
@@ -27,8 +29,8 @@
                 <tr>
                   <th
                     class="text-left"
-                    v-for="column in Object.keys(chartData[0])"
-                    :key="column[0]"
+                    v-for="(column, index) in columns"
+                    :key="index"
                   >
                     {{ column }}
                   </th>
@@ -37,8 +39,8 @@
               <tbody>
                 <tr v-for="item in chartData" :key="item.name">
                   <td
-                    v-for="column in Object.keys(chartData[0])"
-                    :key="column[0]"
+                    v-for="(column, index) in columns"
+                    :key="index"
                   >
                     {{ item[column] }}
                   </td>
@@ -78,7 +80,7 @@ export default {
       city: '',
       zipCode: '',
     },
-    chartDataRows: ['firstname', 'lastname'],
+    columns: ['Vorname*', 'Nachname*', 'Pfadfindername', 'Geburtsdatum*', 'Adresse*', 'Postleitzahl*', 'Telefonnummer*', 'E-Mail-Adresse*', 'Tagesgast'],
     jsonData: [],
     e1: 1,
     showError: false,
@@ -132,29 +134,25 @@ export default {
       const dto = {
         firstName: '',
         lastName: '',
+        scoutName: '',
         street: '',
         zipCode: '',
+        email: '',
         phoneNumber: '',
-        age: null,
-        registration: null,
-        eatHabitType: [],
-        scoutGroup: null,
-        isGroupLeader: false,
-        roles: ['1'],
-        id: 0,
-        zipCodeId: 0,
+        birthdate: '',
+        dayGuest: '',
       };
-      dto.firstName = input.Vorname;
-      dto.lastName = input.Nachname;
-      dto.street = input.Adresse;
-      dto.zipCode = input.Postleitzahl;
-      dto.phoneNumber = input.Telefonnummer;
-      dto.age = input.Alter;
-      dto.scoutGroup = input.scoutGroup;
-      dto.isGroupLeader = false;
-      if (input.Vegetarisch === 'x') {
-        dto.eatHabitType.push('Kein Fleisch(vegetarisch)');
-      }
+      dto.firstName = input['Vorname*'];
+      dto.lastName = input['Vorname*'];
+      dto.scoutName = input['Pfadfindername']; // eslint-disable-line
+      dto.street = input['Adresse*'];
+      dto.ageGroup = input['Altersstufe*'];
+      dto.zipCode = 1; // input['Postleitzahl*'];
+      dto.phoneNumber = input['Telefonnummer*'];
+      dto.email = input['E-Mail-Adresse*'];
+      dto.birthdate = input['Geburtsdatum*'];
+      dto.dayGuest = input['Tagesgast']; // eslint-disable-line
+      console.log(dto);
       return dto;
     },
   },

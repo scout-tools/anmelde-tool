@@ -5,6 +5,8 @@ from pathlib import Path
 from enum import Enum
 import threading
 from threading import Thread
+from django.template.context import make_context
+from django.template.loader import get_template
 
 url = getattr(settings, 'FRONT_URL', '')
 sender = f'Anmelde-Tool <{getattr(settings, "EMAIL_HOST_USER")}>'
@@ -17,6 +19,7 @@ class MailType(Enum):
     ResponsiblePerson = 2
     RegistrationSummary = 3
     RegistrationReminder = 4
+    RegistrationMatching = 5
 
 
 def get_mail(mail_type: MailType, data, email_id=0):
@@ -33,6 +36,11 @@ def get_mail(mail_type: MailType, data, email_id=0):
             mail = 'reminder_mail'
         else:
             mail = 'reminder_mail_not_confirmed'
+    elif mail_type is MailType.RegistrationMatching:
+        if data['recipient_matched']:
+            mail = 'matching'
+        else:
+            mail = 'matching_unmatched'
     else:
         return None
 
@@ -43,8 +51,10 @@ def get_mail(mail_type: MailType, data, email_id=0):
     else:
         path = f'default/{mail}'
 
+    project_tpl = get_template(f'{email_directory}/{path}.html')
+    html_rendered = project_tpl.template.render(make_context(data, autoescape=False))
     plain_renderend = render_to_string(f'{path}.txt', data)
-    html_rendered = render_to_string(f'{path}.html', data)
+    # html_rendered = render_to_string(f'{path}.html', data)
     return plain_renderend, html_rendered
 
 
@@ -105,21 +115,39 @@ def send_registration_reminder(data):
     return send_email(plain_renderend, html_rendered, subject, recipients)
 
 
-def send_email(plain_renderend, html_rendered, subject, recipients):
-    EmailThread(plain_renderend, html_rendered, subject, recipients).start()
+def send_matching(data):
+    plain_renderend, html_rendered = get_mail(MailType.RegistrationMatching, data, data['email_id'])
+
+    subject = "Neuigkeiten vom stadt&spiel"
+
+    recipients = [data['email']]
+    attachments = ('Checkliste.pdf', 'Einladung.docx', 'stadt&spiel_Packliste.docx', 'Zeitplan.pdf')
+    return send_email(plain_renderend, html_rendered, subject, recipients, reply_to=('stadt@bdp-dpv.de',),
+                      attachments=attachments)
+
+
+def send_email(plain_renderend, html_rendered, subject, recipients, reply_to=('support@anmelde-tool.de',),
+               attachments=[]):
+    EmailThread(plain_renderend, html_rendered, subject, recipients, reply_to, attachments).start()
 
 
 class EmailThread(threading.Thread):
-    def __init__(self, body_plain, body_html, subject, recipients):
+    def __init__(self, body_plain, body_html, subject, recipients, reply_to, attachments):
         self.subject = subject
         self.recipient_list = recipients
         self.html_content = body_html
         self.body_plain = body_plain
+        self.reply_to = reply_to
+        self.attachments = attachments
         threading.Thread.__init__(self)
 
     def run(self):
         email = EmailMultiAlternatives(self.subject, self.html_content, sender, self.recipient_list,
-                                       reply_to=('support@anmelde-tool.de',))
+                                       reply_to=self.reply_to)
         # email.attach_alternative(self.html_content, 'text/html')
+        for atm in self.attachments:
+            path = Path(f'{email_directory}/attachments/{atm}')
+            if path.exists():
+                email.attach_file(path)
         email.content_subtype = 'html'
         email.send()

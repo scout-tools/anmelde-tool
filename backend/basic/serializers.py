@@ -3,7 +3,7 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from rest_framework import serializers
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, \
     ParticipantGroup, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
-    EatHabitType, EatHabit, TravelType, TentType, TravelTag, PostalAddress
+    EatHabitType, EatHabit, TravelType, TentType, TravelTag, PostalAddress, Workshop
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
 from django.db.models import Sum, Count, F, Q, Case, When, Value, CharField
@@ -46,7 +46,8 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'participant_role',
             'is_registered',
             'can_register',
-            'can_edit'
+            'can_edit',
+            'is_public'
         )
 
     def get_event_role(self, obj):
@@ -550,7 +551,22 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
                 .aggregate(num=Coalesce(Sum('number_of_persons'), 0))['num']
         num_pers = obj.participantpersonal_set.filter(participant_role=4).count()
         result = num_group + num_pers
-        self.total_participants = result
+        return result
+
+    def get_total_groupleader(self, obj):
+        num_group = \
+            obj.participantgroup_set.filter(participant_role=2).aggregate(num=Coalesce(Sum('number_of_persons'), 0))[
+                'num']
+        num_pers = obj.participantpersonal_set.filter(participant_role=2).count()
+        result = num_group + num_pers
+        return result
+
+    def get_total_leader(self, obj):
+        num_group = \
+            obj.participantgroup_set.filter(participant_role=3).aggregate(num=Coalesce(Sum('number_of_persons'), 0))[
+                'num']
+        num_pers = obj.participantpersonal_set.filter(participant_role=3).count()
+        result = num_group + num_pers
         return result
 
     def get_total_fee(self, obj):
@@ -683,3 +699,23 @@ class RegistrationStatSerializer(serializers.ModelSerializer):
                                                 "userextended__scout_name",
                                                 "userextended__mobile_number")
         return result
+
+class WorkshopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workshop
+        fields = '__all__'
+
+class WorkshopStatsSerializer(serializers.ModelSerializer):
+    supervisor_name = serializers.SerializerMethodField('get_supervisor_name')
+    class Meta:
+        model = Workshop
+        fields =('id', 'title', 'free_text', 'costs', 'supervisor_name', 'registration')
+
+    def get_supervisor_name(self, obj):
+        supervisor_name = ''
+        if (obj.supervisor):
+            supervisor = ParticipantPersonal.objects.filter(id=obj.supervisor.id).first()
+            supervisor_name = f"{supervisor.first_name} {supervisor.last_name}"
+            if (supervisor.scout_name):
+                supervisor_name += f" ({supervisor.scout_name})"
+        return supervisor_name

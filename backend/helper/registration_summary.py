@@ -1,8 +1,10 @@
+import datetime
+
 from django.utils.formats import date_format
 
-from .email import send_responsible_person_mail, send_registration_summary, send_registration_reminder
+from .email import send_responsible_person_mail, send_registration_summary, send_registration_reminder, send_matching
 from basic.serializers import RegistrationSummarySerializer
-from basic.models import Registration
+from basic.models import Registration, RegistrationMatching, ScoutHierarchy, EventLocation
 from django.shortcuts import get_object_or_404
 from django.forms.models import model_to_dict
 
@@ -25,7 +27,8 @@ def create_registration_summary(data):
             'event': registration.event.name,
             'event_id': registration.event.id,
             'email_id': registration.event.email_id,
-            'responsible_persons': ', '.join(registration.responsible_persons.all().values_list('userextended__scout_name', flat=True)),
+            'responsible_persons': ', '.join(
+                registration.responsible_persons.all().values_list('userextended__scout_name', flat=True)),
             'total_participants': total_participants,
             'total_fee': total_fee,
             'email': person.username
@@ -46,7 +49,8 @@ def create_reminder_registration(registration):
             'event': registration.event.name,
             'event_id': registration.event.id,
             'email_id': registration.event.email_id,
-            'responsible_persons': ', '.join(registration.responsible_persons.all().values_list('userextended__scout_name', flat=True)),
+            'responsible_persons': ', '.join(
+                registration.responsible_persons.all().values_list('userextended__scout_name', flat=True)),
             'total_participants': total_participants,
             'total_volunteers': total_volunteers,
             'email': person.username,

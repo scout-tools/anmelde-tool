@@ -224,7 +224,8 @@ export default {
     },
     isMobilMandatory() {
       if (this.event) {
-        return this.event.eventTags.filter((tag) => tag === 1).length;
+        return false;
+        // return this.event.eventTags.filter((tag) => tag === 1).length;
       }
       return false;
     },

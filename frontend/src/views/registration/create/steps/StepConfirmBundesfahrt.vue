@@ -1,6 +1,6 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-    <v-container>
+    <v-container class="pa-5 my-5">
       <v-row class="mt-2">
         <!-- <span class="text-left subtitle-1">
           <p><b>Zusammenfassung</b></p>

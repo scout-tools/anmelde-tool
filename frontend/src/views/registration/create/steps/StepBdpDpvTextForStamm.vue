@@ -1,6 +1,6 @@
 <template>
   <v-form ref="StepBdpDpVPreferences" v-model="valid">
-    <v-container class="px-0">
+    <v-container class="pa-5 my-5">
       <p class="ma-6">
         {{ placeholder }}
       </p>
@@ -11,16 +11,11 @@
         solo
         auto-grow
         prepend-icon="mdi-forum"
-        label="Nachricht für den Partnerstamm"
-        placeholder="Hier den Text eintippen"
+        label="Nachricht an die Lagerleitung"
+        placeholder="Hier an die Lagerleitung"
         v-model="textfieldText"
         :error-messages="textfieldTextErrors"
       ></v-textarea>
-
-      <v-subheader>
-        Hinweis: Auch diese Nachricht kannst du noch bis zum 01.Mai.2021
-        anpassen, wenn du sie mit deinem Stamm gemeinsam schreiben möchtest.
-      </v-subheader>
       <v-divider class="my-3" />
 
       <prev-next-buttons
@@ -45,7 +40,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvTextForStamm',
-  displayName: 'Nachricht an euren Partnerstamm',
+  displayName: 'Nachricht an die Lagerleitung',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,
@@ -57,11 +52,7 @@ export default {
     textfieldText: '',
     currentRegistration: [],
     placeholder:
-      'Hier ist Platz für eine persönliche Nachricht an euren ' + // eslint-disable-line
-      'noch unbekannten Partnerstamm. Wenn du Lust hast, ' + // eslint-disable-line
-      'dann schreibe auf, was euch ausmacht, was euer tollstes Fahrtenerlebnis war, ' + // eslint-disable-line
-      'euer Lieblingslied, was euch an eurer Stadt besonders gefällt und wie man dich als ' + // eslint-disable-line
-      'Ansprechperson am besten erreichen kann, z.B. Mail / Whats App / Telegram / Brieftaube.', // eslint-disable-line
+      'Hier ist Platz für eine Nachricht an die Lagerleitung',
   }),
   computed: {
     ...mapGetters(['dpvAddedLocation']),

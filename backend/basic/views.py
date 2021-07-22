@@ -20,7 +20,8 @@ from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
-    TentType, EatHabit, TravelTag, PostalAddress
+    TentType, EatHabit, TravelTag, PostalAddress, EventRoleMapping, RegistrationMatching, \
+    Workshop
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
@@ -28,13 +29,16 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, \
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
     EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
-    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer
+    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer, \
+    WorkshopSerializer, WorkshopStatsSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
-    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission
+    IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission, \
+    IsOrganisationLeader
 
 from helper.registration_summary import registration_responsible_person, create_registration_summary, \
     create_reminder_registration
+from helper.registration_matching_mail import create_matching_mail
 
 
 def get_dataset(kwargs, pk, dataset):
@@ -48,9 +52,17 @@ def get_dataset(kwargs, pk, dataset):
 def get_event(kwargs):
     event_id = kwargs.get("event_pk", None)
     if event_id is not None:
-        return Event.objects.filter(id=event_id)
+        return Event.objects.get(id=event_id)
     else:
         return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
+
+
+def filter_data(user, kwargs, data):
+    event_id = kwargs.get("event_pk", None)
+    role = EventRoleMapping.objects.filter(event_id=event_id, user=user)
+    # parent_level =
+    # queryset = data.objects.filter()
+    return
 
 
 def get_registrations_from_event(kwargs):
@@ -180,7 +192,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                     data.update(CreateUserExternally(user_email, event_data))
                 else:
                     user_data = {'username': user.userextended.scout_name if user.userextended is not None else
-                                 user.username.split('@', 1)[0],
+                    user.username.split('@', 1)[0],
                                  'user': user.username,
                                  'email': user.username,
                                  }
@@ -201,11 +213,10 @@ class ZipCodeSearchFilter(FilterSet):
 
     class Meta:
         model = ZipCode
-        fields = ['zip_code', 'city']
+        fields = ['zip_code', 'city', 'id']
 
     def get_zip_city(self, queryset, field_name, value):
         cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
-        print(cities.count())
         if cities.count() > 250:
             raise PermissionDenied('Too many results!!!')
         return cities
@@ -251,7 +262,7 @@ class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantPersonalViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
+    permission_classes = [IsAuthenticated]
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
 
@@ -411,11 +422,13 @@ class RegistrationSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RegistrationStatViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsTeamMemberPermission]
+    permission_classes = [IsAuthenticated, IsTeamMemberPermission]  # IsOrganisationLeader
     serializer_class = RegistrationStatSerializer
 
     def get_queryset(self):
-        return get_registrations_from_event(self.kwargs)
+        queryset = get_registrations_from_event(self.kwargs)
+        # queryset = filter_data(self.request.user, self.kwargs, queryset)
+        return queryset
 
 
 class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
@@ -444,6 +457,18 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
                            then=F('scout_organisation__name')))
         )
 
+        options = {1: 'Heim, Zuhause',
+                   4: 'Heim, auswärts, nah',
+                   5: 'Heim, auswärts, weit weg',
+                   6: 'Heim, auswärts, Distanz egal',
+                   7: 'Heim, egal wo, lieber nah',
+                   8: 'Heim, egal wo, lieber weit',
+                   9: 'Heim, egal wo, Distanz egal',
+                   10: 'Kein Heim, lieber nah',
+                   11: 'Kein Heim, lieber weit',
+                   12: 'Kein Heim, Distanz egal',
+                   }
+
         worksheet.set_column(0, 2, 25)
 
         worksheet.write(0, 0, "Export-Timestamp")
@@ -455,28 +480,14 @@ class TravelPreferenceXlsxViewSet(viewsets.ViewSet):
         worksheet.write(1, 3, "Ort")
         worksheet.write(1, 4, "Präferenz")
         worksheet.write(1, 5, "Hat Heim")
+
         for row_num, group in enumerate(groups.iterator()):
             worksheet.write(row_num + 2, 0, group['scout_organisation__name'])
             worksheet.write(row_num + 2, 1, group['bund'])
             worksheet.write(row_num + 2, 2, group['scout_organisation__zip_code__zip_code'])
             worksheet.write(row_num + 2, 3, group['scout_organisation__zip_code__city'])
-            custom_choice = group['custom_choice']
+            worksheet.write(row_num + 2, 4, options.get(group['custom_choice']))
 
-            options = {1: 'Heim, Zuhause',
-                       4: 'Heim, auswärts, nah',
-                       5: 'Heim, auswärts, weit weg',
-                       6: 'Heim, auswärts, Distanz egal',
-                       7: 'Heim, egal wo, lieber nah',
-                       8: 'Heim, egal wo, lieber weit',
-                       9: 'Heim, egal wo, Distanz egal',
-                       10: 'Kein Heim, lieber nah',
-                       11: 'Kein Heim, lieber weit',
-                       12: 'Kein Heim, Distanz egal',
-                       }
-
-            worksheet.write(row_num + 2, 2, options.get(custom_choice))
-
-            print('eventlocation: ', group['eventlocation'])
             if group['eventlocation']:
                 worksheet.write(row_num + 2, 5, 'x')
 
@@ -503,7 +514,6 @@ class TextAndPackageAddressXlsxViewSet(viewsets.ViewSet):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
 
-        registration = Registration.objects.filter(event_id=event_pk)
         groups = Registration.objects.filter(event_id=event_pk).values(
             "scout_organisation__name",
             "postaladdress__street",
@@ -582,13 +592,12 @@ class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
             "zip_code__city",
             "contact_name",
             "contact_email",
-            "contact_email",
+            "contact_phone",
             "fix_fee",
             "per_person_fee",
             "capacity_corona",
             "capacity",
             "location_type__name",
-            "registration__scout_organisation",
             "registration__scout_organisation__name") \
             .annotate(bund=Case(When(registration__scout_organisation__parent__parent__parent__level=3,
                                      then=F('registration__scout_organisation__parent__parent__parent__name')),
@@ -599,36 +608,41 @@ class EventLocationFeeXlsxViewSet(viewsets.ViewSet):
                                 When(registration__scout_organisation__level=3,
                                      then=F('registration__scout_organisation__name'))))
 
-        worksheet.set_column(0, 1, 25)
-        worksheet.set_column(2, 3, 10)
+        worksheet.set_column(0, 13, 25)
 
         worksheet.write(0, 0, "Export-Timestamp")
         worksheet.write(0, 1, time.ctime())
 
         worksheet.write(1, 0, "Stamm")
         worksheet.write(1, 1, "Bund")
-        worksheet.write(1, 2, "Name")
-        worksheet.write(1, 3, "Adresse")
-        worksheet.write(1, 4, "Postleitzahl")
-        worksheet.write(1, 5, "Stadt")
-        worksheet.write(1, 6, "Typ")
-        worksheet.write(1, 7, "Fixkosten")
-        worksheet.write(1, 8, "Kosten p.P.")
-        worksheet.write(1, 9, "Schlafplatz")
-        worksheet.write(1, 10, "Schlafplatz unter Corona Bedinungen")
+        worksheet.write(1, 2, "Kontakt")
+        worksheet.write(1, 3, "Email")
+        worksheet.write(1, 4, "Telefon")
+        worksheet.write(1, 5, "Name")
+        worksheet.write(1, 6, "Adresse")
+        worksheet.write(1, 7, "Postleitzahl")
+        worksheet.write(1, 8, "Stadt")
+        worksheet.write(1, 9, "Typ")
+        worksheet.write(1, 10, "Fixkosten")
+        worksheet.write(1, 11, "Kosten p.P.")
+        worksheet.write(1, 12, "Schlafplatz")
+        worksheet.write(1, 13, "Schlafplatz unter Corona Bedinungen")
 
         for row_num, location in enumerate(locations.iterator()):
-            worksheet.write(row_num + 2, 0, location['registration__scout_organisation'])
+            worksheet.write(row_num + 2, 0, location['registration__scout_organisation__name'])
             worksheet.write(row_num + 2, 1, location['bund'])
-            worksheet.write(row_num + 2, 2, location['name'])
-            worksheet.write(row_num + 2, 3, location['address'])
-            worksheet.write(row_num + 2, 4, location['zip_code__zip_code'])
-            worksheet.write(row_num + 2, 5, location['zip_code__city'])
-            worksheet.write(row_num + 2, 6, location['location_type__name'])
-            worksheet.write(row_num + 2, 7, location['fix_fee'])
-            worksheet.write(row_num + 2, 8, location['per_person_fee'])
-            worksheet.write(row_num + 2, 9, location['capacity'])
-            worksheet.write(row_num + 2, 10, location['capacity_corona'])
+            worksheet.write(row_num + 2, 2, location['contact_name'])
+            worksheet.write(row_num + 2, 3, location['contact_email'])
+            worksheet.write(row_num + 2, 4, location['contact_phone'])
+            worksheet.write(row_num + 2, 5, location['name'])
+            worksheet.write(row_num + 2, 6, location['address'])
+            worksheet.write(row_num + 2, 7, location['zip_code__zip_code'])
+            worksheet.write(row_num + 2, 8, location['zip_code__city'])
+            worksheet.write(row_num + 2, 9, location['location_type__name'])
+            worksheet.write(row_num + 2, 10, location['fix_fee'])
+            worksheet.write(row_num + 2, 11, location['per_person_fee'])
+            worksheet.write(row_num + 2, 12, location['capacity'])
+            worksheet.write(row_num + 2, 13, location['capacity_corona'])
 
         workbook.close()
         output.seek(0)
@@ -653,24 +667,111 @@ class RegistrationGroupsViewSet(viewsets.ViewSet):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
 
-        groups = ParticipantGroup.objects.filter(registration__event_id=event_pk).values(
-            "participant_role__name",
-            "number_of_persons",
-            "registration__scout_organisation__name")
-        worksheet.set_column(0, 1, 25)
-        worksheet.set_column(2, 3, 10)
+        groups = Registration.objects.filter(event_id=event_pk).values(
+            'id',
+            "scout_organisation__name",
+            "responsible_persons__userextended__scout_name",
+            "responsible_persons__username",
+            "scout_organisation__zip_code__zip_code",
+            "scout_organisation__zip_code__city",
+            "custom_choice", ).annotate(
+            bund=Case(When(scout_organisation__parent__parent__parent__level=3,
+                           then=F('scout_organisation__parent__parent__parent__name')),
+                      When(scout_organisation__parent__parent__level=3,
+                           then=F('scout_organisation__parent__parent__name')),
+                      When(scout_organisation__parent__level=3,
+                           then=F('scout_organisation__parent__name')),
+                      When(scout_organisation__level=3,
+                           then=F('scout_organisation__name')))
+        )
+
+        options = {1: 'Heim, Zuhause',
+                   4: 'Heim, auswärts, nah',
+                   5: 'Heim, auswärts, weit weg',
+                   6: 'Heim, auswärts, Distanz egal',
+                   7: 'Heim, egal wo, lieber nah',
+                   8: 'Heim, egal wo, lieber weit',
+                   9: 'Heim, egal wo, Distanz egal',
+                   10: 'Kein Heim, lieber nah',
+                   11: 'Kein Heim, lieber weit',
+                   12: 'Kein Heim, Distanz egal',
+                   }
 
         worksheet.write(0, 0, "Export-Timestamp")
         worksheet.write(0, 1, time.ctime())
 
+        worksheet.set_column(0, 25, 25)
+
         worksheet.write(1, 0, "Stamm")
-        worksheet.write(1, 1, "Personen Gruppe")
-        worksheet.write(1, 2, "Anzahl")
+        worksheet.write(1, 1, "Bund")
+        worksheet.write(1, 2, "Veranwortliche Person")
+        worksheet.write(1, 3, "Email")
+        worksheet.write(1, 4, "Plz")
+        worksheet.write(1, 5, "Ort")
+        worksheet.write(1, 6, "Präferenz")
+        worksheet.write(1, 7, "Stammesvertretung")
+        worksheet.write(1, 8, "Helferlein")
+        worksheet.write(1, 9, "Teilnehmende")
+        worksheet.write(1, 10, "Gruppenleitung")
+        worksheet.write(1, 11, "Name Des Schlafplatzes 1")
+        worksheet.write(1, 12, "Typ")
+        worksheet.write(1, 13, "Fixkosten")
+        worksheet.write(1, 14, "Kosten p.P.")
+        worksheet.write(1, 15, "Schlafplätze")
+        worksheet.write(1, 16, "Schlafplätze unter Corona Bedinungen")
+        worksheet.write(1, 17, "Name Des Schlafplatzes 2")
+        worksheet.write(1, 18, "Typ")
+        worksheet.write(1, 19, "Fixkosten")
+        worksheet.write(1, 20, "Kosten p.P.")
+        worksheet.write(1, 21, "Schlafplätze")
+        worksheet.write(1, 22, "Schlafplätze unter Corona Bedinungen")
 
         for row_num, group in enumerate(groups.iterator()):
-            worksheet.write(row_num + 2, 0, group['registration__scout_organisation__name'])
-            worksheet.write(row_num + 2, 1, group['participant_role__name'])
-            worksheet.write(row_num + 2, 2, group['number_of_persons'])
+            participant_group = ParticipantGroup.objects.filter(registration__id=group['id']).values(
+                "participant_role__name",
+                "number_of_persons", )
+
+            stammesvertretung = 0
+            helferlein = 0
+            teilnehmende = 0
+            gruppenleitung = 0
+            for participants in participant_group:
+                if participants['participant_role__name'] == 'Gruppenleitung':
+                    gruppenleitung = participants['number_of_persons']
+                elif participants['participant_role__name'] == 'Stammesvertretung':
+                    stammesvertretung = participants['number_of_persons']
+                elif participants['participant_role__name'] == 'Helferlein':
+                    helferlein = participants['number_of_persons']
+                elif participants['participant_role__name'] == 'Teilnehmende':
+                    teilnehmende = participants['number_of_persons']
+
+            locations = EventLocation.objects.filter(registration__id=group['id']).values(
+                "name",
+                "fix_fee",
+                "per_person_fee",
+                "capacity_corona",
+                "capacity",
+                "location_type__name")
+
+            worksheet.write(row_num + 2, 0, group['scout_organisation__name'])
+            worksheet.write(row_num + 2, 1, group['bund'])
+            worksheet.write(row_num + 2, 2, group['responsible_persons__userextended__scout_name'])
+            worksheet.write(row_num + 2, 3, group['responsible_persons__username'])
+            worksheet.write(row_num + 2, 4, group['scout_organisation__zip_code__zip_code'])
+            worksheet.write(row_num + 2, 5, group['scout_organisation__zip_code__city'])
+            worksheet.write(row_num + 2, 6, options.get(group['custom_choice']))
+            worksheet.write(row_num + 2, 7, stammesvertretung)
+            worksheet.write(row_num + 2, 8, helferlein)
+            worksheet.write(row_num + 2, 9, teilnehmende)
+            worksheet.write(row_num + 2, 10, gruppenleitung)
+
+            for col_num, loc in enumerate(locations.iterator()):
+                worksheet.write(row_num + 2, 11 + col_num * 6, loc['name'])
+                worksheet.write(row_num + 2, 12 + col_num * 6, loc['location_type__name'])
+                worksheet.write(row_num + 2, 13 + col_num * 6, loc['fix_fee'])
+                worksheet.write(row_num + 2, 14 + col_num * 6, loc['per_person_fee'])
+                worksheet.write(row_num + 2, 15 + col_num * 6, loc['capacity'])
+                worksheet.write(row_num + 2, 16 + col_num * 6, loc['capacity_corona'])
 
         workbook.close()
         output.seek(0)
@@ -689,7 +790,8 @@ class ReminderMailViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, IsEventMaster]
 
     def create(self, request, *args, **kwargs):
-        queryset = get_registrations_from_event(kwargs)
+        registrations = get_registrations_from_event(kwargs)
+        event = get_event(kwargs)
 
         if 'code' in request.query_params:
             code = request.query_params.get('code', None)
@@ -699,7 +801,63 @@ class ReminderMailViewSet(viewsets.ViewSet):
         if code != 'A1B2C3D4':
             raise PermissionDenied('wrong code for reminder mails')
 
-        for registration in queryset:
-            create_reminder_registration(registration)
+        email_receiver = 'all'
+        email_type = 'reminder'
+        if 'type' in request.query_params:
+            email_type = request.query_params.get('type', None)
+
+        if 'receiver' in request.query_params:
+            email_receiver = request.query_params.get('receiver', None)
+
+        if email_type == 'reminder':
+            if email_type == 'reminder':
+                if email_receiver == 'unconfirmed':
+                    registrations = registrations.filter(is_confirmed=False)
+                elif email_receiver == 'confirmed':
+                    registrations = registrations.filter(is_confirmed=True)
+                elif email_receiver == 'all':
+                    registrations = registrations
+                else:
+                    return Response({'type': f'no valid receiver "{email_receiver}" given'},
+                                    status=status.HTTP_400_BAD_REQUEST)
+
+                for registration in registrations:
+                    create_reminder_registration(registration)
+
+        elif email_type == 'matching':
+            matchings = RegistrationMatching.objects.filter(event=event)
+            registation_of_matching = []
+            for i in matchings.all():
+                for x in i.registrations.all():
+                    registation_of_matching.append(x)
+
+            if email_receiver == 'matched':
+                registrations = registation_of_matching
+            elif email_receiver == 'unmatched':
+                registrations = [x for x in registrations if x not in registation_of_matching]
+            elif email_receiver == 'all':
+                registrations = registrations
+            else:
+                return Response({'type': f'no valid receiver "{email_receiver}" given'},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            for registration in registrations:
+                matching = matchings.filter(registrations__in=[registration]).first()
+                create_matching_mail(matching, registration, email_receiver)
+
+        else:
+            return Response({'receiver': f'no valid type "{email_type}" given'}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)
+
+class WorkshopViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Workshop.objects.all()
+    serializer_class = WorkshopSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('registration',)
+
+class WorkshopStatsViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = WorkshopStatsSerializer
+    queryset = Workshop.objects.all()

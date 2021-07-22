@@ -66,7 +66,7 @@ import axios from 'axios';
 
 import StepAddParticipantsSingle from './steps/StepAddParticipantsSingle.vue';
 import StepAddParticipants from './steps/StepAddParticipants.vue';
-import StepConfirmBundesfahrt from './steps/StepConfirmBundesfahrt.vue';
+import StepConfirmBusife from './steps/StepConfirmBusife.vue';
 import StepConfirmDpv from './steps/StepConfirmDpv.vue';
 import StepBdpDpvPackage from './steps/StepBdpDpvPackage.vue';
 import StepConfirm from './steps/StepConfirm.vue';
@@ -74,20 +74,18 @@ import StepConsent from './steps/StepConsent.vue';
 import StepFood from './steps/StepFood.vue';
 import StepBdpDpvLocation from './steps/StepBdpDpvLocation.vue';
 import StepBdpDpVPreferences from './steps/StepBdpDpVPreferences.vue';
-import StepTents from './steps/StepTents.vue';
-import StepTravel from './steps/StepTravel.vue';
 import StepAddParticipantGroupRole from './steps/StepBdPDpvAddParticipantGroupRole.vue';
 import StepBdpDpvTextForStamm from './steps/StepBdpDpvTextForStamm.vue';
-import StepTravelBack from './steps/StepTravelBack.vue';
 import StepTravelBundesfahrt from './steps/StepTravelBundesfahrt.vue';
 import StepBdpDpvLocationSuggestion from './steps/StepBdpDpvLocationSuggestion.vue';
+import StepWorkshop from './steps/StepWorkshop.vue';
 
 export default {
   components: {
     StepAddParticipantsSingle,
     StepAddParticipants,
     StepFood,
-    StepConfirmBundesfahrt,
+    StepConfirmBusife,
     StepConfirmDpv,
     StepConfirm,
     StepConsent,
@@ -97,6 +95,7 @@ export default {
     StepBdpDpvLocationSuggestion,
     StepTravelBundesfahrt,
     StepBdpDpvPackage,
+    StepWorkshop,
   },
   props: ['scoutOrganisation'],
   data() {
@@ -129,11 +128,9 @@ export default {
         return [
           StepConsent,
           StepAddParticipantsSingle,
-          StepTents,
-          StepTravel,
-          StepTravelBundesfahrt,
-          StepTravelBack,
-          StepConfirmBundesfahrt,
+          StepWorkshop,
+          StepBdpDpvTextForStamm,
+          StepConfirmBusife,
         ];
       }
       // BdP-DPV
