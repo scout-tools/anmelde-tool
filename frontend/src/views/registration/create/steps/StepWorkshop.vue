@@ -5,10 +5,12 @@
         Ihr habt {{ participantCount }} Teilnehmende angemeldet und
         sollt pro 15 Personen eine AG anbieten. <br/>
         <br />
-        Ihr benötigt also {{ workShopCountString }} AG's.
+        Ihr benötigt also mindestens {{ workShopCountString }} AGs.
       </p>
       <p v-if="!valid" class="red--text">
-        Ihr bietet noch nicht genügend AGs an. <br>
+        Ihr bietet aktuell
+        {{ items[0].workshops.length }} AGs an.
+        Ihr müsst aber {{ workShopCountString }} anbieten. <br>
       </p>
       <v-btn class="ma-2" color="success" @click="newAG">
         <v-icon left> mdi-plus </v-icon>
@@ -164,9 +166,7 @@ export default {
     },
     onRefresh() {
       this.getWorkshops();
-      if (!this.valid) {
-        this.validate();
-      }
+      this.valid = true;
     },
     newAG() {
       this.$refs.createSingleWorkshopDialog.openDialog();

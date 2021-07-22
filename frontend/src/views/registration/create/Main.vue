@@ -66,7 +66,7 @@ import axios from 'axios';
 
 import StepAddParticipantsSingle from './steps/StepAddParticipantsSingle.vue';
 import StepAddParticipants from './steps/StepAddParticipants.vue';
-import StepConfirmBundesfahrt from './steps/StepConfirmBundesfahrt.vue';
+import StepConfirmBusife from './steps/StepConfirmBusife.vue';
 import StepConfirmDpv from './steps/StepConfirmDpv.vue';
 import StepBdpDpvPackage from './steps/StepBdpDpvPackage.vue';
 import StepConfirm from './steps/StepConfirm.vue';
@@ -85,7 +85,7 @@ export default {
     StepAddParticipantsSingle,
     StepAddParticipants,
     StepFood,
-    StepConfirmBundesfahrt,
+    StepConfirmBusife,
     StepConfirmDpv,
     StepConfirm,
     StepConsent,
@@ -130,7 +130,7 @@ export default {
           StepAddParticipantsSingle,
           StepWorkshop,
           StepBdpDpvTextForStamm,
-          StepConfirmBundesfahrt,
+          StepConfirmBusife,
         ];
       }
       // BdP-DPV
