@@ -97,5 +97,14 @@
             "name": "Tagesgast: Montag auf Dienstag",
             "description": ""
         }
+    },
+    {
+        "model": "basic.role",
+        "pk": 11,
+        "fields": {
+            "id": 11,
+            "name": "Tagesgast",
+            "description": ""
+        }
     }
 ]

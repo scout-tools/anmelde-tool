@@ -1,6 +1,6 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-    <v-container class="pa-5">
+    <v-container class="pa-5 my-5">
       <p>
         Ich melde folgende_n Teilnehmer_in an <br />
         <br />
@@ -187,24 +187,6 @@ export default {
         return;
       }
       this.$emit('submit');
-    },
-    addParticipants() {
-      const promises = [];
-      const registrationId = this.$route.params.id;
-      const myUrl = `${this.API_URL}basic/participant-group/`;
-      const valueArray = Object.values(this.data);
-      Object.keys(this.data).forEach((element, index) => {
-        const paramsData = {
-          ageGroup: parseInt(element, 10),
-          numberOfPersons: parseInt(valueArray[index], 10),
-          registration: parseInt(registrationId, 10),
-        };
-        promises.push(axios.post(myUrl, paramsData));
-      });
-
-      Promise.all(promises).then(() => {
-        this.$emit('nextStep');
-      });
     },
     editParticipant(id) {
       this.$refs.createSinglePersonDialog.openDialogEdit(

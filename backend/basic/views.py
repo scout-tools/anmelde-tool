@@ -213,7 +213,7 @@ class ZipCodeSearchFilter(FilterSet):
 
     class Meta:
         model = ZipCode
-        fields = ['zip_code', 'city']
+        fields = ['zip_code', 'city', 'id']
 
     def get_zip_city(self, queryset, field_name, value):
         cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
@@ -262,7 +262,7 @@ class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantPersonalViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
+    permission_classes = [IsAuthenticated]
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
 

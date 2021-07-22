@@ -1,6 +1,6 @@
 <template>
   <v-form ref="formWorkshop" v-model="valid">
-    <v-container class="pa-5">
+    <v-container class="pa-5 my-5">
       <p>
         Ihr habt {{ participantCount }} Teilnehmende angemeldet und
         sollt pro 15 Personen eine AG anbieten. <br/>
@@ -24,7 +24,7 @@
             :key="i"
           >
             <v-list-item-avatar>
-              <v-icon color="black" dark>mdi-flask-outline</v-icon>
+              <v-icon color="black" dark>mdi-school</v-icon>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title

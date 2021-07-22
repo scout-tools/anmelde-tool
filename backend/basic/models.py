@@ -278,7 +278,7 @@ class ParticipantPersonal(TimeStampMixin):
         serialize=False,
         verbose_name='ID')
     registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
-    scout_name = models.CharField(max_length=100, blank=True)
+    scout_name = models.CharField(max_length=100, blank=True, null=True)
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     street = models.CharField(max_length=100, blank=True)
@@ -290,6 +290,8 @@ class ParticipantPersonal(TimeStampMixin):
     age_group = models.ForeignKey(AgeGroup, on_delete=models.PROTECT, null=True, blank=True)
     eat_habit_type = models.ManyToManyField(EatHabitType, blank=True)
     participant_role = models.ForeignKey(Role, on_delete=models.PROTECT, default=0)
+    email = models.EmailField(null=True)
+    birthday = models.DateField(null=True)
 
     def __str__(self):
         return "{} - {}".format(self.registration, self.first_name)

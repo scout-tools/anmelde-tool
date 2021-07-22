@@ -46,7 +46,8 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'participant_role',
             'is_registered',
             'can_register',
-            'can_edit'
+            'can_edit',
+            'is_public'
         )
 
     def get_event_role(self, obj):

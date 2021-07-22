@@ -104,39 +104,73 @@
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-    <v-menu
-      ref="menu"
-      v-model="menu"
-      :close-on-content-click="false"
-      transition="scale-transition"
-      offset-y
-      min-width="auto"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-text-field
-          v-model="computedDateFormattedMomentjs"
-          label="Geburtstag"
-          prepend-icon="mdi-calendar"
-          readonly
-          v-bind="attrs"
-          v-on="on"
-        ></v-text-field>
-      </template>
-      <v-date-picker
-        v-model="date"
-        :active-picker.sync="activePicker"
-        :max="(new Date(new Date('2010-01-01T03:24:00') - (
-          new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
-        min="1950-01-01"
-        @change="save"
-      ></v-date-picker>
-    </v-menu>
-    </v-col>
-    <v-col
-      cols="12"
-      sm="6"
-      md="4"
-    >
+              <v-menu
+                ref="menu"
+                v-model="menu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="computedDateFormattedMomentjs"
+                    label="Geburtstag"
+                    prepend-icon="mdi-calendar"
+                    :error-messages="birthdayErrors"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="data.birthday"
+                  :active-picker.sync="activePicker"
+                  :max="
+                    new Date(
+                      new Date('2021-12-24T03:24:00') -
+                        new Date().getTimezoneOffset() * 60000,
+                    )
+                      .toISOString()
+                      .substr(0, 10)
+                  "
+                  min="1950-01-01"
+                  @change="save"
+                ></v-date-picker>
+              </v-menu>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-select
+                v-model="data.ageGroup"
+                :items="ageGroupMapping"
+                :error-messages="ageGroupsErrors"
+                item-text="name"
+                prepend-icon="mdi-account-group"
+                item-value="id"
+                label="Stufe"
+                required
+                @input="validate()"
+              />
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="data.email"
+                label="E-Mail Adresse*"
+                prepend-icon="mdi-email"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ tooltip.email }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-text-field>
             </v-col>
           </v-row>
 
@@ -320,8 +354,6 @@ export default {
     zipCodeResponse: [],
     activePicker: null,
     search: null,
-    date: (new Date(Date.now() - (
-      new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     menu: false,
     modal: false,
     menu2: false,
@@ -331,50 +363,24 @@ export default {
       street: null,
       zipCode: null,
       phoneNumber: null,
-      age: null,
+      birthday: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
+      ageGroup: null,
       registration: null,
       eatHabitType: [],
       scoutGroup: 'Test',
       isGroupLeader: false,
       participantRole: 5,
     },
-    roleItems: [
-      {
-        id: 5,
-        name: 'Mosaikersleben',
-        dayGuest: true,
-      },
-      {
-        id: 6,
-        name: 'Kaperfahrt + Mosaikersleben',
-        dayGuest: true,
-      },
-      {
-        name: 'Sonntag, 08.08.',
-        id: 7,
-        dayGuest: false,
-      },
-      {
-        name: 'Sonntag, 08.08. mit Übernachtung',
-        id: 10,
-        dayGuest: false,
-      },
-      {
-        name: 'Montag, 09.08.',
-        id: 8,
-        dayGuest: false,
-      },
-      {
-        name: 'Dienstag, 10.08.',
-        id: 9,
-        dayGuest: false,
-      },
-      {
-        name: 'Montag, 09.08. mit Übernachtung',
-        id: 11,
-        dayGuest: false,
-      },
-    ],
+    tooltip: {
+      scoutName: 'Gib hier bitte deinen Namen oder deinen Fahrtennamen ein.',
+      email:
+        'Die E-Mail nutzen wir für die Kommunikation mit dem Tool und für Rückfragen.',
+      mobileNumber:
+        'Die Handynummer ist freiwillig und hilft dich zu kontaktieren (Für manche Fahrten ist sie Pflicht)',
+      scoutOrganisation: 'Mit dem Stift kannst du deinen Stamm auswählen.',
+    },
     showError: false,
     showSuccess: false,
     timeout: 7000,
@@ -382,7 +388,7 @@ export default {
   watch: {
     menu(val) {
       val && this.$nextTick(() => { // eslint-disable-line
-        this.activePicker = 'YEAR';
+        this.activePicker = 'YEAR'; // eslint-disable-line
       });
     },
     search(searchString) {
@@ -411,10 +417,6 @@ export default {
   },
   validations: {
     data: {
-      scoutName: {
-        minLength: minLength(2),
-        maxLength: maxLength(20),
-      },
       firstName: {
         required,
         minLength: minLength(2),
@@ -425,16 +427,21 @@ export default {
         minLength: minLength(2),
         maxLength: maxLength(20),
       },
+      scoutName: {
+        minLength: minLength(2),
+        maxLength: maxLength(20),
+      },
+      ageGroup: {
+        required,
+      },
       phoneNumber: {
         required,
         integer,
         minValue: minValue(1),
         phoneNumStartValidator,
       },
-      age: {
+      birthday: {
         required,
-        integer,
-        minValue: minValue(1),
       },
       street: {
         required,
@@ -451,9 +458,14 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
+    ...mapGetters([
+      'isAuthenticated',
+      'getJwtData',
+      'hierarchyMapping',
+      'ageGroupMapping',
+    ]),
     computedDateFormattedMomentjs() {
-      return this.date ? moment(this.date).format('DD.MM.YYYY') : '';
+      return this.data.birthday ? moment(this.data.birthday).format('DD.MM.YYYY') : '';
     },
     firstNameErrors() {
       const errors = [];
@@ -497,14 +509,19 @@ export default {
       }
       return errors;
     },
-    ageErrors() {
+    ageGroupsErrors() {
       const errors = [];
-      if (!this.$v.data.age.$dirty) return errors;
-      if (!this.$v.data.age.required) {
-        errors.push('Alter ist erforderlich.');
+      if (!this.$v.data.ageGroup.$dirty) return errors;
+      if (!this.$v.data.ageGroup.required) {
+        errors.push('Es muss mindestens eine Zielgruppe ausgewählt werden.');
       }
-      if (!this.$v.data.age.integer || !this.$v.data.age.minValue) {
-        errors.push('Es muss ein gültiges Alter eingetragen werden.');
+      return errors;
+    },
+    birthdayErrors() {
+      const errors = [];
+      if (!this.$v.data.birthday.$dirty) return errors;
+      if (!this.$v.data.birthday.required) {
+        errors.push('Alter ist erforderlich.');
       }
       return errors;
     },
@@ -561,6 +578,12 @@ export default {
 
       return response.data;
     },
+    async callSingleZipCode(id) {
+      const path = `${this.API_URL}basic/zip-code/?id=${id}`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
     save(date) {
       this.$refs.menu.save(date);
     },
@@ -587,6 +610,7 @@ export default {
       this.data = {
         firstName: null,
         lastName: null,
+        scoutName: null,
         street: null,
         zipCode: null,
         phoneNumber: null,
@@ -596,7 +620,9 @@ export default {
         scoutGroup: 'Test',
         isGroupLeader: false,
         roles: [],
-        participantRole: 5,
+        participantRole: 1,
+        email: '',
+        birthday: '',
       };
       this.eatHabitText = [];
       this.isDayGuest = false;
@@ -608,33 +634,24 @@ export default {
       this.data = input;
       this.active = true;
       this.isEditWindow = true;
-      this.eatHabitText = [];
+
+      this.getSingleZipCode(this.data.zipCode);
       this.loadData();
     },
-    loadData() {
-      this.isLoading = true;
-
-      Promise.all([this.getGroups(), this.getEatHabitTypeMapping()])
-        .then((values) => {
-          [this.scoutHierarchyGroups, this.eatHabitTypeMapping] = values;
-          this.isLoading = false;
+    getSingleZipCode(zipCode) {
+      this.callSingleZipCode(zipCode)
+        .then((res) => {
+          this.zipCodeResponse = res;
         })
-        .catch((error) => {
-          this.errormsg = error.response.data.message;
-          this.isLoading = false;
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.isZipLoading = false;
         });
     },
-    async getGroups() {
-      const path = `${this.API_URL}basic/scout-hierarchy-group/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
-    async getEatHabitTypeMapping() {
-      const path = `${this.API_URL}basic/eat-habit-type/`;
-      const response = await axios.get(path);
-
-      return response.data;
+    loadData() {
+      this.isDayGuest = this.data.participantRole === 11;
     },
     getParticipantPersonalById(id) {
       axios
@@ -672,17 +689,7 @@ export default {
     },
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
-      if (this.data.scoutGroup && this.data.scoutGroup.name) {
-        this.data.scoutGroup = this.data.scoutGroup.name;
-      }
-      if (this.data.eatHabitType && this.data.eatHabitType.name) {
-        this.data.eatHabitType = this.data.eatHabitType.name;
-      }
-      if (this.eatHabitText && this.data.eatHabitType) {
-        this.data.eatHabitType = this.data.eatHabitType.concat(
-          this.eatHabitText,
-        );
-      }
+      this.data.participantRole = this.isDayGuest ? 11 : 1;
       if (!this.data.id) {
         axios
           .post(`${this.API_URL}basic/participant-personal/`, this.data)

@@ -4,7 +4,7 @@
     "django_settings": "backend.settings",
     "project_name": "backend",
     "runtime": "python3.7",
-    "s3_bucket": "zappa-anmelde-tool-dev",
+    "s3_bucket": "zappa-anmelde-tool-busife",
     "vpc_config": {
       "SubnetIds": [
         "subnet-9aca14e6",

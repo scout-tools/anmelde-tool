@@ -45,34 +45,6 @@
                 </template>
               </v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model.lazy="data.freeText"
-                :counter="1000"
-                :error-messages="errorMessage('freeText')"
-                label="AG-Beschreibung"
-                required
-                prepend-icon="mdi-card-account-details-outline"
-                @input="$v.data.freeText.$touch()"
-                @blur="$v.data.freeText.$touch()"
-              >
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{
-                        'Trage bitte hier eine Erklärung ' +
-                        'und weitere Erläuterungen zu deiner AG ein'
-                      }}
-                    </span>
-                  </v-tooltip>
-                </template>
-              </v-text-field>
-            </v-col>
           </v-row>
           <v-divider />
           <v-row>
@@ -86,23 +58,7 @@
             @input="$v.data.costs.$touch()"
             @blur="$v.data.costs.$touch()"
           >
-            <!--            <template slot="append">-->
-            <!--              <v-tooltip bottom>-->
-            <!--                <template v-slot:activator="{ on, attrs }">-->
-            <!--                  <v-icon color="success" dark v-bind="attrs" v-on="on">-->
-            <!--                    mdi-help-circle-outline-->
-            <!--                  </v-icon>-->
-            <!--                </template>-->
-            <!--                <span>-->
-            <!--                      {{-->
-            <!--                    'Trage bitte hier die anfallenden Kosten ' +-->
-            <!--                    'für die AG ein'-->
-            <!--                  }}-->
-            <!--                    </span>-->
-            <!--              </v-tooltip>-->
-            <!--            </template>-->
           </vuetify-money>
-
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-autocomplete
@@ -135,8 +91,40 @@
               </v-autocomplete>
             </v-col>
           </v-row>
+          <v-divider />
+          <v-row>
+            <v-col cols="12" sm="6">
+              <v-textarea
+                filled
+                v-model.lazy="data.freeText"
+                :counter="1000"
+                :error-messages="errorMessage('freeText')"
+                label="AG-Beschreibung"
+                required
+                prepend-icon="mdi-card-account-details-outline"
+                @input="$v.data.freeText.$touch()"
+                @blur="$v.data.freeText.$touch()"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{
+                        'Trage bitte hier eine Erklärung ' +
+                        'und weitere Erläuterungen zu deiner AG ein'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-textarea>
+            </v-col>
+          </v-row>
           <v-divider class="my-3" />
-          <v-btn color="primary" @click="onClickOkay"> Speichern </v-btn>
+          <v-btn color="success" @click="onClickOkay"> Speichern </v-btn>
         </v-form>
       </v-container>
       <v-divider class="my-4" />
