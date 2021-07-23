@@ -33,7 +33,17 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '83.169.2.26',
+    '127.0.0.1',
+    'localhost',
+    'anmeldetool-backend-dev.eba-sb52mfq3.eu-central-1.elasticbeanstalk.com',
+    'anmeldetoolbackenddev-prod.eu-central-1.elasticbeanstalk.com',
+    '1agdtsauoj.execute-api.eu-central-1.amazonaws.com',
+    'https://oev1ba563c.execute-api.eu-central-1.amazonaws.com/devbusife',
+    'dev.api.anmelde-tool.de',
+    'api.anmelde-tool.de'
+]
 
 CORS_ALLOW_CREDENTIALS = True
 
