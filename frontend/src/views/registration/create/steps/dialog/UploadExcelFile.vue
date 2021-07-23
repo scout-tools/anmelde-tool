@@ -15,12 +15,14 @@
       </v-toolbar>
       <v-sheet class="ma-5">
         <v-header>
-          Lade hier deine Excel Datei hoch, um dir die manuelle Eingabe zu erleichtern.
-          Die Datei muss in einem bestimmten Format sein.
-          <a target="_blank" href="https://cloud.dpbm.de/s/ZTm4KL2JqtJN9DP">Link zur Bundescloud</a>
+          Lade hier deine Excel Datei hoch, um dir die manuelle Eingabe zu
+          erleichtern. Die Datei muss in einem bestimmten Format sein.
+          <a target="_blank" href="https://cloud.dpbm.de/s/ZTm4KL2JqtJN9DP"
+            >Link zur Bundescloud</a
+          >
         </v-header>
         <v-card class="ma-4 pa-3">
-        <input type="file" @change="onFileChange" />
+          <input type="file" @change="onFileChange" />
         </v-card>
         <v-card class="ma-4">
           <v-simple-table dense>
@@ -38,10 +40,7 @@
               </thead>
               <tbody>
                 <tr v-for="item in chartData" :key="item.name">
-                  <td
-                    v-for="(column, index) in columns"
-                    :key="index"
-                  >
+                  <td v-for="(column, index) in columns" :key="index">
                     {{ item[column] }}
                   </td>
                   <td>
@@ -55,7 +54,9 @@
           </v-simple-table>
         </v-card>
       </v-sheet>
-      <create-single-person-dialog ref="createSinglePersonDialog"></create-single-person-dialog>
+      <create-single-person-dialog
+        ref="createSinglePersonDialog"
+      ></create-single-person-dialog>
     </v-card>
   </v-dialog>
 </template>
@@ -80,7 +81,17 @@ export default {
       city: '',
       zipCode: '',
     },
-    columns: ['Vorname*', 'Nachname*', 'Pfadfindername', 'Geburtsdatum*', 'Adresse*', 'Postleitzahl*', 'Telefonnummer*', 'E-Mail-Adresse*', 'Tagesgast'],
+    columns: [
+      'Vorname*',
+      'Nachname*',
+      'Pfadfindername',
+      'Geburtsdatum*',
+      'Adresse*',
+      'Postleitzahl*',
+      'Telefonnummer*',
+      'E-Mail-Adresse*',
+      'Tagesgast',
+    ],
     jsonData: [],
     e1: 1,
     showError: false,
@@ -105,7 +116,7 @@ export default {
         const reader = new FileReader(); // eslint-disable-line
         reader.onload = (e3) => {
           const data = new Uint8Array(e3.target.result); // eslint-disable-line
-          const workbook = XLSX.read(data, {type: 'array'}); // eslint-disable-line
+          const workbook = XLSX.read(data, { type: 'array' }); // eslint-disable-line
           const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
           const dataExport = XLSX.utils.sheet_to_json(firstWorksheet, {
             range: 0,
@@ -139,21 +150,42 @@ export default {
         zipCode: '',
         email: '',
         phoneNumber: '',
-        birthdate: '',
-        dayGuest: '',
+        birthday: '',
+        participantRole: '',
       };
       dto.firstName = input['Vorname*'];
-      dto.lastName = input['Vorname*'];
+      dto.lastName = input['Nachname*'];
       dto.scoutName = input['Pfadfindername']; // eslint-disable-line
       dto.street = input['Adresse*'];
-      dto.ageGroup = input['Altersstufe*'];
+      dto.ageGroup = this.convertAgeGroup(input['Altersstufe*']);
       dto.zipCode = 1; // input['Postleitzahl*'];
       dto.phoneNumber = input['Telefonnummer*'];
       dto.email = input['E-Mail-Adresse*'];
-      dto.birthdate = input['Geburtsdatum*'];
-      dto.dayGuest = input['Tagesgast']; // eslint-disable-line
+      dto.birthday = this.convertBirthday(input['Geburtsdatum*']);
+      dto.participantRole = input['Tagesgast'] === 'x'? 11 : 1; // eslint-disable-line
       console.log(dto);
       return dto;
+    },
+    convertBirthday(birthdayDays) {
+      const startDate = new Date(1900, 0, 1);
+      const newDate = new Date(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate() + birthdayDays - 2,
+      );
+      return newDate;
+    },
+    convertAgeGroup(ageGroupString) {
+      switch (ageGroupString) {
+        case 'Meutenstufe':
+          return 1;
+        case 'Sippestufe':
+          return 2;
+        case 'Roverstufe':
+          return 3;
+        default:
+          return null;
+      }
     },
   },
   computed: {

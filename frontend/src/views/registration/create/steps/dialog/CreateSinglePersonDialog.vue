@@ -366,7 +366,7 @@ export default {
       birthday: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
-      ageGroup: null,
+      ageGroup: 2,
       registration: null,
       eatHabitType: [],
       scoutGroup: 'Test',
@@ -465,6 +465,7 @@ export default {
       'ageGroupMapping',
     ]),
     computedDateFormattedMomentjs() {
+      debugger;
       return this.data.birthday ? moment(this.data.birthday).format('DD.MM.YYYY') : '';
     },
     firstNameErrors() {
@@ -620,6 +621,7 @@ export default {
         scoutGroup: 'Test',
         isGroupLeader: false,
         roles: [],
+        ageGroup: 2,
         participantRole: 1,
         email: '',
         birthday: '',
@@ -690,7 +692,8 @@ export default {
     async callCreateParticipantPost() {
       this.data.registration = this.$route.params.id;
       this.data.participantRole = this.isDayGuest ? 11 : 1;
-      if (!this.data.id) {
+      const { id } = this.data;
+      if (!id) {
         axios
           .post(`${this.API_URL}basic/participant-personal/`, this.data)
           .then(() => {
@@ -700,7 +703,7 @@ export default {
       } else {
         axios
           .put(
-            `${this.API_URL}basic/participant-personal/${this.data.id}/`,
+            `${this.API_URL}basic/participant-personal/${id}/`,
             this.data,
           )
           .then(() => {
