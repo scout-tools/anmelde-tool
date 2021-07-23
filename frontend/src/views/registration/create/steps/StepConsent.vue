@@ -15,8 +15,10 @@
             <br />
             Die folgenden Daten sind nur für das Planungsteam und die Administrator_innen
             sichtbar. <br />
-
-            Alle Dokumente findest du hier: <a target="_blank" href="https://cloud.dpbm.de/s/ZTm4KL2JqtJN9DP">Link zur Bundescloud</a>
+              Alle Dokumente findest du hier:
+              <a v-if="isBundesfahrt" target="_blank" href="https://cloud.dpbm.de/s/ZTm4KL2JqtJN9DP">
+                Link zur Bundescloud
+              </a>
           </p>
         </span>
       </v-row>

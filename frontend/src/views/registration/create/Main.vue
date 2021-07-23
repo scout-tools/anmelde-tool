@@ -76,6 +76,7 @@ import StepBdpDpvLocation from './steps/StepBdpDpvLocation.vue';
 import StepBdpDpVPreferences from './steps/StepBdpDpVPreferences.vue';
 import StepAddParticipantGroupRole from './steps/StepBdPDpvAddParticipantGroupRole.vue';
 import StepBdpDpvTextForStamm from './steps/StepBdpDpvTextForStamm.vue';
+import StepFreeText from './steps/StepFreeText.vue';
 import StepTravelBundesfahrt from './steps/StepTravelBundesfahrt.vue';
 import StepBdpDpvLocationSuggestion from './steps/StepBdpDpvLocationSuggestion.vue';
 import StepWorkshop from './steps/StepWorkshop.vue';
@@ -92,6 +93,7 @@ export default {
     StepBdpDpvLocation,
     StepBdpDpVPreferences,
     StepBdpDpvTextForStamm,
+    StepFreeText,
     StepBdpDpvLocationSuggestion,
     StepTravelBundesfahrt,
     StepBdpDpvPackage,
@@ -129,7 +131,7 @@ export default {
           StepConsent,
           StepAddParticipantsSingle,
           StepWorkshop,
-          StepBdpDpvTextForStamm,
+          StepFreeText,
           StepConfirmBusife,
         ];
       }
