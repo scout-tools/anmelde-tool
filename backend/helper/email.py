@@ -143,7 +143,9 @@ class EmailThread(threading.Thread):
 
     def run(self):
         email = EmailMultiAlternatives(self.subject, self.html_content, sender, self.recipient_list,
+                                       bcc=[getattr(settings, "EMAIL_HOST_USER")],
                                        reply_to=self.reply_to)
+
         # email.attach_alternative(self.html_content, 'text/html')
         for atm in self.attachments:
             path = Path(f'{email_directory}/attachments/{atm}')
