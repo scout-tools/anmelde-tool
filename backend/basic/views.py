@@ -393,7 +393,7 @@ class EventProgramMasterViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class EventParticipantsViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsTeamMemberPermission]
     serializer_class = EventParticipantsSerializer
 
     def get_queryset(self):
