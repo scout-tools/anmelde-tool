@@ -3,7 +3,7 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from rest_framework import serializers
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, \
     ParticipantGroup, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
-    EatHabitType, EatHabit, TravelType, TentType, TravelTag, PostalAddress
+    EatHabitType, EatHabit, TravelType, TentType, TravelTag, PostalAddress, Workshop
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
 from django.db.models import Sum, Count, F, Q, Case, When, Value, CharField
@@ -46,7 +46,8 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'participant_role',
             'is_registered',
             'can_register',
-            'can_edit'
+            'can_edit',
+            'is_public'
         )
 
     def get_event_role(self, obj):
@@ -671,30 +672,46 @@ class RegistrationStatSerializer(serializers.ModelSerializer):
         return items.city
 
     def get_number_participant(self, obj):
-        items = ParticipantGroup.objects.filter(registration_id=obj.id)
+        itemsGroup = ParticipantGroup.objects.filter(registration_id=obj.id) \
+            .aggregate(sum=Coalesce(Sum('number_of_persons'), 0))['sum']
 
-        sum_participant = items.aggregate(
-            Sum('number_of_persons'))['number_of_persons__sum']
+        itemsPersonal = ParticipantPersonal.objects.filter(registration_id=obj.id).count()
 
-        return sum_participant
+        return itemsGroup + itemsPersonal
 
     def get_number_helper(self, obj):
-        items = ParticipantGroup.objects.filter(
-            registration_id=obj.id
-        )
+        itemsGroup = ParticipantGroup.objects.filter(registration_id=obj.id, participant_role=4) \
+            .aggregate(sum=Coalesce(Sum('number_of_persons'), 0))['sum']
 
-        helper = items.filter(
-            participant_role=4
-        )
+        itemsPersonal = ParticipantPersonal.objects.filter(registration_id=obj.id, participant_role=4).count()
 
-        sum_helper = helper.aggregate(
-            Sum('number_of_persons')
-        )['number_of_persons__sum']
-
-        return sum_helper
+        return itemsGroup + itemsPersonal
 
     def get_responsible_persons(self, obj):
         result = obj.responsible_persons.values('username',
                                                 "userextended__scout_name",
                                                 "userextended__mobile_number")
         return result
+
+
+class WorkshopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workshop
+        fields = '__all__'
+
+
+class WorkshopStatsSerializer(serializers.ModelSerializer):
+    supervisor_name = serializers.SerializerMethodField('get_supervisor_name')
+
+    class Meta:
+        model = Workshop
+        fields = ('id', 'title', 'free_text', 'costs', 'supervisor_name', 'registration')
+
+    def get_supervisor_name(self, obj):
+        supervisor_name = ''
+        if (obj.supervisor):
+            supervisor = ParticipantPersonal.objects.filter(id=obj.supervisor.id).first()
+            supervisor_name = f"{supervisor.first_name} {supervisor.last_name}"
+            if (supervisor.scout_name):
+                supervisor_name += f" ({supervisor.scout_name})"
+        return supervisor_name

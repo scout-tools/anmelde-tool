@@ -171,7 +171,7 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
     getItems() {
-      return this.items;
+      return this.items.filter((item) => item.isPublic);
     },
     hasSetExtendedUserInfos() {
       if (this.userExtendedItems) {

@@ -202,7 +202,7 @@ export default {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;
       // eslint-disable-next-line
-      !this.$v.email.required && errors.push('E-mail ist erforderkich');
+      !this.$v.email.required && errors.push('E-Mail ist erforderlich');
 
       // eslint-disable-next-line
       !this.$v.email.email && errors.push('Ist keine echte E-Mail-Adresse');

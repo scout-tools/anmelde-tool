@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-auto" :color="color" dark>
     <v-container fluid>
-      <v-row align="center" justify="center" v-if="list.dataOne">
+      <v-row align="center" justify="center" v-if="list">
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline">{{
@@ -45,6 +45,7 @@ export default {
   props: ['data', 'color'],
   computed: {
     list() {
+      debugger;
       return this.data;
     },
   },

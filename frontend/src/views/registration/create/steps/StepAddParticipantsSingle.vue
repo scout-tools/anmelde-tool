@@ -1,6 +1,6 @@
 <template>
   <v-form ref="formNameDescription" v-model="valid">
-    <v-container class="pa-5">
+    <v-container class="pa-5 my-5">
       <p>
         Ich melde folgende_n Teilnehmer_in an <br />
         <br />
@@ -13,9 +13,9 @@
         <v-icon left> mdi-plus </v-icon>
         Teilnehmer_in hinzufügen
       </v-btn>
-      <v-btn class="ma-2" color="primary" disabled @click="openExcelDialog">
+      <v-btn class="ma-2" color="primary" @click="openExcelDialog">
         <v-icon left> mdi-plus </v-icon>
-        Excel Datei hochladen (coming soon)
+        Excel Datei hochladen
       </v-btn>
       <v-list v-if="!isLoading">
         <v-subheader>Teilnehmer_innen</v-subheader>
@@ -29,7 +29,7 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title
-                v-text="item.scoutGroup + ' - ' + item.firstName"
+                v-text="getDisplayName(item)"
               ></v-list-item-title>
             </v-list-item-content>
             <v-list-item-action>
@@ -142,6 +142,13 @@ export default {
     },
   },
   methods: {
+    getDisplayName(item) {
+      let returnString = `${item.firstName} ${item.lastName}`;
+      if (item.scoutName) {
+        returnString = `${returnString} (${item.scoutName})`;
+      }
+      return returnString;
+    },
     getParticipants() {
       this.isLoading = true;
       Promise.all([this.loadParticipants()])
@@ -180,24 +187,6 @@ export default {
         return;
       }
       this.$emit('submit');
-    },
-    addParticipants() {
-      const promises = [];
-      const registrationId = this.$route.params.id;
-      const myUrl = `${this.API_URL}basic/participant-group/`;
-      const valueArray = Object.values(this.data);
-      Object.keys(this.data).forEach((element, index) => {
-        const paramsData = {
-          ageGroup: parseInt(element, 10),
-          numberOfPersons: parseInt(valueArray[index], 10),
-          registration: parseInt(registrationId, 10),
-        };
-        promises.push(axios.post(myUrl, paramsData));
-      });
-
-      Promise.all(promises).then(() => {
-        this.$emit('nextStep');
-      });
     },
     editParticipant(id) {
       this.$refs.createSinglePersonDialog.openDialogEdit(

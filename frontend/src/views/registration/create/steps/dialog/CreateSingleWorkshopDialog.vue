@@ -1,0 +1,328 @@
+<template>
+  <v-dialog
+    ref="workshopDialog"
+    v-model="active"
+    transition="dialog-top-transition"
+    fullscreen
+  >
+    <v-card>
+      <v-toolbar dark color="primary">
+        <v-btn icon dark @click="active = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-toolbar-title>AGs hinzufügen</v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+      <v-container>
+        <v-subheader class="ma-5">
+          Ich melde folgende AG an.
+        </v-subheader>
+        <v-form v-model="valid">
+          <v-divider />
+          <v-row>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model.lazy="data.title"
+                :counter="100"
+                :error-messages="errorMessage('title')"
+                label="AG-Titel"
+                required
+                prepend-icon="mdi-card-account-details-outline"
+                @input="$v.data.title.$touch()"
+                @blur="$v.data.title.$touch()"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Trage bitte einen Namen für die AG ein ' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-text-field>
+            </v-col>
+          </v-row>
+          <v-divider />
+          <v-row>
+            <v-col cols="12" sm="6" md="4">
+          <vuetify-money
+            v-model="data.costs"
+            :options="options"
+            :properties="properties"
+            :error-messages="errorMessage('costs')"
+            label="AG-Kosten"
+            @input="$v.data.costs.$touch()"
+            @blur="$v.data.costs.$touch()"
+          >
+          </vuetify-money>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-autocomplete
+                v-model="data.supervisor"
+                :items="participants"
+                item-text="name"
+                item-value="id"
+                :error-messages="errorMessage('supervisor')"
+                label="AG-Verantwortlicher"
+                required
+                prepend-icon="mdi-card-account-details-outline"
+                @input="$v.data.supervisor.$touch()"
+                @change="$v.data.supervisor.$touch()"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{
+                        'Trage bitte hier die für die AG Verantwortliche Person ' +
+                        'ein.'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-autocomplete>
+            </v-col>
+          </v-row>
+          <v-divider />
+          <v-row>
+            <v-col cols="12" sm="6">
+              <v-textarea
+                filled
+                v-model.lazy="data.freeText"
+                :counter="1000"
+                :error-messages="errorMessage('freeText')"
+                label="AG-Beschreibung"
+                required
+                prepend-icon="mdi-card-account-details-outline"
+                @input="$v.data.freeText.$touch()"
+                @blur="$v.data.freeText.$touch()"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{
+                        'Trage bitte hier eine Erklärung ' +
+                        'und weitere Erläuterungen zu deiner AG ein'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-textarea>
+            </v-col>
+          </v-row>
+          <v-divider class="my-3" />
+          <v-btn color="success" @click="onClickOkay"> Speichern </v-btn>
+        </v-form>
+      </v-container>
+      <v-divider class="my-4" />
+
+      <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
+        {{ 'Fehler beim Anlegen einer AG' }}
+      </v-snackbar>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script>
+import {
+  required, minLength, maxLength, between,
+} from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
+import axios from 'axios';
+
+export default {
+  name: 'CreateSingleWorkshopDialog',
+  props: ['isOpen'],
+  data: () => ({
+    API_URL: process.env.VUE_APP_API,
+    active: false,
+    valid: true,
+    participants: [],
+    isLoading: true,
+    isEditWindow: false,
+    menu: false,
+    modal: false,
+    menu2: false,
+    data: {
+      title: null,
+      freeText: null,
+      costs: null,
+      supervisor: null,
+      registration: null,
+    },
+    showError: false,
+    showSuccess: false,
+    timeout: 7000,
+    options: {
+      locale: 'de-DE',
+      suffix: '€',
+      precision: 2,
+      max: 999.99,
+    },
+    properties: {
+      'prepend-icon': 'mdi-cash',
+    },
+  }),
+  validations: {
+    data: {
+      title: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(100),
+      },
+      freeText: {
+        required,
+        minLength: minLength(5),
+        maxLength: maxLength(1000),
+      },
+      costs: {
+        required,
+        between: between(0.00, 999.99),
+      },
+      supervisor: {
+        required,
+      },
+    },
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
+  },
+  methods: {
+    getDisplayName(firstName, lastName, scoutName) {
+      let returnString = `${firstName} ${lastName}`;
+      if (scoutName) {
+        returnString = `${returnString} (${scoutName})`;
+      }
+      return returnString;
+    },
+    errorMessage(field) {
+      const errors = [];
+      const valObj = this.$v.data[field];
+      if (!valObj.$dirty) return errors;
+      if (valObj.required === false) {
+        errors.push('Dieses Feld ist erforderlich.');
+      }
+      if (valObj.minLength === false) {
+        const { min } = valObj.$params.minLength;
+        errors.push(`Du musst mindestens ${min} Zeichen nutzen.`);
+      }
+      if (valObj.maxLength === false) {
+        const { max } = valObj.$params.maxLength;
+        errors.push(`Du darfst maximal ${max} Zeichen nutzen.`);
+      }
+      if (valObj.between === false) {
+        const { min, max } = valObj.$params.between;
+        errors.push(`Bitte gib einen Wert zwischen ${min}€ und ${max}€ ein.`);
+      }
+      return errors;
+    },
+    onClickOk() {
+      this.active = false;
+    },
+    onClickCancel() {
+      this.active = false;
+    },
+    openDialog() {
+      this.data = {
+        title: null,
+        freeText: null,
+        costs: null,
+        supervisor: null,
+        registration: null,
+      };
+      this.isEditWindow = false;
+      this.active = true;
+      this.loadData();
+    },
+    openDialogEdit(input) {
+      this.data = input;
+      this.isEditWindow = true;
+      this.active = true;
+      this.loadData();
+    },
+    loadData() {
+      this.isLoading = true;
+
+      Promise.all([this.loadParticipants()])
+        .then((values) => {
+          [this.participants] = values;
+          this.participants = this.participants[0].participantpersonalSet.map(({
+            firstName, lastName, scoutName, ...args
+          }) => ({
+            name: this.getDisplayName(firstName, lastName, scoutName),
+            ...args,
+          }));
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
+        });
+    },
+    async loadParticipants() {
+      const path = `${this.API_URL}basic/registration/${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`;
+      const response = await axios.get(path);
+      return response.data;
+    },
+    closeDialog() {
+      this.active = false;
+      this.$v.$reset();
+      Object.keys(this.data).forEach((key) => {
+        this.data[key] = '';
+      });
+      this.$emit('close');
+    },
+    validate() {
+      this.$v.$touch();
+      console.log(this.$v);
+      this.valid = !this.$v.$anyError;
+    },
+    onClickOkay() {
+      this.validate();
+      if (this.valid) {
+        try {
+          this.callCreateParticipantPost();
+        } catch (e) {
+          console.log(e);
+          this.showError = true;
+        }
+      }
+    },
+    async callCreateParticipantPost() {
+      this.data.registration = this.$route.params.id;
+
+      if (!this.data.id) {
+        axios
+          .post(`${this.API_URL}basic/workshop/`, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
+      } else {
+        axios
+          .put(`${this.API_URL}basic/workshop/${this.data.id}/`, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
+      }
+    },
+    getData() {
+      return this.data;
+    },
+  },
+};
+</script>

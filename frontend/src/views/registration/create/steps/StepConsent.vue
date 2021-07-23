@@ -15,11 +15,10 @@
             <br />
             Die folgenden Daten sind nur für das Planungsteam und die Administrator_innen
             sichtbar. <br />
-          </p>
-          <p>
-            <br />
-            Hinweis: Vergiss nicht dich als Fahrtenleitung auch selbst anzumelden.
-            <br />
+              Alle Dokumente findest du hier:
+              <a v-if="isBundesfahrt" target="_blank" href="https://cloud.dpbm.de/s/ZTm4KL2JqtJN9DP">
+                Link zur Bundescloud
+              </a>
           </p>
         </span>
       </v-row>
@@ -38,10 +37,22 @@
           v-model="data.checkbox2"
           v-if="isBundesfahrt"
           :label="`Hiermit bestätige ich, dass alle Teilnehmer_innen,
-          die ich auf diesem Wege zur Bundesfahrt anmelde die
-          „Datenschutzhinweise zur Bundesfahrt 2021 des DPBM“ zur
+          die ich auf diesem Wege zum ${currentEvent.name } anmelde die
+          „Datenschutzhinweise zur
           Kenntnis genommen und diesen zugestimmt haben.`"
           :error-messages="checkbox2Errors"
+        >
+        </v-checkbox>
+      </v-row>
+
+      <v-row>
+        <v-checkbox
+          v-model="data.checkbox3"
+          v-if="isBundesfahrt"
+          :label="`Ich trage Sorge, dass alle von mir angemeldeten Teilnehmer
+            über die Corona Regel informiert sind
+            und ich achte auf die Einhaltung.`"
+          :error-messages="checkbox3Errors"
         >
         </v-checkbox>
       </v-row>
@@ -99,6 +110,7 @@ export default {
     data: {
       checkbox1: false,
       checkbox2: false,
+      checkbox3: false,
       name: '',
       description: '',
     },
@@ -110,6 +122,11 @@ export default {
         checked: (value) => value === true,
       },
       checkbox2: {
+        function(value) {
+          return value === true || !this.isBundesfahrt;
+        },
+      },
+      checkbox3: {
         function(value) {
           return value === true || !this.isBundesfahrt;
         },
@@ -132,6 +149,16 @@ export default {
       const errors = [];
       if (!this.$v.data.checkbox2.$dirty) return errors;
       if (this.$v.data.checkbox2.$invalid) {
+        errors.push(
+          'Deine Zustimmung ist erforderlich, damit du weiter machen kannst.',
+        );
+      }
+      return errors;
+    },
+    checkbox3Errors() {
+      const errors = [];
+      if (!this.$v.data.checkbox3.$dirty) return errors;
+      if (this.$v.data.checkbox3.$invalid) {
         errors.push(
           'Deine Zustimmung ist erforderlich, damit du weiter machen kannst.',
         );

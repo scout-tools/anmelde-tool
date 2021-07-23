@@ -81,6 +81,15 @@ class IsResponsiblePersonPermission(permissions.BasePermission):
         return Registration.objects.filter(id=pk, responsible_persons=request.user).exists()
 
 
+class IsResponsiblePersonParticipantPersonalPermission(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        pk = 'registration' in request.data and request.data['registration']
+        if pk is None:
+            raise NoRegistationId()
+        return Registration.objects.filter(id=pk, responsible_persons=request.user).exists()
+
+
 class NoRegistationId(exceptions.APIException):
     status_code = status.HTTP_400_BAD_REQUEST
     default_detail = "No Registration id given"

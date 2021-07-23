@@ -164,3 +164,6 @@ media/
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 /backend/.env_prod
+
+# Zappa
+zappa_settings.json

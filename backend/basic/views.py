@@ -20,7 +20,8 @@ from rest_framework.response import Response
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, \
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
-    TentType, EatHabit, TravelTag, PostalAddress, EventRoleMapping, RegistrationMatching
+    TentType, EatHabit, TravelTag, PostalAddress, EventRoleMapping, RegistrationMatching, \
+    Workshop
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
@@ -28,11 +29,12 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     EatHabitTypeSerializer, EatHabitSerializer, TravelTypeSerializer, \
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
     EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
-    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer
+    RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer, \
+    WorkshopSerializer, WorkshopStatsSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission, \
-    IsOrganisationLeader
+    IsOrganisationLeader, IsResponsiblePersonParticipantPersonalPermission
 
 from helper.registration_summary import registration_responsible_person, create_registration_summary, \
     create_reminder_registration
@@ -50,7 +52,7 @@ def get_dataset(kwargs, pk, dataset):
 def get_event(kwargs):
     event_id = kwargs.get("event_pk", None)
     if event_id is not None:
-        return Event.objects.get(id=event_id)
+        return Event.objects.filter(id=event_id)
     else:
         return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
 
@@ -231,7 +233,7 @@ class ZipCodeSearchFilter(FilterSet):
 
     class Meta:
         model = ZipCode
-        fields = ['zip_code', 'city']
+        fields = ['zip_code', 'city', 'id']
 
     def get_zip_city(self, queryset, field_name, value):
         cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
@@ -280,7 +282,7 @@ class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantPersonalViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
+    permission_classes = [IsAuthenticated, IsResponsiblePersonParticipantPersonalPermission]
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
 
@@ -846,3 +848,17 @@ class ReminderMailViewSet(viewsets.ViewSet):
             return Response({'receiver': f'no valid type "{email_type}" given'}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)
+
+
+class WorkshopViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Workshop.objects.all()
+    serializer_class = WorkshopSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('registration',)
+
+
+class WorkshopStatsViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = WorkshopStatsSerializer
+    queryset = Workshop.objects.all()
