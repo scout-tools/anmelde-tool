@@ -52,7 +52,7 @@ def get_dataset(kwargs, pk, dataset):
 def get_event(kwargs):
     event_id = kwargs.get("event_pk", None)
     if event_id is not None:
-        return Event.objects.get(id=event_id)
+        return Event.objects.filter(id=event_id)
     else:
         return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
 
