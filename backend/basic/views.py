@@ -34,7 +34,7 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission, \
-    IsOrganisationLeader
+    IsOrganisationLeader, IsResponsiblePersonParticipantPersonalPermission
 
 from helper.registration_summary import registration_responsible_person, create_registration_summary, \
     create_reminder_registration
@@ -282,7 +282,7 @@ class ScoutOrgaLevelViewSet(viewsets.ModelViewSet):
 
 
 class ParticipantPersonalViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsResponsiblePersonPermission]
+    permission_classes = [IsAuthenticated, IsResponsiblePersonParticipantPersonalPermission]
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
 
@@ -849,12 +849,14 @@ class ReminderMailViewSet(viewsets.ViewSet):
 
         return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)
 
+
 class WorkshopViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Workshop.objects.all()
     serializer_class = WorkshopSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('registration',)
+
 
 class WorkshopStatsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
