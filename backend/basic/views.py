@@ -30,7 +30,7 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
     EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
     RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer, \
-    WorkshopSerializer, WorkshopStatsSerializer
+    WorkshopSerializer, WorkshopStatsSerializer, SimpleMailSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission, \
@@ -39,6 +39,7 @@ from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsPr
 from helper.registration_summary import registration_responsible_person, create_registration_summary, \
     create_reminder_registration
 from helper.registration_matching_mail import create_matching_mail
+import helper.email
 
 
 def get_dataset(kwargs, pk, dataset):
@@ -846,6 +847,31 @@ class ReminderMailViewSet(viewsets.ViewSet):
 
         else:
             return Response({'receiver': f'no valid type "{email_type}" given'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)
+
+
+class SimpleMailViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated, IsEventMaster]
+
+    def create(self, request, *args, **kwargs):
+        serializer = SimpleMailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        if request.data['code'] != 'A1B2C3D4':
+            raise PermissionDenied('wrong code for reminder mails')
+
+        queryset = get_registrations_from_event(self.kwargs)
+
+        for registration in queryset:
+            if registration.responsible_persons.exists():
+                data = {
+                    'email': list(registration.responsible_persons.values_list('username', flat=True)),
+                    'event': registration.event.name,
+                    'text': request.data['text'],
+                    'reply_to': request.data['reply_to']
+                }
+                helper.email.send_simple(data)
 
         return Response({'status': 'emails sent'}, status=status.HTTP_200_OK)
 

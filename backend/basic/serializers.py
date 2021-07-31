@@ -715,3 +715,9 @@ class WorkshopStatsSerializer(serializers.ModelSerializer):
             if (supervisor.scout_name):
                 supervisor_name += f" ({supervisor.scout_name})"
         return supervisor_name
+
+
+class SimpleMailSerializer(serializers.Serializer):
+    code = serializers.CharField()
+    text = serializers.CharField()
+    reply_to = serializers.ListField(required=False)

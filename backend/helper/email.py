@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
 from django.template.loader import render_to_string
 from pathlib import Path
 from enum import Enum
@@ -98,6 +98,7 @@ def send_registration_summary(data):
 
     subject = "Registrierung beim Anmelde-Tool vollständig abgeschlossen"
     recipients = [data['email']]
+    send_mail()
 
     return send_email(plain_renderend, html_rendered, subject, recipients)
 
@@ -126,30 +127,44 @@ def send_matching(data):
                       attachments=attachments)
 
 
+def send_simple(data):
+    subject = f"Neuigkeiten vom {data['event']}"
+    recipients = data['email']
+    if data['reply_to'] is not None:
+        return send_email(data['text'], "", subject, recipients, reply_to=data['reply_to'], simple=True)
+    else:
+        return send_email(data['text'], "", subject, recipients, simple=True)
+
+
 def send_email(plain_renderend, html_rendered, subject, recipients, reply_to=('support@anmelde-tool.de',),
-               attachments=[]):
-    EmailThread(plain_renderend, html_rendered, subject, recipients, reply_to, attachments).start()
+               attachments=[], simple=False):
+    EmailComplexThread(plain_renderend, html_rendered, subject, recipients, reply_to, attachments, simple).start()
 
 
-class EmailThread(threading.Thread):
-    def __init__(self, body_plain, body_html, subject, recipients, reply_to, attachments):
+class EmailComplexThread(threading.Thread):
+    def __init__(self, body_plain, body_html, subject, recipients, reply_to, attachments, simple=False):
         self.subject = subject
         self.recipient_list = recipients
         self.html_content = body_html
         self.body_plain = body_plain
         self.reply_to = reply_to
         self.attachments = attachments
+        self.simple = simple
         threading.Thread.__init__(self)
 
     def run(self):
-        email = EmailMultiAlternatives(self.subject, self.html_content, sender, self.recipient_list,
-                                       bcc=[getattr(settings, "EMAIL_HOST_USER")],
-                                       reply_to=self.reply_to)
+        if self.simple:
+            email = EmailMessage(self.subject, self.body_plain, sender, self.recipient_list,
+                                 bcc=[getattr(settings, "EMAIL_HOST_USER")], reply_to=self.reply_to)
+        else:
+            email = EmailMultiAlternatives(self.subject, self.html_content, sender, self.recipient_list,
+                                           bcc=[getattr(settings, "EMAIL_HOST_USER")],
+                                           reply_to=self.reply_to)
+            email.content_subtype = 'html'
 
-        # email.attach_alternative(self.html_content, 'text/html')
         for atm in self.attachments:
             path = Path(f'{email_directory}/attachments/{atm}')
             if path.exists():
                 email.attach_file(path)
-        email.content_subtype = 'html'
+
         email.send()

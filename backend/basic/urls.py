@@ -52,6 +52,8 @@ event_router.register(r'registration-stats', views.RegistrationStatViewSet,
                       basename='registration-stats-details')
 event_router.register(r'registration-reminder', views.ReminderMailViewSet,
                       basename='registration-reminder-details')
+event_router.register(r'registration-simplemail', views.SimpleMailViewSet,
+                      basename='registration-simplemail')
 
 registration_router = routers.NestedSimpleRouter(router, r'registration', lookup='registration')
 registration_router.register(r'participants', views.RegistrationParticipantsViewSet, basename='participants')
