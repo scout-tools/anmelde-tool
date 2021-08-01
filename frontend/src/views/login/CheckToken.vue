@@ -193,7 +193,7 @@ export default {
             this.onSuccessfulLogin();
           })
           .catch((error) => {
-            this.responseObj = error.response.data;
+            this.responseObj = error.response.statusText;
             this.showError = true;
             this.isLoading = false;
           });

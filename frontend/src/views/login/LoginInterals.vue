@@ -20,8 +20,8 @@
             </v-card-title>
             <v-card-text class="mt-5">
               <v-subheader>
-                Hier kannst du dich einloggen falls du bereits Zugangsdaten
-                bekommen hast.
+                Hier kannst du dich einloggen falls du ein Lager
+                organisiertst und deine Daten abrufen willst.
               </v-subheader>
               <v-form>
                 <v-container v-if="!emailSend">

@@ -25,7 +25,7 @@
           <input type="file" @change="onFileChange" />
         </v-card>
         <v-card class="ma-4">
-          <v-simple-table dense>
+          <v-simple-table dense v-if="chartData.length">
             <template v-slot:default>
               <thead>
                 <tr>
@@ -34,14 +34,14 @@
                     v-for="(column, index) in columns"
                     :key="index"
                   >
-                    {{ column }}
+                    {{ mapHeader(column) }}
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="item in chartData" :key="item.name">
                   <td v-for="(column, index) in columns" :key="index">
-                    {{ item[column] }}
+                    {{ displayFormt(item[column], column) }}
                   </td>
                   <td>
                     <v-btn icon @click="fillParticipant(item)">
@@ -63,6 +63,9 @@
 
 <script>
 import XLSX from 'xlsx';
+import moment from 'moment';
+import axios from 'axios';
+
 import CreateSinglePersonDialog from '@/views/registration/create/steps/dialog/CreateSinglePersonDialog.vue';
 
 export default {
@@ -74,6 +77,7 @@ export default {
     active: false,
     valid: true,
     files: [],
+    promises: [],
     data: {
       name: '',
       description: '',
@@ -82,15 +86,15 @@ export default {
       zipCode: '',
     },
     columns: [
-      'Vorname*',
-      'Nachname*',
-      'Pfadfindername',
-      'Geburtsdatum*',
-      'Adresse*',
-      'Postleitzahl*',
-      'Telefonnummer*',
-      'E-Mail-Adresse*',
-      'Tagesgast',
+      'firstName',
+      'lastName',
+      'scoutName',
+      'birthday',
+      'street',
+      'zipCodeShow',
+      'phoneNumber',
+      'email',
+      'participantRole',
     ],
     jsonData: [],
     e1: 1,
@@ -104,10 +108,62 @@ export default {
     },
   }),
   methods: {
+    displayFormt(date, column) {
+      if (column === 'birthday') {
+        return moment(date).format('DD.MM.YYYY');
+      }
+      if (column === 'participantRole') {
+        return date === 1 ? 'Teilnehmer_innen' : 'Tagesgast';
+      }
+      return date;
+    },
+    mapHeader(column) {
+      switch (column) {
+        case 'firstName':
+          return 'Vorname';
+        case 'lastName':
+          return 'Nachname';
+        case 'scoutName':
+          return 'Pfadfindername';
+        case 'birthday':
+          return 'Geburtstag';
+        case 'street':
+          return 'Straße';
+        case 'zipCode':
+          return 'PLZ';
+        case 'phoneNumber':
+          return 'Telefonnummer';
+        case 'email':
+          return 'E-Mail-Adresse';
+        case 'participantRole':
+          return 'Rolle';
+        default:
+          return 'Unbekannt';
+      }
+    },
     onFileChange(e) {
+      const me = this;
       this.getJsonFromFile(e).then((data) => {
-        this.jsonData = data;
+        me.processExcelData(data).then((data2) => {
+          me.jsonData = data2;
+        });
       });
+    },
+    async processExcelData(data) {
+      const me = this;
+      const output = [];
+      let zipCodeTemps = [];
+      data.forEach((element, index, array) => { // eslint-disable-line
+        output.push(me.map(element));
+      });
+      await Promise.all(this.promises).then((array) => {
+        zipCodeTemps = array;
+      });
+      output.forEach((element, index, array) => { // eslint-disable-line
+        element.zipCode = zipCodeTemps[index][0].id; // eslint-disable-line
+        element.zipCodeShow = `${zipCodeTemps[index][0].zipCode} - ${zipCodeTemps[index][0].city}`; // eslint-disable-line
+      });
+      return output;
     },
     getJsonFromFile(e) {
       return new Promise((resolve) => {
@@ -138,7 +194,7 @@ export default {
       this.$emit('refresh');
     },
     fillParticipant(input) {
-      const newInput = this.map(input);
+      const newInput = input;
       this.$refs.createSinglePersonDialog.openDialogEdit(newInput);
     },
     map(input) {
@@ -150,22 +206,34 @@ export default {
         zipCode: '',
         email: '',
         phoneNumber: '',
-        birthday: '',
+        birthday: new Date(),
         participantRole: '',
+        eatHabitType: [],
+        scoutGroup: 'Test',
       };
       dto.firstName = input['Vorname*'];
       dto.lastName = input['Nachname*'];
       dto.scoutName = input['Pfadfindername']; // eslint-disable-line
       dto.street = input['Adresse*'];
       dto.ageGroup = this.convertAgeGroup(input['Altersstufe*']);
-      dto.zipCode = 1; // input['Postleitzahl*'];
+      dto.zipCode = this.getZipCode(input['Postleitzahl*'], input['Stadt*']);
       dto.phoneNumber = input['Telefonnummer*'];
       dto.email = input['E-Mail-Adresse*'];
       dto.birthday = this.convertBirthday(input['Geburtsdatum*']);
-      dto.participantRole = input['Tagesgast'] === 'x'? 11 : 1; // eslint-disable-line
-      console.log(dto);
+      dto.participantRole = input['Tagesgast'] === 'x' ? 11 : 1; // eslint-disable-line
       return dto;
     },
+    async callSingleZipCode(zipCode) {
+      const path = `${this.API_URL}basic/zip-code/?zip_city=${zipCode}`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+    getZipCode(zipCode) {
+      this.promises.push(this.callSingleZipCode(zipCode));
+      return '...';
+    },
+
     convertBirthday(birthdayDays) {
       const startDate = new Date(1900, 0, 1);
       const newDate = new Date(
@@ -173,7 +241,7 @@ export default {
         startDate.getMonth(),
         startDate.getDate() + birthdayDays - 2,
       );
-      return newDate;
+      return moment(newDate).format('YYYY-MM-DD');
     },
     convertAgeGroup(ageGroupString) {
       switch (ageGroupString) {

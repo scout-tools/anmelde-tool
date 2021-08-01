@@ -45,7 +45,6 @@ export default {
   props: ['data', 'color'],
   computed: {
     list() {
-      debugger;
       return this.data;
     },
   },
