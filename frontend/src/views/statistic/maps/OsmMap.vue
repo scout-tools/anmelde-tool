@@ -1,5 +1,7 @@
 <template>
-  <div style="height: 800px; width: 100%">
+  <v-container class="top-margin">
+    <v-row>
+    <div style="height: 900px; width: 100%">
     <l-map
       :zoom="zoom"
       :center="center"
@@ -18,7 +20,28 @@
         </l-popup>
       </l-circle>
     </l-map>
-  </div>
+    </div>
+    </v-row>
+    <v-divider class="my-6"/>
+    <v-row>
+      <v-col cols="8" sm="8">
+    <v-slider
+      v-model="radiusSlider"
+      color="black"
+      label="Radius in km"
+      min=10
+      max="250"
+      thumb-label="always"
+    >
+    </v-slider>
+      </v-col>
+        <v-col cols="4" sm="4">
+        <p>
+        Zoom {{ this.currentZoom }}
+        </p>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -43,6 +66,7 @@ export default {
   data() {
     return {
       zoom: 6.5,
+      radiusSlider: 2,
       center: latLng(51, 11),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
@@ -68,8 +92,8 @@ export default {
     getColor(item) {
       return item.bund === 'BdP' ? 'red' : 'blue';
     },
-    getRadius(item) {
-      return item.participants * 20 + 2000;
+    getRadius() {
+      return this.radiusSlider * 1000;
     },
     createContent(item) {
       return `${item.bund},

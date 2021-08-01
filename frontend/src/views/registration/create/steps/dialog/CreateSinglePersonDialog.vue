@@ -465,7 +465,6 @@ export default {
       'ageGroupMapping',
     ]),
     computedDateFormattedMomentjs() {
-      debugger;
       return this.data.birthday ? moment(this.data.birthday).format('DD.MM.YYYY') : '';
     },
     firstNameErrors() {

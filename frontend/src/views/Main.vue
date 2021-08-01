@@ -1,6 +1,15 @@
 <template>
   <v-app>
     <top-menu-main v-show="!isLoginOnly"/>
+    <div v-if="isRouterPageUndefined" class="fullsize pa-10">
+      <v-btn
+        class="ma-10"
+        @click="onRefreshClicked"
+        color="primary"
+      >
+        Weiter
+      </v-btn>
+    </div>
     <router-view class="fullsize"/>
     <footer-main v-show="!isLoginOnly"/>
   </v-app>
@@ -29,8 +38,19 @@ export default {
       }
       return true;
     },
+    isRouterPageUndefined() {
+      return this.$router.history.current.name === null;
+    },
     isLoginOnly() {
       return this.$router.history.current.query.header === 'no';
+    },
+  },
+  methods: {
+    onRefreshClicked() {
+      this.$router.go();
+    },
+    onGoToStartpageClicked() {
+      this.$router.go();
     },
   },
 };
