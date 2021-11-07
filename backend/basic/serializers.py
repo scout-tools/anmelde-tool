@@ -3,7 +3,8 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from rest_framework import serializers
 from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration, ZipCode, \
     ParticipantGroup, Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
-    EatHabitType, EatHabit, TravelType, TentType, TravelTag, PostalAddress, Workshop
+    EatHabitType, EatHabit, TravelType, TentType, TravelTag, PostalAddress, Workshop, EventTag, \
+    Contact
 from rest_framework.fields import Field
 from django.contrib.auth.models import User
 from django.db.models import Sum, Count, F, Q, Case, When, Value, CharField
@@ -23,6 +24,12 @@ def distinct_combinations(num_range):
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
+        fields = '__all__'
+
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
         fields = '__all__'
 
 
@@ -287,6 +294,12 @@ class TentTypeSerializer(serializers.ModelSerializer):
 class TravelTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = TravelTag
+        fields = '__all__'
+
+
+class EventTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventTag
         fields = '__all__'
 
 

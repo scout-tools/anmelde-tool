@@ -5,7 +5,7 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, \
     Role, MethodOfTravel, Tent, ScoutOrgaLevel, ParticipantPersonal, \
     EatHabitType, EatHabit, TravelType, \
     TentType, EventTag, EventRoleMapping, EventRole, PostalAddress, RegistrationMatching, \
-    Workshop
+    Workshop, Contact
 
 admin.site.register(AgeGroup)
 admin.site.register(Role)
@@ -22,6 +22,7 @@ admin.site.register(EventRoleMapping)
 admin.site.register(EventRole)
 admin.site.register(PostalAddress)
 admin.site.register(Workshop)
+admin.site.register(Contact)
 
 
 @admin.register(ScoutHierarchy)

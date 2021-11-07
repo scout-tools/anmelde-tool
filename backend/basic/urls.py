@@ -18,6 +18,7 @@ router.register(r'eat-habit-type', views.EatHabitTypeViewSet)
 router.register(r'eat-habit', views.EatHabitViewSet)
 router.register(r'travel-type', views.TravelTypeViewSet)
 router.register(r'travel-tag', views.TravelTagViewSet)
+router.register(r'event-tag', views.EventTagViewSet)
 router.register(r'tent-type', views.TentTypeViewSet)
 router.register(r'tent', views.TentViewSet)
 router.register(r'scout-orga-level', views.ScoutOrgaLevelViewSet)
@@ -26,8 +27,10 @@ router.register(r'method-of-travel', views.MethodOfTravelViewSet)
 router.register(r'event-overview', views.EventOverviewViewSet)
 router.register(r'check-event', views.EventCodeCheckerViewSet, basename="event-code")
 router.register(r'postal-address', views.PostalAddressViewSet)
+router.register(r'contact', views.ContactViewSet, basename="contact")
 router.register(r'workshop', views.WorkshopViewSet, basename="workshop")
 router.register(r'workshop-stats', views.WorkshopStatsViewSet, basename="workshopStats")
+
 
 event_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
 event_router.register(r'participants', views.EventParticipantsViewSet,
