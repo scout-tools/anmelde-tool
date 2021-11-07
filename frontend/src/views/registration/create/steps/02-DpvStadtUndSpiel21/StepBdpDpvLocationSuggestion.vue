@@ -86,7 +86,7 @@ Wichtig wären uns der Name des Ortes und eine Kontakperson mit EMail oder Telef
 import axios from 'axios';
 import CreateLocationDialog from '@/views/event/create/components/dialog/CreateLocationDialog.vue';
 import DeleteLocationModal from '@/views/registration/create/steps/dialog/DeleteLocationModal.vue';
-import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocationSuggention',

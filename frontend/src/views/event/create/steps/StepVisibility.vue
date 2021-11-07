@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="StepInvitationCode" v-model="valid">
+  <v-form ref="StepVisibility" v-model="valid">
     <v-container>
       <v-row class="mb-6">
         <span class="subtitle-1">
@@ -12,16 +12,7 @@
       </v-row>
       <v-row align="center" justify="center">
         <v-col cols="3">
-          <v-text-field
-            v-model="data.invitationCode"
-            :error-messages="invitationCodeErrors"
-            label="Verifizierungscode"
-            required
-            outlined
-            filled
-            prepend-inner-icon="mdi-account-key"
-            @blur="$v.data.invitationCode.$touch()"
-          />
+          <v-switch label="Sichtbar" v-model="data.isPublic"> </v-switch>
         </v-col>
       </v-row>
 
@@ -39,71 +30,45 @@
 </template>
 
 <script>
-import { alphaNum, minLength, maxLength } from 'vuelidate/lib/validators';
+import { required } from 'vuelidate/lib/validators';
+import { stepMixin } from '@/mixins/stepMixin';
+
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepInvitationCode',
+  name: 'StepVisibility',
   props: ['position', 'maxPos', 'data'],
   components: {
     PrevNextButtons,
   },
+  mixins: [stepMixin],
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
   }),
   validations: {
     data: {
-      invitationCode: {
-        alphaNum,
-        minLength: minLength(4),
-        maxLength: maxLength(10),
+      isPublic: {
+        required,
       },
     },
   },
   computed: {
     invitationCodeErrors() {
       const errors = [];
-      if (!this.$v.data.invitationCode.$dirty) return errors;
-      if (!this.$v.data.invitationCode.alphaNum) {
+      if (!this.$v.data.isPublic.$dirty) return errors;
+      if (!this.$v.data.isPublic.required) {
         errors.push(
           'Der Einladungscode muss aus Zahlen und Buchstaben bestehen,',
         );
-      }
-      if (!this.$v.data.invitationCode.minLength) {
-        errors.push('Minimal 4 Zeichen sind nötig.');
-      }
-      if (!this.$v.data.invitationCode.maxLength) {
-        errors.push('Maximal 4 Zeichen sind nötig.');
       }
       return errors;
     },
   },
   methods: {
-    validate() {
-      this.$v.$touch();
-      this.valid = !this.$v.$error;
-    },
-    prevStep() {
-      this.$emit('prevStep');
-    },
-    nextStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-      this.$emit('nextStep');
-    },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-      this.$emit('submit');
-    },
     getData() {
       return {
-        invitationCode: this.data.invitationCode,
+        isPublic: this.data.isPublic,
       };
     },
   },

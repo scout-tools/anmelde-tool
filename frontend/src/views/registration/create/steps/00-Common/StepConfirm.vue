@@ -31,10 +31,10 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators';
-import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepConfirmBundesfahrt',
+  name: 'StepConfirm',
   displayName: 'Zusammenfassung und Bestätigung',
   props: ['position', 'maxPos'],
   components: {
@@ -89,8 +89,7 @@ export default {
         description: this.data.description,
       };
     },
-    beforeTabShow() {
-    },
+    beforeTabShow() {},
   },
 };
 </script>

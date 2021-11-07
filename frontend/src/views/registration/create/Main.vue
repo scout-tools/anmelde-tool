@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card v-if="!isLoading" class="mx-auto top-margin">
       <v-row justify="center">
         <v-stepper v-model="currentStep" vertical>
@@ -46,17 +46,7 @@
       </v-snackbar>
     </v-card>
     <v-card v-else>
-      <div class="text-center ma-5">
-        <p>Lade Daten ...</p>
-        <v-progress-circular
-          :size="80"
-          :width="10"
-          class="ma-5"
-          color="primary"
-          indeterminate
-        ></v-progress-circular>
-        <p>Bitte hab etwas Geduld.</p>
-      </div>
+      <LoadingCircual/>
     </v-card>
   </v-container>
 </template>
@@ -64,22 +54,31 @@
 <script>
 import axios from 'axios';
 
-import StepAddParticipantsSingle from './steps/StepAddParticipantsSingle.vue';
-import StepAddParticipants from './steps/StepAddParticipants.vue';
-import StepConfirmBusife from './steps/StepConfirmBusife.vue';
-import StepConfirmDpv from './steps/StepConfirmDpv.vue';
-import StepBdpDpvPackage from './steps/StepBdpDpvPackage.vue';
-import StepConfirm from './steps/StepConfirm.vue';
-import StepConsent from './steps/StepConsent.vue';
-import StepFood from './steps/StepFood.vue';
-import StepBdpDpvLocation from './steps/StepBdpDpvLocation.vue';
-import StepBdpDpVPreferences from './steps/StepBdpDpVPreferences.vue';
-import StepAddParticipantGroupRole from './steps/StepBdPDpvAddParticipantGroupRole.vue';
-import StepBdpDpvTextForStamm from './steps/StepBdpDpvTextForStamm.vue';
-import StepFreeText from './steps/StepFreeText.vue';
-import StepTravelBundesfahrt from './steps/StepTravelBundesfahrt.vue';
-import StepBdpDpvLocationSuggestion from './steps/StepBdpDpvLocationSuggestion.vue';
-import StepWorkshop from './steps/StepWorkshop.vue';
+import LoadingCircual from '@/components/loading/Circual.vue';
+
+import StepConfirm from './steps/00-Common/StepConfirm.vue';
+import StepConsent from './steps/00-Common/StepConsent.vue';
+import StepFood from './steps/00-Common/StepFood.vue';
+import StepFreeText from './steps/00-Common/StepFreeText.vue';
+import AddContract from './steps/00-Common/AddContract.vue';
+
+import StepAddParticipantsSingle from './steps/01-MosaikBundesfahrt21/StepAddParticipantsSingle.vue';
+import StepTravelBundesfahrt from './steps/01-MosaikBundesfahrt21/StepTravelBundesfahrt.vue';
+// import StepConfirmBundesfahrt from './steps/01-MosaikBundesfahrt21/StepConfirmBundesfahrt.vue';
+
+import StepAddParticipants from './steps/02-DpvStadtUndSpiel21/StepAddParticipants.vue';
+import StepAddParticipantGroupRole from './steps/02-DpvStadtUndSpiel21/StepBdPDpvAddParticipantGroupRole.vue';
+import StepBdpDpvLocation from './steps/02-DpvStadtUndSpiel21/StepBdpDpvLocation.vue';
+import StepBdpDpvLocationSuggestion from './steps/02-DpvStadtUndSpiel21/StepBdpDpvLocationSuggestion.vue';
+import StepBdpDpvPackage from './steps/02-DpvStadtUndSpiel21/StepBdpDpvPackage.vue';
+import StepBdpDpVPreferences from './steps/02-DpvStadtUndSpiel21/StepBdpDpVPreferences.vue';
+import StepBdpDpvTextForStamm from './steps/02-DpvStadtUndSpiel21/StepBdpDpvTextForStamm.vue';
+import StepConfirmDpv from './steps/02-DpvStadtUndSpiel21/StepConfirmDpv.vue';
+
+import StepWorkshop from './steps/03-BusiFe21/StepWorkshop.vue';
+import StepConfirmBusife from './steps/03-BusiFe21/StepConfirmBusife.vue';
+
+import DpvGoldErlebnisangebot from './steps/04-DpvGoldErlebnisangebot21/StepErlegbnisAngebot.vue';
 
 export default {
   components: {
@@ -98,6 +97,9 @@ export default {
     StepTravelBundesfahrt,
     StepBdpDpvPackage,
     StepWorkshop,
+    LoadingCircual,
+    DpvGoldErlebnisangebot,
+    AddContract,
   },
   props: ['scoutOrganisation'],
   data() {
@@ -150,6 +152,20 @@ export default {
           StepBdpDpvLocationSuggestion,
           StepBdpDpvPackage,
           StepConfirmDpv,
+        ];
+      }
+      // DPV-Gold-Erlebnisangebot
+      if (
+        this.currentEvent && // eslint-disable-line
+        this.currentEvent.eventTags && // eslint-disable-line
+        this.currentEvent.eventTags.includes(3)
+      ) {
+        return [
+          StepConsent,
+          DpvGoldErlebnisangebot,
+          AddContract,
+          StepFreeText,
+          StepConfirm,
         ];
       }
       return [StepConsent, StepAddParticipants, StepFood, StepConfirm];

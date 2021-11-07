@@ -9,8 +9,8 @@
             </v-card-title>
             <v-list subheader two-line>
               <v-subheader inset>
-                Nicht lange zögern. Melde deinen Stamm zu einer dieser
-                Fahrten an.
+                Nicht lange zögern. Melde deinen Stamm zu einer dieser Fahrten
+                an.
               </v-subheader>
 
               <v-btn
@@ -22,11 +22,19 @@
                 <v-icon left>mdi-calendar-plus</v-icon>
                 Neue Fahrt erstellen
               </v-btn>
-                <v-divider/>
+              <v-divider />
               <template v-for="(item, index) in getItems">
                 <v-list-item :key="item.name">
                   <v-list-item-avatar>
                     <v-icon
+                      v-if="isStaff"
+                      :class="'primary'"
+                      dark
+                      v-text="'mdi-pen'"
+                      @click="onEventEditClicked(item.id)"
+                    ></v-icon>
+                    <v-icon
+                      v-else
                       :class="'primary'"
                       dark
                       v-text="'mdi-tent'"
@@ -89,9 +97,11 @@
                     "
                     class="ml-4"
                   >
-                    <v-btn icon
-                           v-if="item.isRegistered.length"
-                           @click="editRegistration(getRegisteredId(item))">
+                    <v-btn
+                      icon
+                      v-if="item.isRegistered.length"
+                      @click="editRegistration(getRegisteredId(item))"
+                    >
                       <v-icon fab color="primary"> mdi-pencil </v-icon>
                     </v-btn>
                   </v-list-item-action>
@@ -125,7 +135,7 @@
           </v-card>
           <v-card v-else>
             <div class="text-center ma-5">
-              <p> Lade Daten ...</p>
+              <p>Lade Daten ...</p>
               <v-progress-circular
                 :size="80"
                 :width="10"
@@ -133,13 +143,13 @@
                 color="primary"
                 indeterminate
               ></v-progress-circular>
-              <p> Bitte hab etwas Geduld.</p>
+              <p>Bitte hab etwas Geduld.</p>
             </div>
           </v-card>
         </v-layout>
       </v-flex>
     </v-row>
-    <confirm-registration-edit-modal ref="confirmRegistrationEditModal"/>
+    <confirm-registration-edit-modal ref="confirmRegistrationEditModal" />
   </v-container>
 </template>
 
@@ -188,8 +198,20 @@ export default {
       }
       return true;
     },
+    isStaff() {
+      if (this.getJwtData) {
+        return this.getJwtData.isStaff;
+      }
+      return false;
+    },
   },
   methods: {
+    onEventEditClicked(id) {
+      this.$router.push({
+        name: 'createEvent',
+        params: { id },
+      });
+    },
     editRegistration(item) {
       this.$refs.confirmRegistrationEditModal.show(item);
     },

@@ -41,7 +41,7 @@ import { mapGetters } from 'vuex';
 import { maxLength } from 'vuelidate/lib/validators';
 
 import CreateLocationDialog from '@/views/event/create/components/dialog/CreateLocationDialog.vue';
-import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvTextForStamm',

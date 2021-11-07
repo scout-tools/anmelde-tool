@@ -97,7 +97,7 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { required, minLength } from 'vuelidate/lib/validators';
-import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepTents',

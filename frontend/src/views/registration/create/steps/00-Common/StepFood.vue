@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
-import EatPicker from '../components/EatPicker.vue';
+import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
+import EatPicker from '../../components/EatPicker.vue';
 
 export default {
   components: {

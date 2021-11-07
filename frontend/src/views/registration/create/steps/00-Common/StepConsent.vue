@@ -4,7 +4,7 @@
       <v-row class="mt-2">
         <span class="text-left subtitle-1">
           <p>
-            Hiermit melde ich <b> {{ myStamm }} </b> zur
+            Hiermit melde ich <b> {{ myStamm }} aus dem Bund {{ myBund }} </b> zur
             <b> {{ currentEvent.name }} </b> an. <br />
             <br />
             Bevor deine Anmeldung verbindlich wird, musst du sie im letzten
@@ -15,7 +15,7 @@
             <br />
             Die folgenden Daten sind nur für das Planungsteam und die Administrator_innen
             sichtbar. <br />
-              Alle Dokumente findest du hier:
+              <span v-if="isBundesfahrt">Alle Dokumente findest du hier:</span>
               <a v-if="isBundesfahrt" target="_blank" href="https://cloud.dpbm.de/s/ZTm4KL2JqtJN9DP">
                 Link zur Bundescloud
               </a>
@@ -88,7 +88,7 @@ import moment from 'moment';
 import axios from 'axios';
 
 import { required } from 'vuelidate/lib/validators';
-import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepConsent',
@@ -134,7 +134,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'hierarchyMapping', 'getJwtData']),
+    ...mapGetters(['isAuthenticated', 'hierarchyMapping', 'getJwtData', 'myStamm', 'myBund', 'myScoutname']),
     checkbox1Errors() {
       const errors = [];
       if (!this.$v.data.checkbox1.$dirty) return errors;
@@ -164,14 +164,6 @@ export default {
         );
       }
       return errors;
-    },
-    myStamm() {
-      if (this.extendedUsers.scoutOrganisation) {
-        return this.hierarchyMapping.find(
-          (item) => item.id === this.extendedUsers.scoutOrganisation,
-        ).name;
-      }
-      return 'Keine Name';
     },
     registrationDeadlineFormat() {
       return moment(this.currentEvent.registrationDeadline)
@@ -214,13 +206,35 @@ export default {
 
       Promise.all([this.loadUserExtended()])
         .then((values) => {
-          [this.extendedUsers] = values;
+          this.setMyStamm(values[0]);
           this.isLoading = false;
         })
         .catch((error) => {
           this.errormsg = error.response.data.message;
           this.isLoading = false;
         });
+    },
+    setMyStamm(data) {
+      let myStamm = 'kein Stamm';
+      if (data.scoutOrganisation) {
+        myStamm = this.hierarchyMapping.find(
+          (item) => item.id === data.scoutOrganisation,
+        ).name;
+        const parentId = this.hierarchyMapping.find(
+          (item) => item.id === data.scoutOrganisation,
+        ).parent;
+        let parentObj = this.hierarchyMapping.find(
+          (item) => item.id === parentId,
+        );
+        if (parentObj.level > 3) {
+          parentObj = this.hierarchyMapping.find(
+            (item) => item.id === parentObj.parent,
+          );
+        }
+        this.$store.commit('setMyBund', parentObj.name);
+        this.$store.commit('setMyStamm', myStamm);
+        this.$store.commit('setMyScoutname', data.scoutName);
+      }
     },
     async loadUserExtended() {
       const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;

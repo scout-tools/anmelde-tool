@@ -34,7 +34,7 @@
 <script>
 import { required } from 'vuelidate/lib/validators';
 import axios from 'axios';
-import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepConfirmBundesfahrt',
