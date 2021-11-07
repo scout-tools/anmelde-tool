@@ -37,8 +37,8 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { required, minLength, minValue } from 'vuelidate/lib/validators';
-import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
-import TravelPicker from '../components/TravelPicker.vue';
+import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
+import TravelPicker from '../../components/TravelPicker.vue';
 
 export default {
   name: 'StepTravelBack',

@@ -37,9 +37,10 @@ const routes = [
     component: CheckTokenMain,
   },
   {
-    path: '/event/create',
+    path: '/event/create/:id',
     name: 'createEvent',
     component: CreateEvent,
+    props: true,
   },
   {
     path: '/event/overview',

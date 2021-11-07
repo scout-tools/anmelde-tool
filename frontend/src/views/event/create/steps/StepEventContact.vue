@@ -1,16 +1,17 @@
 <template>
-  <v-form
-    ref="formEventContact"
-    v-model="valid"
-  >
+  <v-form ref="formEventContact" v-model="valid">
     <v-container>
       <v-row class="mt-6">
-      <span class="subtitle-1">
-        {{'Trage hier die E-Mail-Adressen der verantwortlichen Kontaktpersonen ' +
-          ' als Ansprechperson ein.' }}
-        <br>
-        <i>{{' (Jede geschriebene E-Mail-Adresse muss mit Enter bestätigt werden!)'}}</i>
-      </span>
+        <span class="subtitle-1">
+          {{
+            'Trage hier die E-Mail-Adressen der verantwortlichen Kontaktpersonen ' +
+            ' als Ansprechperson ein.'
+          }}
+          <br />
+          <i>{{
+            ' (Jede geschriebene E-Mail-Adresse muss mit Enter bestätigt werden!)'
+          }}</i>
+        </span>
       </v-row>
       <v-row>
         <v-combobox
@@ -26,10 +27,15 @@
         />
       </v-row>
 
-      <v-divider class="my-2"/>
+      <v-divider class="my-2" />
 
-      <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
-                         @prevStep="prevStep()" @submitStep="submitStep()"/>
+      <prev-next-buttons
+        :position="position"
+        :max-pos="maxPos"
+        @nextStep="nextStep()"
+        @prevStep="prevStep()"
+        @submitStep="submitStep()"
+      />
     </v-container>
   </v-form>
 </template>
@@ -40,7 +46,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepEventContact',
-  props: ['position', 'maxPos'],
+  props: ['position', 'maxPos', 'data'],
   components: {
     PrevNextButtons,
   },
@@ -51,8 +57,8 @@ export default {
   }),
   validations: {
     contacts: {
-      required,
       $each: {
+        required,
         email,
       },
     },

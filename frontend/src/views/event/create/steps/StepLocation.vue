@@ -48,7 +48,7 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepLocation',
-  props: ['position', 'maxPos'],
+  props: ['position', 'maxPos', 'data'],
   components: {
     CreateLocationDialog,
     PrevNextButtons,
@@ -105,9 +105,9 @@ export default {
     },
     formatLocationPreview() {
       this.items = this.items.map(({
-        name, zipCode, city, address, ...args
+        name, description, address, ...args
       }) => ({
-        preview: `${name}: ${zipCode} ${city} (${address})`,
+        preview: `${name}: ${description} (${address})`,
         ...args,
       }));
     },

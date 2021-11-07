@@ -46,7 +46,7 @@
 import { mapGetters } from 'vuex';
 // import { required, minLength, minValue } from 'vuelidate/lib/validators';
 
-import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepNameDescription',

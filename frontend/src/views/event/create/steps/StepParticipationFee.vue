@@ -1,12 +1,10 @@
 <template>
-  <v-form
-    ref="formNameDescription"
-  >
+  <v-form ref="StepParticipationFee">
     <v-container>
       <v-row class="mb-6">
-      <span class="subtitle-1">
-        Gib den Tielnehmerbeitrag für die Aktion an.
-      </span>
+        <span class="subtitle-1">
+          Gib den Teilnehmerbeitrag für die Aktion an.
+        </span>
       </v-row>
       <v-row>
         <vuetify-money
@@ -16,10 +14,15 @@
         />
       </v-row>
 
-      <v-divider class="my-3"/>
+      <v-divider class="my-3" />
 
-      <prev-next-buttons :position="position" :max-pos="maxPos" @nextStep="nextStep()"
-                         @prevStep="prevStep()" @submitStep="submitStep()"/>
+      <prev-next-buttons
+        :position="position"
+        :max-pos="maxPos"
+        @nextStep="nextStep()"
+        @prevStep="prevStep()"
+        @submitStep="submitStep()"
+      />
     </v-container>
   </v-form>
 </template>
@@ -29,15 +32,12 @@ import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepParticipationFee',
-  props: ['position', 'maxPos'],
+  props: ['position', 'maxPos', 'data'],
   components: {
     PrevNextButtons,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
-    data: {
-      participationFee: 0.00,
-    },
     options: {
       locale: 'de-DE',
       prefix: '€',

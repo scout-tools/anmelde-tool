@@ -18,51 +18,45 @@
           </span>
           <v-radio-group v-model="radioGroup">
             <v-radio label="Ja" value="1"></v-radio>
-            <v-radio :disabled="!!location.length" label="Nein" value="2"></v-radio>
+            <v-radio
+              :disabled="!!location.length"
+              label="Nein"
+              value="2"
+            ></v-radio>
           </v-radio-group>
         </v-container>
       </v-expand-transition>
 
       <v-expand-transition>
         <v-container v-show="radioGroup === '1'">
-          <v-btn
-            color="primary"
-            @click="newLocation()"
-          >
+          <v-btn color="primary" @click="newLocation()">
             Platz oder Haus Hinzufügen
           </v-btn>
-      <v-list-item-group color="primary">
-        <v-container>
-        <v-list-item
-          v-for="(item, i) in location"
-          :key="i"
-        >
-          <v-list-item-avatar>
-            <v-icon color="black" dark>mdi-home</v-icon>
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title
-              v-text="item.name"
-            ></v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-btn dense icon @click="editLocation(item.id)">
-              <v-icon color="primary lighten-1">mdi-pencil</v-icon>
-            </v-btn>
-          </v-list-item-action>
-          <v-list-item-action>
-            <v-btn dense icon @click="deleteLocation(item.id)">
-              <v-icon color="red lighten-1">mdi-trash-can</v-icon>
-            </v-btn>
-          </v-list-item-action>
-        </v-list-item>
-        <v-list-item
-          v-if="!location.length"
-        >
-          Bisher hast du noch kein Haus/Zeltplatz hinzugefügt.
-        </v-list-item>
-        </v-container>
-      </v-list-item-group>
+          <v-list-item-group color="primary">
+            <v-container>
+              <v-list-item v-for="(item, i) in location" :key="i">
+                <v-list-item-avatar>
+                  <v-icon color="black" dark>mdi-home</v-icon>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.name"></v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-btn dense icon @click="editLocation(item.id)">
+                    <v-icon color="primary lighten-1">mdi-pencil</v-icon>
+                  </v-btn>
+                </v-list-item-action>
+                <v-list-item-action>
+                  <v-btn dense icon @click="deleteLocation(item.id)">
+                    <v-icon color="red lighten-1">mdi-trash-can</v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </v-list-item>
+              <v-list-item v-if="!location.length">
+                Bisher hast du noch kein Haus/Zeltplatz hinzugefügt.
+              </v-list-item>
+            </v-container>
+          </v-list-item-group>
         </v-container>
       </v-expand-transition>
       <v-divider class="my-3" />
@@ -75,10 +69,7 @@
         @submitStep="submitStep()"
       />
     </v-container>
-    <create-location-dialog
-      ref="newLocationDialog"
-      @refresh="onRefresh()"
-    />
+    <create-location-dialog ref="newLocationDialog" @refresh="onRefresh()" />
     <delete-location-modal ref="deleteLocationModal" @refresh="onRefresh()" />
   </v-form>
 </template>
@@ -87,7 +78,7 @@
 import axios from 'axios';
 import CreateLocationDialog from '@/views/event/create/components/dialog/CreateLocationDialog.vue';
 import DeleteLocationModal from '@/views/registration/create/steps/dialog/DeleteLocationModal.vue';
-import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
+import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvLocation',
@@ -151,8 +142,9 @@ export default {
         .then((values) => {
           [this.location] = values;
           this.isLoading = false;
-          this.location = this.location.filter((item) =>
-            this.show_event_location_types.includes(item.locationType), // eslint-disable-line
+          this.location = this.location.filter(
+            (item) =>
+              this.show_event_location_types.includes(item.locationType), // eslint-disable-line
           ); // eslint-disable-line
         })
         .catch((error) => {

@@ -28,6 +28,9 @@ export default new Vuex.Store({
     dpvAddedLocation: false,
     apiIsDown: false,
     scoutGroupMapping: [],
+    myStamm: '',
+    myBund: '',
+    myScoutname: '',
     registeredTents: [{
       id: 1, registration: 1, tentType: 1, usedByScoutGroups: [1],
     }],
@@ -35,6 +38,15 @@ export default new Vuex.Store({
   getters: {
     dpvAddedLocation(state) {
       return state.dpvAddedLocation;
+    },
+    myBund(state) {
+      return state.myBund;
+    },
+    myStamm(state) {
+      return state.myStamm;
+    },
+    myScoutname(state) {
+      return state.myScoutname;
     },
     getJwtData(state) {
       return VueJwtDecode.decode(state.accessToken);
@@ -120,6 +132,15 @@ export default new Vuex.Store({
     },
     setRoleMapping(state, newData) {
       state.roleMapping = newData;
+    },
+    setMyBund(state, newData) {
+      state.myBund = newData;
+    },
+    setMyStamm(state, newData) {
+      state.myStamm = newData;
+    },
+    setMyScoutname(state, newData) {
+      state.myScoutname = newData;
     },
     setScoutOrgaLevelMapping(state, newData) {
       state.scoutOrgaLevelMapping = newData;
