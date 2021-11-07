@@ -16,5 +16,23 @@
             "name": "BdP-DPV-Aktion",
             "description": ""
         }
+    },
+    {
+        "model": "basic.EventTag",
+        "pk": 3,
+        "fields": {
+            "id": 3,
+            "name": "BuSiFe21",
+            "description": "Bundessingefest 2021"
+        }
+    },
+    {
+        "model": "basic.EventTag",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "name": "Erlebnisangebote",
+            "description": "DPV-Gold"
+        }
     }
 ]

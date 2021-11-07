@@ -21,7 +21,7 @@ from .models import Event, AgeGroup, EventLocation, ScoutHierarchy, Registration
     ZipCode, ParticipantGroup, Role, MethodOfTravel, Tent, \
     ScoutOrgaLevel, ParticipantPersonal, EatHabitType, EatHabit, TravelType, \
     TentType, EatHabit, TravelTag, PostalAddress, EventRoleMapping, RegistrationMatching, \
-    Workshop
+    Workshop, EventTag, Contact
 from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSerializer, \
     ScoutHierarchySerializer, RegistrationSerializer, ZipCodeSerializer, ParticipantGroupSerializer, \
     RoleSerializer, MethodOfTravelSerializer, TentSerializer, \
@@ -30,7 +30,7 @@ from .serializers import EventSerializer, AgeGroupSerializer, EventLocationSeria
     TentTypeSerializer, EventOverviewSerializer, EatHabitSerializer, EventCashMasterSerializer, \
     EventKitchenMasterSerializer, EventProgramMasterSerializer, RegistrationParticipantsSerializer, \
     RegistrationSummarySerializer, TravelTagSerializer, PostalAddressSerializer, RegistrationStatSerializer, \
-    WorkshopSerializer, WorkshopStatsSerializer, SimpleMailSerializer
+    WorkshopSerializer, WorkshopStatsSerializer, SimpleMailSerializer, EventTagSerializer, ContactSerializer
 
 from .permissions import IsEventMaster, IsKitchenMaster, IsEventCashMaster, IsProgramMaster, \
     IsLogisticMaster, IsSocialMediaPermission, IsResponsiblePersonPermission, IsTeamMemberPermission, \
@@ -341,6 +341,20 @@ class TravelTagViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = TravelTag.objects.all()
     serializer_class = TravelTagSerializer
+
+
+class EventTagViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = EventTag.objects.all()
+    serializer_class = EventTagSerializer
+
+
+class ContactViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('registration',)
 
 
 class EventCodeCheckerViewSet(viewsets.ReadOnlyModelViewSet):

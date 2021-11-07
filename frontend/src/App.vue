@@ -28,8 +28,4 @@ export default {
 .top-margin {
   margin-top: 70px !important;
 }
-
-#app {
-  background-color: rgba(240, 236, 236, 0.185);
-}
 </style>

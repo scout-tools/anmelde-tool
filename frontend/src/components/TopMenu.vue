@@ -5,7 +5,7 @@
         <router-link to="/">
           <img
             :src="logoPath"
-            height="40"
+            height="55"
             alt="Logo"
             class="logo-img mx-2"
           />
@@ -47,9 +47,9 @@ export default {
     },
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
-        return require('../assets/logo_dpv_beta.png'); // eslint-disable-line
+        return require('../assets/dpvgold/dpv-gold-logo-white.png'); // eslint-disable-line
       }
-      return require('../assets/logo_bdp_dpv.svg'); // eslint-disable-line
+      return require('../assets/dpvgold/dpv-gold-logo-white.png'); // eslint-disable-line
     },
     isSimpleUser() {
       if (this.getJwtData) {

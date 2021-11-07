@@ -151,6 +151,12 @@ class EventTag(TimeStampMixin):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=100, blank=True)
 
+    def __str__(self):
+        return "{}".format(self.name)
+
+    def __repr__(self):
+        return self.__str__()
+
 
 class Event(TimeStampMixin):
     id = models.AutoField(
@@ -249,6 +255,26 @@ class ParticipantGroup(TimeStampMixin):
 
     def __str__(self):
         return "{} - {}".format(self.registration, self.participant_role)
+
+    def __repr__(self):
+        return self.__str__()
+
+
+class Contact(TimeStampMixin):
+    id = models.AutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name='ID')
+    firstname = models.CharField(max_length=100, blank=True)
+    lastname = models.CharField(max_length=100, blank=True)
+    scoutname = models.CharField(max_length=100, blank=True)
+    email = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=100, blank=True)
+    registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
+
+    def __str__(self):
+        return "{} - {}".format(self.registration, self.scoutname)
 
     def __repr__(self):
         return self.__str__()
@@ -428,6 +454,7 @@ class RegistrationMatching(TimeStampMixin):
     def __str__(self):
         return "{} - {} - {}".format(self.event, ", ".join(r.scout_organisation.name for r in self.registrations.all()),
                                      self.sleeping_location)
+
 
 class Workshop(TimeStampMixin):
     id = models.AutoField(

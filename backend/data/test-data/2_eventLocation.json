@@ -5,8 +5,8 @@
         "fields": {
             "id": 1,
             "name": "Max Hof",
-            "description": "",
-            "address": "Dönerstr. 88"
+            "description": "Zeltplatz mit Haus",
+            "address": "Meerendonkerstr. 331"
         
         }
     },
@@ -15,9 +15,9 @@
         "pk": 2,
         "fields": {
             "id": 2,
-            "name": "Brexbachtal",
-            "description": "",
-            "address": "Dönerstr. 7"
+            "name": "Pfadfinderlager Brexbachtal",
+            "description": "in der nähe von Koblenz",
+            "address": "Im Brextal, 56170 Bendorf"
         }
     },
     {
@@ -25,9 +25,19 @@
         "pk": 3,
         "fields": {
             "id": 3,
-            "name": "Hoffeld",
-            "description": "",
-            "address": "Dönerstr. 4"
+            "name": "Jugendhaus Basaltkuppe",
+            "description": "in der Eifel",
+            "address": "Hoffeld"
+        }
+    },
+    {
+        "model": "basic.eventLocation",
+        "pk": 4,
+        "fields": {
+            "id": 4,
+            "name": "Burg Ludwigstein",
+            "description": "Große Burg mit Jugendherberge und Zeltplatz",
+            "address": "Burg Ludwigstein, 37214 Witzenhausen"
         }
     }
 ]
