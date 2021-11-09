@@ -3,7 +3,7 @@
     class="bg"
     :style="{
       'background-image':
-        'url(' + require('@/assets/2018-05-Führungstippel-63_klein.jpg') + ')',
+        'url(' + require('@/assets/dpvgold/foto_burg_ludwigstein_2.jpeg') + ')',
     }"
   >
     <v-container fill-height fluid>

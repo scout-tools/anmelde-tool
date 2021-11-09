@@ -98,7 +98,7 @@ def send_registration_summary(data):
 
     subject = "Registrierung beim Anmelde-Tool vollständig abgeschlossen"
     recipients = [data['email']]
-    send_mail()
+    send_email(plain_renderend, html_rendered, subject, recipients)
 
     return send_email(plain_renderend, html_rendered, subject, recipients)
 

@@ -1,0 +1,41 @@
+<mjml>
+  <mj-body background-color="#ccd3e0">
+    <mj-section background-color="#001838" padding-bottom="20px" padding-top="20px">
+      <mj-column width="20%" background-color="#001838">
+        <mj-image src="https://anmelde-tool.de/img/dpv-gold-logo-white.c87b71f0.png" alt="" align="left" border="none" width="100px" padding-left="10px" padding-right="10px" padding-bottom="10px" padding-top="10px"></mj-image>
+      </mj-column>
+      <mj-column padding-left="30px" width="80%" background-color="#001838">
+        <mj-text align="left" font-size="36px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="28px">Erlebnisabgebote</mj-text>
+        <mj-text align="left" font-size="14px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="9px">DPV-Gold 2022</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FFF" padding-bottom="0px" padding-top="0">
+      <mj-column width="100%">
+        <mj-text align="left" font-size="14px" color="#333333" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">
+          <p style="font-size:16px"><strong>Liebe_r {{ responsible_persons }}</strong></p>
+          <p>wir freuen uns, dass du erfolgreich einen Workshop angemeldet hast. </p> <br>
+          <p>...Hier kann noch mehr Text stehen... </p>
+
+          <p>
+            Wir freuen uns auf euch.
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FFF" padding-bottom="15px">
+      <mj-column>
+        <mj-text align="center" color="#333333" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
+          <p>Bei Problemen, kannst du dich gerne an info@dpv-gold.de wenden.</p>
+          <br></br>
+          <p><strong>DPV-Gold</strong></p>
+          <p>
+            Dein DPV-Gold Team</p>
+          <p>
+            info@dpbm.de</p>
+          <p>
+            www.dpvgold.de</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <v-parallax :src="require('@/assets/Italien-Robert-9_klein.jpg')">
+      <v-parallax :src="require('@/assets/dpvgold/foto_burg_ludwigstein_2.jpeg')">
         <v-layout column align-center justify-center class="white--text">
           <h1
             class="white--text mb-2 display-1"
@@ -22,7 +22,7 @@
             @click="$router.push({ name: 'loginParticipants' })"
           >
             <v-icon left>mdi-calendar-plus</v-icon>
-            Zu einer Fahrt Anmelden
+            Zur Anmeldung
           </v-btn>
         </v-layout>
       </v-parallax>
@@ -43,7 +43,7 @@
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
             <h2 class="headline">
-              Der Beste Weg um große Anmeldezahlen Übersichtlich zu gestalten.
+              Der beste Weg, um große Anmeldezahlen übersichtlich zu gestalten.
             </h2>
             <span class="subheading">
               Kein E-Mail Krieg. Keine Missverständnisse. Zeit für das
@@ -64,9 +64,9 @@
                   </v-card-title>
                   <v-card-text>
                     Schneller und einfacher war eine Anmeldung für ein Fahrt
-                    noch nie. Die Anmeldung deiner Teilnehmer klappt innerhalb
+                    noch nie. Die Anmeldung deiner Teilnehmende klappt innerhalb
                     von Minuten. Kein extra Passwort. Der Anmeldeprozess ist gut
-                    erklärt, so dass Keine Fragen offen bleiben. Falls sich eine
+                    erklärt, sodass keine Fragen offen bleiben. Falls sich eine
                     Änderung ergeben hat, können die Daten bis zum
                     Anmeldeschluss einfach noch schnell angepasst werden.
                   </v-card-text>

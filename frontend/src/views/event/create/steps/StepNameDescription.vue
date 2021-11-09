@@ -37,6 +37,14 @@
         />
       </v-row>
 
+      <v-row v-if="false">
+      <v-divider class="my-3" />
+        <ckeditor
+          :editor="ckeditor.editor"
+          v-model="ckeditor.editorData"
+          :config="ckeditor.editorConfig"
+        ></ckeditor>
+      </v-row>
       <v-divider class="my-3" />
 
       <prev-next-buttons
@@ -53,6 +61,8 @@
 <script>
 import { required, maxLength } from 'vuelidate/lib/validators';
 import { stepMixin } from '@/mixins/stepMixin';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import '@ckeditor/ckeditor5-build-classic/build/translations/de';
 
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';
 
@@ -66,6 +76,13 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
+    ckeditor: {
+      editor: ClassicEditor,
+      editorData: '<p>Content of the editor.</p>',
+      editorConfig: {
+        language: 'de',
+      },
+    },
   }),
   validations: {
     data: {

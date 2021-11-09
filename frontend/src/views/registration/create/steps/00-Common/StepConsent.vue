@@ -4,7 +4,7 @@
       <v-row class="mt-2">
         <span class="text-left subtitle-1">
           <p>
-            Hiermit melde ich <b> {{ myStamm }} aus dem Bund {{ myBund }} </b> zur
+            Hiermit melde ich mich vom<b> {{ myStamm }} </b> aus dem Bund <b> {{ myBund }} </b> zur
             <b> {{ currentEvent.name }} </b> an. <br />
             <br />
             Bevor deine Anmeldung verbindlich wird, musst du sie im letzten

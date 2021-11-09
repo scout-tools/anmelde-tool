@@ -181,6 +181,7 @@ class Event(TimeStampMixin):
     max_scout_orga_level = models.ForeignKey(ScoutOrgaLevel, on_delete=models.PROTECT, null=True, blank=True)
     is_public = models.BooleanField(default=0)
     email_id = models.IntegerField(blank=True, default=0)
+    is_personal_registration = models.BooleanField(default=0)
 
     # ToDo: add pdf attatchment
     # ToDo: add html description

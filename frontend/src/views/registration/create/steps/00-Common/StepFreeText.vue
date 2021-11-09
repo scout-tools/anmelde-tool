@@ -12,7 +12,7 @@
         auto-grow
         prepend-icon="mdi-forum"
         label="Nachricht an die Lagerleitung"
-        placeholder="Hier an die Lagerleitung"
+        placeholder="Hier an die Lagerleitung."
         v-model="textfieldText"
         :error-messages="textfieldTextErrors"
       ></v-textarea>
@@ -39,7 +39,7 @@ import CreateLocationDialog from '@/views/event/create/components/dialog/CreateL
 import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
 
 export default {
-  name: 'StepBdpDpvTextForStamm',
+  name: 'StepFreeText',
   displayName: 'Nachricht an die Lagerleitung',
   props: ['position', 'maxPos'],
   components: {
@@ -55,7 +55,7 @@ export default {
       'Hier ist Platz für eine Nachricht an die Lagerleitung',
   }),
   computed: {
-    ...mapGetters(['dpvAddedLocation']),
+    ...mapGetters([]),
 
     textfieldTextErrors() {
       const errors = [];

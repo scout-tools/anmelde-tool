@@ -85,7 +85,7 @@ export default {
       { text: 'Datum', value: 'createdAt' },
       { text: 'Bund', value: 'bundName' },
       { text: 'Name', value: 'scoutOrganisation' },
-      { text: 'Teilnehmer (Helfer)', value: 'numberParticipant' },
+      { text: 'Teilnehmende (Helfer)', value: 'numberParticipant' },
       { text: '', value: 'data-table-expand' },
     ],
     API_URL: process.env.VUE_APP_API,
