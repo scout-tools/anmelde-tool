@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="StepBdpDpVPreferences" v-model="valid">
+  <v-form ref="StepFreeText" v-model="valid">
     <v-container class="pa-5 my-5">
       <p class="ma-6">
         {{ placeholder }}
