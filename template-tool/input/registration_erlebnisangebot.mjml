@@ -2,7 +2,7 @@
   <mj-body background-color="#ccd3e0">
     <mj-section background-color="#001838" padding-bottom="20px" padding-top="20px">
       <mj-column width="20%" background-color="#001838">
-        <mj-image src="https://anmelde-tool.de/img/dpv-gold-logo-white.c87b71f0.png" alt="" align="left" border="none" width="100px" padding-left="10px" padding-right="10px" padding-bottom="10px" padding-top="10px"></mj-image>
+        <mj-image src="https://anmelde-tool.de/img/dpv-gold-logo-white.1816250a.png" alt="" align="left" border="none" width="100px" padding-left="10px" padding-right="10px" padding-bottom="10px" padding-top="10px"></mj-image>
       </mj-column>
       <mj-column padding-left="30px" width="80%" background-color="#001838">
         <mj-text align="left" font-size="36px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="28px">Erlebnisabgebote</mj-text>
