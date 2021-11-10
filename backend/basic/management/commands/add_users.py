@@ -63,8 +63,8 @@ class Command(BaseCommand):
             user_7.is_staff = True
             user_7.save()
 
-        if not UserModel.objects.filter(username='tonibaer97@gmail.com').exists():
-            user_8 = UserModel.objects.create_user('tonibaer97@gmail.com', password='toni')
+        if not UserModel.objects.filter(username='tonibaer97@g.com').exists():
+            user_8 = UserModel.objects.create_user('tonibaer97@g.com', password='toni')
             user_8.is_superuser = False
             user_8.is_staff = False
             user_8.save()

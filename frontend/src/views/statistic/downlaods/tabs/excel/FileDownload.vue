@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row v-if="false">
       <v-btn
         class="ma-2"
         @click="clickDownload('event_locations_fee')"
@@ -10,7 +10,7 @@
         Zeltplatgebühren
       </v-btn>
     </v-row>
-    <v-row>
+    <v-row v-if="false">
       <v-btn
         class="ma-2"
         color="primary"
@@ -21,7 +21,7 @@
         Reise Preferenz
       </v-btn>
     </v-row>
-    <v-row>
+    <v-row v-if="false">
       <v-btn
         class="ma-2"
         @click="clickDownload('text-package-address')"
@@ -32,7 +32,7 @@
         Packet Adressen
       </v-btn>
     </v-row>
-    <v-row>
+    <v-row v-if="false">
       <v-btn
         class="ma-2"
         @click="clickDownload('registration-groups')"

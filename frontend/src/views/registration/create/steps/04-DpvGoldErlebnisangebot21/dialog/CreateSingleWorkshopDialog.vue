@@ -82,14 +82,14 @@
             <v-col cols="12" sm="6">
               <v-textarea
                 filled
-                v-model.lazy="data.description"
+                v-model="data.freeText"
                 :counter="1000"
-                :error-messages="errorMessage('description')"
+                :error-messages="errorMessage('freeText')"
                 label="Erlebnisangebot-Beschreibung"
                 required
                 prepend-icon="mdi-card-account-details-outline"
-                @input="$v.data.description.$touch()"
-                @blur="$v.data.description.$touch()"
+                @input="$v.data.freeText.$touch()"
+                @blur="$v.data.freeText.$touch()"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -150,7 +150,7 @@ export default {
       title: null,
       minPerson: 5,
       maxPerson: 10,
-      description: null,
+      freeText: null,
       costs: null,
       registration: null,
     },
@@ -178,7 +178,7 @@ export default {
         required,
         between: between(0.0, 500.00),
       },
-      description: {
+      freeText: {
         required,
       },
       minPerson: {
@@ -233,9 +233,10 @@ export default {
     openDialog() {
       this.data = {
         title: null,
-        description: null,
+        freeText: null,
         costs: null,
-        supervisor: null,
+        minPerson: null,
+        maxPerson: null,
         registration: null,
       };
       this.isEditWindow = false;

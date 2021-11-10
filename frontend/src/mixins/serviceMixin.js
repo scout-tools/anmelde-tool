@@ -18,8 +18,8 @@ export const serviceMixin = {  // eslint-disable-line
       const path = `${process.env.VUE_APP_API}basic/event/${eventId}/participants/`;
       return axios.get(path);
     },
-    async getWorkshopStats() {
-      const path = `${process.env.VUE_APP_API}basic/workshop-stats/`;
+    async getWorkshopStats(eventId) {
+      const path = `${process.env.VUE_APP_API}basic/event/${eventId}/workshop-eventmaster-overview/`;
       return axios.get(path);
     },
   },
