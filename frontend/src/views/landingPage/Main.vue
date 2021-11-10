@@ -121,7 +121,7 @@ export default {
   computed: {
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
-        return require('./../../assets/dpvgold/dpv-gold-logo-black.png'); // eslint-disable-line
+        return require('./../../assets/dpvgold/dpv-gold-logo-test-simple.png'); // eslint-disable-line
       }
       return require('./../../assets/dpvgold/dpv-gold-logo-black.png'); // eslint-disable-line
     },

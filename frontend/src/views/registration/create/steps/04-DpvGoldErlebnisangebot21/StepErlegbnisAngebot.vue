@@ -5,7 +5,7 @@
 
         Bitte trage hier dein Erlebnisangebot ein. <br> <br>
         Falls du Inspirationen oder Ideen brauchst kannst du gerne
-        <a style="color:blue;" href="https://www.google.de">hier</a> schauen.
+        <a style="color:blue;" target="_blank" href="https://www.google.de">hier</a> schauen.
       </p>
       <v-btn class="ma-2" color="success" @click="newAG">
         <v-icon left> mdi-plus </v-icon>
