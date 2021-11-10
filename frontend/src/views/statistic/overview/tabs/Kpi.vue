@@ -71,12 +71,12 @@ export default {
       return {
         header: 'Anzahl Stämme',
         subheader: 'aus den Bünden',
-        dataOne: this.confirmedData.filter((item) => item.verbandName === 'BdP')
+        dataOne: this.confirmedData.filter((item) => item.bundName === 'DPB-Mosaik')
           .length,
-        dataTwo: this.confirmedData.filter((item) => item.verbandName === 'DPV')
+        dataTwo: this.confirmedData.filter((item) => item.bundName !== 'DPB-Mosaik')
           .length,
-        dataOneName: 'BdP',
-        dataTwoName: 'DPV',
+        dataOneName: 'DPB-Mosaik',
+        dataTwoName: 'Andere',
       };
     },
     kpiCardThree() {
