@@ -24,19 +24,20 @@
 
           <p>P.S. Bei weiteren Fragen oder Problemen kannst du dich gerne direkt an uns wenden.</p>
         </mj-text>
-        <mj-column </mj-section>
-          <mj-section background-color="#001838" padding-bottom="10px" padding-top="10px">
-            <mj-column>
-              <mj-text align="center" color="#ffff" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
-                <br></br>
-                <p><strong>DPV-goLd</strong></p>
-                <p> Dein DPV-goLd Team</p>
-                <p> info@dpvgold.de</p>
-                <p>
-                  www.dpvgold.de</p>
-              </mj-text>
-            </mj-column>
-          </mj-section>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#001838" padding-bottom="10px" padding-top="0px">
+      <mj-column>
+        <mj-text align="center" color="#ffff" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
+          <br>
+          <p><strong>DPV-goLd</strong></p>
+          <p> Dein DPV-goLd Team</p>
+          <p> info@dpvgold.de</p>
+          <p>
+            www.dpvgold.de</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
 
   </mj-body>
 </mjml>
