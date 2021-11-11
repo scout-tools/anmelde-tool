@@ -1,12 +1,12 @@
 <mjml>
   <mj-body background-color="#ccd3e0">
     <mj-section background-color="#001838" padding-bottom="20px" padding-top="20px">
-      <mj-column width="20%" background-color="#001838">
-        <mj-image src="https://raw.githubusercontent.com/scout-tools/anmelde-tool/main/frontend/src/assets/dpvgold/logo/dpv-gold-logo-white.png" alt="" align="left" border="none" width="100px" padding-left="30px" padding-right="10px" padding-bottom="10px" padding-top="10px"></mj-image>
+      <mj-column width="20%" background-color="#001838" align="center">
+        <mj-image src="https://raw.githubusercontent.com/scout-tools/anmelde-tool/main/frontend/src/assets/dpvgold/logo/dpv-gold-logo-white.png" alt="" align="center" border="none" width="100px" padding="5px"></mj-image>
       </mj-column>
-      <mj-column padding-left="30px" width="80%" background-color="#001838">
-        <mj-text align="left" font-size="36px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="28px">Erlebnisabgebote</mj-text>
-        <mj-text align="left" font-size="14px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="9px">DPV-goLd 2022</mj-text>
+      <mj-column padding-left="30px" width="75%" background-color="#001838">
+        <mj-text align="left" font-size="30px" color="#FFFFFF" font-family="Avenir">Erlebnisangebote</mj-text>
+        <mj-text align="left" font-size="14px" color="#FFFFFF" font-family="Avenir">DPV-goLd 2022</mj-text>
       </mj-column>
     </mj-section>
     <mj-section background-color="#FFF" padding-bottom="0px" padding-top="0">
@@ -21,21 +21,22 @@
           </p>
           <p>Viele Grüße und Gut Pfad,</p> <br>
           <p>Dein goLd-Planungsteam</p>
+
+          <p>P.S. Bei weiteren Fragen oder Problemen kannst du dich gerne direkt an uns wenden.</p>
         </mj-text>
-      </mj-column>
-    </mj-section>
-    <mj-section background-color="#FFF" padding-bottom="15px">
-      <mj-column>
-        <mj-text align="center" color="#333333" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
-          <p>P.S. Bei weiteren Fragen oder Problemen kannst du dich gerne direkt an uns  wenden.</p>
-          <br></br>
-          <p><strong>DPV-goLd</strong></p>
-          <p> Dein DPV-goLd Team</p>
-          <p> info@dpvgold.de</p>
-          <p>
-            www.dpvgold.de</p>
-        </mj-text>
-      </mj-column>
-    </mj-section>
+        <mj-column </mj-section>
+          <mj-section background-color="#001838" padding-bottom="10px" padding-top="10px">
+            <mj-column>
+              <mj-text align="center" color="#ffff" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
+                <br></br>
+                <p><strong>DPV-goLd</strong></p>
+                <p> Dein DPV-goLd Team</p>
+                <p> info@dpvgold.de</p>
+                <p>
+                  www.dpvgold.de</p>
+              </mj-text>
+            </mj-column>
+          </mj-section>
+
   </mj-body>
 </mjml>

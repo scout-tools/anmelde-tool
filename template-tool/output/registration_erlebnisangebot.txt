@@ -1,7 +1,7 @@
-[https://anmelde-tool.de/img/dpv-gold-logo-white.c87b71f0.png]
+[https://raw.githubusercontent.com/scout-tools/anmelde-tool/main/frontend/src/assets/dpvgold/logo/dpv-gold-logo-white.png]
 
-Erlebnisabgebote
-DPV-Gold 2022
+Erlebnisangebote
+DPV-goLd 2022
 
 Liebe_r {{ responsible_persons }}
 
@@ -10,16 +10,23 @@ wir freuen uns, dass du erfolgreich einen Workshop angemeldet hast.
 
 ...Hier kann noch mehr Text stehen...
 
-Wir freuen uns auf euch.
+Vielen Dank für deinen Beitrag zu unserem goLdenen Jubiläum im September auf der Burg Ludwigstein.
 
-Bei Problemen, kannst du dich gerne an info@dpv-gold.de wenden.
+Viele Grüße und Gut Pfad,
+
+
+Dein goLd-Planungsteam
+
+P.S. Bei weiteren Fragen oder Problemen kannst du dich gerne direkt an uns wenden.
 
 
 
-DPV-Gold
 
-Dein DPV-Gold Team
 
-info@dpbm.de
+DPV-goLd
+
+Dein DPV-goLd Team
+
+info@dpvgold.de
 
 www.dpvgold.de
