@@ -14,7 +14,9 @@
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-container>
-        <v-subheader class="ma-5"> Ich melde folgendes Erlebnisangebot an. </v-subheader>
+        <v-subheader class="ma-5">
+          Ich melde folgendes Erlebnisangebot an.
+        </v-subheader>
         <v-form v-model="valid">
           <v-divider />
           <v-row>
@@ -37,7 +39,9 @@
                       </v-icon>
                     </template>
                     <span>
-                      {{ 'Trage bitte einen kurzen Namen für dein Erlebnisangebot ein.' }}
+                      {{
+                        'Trage bitte einen kurzen Namen für dein Erlebnisangebot ein.'
+                      }}
                     </span>
                   </v-tooltip>
                 </template>
@@ -52,7 +56,7 @@
                 :options="options"
                 :properties="properties"
                 :error-messages="errorMessage('costs')"
-                label="Erlebnisangebot-Kosten"
+                label="Gesamte Erlebnisangebot-Kosten"
                 @input="$v.data.costs.$touch()"
                 @blur="$v.data.costs.$touch()"
               >
@@ -63,8 +67,24 @@
                 v-model="data.minPerson"
                 @input="$v.data.minPerson.$touch()"
                 @blur="$v.data.minPerson.$touch()"
-                :error-messages="errorMessage('maxPerson')"
-                number label="min. Teilnehmeranzahl">
+                :error-messages="errorMessage('minPerson')"
+                number
+                label="min. Teilnehmeranzahl"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{
+                        'Die minimale Anzahl an Teilnehmern.'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
@@ -73,7 +93,23 @@
                 @input="$v.data.maxPerson.$touch()"
                 @blur="$v.data.maxPerson.$touch()"
                 :error-messages="errorMessage('maxPerson')"
-                number label="max. Teilnehmeranzahl">
+                number
+                label="max. Teilnehmeranzahl"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{
+                        'Die maximale Anzahl an Teilnehmern.'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
               </v-text-field>
             </v-col>
           </v-row>
@@ -91,21 +127,6 @@
                 @input="$v.data.freeText.$touch()"
                 @blur="$v.data.freeText.$touch()"
               >
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>
-                      {{
-                        'Trage bitte hier eine Erklärung ' +
-                        'und weitere Erläuterungen zu deinem Erlebnisangebot ein'
-                      }}
-                    </span>
-                  </v-tooltip>
-                </template>
               </v-textarea>
             </v-col>
           </v-row>
@@ -129,6 +150,8 @@ import {
   minLength,
   maxLength,
   between,
+  minValue,
+  maxValue,
 } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import axios from 'axios';
@@ -161,7 +184,7 @@ export default {
       locale: 'de-DE',
       suffix: '€',
       precision: 2,
-      max: 999.99,
+      max: 500.0,
     },
     properties: {
       'prepend-icon': 'mdi-cash',
@@ -176,21 +199,33 @@ export default {
       },
       costs: {
         required,
-        between: between(0.0, 500.00),
+        between: between(0.0, 500.0),
       },
       freeText: {
         required,
+        minLength: minLength(3),
+        maxLength: maxLength(100),
       },
       minPerson: {
         required,
+        minValue: minValue(3),
+        maxValue: maxValue(100),
       },
       maxPerson: {
         required,
+        minValue: minValue(4),
+        maxValue: maxValue(100),
       },
     },
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping', 'myStamm', 'myBund']),
+    ...mapGetters([
+      'isAuthenticated',
+      'getJwtData',
+      'hierarchyMapping',
+      'myStamm',
+      'myBund',
+    ]),
     email() {
       return this.getJwtData.email;
     },
@@ -217,6 +252,12 @@ export default {
       if (valObj.maxLength === false) {
         const { max } = valObj.$params.maxLength;
         errors.push(`Du darfst maximal ${max} Zeichen nutzen.`);
+      }
+      if (valObj.minValue === false) {
+        errors.push(`Minimal sind ${valObj.$params.minValue.min} erlaubt.`);
+      }
+      if (valObj.maxValue === false) {
+        errors.push(`Maximal sind ${valObj.$params.maxValue.max} erlaubt.`);
       }
       if (valObj.between === false) {
         const { min, max } = valObj.$params.between;

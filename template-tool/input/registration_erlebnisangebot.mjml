@@ -31,10 +31,9 @@
         <mj-text align="center" color="#ffff" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
           <br>
           <p><strong>DPV-goLd</strong></p>
-          <p> Dein DPV-goLd Team</p>
-          <p> info@dpvgold.de</p>
-          <p>
-            www.dpvgold.de</p>
+          <p>Dein DPV-goLd Team</p>
+          <p>info@dpvgold.de</p>
+          <p>www.dpvgold.de</p>
         </mj-text>
       </mj-column>
     </mj-section>
