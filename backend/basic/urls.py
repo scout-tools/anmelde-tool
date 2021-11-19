@@ -45,20 +45,8 @@ event_router.register(r'workshop-eventmaster-overview', views.WorkshopStatsViewS
                       basename='workshop-event-master-overview')
 event_router.register(r'program-eventmaster-overview', views.EventProgramMasterViewSet,
                       basename='program-event-master-overview')
-event_router.register(r'xlsx-generator/event_locations_fee', views.EventLocationFeeXlsxViewSet,
-                      basename='event_locations_fee')
-event_router.register(r'xlsx-generator/travel-preference', views.TravelPreferenceXlsxViewSet,
-                      basename='travel-preference')
-event_router.register(r'xlsx-generator/text-package-address', views.TextAndPackageAddressXlsxViewSet,
-                      basename='text-package-address')
-event_router.register(r'xlsx-generator/registration-groups', views.RegistrationGroupsViewSet,
-                      basename='registration-groups')
 event_router.register(r'registration-stats', views.RegistrationStatViewSet,
                       basename='registration-stats-details')
-event_router.register(r'registration-reminder', views.ReminderMailViewSet,
-                      basename='registration-reminder-details')
-event_router.register(r'registration-simplemail', views.SimpleMailViewSet,
-                      basename='registration-simplemail')
 
 registration_router = routers.NestedSimpleRouter(router, r'registration', lookup='registration')
 registration_router.register(r'participants', views.RegistrationParticipantsViewSet, basename='participants')
