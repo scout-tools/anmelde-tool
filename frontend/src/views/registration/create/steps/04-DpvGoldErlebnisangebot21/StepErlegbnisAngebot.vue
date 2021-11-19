@@ -72,8 +72,8 @@
 </template>
 
 <script>
-import PrevNextButtons from '@/views/registration/create/components/button/PrevNextButtonsSteps.vue';
 import axios from 'axios';
+import PrevNextButtons from '@/views/registration/create/components/button/PrevNextButtonsSteps.vue';
 import CreateSingleWorkshopDialog from './dialog/CreateSingleWorkshopDialog.vue';
 import DeleteWorkshopModal from './dialog/DeleteWorkshopModal.vue';
 

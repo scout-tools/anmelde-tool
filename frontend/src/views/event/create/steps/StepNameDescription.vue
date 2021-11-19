@@ -60,8 +60,8 @@
 
 <script>
 import { required, maxLength } from 'vuelidate/lib/validators';
-import { stepMixin } from '@/mixins/stepMixin';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { stepMixin } from '@/mixins/stepMixin';
 import '@ckeditor/ckeditor5-build-classic/build/translations/de';
 
 import PrevNextButtons from '../components/button/PrevNextButtonsSteps.vue';

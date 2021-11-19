@@ -1,5 +1,4 @@
-export const serviceMixin = {
-    // eslint-disable-line
-    methods: {},
-  };
-  
+export default {
+  // eslint-disable-line
+  methods: {},
+};

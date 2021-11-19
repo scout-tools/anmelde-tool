@@ -83,8 +83,8 @@
 </template>
 
 <script>
-import PrevNextButtons from '@/views/registration/create/components/button/PrevNextButtonsSteps.vue';
 import axios from 'axios';
+import PrevNextButtons from '@/views/registration/create/components/button/PrevNextButtonsSteps.vue';
 import CreateSingleWorkshopDialog from '@/views/registration/create/steps/dialog/CreateSingleWorkshopDialog.vue';
 import DeleteWorkshopModal from '@/views/registration/create/steps/dialog/DeleteWorkshopModal.vue';
 
