@@ -30,8 +30,8 @@
                   Kosten: {{ item.workshopCosts }} €
                   <br />
                   <br />
-                  von {{ item.workshopMaxPerson }} bis
-                  {{ item.workshopMinPerson }} Personen
+                  von {{ item.workshopMinPerson }} bis
+                  {{ item.workshopMaxPerson }} Personen
                 </p>
               </v-row>
               <v-row>
@@ -42,10 +42,10 @@
                   Name: {{ item.contactFirstname }} {{ item.contactLastname }}
                   <br />
                   <br />
-                  Pfadfindername: {{ item.contactScoutname }} €
+                  Pfadfindername: {{ item.contactScoutname }}
                   <br />
                   <br />
-                  Stamm: {{ item.scoutOrganisation}} ({{ item.bundName}})
+                  {{ item.scoutOrganisation}} ({{ item.bundName}})
                   <br />
                   <br />
 

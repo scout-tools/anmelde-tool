@@ -204,7 +204,7 @@ export default {
       freeText: {
         required,
         minLength: minLength(3),
-        maxLength: maxLength(100),
+        maxLength: maxLength(1000),
       },
       minPerson: {
         required,
