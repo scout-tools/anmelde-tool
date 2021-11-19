@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets, generics, mixins, status
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import MyTokenObtainPairSerializer, UserExtendedSerializer, AuthSerializer
+from .serializers import MyTokenObtainPairSerializer, UserExtendedSerializer, AuthSerializer, User
 from .models import UserExtended
 from rest_framework.permissions import IsAuthenticated
 
