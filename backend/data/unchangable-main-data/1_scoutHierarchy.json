@@ -14,7 +14,8 @@
     "fields": {
       "id": 2,
       "level_id": 3,
-      "name": "DPB-Mosaik"
+      "name": "DPB-Mosaik",
+      "abbreviation": "DPBM"
     }
   },
   {
@@ -23,7 +24,8 @@
     "fields": {
       "id": 3,
       "level_id": 3,
-      "name": "PB-Nordlicht"
+      "name": "PB-Nordlicht",
+      "abbreviation": "PBNL"
     }
   },
   {
@@ -32,7 +34,8 @@
     "fields": {
       "id": 4,
       "level_id": 3,
-      "name": "PBN"
+      "name": "PBN",
+      "abbreviation": "PBN"
     }
   },
   {
@@ -41,7 +44,8 @@
     "fields": {
       "id": 5,
       "level_id": 3,
-      "name": "BP-Horizonte"
+      "name": "BP-Horizonte",
+      "abbreviation": "PBH"
     }
   },
   {
@@ -50,7 +54,8 @@
     "fields": {
       "id": 6,
       "level_id": 3,
-      "name": "DPBH"
+      "name": "DPBH",
+      "abbreviation": "DPH"
     }
   },
   {
@@ -59,7 +64,8 @@
     "fields": {
       "id": 7,
       "level_id": 3,
-      "name": "PSD"
+      "name": "PSD",
+      "abbreviation": "PSD"
     }
   },
   {
@@ -68,7 +74,8 @@
     "fields": {
       "id": 8,
       "level_id": 3,
-      "name": "BEP"
+      "name": "BEP",
+      "abbreviation": "BEP"
     }
   },
   {
@@ -77,7 +84,8 @@
     "fields": {
       "id": 9,
       "level_id": 3,
-      "name": "PB Boreas"
+      "name": "PB Boreas",
+      "abbreviation": "PBB"
     }
   },
   {
@@ -86,7 +94,8 @@
     "fields": {
       "id": 10,
       "level_id": 3,
-      "name": "PBMV"
+      "name": "PBMV",
+      "abbreviation": "PBMV"
     }
   },
   {
@@ -95,7 +104,8 @@
     "fields": {
       "id": 11,
       "level_id": 3,
-      "name": "Jomsburg"
+      "name": "Jomsburg",
+      "abbreviation": "JOMS"
     }
   },
   {
@@ -104,7 +114,8 @@
     "fields": {
       "id": 12,
       "level_id": 3,
-      "name": "PBW"
+      "name": "PBW",
+      "abbreviation": "PBW"
     }
   },
   {
@@ -113,7 +124,8 @@
     "fields": {
       "id": 13,
       "level_id": 3,
-      "name": "FPS"
+      "name": "FPS",
+      "abbreviation": "FP"
     }
   },
   {

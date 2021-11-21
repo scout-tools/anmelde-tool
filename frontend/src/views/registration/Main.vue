@@ -16,7 +16,7 @@
                       Einladung. Falls du nichts findest, melde dich beim
                       Veranstalter, deiner Bundesführung oder bei:
                       <a href="mailto:support@anmelde-tool.de"
-                        >support@anmelde-tool.de</a
+                      >support@anmelde-tool.de</a
                       >
                     </p>
                     <p class="mt-4">
@@ -29,7 +29,7 @@
                   </div>
                   <v-subheader v-if="isMobilMandatory" class="ma-0">
                     <v-icon class="ma-2" color="error"
-                      >mdi-alert-circle
+                    >mdi-alert-circle
                     </v-icon>
                     Für diese Fahrt ist die Handynummer Pflicht. Falls du sie
                     nicht eintragen hast, kannst du sie nur unter den Profil
@@ -259,7 +259,7 @@ export default {
       if (!this.$v.invitationCode.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.invitationCode.required &&
-        errors.push('Der Einladungscode wird benötigt');
+      errors.push('Der Einladungscode wird benötigt');
       return errors;
     },
     mobileNumberErrors() {
@@ -267,7 +267,7 @@ export default {
       if (!this.$v.mobileNumber.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.mobileNumber.required &&
-        errors.push('Telefonnummer ist für diese Fahrt verpflichtend. Wechsele ins Profil um die Telefonnummer hinzuzufügen');
+      errors.push('Telefonnummer ist für diese Fahrt verpflichtend. Wechsele ins Profil um die Telefonnummer hinzuzufügen');
       return errors;
     },
   },

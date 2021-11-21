@@ -19,10 +19,10 @@
             class="mt-10"
             color="success"
             x-large
-            @click="$router.push({ name: 'loginParticipants' })"
-          >
+            @click="$router.push({ name: 'eventOverview' })"
+            v-if="isAuthenticated">
             <v-icon left>mdi-calendar-plus</v-icon>
-            Zur Anmeldung
+            Zu den Fahrten
           </v-btn>
         </v-layout>
       </v-parallax>
@@ -32,7 +32,7 @@
       <v-container>
         <v-layout column align-center justify-center class="white--text">
           <v-flex xs12 class="text-xs-center">
-            <img height="200px" :src="logoPath" />
+            <img height="200px" :src="logoPath"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -112,6 +112,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data: () => ({
     title: 'Endorfine',
@@ -125,9 +127,7 @@ export default {
       }
       return require('./../../assets/dpvgold/dpv-gold-logo-black.png'); // eslint-disable-line
     },
+    ...mapGetters(['isAuthenticated']),
   },
 };
 </script>
-
-<style>
-</style>

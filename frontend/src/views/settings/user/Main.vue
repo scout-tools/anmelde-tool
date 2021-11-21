@@ -4,15 +4,18 @@
       <v-row justify="center">
         <v-flex ma-3 lg9>
           <v-layout column>
-            <v-card>
+            <v-card :loading="loading">
               <v-card-title class="text-center justify-center py-6">
                 Hier kannst du deinen persönlichen Account anpassen.
               </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-subheader class="ma-5">
-                    Hier musst du deine persönlichen Daten angeben. Deine Stammes-Zugehörigkeit
-                    sowie deinen Fahrtenname sind wichtig, damit du dich oder deinen Stamm bei
+                    Hier musst du deine persönlichen Daten angeben.
+                    ie meisten Daten haben wir schon von der DPV Identiy Provider. Überprüfe
+                    trotzdem ob die Daten stimmen und korrigiere sie gegebenfalls.
+                    Deine Stammes-Zugehörigkeit sowie deinen Fahrtenname sind wichtig, damit du dich
+                    oder deinen Stamm bei
                     Fahrten anmelden kannst. Fülle die Felder deswegen unbedingt
                     aus. Die Handynummer ist freiwillig und hilft dich zu
                     kontaktieren.
@@ -137,12 +140,12 @@
                       </v-text-field>
                     </v-col>
                     <v-col cols="12">
-                        <router-link
+                      <router-link
                         to="/datenschutz"
                         target="_blank"
-                        >
-                          Link zur Datenschutzerklärung
-                        </router-link>
+                      >
+                        Link zur Datenschutzerklärung
+                      </router-link>
                     </v-col>
                     <v-col cols="12">
                       <v-checkbox
@@ -187,7 +190,7 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
-import { required, minLength, maxLength } from 'vuelidate/lib/validators';
+import { maxLength, minLength, required } from 'vuelidate/lib/validators';
 
 import PickStammForm from './form/PickStamm.vue';
 
@@ -252,7 +255,7 @@ export default {
       if (!this.$v.checkbox.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.checkbox.checked &&
-        errors.push('Du musst den Datenschutzbestimmungen zustimmen.');
+      errors.push('Du musst den Datenschutzbestimmungen zustimmen.');
       return errors;
     },
     mobileNumberErrors() {
@@ -260,10 +263,10 @@ export default {
       if (!this.$v.mobileNumber.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.mobileNumber.maxLength &&
-        errors.push('Eine Handynummer hat maxtimal 20 Ziffern');
+      errors.push('Eine Handynummer hat maxtimal 20 Ziffern');
       // eslint-disable-next-line
       !this.$v.mobileNumber.minLength &&
-        errors.push('Eine Handynummer hat mindestens 6 Ziffern.');
+      errors.push('Eine Handynummer hat mindestens 6 Ziffern.');
       return errors;
     },
     scoutNameErrors() {
@@ -271,7 +274,7 @@ export default {
       if (!this.$v.scoutName.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.scoutName.maxLength &&
-        errors.push('Darf nicht mehr als 20 Zeichen haben');
+      errors.push('Darf nicht mehr als 20 Zeichen haben');
       // eslint-disable-next-line
       !this.$v.scoutName.required && errors.push('Dein Name ist erforderlich');
       return errors;
@@ -281,7 +284,7 @@ export default {
       if (!this.$v.scoutOrganisation.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.scoutOrganisation.required &&
-        errors.push('Wir brauchen deinen Stamm');
+      errors.push('Wir brauchen deinen Stamm');
       return errors;
     },
   },
@@ -303,35 +306,40 @@ export default {
       this.saveUserData();
     },
     getData() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
-      axios
-        .get(path)
+      this.loading = true;
+      const path = `${this.API_URL}/auth/personal-data/`;
+      axios.get(path)
         .then((res) => {
+          console.log(res);
           this.scoutOrganisation = res.data.scoutOrganisation;
           this.mobileNumber = res.data.mobileNumber;
           this.scoutName = res.data.scoutName;
+          this.checkbox = res.data.dsgvoConfirmed;
         })
-        .catch(() => {
-          console.log('Fehler');
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     saveUserData() {
-      axios
-        .put(
-          `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`,
-          {
-            user: this.getJwtData.userId,
-            scoutOrganisation: this.scoutOrganisation,
-            mobileNumber: this.mobileNumber,
-            scoutName: this.scoutName,
-          },
-        )
+      this.loading = true;
+      const path = `${this.API_URL}/auth/personal-data/`;
+      axios.post(path, {
+        scoutOrganisation: this.scoutOrganisation,
+        mobileNumber: this.mobileNumber,
+        scoutName: this.scoutName,
+        dsgvoConfirmed: this.checkbox,
+      })
         .then(() => {
           this.showSuccess = true;
-          setTimeout(() => this.$router.push({ name: 'eventOverview' }), 100);
         })
         .catch(() => {
           this.showError = true;
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
   },

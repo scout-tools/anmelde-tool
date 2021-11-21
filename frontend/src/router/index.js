@@ -8,8 +8,7 @@ import RegistrationForm from '@/views/registration/Main.vue';
 import RegistrationCreate from '@/views/registration/create/Main.vue';
 import LandingPage from '@/views/landingPage/Main.vue';
 import CreateEvent from '@/views/event/create/Main.vue';
-import LoginParticipantsMain from '@/views/login/LoginParticipants.vue';
-import LoginInteralsMain from '@/views/login/LoginInterals.vue';
+
 import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
 
@@ -20,16 +19,6 @@ const routes = [
     path: '/',
     name: 'landing',
     component: LandingPage,
-  },
-  {
-    path: '/login-participants',
-    name: 'loginParticipants',
-    component: LoginParticipantsMain,
-  },
-  {
-    path: '/login-interals',
-    name: 'loginInterals',
-    component: LoginInteralsMain,
   },
   {
     path: '/check-token',

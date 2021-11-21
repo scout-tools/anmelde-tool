@@ -1,6 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
-from rest_framework.renderers import JSONRenderer
+from django.db import models
 
 
 class TimeStampMixin(models.Model):
@@ -134,6 +133,7 @@ class ScoutHierarchy(TimeStampMixin):
     name = models.CharField(max_length=60, blank=True)
     zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     parent = models.ForeignKey('self', null=True, on_delete=models.PROTECT, related_name='scouthierarchy', blank=True)
+    abbreviation = models.CharField(max_length=5, blank=True, null=True)
 
     def __str__(self):
         return "{} - {}".format(self.level, self.name)

@@ -23,9 +23,3 @@ export default {
   }),
 };
 </script>
-
-<style>
-.top-margin {
-  margin-top: 70px !important;
-}
-</style>

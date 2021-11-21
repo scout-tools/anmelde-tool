@@ -1,7 +1,8 @@
 import os
-from pathlib import Path
-import environ
 from datetime import timedelta
+from pathlib import Path
+
+import environ
 
 env = environ.Env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -46,7 +47,8 @@ INSTALLED_APPS = [
     'ebhealthcheck.apps.EBHealthCheckConfig',
     'django_extensions',
     'django_filters',
-    'mozilla_django_oidc'
+    'mozilla_django_oidc',
+    'authentication'
 ]
 
 MIDDLEWARE = [

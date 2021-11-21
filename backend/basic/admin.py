@@ -27,8 +27,8 @@ admin.site.register(Contact)
 
 @admin.register(ScoutHierarchy)
 class ScoutHierarchyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'level', 'zip_code', 'parent', 'level')
-    list_filter = ('parent', 'level')
+    list_display = ('name', 'level', 'zip_code', 'parent')
+    list_filter = ('level',)
     search_fields = ('name',)
 
 

@@ -1,7 +1,9 @@
-from mozilla_django_oidc.auth import OIDCAuthenticationBackend
-from django.contrib.auth.models import User
+from basic.models import ScoutHierarchy
 from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
 from django.db import transaction
+from django.db.models import Q
+from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 
 
 class MyOIDCAB(OIDCAuthenticationBackend):
@@ -9,17 +11,14 @@ class MyOIDCAB(OIDCAuthenticationBackend):
     def create_user(self, claims):
         user = super(MyOIDCAB, self).create_user(claims)
         user.username = claims.get('sub', '')
-        user.first_name = claims.get('given_name', '')
-        user.last_name = claims.get('family_name', '')
         user.save()
 
+        self.set_user_info(user, claims)
+        
         return user
 
     def update_user(self, user, claims):
-        user.first_name = claims.get('given_name', '')
-        user.last_name = claims.get('family_name', '')
-        user.save()
-
+        self.set_user_info(user, claims)
         return user
 
     def update_groups(self, user, claims):
@@ -57,3 +56,24 @@ class MyOIDCAB(OIDCAuthenticationBackend):
 
         except User.DoesNotExist:
             return self.UserModel.objects.none()
+
+    def set_user_info(self, user, claims):
+        fahrtenname = claims.get('fahrtenname', '')
+        if fahrtenname:
+            user.userextended.scout_name = claims.get('fahrtenname', '')
+        else:
+            user.userextended.scout_name = claims.get('given_name', '')
+
+        stamm = claims.get('stamm', '')
+        bund = claims.get('bund', '')
+
+        if stamm and bund:
+            stamm = stamm.replace('stamm', '')
+            found_bund = ScoutHierarchy.objects.filter(level=3, abbreviation=bund).first()
+            found_stamm = ScoutHierarchy.objects.filter(
+                Q(name__contains=stamm, parent=found_bund) | Q(name__contains=stamm, parent__parent=found_bund))
+            if len(found_stamm) == 1:
+                user.userextended.scout_organisation = found_stamm.first()
+                user.userextended.successfull_initialised = True
+            user.userextended.save()
+        user.save()
