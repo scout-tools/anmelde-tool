@@ -37,6 +37,7 @@
                 dark
                 circle
                 x-large>
+                Profil
                 <v-icon x-large>mdi-account-circle</v-icon>
               </v-tab>
             </template>
@@ -82,6 +83,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import Keycloak from 'keycloak-js';
+import axios from 'axios';
 
 export default {
   name: 'TopMenu',
@@ -137,12 +139,29 @@ export default {
           this.userinfo = userInfo;
         });
     },
+    checkUser() {
+      const path = `${this.API_URL}/auth/personal-data-check/`;
+      axios.get(path)
+        .then((res) => {
+          console.log(res);
+          if (res.status === 426) {
+            this.router.push({ name: 'settingsUser' });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status === 426) {
+            this.$router.push({ name: 'settingsUser' });
+          }
+        });
+    },
     login() {
       this.keycloak.login()
         .then((auth) => {
           if (auth) {
             this.afterAuth();
             this.refreshToken();
+            this.checkUser();
           }
         })
         .catch((error) => {
@@ -202,6 +221,7 @@ export default {
           console.log('Authenticated');
           this.afterAuth();
           this.refreshToken();
+          this.checkUser();
         }
       })
       .catch((error) => {

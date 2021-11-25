@@ -310,7 +310,6 @@ export default {
       const path = `${this.API_URL}/auth/personal-data/`;
       axios.get(path)
         .then((res) => {
-          console.log(res);
           this.scoutOrganisation = res.data.scoutOrganisation;
           this.mobileNumber = res.data.mobileNumber;
           this.scoutName = res.data.scoutName;

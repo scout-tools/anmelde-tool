@@ -20,11 +20,6 @@ class PersonalData(viewsets.ViewSet):
         #                  'user-username': request.user.username,
         #                  'auth': user}, status=status.HTTP_200_OK)
 
-    def retrieve(self, request, *args, **kwargs):
-        queryset = UserExtended.objects.get(user=request.user)
-        serializer = UserExtendedSerializer(queryset, many=False)
-        return Response(serializer.data)
-
     def create(self, request, pk=None):
         queryset = UserExtended.objects.get(user=request.user)
         serializer = UserExtendedSerializer(queryset, data=request.data, many=False)
@@ -33,5 +28,14 @@ class PersonalData(viewsets.ViewSet):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def partial_update(self, request, pk=None):
-        return Response('test', status=status.HTTP_400_BAD_REQUEST)
+
+class PersonalDataCheck(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        queryset = UserExtended.objects.get(user=request.user)
+        serializer = UserExtendedSerializer(queryset, many=False)
+        if not serializer.data['successfull_initialised'] or not serializer.data['dsgvo_confirmed']:
+            return Response({'status': "init required"}, status=status.HTTP_426_UPGRADE_REQUIRED)
+        else:
+            return Response({'status': "user ok"}, status=status.HTTP_200_OK)
