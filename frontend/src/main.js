@@ -1,23 +1,17 @@
 import Vue from 'vue';
-import Vuelidate from 'vuelidate';
 import VueJwtDecode from 'vue-jwt-decode';
-import VuetifyMoney from 'vuetify-money';
-import VueGoogleCharts from 'vue-google-charts';
 import VueLodash from 'vue-lodash';
 import lodash from 'lodash';
-import AsyncComputed from 'vue-async-computed';
 import moment from 'moment';
-import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
-import 'leaflet/dist/leaflet.css';
+import Vuelidate from 'vuelidate';
+import { LMap, LMarker, LTileLayer } from 'vue2-leaflet';
 import { Icon } from 'leaflet';
-import CKEditor from '@ckeditor/ckeditor5-vue2';
-
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
 import auth from './auth';
-
+import 'leaflet/dist/leaflet.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 const VueMoment = require('vue-moment');
@@ -26,23 +20,18 @@ Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
 Vue.use(VueJwtDecode);
-Vue.use(VuetifyMoney);
-Vue.use(VueGoogleCharts);
-Vue.use(AsyncComputed);
 Vue.use(VueMoment);
-Vue.use(CKEditor);
-
 Vue.use(VueLodash, { lodash });
+
+auth.interceptorsSetup(store, router);
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
 Vue.component('l-marker', LMarker);
 
-auth.interceptorsSetup(store, router);
-
 delete Icon.Default.prototype._getIconUrl; //eslint-disable-line
 Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'), //eslint-disable-line 
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'), //eslint-disable-line
   iconUrl: require('leaflet/dist/images/marker-icon.png'), //eslint-disable-line
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'), //eslint-disable-line
 });

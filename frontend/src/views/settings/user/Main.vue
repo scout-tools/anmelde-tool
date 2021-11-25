@@ -192,7 +192,7 @@ import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
 import { maxLength, minLength, required } from 'vuelidate/lib/validators';
 
-import PickStammForm from './form/PickStamm.vue';
+import PickStammForm from './PickStamm.vue';
 
 export default {
   mixins: [validationMixin],

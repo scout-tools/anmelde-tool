@@ -131,9 +131,7 @@ export default {
   },
   methods: {
     afterAuth() {
-      this.$store.commit('setTokens',
-        this.keycloak.token,
-        this.keycloak.refreshToken);
+      this.$store.commit('setTokens', this.keycloak.token, this.keycloak.refreshToken);
       this.keycloak.loadUserInfo()
         .then((userInfo) => {
           this.userinfo = userInfo;

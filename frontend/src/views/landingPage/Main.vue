@@ -32,7 +32,7 @@
       <v-container>
         <v-layout column align-center justify-center class="white--text">
           <v-flex xs12 class="text-xs-center">
-            <img height="200px" :src="logoPath"/>
+            <img height="200px" :src="logoPath" alt=""/>
           </v-flex>
         </v-layout>
       </v-container>
