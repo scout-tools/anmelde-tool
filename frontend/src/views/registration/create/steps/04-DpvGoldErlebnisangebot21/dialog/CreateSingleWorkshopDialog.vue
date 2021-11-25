@@ -69,7 +69,7 @@
                 @blur="$v.data.minPerson.$touch()"
                 :error-messages="errorMessage('minPerson')"
                 number
-                label="min. Teilnehmeranzahl"
+                label="min. Teilnehmende"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -80,7 +80,7 @@
                     </template>
                     <span>
                       {{
-                        'Die minimale Anzahl an Teilnehmern.'
+                        'Die minimale Anzahl an Teilnehmenden.'
                       }}
                     </span>
                   </v-tooltip>
@@ -94,7 +94,7 @@
                 @blur="$v.data.maxPerson.$touch()"
                 :error-messages="errorMessage('maxPerson')"
                 number
-                label="max. Teilnehmeranzahl"
+                label="max. Teilnehmende"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -105,7 +105,7 @@
                     </template>
                     <span>
                       {{
-                        'Die maximale Anzahl an Teilnehmern.'
+                        'Die maximale Anzahl an Teilnehmenden.'
                       }}
                     </span>
                   </v-tooltip>
@@ -261,7 +261,7 @@ export default {
       }
       if (valObj.between === false) {
         const { min, max } = valObj.$params.between;
-        errors.push(`Bitte gib einen Wert zwischen ${min}€ und ${max}€ ein.`);
+        errors.push(`Bitte gib einen Wert zwischen ${min}€ und ${max}€ ein. Falls du mehr als ${max}€ brauchst melde dich bei der Lagerleitung.`);
       }
       return errors;
     },

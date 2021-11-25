@@ -51,7 +51,7 @@
                 </template>
                 <span>
                   {{
-                    'Gib hier deinen Nachnamen ein.'
+                    'Gib hier deinen Vornamen ein.'
                   }}
                 </span>
               </v-tooltip>
@@ -78,7 +78,7 @@
                 </template>
                 <span>
                   {{
-                    'Gib hier deinen Vorname ein.'
+                    'Gib hier deinen Namenamen ein.'
                   }}
                 </span>
               </v-tooltip>
