@@ -3,15 +3,16 @@
     <v-row class="center text-center justify-center">
       <p>
         Bei Fragen aller Art könnt ihr euch bei uns melden:
-        <br />
+        <br/>
         <img
+          alt="Email Adresse für Support Anfragen"
           class="mr-2"
           :src="require('@/assets/anmeldeToolMailAdresse.jpg')"
           height="50"
         /></p
-    ></v-row>
+      ></v-row>
     <v-row class="center text-center justify-center">
-      <v-divider />
+      <v-divider/>
       <v-expansion-panels>
         <v-expansion-panel v-for="(faq, i) in faqs" :key="i">
           <v-expansion-panel-header>

@@ -1,5 +1,5 @@
 <template>
-    <v-container class="top-margin">
+  <v-container class="top-margin">
     <v-row class="center text-center justify-center">
       <v-card class="ma-2 pa-2 mx-auto">
         <div class="ma-3">
@@ -7,9 +7,9 @@
 
           <p class="font-weight-medium">
             Pfadfinder-Bundesamt Köln e.V. <br>
-            Deutscher Pfadfinderbund Mosaik <br />
-            Robert-Perthel-Str. 79<br />
-            50739 Köln <br />
+            Deutscher Pfadfinderbund Mosaik <br/>
+            Robert-Perthel-Str. 79<br/>
+            50739 Köln <br/>
           </p>
 
           <p>
@@ -35,13 +35,14 @@
 
           <p class="font-weight-medium">
             <a href="https://dpbm.de/impressum/">Kontakt zum Bundesamt hier </a>
-            <br />
+            <br/>
             <img
+              alt="Email Adresse für Support Anfragen"
               class="mr-2"
               :src="require('@/assets/anmeldeToolMailAdresse.jpg')"
               height="50"
             />
-            <br />
+            <br/>
           </p>
         </div>
       </v-card>
@@ -98,7 +99,7 @@
                 src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png"
               />
             </a>
-            <br />
+            <br/>
             Dieses Werk ist lizenziert unter einer
             <a
               rel="license"
