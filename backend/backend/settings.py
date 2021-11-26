@@ -41,14 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'basic.apps.BasicConfig',
     'rest_framework.authtoken',
     'storages',
     'ebhealthcheck.apps.EBHealthCheckConfig',
     'django_extensions',
     'django_filters',
     'mozilla_django_oidc',
-    'authentication'
+    'authentication',
+    'basic',
+    'colorfield'
 ]
 
 MIDDLEWARE = [
