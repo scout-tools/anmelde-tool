@@ -10,6 +10,5 @@ class UserExtendedSerializer(serializers.ModelSerializer):
             'mobile_number',
             'scout_name',
             'scout_organisation',
-            'successfull_initialised',
             'dsgvo_confirmed'
         )

@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'mozilla_django_oidc',
     'authentication',
     'basic',
-    'colorfield'
+    'colorfield',
+    'polymorphic',
 ]
 
 MIDDLEWARE = [

@@ -1,8 +1,9 @@
 from django.contrib import admin
+from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
-from .models import AgeGroup, EventLocation, ScoutHierarchy, ZipCode, ScoutOrgaLevel, Tag, TagType, Event
+from .models import EventLocation, ScoutHierarchy, ZipCode, ScoutOrgaLevel, TagType, Event, AbstractAttribute, Tag, \
+    BooleanAttribute, TimeAttribute
 
-admin.site.register(AgeGroup)
 admin.site.register(ScoutOrgaLevel)
 
 
@@ -33,13 +34,38 @@ class EventAdmin(admin.ModelAdmin):
 
 
 @admin.register(TagType)
-class EventTagAdmin(admin.ModelAdmin):
+class EventTagTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'color')
     search_fields = ('name',)
 
 
-@admin.register(Tag)
-class EventTagAdmin(admin.ModelAdmin):
+class AbstractAttributeChildAdmin(PolymorphicChildModelAdmin):
+    """ Base admin class for all child models """
+    base_model = AbstractAttribute  # Optional, explicitly set here.
     list_display = ('name', 'type',)
     search_fields = ('name', 'type')
     autocomplete_fields = ('type',)
+    show_in_index = True
+
+
+@admin.register(BooleanAttribute)
+class BooleanAttributeAdmin(AbstractAttributeChildAdmin):
+    base_model = BooleanAttribute
+
+
+@admin.register(TimeAttribute)
+class TimeAttributeAdmin(AbstractAttributeChildAdmin):
+    base_model = TimeAttribute
+
+
+@admin.register(Tag)
+class EventTagAdmin(AbstractAttributeChildAdmin):
+    base_model = Tag
+
+
+@admin.register(AbstractAttribute)
+class AbstractAttributeParentAdmin(PolymorphicParentModelAdmin):
+    """ The parent model admin """
+    base_model = AbstractAttribute  # Optional, explicitly set here.
+    child_models = (Tag, BooleanAttribute, TimeAttribute)
+    list_filter = (PolymorphicChildModelFilter,)  # This is optional.

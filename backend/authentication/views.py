@@ -35,7 +35,7 @@ class PersonalDataCheck(viewsets.ViewSet):
     def list(self, request, *args, **kwargs):
         queryset = UserExtended.objects.get(user=request.user)
         serializer = UserExtendedSerializer(queryset, many=False)
-        if not serializer.data['successfull_initialised'] or not serializer.data['dsgvo_confirmed']:
+        if not serializer.data['scout_organisation'] or not serializer.data['dsgvo_confirmed']:
             return Response({'status': "init required"}, status=status.HTTP_426_UPGRADE_REQUIRED)
         else:
             return Response({'status': "user ok"}, status=status.HTTP_200_OK)

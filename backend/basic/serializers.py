@@ -2,13 +2,7 @@
 
 from rest_framework import serializers
 
-from .models import AgeGroup, EventLocation, ScoutHierarchy, ZipCode, ScoutOrgaLevel
-
-
-class AgeGroupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AgeGroup
-        fields = '__all__'
+from .models import EventLocation, ScoutHierarchy, ZipCode, ScoutOrgaLevel
 
 
 class EventLocationSerializer(serializers.ModelSerializer):

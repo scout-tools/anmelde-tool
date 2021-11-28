@@ -1,6 +1,7 @@
 from colorfield.fields import ColorField
 from django.contrib.auth.models import User
 from django.db import models
+from polymorphic.models import PolymorphicModel
 
 
 class TimeStampMixin(models.Model):
@@ -32,15 +33,37 @@ class TagType(models.Model):
         return self.name
 
 
-class Tag(models.Model):
+class AttributeDescription(models.Model):
+    id = models.AutoField(auto_created=True, primary_key=True)
+    header = models.CharField(max_length=1000, blank=True)
+    name = models.CharField(max_length=1000, blank=True)
+    description = models.CharField(max_length=1000, blank=True)
+
+
+class AbstractAttribute(PolymorphicModel):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=100, blank=True)
-    description = models.CharField(max_length=100, blank=True)
     type = models.ForeignKey(TagType, null=True, blank=False, on_delete=models.PROTECT)
     is_custom = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.name
+
+class DescriptionTagRelation(models.Model):
+    id = models.AutoField(auto_created=True, primary_key=True)
+    description = models.ForeignKey(AttributeDescription, null=True, on_delete=models.PROTECT)
+    event = models.ForeignKey("Event", null=True, on_delete=models.PROTECT)
+    attribute = models.ForeignKey(AbstractAttribute, on_delete=models.CASCADE, null=True)
+
+
+class Tag(AbstractAttribute):
+    pass
+
+
+class BooleanAttribute(AbstractAttribute):
+    boolean_field = models.BooleanField(default=False)
+
+
+class TimeAttribute(AbstractAttribute):
+    date_field = models.DateTimeField()
 
 
 class EventLocation(TimeStampMixin):
@@ -55,18 +78,8 @@ class EventLocation(TimeStampMixin):
     capacity = models.IntegerField(blank=True, null=True)
     per_person_fee = models.FloatField(blank=True, null=True)
     fix_fee = models.FloatField(blank=True, null=True)
-    tags = models.ManyToManyField(Tag)
 
-    def __str__(self):
-        return self.name
-
-
-class AgeGroup(TimeStampMixin):
-    id = models.AutoField(auto_created=True, primary_key=True)
-    name = models.CharField(max_length=20)
-    description = models.CharField(max_length=100, blank=True)
-    min_age = models.IntegerField(blank=True, null=True)
-    max_age = models.IntegerField(blank=True, null=True)
+    # tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name
@@ -93,20 +106,6 @@ class ScoutHierarchy(TimeStampMixin):
         return f"{self.level} - {self.name}"
 
 
-class EatHabitType(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
-    name = models.CharField(max_length=40)
-    description = models.CharField(max_length=100, blank=True)
-    is_custom = models.BooleanField(default=1)
-
-    def __str__(self):
-        return self.name
-
-
 class Event(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=50)
@@ -119,7 +118,7 @@ class Event(TimeStampMixin):
     last_possible_update = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     invitation_code = models.CharField(max_length=20, blank=True)
     is_public = models.BooleanField(default=False)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     responsible_persons = models.ManyToManyField(User)
 
@@ -132,7 +131,8 @@ class SleepingLocations(TimeStampMixin):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100, blank=True)
     additional_price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    tags = models.ManyToManyField(Tag)
+
+    # tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name
@@ -145,7 +145,7 @@ class Registration(TimeStampMixin):
     is_confirmed = models.BooleanField(default=0)
     is_accepted = models.BooleanField(default=0)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
 
 
 class RegistrationParticipant(TimeStampMixin):
@@ -157,11 +157,11 @@ class RegistrationParticipant(TimeStampMixin):
     age = models.IntegerField(null=True, blank=True)
     scout_group = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
-    eat_habits = models.ManyToManyField(EatHabitType, blank=True)
     email = models.EmailField(null=True)
     birthday = models.DateField(null=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(Tag)
+
+    # tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return f"{self.registration}: {self.last_name}, {self.first_name}"

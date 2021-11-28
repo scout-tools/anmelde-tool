@@ -10,7 +10,6 @@ class UserExtended(models.Model):
     scout_organisation = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
     mobile_number = models.CharField(max_length=20, blank=True)
     scout_name = models.CharField(max_length=20, blank=True)
-    successfull_initialised = models.BooleanField(default=False)
     dsgvo_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
