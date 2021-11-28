@@ -48,7 +48,9 @@
                   {{ item.scoutOrganisation}} ({{ item.bundName}})
                   <br />
                   <br />
-
+                  E-Mail: {{ item.contactEmail }}
+                  <br />
+                  <br />
                 </p>
               </v-row>
             </v-container>
