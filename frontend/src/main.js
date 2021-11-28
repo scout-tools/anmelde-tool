@@ -6,10 +6,13 @@ import moment from 'moment';
 import Vuelidate from 'vuelidate';
 import { LMap, LMarker, LTileLayer } from 'vue2-leaflet';
 import { Icon } from 'leaflet';
+import VueKeycloakJs from '@dsb-norge/vue-keycloak-js';
+
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
+import keycl from './auth/keycloak';
 import auth from './auth';
 import 'leaflet/dist/leaflet.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
@@ -37,6 +40,33 @@ Icon.Default.mergeOptions({
 });
 
 Vue.prototype.moment = moment;
+
+Vue.use(VueKeycloakJs, {
+  init: {
+    // Use 'login-required' to always require authentication
+    // If using 'login-required', there is no need for the router guards in router.js
+    onLoad: 'check-sso',
+    checkLoginIframe: false,
+  },
+
+  config: {
+    url: process.env.VUE_APP_KEYCLOAK_URL,
+    realm: process.env.VUE_APP_KEYCLOAK_REALM,
+    clientId: process.env.VUE_APP_KEYCLOAK_CLIENT_ID,
+    onLoad: 'check-sso',
+    checkLoginIframe: false,
+  },
+  onReady(keycloak) {
+    store.commit('setTokens', keycloak.token, keycloak.refreshToken);
+    keycloak.loadUserInfo()
+      .then((userInfo) => {
+        store.commit('setUserinfo', userInfo);
+
+        keycl.checkPersonalData();
+        keycl.setRefreshInterval(keycloak);
+      });
+  },
+});
 
 new Vue({
   router,

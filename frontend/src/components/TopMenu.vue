@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="loadedData">
+  <v-container>
     <v-app-bar app color="primary" dark absolute>
       <v-tabs background-color="primary" centered dark icons-and-text>
         <v-tab>
@@ -22,7 +22,7 @@
         </v-tab>
         <v-spacer/>
         <v-card-actions class="justify-center">
-          <v-btn depressed color="secondary" elevation="2" @click="login" v-if="!isAuth">
+          <v-btn depressed color="secondary" elevation="2" @click="onLoginClicked" v-if="!isAuth">
             Login
           </v-btn>
           <v-menu bottom offset-y v-else>
@@ -65,7 +65,7 @@
                   </v-list-item>
                   <v-divider></v-divider>
                   <v-list-item class="justify-center">
-                    <v-btn class="ma-5 text-center" large dark @click="logout">
+                    <v-btn class="ma-5 text-center" large dark @click="onLogoutClicked">
                       Logout
                     </v-btn>
                   </v-list-item>
@@ -82,31 +82,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Keycloak from 'keycloak-js';
-import axios from 'axios';
 
 export default {
   name: 'TopMenu',
   data: () => ({
-    fav: true,
-    menu: false,
-    message: false,
-    hints: true,
-    API_URL: process.env.VUE_APP_API,
-    userinfo: {
-      fahrtenname: '',
-      stamm: '',
-      bund: '',
-    },
-    keycloakUrl: process.env.VUE_APP_KEYCLOAK_URL,
-    keycloakRealm: process.env.VUE_APP_KEYCLOAK_REALM,
-    keycloakClientId: process.env.VUE_APP_KEYCLOAK_CLIENT_ID,
-
-    keycloak: null,
-    loadedData: false,
   }),
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData']),
+    ...mapGetters(['userinfo']),
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
         return require('../assets/dpvgold/dpv-gold-logo-test-simple.png'); // eslint-disable-line
@@ -123,112 +105,28 @@ export default {
       return '';
     },
     isAuth() {
-      if (this.keycloak !== null) {
-        return this.keycloak.authenticated;
+      if (this.$keycloak !== null) {
+        return this.$keycloak.authenticated;
       }
       return true;
     },
   },
   methods: {
-    afterAuth() {
-      this.$store.commit('setTokens', this.keycloak.token, this.keycloak.refreshToken);
-      this.keycloak.loadUserInfo()
-        .then((userInfo) => {
-          this.userinfo = userInfo;
-        });
-    },
-    checkUser() {
-      const path = `${this.API_URL}/auth/personal-data-check/`;
-      axios.get(path)
-        .then((res) => {
-          console.log(res);
-          if (res.status === 426) {
-            this.router.push({ name: 'settingsUser' });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.response.status === 426) {
-            this.$router.push({ name: 'settingsUser' });
-          }
-        });
-    },
-    login() {
-      this.keycloak.login()
-        .then((auth) => {
-          if (auth) {
-            this.afterAuth();
-            this.refreshToken();
-            this.checkUser();
-          }
-        })
-        .catch((error) => {
-          console.error('Authenticated Failed: ', error);
-          this.logout();
-        })
-        .finally(() => {
-          this.loadedData = true;
-        });
-    },
-    logout() {
-      this.keycloak.logout();
+    onLogoutClicked() {
+      this.$keycloak.logoutFn();
+
       this.$store.commit('clearTokens');
+      this.$store.commit('clearUserinfo');
+
       this.$router.push({ name: 'landing' });
-      this.userinfo = null;
     },
-    refreshToken() {
-      if (this.isAuthenticated) {
-        setInterval(() => {
-          this.keycloak.updateToken(70)
-            .then((refreshed) => {
-              if (refreshed) {
-                console.log(`Token refreshed ${refreshed}`);
-              } else {
-                console.log(`Token not refreshed, valid for ${
-                  Math.round(this.keycloak.tokenParsed.exp + this.keycloak.timeSkew - new Date().getTime() / 1000)} seconds`);
-              }
-            })
-            .catch(() => {
-              console.log('Failed to refresh token');
-            });
-        }, 6000);
-      }
+    onLoginClicked() {
+      this.$keycloak.login();
     },
-    goToIdm() {
+    goToIdm() { // external keycloak user settings page
       const link = `${this.keycloakUrl}/realms/${this.keycloakRealm}/account/`;
       window.open(link, '_blank');
     },
-  },
-  mounted() {
-    const initOptions = {
-      url: this.keycloakUrl,
-      realm: this.keycloakRealm,
-      clientId: this.keycloakClientId,
-      onLoad: 'check-sso',
-      checkLoginIframe: false,
-    };
-    this.keycloak = Keycloak(initOptions);
-
-    this.keycloak.init({
-      onLoad: initOptions.onLoad,
-      checkLoginIframe: initOptions.checkLoginIframe,
-    })
-      .then((auth) => {
-        console.log(auth);
-        if (auth) {
-          console.log('Authenticated');
-          this.afterAuth();
-          this.refreshToken();
-          this.checkUser();
-        }
-      })
-      .catch((error) => {
-        console.error('Authenticated Failed: ', error);
-        this.logout();
-      })
-      .finally(() => {
-        this.loadedData = true;
-      });
   },
 };
 </script>

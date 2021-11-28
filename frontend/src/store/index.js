@@ -34,10 +34,18 @@ export default new Vuex.Store({
     registeredTents: [{
       id: 1, registration: 1, tentType: 1, usedByScoutGroups: [1],
     }],
+    userinfo: {
+      fahrtenname: '',
+      stamm: '',
+      bund: '',
+    },
   },
   getters: {
     dpvAddedLocation(state) {
       return state.dpvAddedLocation;
+    },
+    userinfo(state) {
+      return state.userinfo;
     },
     myBund(state) {
       return state.myBund;
@@ -49,7 +57,10 @@ export default new Vuex.Store({
       return state.myScoutname;
     },
     getJwtData(state) {
-      return VueJwtDecode.decode(state.accessToken);
+      if (state.accessToken) {
+        return VueJwtDecode.decode(state.accessToken);
+      }
+      return {};
     },
     isAuthenticated(state) {
       return !!state.accessToken;
@@ -111,6 +122,16 @@ export default new Vuex.Store({
     clearTokens(state) {
       state.accessToken = null;
       state.refreshToken = null;
+    },
+    setUserinfo(state, userinfo) {
+      state.userinfo = userinfo;
+    },
+    clearUserinfo(state) {
+      state.userinfo = {
+        fahrtenname: '',
+        stamm: '',
+        bund: '',
+      };
     },
     setAgeGroupMapping(state, newAgeGroup) {
       state.ageGroupMapping = newAgeGroup;
