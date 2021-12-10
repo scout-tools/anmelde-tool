@@ -42,7 +42,9 @@ ALLOWED_HOSTS = [
     '1agdtsauoj.execute-api.eu-central-1.amazonaws.com',
     'oev1ba563c.execute-api.eu-central-1.amazonaws.com',
     'dev.api.anmelde-tool.de',
-    'api.anmelde-tool.de'
+    'api.anmelde-tool.de',
+    'anmeldetool-dev.eba-crptpzh7.eu-central-1.elasticbeanstalk.com/',
+    'api.anmelde-tool.dev.scout-tools.de'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
