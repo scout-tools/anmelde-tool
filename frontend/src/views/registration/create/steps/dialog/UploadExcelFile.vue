@@ -17,8 +17,8 @@
         <v-header>
           Lade hier deine Excel Datei hoch, um dir die manuelle Eingabe zu
           erleichtern. Die Datei muss in einem bestimmten Format sein.
-          <a target="_blank" href="https://cloud.dpbm.de/s/ZTm4KL2JqtJN9DP"
-            >Link zur Bundescloud</a
+          <a target="_blank" href="https://cloud.dpvonline.de/s/fMMrgfpf5dAm9Fg"
+            >Link zur DPV-Cloud</a
           >
         </v-header>
         <v-card class="ma-4 pa-3">

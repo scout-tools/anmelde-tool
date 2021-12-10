@@ -61,10 +61,11 @@ import StepConsent from './steps/00-Common/StepConsent.vue';
 import StepFood from './steps/00-Common/StepFood.vue';
 import StepFreeText from './steps/00-Common/StepFreeText.vue';
 import AddContract from './steps/00-Common/AddContract.vue';
+import StepTents from './steps/00-Common/StepTents.vue';
+import StepTravel from './steps/00-Common/StepTravel.vue';
 
 import StepAddParticipantsSingle from './steps/01-MosaikBundesfahrt21/StepAddParticipantsSingle.vue';
 import StepTravelBundesfahrt from './steps/01-MosaikBundesfahrt21/StepTravelBundesfahrt.vue';
-// import StepConfirmBundesfahrt from './steps/01-MosaikBundesfahrt21/StepConfirmBundesfahrt.vue';
 
 import StepAddParticipants from './steps/02-DpvStadtUndSpiel21/StepAddParticipants.vue';
 import StepAddParticipantGroupRole from './steps/02-DpvStadtUndSpiel21/StepBdPDpvAddParticipantGroupRole.vue';
@@ -100,6 +101,8 @@ export default {
     LoadingCircual,
     DpvGoldErlebnisangebot,
     AddContract,
+    StepTents,
+    StepTravel,
   },
   props: ['scoutOrganisation'],
   data() {
@@ -132,7 +135,8 @@ export default {
         return [
           StepConsent,
           StepAddParticipantsSingle,
-          StepWorkshop,
+          StepTents,
+          StepTravel,
           StepFreeText,
           StepConfirmBusife,
         ];

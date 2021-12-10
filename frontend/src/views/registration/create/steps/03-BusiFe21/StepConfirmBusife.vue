@@ -2,10 +2,10 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container>
       <v-row class="mt-2">
-         <div class="text-left subtitle-1">
+         <!-- <div class="text-left subtitle-1">
           <p><b>Zusammenfassung</b></p>
             Ihr habt {{ participantCount }} Teilnehmende und {{ workshopCount }} AGs angemeldet.
-        </div>
+        </div> -->
       </v-row>
        <v-divider class="text-left my-2"/>
       <v-row>

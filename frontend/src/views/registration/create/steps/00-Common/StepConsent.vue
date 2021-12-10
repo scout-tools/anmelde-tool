@@ -16,8 +16,8 @@
             Die folgenden Daten sind nur für das Planungsteam und die Administrator_innen
             sichtbar. <br />
               <span v-if="isBundesfahrt">Alle Dokumente findest du hier:</span>
-              <a v-if="isBundesfahrt" target="_blank" href="https://cloud.dpbm.de/s/ZTm4KL2JqtJN9DP">
-                Link zur Bundescloud
+              <a v-if="isBundesfahrt" target="_blank" href="https://cloud.dpvonline.de/s/5BM6qmNS5Mp7wqG">
+                Link zur DPV-Cloud
               </a>
           </p>
         </span>

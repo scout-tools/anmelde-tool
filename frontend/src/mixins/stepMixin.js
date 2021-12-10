@@ -7,9 +7,9 @@ export const stepMixin = { // eslint-disable-line
     prevStep() {
       this.$emit('prevStep');
     },
-    nextStep() {
+    nextStep(force = false) {
       this.validate();
-      if (!this.valid) {
+      if (!this.valid && !force) {
         return;
       }
       this.$emit('nextStep');
