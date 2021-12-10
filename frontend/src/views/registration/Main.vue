@@ -303,13 +303,13 @@ export default {
     },
 
     async loadUserExtended() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
+      const path = `${this.API_URL}/auth/data/user-extended/${this.getJwtData.userId}/`;
       const response = await axios.get(path);
 
       return response.data;
     },
     async getEventById(id) {
-      const path = `${process.env.VUE_APP_API}basic/event/${id}/`;
+      const path = `${process.env.VUE_APP_API}/basic/event/${id}/`;
       const response = await axios.get(path);
 
       return response.data;
@@ -317,7 +317,7 @@ export default {
 
     createRegestration() {
       axios
-        .post(`${this.API_URL}basic/registration/?code=${this.getCodeParam}`, {
+        .post(`${this.API_URL}/basic/registration/?code=${this.getCodeParam}`, {
           responsiblePersons: [this.getJwtData.email],
           scoutOrganisation: this.items.scoutOrganisation,
           event: this.eventId,

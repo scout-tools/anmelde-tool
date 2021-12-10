@@ -179,7 +179,7 @@ export default {
       if (this.username && this.password) {
         this.isLoading = true;
         axios
-          .post(`${this.API_URL}auth/token/`, {
+          .post(`${this.API_URL}/auth/token/`, {
             username: this.username,
             password: this.password,
           })

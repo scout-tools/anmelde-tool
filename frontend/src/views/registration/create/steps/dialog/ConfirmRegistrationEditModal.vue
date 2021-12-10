@@ -44,7 +44,7 @@ export default {
   methods: {
     onEditClick() {
       axios
-        .delete(`${this.API_URL}basic/participant-personal/${this.data}/`)
+        .delete(`${this.API_URL}/basic/participant-personal/${this.data}/`)
         .then(() => {
           this.showSuccess = true;
           this.dialog = false;

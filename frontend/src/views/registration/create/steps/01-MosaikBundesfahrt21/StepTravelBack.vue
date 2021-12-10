@@ -77,7 +77,7 @@ export default {
     getMethod() {
       axios
         .get(
-          `${this.API_URL}basic/method-of-travel/`,
+          `${this.API_URL}/basic/method-of-travel/`,
         )
         .then((res) => res.data.filter((i) => i.travelTag === this.travelTag))
         .catch((err) => {
@@ -111,7 +111,7 @@ export default {
             });
 
             const promises = [];
-            const myUrl = `${this.API_URL}basic/method-of-travel/`;
+            const myUrl = `${this.API_URL}/basic/method-of-travel/`;
             methodOfTravel.forEach((i) => {
               promises.push(axios.post(myUrl, i));
             });
@@ -121,7 +121,7 @@ export default {
           } else {
             const promises = [];
             methodOfTravel.forEach((i) => {
-              promises.push(axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i));
+              promises.push(axios.put(`${this.API_URL}/basic/method-of-travel/${i.id}/`, i));
             });
             Promise.all(promises).then(() => {
               this.$emit('nextStep');

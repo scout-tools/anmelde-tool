@@ -107,7 +107,7 @@ export default {
     async patchRegiststration() {
       const registrationId = this.$route.params.id;
       return axios.patch(
-        `${process.env.VUE_APP_API}basic/registration/${registrationId}/`,
+        `${process.env.VUE_APP_API}/basic/registration/${registrationId}/`,
         {
           freeText: this.textfieldText,
         },

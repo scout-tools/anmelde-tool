@@ -169,7 +169,7 @@ export default {
     },
 
     callTokenPost() {
-      return axios.post(`${this.API_URL}auth/token/`, {
+      return axios.post(`${this.API_URL}/auth/token/`, {
         username: this.username,
         password: this.password,
       });

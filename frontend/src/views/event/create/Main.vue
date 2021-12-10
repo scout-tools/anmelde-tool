@@ -130,7 +130,7 @@ export default {
       setTimeout(() => this.$router.push({ name: 'eventOverview' }), 2000);
     },
     callCreateEventPost() {
-      return axios.post(`${this.API_URL}basic/event/`, this.data.event);
+      return axios.post(`${this.API_URL}/basic/event/`, this.data.event);
     },
     formatCreateEventRequestData() {
       const dataNameDescription = this.$refs.StepNameDescription[0].getData();
@@ -175,7 +175,7 @@ export default {
       }
     },
     async getEventById(id) {
-      const path = `${process.env.VUE_APP_API}basic/event/${id}/`;
+      const path = `${process.env.VUE_APP_API}/basic/event/${id}/`;
       const response = await axios.get(path);
 
       return response.data;

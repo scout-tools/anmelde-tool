@@ -185,7 +185,7 @@ export default {
       this.dialog = false;
     },
     async loadZipCodeData(id) {
-      const url = `${this.API_URL}basic/zip-code/${id}/`;
+      const url = `${this.API_URL}/basic/zip-code/${id}/`;
       const response = await axios.get(url);
       return response.data;
     },

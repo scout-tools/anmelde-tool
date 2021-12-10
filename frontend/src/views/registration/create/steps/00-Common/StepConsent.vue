@@ -237,7 +237,7 @@ export default {
       }
     },
     async loadUserExtended() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
+      const path = `${this.API_URL}/auth/data/user-extended/${this.getJwtData.userId}/`;
       const response = await axios.get(path);
 
       return response.data;

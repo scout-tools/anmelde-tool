@@ -259,20 +259,20 @@ export default {
     async getContact() {
       const registrationId = this.$route.params.id;
       const res = await axios.get(
-        `${process.env.VUE_APP_API}basic/contact/?registration=${registrationId}`,
+        `${process.env.VUE_APP_API}/basic/contact/?registration=${registrationId}`,
       );
       return res.data;
     },
     async postContact() {
       const res = await axios.post(
-        `${process.env.VUE_APP_API}basic/contact/`,
+        `${process.env.VUE_APP_API}/basic/contact/`,
         this.data,
       );
       return res.data;
     },
     async putContact(id) {
       const res = await axios.put(
-        `${process.env.VUE_APP_API}basic/contact/${id}/`,
+        `${process.env.VUE_APP_API}/basic/contact/${id}/`,
         this.data,
       );
       return res.data;

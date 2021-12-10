@@ -197,12 +197,12 @@ export default {
       this.$router.push({ name: 'eventOverview' });
     },
     callConfirmRegistration() {
-      return axios.patch(`${process.env.VUE_APP_API}basic/registration/${this.id}/`, {
+      return axios.patch(`${process.env.VUE_APP_API}/basic/registration/${this.id}/`, {
         is_confirmed: true,
       });
     },
     unConfirmRegistration() {
-      return axios.patch(`${process.env.VUE_APP_API}basic/registration/${this.id}/`, {
+      return axios.patch(`${process.env.VUE_APP_API}/basic/registration/${this.id}/`, {
         is_confirmed: false,
       });
     },
@@ -221,14 +221,14 @@ export default {
     },
 
     async getEventData(id) {
-      const path = `${process.env.VUE_APP_API}basic/event/${parseInt(id, 10)}/`;
+      const path = `${process.env.VUE_APP_API}/basic/event/${parseInt(id, 10)}/`;
       const response = await axios.get(path);
 
       return response.data;
     },
 
     getRegistration() {
-      const path = `${process.env.VUE_APP_API}basic/registration/${this.$route.params.id}/`;
+      const path = `${process.env.VUE_APP_API}/basic/registration/${this.$route.params.id}/`;
       axios
         .get(path)
         .then((res) => {

@@ -358,7 +358,7 @@ export default {
   },
   methods: {
     async getRegistrationSummaryData() {
-      const path = `${process.env.VUE_APP_API}basic/registration/${this.id}/summary/`;
+      const path = `${process.env.VUE_APP_API}/basic/registration/${this.id}/summary/`;
       axios
         .get(path)
         .then((res) => {

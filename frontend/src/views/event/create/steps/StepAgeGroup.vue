@@ -93,7 +93,7 @@ export default {
       this.$emit('submit');
     },
     async getAgeGroups() {
-      const result = await axios.get(`${this.API_URL}basic/age-group/`);
+      const result = await axios.get(`${this.API_URL}/basic/age-group/`);
       this.ageGroupList = result.data;
     },
     getData() {

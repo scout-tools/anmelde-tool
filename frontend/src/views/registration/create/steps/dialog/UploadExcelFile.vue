@@ -224,7 +224,7 @@ export default {
       return dto;
     },
     async callSingleZipCode(zipCode) {
-      const path = `${this.API_URL}basic/zip-code/?zip_city=${zipCode}`;
+      const path = `${this.API_URL}/basic/zip-code/?zip_city=${zipCode}`;
       const response = await axios.get(path);
 
       return response.data;

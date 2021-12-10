@@ -113,7 +113,7 @@ export default {
             });
 
             const promises = [];
-            const myUrl = `${this.API_URL}basic/method-of-travel/`;
+            const myUrl = `${this.API_URL}/basic/method-of-travel/`;
             methodOfTravel.forEach((i) => {
               promises.push(axios.post(myUrl, i));
             });
@@ -124,7 +124,7 @@ export default {
             const promises = [];
             methodOfTravel.forEach((i) => {
               promises.push(
-                axios.put(`${this.API_URL}basic/method-of-travel/${i.id}/`, i),
+                axios.put(`${this.API_URL}/basic/method-of-travel/${i.id}/`, i),
               );
             });
             Promise.all(promises).then(() => {

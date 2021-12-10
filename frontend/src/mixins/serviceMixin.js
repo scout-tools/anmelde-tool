@@ -3,7 +3,7 @@ import axios from 'axios';
 export const serviceMixin = {  // eslint-disable-line
   methods: {
     async postExperimentItem(event, experiment, score) {
-      const path = `${process.env.VUE_APP_API}basic/experiment-item/`;
+      const path = `${process.env.VUE_APP_API}/basic/experiment-item/`;
       return axios.post(path, {
         event,
         experiment,
@@ -11,15 +11,15 @@ export const serviceMixin = {  // eslint-disable-line
       });
     },
     async getRegistrationStats(eventId) {
-      const path = `${process.env.VUE_APP_API}basic/event/${eventId}/registration-stats/`;
+      const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/registration-stats/`;
       return axios.get(path);
     },
     async getParticipants(eventId) {
-      const path = `${process.env.VUE_APP_API}basic/event/${eventId}/participants/`;
+      const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/participants/`;
       return axios.get(path);
     },
     async getWorkshopStats(eventId) {
-      const path = `${process.env.VUE_APP_API}basic/event/${eventId}/workshop-eventmaster-overview/`;
+      const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/workshop-eventmaster-overview/`;
       return axios.get(path);
     },
   },

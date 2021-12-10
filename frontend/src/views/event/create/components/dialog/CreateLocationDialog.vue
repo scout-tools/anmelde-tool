@@ -559,7 +559,7 @@ export default {
   },
   methods: {
     async getZipCodeMapping(searchString) {
-      const path = `${this.API_URL}basic/zip-code/?zip_city=${searchString}`;
+      const path = `${this.API_URL}/basic/zip-code/?zip_city=${searchString}`;
       const response = await axios.get(path);
 
       return response.data;
@@ -612,7 +612,7 @@ export default {
       }
       if (!this.data.id) {
         axios
-          .post(`${this.API_URL}basic/event-location/`, this.data)
+          .post(`${this.API_URL}/basic/event-location/`, this.data)
           .then(() => {
             this.closeDialog();
             this.$emit('refresh');
@@ -620,7 +620,7 @@ export default {
       } else {
         axios
           .put(
-            `${this.API_URL}basic/event-location/${this.data.id}/`,
+            `${this.API_URL}/basic/event-location/${this.data.id}/`,
             this.data,
           )
           .then(() => {
