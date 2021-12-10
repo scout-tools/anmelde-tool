@@ -1,6 +1,7 @@
 from colorfield.fields import ColorField
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from polymorphic.models import PolymorphicModel
 
 
@@ -39,19 +40,40 @@ class AttributeDescription(models.Model):
     name = models.CharField(max_length=1000, blank=True)
     description = models.CharField(max_length=1000, blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class AbstractAttribute(PolymorphicModel):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=100, blank=True)
     type = models.ForeignKey(TagType, null=True, blank=False, on_delete=models.PROTECT)
     is_custom = models.BooleanField(default=False)
+    is_visible = models.BooleanField(default=True)
+    description = models.CharField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return f'{self.type}: {self.name}'
 
 
-class DescriptionTagRelation(models.Model):
+class DescriptionEventAttributeRelation(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True)
     description = models.ForeignKey(AttributeDescription, null=True, on_delete=models.PROTECT)
     event = models.ForeignKey("Event", null=True, on_delete=models.PROTECT)
     attribute = models.ForeignKey(AbstractAttribute, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f'{self.event}: {self.attribute}'
+
+
+class DescriptionRegistrationAttributeRelation(models.Model):
+    id = models.AutoField(auto_created=True, primary_key=True)
+    description = models.ForeignKey(AttributeDescription, null=True, on_delete=models.PROTECT)
+    registration = models.ForeignKey("Registration", null=True, on_delete=models.PROTECT)
+    attribute = models.ForeignKey(AbstractAttribute, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f'{self.event}: {self.registration}'
 
 
 class Tag(AbstractAttribute):
@@ -78,11 +100,11 @@ class EventLocation(TimeStampMixin):
     capacity = models.IntegerField(blank=True, null=True)
     per_person_fee = models.FloatField(blank=True, null=True)
     fix_fee = models.FloatField(blank=True, null=True)
+    tags = models.ManyToManyField(Tag)
 
-    # tags = models.ManyToManyField(Tag)
 
-    def __str__(self):
-        return self.name
+def __str__(self):
+    return self.name
 
 
 class ScoutOrgaLevel(TimeStampMixin):
@@ -106,6 +128,13 @@ class ScoutHierarchy(TimeStampMixin):
         return f"{self.level} - {self.name}"
 
 
+class RegistrationType(models.TextChoices):
+    SingleOnly = 'SO', _('Single Only')
+    GroupOnly = 'GO', _('Groups Only')
+    GroupsOptionalSingleOptional = 'GOSO', _('Groups Optional, Single Optional')
+    GroupsRequiredSingleOptional = 'GRSO', _('Groups Required Single Optional')
+
+
 class Event(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=50)
@@ -118,9 +147,12 @@ class Event(TimeStampMixin):
     last_possible_update = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     invitation_code = models.CharField(max_length=20, blank=True)
     is_public = models.BooleanField(default=False)
-    # tags = models.ManyToManyField(Tag)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     responsible_persons = models.ManyToManyField(User)
+    keycloak_path = models.CharField(max_length=50, blank=True)
+    tags = models.ManyToManyField(Tag)
+    registration_model = models.CharField(max_length=4, choices=RegistrationType.choices,
+                                          default=RegistrationType.GroupOnly)
 
     def __str__(self):
         return f"{self.name}: {self.start_time} - {self.end_time}, {self.location}"
@@ -131,8 +163,7 @@ class SleepingLocations(TimeStampMixin):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100, blank=True)
     additional_price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-
-    # tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name
@@ -145,7 +176,7 @@ class Registration(TimeStampMixin):
     is_confirmed = models.BooleanField(default=0)
     is_accepted = models.BooleanField(default=0)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-    # tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag)
 
 
 class RegistrationParticipant(TimeStampMixin):
@@ -160,8 +191,7 @@ class RegistrationParticipant(TimeStampMixin):
     email = models.EmailField(null=True)
     birthday = models.DateField(null=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
-
-    # tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return f"{self.registration}: {self.last_name}, {self.first_name}"
@@ -176,6 +206,7 @@ class Workshop(TimeStampMixin):
     max_person = models.IntegerField(blank=True, null=True)
     supervisor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.title
