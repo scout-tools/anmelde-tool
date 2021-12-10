@@ -1,6 +1,6 @@
 <template>
   <v-container class="mt-10">
-    <v-row justify="center">
+    <v-row justify="center" class="mt-5">
       <v-flex ma-3 lg9>
         <v-layout column>
           <v-card>
@@ -14,46 +14,46 @@
             >
               <v-tabs-slider></v-tabs-slider>
 
-            <v-tab href="#tab-1">
+              <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-1">
                 Übersicht
                 <v-icon>mdi-clipboard-list</v-icon>
               </v-tab>
 
-              <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-2">
+              <v-tab v-if="displayEventRoleTab(eventOverview, 1, 7)" href="#tab-2">
                 Lagerleitung
                 <v-icon>mdi-counter</v-icon>
               </v-tab>
 
-              <v-tab href="#tab-3">
+              <v-tab v-if="displayEventRoleTab(eventOverview, 2, 5)" href="#tab-3">
                 Karte
                 <v-icon>mdi-map</v-icon>
               </v-tab>
 
-              <v-tab v-if="displayEventRoleTab(eventOverview, 2)" href="#tab-4">
+              <v-tab v-if="displayEventRoleTab(eventOverview, 2, 6)" href="#tab-4">
                 Kasse
                 <v-icon>mdi-currency-eur</v-icon>
               </v-tab>
 
-              <!-- <v-tab v-if="displayEventRoleTab(eventOverview, 4)" href="#tab-5">
-                Programm
+              <v-tab v-if="displayEventRoleTab(eventOverview, 4, 4)" href="#tab-5">
+                Erlebnisangebot
                 <v-icon>mdi-run-fast</v-icon>
-              </v-tab> -->
+              </v-tab>
 
-              <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-5">
+              <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-6">
                 Zusätze
                 <v-icon>mdi-file-download</v-icon>
               </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-              <v-tab-item v-for="i in 5" :key="i" :value="'tab-' + i">
+              <v-tab-item v-for="i in 6" :key="i" :value="'tab-' + i">
                 <v-card-text>
-                  <overview-main v-if="i === 1" />
-                  <leader-main v-if="i === 2" />
-                  <maps-main v-if="i === 3" />
-                  <cash-main v-if="i === 4" />
-                  <!-- <program-main v-if="i === 5" /> -->
-                  <pdf-generation-main v-if="i === 5"/>
+                  <OverviewMain v-if="i === 1" />
+                  <LeaderMain v-if="i === 2" />
+                  <MapsMain v-if="i === 3" />
+                  <CashMain v-if="i === 4" />
+                  <WorkshopMain v-if="i === 5" />
+                  <PdfGenerationMain v-if="i === 6"/>
                 </v-card-text>
               </v-tab-item>
             </v-tabs-items>
@@ -72,7 +72,7 @@ import OverviewMain from './overview/Main.vue';
 import LeaderMain from './leader/Main.vue';
 import MapsMain from './maps/Main.vue';
 import CashMain from './cash/Main.vue';
-// import ProgramMain from './program/Main.vue';
+import WorkshopMain from './workshop/Main.vue';
 import PdfGenerationMain from './downlaods/Main.vue';
 
 export default {
@@ -80,7 +80,7 @@ export default {
     MapsMain,
     LeaderMain,
     CashMain,
-    // ProgramMain,
+    WorkshopMain,
     PdfGenerationMain,
     OverviewMain,
   },
@@ -103,17 +103,18 @@ export default {
     };
   },
   methods: {
-    displayEventRoleTab(eventOverview, id) {
+    displayEventRoleTab(eventOverview, id, tag = 0) {
       if (
         eventOverview && // eslint-disable-line
         eventOverview.participantRole && // eslint-disable-line
         eventOverview.participantRole.length
       ) {
         const roles = eventOverview.participantRole;
+        const tags = eventOverview.eventTags;
         const hasRole = roles.some((role) => role.eventRoleId === id);
         const isFahrtenleitung = roles.some((role) => role.eventRoleId === 1);
-
-        return hasRole || isFahrtenleitung;
+        const hasModule = tags.some((currentTag) => currentTag === tag);
+        return (hasRole || isFahrtenleitung) && (hasModule || tag === 0);
       }
       return 1;
     },

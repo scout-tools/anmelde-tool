@@ -47,9 +47,9 @@ export default {
     },
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
-        return require('../assets/dpvgold/dpv-gold-logo-white.png'); // eslint-disable-line
+        return require('../assets/dpvgold/dpv-gold-logo-test-simple.png'); // eslint-disable-line
       }
-      return require('../assets/dpvgold/dpv-gold-logo-white.png'); // eslint-disable-line
+      return require('../assets/dpvgold/dpv-gold-logo-white_simple.png'); // eslint-disable-line
     },
     isSimpleUser() {
       if (this.getJwtData) {

@@ -1,30 +1,29 @@
-[https://www.hratuga.de/pfadfinderwissen/images/0/0f/Dpbm.gif]
+[https://raw.githubusercontent.com/scout-tools/anmelde-tool/main/frontend/src/assets/dpvgold/logo/dpv-gold-logo-white.png]
 
-Busife 2021
-Bundessingefest
+Erlebnisangebote
+DPV-goLd 2022
 
 Liebe_r {{ responsible_persons }}
 
-wir freuen uns, dass ihr euch als Stamm {{ scout_organisation }} für das BuSife 2021 angemeldet habt!
-
-Für die Fahrt hast du {{ total_participants }} Teilnehmer_innen angemeldet.
-
-Dazu habt ihr {{ total_workshops }} angemeldet.
-
-Wir freuen uns auf euch.
-
-Bei Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.
+wir freuen uns, dass du erfolgreich einen Workshop angemeldet hast.
 
 
+Vielen Dank für deinen Beitrag zu unserem goLdenen Jubiläum im September auf der Burg Ludwigstein.
 
-BuSiFe, das Singefest des Deutschen Pfadfinderbund Mosaik.
+Viele Grüße und Gut Pfad,
 
-Deutscher Pfadfinderbund Mosaik
 
-Robert-Perthel-Str. 79
+Dein goLd-Planungsteam
 
-50739 Köln
+P.S. Bei weiteren Fragen oder Problemen kannst du dich gerne direkt an uns wenden.
 
-busife@dpbm.de
 
-www.dpbm.de
+
+
+DPV-goLd
+
+Dein DPV-goLd Team
+
+info@dpvgold.de
+
+www.dpvgold.de

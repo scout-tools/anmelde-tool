@@ -92,9 +92,9 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 
 import DeleteModal from '@/views/registration/create/steps/dialog/DeleteModal.vue';
-import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
-import CreateSinglePersonDialog from './../dialog/CreateSinglePersonDialog.vue';
-import UploadExcelFile from './../dialog/UploadExcelFile.vue';
+import PrevNextButtons from '@/views/registration/create/components/button/PrevNextButtonsSteps.vue';
+import CreateSinglePersonDialog from '../dialog/CreateSinglePersonDialog.vue';
+import UploadExcelFile from '../dialog/UploadExcelFile.vue';
 
 export default {
   name: 'StepAddParticipantsSingle',

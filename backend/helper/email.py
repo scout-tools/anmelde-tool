@@ -96,9 +96,8 @@ def send_responsible_person_mail(data):
 def send_registration_summary(data):
     plain_renderend, html_rendered = get_mail(MailType.RegistrationSummary, data, data['email_id'])
 
-    subject = "Registrierung beim Anmelde-Tool vollständig abgeschlossen"
+    subject = "Anmelde-Tool: Anmeldung abgeschlossen"
     recipients = [data['email']]
-    send_mail()
 
     return send_email(plain_renderend, html_rendered, subject, recipients)
 

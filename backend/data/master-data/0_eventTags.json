@@ -31,8 +31,35 @@
         "pk": 4,
         "fields": {
             "id": 4,
-            "name": "Erlebnisangebote",
-            "description": "DPV-Gold"
+            "name": "AG-Modul",
+            "description": "Soll das AG-Modul enthalten"
+        }
+    },
+    {
+        "model": "basic.EventTag",
+        "pk": 5,
+        "fields": {
+            "id": 5,
+            "name": "Karten-Modul",
+            "description": "Soll das Karten-Modul enthalten"
+        }
+    },
+    {
+        "model": "basic.EventTag",
+        "pk": 6,
+        "fields": {
+            "id": 6,
+            "name": "Kassen-Modul",
+            "description": "Soll das Kassen Module enthalten"
+        }
+    },
+    {
+        "model": "basic.EventTag",
+        "pk": 7,
+        "fields": {
+            "id": 7,
+            "name": "Lagerleitungs-Modul",
+            "description": "Soll das Lagerleitungs Module enthalten"
         }
     }
 ]

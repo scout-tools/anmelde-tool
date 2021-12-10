@@ -152,7 +152,7 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
     def get_scout_organisations(self, obj):
         result = obj.registration_set.values('scout_organisation__name').annotate(
             participants=Coalesce(Sum('participantgroup__number_of_persons'), 0)
-                         + Coalesce(Count('participantpersonal'), 0),
+            + Coalesce(Count('participantpersonal'), 0),
             bund=Case(When(scout_organisation__parent__parent__parent__level=3,
                            then=F('scout_organisation__parent__parent__parent__name')),
                       When(scout_organisation__parent__parent__level=3,
@@ -192,7 +192,7 @@ class EventParticipantsSerializer(serializers.ModelSerializer):
         result = obj.registration_set.values('scout_organisation__name', 'participantgroup__created_at__date',
                                              'participantpersonal__created_at__date').annotate(
             participants=Coalesce(Sum('participantgroup__number_of_persons'), 0)
-                         + Coalesce(Count('participantpersonal'), 0),
+            + Coalesce(Count('participantpersonal'), 0),
             bund=Case(When(scout_organisation__parent__parent__parent__level=3,
                            then=F('scout_organisation__parent__parent__parent__name')),
                       When(scout_organisation__parent__parent__level=3,
@@ -374,8 +374,8 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
                                                                        filter=Q(
                                                                            participantgroup__eathabit__eat_habit_type=1)),
                                                                    0)
-                                                          + Count('participantpersonal',
-                                                                  filter=Q(participantpersonal__eat_habit_type=1)))[
+                                              + Count('participantpersonal',
+                                                      filter=Q(participantpersonal__eat_habit_type=1)))[
             'veggi_group']
 
     def get_num_vegan(self, obj):
@@ -383,8 +383,8 @@ class EventKitchenMasterSerializer(serializers.ModelSerializer):
                                                                        filter=Q(
                                                                            participantgroup__eathabit__eat_habit_type=2)),
                                                                    0)
-                                                          + Count('participantpersonal',
-                                                                  filter=Q(participantpersonal__eat_habit_type=2)))[
+                                              + Count('participantpersonal',
+                                                      filter=Q(participantpersonal__eat_habit_type=2)))[
             'vegan_total']
 
     def get_num_grouped_by_age_group(self, obj):
@@ -447,7 +447,7 @@ class EventProgramMasterSerializer(serializers.ModelSerializer):
             When(participantpersonal__participant_role__isnull=False,
                  then=F('participantpersonal__participant_role__name')))
         ).aggregate(total_participants=Coalesce(Sum('participantgroup__number_of_persons'), 0)
-                                       + Count('participantpersonal'))['total_participants']
+                    + Count('participantpersonal'))['total_participants']
 
     def get_participants_grouped_by_age(self, obj):
         return obj.registration_set.values(role=Case(
@@ -561,7 +561,7 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
     def get_total_volunteers(self, obj):
         num_group = \
             obj.participantgroup_set.filter(participant_role=4) \
-                .aggregate(num=Coalesce(Sum('number_of_persons'), 0))['num']
+            .aggregate(num=Coalesce(Sum('number_of_persons'), 0))['num']
         num_pers = obj.participantpersonal_set.filter(participant_role=4).count()
         result = num_group + num_pers
         return result
@@ -714,20 +714,82 @@ class WorkshopSerializer(serializers.ModelSerializer):
 
 
 class WorkshopStatsSerializer(serializers.ModelSerializer):
-    supervisor_name = serializers.SerializerMethodField('get_supervisor_name')
+    bund_name = serializers.SerializerMethodField()
+
+    workshop_title = serializers.SerializerMethodField()
+    workshop_free_text = serializers.SerializerMethodField()
+    workshop_costs = serializers.SerializerMethodField()
+    workshop_min_person = serializers.SerializerMethodField()
+    workshop_max_person = serializers.SerializerMethodField()
+
+    contact_firstname = serializers.SerializerMethodField()
+    contact_lastname = serializers.SerializerMethodField()
+    contact_scoutname = serializers.SerializerMethodField()
+    contact_email = serializers.SerializerMethodField()
+
+    scout_organisation = serializers.SlugRelatedField(
+        many=False,
+        read_only=False,
+        queryset=ScoutHierarchy.objects.all(),
+        slug_field='name'
+    )
 
     class Meta:
-        model = Workshop
-        fields = ('id', 'title', 'free_text', 'costs', 'supervisor_name', 'registration')
+        model = Registration
+        fields = (
+            'id',
+            'is_confirmed',
+            'scout_organisation',
+            'bund_name',
+            'workshop_title',
+            'workshop_free_text',
+            'workshop_costs',
+            'workshop_min_person',
+            'workshop_max_person',
+            'created_at',
+            'contact_firstname',
+            'contact_lastname',
+            'contact_scoutname',
+            'contact_email',
+        )
 
-    def get_supervisor_name(self, obj):
-        supervisor_name = ''
-        if (obj.supervisor):
-            supervisor = ParticipantPersonal.objects.filter(id=obj.supervisor.id).first()
-            supervisor_name = f"{supervisor.first_name} {supervisor.last_name}"
-            if (supervisor.scout_name):
-                supervisor_name += f" ({supervisor.scout_name})"
-        return supervisor_name
+    def get_bund_name(self, obj):
+        partent_id = obj.scout_organisation.parent.id
+        partent_one = ScoutHierarchy.objects.filter(id=partent_id).first()
+        if (partent_one.level.id == 3):
+            return partent_one.name
+        else:
+            partent_two = ScoutHierarchy.objects.filter(id=partent_one.parent.id).first()
+            return partent_two.name
+
+        return items.city
+
+    def get_workshop_title(self, obj):
+        return Workshop.objects.filter(registration_id=obj.id).first().title
+
+    def get_workshop_free_text(self, obj):
+        return Workshop.objects.filter(registration_id=obj.id).first().free_text
+
+    def get_workshop_costs(self, obj):
+        return Workshop.objects.filter(registration_id=obj.id).first().costs
+
+    def get_workshop_min_person(self, obj):
+        return Workshop.objects.filter(registration_id=obj.id).first().min_person
+
+    def get_workshop_max_person(self, obj):
+        return Workshop.objects.filter(registration_id=obj.id).first().max_person
+
+    def get_contact_firstname(self, obj):
+        return Contact.objects.filter(registration_id=obj.id).first().firstname
+
+    def get_contact_lastname(self, obj):
+        return Contact.objects.filter(registration_id=obj.id).first().lastname
+
+    def get_contact_scoutname(self, obj):
+        return Contact.objects.filter(registration_id=obj.id).first().scoutname
+
+    def get_contact_email(self, obj):
+        return Contact.objects.filter(registration_id=obj.id).first().email
 
 
 class SimpleMailSerializer(serializers.Serializer):

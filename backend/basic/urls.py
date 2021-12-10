@@ -41,6 +41,8 @@ event_router.register(r'cash-eventmaster-overview', views.EventCashMasterViewSet
                       basename='cash-event-master-overview')
 event_router.register(r'kitchen-eventmaster-overview', views.EventKitchenMasterViewSet,
                       basename='kitchen-event-master-overview')
+event_router.register(r'workshop-eventmaster-overview', views.WorkshopStatsViewSet,
+                      basename='workshop-event-master-overview')
 event_router.register(r'program-eventmaster-overview', views.EventProgramMasterViewSet,
                       basename='program-event-master-overview')
 event_router.register(r'xlsx-generator/event_locations_fee', views.EventLocationFeeXlsxViewSet,

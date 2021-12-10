@@ -901,4 +901,8 @@ class WorkshopViewSet(viewsets.ModelViewSet):
 class WorkshopStatsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = WorkshopStatsSerializer
-    queryset = Workshop.objects.all()
+
+    def get_queryset(self):
+        queryset = get_registrations_from_event(self.kwargs)
+
+        return queryset

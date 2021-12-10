@@ -4,11 +4,11 @@
       <v-icon left> mdi-microsoft-excel </v-icon>
       Excel
     </v-tab>
-    <v-tab class="pa-0">
+    <v-tab class="pa-0" v-if="false">
       <v-icon left> mdi-file-pdf </v-icon>
       PDFs
     </v-tab>
-    <v-tab class="pa-0">
+    <v-tab class="pa-0" v-if="false">
       <v-icon left> mdi-at </v-icon>
       E-Mail
     </v-tab>
@@ -41,8 +41,8 @@
 
 <script>
 
-import FileDownload from './tabs/FileDownload.vue';
-import SendMail from './tabs/SendMail.vue';
+import FileDownload from './tabs/excel/FileDownload.vue';
+import SendMail from './tabs/mails/SendMail.vue';
 import PdfGenerationInterface from './tabs/pdf/GenerationInterface.vue';
 
 export default {

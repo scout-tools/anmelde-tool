@@ -98,7 +98,7 @@
                       </template>
                       <span>
                         {{
-                          'Wie viele Teilnehmer können dort schlafen?'
+                          'Wie viele Teilnehmende können dort schlafen?'
                         }}
                       </span>
                     </v-tooltip>

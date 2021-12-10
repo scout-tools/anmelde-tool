@@ -51,8 +51,7 @@
                 </template>
                 <span>
                   {{
-                    'Gib hier den Vornamen der Person ein, ' +
-                    'die den Workshop durchführt.'
+                    'Gib hier deinen Vornamen ein.'
                   }}
                 </span>
               </v-tooltip>
@@ -79,8 +78,7 @@
                 </template>
                 <span>
                   {{
-                    'Gib hier den Nachnamen der Person ein, ' +
-                    'die das Paket erhält.'
+                    'Gib hier deinen Namenamen ein.'
                   }}
                 </span>
               </v-tooltip>
@@ -130,7 +128,7 @@ import PrevNextButtons from '../../components/button/PrevNextButtonsSteps.vue';
 
 export default {
   name: 'StepBdpDpvTextForStamm',
-  displayName: 'Kontakt Daten',
+  displayName: 'Kontaktdaten',
   props: ['position', 'maxPos'],
   components: {
     PrevNextButtons,

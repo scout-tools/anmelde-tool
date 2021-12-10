@@ -2,7 +2,7 @@ import { readFile, writeFile } from 'fs';
 import mjml2html from 'mjml';
 import { htmlToText } from 'html-to-text';
 
-const ary =  ['matching']
+const ary =  ['registration_erlebnisangebot']
 
 const path = `input/${ary[0]}.mjml`
 

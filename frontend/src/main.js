@@ -10,6 +10,7 @@ import moment from 'moment';
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from 'leaflet';
+import CKEditor from '@ckeditor/ckeditor5-vue2';
 
 import App from './App.vue';
 import router from './router';
@@ -29,6 +30,7 @@ Vue.use(VuetifyMoney);
 Vue.use(VueGoogleCharts);
 Vue.use(AsyncComputed);
 Vue.use(VueMoment);
+Vue.use(CKEditor);
 
 Vue.use(VueLodash, { lodash });
 

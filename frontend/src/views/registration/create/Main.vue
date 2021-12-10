@@ -158,7 +158,7 @@ export default {
       if (
         this.currentEvent && // eslint-disable-line
         this.currentEvent.eventTags && // eslint-disable-line
-        this.currentEvent.eventTags.includes(3)
+        this.currentEvent.eventTags.includes(4)
       ) {
         return [
           StepConsent,

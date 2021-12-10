@@ -11,7 +11,9 @@
       <v-row>
         <v-checkbox
           v-model="data.checkbox1"
-          :label="`Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zur Fahrt an.`"
+          :label="`Ich habe meine Daten überprüft und sende diese ` +
+            `Anmeldung verbindlich an die Lagerleitung.`"
+          :error-messages="checkbox1Errors"
         >
         </v-checkbox>
       </v-row>
@@ -58,6 +60,16 @@ export default {
   computed: {
     id() {
       return this.$route.params.id;
+    },
+    checkbox1Errors() {
+      const errors = [];
+      if (!this.$v.data.checkbox1.$dirty) return errors;
+      if (!this.$v.data.checkbox1.required || !this.$v.data.checkbox1.checked) {
+        errors.push(
+          'Deine Zustimmung ist erforderlich, damit du dich anmelden kannst.',
+        );
+      }
+      return errors;
     },
   },
   methods: {

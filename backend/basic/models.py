@@ -181,6 +181,7 @@ class Event(TimeStampMixin):
     max_scout_orga_level = models.ForeignKey(ScoutOrgaLevel, on_delete=models.PROTECT, null=True, blank=True)
     is_public = models.BooleanField(default=0)
     email_id = models.IntegerField(blank=True, default=0)
+    is_personal_registration = models.BooleanField(default=0)
 
     # ToDo: add pdf attatchment
     # ToDo: add html description
@@ -465,6 +466,8 @@ class Workshop(TimeStampMixin):
     title = models.CharField(max_length=100, blank=True)
     free_text = models.CharField(max_length=1000, blank=True)
     costs = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    min_person = models.IntegerField(blank=True, null=True)
+    max_person = models.IntegerField(blank=True, null=True)
     supervisor = models.ForeignKey(ParticipantPersonal, on_delete=models.PROTECT, null=True)
     registration = models.ForeignKey("Registration", on_delete=models.PROTECT, null=True, blank=True)
 
