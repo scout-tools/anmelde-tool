@@ -5,7 +5,7 @@
         <v-tab>
           <router-link to="/">
             <img
-              :src="logoPath"
+              :src="getLogoPath"
               height="55"
               alt="Logo"
               class="logo-img mx-2"/>
@@ -43,7 +43,7 @@
             </template>
             <v-card>
               <v-card-title class="justify-center">
-                {{ userName }}
+                {{ getUserName }}
               </v-card-title>
               <v-card-subtitle class="text-center">
                 Stamm: {{ userinfo.stamm }} ({{ userinfo.bund }})
@@ -73,7 +73,6 @@
               </v-card-actions>
             </v-card>
           </v-menu>
-
         </v-card-actions>
       </v-tabs>
     </v-app-bar>
@@ -82,28 +81,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import authMixin from '@/mixins/authMixin';
+import basicInfoMixin from '@/mixins/basicInfoMixin';
 
 export default {
   name: 'TopMenu',
-  data: () => ({
-  }),
+  mixins: [authMixin, basicInfoMixin],
   computed: {
     ...mapGetters(['userinfo']),
-    logoPath() {
-      if (process.env.VUE_APP_ENV === 'DEV') {
-        return require('../assets/dpvgold/dpv-gold-logo-test-simple.png'); // eslint-disable-line
-      }
-      return require('../assets/dpvgold/dpv-gold-logo-white_simple.png'); // eslint-disable-line
-    },
-    userName() {
-      if (this.userinfo) {
-        if (this.userinfo.fahrtenname && this.userinfo.fahrtenname.length > 0) {
-          return this.userinfo.fahrtenname;
-        }
-        return this.userinfo.name;
-      }
-      return '';
-    },
     isAuth() {
       if (this.$keycloak !== null) {
         return this.$keycloak.authenticated;
@@ -113,12 +98,7 @@ export default {
   },
   methods: {
     onLogoutClicked() {
-      this.$keycloak.logoutFn();
-
-      this.$store.commit('clearTokens');
-      this.$store.commit('clearUserinfo');
-
-      this.$router.push({ name: 'landing' });
+      this.logout();
     },
     onLoginClicked() {
       this.$keycloak.login();

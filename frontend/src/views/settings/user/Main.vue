@@ -84,8 +84,7 @@
                         v-model="getStammName"
                         label="Mein Stamm*"
                         prepend-icon="mdi-account-group"
-                        :error-messages="stammErrors"
-                      >
+                        :error-messages="stammErrors">
                         <template slot="append">
                           <v-btn icon @click="onPickStammClick">
                             <v-icon>mdi-pencil</v-icon>
@@ -118,8 +117,7 @@
                         label="Handynummer"
                         prepend-icon="mdi-cellphone-android"
                         @change="updateData"
-                        :error-messages="mobileNumberErrors"
-                      >
+                        :error-messages="mobileNumberErrors">
                         <template slot="append">
                           <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
@@ -142,8 +140,7 @@
                     <v-col cols="12">
                       <router-link
                         to="/datenschutz"
-                        target="_blank"
-                      >
+                        target="_blank">
                         Link zur Datenschutzerklärung
                       </router-link>
                     </v-col>
@@ -158,7 +155,6 @@
                   </v-row>
                 </v-container>
               </v-card-text>
-
               <v-card-actions>
                 <v-container>
                   <v-row>
@@ -168,17 +164,17 @@
                         Änderungen speichern
                       </v-btn>
                     </v-col>
-                    <!-- TODO: add user-delete service and activate button -->
-                    <!-- <v-col cols="12" sm="6" md="4">
-                      <v-btn dark color="red">
+                    <v-col cols="12" sm="6" md="4">
+                      <v-btn dark color="red" @click="onDeleteClicked">
                         <v-icon left>mdi-delete</v-icon>
-                        Meine persönlichen Daten löschen.
+                        Meine Daten löschen.
                       </v-btn>
-                    </v-col> -->
+                    </v-col>
                   </v-row>
                 </v-container>
               </v-card-actions>
             </v-card>
+            <yes-no-dialog ref="yesNoDialog"/>
           </v-layout>
         </v-flex>
       </v-row>
@@ -191,13 +187,15 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
 import { maxLength, minLength, required } from 'vuelidate/lib/validators';
-
+import YesNoDialog from '@/components/modals/YesNoDialog.vue';
 import PickStammForm from './PickStamm.vue';
+import auth from '@/mixins/authMixin';
 
 export default {
-  mixins: [validationMixin],
+  mixins: [validationMixin, auth],
   components: {
     PickStammForm,
+    YesNoDialog,
   },
   validations: {
     scoutOrganisation: {
@@ -237,16 +235,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
+    ...mapGetters(['isAuthenticated', 'getJwtData']),
     email() {
       return this.getJwtData.email;
     },
     getStammName() {
-      const obj = this.hierarchyMapping.find(
-        (user) => user.id === this.scoutOrganisation,
-      );
-      if (obj && obj.name) {
-        return obj.name;
+      if (this.scoutOrganisation && this.scoutOrganisation.name) {
+        return this.scoutOrganisation.name;
       }
       return 'Noch kein Stamm gewählt';
     },
@@ -292,8 +287,8 @@ export default {
     updateData(type, data) {
       this[type] = data;
     },
-    tranferId(id) {
-      this.scoutOrganisation = id;
+    tranferId(newScoutOrganistation) {
+      this.scoutOrganisation = newScoutOrganistation;
     },
     onPickStammClick() {
       this.$refs.pickStamm.show(this.scoutOrganisation);
@@ -305,6 +300,27 @@ export default {
       }
       this.saveUserData();
     },
+    async onDeleteClicked() {
+      const text = 'Bist du sicher, dass du deinen Account beim Anmelde Tool löschen möchtest?'
+        + '<p>Dies inkludiert:'
+        + '<ul>'
+        + '<li>Deine persöhnlichen Daten, wie deinen Fahrtennamen, deine Handynummer und deinen Stamm</li>'
+        + '<li>Deine angebotenen Fahrten (sofern es keine anderen verantwortlichen Personen gibt)</li>'
+        + '<li>Deine Registrierungen unabhängig ob sie bereits stattgefunden haben, oder erst noch stattfinden werden'
+        + ' (sofern es keine anderen verantwortlichen Personen gibt)</li>'
+        + '<li>Deine angebotenen Workshops</li>'
+        + '</ul>'
+        + '<p> Deine Daten beim DPV IDM bleiben allerdings weiterhin bestehen';
+      const confirmBox = this.$refs.yesNoDialog.open(
+        'Bestätige',
+        text,
+        'Löschen',
+        'Abbrechen',
+      );
+      if (await confirmBox) {
+        this.deleteUserData();
+      }
+    },
     getData() {
       this.loading = true;
       const path = `${this.API_URL}/auth/personal-data/`;
@@ -315,8 +331,11 @@ export default {
           this.scoutName = res.data.scoutName;
           this.checkbox = res.data.dsgvoConfirmed;
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          this.$root.globalSnackbar.show({
+            message: 'Es gab einen Fehler beim runterladen deiner Daten, bitte probiere es später noch einmal.',
+            color: 'error',
+          });
         })
         .finally(() => {
           this.loading = false;
@@ -326,16 +345,43 @@ export default {
       this.loading = true;
       const path = `${this.API_URL}/auth/personal-data/`;
       axios.post(path, {
-        scoutOrganisation: this.scoutOrganisation,
+        scoutOrganisation: this.scoutOrganisation.id,
         mobileNumber: this.mobileNumber,
         scoutName: this.scoutName,
         dsgvoConfirmed: this.checkbox,
       })
         .then(() => {
-          this.showSuccess = true;
+          this.$root.globalSnackbar.show({
+            message: 'Deine Daten wurden erfolgreich geändert.',
+            color: 'success',
+          });
         })
         .catch(() => {
-          this.showError = true;
+          this.$root.globalSnackbar.show({
+            message: 'Es gab einen Fehler beim ändern deiner Daten, bitte probiere es später noch einmal.',
+            color: 'error',
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    deleteUserData() {
+      this.loading = true;
+      const path = `${this.API_URL}/auth/personal-data/`;
+      axios.delete(path)
+        .then(() => {
+          this.$root.globalSnackbar.show({
+            message: 'Deine Daten wurden erfolgreich gelöscht.',
+            color: 'success',
+          });
+          this.logout();
+        })
+        .catch(() => {
+          this.$root.globalSnackbar.show({
+            message: 'Es gab einen Fehler beim löschen deiner Daten, bitte probiere es später noch einmal.',
+            color: 'error',
+          });
         })
         .finally(() => {
           this.loading = false;

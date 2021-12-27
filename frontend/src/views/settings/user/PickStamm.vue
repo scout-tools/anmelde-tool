@@ -5,50 +5,46 @@
         v-model="dialog"
         transition="dialog-top-transition"
         fullscreen
-        hide-overlay
-      >
+        hide-overlay>
         <v-card>
-       <v-toolbar
-          dark
-          color="primary"
-        >
-          <v-btn
-            icon
+          <v-toolbar
             dark
-            @click="cancel"
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>Wähle deinen Stamm aus</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-           <v-btn
-              :disabled="!selected"
-              class="white--text"
-              color="green darken-1"
-              depressed
-              @click="onTakeStammClicked"
-            >
-              Das ist mein Stamm
-              <v-icon right> mdi-content-save </v-icon>
+            color="primary">
+            <v-btn
+              icon
+              dark
+              @click="cancel">
+              <v-icon>mdi-close</v-icon>
             </v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-          <v-subheader class="ma-0">
-            <v-icon class="ma-2" color="error">mdi-alert-circle </v-icon>
-            Dein Stamm fehlt oder der Ort/die Postleitzahl
-            ist falsch? Schreibe uns eine E-Mail an: &nbsp; &emsp;
-            <a href= "mailto:support@anmelde-tool.de">support@anmelde-tool.de</a>
-          </v-subheader>
-          <v-row class="pa-2" justify="space-between">
+            <v-toolbar-title>Wähle deinen Stamm aus</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+              <v-btn
+                :disabled="!selected"
+                class="white--text"
+                color="green darken-1"
+                depressed
+                @click="onTakeStammClicked">
+                Das ist mein Stamm
+                <v-icon right> mdi-content-save</v-icon>
+              </v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
+          <v-card-text>
+            <!--<v-icon class="ma-2" color="error">mdi-alert-circle</v-icon>-->
+            <br>Du bist kein Mitglied eines Stammes mehr? Wähle einfach deinen Bund aus.
+            <br>Dein Stamm fehlt oder der Ort/die Postleitzahl ist falsch?
+            <br>Schreibe uns eine E-Mail an:
+            <a href="mailto:support@anmelde-tool.de">support@anmelde-tool.de</a>
+          </v-card-text>
+          <v-row class="ma-2" justify="space-between">
             <v-col cols="5">
               <v-text-field
                 v-model="search"
                 label="Suche deinen Stamm"
                 flat
                 clearable
-                clear-icon="mdi-close-circle-outline"
-              ></v-text-field>
+                clear-icon="mdi-close-circle-outline"/>
               <v-treeview
                 :active.sync="active"
                 :items="hierarchyNested"
@@ -56,20 +52,17 @@
                 activatable
                 :search="search"
                 color="warning"
-                open-on-click
-                transition
-              >
+                transition>
               </v-treeview>
             </v-col>
 
-            <v-divider vertical></v-divider>
+            <v-divider vertical/>
 
             <v-col class="d-flex text-center">
               <v-scroll-y-transition mode="out-in">
                 <div
                   v-if="!selected"
-                  class="title grey--text text--lighten-1 font-weight-light"
-                >
+                  class="title grey--text text--lighten-1 font-weight-light">
                   Wähle einen Stamm
                 </div>
                 <v-card
@@ -77,8 +70,7 @@
                   :key="selected.id"
                   min-width="300"
                   class="mx-auto"
-                  flat
-                >
+                  flat>
                   <v-card-text>
                     <h3 class="headline mb-2">
                       {{ selected.name }}
@@ -87,7 +79,7 @@
                       {{ selected.email }}
                     </div>
                   </v-card-text>
-                  <v-divider></v-divider>
+                  <v-divider/>
                   <v-row>
                     <v-col cols="6">
                       Postleitzahl:
@@ -117,47 +109,44 @@
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import basicInfoMixin from '@/mixins/basicInfoMixin';
 
 export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
-    items: [],
-    search: null,
-    caseSensitive: false,
+    search: '',
     active: [],
-    avatar: null,
     open: [],
-    users: [],
     dialog: false,
-    propId: null,
+    currentHierachy: {
+      id: String,
+      name: String,
+      parent: String,
+      zipCode: String,
+    },
+    hierarchies: [],
+    zipCodeObject: {
+      zipCode: '',
+      city: '',
+    },
   }),
-
+  mixins: [basicInfoMixin],
   computed: {
-    getItems() {
-      return this.items;
-    },
-    filter() {
-      return this.caseSensitive
-        ? (item, search, textKey) => item[textKey].indexOf(search) > -1
-        : undefined;
-    },
-    ...mapGetters(['isAuthenticated', 'hierarchyMapping']),
+    ...mapGetters(['isAuthenticated']),
     selected() {
       if (!this.active.length) return undefined;
       const id = this.active[0];
-      if (!(this.hierarchyMapping.find((user) => user.id === id).level === 5)) return undefined;
-      return this.hierarchyMapping.find((user) => user.id === id);
+      return this.hierarchies.find((user) => user.id === id);
     },
     hierarchyNested() {
-      return this.nest(this.hierarchyMapping);
+      return this.nest(this.hierarchies);
     },
   },
-
   methods: {
     nest(inputArray) {
       const nested = [];
       inputArray.forEach((item) => { // eslint-disable-line
-        var parent = item.parent; // eslint-disable-line
+        const parent = item.parent; // eslint-disable-line
         if (!parent) {
           nested.push(item);
         } else {
@@ -173,36 +162,55 @@ export default {
       });
       return nested;
     },
-    show(id) {
+    show(currentScouthierachy) {
+      this.open = [];
+      this.active = [];
       this.dialog = true;
-      this.propId = id;
+      if (currentScouthierachy) {
+        this.currentHierachy = currentScouthierachy;
+        this.active = [currentScouthierachy.id];
+        let iterateHierachy = currentScouthierachy;
+        while (iterateHierachy) {
+          this.open.push(iterateHierachy.parent);
+          const newIterate = this.hierarchies.find((user) => user.id === iterateHierachy.parent);// eslint-disable-line
+          iterateHierachy = newIterate;
+        }
+      }
     },
     cancel() {
       this.dialog = false;
     },
     onTakeStammClicked() {
-      this.$emit('sendIdToParent', this.active[0]);
+      if (this.active) {
+        const selectedHierachy = this.hierarchies.find((user) => user.id === this.active[0]);
+        this.$emit('sendIdToParent', selectedHierachy);
+      }
       this.dialog = false;
     },
-    async loadZipCodeData(id) {
-      const url = `${this.API_URL}basic/zip-code/${id}/`;
-      const response = await axios.get(url);
-      return response.data;
-    },
   },
-  asyncComputed: {
-    zipCodeObject() {
+  async created() {
+    const path = `${process.env.VUE_APP_API}/basic/scout-hierarchy/`;
+    const response = await axios.get(path);
+    this.hierarchies = response.data;
+  },
+  watch: {
+    async active() {
+      const undef = {
+        zipCode: '',
+        city: '',
+      };
       if (this.active && this.active.length) {
-        if (!this.active.length) return undefined;
         const id = this.active[0];
-        if (!(this.hierarchyMapping.find((user) => user.id === id).level === 5)) return undefined;
-        const zipCodeId = this.hierarchyMapping.find((user) => user.id === id).zipCode;
-        return this.loadZipCodeData(zipCodeId);
+        if (!(this.hierarchies.find((user) => user.id === id).level === 5)) {
+          this.zipCodeObject = undef;
+          return;
+        }
+        const zipCodeId = this.hierarchies.find((user) => user.id === id).zipCode;
+        this.zipCodeObject = await this.getZipcodeInfo(zipCodeId);
+      } else {
+        this.zipCodeObject = undef;
       }
-      return [];
     },
   },
 };
 </script>
-
-<style></style>

@@ -14,7 +14,7 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         user.save()
 
         self.set_user_info(user, claims)
-        
+
         return user
 
     def update_user(self, user, claims):
@@ -67,7 +67,7 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         stamm = claims.get('stamm', '')
         bund = claims.get('bund', '')
 
-        if stamm and bund:
+        if stamm and bund and not user.userextended.scout_organisation:
             stamm = stamm.replace('stamm', '')
             found_bund = ScoutHierarchy.objects.filter(level=3, abbreviation=bund).first()
             found_stamm = ScoutHierarchy.objects.filter(

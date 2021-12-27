@@ -1,7 +1,9 @@
 import datetime
-from django.utils.formats import date_format
+
 from basic.models import Registration, RegistrationMatching, EventLocation
 from basic.serializers import RegistrationSummarySerializer
+from django.utils.formats import date_format
+
 from .email import send_matching
 
 

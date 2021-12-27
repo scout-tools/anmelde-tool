@@ -13,9 +13,11 @@ export default {
   name: 'App',
   components: {
     MainComp,
+
   },
   created() {
     document.title = 'Anmelde-Tool für Pfadfinder_innen';
   },
+
 };
 </script>

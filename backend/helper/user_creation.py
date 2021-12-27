@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+
 from .email import send_external_registration_mail, send_auth_mail
 
 

@@ -1,12 +1,12 @@
-from django.conf import settings
-from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
-from django.template.loader import render_to_string
-from pathlib import Path
-from enum import Enum
 import threading
-from threading import Thread
+from enum import Enum
+from pathlib import Path
+
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives, EmailMessage
 from django.template.context import make_context
 from django.template.loader import get_template
+from django.template.loader import render_to_string
 
 url = getattr(settings, 'FRONT_URL', '')
 sender = f'Anmelde-Tool <{getattr(settings, "EMAIL_HOST_USER")}>'

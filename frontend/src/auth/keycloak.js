@@ -6,7 +6,6 @@ const keycl = {
     const path = `${process.env.VUE_APP_API}/auth/personal-data-check/`;
     axios.get(path)
       .then((res) => {
-        console.log(res);
         if (res.status === 426) {
           router.push({ name: 'settingsUser' });
         }

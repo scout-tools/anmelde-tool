@@ -32,7 +32,7 @@
       <v-container>
         <v-layout column align-center justify-center class="white--text">
           <v-flex xs12 class="text-xs-center">
-            <img height="200px" :src="logoPath" alt=""/>
+            <img height="200px" :src="getLogoPath" alt=""/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -113,20 +113,16 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import basicInfoMixin from '@/mixins/basicInfoMixin';
 
 export default {
+  mixins: [basicInfoMixin],
   data: () => ({
     title: 'Endorfine',
     email: '',
     subscribed: false,
   }),
   computed: {
-    logoPath() {
-      if (process.env.VUE_APP_ENV === 'DEV') {
-        return require('./../../assets/dpvgold/dpv-gold-logo-test-simple.png'); // eslint-disable-line
-      }
-      return require('./../../assets/dpvgold/dpv-gold-logo-black.png'); // eslint-disable-line
-    },
     ...mapGetters(['isAuthenticated']),
   },
 };
