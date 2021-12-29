@@ -28,6 +28,7 @@
                 :error-messages="firstNameErrors"
                 label="Vorname"
                 required
+                autofocus
                 prepend-icon="mdi-card-account-details-outline"
                 @input="$v.data.firstName.$touch()"
                 @blur="$v.data.firstName.$touch()"
@@ -77,7 +78,6 @@
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="data.scoutName"
-                autofocus
                 :counter="20"
                 :error-messages="scoutNameErrors"
                 label="Fahrtenname (optional)"
@@ -139,7 +139,7 @@
                 ></v-date-picker>
               </v-menu>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <!-- <v-col cols="12" sm="6" md="4">
               <v-select
                 v-model="data.ageGroup"
                 :items="ageGroupMapping"
@@ -151,12 +151,15 @@
                 required
                 @input="validate()"
               />
-            </v-col>
+            </v-col> -->
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="data.email"
                 label="E-Mail Adresse*"
                 prepend-icon="mdi-email"
+                :error-messages="emailErrors"
+                @input="$v.data.email.$touch()"
+                @blur="$v.data.email.$touch()"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -389,6 +392,7 @@ import {
   maxLength,
   integer,
   minValue,
+  email,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import moment from 'moment';
@@ -533,7 +537,8 @@ export default {
         minLength: minLength(2),
         maxLength: maxLength(20),
       },
-      ageGroup: {
+      email: {
+        email,
         required,
       },
       phoneNumber: {
@@ -624,6 +629,17 @@ export default {
       if (!this.$v.data.birthday.$dirty) return errors;
       if (!this.$v.data.birthday.required) {
         errors.push('Alter ist erforderlich.');
+      }
+      return errors;
+    },
+    emailErrors() {
+      const errors = [];
+      if (!this.$v.data.email.$dirty) return errors;
+      if (!this.$v.data.email.required) {
+        errors.push('E-Mail ist erforderlich.');
+      }
+      if (!this.$v.data.email.email) {
+        errors.push('Falsche Format');
       }
       return errors;
     },

@@ -67,7 +67,8 @@ INSTALLED_APPS = [
     'storages',
     'ebhealthcheck.apps.EBHealthCheckConfig',
     'django_extensions',
-    'django_filters'
+    'django_filters',
+    "graphene_django"
 ]
 
 MIDDLEWARE = [
@@ -250,4 +251,8 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
     'JTI_CLAIM': 'jti',
+}
+
+GRAPHENE = {
+    "SCHEMA": "basic.schema.schema"
 }

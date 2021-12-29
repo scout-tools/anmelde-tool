@@ -4,7 +4,7 @@
       <v-row class="mt-2">
         <span class="text-left subtitle-1">
           <p>
-            Bitte Trage mit wievielen Zelten ihr kommen wollt.
+            Bitte gebe an mit wievielen Zelten ihr kommen wollt.
             <br />
           </p>
         </span>
@@ -33,7 +33,7 @@
           <v-text-field
             v-if="data.jurten"
             v-model="data.jurtenstangen"
-            :label="`Anzahl Kohtenstangen`"
+            :label="`Anzahl Jurtenstangen`"
           >
           </v-text-field>
         </v-col>

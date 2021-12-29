@@ -1,35 +1,72 @@
 <template>
   <v-form v-model="valid">
     <v-container>
-      <v-row class="mt-2" center>
+      <!-- <v-row class="mt-2" center>
         <span class="text-center ma-5 subtitle-1">
           <p>
             Wie werdet ihr anreisen?
           </p>
         </span>
-      </v-row>
+      </v-row> -->
         <p>Wie werdet ihr auf der Burg ankommen?</p>
       <v-row>
-      <v-col cols="8" class="my-5">
+        <v-col cols="4" sm="8">
 
         <v-btn-toggle v-model="data.vehicle" tile color="blue accent-3" group multiple>
           <v-btn value="tain"> Bahn  </v-btn>
 
           <v-btn value="bus"> Reisebus  </v-btn>
-          <v-btn value="car"> Auto  </v-btn>
+          <v-btn value="car"> PKW  </v-btn>
           <v-btn value="else"> Sonstiges   </v-btn>
         </v-btn-toggle>
       </v-col>
       <v-col cols="3">
         <v-text-field
         v-show="data.vehicle.includes('car')"
-        label="Wieviele Auto?">
+        label="Wieviele PKWs?">
+        </v-text-field>
+      </v-col>
+      <v-col cols="3">
+        <v-text-field
+        v-show="data.vehicle.includes('else')"
+        label="Sonstiges Vekehrsmittel">
         </v-text-field>
       </v-col>
       </v-row>
+<v-row align="center" justify="center">
+        <p
+          class="text-center"
+          v-if="data.vehicle.includes('car')"
+          style="border-style: solid; border-color: red"
+        >
+          <v-icon color="red darken-1" large class="ma-2">
+            mdi-alert mdi-spin
+          </v-icon>
+          Bitte beachtet, dass an der Burg selbst nur sehr wenige bis
+          keine Parkplätze zur Verfügung stehen und PKW daher ggf. in
+          einiger Entfernung im Umland abgestellt werden müssen.
+          <v-icon color="red darken-1" large class="ma-2">
+            mdi-alert mdi-flip-h mdi-spin
+          </v-icon>
+        </p>
+        <p
+          class="text-center"
+          v-if="!data.vehicle.includes('car')"
+          style="border-style: solid; border-color: green"
+        >
+          <v-icon color="green darken-1" large class="ma-2">
+            mdi-emoticon-kiss-outline
+          </v-icon>
+          Mega Cool, dass ihr ohne Auto anreist.
+          <v-icon color="green darken-1" large class="ma-2">
+            mdi-emoticon-kiss-outline mdi-flip-h
+          </v-icon>
+        </p>
+      </v-row>
+      <v-divider class="my-2"/>
       <v-row>
       <v-col cols="12" class="py-2">
-        <p>Wann werde ihr an der Burg ankommen?</p>
+        <p>Wann werdet ihr voraussichtlich an der Burg ankommen?</p>
 
         <v-btn-toggle v-model="data.time" tile color="blue accent-3" group>
           <v-btn value="left"> 16:00 - 18:00</v-btn>
@@ -37,9 +74,14 @@
           <v-btn value="center"> 18:00 - 20:00</v-btn>
           <v-btn value="right"> 20:00 - 22:00  </v-btn>
           <v-btn value="123"> 22:00 - 0:00   </v-btn>
-          <v-btn value="321312"> Noch Später   </v-btn>
-          <v-btn value="32131232"> Samstag   </v-btn>
+          <v-btn value="later"> Noch Später + Samstag</v-btn>
         </v-btn-toggle>
+      </v-col>
+      <v-col cols="3">
+        <v-text-field
+        v-show="data.time.includes('later')"
+        label="Wann etwa?">
+        </v-text-field>
       </v-col>
       </v-row>
       <v-divider class="my-3" />
@@ -76,6 +118,7 @@ export default {
     participantRole: [6],
     data: {
       vehicle: [],
+      time: [],
     },
     filteredItems: [],
     errorNotFinished: false,
