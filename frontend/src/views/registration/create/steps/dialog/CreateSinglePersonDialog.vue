@@ -15,7 +15,7 @@
       </v-toolbar>
       <v-container>
         <v-subheader class="ma-5">
-          Ich melde folgende_n Teilnehmer_in an.
+          Ich melde folgenden Teilnehmenden an.
         </v-subheader>
         <v-form v-model="valid">
           <v-divider />
@@ -398,6 +398,8 @@ import axios from 'axios';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 
+// import DateField from '@/components/field/Datefield.vue';
+
 const scoutGroupStartValidator = (groupObjOrGroupName) => {
   const validStarts = ['Meute', 'Sippe', 'Roverrunde'];
   if (!groupObjOrGroupName) {
@@ -429,6 +431,9 @@ const phoneNumStartValidator = (number) => {
 
 export default {
   props: ['isOpen'],
+  // components: {
+  //   DateField,
+  // },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,

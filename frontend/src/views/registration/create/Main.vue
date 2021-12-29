@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-card v-if="!isLoading" class="mx-auto top-margin">
+    <v-card v-if="!isLoading" class="mx-auto top-margin default-max-width">
       <v-row justify="center">
         <v-stepper v-model="currentStep" vertical>
           <template v-for="(step, index) in steps">
