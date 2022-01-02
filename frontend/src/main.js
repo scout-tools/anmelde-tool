@@ -7,7 +7,7 @@ import Vuelidate from 'vuelidate';
 import { LMap, LMarker, LTileLayer } from 'vue2-leaflet';
 import { Icon } from 'leaflet';
 import VueKeycloakJs from '@dsb-norge/vue-keycloak-js';
-
+import vuetifyMoney from 'vuetify-money';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -25,6 +25,7 @@ Vue.use(Vuelidate);
 Vue.use(VueJwtDecode);
 Vue.use(VueMoment);
 Vue.use(VueLodash, { lodash });
+Vue.use(vuetifyMoney);
 
 auth.interceptorsSetup(store, router);
 

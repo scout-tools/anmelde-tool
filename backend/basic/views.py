@@ -6,8 +6,8 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import Event, EventLocation, ScoutHierarchy, ZipCode
-from .serializers import EventSerializer, EventLocationSerializer, ScoutHierarchySerializer, ZipCodeSerializer
+from .models import ScoutHierarchy, ZipCode
+from .serializers import ScoutHierarchySerializer, ZipCodeSerializer
 
 
 def get_dataset(kwargs, pk, dataset):
@@ -16,22 +16,6 @@ def get_dataset(kwargs, pk, dataset):
         return dataset.objects.filter(id=dataset_id)
     else:
         return Response('No dataset selected', status=status.HTTP_400_BAD_REQUEST)
-
-
-def get_event(kwargs):
-    event_id = kwargs.get("event_pk", None)
-    if event_id is not None:
-        return Event.objects.filter(id=event_id)
-    else:
-        return Response('No event selected', status=status.HTTP_400_BAD_REQUEST)
-
-
-class EventLocationViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('registration',)
-    queryset = EventLocation.objects.all()
-    serializer_class = EventLocationSerializer
 
 
 class ScoutHierarchyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -55,13 +39,10 @@ class ZipCodeSearchFilter(FilterSet):
 
 
 class ZipCodeViewSet(viewsets.ReadOnlyModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = ZipCode.objects.all()
     serializer_class = ZipCodeSerializer
     filterset_class = ZipCodeSearchFilter
 
 
-class EventViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
+

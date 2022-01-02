@@ -1,7 +1,7 @@
 from django.contrib import admin
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
-from .models import EventLocation, ScoutHierarchy, ZipCode, ScoutOrgaLevel, TagType, Event, AbstractAttribute, Tag, \
+from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, TagType, AbstractAttribute, Tag, \
     BooleanAttribute, TimeAttribute
 
 admin.site.register(ScoutOrgaLevel)
@@ -18,19 +18,6 @@ class ScoutHierarchyAdmin(admin.ModelAdmin):
 class ZipCodeAdmin(admin.ModelAdmin):
     list_display = ('zip_code', 'city')
     search_fields = ('zip_code', 'city')
-
-
-@admin.register(EventLocation)
-class EventLocationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'zip_code')
-    search_fields = ('name',)
-    autocomplete_fields = ('zip_code',)
-
-
-@admin.register(Event)
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'location', 'is_public')
-    search_fields = ('name',)
 
 
 @admin.register(TagType)

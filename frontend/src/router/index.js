@@ -4,7 +4,8 @@ import SettingsUser from '@/views/settings/user/Main.vue';
 import LandingPage from '@/views/landingPage/Main.vue';
 import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
-
+import EventPlaner from '@/views/eventPlaner/Main.vue';
+import PlanEvent from '@/views/eventPlaner/create/Main.vue';
 // import CheckTokenMain from '@/views/login/CheckToken.vue';
 // import EventOverview from '@/views/event/overview/Overview.vue';
 // import StatisticOverview from '@/views/statistic/Main.vue';
@@ -19,6 +20,16 @@ const routes = [
     path: '/',
     name: 'landing',
     component: LandingPage,
+  },
+  {
+    path: '/eventplaner',
+    name: 'eventPlaner',
+    component: EventPlaner,
+  },
+  {
+    path: '/planevent/:id/:step?',
+    name: 'planEvent',
+    component: PlanEvent,
   },
   // {
   //   path: '/check-token',

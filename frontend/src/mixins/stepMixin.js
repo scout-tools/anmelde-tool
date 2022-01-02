@@ -1,8 +1,19 @@
-export const stepMixin = { // eslint-disable-line
+export default {
+  // eslint-disable-line
   methods: {
     validate() {
       this.$v.$touch();
       this.valid = !this.$v.$error;
+    },
+    submitStep() {
+      this.validate();
+      if (!this.valid) {
+        return;
+      }
+      this.$emit('submit');
+    },
+    beforeTabShow() {
+      // this.onRefresh();
     },
     prevStep() {
       this.$emit('prevStep');
@@ -14,12 +25,8 @@ export const stepMixin = { // eslint-disable-line
       }
       this.$emit('nextStep');
     },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-      this.$emit('submit');
+    onIngoredClicked() {
+      this.$emit('nextStep');
     },
   },
 };

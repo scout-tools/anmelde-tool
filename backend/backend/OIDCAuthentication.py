@@ -14,11 +14,13 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         user.save()
 
         self.set_user_info(user, claims)
+        self.update_groups(user, claims)
 
         return user
 
     def update_user(self, user, claims):
         self.set_user_info(user, claims)
+        self.update_groups(user, claims)
         return user
 
     def update_groups(self, user, claims):
@@ -29,7 +31,7 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         """
         with transaction.atomic():
             user.groups.clear()
-            for role in claims.get('roles'):
+            for role in claims.get('groups'):
                 group, _ = Group.objects.get_or_create(name=role)
                 group.user_set.add(user)
 

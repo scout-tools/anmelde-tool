@@ -16,7 +16,7 @@
           Fahrten
           <v-icon>mdi-view-list</v-icon>
         </v-tab>
-        <v-tab v-if="isAuth" @click="$router.push({ name: 'eventPlanning' })">
+        <v-tab v-if="isAuth" @click="$router.push({ name: 'eventPlaner' })">
           Eventplaner
           <v-icon>mdi-view-list</v-icon>
         </v-tab>

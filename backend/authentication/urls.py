@@ -10,5 +10,5 @@ router.register(r'personal-data-check', views.PersonalDataCheck, basename='perso
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('auth/', include(router.urls)),
+    path('', include(router.urls)),
 ]

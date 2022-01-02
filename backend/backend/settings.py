@@ -48,9 +48,10 @@ INSTALLED_APPS = [
     'django_filters',
     'mozilla_django_oidc',
     'authentication',
-    'basic',
     'colorfield',
     'polymorphic',
+    'basic',
+    'event',
 ]
 
 MIDDLEWARE = [
@@ -210,7 +211,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 BASE_URI = env('BASE_URI')
-BASE_REALM_URI = f'{BASE_URI}/realms/{env("OIDC_RP_REALMNAME")}'
+BASE_REALM_URI = f'{BASE_URI}realms/{env("OIDC_RP_REALMNAME")}'
 OIDC_AUTH_URI = f'{BASE_REALM_URI}/{env("OIDC_RP_CLIENT_ID")}/'
 OIDC_CALLBACK_PUBLIC_URI = f'{BASE_REALM_URI}/'
 OIDC_RP_CLIENT_ID = env('OIDC_RP_CLIENT_ID')
