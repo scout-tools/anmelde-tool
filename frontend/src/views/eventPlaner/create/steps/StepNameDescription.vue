@@ -38,6 +38,7 @@
       </v-row>
 
       <prev-next-button
+        :valid="valid"
         :position="position"
         :max-pos="maxPos"
         @nextStep="nextStep()"
@@ -105,18 +106,11 @@ export default {
     },
   },
   methods: {
-    getData() {
-      return {
-        name: this.name,
-        description: this.description,
-      };
-    },
     postData() {
       const data = {
         name: this.name,
         description: this.description,
       };
-      console.log(data);
       this.updateEvent(this.$route.params.id, data);
     },
   },

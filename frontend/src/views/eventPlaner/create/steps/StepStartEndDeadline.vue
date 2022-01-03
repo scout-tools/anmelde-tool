@@ -40,13 +40,30 @@
           :error-messages-time="registrationEndTimeErrors"
         />
       </v-row>
+      <v-row>
+        <v-card-text>
+          Unabhängig vom Ende der Anmeldephase, kann man einstellen bis wann bereits Angemeldete
+          ihre Daten verändern können. Diese veränderten Daten werden mit einem Tag versehen
+          und müssen von der Lagerleitung bestätigt werden.
+          Wenn es keine Möglichkeit geben soll die Daten nach dem Anmeldeende zu verändern,
+          kann dieses Feld leer gelassen werden.
+        </v-card-text>
+        <DateTimePicker
+          ref="registrationLasPossibleUpdate"
+          v-model="lastPossibleUpdate"
+          title="Bearbeitungsende"
+          :error-messages-date="registrationEndTimeErrors"
+          :error-messages-time="registrationEndTimeErrors"
+        />
+      </v-row>
       <v-divider class="my-2"/>
       <prev-next-button
+        :valid="valid"
         :position="position"
         :max-pos="maxPos"
-        @nextStep="nextStep()"
+        @nextStep="nextStep"
         @prevStep="prevStep"
-        @submitStep="submitStep()"
+        @submitStep="submitStep"
         @ignore="onIngoredClicked"
       />
     </v-container>
@@ -54,11 +71,13 @@
 </template>
 
 <script>
-import moment from 'moment';
+// import moment from 'moment';
 import { required } from 'vuelidate/lib/validators';
+import moment from 'moment';
 import stepMixin from '@/mixins/stepMixin';
 import DateTimePicker from '@/components/picker/DateTimePicker.vue';
 import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
   name: 'StepStartEndDeadline',
@@ -77,9 +96,10 @@ export default {
       registrationDeadline: null,
       registrationStart: null,
       deadlineDate: null,
+      lastPossibleUpdate: null,
     };
   },
-  mixins: [stepMixin],
+  mixins: [stepMixin, apiCallsMixin],
   validations: {
     startTime: {
       required,
@@ -95,17 +115,6 @@ export default {
     },
   },
   computed: {
-    deadlineIsFilled() {
-      return this.deadlineDate !== '';
-    },
-    deadlineDateString() {
-      const dateFormat = 'DD.MM.YYYY';
-      if (this.deadlineDate === '') {
-        return '';
-      }
-      return `${moment(this.data.deadlineDate, dateFormat, 'de')
-        .format(dateFormat)}`;
-    },
     startTimeErrors() {
       const errors = [];
       if (!this.$v.startTime.$dirty) return errors;
@@ -119,25 +128,6 @@ export default {
       if (!this.$v.endTime.$dirty) return errors;
       if (!this.$v.endTime.required) {
         errors.push('Eine Endzeit muss eingetragen werden.');
-      }
-      return errors;
-    },
-    deadlineDateErrors() {
-      const errors = [];
-      if (!this.$v.deadlineDate.$dirty) return errors;
-      if (!this.$v.deadlineDate.required) {
-        errors.push('Eine Deadline muss eingetragen werden.');
-      }
-      if (this.$v.deadlineDate.$invalid) {
-        errors.push('Gib ein Datum vor dem Starttermin ein.');
-      }
-      return errors;
-    },
-    deadlineTimeErrors() {
-      const errors = [];
-      if (!this.$v.deadlineTime.$dirty) return errors;
-      if (!this.$v.deadlineTime.required) {
-        errors.push('Eine Deadline Zeit muss eingetragen werden.');
       }
       return errors;
     },
@@ -158,20 +148,43 @@ export default {
       return errors;
     },
   },
-  methods: {
-    getData() {
-      return {
-        startTime: this.data.startTime,
-        endTime: this.data.endTime,
-        registrationDeadline: this.data.registrationDeadline,
-      };
-    },
-  },
+  methods: {},
   mounted() {
-    this.$refs.startTimeRef.setDate(this.startTime);
-    this.$refs.endTimeRef.setDate(this.endTime);
-    this.$refs.registrationStartRef.setDate(this.registrationStart);
-    this.$refs.registrationDeadlineRef.setDate(this.registrationDeadline);
+
+  },
+  created() {
+    if (!this.$route.params.id) {
+      this.$root.globalSnackbar.show({
+        message: 'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später noch einmal.',
+        color: 'error',
+      });
+      this.$router.back();
+    }
+    this.getEvent(this.$route.params.id)
+      .then((success) => {
+        console.log(success);
+        this.startTime = moment(success.data.startTime, 'YYYY-MM-')
+          .toDate();
+        this.endTime = moment(success.data.endTime)
+          .toDate();
+        this.registrationDeadline = moment(success.data.registrationDeadline)
+          .toDate();
+        this.registrationStart = moment(success.data.registrationStart)
+          .toDate();
+        this.lastPossibleUpdate = moment(success.data.lastPossibleUpdate)
+          .toDate();
+        this.$refs.startTimeRef.setDate(this.startTime);
+        this.$refs.endTimeRef.setDate(this.endTime);
+        this.$refs.registrationStartRef.setDate(this.registrationStart);
+        this.$refs.registrationDeadlineRef.setDate(this.registrationDeadline);
+      })
+      .catch(() => {
+        this.$root.globalSnackbar.show({
+          message: 'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später nocheinmal.',
+          color: 'error',
+        });
+        this.$router.back();
+      });
   },
 };
 </script>

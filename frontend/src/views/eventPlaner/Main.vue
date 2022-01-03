@@ -53,6 +53,9 @@
                       <span>Bearbeite Schritt {{ editIndex }}</span>
                     </v-tooltip>
                   </v-list-item-action>
+                  <v-btn color="primary" @click="editCompleteEvent(item.id)">
+                    Bearbeite das ganze Event
+                  </v-btn>
                 </v-list-item>
                 <v-divider v-if="index < items.length - 1" :key="index"/>
               </template>
@@ -133,6 +136,14 @@ export default {
         name: 'planEvent',
         params: {
           step,
+          id: eventId,
+        },
+      });
+    },
+    editCompleteEvent(eventId) {
+      this.$router.push({
+        name: 'planEvent',
+        params: {
           id: eventId,
         },
       });

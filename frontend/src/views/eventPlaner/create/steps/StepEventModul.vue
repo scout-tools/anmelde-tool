@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     async getEventTags() {
-      const result = await axios.get(`${this.API_URL}/basic/event-tag/`);
+      const result = await axios.get(`${this.API_URL}/basic/tags/?type__name=event-tag`);
       this.eventTagList = result.data;
     },
     getData() {

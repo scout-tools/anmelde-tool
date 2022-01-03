@@ -1,13 +1,14 @@
 from django.db.models import Q
-from django_filters import CharFilter
+from django_filters import CharFilter, filters
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import status, viewsets
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import ScoutHierarchy, ZipCode
-from .serializers import ScoutHierarchySerializer, ZipCodeSerializer
+from .models import ScoutHierarchy, ZipCode, Tag, TagType
+from .serializers import ScoutHierarchySerializer, ZipCodeSerializer, TagShortSerializer, TagTypeShortSerializer
 
 
 def get_dataset(kwargs, pk, dataset):
@@ -45,4 +46,18 @@ class ZipCodeViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_class = ZipCodeSearchFilter
 
 
+class TagViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Tag.objects.all()
+    serializer_class = TagShortSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['type', 'type__name']
+    search_fields = ['type__name', 'name']
 
+
+class TagTypeViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = TagType.objects.all()
+    serializer_class = TagTypeShortSerializer
+    filter_backends = [SearchFilter, ]
+    search_fields = ['name', ]

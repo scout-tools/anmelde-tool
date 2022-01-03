@@ -13,7 +13,7 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              v-model="date"
+              v-model="dateFormatted"
               :label="`Datum für ${title}`"
               prepend-icon="mdi-calendar"
               readonly
@@ -105,16 +105,28 @@ export default {
       type: Array,
     },
   },
+  computed: {
+    dateFormatted() {
+      if (this.date) {
+        return moment(this.date)
+          .format('DD.MM.YYYY');
+      }
+      return '';
+    },
+  },
   methods: {
     save() {
       this.$emit(
         'input',
-        moment(`${this.date} ${this.time}`, 'YYYY-MM-DD hh:mm').toDate(),
+        moment(`${this.date} ${this.time}`, 'YYYY-MM-DD HH:mm:ss')
+          .toDate(),
       );
     },
     setDate(date) {
-      this.date = date ? moment(date).format('YYYY-MM-DD') : null;
-      this.time = date ? moment(date).format('hh:mm') : null;
+      this.date = date ? moment(date)
+        .format('YYYY-MM-DD') : null;
+      this.time = date ? moment(date)
+        .format('HH:mm:ss') : null;
     },
   },
 };

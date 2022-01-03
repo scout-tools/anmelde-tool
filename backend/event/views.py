@@ -29,6 +29,8 @@ class EventViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
+        if request.data.get('name', None) is None:
+            request.data['name'] = self.get_object().name
         return super().update(request, *args, **kwargs)
 
 

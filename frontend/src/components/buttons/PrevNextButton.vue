@@ -4,7 +4,8 @@
       <v-icon left> mdi-chevron-left</v-icon>
       Zurück
     </v-btn>
-    <v-btn v-if="position < maxPos" color="primary" @click="$emit('update')&&$emit('nextStep')">
+    <v-btn :disabled="!valid" v-if="position < maxPos" color="primary"
+           @click="$emit('update')&&$emit('nextStep')">
       Weiter
       <v-icon right> mdi-chevron-right</v-icon>
     </v-btn>
@@ -24,6 +25,6 @@
 
 <script>
 export default {
-  props: ['position', 'maxPos'],
+  props: ['position', 'maxPos', 'valid'],
 };
 </script>

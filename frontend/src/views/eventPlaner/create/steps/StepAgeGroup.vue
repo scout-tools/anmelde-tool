@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     async getAvailableAgeGroups() {
-      const result = await axios.get(`${this.API_URL}/basic/age-group/`);
+      const result = await axios.get(`${this.API_URL}/basic/tags/?type__name=age-group`);
       this.ageGroupList = result.data;
     },
     postData() {

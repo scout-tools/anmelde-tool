@@ -20,7 +20,7 @@
             outlined
             filled
             prepend-inner-icon="mdi-account-key"
-            @blur="$v.invitationCode.$touch()"
+            @blur="validate"
           />
         </v-col>
       </v-row>
@@ -30,10 +30,12 @@
       <prev-next-button
         :position="position"
         :max-pos="maxPos"
-        @nextStep="nextStep()"
+        :valid="valid"
+        @nextStep="nextStep"
         @prevStep="prevStep"
-        @submitStep="submitStep()"
+        @submitStep="submitStep"
         @ignore="onIngoredClicked"
+        @update="postData"
       />
     </v-container>
   </v-form>
@@ -43,12 +45,13 @@
 import { alphaNum, minLength, maxLength } from 'vuelidate/lib/validators';
 import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
   name: 'StepInvitationCode',
   header: 'Verifizierungscode',
-  props: ['position', 'maxPos', 'newData'],
-  mixins: [stepMixin],
+  props: ['position', 'maxPos'],
+  mixins: [stepMixin, apiCallsMixin],
   components: {
     PrevNextButton,
   },
@@ -77,17 +80,38 @@ export default {
         errors.push('Minimal 4 Zeichen sind nötig.');
       }
       if (!this.$v.invitationCode.maxLength) {
-        errors.push('Maximal 10 Zeichen sind nötig.');
+        errors.push('Maximal 10 Zeichen sind möglich.');
       }
       return errors;
     },
   },
   methods: {
-    getData() {
-      return {
+    postData() {
+      const data = {
         invitationCode: this.invitationCode,
       };
+      this.updateEvent(this.$route.params.id, data);
     },
+  },
+  created() {
+    if (!this.$route.params.id) {
+      this.$root.globalSnackbar.show({
+        message: 'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später noch einmal.',
+        color: 'error',
+      });
+      this.$router.back();
+    }
+    this.getEvent(this.$route.params.id)
+      .then((success) => {
+        this.invitationCode = success.data.invitationCode;
+      })
+      .catch(() => {
+        this.$root.globalSnackbar.show({
+          message: 'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später nocheinmal.',
+          color: 'error',
+        });
+        this.$router.back();
+      });
   },
 };
 </script>

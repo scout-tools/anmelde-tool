@@ -1,0 +1,27 @@
+[
+  {
+    "model": "basic.tag",
+    "pk": 1,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 2,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 3,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 4,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 5,
+    "fields": {}
+  }
+]

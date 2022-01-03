@@ -1,0 +1,20 @@
+[
+  {
+    "model": "basic.tagtype",
+    "pk": 1,
+    "fields": {
+      "name": "age-group",
+      "description": "",
+      "color": "#5E60FF"
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 2,
+    "fields": {
+      "name": "event-tag",
+      "description": "",
+      "color": "#D3FFD5"
+    }
+  }
+]

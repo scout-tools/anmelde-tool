@@ -1,0 +1,71 @@
+[
+  {
+    "model": "event.event",
+    "pk": 1,
+    "fields": {
+      "created_at": "2022-01-02T17:58:03.515Z",
+      "updated_at": "2022-01-02T18:05:12.372Z",
+      "name": "DPV goLd",
+      "description": "test3",
+      "location": null,
+      "start_time": "2022-09-16T16:00:00Z",
+      "end_time": "2022-09-18T11:00:00Z",
+      "registration_deadline": "2022-06-01T21:59:59Z",
+      "registration_start": "2022-01-31T23:00:01Z",
+      "last_possible_update": "2022-09-01T21:59:59Z",
+      "invitation_code": "AAAA",
+      "is_public": true,
+      "price": "25.00",
+      "responsible_person": 1,
+      "keycloak_path": "/DPV/Aktionen/DPV Gold",
+      "registration_model": "GOSO",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": 2,
+    "fields": {
+      "created_at": "2022-01-02T18:00:07.248Z",
+      "updated_at": "2022-01-02T18:00:07.248Z",
+      "name": "VIA23 DPV Verbandslager",
+      "description": "",
+      "location": null,
+      "start_time": "2023-05-26T16:00:00Z",
+      "end_time": "2023-05-30T11:00:00Z",
+      "registration_deadline": "2023-02-01T22:59:59Z",
+      "registration_start": "2022-07-31T22:00:01Z",
+      "last_possible_update": "2023-04-01T21:59:59Z",
+      "invitation_code": "AAAA",
+      "is_public": true,
+      "price": "40.00",
+      "responsible_person": 1,
+      "keycloak_path": "/DPV/Aktionen/DPV Verbandslager 2023",
+      "registration_model": "GOSO",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": 3,
+    "fields": {
+      "created_at": "2022-01-02T18:31:01.598Z",
+      "updated_at": "2022-01-02T18:31:01.598Z",
+      "name": "Dummy",
+      "description": "",
+      "location": null,
+      "start_time": null,
+      "end_time": null,
+      "registration_deadline": null,
+      "registration_start": null,
+      "last_possible_update": null,
+      "invitation_code": "",
+      "is_public": false,
+      "price": "0.00",
+      "responsible_person": 1,
+      "keycloak_path": "",
+      "registration_model": "GO",
+      "tags": []
+    }
+  }
+]
