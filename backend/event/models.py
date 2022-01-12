@@ -15,10 +15,12 @@ class EventLocation(TimeStampMixin):
     contact_name = models.CharField(max_length=30, blank=True)
     contact_email = models.CharField(max_length=30, blank=True)
     contact_phone = models.CharField(max_length=30, blank=True)
-    capacity = models.IntegerField(blank=True, null=True)
     per_person_fee = models.FloatField(blank=True, null=True)
     fix_fee = models.FloatField(blank=True, null=True)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True)
+
+    def __str__(self):
+        return f'{self.name}: {self.description} ({self.address}, {self.zip_code})'
 
 
 class RegistrationType(models.TextChoices):

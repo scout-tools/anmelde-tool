@@ -41,7 +41,7 @@ class TagShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ('name', 'type')
+        fields = ('id', 'name', 'type')
 
 
 class TagLongSerializer(serializers.ModelSerializer):

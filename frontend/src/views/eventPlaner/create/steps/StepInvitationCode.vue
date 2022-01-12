@@ -35,7 +35,7 @@
         @prevStep="prevStep"
         @submitStep="submitStep"
         @ignore="onIngoredClicked"
-        @update="postData"
+        @update="updateData"
       />
     </v-container>
   </v-form>
@@ -43,9 +43,11 @@
 
 <script>
 import { alphaNum, minLength, maxLength } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
 import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import store from '@/store';
 
 export default {
   name: 'StepInvitationCode',
@@ -84,34 +86,28 @@ export default {
       }
       return errors;
     },
+    ...mapGetters({
+      event: 'createEvent/event',
+    }),
   },
   methods: {
-    postData() {
-      const data = {
-        invitationCode: this.invitationCode,
-      };
-      this.updateEvent(this.$route.params.id, data);
-    },
-  },
-  created() {
-    if (!this.$route.params.id) {
-      this.$root.globalSnackbar.show({
-        message: 'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später noch einmal.',
-        color: 'error',
-      });
-      this.$router.back();
-    }
-    this.getEvent(this.$route.params.id)
-      .then((success) => {
-        this.invitationCode = success.data.invitationCode;
-      })
-      .catch(() => {
+    updateData() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
         this.$root.globalSnackbar.show({
-          message: 'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später nocheinmal.',
+          message: 'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
           color: 'error',
         });
-        this.$router.back();
-      });
+      } else {
+        store.commit('createEvent/setEventAttribute', {
+          prop: 'invitationCode',
+          value: this.invitationCode,
+        });
+      }
+    },
+  },
+  mounted() {
+    this.invitationCode = this.event.invitationCode;
   },
 };
 </script>

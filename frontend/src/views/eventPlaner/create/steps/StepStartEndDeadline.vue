@@ -65,19 +65,22 @@
         @prevStep="prevStep"
         @submitStep="submitStep"
         @ignore="onIngoredClicked"
+        @update="updateData"
       />
     </v-container>
   </v-form>
 </template>
 
 <script>
-// import moment from 'moment';
+
 import { required } from 'vuelidate/lib/validators';
 import moment from 'moment';
+import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import DateTimePicker from '@/components/picker/DateTimePicker.vue';
 import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import store from '@/store';
 
 export default {
   name: 'StepStartEndDeadline',
@@ -95,7 +98,6 @@ export default {
       endTime: null,
       registrationDeadline: null,
       registrationStart: null,
-      deadlineDate: null,
       lastPossibleUpdate: null,
     };
   },
@@ -147,44 +149,67 @@ export default {
       }
       return errors;
     },
+    ...mapGetters({
+      event: 'createEvent/event',
+    }),
   },
-  methods: {},
-  mounted() {
-
-  },
-  created() {
-    if (!this.$route.params.id) {
-      this.$root.globalSnackbar.show({
-        message: 'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später noch einmal.',
-        color: 'error',
-      });
-      this.$router.back();
-    }
-    this.getEvent(this.$route.params.id)
-      .then((success) => {
-        console.log(success);
-        this.startTime = moment(success.data.startTime, 'YYYY-MM-')
-          .toDate();
-        this.endTime = moment(success.data.endTime)
-          .toDate();
-        this.registrationDeadline = moment(success.data.registrationDeadline)
-          .toDate();
-        this.registrationStart = moment(success.data.registrationStart)
-          .toDate();
-        this.lastPossibleUpdate = moment(success.data.lastPossibleUpdate)
-          .toDate();
-        this.$refs.startTimeRef.setDate(this.startTime);
-        this.$refs.endTimeRef.setDate(this.endTime);
-        this.$refs.registrationStartRef.setDate(this.registrationStart);
-        this.$refs.registrationDeadlineRef.setDate(this.registrationDeadline);
-      })
-      .catch(() => {
+  methods: {
+    postData() {
+      const data = {
+        registrationDeadline: this.registrationDeadline,
+        registrationStart: this.registrationStart,
+        startTime: this.startTime,
+        lastPossibleUpdate: this.lastPossibleUpdate,
+        endTime: this.endTime,
+      };
+      this.updateEvent(this.$route.params.id, data);
+    },
+    updateData() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
         this.$root.globalSnackbar.show({
-          message: 'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später nocheinmal.',
+          message: 'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
           color: 'error',
         });
-        this.$router.back();
-      });
+      } else {
+        store.commit('createEvent/setEventAttribute', {
+          prop: 'registrationDeadline',
+          value: this.registrationDeadline,
+        });
+        store.commit('createEvent/setEventAttribute', {
+          prop: 'registrationStart',
+          value: this.registrationStart,
+        });
+        store.commit('createEvent/setEventAttribute', {
+          prop: 'startTime',
+          value: this.startTime,
+        });
+        store.commit('createEvent/setEventAttribute', {
+          prop: 'lastPossibleUpdate',
+          value: this.lastPossibleUpdate,
+        });
+        store.commit('createEvent/setEventAttribute', {
+          prop: 'endTime',
+          value: this.endTime,
+        });
+      }
+    },
+  },
+  mounted() {
+    this.startTime = moment(this.event.startTime)
+      .toDate();
+    this.endTime = moment(this.event.endTime)
+      .toDate();
+    this.registrationDeadline = moment(this.event.registrationDeadline)
+      .toDate();
+    this.registrationStart = moment(this.event.registrationStart)
+      .toDate();
+    this.lastPossibleUpdate = moment(this.event.lastPossibleUpdate)
+      .toDate();
+    this.$refs.startTimeRef.setDate(this.startTime);
+    this.$refs.endTimeRef.setDate(this.endTime);
+    this.$refs.registrationStartRef.setDate(this.registrationStart);
+    this.$refs.registrationDeadlineRef.setDate(this.registrationDeadline);
   },
 };
 </script>

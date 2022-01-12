@@ -117,7 +117,6 @@ export default {
     createNewEvent() {
       axios.post(`${this.API_URL}/event/event/`)
         .then((success) => {
-          console.log(success.data);
           const newEventId = success.data.id;
           this.$router.push({
             name: 'planEvent',

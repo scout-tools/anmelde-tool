@@ -1,9 +1,12 @@
 export default {
-  // eslint-disable-line
   methods: {
     validate() {
-      this.$v.$touch();
-      this.valid = !this.$v.$error;
+      try {
+        this.$v.$touch();
+        this.valid = !this.$v.$error;
+      } catch (err) {
+        this.valid = true;
+      }
     },
     submitStep() {
       this.validate();
@@ -11,9 +14,6 @@ export default {
         return;
       }
       this.$emit('submit');
-    },
-    beforeTabShow() {
-      // this.onRefresh();
     },
     prevStep() {
       this.$emit('prevStep');

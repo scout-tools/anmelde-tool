@@ -41,11 +41,11 @@
         :valid="valid"
         :position="position"
         :max-pos="maxPos"
-        @nextStep="nextStep()"
+        @nextStep="nextStep"
         @prevStep="prevStep"
-        @submitStep="submitStep()"
+        @submitStep="submitStep"
         @ignore="onIngoredClicked"
-        @update="postData"
+        @update="updateData"
       />
     </v-container>
   </v-form>
@@ -53,9 +53,11 @@
 
 <script>
 import { required, maxLength } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
+import store from '@/store';
 
 export default {
   name: 'StepNameDescription',
@@ -68,8 +70,8 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    description: '',
     name: '',
+    description: '',
   }),
   validations: {
     name: {
@@ -104,38 +106,29 @@ export default {
       }
       return errors;
     },
+    ...mapGetters({
+      event: 'createEvent/event',
+    }),
   },
   methods: {
-    postData() {
-      const data = {
-        name: this.name,
-        description: this.description,
-      };
-      this.updateEvent(this.$route.params.id, data);
-    },
-  },
-  created() {
-    if (!this.$route.params.id) {
-      this.$root.globalSnackbar.show({
-        message: 'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später noch einmal.',
-        color: 'error',
-      });
-      this.$router.back();
-    }
-    this.getEvent(this.$route.params.id)
-      .then((success) => {
-        if (success.data.name !== 'Dummy') {
-          this.name = success.data.name;
-        }
-        this.description = success.data.description;
-      })
-      .catch(() => {
+    updateData() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
         this.$root.globalSnackbar.show({
-          message: 'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später nocheinmal.',
+          message: 'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
           color: 'error',
         });
-        this.$router.back();
-      });
+      } else {
+        store.commit('createEvent/setEventName', this.name);
+        store.commit('createEvent/setEventDescription', this.description);
+      }
+    },
+  },
+  mounted() {
+    if (this.event.name !== 'Dummy') {
+      this.name = this.event.name;
+    }
+    this.description = this.event.description;
   },
 };
 </script>

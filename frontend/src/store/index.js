@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueJwtDecode from 'vue-jwt-decode';
 import createPersistedState from 'vuex-persistedstate'; // eslint-disable-line
+import createEvent from './createEvent';
 
 Vue.use(Vuex);
 Vue.use(VueJwtDecode);
@@ -10,29 +11,7 @@ export default new Vuex.Store({
   state: {
     accessToken: null,
     refreshToken: null,
-    ageGroupMapping: [],
-    roleMapping: [],
-    scoutOrgaLevelMapping: [],
-    participantRoleMapping: [],
-    eatHabitTypeMapping: [],
-    travelTypeTypeMapping: [],
-    currentEventParticipants: [],
-    currentRegistrationSummary: [],
-    currentEventCash: [],
-    currentEventKitchen: [],
-    currentEventProgram: [],
-    dpvAddedLocation: false,
     apiIsDown: false,
-    scoutGroupMapping: [],
-    myStamm: '',
-    myBund: '',
-    myScoutname: '',
-    registeredTents: [{
-      id: 1,
-      registration: 1,
-      tentType: 1,
-      usedByScoutGroups: [1],
-    }],
     userinfo: {
       fahrtenname: '',
       stamm: '',
@@ -80,6 +59,8 @@ export default new Vuex.Store({
     },
   },
   actions: {},
-  modules: {},
+  modules: {
+    createEvent,
+  },
   plugins: [createPersistedState()],
 });

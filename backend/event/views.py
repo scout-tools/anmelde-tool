@@ -4,24 +4,23 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from event.models import Event, EventLocation
-from event.serializers import EventSerializer, EventPlanerSerializer, EventLocationSerializer
+from event.serializers import EventPlanerSerializer, EventLocationSerializer, EventCompleteSerializer
 
 
 class EventLocationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('registration',)
+    filterset_fields = ('name',)
     queryset = EventLocation.objects.all()
     serializer_class = EventLocationSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
-    serializer_class = EventSerializer
+    serializer_class = EventCompleteSerializer
 
     def create(self, request, *args, **kwargs):
-        print(request.data)
         if request.data.get('name', None) is None:
             request.data['name'] = 'Dummy'
         if request.data.get('responsible_person', None) is None:

@@ -21,19 +21,21 @@
       <prev-next-button
         :position="position"
         :max-pos="maxPos"
-        @nextStep="nextStep()"
+        :valid="valid"
+        @nextStep="nextStep"
         @prevStep="prevStep"
-        @submitStep="submitStep()"
+        @submitStep="submitStep"
         @ignore="onIngoredClicked"
+        @update="updateData"
       />
     </v-container>
   </v-form>
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
-
+import store from '@/store';
 import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
 
 export default {
@@ -49,31 +51,21 @@ export default {
     valid: true,
     isPublic: false,
   }),
-  validations: {
-    data: {
-      isPublic: {
-        required,
-      },
-    },
-  },
   computed: {
-    invitationCodeErrors() {
-      const errors = [];
-      if (!this.$v.data.isPublic.$dirty) return errors;
-      if (!this.$v.data.isPublic.required) {
-        errors.push(
-          'Der Einladungscode muss aus Zahlen und Buchstaben bestehen,',
-        );
-      }
-      return errors;
-    },
+    ...mapGetters({
+      event: 'createEvent/event',
+    }),
   },
   methods: {
-    getData() {
-      return {
-        isPublic: this.data.isPublic,
-      };
+    updateData() {
+      store.commit('createEvent/setEventAttribute', {
+        prop: 'isPublic',
+        value: this.isPublic,
+      });
     },
+  },
+  mounted() {
+    this.isPublic = this.event.isPublic;
   },
 };
 </script>

@@ -19,9 +19,9 @@
               <v-col cols="6" sm="6">
                 <v-select
                   :items="event_location_types"
-                  item-text="state"
-                  item-value="abbr"
-                  v-model="data.locationType"
+                  item-text="name"
+                  item-value="id"
+                  v-model="locationType"
                   required
                   :error-messages="typeErrors"
                   label="Kategorie"
@@ -78,59 +78,8 @@
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-subheader class="my-0"> Anzahl Schlafplätze </v-subheader>
-            <v-divider class="my-0" />
-            <v-row>
-              <v-col cols="12" sm="6">
-                <v-text-field
-                  v-model="data.capacity"
-                  :error-messages="capacityError"
-                  label="Anzahl Schlafplätze"
-                  prepend-icon="mdi-home"
-                >
-                  <template slot="append">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon color="success" dark v-bind="attrs" v-on="on">
-                          mdi-help-circle-outline
-                        </v-icon>
-                      </template>
-                      <span>
-                        {{
-                          'Wie viele Teilnehmende können dort schlafen?'
-                        }}
-                      </span>
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-text-field
-                  v-model="data.capacityCorona"
-                  :error-messages="capacityCoronaError"
-                  label="Anzahl Schlafplätze (Corona)"
-                  required
-                  prepend-icon="mdi-virus"
-                >
-                  <template slot="append">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon color="success" dark v-bind="attrs" v-on="on">
-                          mdi-help-circle-outline
-                        </v-icon>
-                      </template>
-                      <span>
-                        {{
-                          'Wie viele Schlafplätze gab es dort im September 2020?'
-                        }}
-                      </span>
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-            </v-row>
-            <v-subheader class="my-0"> Adresse </v-subheader>
-            <v-divider class="my-0" />
+            <v-subheader class="my-0"> Adresse</v-subheader>
+            <v-divider class="my-0"/>
             <v-row>
               <v-col cols="12" sm="6">
                 <v-text-field
@@ -175,18 +124,16 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{
-                          'Trage bitte den Wohnort oder die Postleitzahl ' +
-                          'des Wohnorts ein und wähle die richtige Option aus.'
-                        }}
+                          Trage bitte den Wohnort oder die Postleitzahl
+                          des Wohnorts ein und wähle die richtige Option aus.
                       </span>
                     </v-tooltip>
                   </template>
                 </v-autocomplete>
               </v-col>
             </v-row>
-            <v-subheader class="my-0"> Kosten </v-subheader>
-            <v-divider class="my-0" />
+            <v-subheader class="my-0"> Kosten</v-subheader>
+            <v-divider class="my-0"/>
             <v-row>
               <v-col cols="12" sm="6">
                 <v-text-field
@@ -204,7 +151,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Kosten pro Person pro Nacht.' }}
+                        Kosten pro Person pro Nacht.
                       </span>
                     </v-tooltip>
                   </template>
@@ -226,10 +173,8 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{
-                          'Gib hier die Fixkosten ein, die für ein ' +
-                          'Wochenende entstehen (Strom, Miete, etc.).'
-                        }}
+                          Gib hier die Fixkosten ein, die für ein
+                          Wochenende entstehen (Strom, Miete, etc.).
                       </span>
                     </v-tooltip>
                   </template>
@@ -251,7 +196,7 @@
             <v-subheader class="my-0">
               Kontakt Haus-/Zeltplatzvermietung
             </v-subheader>
-            <v-divider class="my-0" />
+            <v-divider class="my-0"/>
             <v-row>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
@@ -268,7 +213,7 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Name der Kontaktperson.' }}
+                        Name der Kontaktperson.
                       </span>
                     </v-tooltip>
                   </template>
@@ -318,11 +263,11 @@
               </v-col>
             </v-row>
           </v-container>
-          <v-divider class="my-3" />
-          <v-btn color="primary" @click="onClickOkay"> Speichern </v-btn>
+          <v-divider class="my-3"/>
+          <v-btn color="primary" @click="onClickOkay"> Speichern</v-btn>
         </v-form>
       </v-container>
-      <v-divider class="my-4" />
+      <v-divider class="my-4"/>
 
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
         {{ 'Fehler beim Erstellen des Ortes' }}
@@ -339,42 +284,47 @@ import {
   requiredIf,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
   props: ['isOpen'],
+  mixins: [apiCallsMixin],
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
     valid: true,
     feeNotKnowen: false,
-    event_location_types: [{ state: 'No data. PLS Set data', abbr: 0 }],
+    event_location_types: [{
+      name: 'No data. PLS Set data',
+      id: null,
+    }],
     noCostState: false,
     isZipLoading: false,
     zipCodeResponse: [],
     search: null,
+    locationType: null,
     data: {
       name: '',
-      locationType: '',
       description: '',
       address: '',
       zipCode: null,
       contactName: '',
       contactEmail: '',
       contactPhone: '',
-      capacity: null,
-      capacityCorona: null,
       perPersonFee: null,
       fixFee: null,
+      tags: [],
     },
     showError: false,
     showSuccess: false,
     timeout: 7000,
   }),
   validations: {
+    locationType: {
+      required,
+      numeric,
+    },
     data: {
-      locationType: {
-        required,
-      },
       name: {
         required,
       },
@@ -386,11 +336,9 @@ export default {
         minLength: minLength(1),
       },
       capacity: {
-        required,
         numeric,
       },
       capacityCorona: {
-        required,
         numeric,
       },
       perPersonFee: {
@@ -443,7 +391,7 @@ export default {
 
       this.isZipLoading = true;
 
-      this.getZipCodeMapping(searchString)
+      this.searchZipCode(searchString)
         .then((res) => {
           this.zipCodeResponse = res;
         })
@@ -456,17 +404,6 @@ export default {
     },
   },
   computed: {
-    capacityError() {
-      const errors = [];
-      if (!this.$v.data.capacity.$dirty) return errors;
-      if (!this.$v.data.capacity.required) {
-        errors.push('Ist verpflichtend.');
-      }
-      if (!this.$v.data.capacity.numeric) {
-        errors.push('Muss numerisch sein.');
-      }
-      return errors;
-    },
     perPersonFeeErrors() {
       const errors = [];
       if (!this.$v.data.perPersonFee.$dirty) return errors;
@@ -483,17 +420,6 @@ export default {
       }
       return errors;
     },
-    capacityCoronaError() {
-      const errors = [];
-      if (!this.$v.data.capacityCorona.$dirty) return errors;
-      if (!this.$v.data.capacityCorona.required) {
-        errors.push('Ist verpflichtend.');
-      }
-      if (!this.$v.data.capacityCorona.numeric) {
-        errors.push('Muss numerisch sein.');
-      }
-      return errors;
-    },
     contactNameErrors() {
       const errors = [];
       if (!this.$v.data.contactName.$dirty) return errors;
@@ -507,7 +433,7 @@ export default {
       if (!this.$v.data.contactPhone.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.data.contactPhone.required &&
-        errors.push('Telefonnummer oder E-Mail ist verpflichtend');
+      errors.push('Telefonnummer oder E-Mail ist verpflichtend');
       return errors;
     },
     contactEmailErrors() {
@@ -515,13 +441,13 @@ export default {
       if (!this.$v.data.contactEmail.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.data.contactEmail.required &&
-        errors.push('Telefonnummer oder E-Mail ist verpflichtend');
+      errors.push('Telefonnummer oder E-Mail ist verpflichtend');
       return errors;
     },
     typeErrors() {
       const errors = [];
-      if (!this.$v.data.locationType.$dirty) return errors;
-      if (!this.$v.data.locationType.required) {
+      if (!this.$v.locationType.$dirty) return errors;
+      if (!this.$v.locationType.required) {
         errors.push('Ist verpflichtend.');
       }
       return errors;
@@ -557,12 +483,6 @@ export default {
     },
   },
   methods: {
-    async getZipCodeMapping(searchString) {
-      const path = `${this.API_URL}basic/zip-code/?zip_city=${searchString}`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
     customText: (item) => `${item.zipCode} — ${item.city}`,
     openDialog() {
       this.active = true;
@@ -576,9 +496,10 @@ export default {
     closeDialog() {
       this.active = false;
       this.$v.$reset();
-      Object.keys(this.data).forEach((key) => {
-        this.data[key] = '';
-      });
+      Object.keys(this.data)
+        .forEach((key) => {
+          this.data[key] = '';
+        });
       this.$emit('close');
     },
     validate() {
@@ -597,6 +518,12 @@ export default {
         }
       }
     },
+    generateTags() {
+      if (this.locationType) {
+        return [this.locationType];
+      }
+      return [];
+    },
     async callCreateEventLocationPost() {
       this.data.registration = this.$route.params.id;
       if (this.feeNotKnowen) {
@@ -609,9 +536,11 @@ export default {
       if (this.data.fixFee === '') {
         this.data.fixFee = null;
       }
+
+      this.data.tags = this.generateTags();
       if (!this.data.id) {
         axios
-          .post(`${this.API_URL}basic/event-location/`, this.data)
+          .post(`${this.API_URL}/event/event-location/`, this.data)
           .then(() => {
             this.closeDialog();
             this.$emit('refresh');
@@ -619,7 +548,7 @@ export default {
       } else {
         axios
           .put(
-            `${this.API_URL}basic/event-location/${this.data.id}/`,
+            `${this.API_URL}/event/event-location/${this.data.id}/`,
             this.data,
           )
           .then(() => {
@@ -628,6 +557,15 @@ export default {
           });
       }
     },
+  },
+  created() {
+    this.getTag('event-location-type')
+      .then((success) => {
+        this.event_location_types = success.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

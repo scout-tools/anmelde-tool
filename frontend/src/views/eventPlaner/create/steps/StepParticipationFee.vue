@@ -17,20 +17,24 @@
       <v-divider class="my-3"/>
 
       <prev-next-button
+        :valid="true"
         :position="position"
         :max-pos="maxPos"
-        @nextStep="nextStep()"
+        @nextStep="nextStep"
         @prevStep="prevStep"
-        @submitStep="submitStep()"
+        @submitStep="submitStep"
         @ignore="onIngoredClicked"
+        @update="updateData"
       />
     </v-container>
   </v-form>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
+import store from '@/store';
 
 export default {
   name: 'StepParticipationFee',
@@ -39,6 +43,11 @@ export default {
   mixins: [stepMixin],
   components: {
     PrevNextButton,
+  },
+  computed: {
+    ...mapGetters({
+      event: 'createEvent/event',
+    }),
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
@@ -50,11 +59,15 @@ export default {
     participationFee: 0.0,
   }),
   methods: {
-    getData() {
-      return {
-        participationFee: this.participationFee,
-      };
+    updateData() {
+      store.commit('createEvent/setEventAttribute', {
+        prop: 'price',
+        value: this.participationFee,
+      });
     },
+  },
+  mounted() {
+    this.participationFee = this.event.price;
   },
 };
 </script>

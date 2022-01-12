@@ -27,9 +27,10 @@
       <prev-next-button
         :position="position"
         :max-pos="maxPos"
-        @nextStep="nextStep()"
+        :valid="valid"
+        @nextStep="nextStep"
         @prevStep="prevStep"
-        @submitStep="submitStep()"
+        @submitStep="submitStep"
         @ignore="onIngoredClicked"
       />
     </v-container>
@@ -76,15 +77,6 @@ export default {
     },
   },
   methods: {
-    validate() {
-      this.$v.contacts.$touch();
-      this.valid = !this.$v.contacts.$anyError;
-    },
-    getData() {
-      return {
-        contacts: this.contacts,
-      };
-    },
   },
 };
 </script>
