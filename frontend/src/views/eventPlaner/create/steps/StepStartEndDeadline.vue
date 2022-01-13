@@ -154,16 +154,6 @@ export default {
     }),
   },
   methods: {
-    postData() {
-      const data = {
-        registrationDeadline: this.registrationDeadline,
-        registrationStart: this.registrationStart,
-        startTime: this.startTime,
-        lastPossibleUpdate: this.lastPossibleUpdate,
-        endTime: this.endTime,
-      };
-      this.updateEvent(this.$route.params.id, data);
-    },
     updateData() {
       this.$v.$touch();
       if (this.$v.$invalid) {
