@@ -36,11 +36,11 @@ Naked==0.1.31
 oauthlib==3.1.0
 pep517==0.10.0
 pip-tools==6.0.1
-Pillow==8.1.2
+Pillow==9.0
 placebo==0.9.0
 progressbar2==3.53.1
-psycopg2==2.8.6
-psycopg2-binary==2.8.6
+psycopg2==2.9.1
+psycopg2-binary==2.9.1
 pyasn1==0.4.8
 pycparser==2.20
 pycryptodome==3.9.9
