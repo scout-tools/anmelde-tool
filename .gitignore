@@ -196,3 +196,4 @@ zappa_settings.json
 
 # Backend Static Files
 /backend/static/
+/.idea/

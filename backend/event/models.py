@@ -42,7 +42,6 @@ class Event(TimeStampMixin):
     last_possible_update = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     invitation_code = models.CharField(max_length=20, blank=True)
     is_public = models.BooleanField(default=False)
-    price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     responsible_person = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     keycloak_path = models.CharField(max_length=50, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
@@ -53,13 +52,14 @@ class Event(TimeStampMixin):
         return f"{self.name}: {self.start_time} - {self.end_time}, {self.location}"
 
 
-class SleepingLocations(models.Model):
+class SleepingLocation(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100, blank=True)
-    additional_price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    tags = models.ManyToManyField(Tag)
-    event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    tags = models.ManyToManyField(Tag, blank=True)
+    bookable_till = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE, )
 
     def __str__(self):
         return self.name
@@ -98,6 +98,7 @@ class RegistrationParticipant(TimeStampMixin):
     birthday = models.DateField(null=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
     tags = models.ManyToManyField(Tag)
+    sleeping_location = models.ForeignKey(SleepingLocation, on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return f"{self.registration}: {self.last_name}, {self.first_name}"

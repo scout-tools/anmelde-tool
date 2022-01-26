@@ -1,12 +1,18 @@
 from rest_framework import serializers
 
 from basic.serializers import TagShortSerializer, ZipCodeSerializer
-from .models import Event, EventLocation
+from .models import Event, EventLocation, SleepingLocation
 
 
-class EventLocationSerializer(serializers.ModelSerializer):
-    zip_code = ZipCodeSerializer(many=False)
+class EventLocationGetSerializer(serializers.ModelSerializer):
+    zip_code = ZipCodeSerializer(many=False, read_only=True)
 
+    class Meta:
+        model = EventLocation
+        fields = '__all__'
+
+
+class EventLocationPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventLocation
         fields = '__all__'
@@ -29,7 +35,15 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
                   'registration_model')
 
 
+class SleepingLocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SleepingLocation
+        fields = '__all__'
+
+
 class EventCompleteSerializer(serializers.ModelSerializer):
+    # sleepinglocation_set = SleepingLocationSerializer(many=True)
+
     class Meta:
         model = Event
         fields = '__all__'
