@@ -59,12 +59,14 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         except User.DoesNotExist:
             return self.UserModel.objects.none()
 
-    def set_user_info(self, user, claims):
+    def set_user_info(self, user: User, claims):
         fahrtenname = claims.get('fahrtenname', '')
         if fahrtenname:
             user.userextended.scout_name = claims.get('fahrtenname', '')
         else:
             user.userextended.scout_name = claims.get('given_name', '')
+
+        user.email = claims.get('email', '')
 
         stamm = claims.get('stamm', '')
         bund = claims.get('bund', '')

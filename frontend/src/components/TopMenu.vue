@@ -104,7 +104,7 @@ export default {
       this.$keycloak.login();
     },
     goToIdm() { // external keycloak user settings page
-      const link = `${this.keycloakUrl}/realms/${this.keycloakRealm}/account/`;
+      const link = `${process.env.VUE_APP_KEYCLOAK_URL}/realms/${process.env.VUE_APP_KEYCLOAK_REALM}/account/`;
       window.open(link, '_blank');
     },
   },
