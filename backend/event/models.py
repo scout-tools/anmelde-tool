@@ -58,6 +58,7 @@ class SleepingLocation(models.Model):
     description = models.CharField(max_length=100, blank=True)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     tags = models.ManyToManyField(Tag, blank=True)
+    bookable_from = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     bookable_till = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE, )
 
