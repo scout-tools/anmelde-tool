@@ -21,7 +21,7 @@ class ZipCodeAdmin(admin.ModelAdmin):
 
 
 @admin.register(TagType)
-class EventTagTypeAdmin(admin.ModelAdmin):
+class TagTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'color')
     search_fields = ('name',)
 

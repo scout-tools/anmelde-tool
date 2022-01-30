@@ -28,6 +28,8 @@ class TagType(models.Model):
     name = models.CharField(max_length=100, blank=True)
     description = models.CharField(max_length=100, blank=True)
     color = ColorField(default='#FF0000')
+    min = models.IntegerField(default=0)
+    max = models.IntegerField(default=9999)
 
     def __str__(self):
         return self.name

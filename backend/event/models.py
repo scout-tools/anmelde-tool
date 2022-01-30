@@ -1,9 +1,16 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db import models
 from polymorphic.models import PolymorphicModel
 from django.utils.translation import gettext_lazy as _
 
-from basic.models import ZipCode, Tag, AbstractAttribute, AttributeDescription, TimeStampMixin, ScoutHierarchy
+from basic.models import ZipCode, Tag, AbstractAttribute, AttributeDescription, TimeStampMixin, ScoutHierarchy, TagType
+
+
+class RegistrationType(models.TextChoices):
+    SingleOnly = 'SO', _('Single Only')
+    GroupOnly = 'GO', _('Groups Only')
+    GroupsOptionalSingleOptional = 'GOSO', _('Groups Optional, Single Optional')
+    GroupsRequiredSingleOptional = 'GRSO', _('Groups Required Single Optional')
 
 
 class EventLocation(TimeStampMixin):
@@ -23,11 +30,19 @@ class EventLocation(TimeStampMixin):
         return f'{self.name}: {self.description} ({self.address}, {self.zip_code})'
 
 
-class RegistrationType(models.TextChoices):
-    SingleOnly = 'SO', _('Single Only')
-    GroupOnly = 'GO', _('Groups Only')
-    GroupsOptionalSingleOptional = 'GOSO', _('Groups Optional, Single Optional')
-    GroupsRequiredSingleOptional = 'GRSO', _('Groups Required Single Optional')
+class AbstractEventModule(PolymorphicModel):
+    id = models.AutoField(primary_key=True)
+    position = models.IntegerField(default=999, auto_created=True)
+    name = models.CharField(max_length=100, default='', blank=True)
+    description = models.CharField(max_length=1000, default='', blank=True)
+    type = models.ForeignKey(TagType, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f'{self.type}: {self.name}'
+
+
+class EventModuleStandard(AbstractEventModule):
+    pass
 
 
 class Event(TimeStampMixin):
@@ -42,11 +57,15 @@ class Event(TimeStampMixin):
     last_possible_update = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     invitation_code = models.CharField(max_length=20, blank=True)
     is_public = models.BooleanField(default=False)
-    responsible_person = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
-    keycloak_path = models.CharField(max_length=50, blank=True)
+    responsible_person = models.ManyToManyField(User)
+    keycloak_path = models.ForeignKey(Group, blank=True, on_delete=models.SET_NULL, null=True,
+                                      related_name='keycloak_group')
+    keycloak_admin_path = models.ForeignKey(Group, blank=True, on_delete=models.SET_NULL, null=True,
+                                            related_name='keycloak_admin_group')
     tags = models.ManyToManyField(Tag, blank=True)
     registration_model = models.CharField(max_length=4, choices=RegistrationType.choices,
                                           default=RegistrationType.GroupOnly)
+    modules = models.ManyToManyField(AbstractEventModule, blank=True)
 
     def __str__(self):
         return f"{self.name}: {self.start_time} - {self.end_time}, {self.location}"
@@ -60,7 +79,7 @@ class SleepingLocation(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     bookable_from = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     bookable_till = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
-    event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE, )
+    event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

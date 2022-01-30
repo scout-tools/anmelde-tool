@@ -31,7 +31,7 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         """
         with transaction.atomic():
             user.groups.clear()
-            for role in claims.get('groups'):
+            for role in claims.get('roles', []):
                 group, _ = Group.objects.get_or_create(name=role)
                 group.user_set.add(user)
 

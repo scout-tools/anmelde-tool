@@ -5,7 +5,9 @@
     "fields": {
       "name": "age-group",
       "description": "",
-      "color": "#5E60FF"
+      "color": "#5E60FF",
+      "min": 0,
+      "max": 9999
     }
   },
   {
@@ -14,7 +16,9 @@
     "fields": {
       "name": "event-tag",
       "description": "",
-      "color": "#D3FFD5"
+      "color": "#D3FFD5",
+      "min": 0,
+      "max": 9999
     }
   },
   {
@@ -23,7 +27,42 @@
     "fields": {
       "name": "event-location-type",
       "description": "",
-      "color": "#9DFF70"
+      "color": "#9DFF70",
+      "min": 0,
+      "max": 9999
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 4,
+    "fields": {
+      "name": "module-sleeping",
+      "description": "",
+      "color": "#FF0000",
+      "min": 1,
+      "max": 1
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 5,
+    "fields": {
+      "name": "module-standard",
+      "description": "",
+      "color": "#FF0000",
+      "min": 0,
+      "max": 9999
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 6,
+    "fields": {
+      "name": "module-event-admin-authorizer",
+      "description": "",
+      "color": "#FF0000",
+      "min": 1,
+      "max": 1
     }
   }
 ]

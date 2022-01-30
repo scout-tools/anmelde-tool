@@ -81,5 +81,5 @@ class EventPlanerViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = EventPlanerSerializer
 
     def get_queryset(self):
-        user_groups = self.request.user.groups.values_list('name', flat=True)
-        return Event.objects.filter(Q(keycloak_path__in=user_groups) | Q(responsible_person=self.request.user))
+        return Event.objects.filter(
+            Q(keycloak_path__in=self.request.user.groups.all()) | Q(responsible_person=self.request.user))

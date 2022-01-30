@@ -1,0 +1,99 @@
+[
+  {
+    "model": "event.eventlocation",
+    "pk": 1,
+    "fields": {
+      "created_at": "2022-01-30T11:21:39.929Z",
+      "updated_at": "2022-01-30T11:21:39.929Z",
+      "name": "Jugendburg Ludwigstein",
+      "description": "Die Burg Ludwigstein ist eine frühere spätmittelalterliche Burg und heutige Jugendburg bei Werleshausen im Werra-Meißner-Kreis in Hessen",
+      "zip_code": 12582,
+      "address": "Burg Ludwigstein",
+      "contact_name": "Many",
+      "contact_email": "test@test.de",
+      "contact_phone": "",
+      "per_person_fee": 0.0,
+      "fix_fee": 0.0,
+      "tags": [
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "model": "event.eventlocation",
+    "pk": 2,
+    "fields": {
+      "created_at": "2022-01-30T11:30:50.487Z",
+      "updated_at": "2022-01-30T11:30:50.487Z",
+      "name": "Gut Steimke",
+      "description": "",
+      "zip_code": 11674,
+      "address": "Steimke",
+      "contact_name": "Inja",
+      "contact_email": "p@p.de",
+      "contact_phone": "",
+      "per_person_fee": 0.0,
+      "fix_fee": 0.0,
+      "tags": [
+        6
+      ]
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": 1,
+    "fields": {
+      "created_at": "2022-01-30T11:22:26.220Z",
+      "updated_at": "2022-01-30T14:42:34.477Z",
+      "name": "DPV goLd",
+      "description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
+      "location": 1,
+      "start_time": "2022-09-16T16:00:00Z",
+      "end_time": "2022-09-18T11:00:00Z",
+      "registration_deadline": "2022-06-01T21:59:59Z",
+      "registration_start": "2022-07-31T22:00:01Z",
+      "last_possible_update": "2022-09-01T21:59:59Z",
+      "invitation_code": "AAAA",
+      "is_public": true,
+      "keycloak_path": 3,
+      "keycloak_admin_path": null,
+      "registration_model": "GOSO",
+      "responsible_person": [
+        2
+      ],
+      "tags": [
+        4
+      ],
+      "modules": []
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": 2,
+    "fields": {
+      "created_at": "2022-01-30T11:30:54.932Z",
+      "updated_at": "2022-01-30T13:08:23.319Z",
+      "name": "VIA23 DPV Verbandslager",
+      "description": "",
+      "location": 2,
+      "start_time": "2023-05-26T16:00:00Z",
+      "end_time": "2023-05-30T11:00:00Z",
+      "registration_deadline": "2023-02-01T22:59:59Z",
+      "registration_start": "2022-07-31T22:00:01Z",
+      "last_possible_update": "2023-04-01T21:59:59Z",
+      "invitation_code": "AAAA",
+      "is_public": true,
+      "keycloak_path": 4,
+      "keycloak_admin_path": null,
+      "registration_model": "GRSO",
+      "responsible_person": [
+        2
+      ],
+      "tags": [
+        6
+      ],
+      "modules": []
+    }
+  }
+]
