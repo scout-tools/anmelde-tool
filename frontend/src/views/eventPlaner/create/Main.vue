@@ -79,20 +79,41 @@ export default {
       timeout: 7000,
       isLoading: true,
       isSingleStep: false,
+      modules: {
+        Introduction: StepNameDescription,
+        VerifyEventCode: StepInvitationCode,
+        DatesAndTimes: StepStartEndDeadline,
+        EventLocation: StepLocation,
+        Tags: StepEventTags,
+        SleepingLocationComplex: StepParticipationFee,
+        SleepingLocationEasy: StepParticipationFee,
+        ContactData: StepEventContact,
+        Public: StepVisibility,
+        InternalAuthentication: StepEventContact,
+        KeycloakAuthentication: StepEventContact,
+        OfferWorkshop: StepEventContact,
+        SubscribeWorkshop: StepEventContact,
+      },
     };
   },
   computed: {
     steps() {
-      return [
-        StepNameDescription,
-        StepInvitationCode,
-        StepStartEndDeadline,
-        StepLocation,
-        StepEventTags,
-        StepParticipationFee,
-        StepEventContact,
-        StepVisibility,
-      ];
+      const stepList = [];
+      this.event.eventmodulemapperSet.forEach((item) => {
+        stepList.push(this.modules[item.module.name]);
+      });
+
+      return stepList;
+      // return [
+      //   StepNameDescription,
+      //   StepInvitationCode,
+      //   StepStartEndDeadline,
+      //   StepLocation,
+      //   StepEventTags,
+      //   StepParticipationFee,
+      //   StepEventContact,
+      //   StepVisibility,
+      // ];
     },
     id() {
       return this.$route.params.id;

@@ -30,19 +30,22 @@ class EventLocation(TimeStampMixin):
         return f'{self.name}: {self.description} ({self.address}, {self.zip_code})'
 
 
-class AbstractEventModule(PolymorphicModel):
+class EventModule(models.Model):
     id = models.AutoField(primary_key=True)
-    position = models.IntegerField(default=999, auto_created=True)
     name = models.CharField(max_length=100, default='', blank=True)
     description = models.CharField(max_length=1000, default='', blank=True)
     type = models.ForeignKey(TagType, on_delete=models.PROTECT)
+    header = models.CharField(max_length=100, default='Default Header')
+    internal = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.type}: {self.name}'
 
 
-class EventModuleStandard(AbstractEventModule):
-    pass
+class AttributeEventModuleMapper(models.Model):
+    id = models.AutoField(primary_key=True)
+    attribute = models.ForeignKey(AbstractAttribute, on_delete=models.PROTECT, null=True)
+    description = models.CharField(max_length=1000, null=True)
 
 
 class Event(TimeStampMixin):
@@ -65,10 +68,20 @@ class Event(TimeStampMixin):
     tags = models.ManyToManyField(Tag, blank=True)
     registration_model = models.CharField(max_length=4, choices=RegistrationType.choices,
                                           default=RegistrationType.GroupOnly)
-    modules = models.ManyToManyField(AbstractEventModule, blank=True)
 
     def __str__(self):
         return f"{self.name}: {self.start_time} - {self.end_time}, {self.location}"
+
+
+class EventModuleMapper(models.Model):
+    id = models.AutoField(primary_key=True)
+    position = models.IntegerField(default=999, auto_created=True)
+    module = models.ForeignKey(EventModule, on_delete=models.PROTECT, null=True, blank=True)
+    attributes = models.ManyToManyField(AttributeEventModuleMapper, blank=True)
+    event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.position}: {self.module.name}'
 
 
 class SleepingLocation(models.Model):
@@ -83,16 +96,6 @@ class SleepingLocation(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class DescriptionEventAttributeRelation(models.Model):
-    id = models.AutoField(auto_created=True, primary_key=True)
-    description = models.ForeignKey(AttributeDescription, null=True, on_delete=models.PROTECT)
-    event = models.ForeignKey(Event, null=True, on_delete=models.PROTECT)
-    attribute = models.ForeignKey(AbstractAttribute, on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return f'{self.event}: {self.attribute}'
 
 
 class Registration(TimeStampMixin):
@@ -143,13 +146,3 @@ class WorkshopParticipant(TimeStampMixin):
     id = models.AutoField(primary_key=True)
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True)
     participant = models.ForeignKey(RegistrationParticipant, on_delete=models.CASCADE, null=True)
-
-
-class DescriptionRegistrationAttributeRelation(models.Model):
-    id = models.AutoField(auto_created=True, primary_key=True)
-    description = models.ForeignKey(AttributeDescription, null=True, on_delete=models.PROTECT)
-    registration = models.ForeignKey(Registration, null=True, on_delete=models.PROTECT)
-    attribute = models.ForeignKey(AbstractAttribute, on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return f'{self.event}: {self.registration}'

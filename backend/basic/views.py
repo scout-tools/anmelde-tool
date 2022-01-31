@@ -61,3 +61,4 @@ class TagTypeViewSet(viewsets.ModelViewSet):
     serializer_class = TagTypeShortSerializer
     filter_backends = [SearchFilter, ]
     search_fields = ['name', ]
+    ordering_fields = ['id', ]

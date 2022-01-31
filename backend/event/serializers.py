@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from basic.serializers import TagShortSerializer, ZipCodeSerializer
-from .models import Event, EventLocation, SleepingLocation
+from .models import Event, EventLocation, SleepingLocation, EventModuleMapper, EventModule
 
 
 class EventLocationGetSerializer(serializers.ModelSerializer):
@@ -41,8 +41,36 @@ class SleepingLocationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class EventModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventModule
+        fields = '__all__'
+
+
+class EventModuleShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventModule
+        fields = ('header', 'name')
+
+
+class EventModuleMapperShortSerializer(serializers.ModelSerializer):
+    module = EventModuleShortSerializer(read_only=True)
+
+    class Meta:
+        model = EventModuleMapper
+        fields = ('position', 'module')
+
+
+class EventModuleMapperSerializer(serializers.ModelSerializer):
+    module = EventModuleSerializer(read_only=True)
+
+    class Meta:
+        model = EventModuleMapper
+        fields = '__all__'
+
+
 class EventCompleteSerializer(serializers.ModelSerializer):
-    # sleepinglocation_set = SleepingLocationSerializer(many=True)
+    eventmodulemapper_set = EventModuleMapperSerializer(many=True, read_only=True)
 
     class Meta:
         model = Event
@@ -51,6 +79,7 @@ class EventCompleteSerializer(serializers.ModelSerializer):
 
 class EventPlanerSerializer(serializers.ModelSerializer):
     tags = TagShortSerializer(many=True)
+    eventmodulemapper_set = EventModuleMapperShortSerializer(many=True, read_only=True)
 
     class Meta:
         model = Event

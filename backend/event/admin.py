@@ -1,7 +1,7 @@
 from django.contrib import admin
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
-from event.models import EventLocation, Event, SleepingLocation, AbstractEventModule, EventModuleStandard
+from event.models import EventLocation, Event, SleepingLocation, EventModule, EventModuleMapper
 
 
 @admin.register(EventLocation)
@@ -25,24 +25,13 @@ class EventAdmin(admin.ModelAdmin):
     autocomplete_fields = ('event',)
 
 
-class AbstractAbstractEventModule(PolymorphicChildModelAdmin):
-    """ Base admin class for all child models """
-    base_model = AbstractEventModule  # Optional, explicitly set here.
-    list_display = ('name', 'type', 'position')
-    search_fields = ('name', 'type')
-    # autocomplete_fields = ('type',)
-    show_in_index = True
+@admin.register(EventModule)
+class EventModuleAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type')
+    autocomplete_fields = ('type',)
+    search_fields = ('name',)
 
 
-@admin.register(EventModuleStandard)
-class EventModuleStandardAdmin(AbstractAbstractEventModule):
-    base_model = EventModuleStandard
-
-
-@admin.register(AbstractEventModule)
-class AbstractAttributeParentAdmin(PolymorphicParentModelAdmin):
-    """ The parent model admin """
-    base_model = AbstractEventModule  # Optional, explicitly set here.
-    child_models = (EventModuleStandard,)
-    list_filter = (PolymorphicChildModelFilter,)  # This is optional.
-    list_display = ('name', 'type', 'position')
+@admin.register(EventModuleMapper)
+class EventModuleMapperAdmin(admin.ModelAdmin):
+    list_display = ('module', 'position')

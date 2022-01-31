@@ -16,50 +16,53 @@
                 Neue Fahrt erstellen
               </v-btn>
             </v-card-actions>
-            <v-list subheader two-line>
-              <v-divider/>
-              <template v-for="(item, index) in items">
-                <v-list-item :key="item.name">
-                  <v-list-item-avatar>
-                    <v-icon
-                      :class="'primary'"
-                      dark
-                      v-text="'mdi-tent'"/>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title
-                      v-text="item.name"
-                    ></v-list-item-title>
-                    <v-list-item-subtitle
-                      v-text="item.description">
-                    </v-list-item-subtitle>
+            <v-expansion-panels class="mt-3">
+              <v-expansion-panel v-for="(item, index) in items" :key="index">
+                <v-expansion-panel-header>
+                  <v-list-item :key="item.name">
+                    <v-list-item-avatar>
+                      <v-icon
+                        :class="'primary'"
+                        dark
+                        v-text="'mdi-tent'"/>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title
+                        v-text="item.name"
+                      ></v-list-item-title>
+                      <v-list-item-subtitle
+                        v-text="item.description">
+                      </v-list-item-subtitle>
 
-                    <v-list-item-subtitle>
-                      {{ getLagerText(item) }}
-                    </v-list-item-subtitle>
+                      <v-list-item-subtitle>
+                        {{ getLagerText(item) }}
+                      </v-list-item-subtitle>
 
-                    <v-list-item-subtitle>
-                      {{ getDeadline(item) }}
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-
-                  <v-list-item-action v-for="(editIndex) in 9" :key="editIndex">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon v-bind="attrs" v-on="on" @click="editEvent(editIndex,item.id)">
-                          <v-icon fab color="primary"> mdi-chart-bar</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Bearbeite Schritt {{ editIndex }}</span>
-                    </v-tooltip>
-                  </v-list-item-action>
-                  <v-btn color="primary" @click="editCompleteEvent(item.id)">
-                    Bearbeite das ganze Event
-                  </v-btn>
-                </v-list-item>
-                <v-divider v-if="index < items.length - 1" :key="index"/>
-              </template>
-            </v-list>
+                      <v-list-item-subtitle>
+                        {{ getDeadline(item) }}
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-row
+                    v-for="(editItem,editIndex) in orderEventModules(item.eventmodulemapperSet)"
+                    :key="editIndex">
+                    <v-btn @click="editEvent(editIndex+1,item.id)"
+                           color="blue-grey"
+                           class="ma-2 white--text">
+                      <v-icon dark color="primary"> mdi-pencil</v-icon>
+                      {{ editItem.module.header }}
+                    </v-btn>
+                  </v-row>
+                  <v-row>
+                    <v-btn class="ma-2" color="primary" @click="editCompleteEvent(item.id)">
+                      Bearbeite das ganze Event
+                    </v-btn>
+                  </v-row>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
           </v-card>
           <v-card v-else>
             <div class="text-center ma-5">
@@ -84,6 +87,7 @@
 import { mapGetters } from 'vuex';
 import axios from 'axios';
 import moment from 'moment';
+import { orderBy } from 'lodash';
 
 export default {
   name: 'Main',
@@ -146,6 +150,9 @@ export default {
           id: eventId,
         },
       });
+    },
+    orderEventModules(eventModules) {
+      return orderBy(eventModules, 'position');
     },
   },
   created() {
