@@ -1,34 +1,44 @@
 <template>
   <v-container>
     <v-card v-if="!isLoading" class="mx-auto my-12">
-      <v-row justify="center">
-        <v-stepper v-model="currentStep" vertical>
-          <template v-for="(step, index) in steps">
-            <v-stepper-step
-              :key="`stepper-${index}`"
-              :complete="currentStep > index + 1"
-              :step="index + 1">
-              {{ step.header }}
-            </v-stepper-step>
+      <v-card-title>
+        Aktion bearbeiten
+      </v-card-title>
+      <v-card-subtitle>
+        Viele Pfadfinder_innen und Pfadfinder freuen sich schon auf deine Aktion. {{ maxStepsText }}
+        Viel Spaß!
+      </v-card-subtitle>
+      <v-card-text>
+        Manche Abschnitte geben vor, was abgefragt werden soll und manche sind mehr optionaler
+        Natur.
+        Bei manchen kann man noch zusätzliche Abfragen einbauen.
+      </v-card-text>
+      <v-stepper v-model="currentStep" vertical class="mt-5">
+        <template v-for="(step, index) in steps">
+          <v-stepper-step
+            :key="`stepper-${index}`"
+            :complete="currentStep > index + 1"
+            :step="index + 1">
+            {{ step.header }}
+          </v-stepper-step>
 
-            <v-divider :key="index"/>
+          <v-divider :key="index"/>
 
-            <v-stepper-items :key="`stepper-items-${index}`">
-              <v-stepper-content :step="index + 1">
-                <component
-                  :is="step"
-                  :ref="step.name"
-                  :position="index + 1"
-                  :max-pos="maxSteps"
-                  @prevStep="prevStep"
-                  @nextStep="nextStep"
-                  @submit="onCreateEventClick"
-                />
-              </v-stepper-content>
-            </v-stepper-items>
-          </template>
-        </v-stepper>
-      </v-row>
+          <v-stepper-items :key="`stepper-items-${index}`">
+            <v-stepper-content :step="index + 1">
+              <component
+                :is="step"
+                :ref="step.name"
+                :position="index + 1"
+                :max-pos="maxSteps"
+                @prevStep="prevStep"
+                @nextStep="nextStep"
+                @submit="onCreateEventClick"
+              />
+            </v-stepper-content>
+          </v-stepper-items>
+        </template>
+      </v-stepper>
       <v-snackbar
         v-model="showSuccess"
         color="success"
@@ -50,12 +60,18 @@ import StepNameDescription from './steps/StepNameDescription.vue';
 import StepLocation from './steps/StepLocation.vue';
 import StepEventContact from './steps/StepEventContact.vue';
 import StepStartEndDeadline from './steps/StepStartEndDeadline.vue';
-import StepParticipationFee from './steps/StepParticipationFee.vue';
+import StepParticipationFeeSimple from './steps/StepParticipationFeeSimple.vue';
 import StepInvitationCode from './steps/StepInvitationCode.vue';
 import StepEventTags from './steps/StepEventTags.vue';
 import StepVisibility from './steps/StepVisibility.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import store from '@/store';
+import StepParticipationFeeComplex
+  from '@/views/eventPlaner/create/steps/StepParticipationFeeComplex.vue';
+import StepEventAuthenticationInternal
+  from '@/views/eventPlaner/create/steps/StepEventAuthenticationInternal.vue';
+import StepEventAuthenticationKeycloak
+  from '@/views/eventPlaner/create/steps/StepEventAuthenticationKeycloak.vue';
 
 export default {
   name: 'PlanEvent',
@@ -65,10 +81,13 @@ export default {
     StepLocation,
     StepEventContact,
     StepStartEndDeadline,
-    StepParticipationFee,
+    StepParticipationFeeSimple,
     StepInvitationCode,
     StepEventTags,
     StepVisibility,
+    StepParticipationFeeComplex,
+    StepEventAuthenticationInternal,
+    StepEventAuthenticationKeycloak,
   },
   data() {
     return {
@@ -85,12 +104,12 @@ export default {
         DatesAndTimes: StepStartEndDeadline,
         EventLocation: StepLocation,
         Tags: StepEventTags,
-        SleepingLocationComplex: StepParticipationFee,
-        SleepingLocationEasy: StepParticipationFee,
+        SleepingLocationComplex: StepParticipationFeeComplex,
+        SleepingLocationEasy: StepParticipationFeeSimple,
         ContactData: StepEventContact,
         Public: StepVisibility,
-        InternalAuthentication: StepEventContact,
-        KeycloakAuthentication: StepEventContact,
+        InternalAuthentication: StepEventAuthenticationInternal,
+        KeycloakAuthentication: StepEventAuthenticationKeycloak,
         OfferWorkshop: StepEventContact,
         SubscribeWorkshop: StepEventContact,
       },
@@ -120,6 +139,12 @@ export default {
     },
     maxSteps() {
       return this.isSingleStep ? 1 : this.steps.length;
+    },
+    maxStepsText() {
+      if (this.maxSteps === 1) {
+        return 'Bitte bearbeite diesen kleinen Schritt.';
+      }
+      return `Im folgenden führen wir dich durch ${this.maxSteps} kleine Schritt.`;
     },
     ...mapGetters({
       event: 'createEvent/event',

@@ -27,7 +27,7 @@ class EventLocation(TimeStampMixin):
     tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
-        return f'{self.name}: {self.description} ({self.address}, {self.zip_code})'
+        return f'{self.name}: ({self.address}, {self.zip_code})'
 
 
 class EventModule(models.Model):
@@ -60,7 +60,7 @@ class Event(TimeStampMixin):
     last_possible_update = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     invitation_code = models.CharField(max_length=20, blank=True)
     is_public = models.BooleanField(default=False)
-    responsible_person = models.ManyToManyField(User)
+    responsible_persons = models.ManyToManyField(User)
     keycloak_path = models.ForeignKey(Group, blank=True, on_delete=models.SET_NULL, null=True,
                                       related_name='keycloak_group')
     keycloak_admin_path = models.ForeignKey(Group, blank=True, on_delete=models.SET_NULL, null=True,
@@ -68,6 +68,7 @@ class Event(TimeStampMixin):
     tags = models.ManyToManyField(Tag, blank=True)
     registration_model = models.CharField(max_length=4, choices=RegistrationType.choices,
                                           default=RegistrationType.GroupOnly)
+
 
     def __str__(self):
         return f"{self.name}: {self.start_time} - {self.end_time}, {self.location}"

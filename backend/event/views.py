@@ -30,8 +30,8 @@ class EventViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         if request.data.get('name', None) is None:
             request.data['name'] = 'Dummy'
-        if request.data.get('responsible_person', None) is None:
-            request.data['responsible_person'] = request.user.id
+        if request.data.get('responsible_persons', None) is None:
+            request.data['responsible_persons'] = request.user.id
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
@@ -82,4 +82,4 @@ class EventPlanerViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return Event.objects.filter(
-            Q(keycloak_path__in=self.request.user.groups.all()) | Q(responsible_person=self.request.user))
+            Q(keycloak_path__in=self.request.user.groups.all()) | Q(responsible_persons=self.request.user))

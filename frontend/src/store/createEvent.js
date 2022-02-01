@@ -14,6 +14,10 @@ export default {
       registrationStart: '',
       startTime: '',
       tags: [],
+      eventmodulemapperSet: [],
+      responsiblePersons: [],
+      keycloakPath: null,
+      keycloakAdminPath: null,
     },
   }),
   mutations: {
@@ -38,6 +42,16 @@ export default {
     setEventTags(state, tags) {
       state.event.tags = tags;
     },
+    setKeycloakGroup(state, group) {
+      state.event.keycloakPath = group;
+    },
+    setKeycloakAdminGroup(state, group) {
+      state.event.keycloakAdminPath = group;
+    },
+    setResponsiblePersons(state, persons) {
+      state.event.responsiblePersons = persons;
+    },
+
   },
   actions: {},
   getters: {

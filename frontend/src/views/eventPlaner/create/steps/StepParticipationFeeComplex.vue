@@ -3,24 +3,17 @@
     <v-container>
       <v-row class="mb-6">
         <span class="subtitle-1">
-          Gib den Teilnehmerbeitrag für die Aktion an. Dafür gibt es mehrere Optionen, entweder gibt
-          es eine Schlafkategorie mit einem fixen Betrag,
-          dann einfach unten den Betrag eintragen und
-          weiter gehts. Brauchst du allerdings mehr Optionen,
-          weil es z.B. verschiedene Übernachtungsmöglichkeiten gibt
-          oder es einen Frühbucher Rabatt geben soll, dann geht es ab ins erweiterte Menü.
+          Hier kannst du verschiedene Übernachtungsmöglichkeiten angeben.
+          Dabei können sich die verschiedenen Möglichkeiten Beitragsmäßig unterscheiden,
+          als auch Zeitlich begrenzt werden.
+          Dadurch kannst du dann verschiedene Kategorien bestimmen,
+          wie z.B. schlafen  Bett im Heim und schlafen im Zelt.
+          Aber auch Frühbucher Rabatte können angegeben werden,
+          wenn man eine Übernachtungsmöglichkeit zweimal hinzufügt
+          und eine davon vergünstigt anbietet,
+          sowie eine zeitliche Begrenzung für die Buchung einstellt.
         </span>
       </v-row>
-      <v-switch label="Erweitere Menü" v-model="extendedMenu"></v-switch>
-      <!--      <div v-if="!extendedMenu">-->
-      <!--        <v-row>-->
-      <!--          <vuetify-money-->
-      <!--            v-model="participationFee"-->
-      <!--            :options="options"-->
-      <!--            label="Teilnehmer_innen Beitrag"-->
-      <!--          />-->
-      <!--        </v-row>-->
-      <!--      </div>-->
       <div>
         <v-card v-for="(sleep,index) in sleepingLocations" :key="index" class="my-3">
           <v-card-title>
@@ -106,7 +99,7 @@ import apiCallsMixin from '@/mixins/apiCallsMixin';
 import DateTimePicker from '@/components/picker/DateTimePicker.vue';
 
 export default {
-  name: 'StepParticipationFee',
+  name: 'StepParticipationFeeComplex',
   header: 'Teilnehmer_innen Beitrag',
   props: ['position', 'maxPos'],
   mixins: [stepMixin, apiCallsMixin],

@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import UserExtended
-from .serializers import UserExtendedGetSerializer, UserExtendedPostSerializer
+from .serializers import UserExtendedGetSerializer, UserExtendedPostSerializer, GroupSerializer
 
 
 class PersonalData(viewsets.ViewSet):
@@ -38,3 +38,11 @@ class PersonalDataCheck(viewsets.ViewSet):
             return Response({'status': "init required"}, status=status.HTTP_426_UPGRADE_REQUIRED)
         else:
             return Response({'status': "user ok"}, status=status.HTTP_200_OK)
+
+
+class GroupViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = GroupSerializer
+
+    def get_queryset(self):
+        return self.request.user.groups.all()

@@ -134,7 +134,7 @@ export default {
       }
     },
   },
-  created() {
+  mounted() {
     this.getEventLocations();
     this.selectedLocation = this.event.location;
   },

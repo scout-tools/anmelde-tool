@@ -1,3 +1,5 @@
+from django.contrib.auth.models import Group
+
 from basic.models import ScoutHierarchy
 from rest_framework import serializers
 from .models import UserExtended
@@ -31,3 +33,9 @@ class UserExtendedPostSerializer(serializers.ModelSerializer):
             'scout_organisation',
             'dsgvo_confirmed'
         )
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('id', 'name',)

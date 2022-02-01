@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.authtoken.admin import User
 
 from basic.serializers import TagShortSerializer, ZipCodeSerializer
 from .models import Event, EventLocation, SleepingLocation, EventModuleMapper, EventModule
@@ -30,7 +31,6 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
                   'registration_deadline',
                   'registration_start',
                   'last_possible_update',
-                  'price',
                   'tags',
                   'registration_model')
 
@@ -71,6 +71,11 @@ class EventModuleMapperSerializer(serializers.ModelSerializer):
 
 class EventCompleteSerializer(serializers.ModelSerializer):
     eventmodulemapper_set = EventModuleMapperSerializer(many=True, read_only=True)
+    responsible_persons = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='email'
+    )
 
     class Meta:
         model = Event
