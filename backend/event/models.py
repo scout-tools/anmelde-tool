@@ -75,13 +75,13 @@ class Event(TimeStampMixin):
 
 class EventModuleMapper(models.Model):
     id = models.AutoField(primary_key=True)
-    position = models.IntegerField(default=999, auto_created=True)
+    ordering = models.IntegerField(default=999, auto_created=True)
     module = models.ForeignKey(EventModule, on_delete=models.PROTECT, null=True, blank=True)
     attributes = models.ManyToManyField(AttributeEventModuleMapper, blank=True)
     event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.position}: {self.module.name}'
+        return f'{self.ordering}: {self.module.name}'
 
 
 class SleepingLocation(models.Model):

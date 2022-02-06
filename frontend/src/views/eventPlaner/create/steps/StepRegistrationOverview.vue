@@ -15,6 +15,9 @@
           <v-toolbar class="mb-2" color="primary" dark>
             <v-toolbar-title>Registrierungsmodule</v-toolbar-title>
             <v-spacer></v-spacer>
+            <v-btn>
+              Modul hinzufügen
+            </v-btn>
             <v-btn icon @click="action('edit')" v-if="!editing">
               <v-icon>sort</v-icon>
             </v-btn>
@@ -26,15 +29,15 @@
             </v-btn>
           </v-toolbar>
           <v-list two-line>
-            <draggable :disabled="!this.editing" v-model="items">
+            <draggable :disabled="!this.editing" v-model="items" >
               <template v-for="(moduleMapper, index) in items">
-                <v-list-item :key="moduleMapper.id">
+                <v-list-item :key="moduleMapper.ID">
                   <v-list-item-avatar color="grey">
                     <span>{{ index + 1 }}</span>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title v-html="moduleMapper.module.header"/>
-                    <v-list-item-subtitle v-html="moduleMapper.module.description"/>
+                    <v-list-item-title v-html="moduleMapper.Title"/>
+                    <v-list-item-subtitle v-html="moduleMapper.Description"/>
                   </v-list-item-content>
                   <v-list-item-action v-if="editing">
                     <v-btn @click="remove(index)" icon>
@@ -166,7 +169,17 @@ export default {
     },
   },
   mounted() {
-    this.items = this.event.eventmodulemapperSet;
+    this.items = [];
+    this.event.eventmodulemapperSet.forEach((item) => {
+      const data = {
+        ID: item.id,
+        Title: item.module.header,
+        order: item.ordering,
+        Subtitle: item.module.description,
+      };
+      console.log(data);
+      this.items.push(data);
+    });
   },
 };
 </script>

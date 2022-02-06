@@ -58,7 +58,7 @@ class EventModuleMapperShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EventModuleMapper
-        fields = ('position', 'module')
+        fields = ('ordering', 'module')
 
 
 class EventModuleMapperSerializer(serializers.ModelSerializer):

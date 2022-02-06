@@ -35,7 +35,7 @@ class EventModuleAdmin(admin.ModelAdmin):
 
 @admin.register(EventModuleMapper)
 class EventModuleMapperAdmin(admin.ModelAdmin):
-    list_display = ('module', 'position')
+    list_display = ('module', 'ordering')
 
 
 @admin.register(AttributeEventModuleMapper)
