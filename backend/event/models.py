@@ -69,7 +69,6 @@ class Event(TimeStampMixin):
     registration_model = models.CharField(max_length=4, choices=RegistrationType.choices,
                                           default=RegistrationType.GroupOnly)
 
-
     def __str__(self):
         return f"{self.name}: {self.start_time} - {self.end_time}, {self.location}"
 

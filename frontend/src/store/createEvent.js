@@ -51,7 +51,9 @@ export default {
     setResponsiblePersons(state, persons) {
       state.event.responsiblePersons = persons;
     },
-
+    setRegistrationModel(state, model) {
+      state.event.registrationModel = model;
+    },
   },
   actions: {},
   getters: {

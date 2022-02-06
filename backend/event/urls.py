@@ -7,6 +7,7 @@ from . import views
 router = routers.SimpleRouter()
 router.register(r'event-location', views.EventLocationViewSet)
 router.register(r'event', views.EventViewSet)
+router.register(r'event-type-choices', views.RegistrationTypeViewSet, basename='event-type-choices')
 router.register(r'event-planer-overview', views.EventPlanerViewSet, basename='event-planer-overview')
 
 event_router = routers.NestedSimpleRouter(router, r'event', lookup='event')

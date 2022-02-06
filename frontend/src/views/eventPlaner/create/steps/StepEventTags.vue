@@ -63,7 +63,7 @@ import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import store from '@/store';
+// import store from '@/store';
 
 export default {
   name: 'StepEventTags',
@@ -143,10 +143,10 @@ export default {
         });
     },
     updateData() {
-      store.commit(
-        'createEvent/setEventTags',
-        [...new Set([...this.ageGroups, ...this.eventTags])],
-      );
+      // store.commit(
+      //   'createEvent/setEventTags',
+      //   [...new Set([...this.ageGroups, ...this.eventTags])],
+      // );
     },
   },
   mounted() {

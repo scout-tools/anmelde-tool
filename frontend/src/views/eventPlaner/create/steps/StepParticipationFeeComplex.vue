@@ -149,7 +149,6 @@ export default {
           this.sleepingLocations[index].bookableTill = time;
           const ref = `bookableTillRef-${item.id}`;
           if (this.$refs[ref]) {
-            console.log('found ref');
             this.$refs[ref][0].setDate(time);
           }
         }

@@ -202,7 +202,7 @@
       "keycloak_path": 3,
       "keycloak_admin_path": null,
       "registration_model": "GOSO",
-      "responsible_person": [
+      "responsible_persons": [
         2
       ],
       "tags": [
@@ -232,7 +232,7 @@
       "keycloak_path": 4,
       "keycloak_admin_path": null,
       "registration_model": "GRSO",
-      "responsible_person": [
+      "responsible_persons": [
         2
       ],
       "tags": [

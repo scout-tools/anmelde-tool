@@ -1,10 +1,11 @@
 from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.exceptions import PermissionDenied, NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
-from event.models import Event, EventLocation, SleepingLocation
+from event.models import Event, EventLocation, SleepingLocation, RegistrationType
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
     EventCompleteSerializer, SleepingLocationSerializer
 
@@ -23,7 +24,7 @@ class EventLocationViewSet(viewsets.ModelViewSet):
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventCompleteSerializer
 
@@ -41,7 +42,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
 
 class SleepingLocationViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = SleepingLocationSerializer
 
     def get_queryset(self):
@@ -83,3 +84,10 @@ class EventPlanerViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         return Event.objects.filter(
             Q(keycloak_path__in=self.request.user.groups.all()) | Q(responsible_persons=self.request.user))
+
+
+class RegistrationTypeViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, pk=None):
+        return Response(RegistrationType.choices, status=status.HTTP_200_OK)

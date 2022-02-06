@@ -16,7 +16,7 @@ class EventLocationAdmin(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'is_public')
     search_fields = ('name',)
-    autocomplete_fields = ('responsible_persons',)
+    autocomplete_fields = ('responsible_persons', 'tags')
 
 
 @admin.register(SleepingLocation)

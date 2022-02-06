@@ -23,6 +23,7 @@
     "vue-moment": "^4.1.0",
     "vue-router": "^3.5.1",
     "vue2-leaflet": "^2.7.1",
+    "vuedraggable": "^2.24.3",
     "vuelidate": "^0.7.6",
     "vuetify": "2.5.6",
     "vuetify-money": "^1.2.0",

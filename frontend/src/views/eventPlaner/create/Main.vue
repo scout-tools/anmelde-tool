@@ -66,12 +66,12 @@ import StepEventTags from './steps/StepEventTags.vue';
 import StepVisibility from './steps/StepVisibility.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import store from '@/store';
-import StepParticipationFeeComplex
-  from '@/views/eventPlaner/create/steps/StepParticipationFeeComplex.vue';
-import StepEventAuthenticationInternal
-  from '@/views/eventPlaner/create/steps/StepEventAuthenticationInternal.vue';
-import StepEventAuthenticationKeycloak
-  from '@/views/eventPlaner/create/steps/StepEventAuthenticationKeycloak.vue';
+import StepParticipationFeeComplex from './steps/StepParticipationFeeComplex.vue';
+import StepEventAuthenticationInternal from './steps/StepEventAuthenticationInternal.vue';
+import StepEventAuthenticationKeycloak from './steps/StepEventAuthenticationKeycloak.vue';
+import StepEventRegistrationModel from './steps/StepEventRegistrationModel.vue';
+import StepRegistrationOverview
+  from '@/views/eventPlaner/create/steps/StepRegistrationOverview.vue';
 
 export default {
   name: 'PlanEvent',
@@ -88,6 +88,7 @@ export default {
     StepParticipationFeeComplex,
     StepEventAuthenticationInternal,
     StepEventAuthenticationKeycloak,
+    StepEventRegistrationModel,
   },
   data() {
     return {
@@ -98,41 +99,36 @@ export default {
       timeout: 7000,
       isLoading: true,
       isSingleStep: false,
-      modules: {
-        Introduction: StepNameDescription,
-        VerifyEventCode: StepInvitationCode,
-        DatesAndTimes: StepStartEndDeadline,
-        EventLocation: StepLocation,
-        Tags: StepEventTags,
-        SleepingLocationComplex: StepParticipationFeeComplex,
-        SleepingLocationEasy: StepParticipationFeeSimple,
-        ContactData: StepEventContact,
-        Public: StepVisibility,
-        InternalAuthentication: StepEventAuthenticationInternal,
-        KeycloakAuthentication: StepEventAuthenticationKeycloak,
-        OfferWorkshop: StepEventContact,
-        SubscribeWorkshop: StepEventContact,
-      },
     };
   },
   computed: {
     steps() {
-      const stepList = [];
-      this.event.eventmodulemapperSet.forEach((item) => {
-        stepList.push(this.modules[item.module.name]);
-      });
+      let sleepingLocation;
+      if (this.event.tags.includes(10)) {
+        sleepingLocation = StepParticipationFeeComplex;
+      } else {
+        sleepingLocation = StepParticipationFeeSimple;
+      }
+      let authorization;
+      if (this.event.tags.includes(12)) {
+        authorization = StepEventAuthenticationKeycloak;
+      } else {
+        authorization = StepEventAuthenticationInternal;
+      }
 
-      return stepList;
-      // return [
-      //   StepNameDescription,
-      //   StepInvitationCode,
-      //   StepStartEndDeadline,
-      //   StepLocation,
-      //   StepEventTags,
-      //   StepParticipationFee,
-      //   StepEventContact,
-      //   StepVisibility,
-      // ];
+      return [
+        StepNameDescription,
+        StepInvitationCode,
+        StepStartEndDeadline,
+        StepLocation,
+        StepEventTags,
+        sleepingLocation,
+        StepEventContact,
+        authorization,
+        StepEventRegistrationModel,
+        StepVisibility,
+        StepRegistrationOverview,
+      ];
     },
     id() {
       return this.$route.params.id;

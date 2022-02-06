@@ -46,13 +46,13 @@
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                   <v-row
-                    v-for="(editItem,editIndex) in orderEventModules(item.eventmodulemapperSet)"
-                    :key="editIndex">
+                    v-for="(editItem,editIndex) in steps"
+                    :key="editIndex+1">
                     <v-btn @click="editEvent(editIndex+1,item.id)"
                            color="blue-grey"
                            class="ma-2 white--text">
                       <v-icon dark color="primary"> mdi-pencil</v-icon>
-                      {{ editItem.module.header }}
+                      {{ editItem }}
                     </v-btn>
                   </v-row>
                   <v-row>
@@ -87,7 +87,6 @@
 import { mapGetters } from 'vuex';
 import axios from 'axios';
 import moment from 'moment';
-import { orderBy } from 'lodash';
 
 export default {
   name: 'Main',
@@ -95,6 +94,19 @@ export default {
     API_URL: process.env.VUE_APP_API,
     items: [],
     isLoading: true,
+    steps: [
+      'Aktionsbeschreibung',
+      'Verifizierungscode',
+      'Daten und Uhrzeit',
+      'Ort',
+      'Tags',
+      'Teilnehmer_innen Beitrag',
+      'Kontaktdaten',
+      'Autorisierung',
+      'Registrierungsmodel',
+      'Sichtbarkeit',
+      'Registrierungübersicht',
+    ],
   }),
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
@@ -150,9 +162,6 @@ export default {
           id: eventId,
         },
       });
-    },
-    orderEventModules(eventModules) {
-      return orderBy(eventModules, 'position');
     },
   },
   created() {

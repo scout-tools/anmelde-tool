@@ -77,6 +77,8 @@ class EventCompleteSerializer(serializers.ModelSerializer):
         slug_field='email'
     )
 
+    # tags = TagShortSerializer(many=True, read_only=True)
+
     class Meta:
         model = Event
         fields = '__all__'

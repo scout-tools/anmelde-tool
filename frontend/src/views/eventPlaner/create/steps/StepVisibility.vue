@@ -3,11 +3,9 @@
     <v-container>
       <v-row class="mb-6">
         <span class="subtitle-1">
-          Lege für die Aktion einen 6-Stelligen Verifizierungscode fest. <br/>
-          Dieser besteht aus Buchstaben und Zahlen und wird bei der Anmeldung
-          mitgeschickt, damit sich die Anmelder verifizieren können, dass sie
-          eingeladen wurden. <br/>
-          Bei leerem Feld gibt es keinen Verifizierungscode.
+          Ist die Veranstaltung schon öffentlich?
+          Wenn Nein, wird sie in der Liste nicht angezeigt,
+          kann aber natürlich jederzeit bearbeitet werden.
         </span>
       </v-row>
       <v-row align="center" justify="center">
