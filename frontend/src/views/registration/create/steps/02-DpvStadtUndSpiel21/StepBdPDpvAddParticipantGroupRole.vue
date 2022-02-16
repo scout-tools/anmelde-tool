@@ -272,7 +272,7 @@ export default {
     saveData() {
       const promises = [];
       const registrationId = this.$route.params.id;
-      const myUrl = `${this.API_URL}/basic/participant-group/`;
+      const myUrl = `${this.API_URL}basic/participant-group/`;
 
       if (this.normalId !== null) {
         promises.push(

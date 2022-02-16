@@ -121,7 +121,7 @@ export default {
   },
   asyncComputed: {
     async getParticipantsData() {
-      const path = `${process.env.VUE_APP_API}/basic/event/${this.eventId}/participants/`;
+      const path = `${process.env.VUE_APP_API}basic/event/${this.eventId}/participants/`;
       axios
         .get(path)
         .then((res) => {
@@ -132,7 +132,7 @@ export default {
         });
     },
     async getCashData() {
-      const path = `${process.env.VUE_APP_API}/basic/event/${this.eventId}/cash-eventmaster-overview/`;
+      const path = `${process.env.VUE_APP_API}basic/event/${this.eventId}/cash-eventmaster-overview/`;
       axios
         .get(path)
         .then((res) => {
@@ -143,7 +143,7 @@ export default {
         });
     },
     async getKitchenData() {
-      const path = `${process.env.VUE_APP_API}/basic/event/${this.eventId}/kitchen-eventmaster-overview/`;
+      const path = `${process.env.VUE_APP_API}basic/event/${this.eventId}/kitchen-eventmaster-overview/`;
       axios
         .get(path)
         .then((res) => {
@@ -154,7 +154,7 @@ export default {
         });
     },
     async getKitchenProgram() {
-      const path = `${process.env.VUE_APP_API}/basic/event/${this.eventId}/program-eventmaster-overview/`;
+      const path = `${process.env.VUE_APP_API}basic/event/${this.eventId}/program-eventmaster-overview/`;
       axios
         .get(path)
         .then((res) => {
@@ -165,7 +165,7 @@ export default {
         });
     },
     async getEventOverview() {
-      const path = `${process.env.VUE_APP_API}/basic/event-overview/${this.eventId}/`;
+      const path = `${process.env.VUE_APP_API}basic/event-overview/${this.eventId}/`;
       axios
         .get(path)
         .then((res) => {

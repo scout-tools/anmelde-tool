@@ -170,7 +170,7 @@ export default {
         });
     },
     async loadParticipants() {
-      const path = `${this.API_URL}/basic/registration/${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`;
+      const path = `${this.API_URL}basic/registration/${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`;
       const response = await axios.get(path);
 
       return response.data;

@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     async loadData() {
-      const result = await axios.get(`${this.API_URL}/basic/event/${this.eventId}/participants/`);
+      const result = await axios.get(`${this.API_URL}basic/event/${this.eventId}/participants/`);
       this.allGroups = result.data[0].scoutOrganisations;
       this.sliceGroups();
       await this.setCurrent(0);

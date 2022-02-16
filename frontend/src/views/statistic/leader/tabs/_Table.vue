@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     getMessages() {
-      const path = `${this.API_URL}/basic/registration-stats/`;
+      const path = `${this.API_URL}basic/registration-stats/`;
       axios
         .get(path)
         .then((res) => {

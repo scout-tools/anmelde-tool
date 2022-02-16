@@ -303,7 +303,7 @@ export default {
       this.saveUserData();
     },
     getData() {
-      const path = `${this.API_URL}/auth/data/user-extended/${this.getJwtData.userId}/`;
+      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
       axios
         .get(path)
         .then((res) => {
@@ -318,7 +318,7 @@ export default {
     saveUserData() {
       axios
         .put(
-          `${this.API_URL}/auth/data/user-extended/${this.getJwtData.userId}/`,
+          `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`,
           {
             user: this.getJwtData.userId,
             scoutOrganisation: this.scoutOrganisation,

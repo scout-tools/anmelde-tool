@@ -53,7 +53,7 @@ export default {
   methods: {
     onDeleteClick() {
       axios
-        .delete(`${this.API_URL}/basic/event-location/${this.data}/`)
+        .delete(`${this.API_URL}basic/event-location/${this.data}/`)
         .then(() => {
           this.showSuccess = true;
           this.dialog = false;

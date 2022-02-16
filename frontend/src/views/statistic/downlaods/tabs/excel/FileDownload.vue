@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     getLink(name) {
-      return `${this.API_URL}/basic/event/${this.eventId}/xlsx-generator/${name}/`;
+      return `${this.API_URL}basic/event/${this.eventId}/xlsx-generator/${name}/`;
     },
 
     clickDownload(name) {

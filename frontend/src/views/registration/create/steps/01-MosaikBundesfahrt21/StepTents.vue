@@ -188,7 +188,7 @@ export default {
     },
     deleteTent(id) {
       axios
-        .delete(`${this.API_URL}/basic/tent/${this.data.tents[id].i}/`)
+        .delete(`${this.API_URL}basic/tent/${this.data.tents[id].i}/`)
         .catch((err) => {
           console.log(err);
         });
@@ -222,23 +222,23 @@ export default {
         if (i.i.isEmpty || i.i === 0) {
           dto.tentType = i.selectedType;
           i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
-          axios.post(`${this.API_URL}/basic/tent/`, dto);
+          axios.post(`${this.API_URL}basic/tent/`, dto);
         } else {
           dto.tentType = i.selectedType;
           i.selectedGroups.forEach((group) => dto.usedByScoutGroups.push(group));
-          axios.put(`${this.API_URL}/basic/tent/${i.i}/`, dto);
+          axios.put(`${this.API_URL}basic/tent/${i.i}/`, dto);
         }
       });
       return null;
     },
     async getTents() {
       const res = await axios
-        .get(`${this.API_URL}/basic/tent/?&timestamp=${new Date().getTime()}`);
+        .get(`${this.API_URL}basic/tent/?&timestamp=${new Date().getTime()}`);
       return res.data;
     },
     async getTentTypes() {
       const res = await axios
-        .get(`${this.API_URL}/basic/tent-type/`);
+        .get(`${this.API_URL}basic/tent-type/`);
       return res.data;
     },
     convertSavedTents() {
@@ -259,7 +259,7 @@ export default {
     },
     async getGroups() {
       const res = await axios
-        .get(`${this.API_URL}/basic/scout-hierarchy-group/?&timestamp=${new Date().getTime()}`);
+        .get(`${this.API_URL}basic/scout-hierarchy-group/?&timestamp=${new Date().getTime()}`);
       return res.data;
     },
     beforeTabShow() {

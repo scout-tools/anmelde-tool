@@ -154,7 +154,7 @@ export default {
         });
     },
     async loadRegistrationEventLocations() {
-      const path = `${this.API_URL}/basic/event-location/?registration=${this.$route.params.id}`;
+      const path = `${this.API_URL}basic/event-location/?registration=${this.$route.params.id}`;
       const response = await axios.get(path);
       return response.data;
     },

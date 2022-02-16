@@ -218,7 +218,7 @@ export default {
     },
 
     callLoginPost() {
-      return axios.post(`${this.API_URL}/auth/login/`, {
+      return axios.post(`${this.API_URL}auth/login/`, {
         email: this.email,
       });
     },

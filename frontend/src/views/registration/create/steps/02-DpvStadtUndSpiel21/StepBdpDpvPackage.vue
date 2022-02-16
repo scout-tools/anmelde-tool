@@ -366,13 +366,13 @@ export default {
     async getPostalAddress() {
       const registrationId = this.$route.params.id;
       const res = await axios.get(
-        `${process.env.VUE_APP_API}/basic/postal-address/?registration=${registrationId}`,
+        `${process.env.VUE_APP_API}basic/postal-address/?registration=${registrationId}`,
       );
       return res.data;
     },
     async postPostalAddress() {
       const res = await axios.post(
-        `${process.env.VUE_APP_API}/basic/postal-address/`,
+        `${process.env.VUE_APP_API}basic/postal-address/`,
         this.data,
       );
       return res.data;
@@ -380,13 +380,13 @@ export default {
     async putPostalAddress() {
       const id = this.data.id; // eslint-disable-line
       const res = await axios.put(
-        `${process.env.VUE_APP_API}/basic/postal-address/${id}/`,
+        `${process.env.VUE_APP_API}basic/postal-address/${id}/`,
         this.data,
       );
       return res.data;
     },
     async getZipCodeMapping(searchString) {
-      const path = `${this.API_URL}/basic/zip-code/?zip_city=${searchString}`;
+      const path = `${this.API_URL}basic/zip-code/?zip_city=${searchString}`;
       const response = await axios.get(path);
 
       return response.data;

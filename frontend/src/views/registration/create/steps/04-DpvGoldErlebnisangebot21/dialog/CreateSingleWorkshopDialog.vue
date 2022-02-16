@@ -311,7 +311,7 @@ export default {
         });
     },
     async loadParticipants() {
-      const path = `${this.API_URL}/basic/registration/${
+      const path = `${this.API_URL}basic/registration/${
         this.$route.params.id
       }/participants/?&timestamp=${new Date().getTime()}`;
       const response = await axios.get(path);
@@ -345,13 +345,13 @@ export default {
       this.data.registration = this.$route.params.id;
 
       if (!this.data.id) {
-        axios.post(`${this.API_URL}/basic/workshop/`, this.data).then(() => {
+        axios.post(`${this.API_URL}basic/workshop/`, this.data).then(() => {
           this.closeDialog();
           this.$emit('refresh');
         });
       } else {
         axios
-          .put(`${this.API_URL}/basic/workshop/${this.data.id}/`, this.data)
+          .put(`${this.API_URL}basic/workshop/${this.data.id}/`, this.data)
           .then(() => {
             this.closeDialog();
             this.$emit('refresh');

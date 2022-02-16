@@ -130,12 +130,12 @@ export default {
       this.isLoading = false;
     },
     async loadWorkshops() {
-      const path = `${this.API_URL}/basic/workshop/?registration=${this.$route.params.id}&timestamp=${new Date().getTime()}`;
+      const path = `${this.API_URL}basic/workshop/?registration=${this.$route.params.id}&timestamp=${new Date().getTime()}`;
       const response = await axios.get(path);
       return response.data;
     },
     async loadParticipantCount() {
-      const path = `${this.API_URL}/basic/registration/${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`;
+      const path = `${this.API_URL}basic/registration/${this.$route.params.id}/participants/?&timestamp=${new Date().getTime()}`;
       const { data } = await axios.get(path);
       return data[0].participantpersonalSet.length;
     },

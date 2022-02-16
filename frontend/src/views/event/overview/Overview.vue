@@ -230,7 +230,7 @@ export default {
       return text2;
     },
     async getEvent() {
-      const path = `${this.API_URL}/basic/event-overview/`;
+      const path = `${this.API_URL}basic/event-overview/`;
       const response = await axios.get(path);
 
       return response.data;
@@ -238,50 +238,50 @@ export default {
     async getUserExtended() {
       const { userId } = this.getJwtData;
       const ts = new Date().getTime();
-      const path = `${this.API_URL}/auth/data/user-extended/${userId}/?&timestamp=${ts}`;
+      const path = `${this.API_URL}auth/data/user-extended/${userId}/?&timestamp=${ts}`;
       const response = await axios.get(path);
 
       return response.data;
     },
     async getRoleMapping() {
-      const path = `${this.API_URL}/basic/role/`;
+      const path = `${this.API_URL}basic/role/`;
       const response = await axios.get(path);
 
       return response.data;
     },
     async getScoutOrgaLevelMapping() {
-      const path = `${this.API_URL}/basic/scout-orga-level/`;
+      const path = `${this.API_URL}basic/scout-orga-level/`;
       const response = await axios.get(path);
 
       return response.data;
     },
     async getEatHabitTypeMapping() {
-      const path = `${this.API_URL}/basic/eat-habit-type/`;
+      const path = `${this.API_URL}basic/eat-habit-type/`;
       const response = await axios.get(path);
 
       return response.data;
     },
 
     async getTravelTypeMapping() {
-      const path = `${this.API_URL}/basic/travel-type/`;
+      const path = `${this.API_URL}basic/travel-type/`;
       const response = await axios.get(path);
 
       return response.data;
     },
     async getHierarchyMapping() {
-      const path = `${process.env.VUE_APP_API}/basic/scout-hierarchy/`;
+      const path = `${process.env.VUE_APP_API}basic/scout-hierarchy/`;
       const response = await axios.get(path);
 
       return response.data;
     },
     async getAgeGroupMapping() {
-      const path = `${this.API_URL}/basic/age-group/`;
+      const path = `${this.API_URL}basic/age-group/`;
       const response = await axios.get(path);
 
       return response.data;
     },
     async getTentTypeMapping() {
-      const path = `${this.API_URL}/basic/tent-type/`;
+      const path = `${this.API_URL}basic/tent-type/`;
       const response = await axios.get(path);
 
       return response.data;

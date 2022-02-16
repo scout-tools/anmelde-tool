@@ -703,19 +703,19 @@ export default {
       return 'Test123';
     },
     async getZipCodeMapping(searchString) {
-      const path = `${this.API_URL}/basic/zip-code/?zip_city=${searchString}`;
+      const path = `${this.API_URL}basic/zip-code/?zip_city=${searchString}`;
       const response = await axios.get(path);
 
       return response.data;
     },
     async callSingleZipCode(id) {
-      const path = `${this.API_URL}/basic/zip-code/?id=${id}`;
+      const path = `${this.API_URL}basic/zip-code/?id=${id}`;
       const response = await axios.get(path);
 
       return response.data;
     },
     async getEatHabitTypeMapping() {
-      const path = `${this.API_URL}/basic/eat-habit-type/`;
+      const path = `${this.API_URL}basic/eat-habit-type/`;
       const response = await axios.get(path);
 
       return response.data;
@@ -802,7 +802,7 @@ export default {
     },
     getParticipantPersonalById(id) {
       axios
-        .get(`${this.API_URL}/basic/participant-personal/${id}/`)
+        .get(`${this.API_URL}basic/participant-personal/${id}/`)
         .then((res) => {
           this.data = res.data;
         })
@@ -840,7 +840,7 @@ export default {
       const { id } = this.data;
       if (!id) {
         axios
-          .post(`${this.API_URL}/basic/participant-personal/`, this.data)
+          .post(`${this.API_URL}basic/participant-personal/`, this.data)
           .then(() => {
             this.closeDialog();
             this.$emit('refresh');
@@ -848,7 +848,7 @@ export default {
       } else {
         axios
           .put(
-            `${this.API_URL}/basic/participant-personal/${id}/`,
+            `${this.API_URL}basic/participant-personal/${id}/`,
             this.data,
           )
           .then(() => {

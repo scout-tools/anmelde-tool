@@ -235,11 +235,11 @@ export default {
         });
     },
     async getMethod() {
-      const res = await axios.get(`${this.API_URL}/basic/method-of-travel/`);
+      const res = await axios.get(`${this.API_URL}basic/method-of-travel/`);
       return res.data;
     },
     async getMaxNumber() {
-      const path = `${this.API_URL}/basic/registration/`;
+      const path = `${this.API_URL}basic/registration/`;
       const answer = await axios.get(
         `${path}${
           this.$route.params.id
