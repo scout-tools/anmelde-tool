@@ -8,6 +8,14 @@
         <br>
         Alternativ kannst du hier die Excelliste hochladen,
         wenn du die Daten dort bereits erfasst hast.
+        <br>
+        <a
+          target="_blank"
+          href="https://cloud.dpvonline.de/s/5BM6qmNS5Mp7wqG"
+          style="color:blue;"
+        >
+          Link zur Beispiel Excel Datei
+        </a>
       </p>
       <v-btn class="ma-2" color="success" @click="newUser">
         <v-icon left> mdi-plus </v-icon>

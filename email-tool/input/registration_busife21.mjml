@@ -1,0 +1,51 @@
+<mjml>
+  <mj-body background-color="#ccd3e0">
+    <mj-section background-color="#084B8A" padding-bottom="20px" padding-top="20px">
+      <mj-column width="20%" background-color="#084B8A">
+        <mj-image src="https://www.hratuga.de/pfadfinderwissen/images/0/0f/Dpbm.gif" alt="" align="left" border="none" width="100px" padding-left="10px" padding-right="10px" padding-bottom="10px" padding-top="10px"></mj-image>
+      </mj-column>
+      <mj-column padding-left="30px" width="80%" background-color="#084B8A">
+        <mj-text align="left" font-size="36px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="28px">Busife 2021</mj-text>
+        <mj-text align="left" font-size="14px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="9px">Bundessingefest</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FFF" padding-bottom="0px" padding-top="0">
+      <mj-column width="100%">
+        <mj-text align="left" font-size="14px" color="#333333" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">
+          <p style="font-size:16px"><strong>Liebe_r {{ responsible_persons }}</strong></p>
+          <p>wir freuen uns, dass ihr euch als Stamm {{ scout_organisation }} für das BuSife 2021
+            angemeldet habt! </p>
+
+          <p>
+            Für die Fahrt hast du {{ total_participants }} Teilnehmer_innen angemeldet.
+          </p>
+          <p>
+            Dazu habt ihr {{ total_workshops }} angemeldet.
+          </p>
+          <p>
+            Wir freuen uns auf euch.
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FFF" padding-bottom="15px">
+      <mj-column>
+        <mj-text align="center" color="#333333" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
+          <p>Bei Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.</p>
+          <br></br>
+          <p><strong>BuSiFe, das Singefest des Deutschen Pfadfinderbund Mosaik.</strong></p>
+          <p>
+            Deutscher Pfadfinderbund Mosaik</p>
+          <p>
+            Robert-Perthel-Str. 79</p>
+          <p>
+            50739 Köln</p>
+          <p>
+            busife@dpbm.de</p>
+          <p>
+            www.dpbm.de</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

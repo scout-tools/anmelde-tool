@@ -17,7 +17,7 @@
         <v-header>
           Lade hier deine Excel Datei hoch, um dir die manuelle Eingabe zu
           erleichtern. Die Datei muss in einem bestimmten Format sein.
-          <a target="_blank" href="https://cloud.dpvonline.de/s/fMMrgfpf5dAm9Fg"
+          <a target="_blank" style="color:blue;" href="https://cloud.dpvonline.de/s/fMMrgfpf5dAm9Fg"
             >Link zur DPV-Cloud</a
           >
         </v-header>

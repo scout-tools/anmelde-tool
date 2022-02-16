@@ -20,6 +20,20 @@
         Fahrten
         <v-icon>mdi-view-list</v-icon>
       </v-tab>
+      <v-tab
+        v-if="isAuthenticated"
+        @click="$router.push({ name: 'eventAdminOverview' })"
+      >
+        Meine Fahrten
+        <v-icon>mdi-view-list</v-icon>
+      </v-tab>
+      <v-tab
+        v-if="isAuthenticated"
+        @click="$router.push({ name: 'masterDataOverview' })"
+      >
+        Daten
+        <v-icon>mdi-view-list</v-icon>
+      </v-tab>
       <v-spacer></v-spacer>
       <v-tab
         v-if="isAuthenticated"

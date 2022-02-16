@@ -12,11 +12,20 @@
                 Nicht lange zögern. Melde deinen Stamm zu einer dieser Fahrten
                 an.
               </v-subheader>
+
+              <v-btn
+                class="ma-6"
+                color="success"
+                v-if="isAuthenticated && !isSimpleUser"
+                @click="$router.push({ name: 'createEvent' })"
+              >
+                <v-icon left>mdi-calendar-plus</v-icon>
+                Neue Fahrt erstellen
+              </v-btn>
               <v-divider />
               <template v-for="(item, index) in getItems">
                 <v-list-item :key="item.name">
                   <v-list-item-avatar>
-
                     <v-icon
                       :class="'primary'"
                       dark
@@ -41,7 +50,14 @@
                     </v-list-item-subtitle>
                   </v-list-item-content>
 
-                  <v-list-item-action>
+                  <v-list-item-action
+                    v-show="
+                      isInTimeRange(
+                        item.registrationStart,
+                        item.registrationDeadline,
+                      ) && !item.isRegistered.length
+                    "
+                  >
                     <router-link
                       :to="{
                         name: 'registrationForm',
@@ -64,42 +80,13 @@
                     </router-link>
                   </v-list-item-action>
 
-                  <v-list-item-action
-                    v-show="
-                      isInTimeRange(
-                        item.registrationStart,
-                        item.registrationDeadline,
-                      ) && item.isRegistered.length
-                    "
-                    class="ml-4"
-                  >
+                  <v-list-item-action>
                     <v-btn
                       icon
-                      v-if="item.isRegistered.length"
-                      @click="editRegistration(getRegisteredId(item))"
+                      @click="onEventEditClicked(item.id)"
                     >
                       <v-icon fab color="primary"> mdi-pencil </v-icon>
                     </v-btn>
-                  </v-list-item-action>
-
-                  <v-list-item-action>
-                    <router-link
-                      :to="{
-                        name: 'statisticOverview',
-                        params: { id: item.id },
-                      }"
-                      style="text-decoration: none"
-                      v-if="item.participantRole.length"
-                    >
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn icon v-bind="attrs" v-on="on">
-                            <v-icon fab color="primary"> mdi-chart-bar </v-icon>
-                          </v-btn>
-                        </template>
-                        <span>Fahrtenstatistik</span>
-                      </v-tooltip>
-                    </router-link>
                   </v-list-item-action>
                 </v-list-item>
                 <v-divider
@@ -139,25 +126,16 @@ import ConfirmRegistrationEditModal from '@/views/registration/create/steps/dial
 export default {
   components: { ConfirmRegistrationEditModal },
   data: () => ({
-    components: {
-      ConfirmRegistrationEditModal,
-    },
     API_URL: process.env.VUE_APP_API,
     items: [],
     isLoading: true,
     userExtendedItems: [],
-    headers: [
-      { text: 'Id', value: 'id' },
-      { text: 'Fahrt', value: 'name' },
-      { text: 'Beschreibung', value: 'description' },
-      { text: 'Actions', value: 'action', sortable: false },
-    ],
   }),
 
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
     getItems() {
-      return this.items.filter((item) => item.isPublic);
+      return this.items;
     },
     hasSetExtendedUserInfos() {
       if (this.userExtendedItems) {
@@ -182,8 +160,11 @@ export default {
     },
   },
   methods: {
-    editRegistration(item) {
-      this.$refs.confirmRegistrationEditModal.show(item);
+    onEventEditClicked(id) {
+      this.$router.push({
+        name: 'updateEvent',
+        params: { id },
+      });
     },
     getHeaderText(header, roles) {
       if (roles && roles.length) {
