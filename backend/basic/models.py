@@ -166,7 +166,7 @@ class Event(TimeStampMixin):
         verbose_name='ID')
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=100, blank=True)
-    location = models.ForeignKey(EventLocation, on_delete=models.PROTECT, null=True, blank=True)
+    location = models.ForeignKey(EventLocation, on_delete=models.PROTECT, null=True, blank=True, related_name='locations')
     age_groups = models.ManyToManyField(AgeGroup, blank=True)
     event_tags = models.ManyToManyField(EventTag, blank=True)
     start_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
@@ -469,7 +469,7 @@ class Workshop(TimeStampMixin):
     min_person = models.IntegerField(blank=True, null=True)
     max_person = models.IntegerField(blank=True, null=True)
     supervisor = models.ForeignKey(ParticipantPersonal, on_delete=models.PROTECT, null=True)
-    registration = models.ForeignKey("Registration", on_delete=models.PROTECT, null=True, blank=True)
+    registration = models.ForeignKey(Registration, on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
         return self.title

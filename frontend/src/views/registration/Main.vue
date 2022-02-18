@@ -1,6 +1,6 @@
 <template>
   <v-form ref="settingsUser">
-    <v-container class="top-margin">
+    <v-container class="top-margin default-max-width">
       <v-row justify="center">
         <v-flex ma-3 lg9>
           <v-layout column>
@@ -343,3 +343,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.default-max-width {
+  max-width: 800px !important;
+}
+</style>

@@ -15,7 +15,7 @@
       </v-toolbar>
       <v-container>
         <v-subheader class="ma-5">
-          Ich melde folgende_n Teilnehmer_in an.
+          Ich melde folgenden Teilnehmenden an.
         </v-subheader>
         <v-form v-model="valid">
           <v-divider />
@@ -28,6 +28,7 @@
                 :error-messages="firstNameErrors"
                 label="Vorname"
                 required
+                autofocus
                 prepend-icon="mdi-card-account-details-outline"
                 @input="$v.data.firstName.$touch()"
                 @blur="$v.data.firstName.$touch()"
@@ -77,7 +78,6 @@
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="data.scoutName"
-                autofocus
                 :counter="20"
                 :error-messages="scoutNameErrors"
                 label="Fahrtenname (optional)"
@@ -139,7 +139,7 @@
                 ></v-date-picker>
               </v-menu>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <!-- <v-col cols="12" sm="6" md="4">
               <v-select
                 v-model="data.ageGroup"
                 :items="ageGroupMapping"
@@ -151,12 +151,15 @@
                 required
                 @input="validate()"
               />
-            </v-col>
+            </v-col> -->
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="data.email"
                 label="E-Mail Adresse*"
                 prepend-icon="mdi-email"
+                :error-messages="emailErrors"
+                @input="$v.data.email.$touch()"
+                @blur="$v.data.email.$touch()"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -263,11 +266,87 @@
             </v-col>
           </v-row>
           <v-divider />
-          <v-subheader> Tagesgast </v-subheader>
+ <v-subheader>
+            Essgewohnheiten / Allergien und Unverträglichkeiten
+          </v-subheader>
+          <v-row>
+            <v-col cols="12" sm="6">
+              <v-autocomplete
+                v-model="data.eatHabitType"
+                :items="eatHabitTypeMapping"
+                label="Essgewohnheiten / Allergien und Unverträglichkeiten"
+                item-text="name"
+                item-value="name"
+                prepend-icon="mdi-food"
+                multiple
+                clearable
+                chips
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{
+                        'Bitte wähle aus den angezeigten Essgewohnheiten. ' +
+                        'Weitere Essgewohnheiten können einfach durch Eingabe ' +
+                        'im Feld angegeben werden.'
+                      }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-autocomplete>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-combobox
+                v-model="eatHabitText"
+                v-show="!isEditWindow"
+                :error-messages="eatHabitTypeErrors"
+                label="weitere Allergien und Unverträglichkeiten (Freitext)"
+                prepend-icon="mdi-food"
+                clearable
+                multiple
+                chips
+                @input="$v.eatHabitText.$touch()"
+                @blur="$v.eatHabitText.$touch()"
+              >
+                <template slot="append">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                        mdi-help-circle-outline
+                      </v-icon>
+                    </template>
+                    <span>
+                      {{ 'Trage bitte hier ein, auf welche ' +
+                      'Besonderheiten die Küche noch achten soll. ' +
+                      'Trage hier nur etwas ein, wenn die Optionen ' +
+                      'des anderen Feldes nicht ausreichen' }}
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-combobox>
+            </v-col>
+          </v-row>
+          <v-divider />
+          <v-subheader>
+            Teilnahme
+          </v-subheader>
           <v-row>
             <v-col cols="12" sm="6">
               <v-container fluid>
-                <v-switch v-model="isDayGuest" label="Tagesgast am Samstag">
+                <v-select
+                  v-model="data.participantRole"
+                  prepend-icon="mdi-tent"
+                  :items="getRoleItems"
+                  item-text="name"
+                  item-value="id"
+                  label="Bett/Zelt/Tagesgast"
+                  required
+                >
                   <template slot="append">
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
@@ -276,13 +355,22 @@
                         </v-icon>
                       </template>
                       <span>
-                        {{ 'Tagesgast?' }}
+                        {{
+                          'An welchen Teilfahrten nimmt der Teilnehmende teil?'
+                        }}
                       </span>
                     </v-tooltip>
                   </template>
-                </v-switch>
+                </v-select>
               </v-container>
             </v-col>
+          </v-row>
+          <v-row v-if="data.participantRole === 5">
+            <p class="red--text">
+              <b>Hinweis:</b> Bettenplätze sind begrenzt
+              und werden nach Zeitpunkt des Anmeldungs- und Zahlungseingangs
+              vergeben
+            </p>
           </v-row>
           <v-divider class="my-3" />
           <v-btn color="primary" @click="onClickOkay"> Speichern </v-btn>
@@ -304,10 +392,13 @@ import {
   maxLength,
   integer,
   minValue,
+  email,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
+
+// import DateField from '@/components/field/Datefield.vue';
 
 const scoutGroupStartValidator = (groupObjOrGroupName) => {
   const validStarts = ['Meute', 'Sippe', 'Roverrunde'];
@@ -340,6 +431,9 @@ const phoneNumStartValidator = (number) => {
 
 export default {
   props: ['isOpen'],
+  // components: {
+  //   DateField,
+  // },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,
@@ -384,6 +478,23 @@ export default {
     showError: false,
     showSuccess: false,
     timeout: 7000,
+    roleItems: [
+      {
+        id: 5,
+        name: 'Zimmer 30€.',
+        dayGuest: true,
+      },
+      {
+        id: 6,
+        name: 'Zeltplatz 20€.',
+        dayGuest: true,
+      },
+      {
+        name: 'Tagesgast 10€.',
+        id: 7,
+        dayGuest: false,
+      },
+    ],
   }),
   watch: {
     menu(val) {
@@ -431,7 +542,8 @@ export default {
         minLength: minLength(2),
         maxLength: maxLength(20),
       },
-      ageGroup: {
+      email: {
+        email,
         required,
       },
       phoneNumber: {
@@ -525,6 +637,17 @@ export default {
       }
       return errors;
     },
+    emailErrors() {
+      const errors = [];
+      if (!this.$v.data.email.$dirty) return errors;
+      if (!this.$v.data.email.required) {
+        errors.push('E-Mail ist erforderlich.');
+      }
+      if (!this.$v.data.email.email) {
+        errors.push('Falsche Format');
+      }
+      return errors;
+    },
     phoneNumberErrors() {
       const errors = [];
       if (!this.$v.data.phoneNumber.$dirty) return errors;
@@ -570,8 +693,15 @@ export default {
       }
       return errors;
     },
+    getRoleItems() {
+      return this.roleItems;
+    },
   },
   methods: {
+    getParticipantRoleLabel() {
+      debugger; // eslint-disable-line
+      return 'Test123';
+    },
     async getZipCodeMapping(searchString) {
       const path = `${this.API_URL}basic/zip-code/?zip_city=${searchString}`;
       const response = await axios.get(path);
@@ -580,6 +710,12 @@ export default {
     },
     async callSingleZipCode(id) {
       const path = `${this.API_URL}basic/zip-code/?id=${id}`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+    async getEatHabitTypeMapping() {
+      const path = `${this.API_URL}basic/eat-habit-type/`;
       const response = await axios.get(path);
 
       return response.data;
@@ -652,7 +788,17 @@ export default {
         });
     },
     loadData() {
-      this.isDayGuest = this.data.participantRole === 11;
+      this.isLoading = true;
+
+      Promise.all([this.getEatHabitTypeMapping()])
+        .then((values) => {
+          [this.eatHabitTypeMapping] = values;
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
+        });
     },
     getParticipantPersonalById(id) {
       axios

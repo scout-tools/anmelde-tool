@@ -2,16 +2,24 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container class="pa-5 my-5">
       <p>
-        Ich melde folgende_n Teilnehmer_in an <br />
+        Ich melde folgende Teilnehmende an <br />
         <br />
         Die Erfassung erfolgt pro Person. <br>
         <br>
         Alternativ kannst du hier die Excelliste hochladen,
         wenn du die Daten dort bereits erfasst hast.
+        <br>
+        <a
+          target="_blank"
+          href="https://cloud.dpvonline.de/s/5BM6qmNS5Mp7wqG"
+          style="color:blue;"
+        >
+          Link zur Beispiel Excel Datei
+        </a>
       </p>
       <v-btn class="ma-2" color="success" @click="newUser">
         <v-icon left> mdi-plus </v-icon>
-        Teilnehmer_in hinzufügen
+        Teilnehmer_innen hinzufügen
       </v-btn>
       <v-btn class="ma-2" color="primary" @click="openExcelDialog">
         <v-icon left> mdi-plus </v-icon>

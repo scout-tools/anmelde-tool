@@ -39,7 +39,9 @@ ALLOWED_HOSTS = [
     'anmeldetool-backend-dev.eba-sb52mfq3.eu-central-1.elasticbeanstalk.com',
     'anmelde-tool-prod.eu-central-1.elasticbeanstalk.com',
     'dev.api.anmelde-tool.de',
-    'api.anmelde-tool.de'
+    'api.anmelde-tool.de',
+    'anmeldetool-dev.eba-crptpzh7.eu-central-1.elasticbeanstalk.com/',
+    'api.anmelde-tool.dev.scout-tools.de'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -62,7 +64,8 @@ INSTALLED_APPS = [
     'storages',
     'ebhealthcheck.apps.EBHealthCheckConfig',
     'django_extensions',
-    'django_filters'
+    'django_filters',
+    "graphene_django"
 ]
 
 MIDDLEWARE = [
@@ -245,4 +248,8 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
     'JTI_CLAIM': 'jti',
+}
+
+GRAPHENE = {
+    "SCHEMA": "basic.schema.schema"
 }

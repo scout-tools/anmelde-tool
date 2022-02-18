@@ -1,6 +1,7 @@
 # myapi/urls.py
 from django.urls import include, path
 from rest_framework_nested import routers
+from graphene_django.views import GraphQLView
 
 from . import views
 
@@ -69,5 +70,6 @@ registration_router.register(r'summary', views.RegistrationSummaryViewSet, basen
 urlpatterns = [
     path('basic/', include(router.urls)),
     path('basic/', include(event_router.urls)),
-    path('basic/', include(registration_router.urls))
+    path('basic/', include(registration_router.urls)),
+    path("graphql", GraphQLView.as_view(graphiql=True)),
 ]

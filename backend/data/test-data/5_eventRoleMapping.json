@@ -6,7 +6,7 @@
             "id": 1,
             "event": 1,
             "event_role": 1, 
-            "user": 13
+            "user": 1
         }
     },
     {
@@ -15,8 +15,8 @@
         "fields": {
             "id": 2,
             "event": 1,
-            "event_role": 2,
-            "user": 12
+            "event_role": 1,
+            "user": 2
         }
     },
     {
@@ -25,68 +25,8 @@
         "fields": {
             "id": 3,
             "event": 1,
-            "event_role": 5,
-            "user": 15
-        }
-    },
-    {
-        "model": "basic.EventRoleMapping",
-        "pk": 4,
-        "fields": {
-            "id": 4,
-            "event": 1,
             "event_role": 1,
-            "user": 16
-        }
-    },
-    {
-        "model": "basic.EventRoleMapping",
-        "pk": 5,
-        "fields": {
-            "id": 5,
-            "event": 1,
-            "event_role": 2,
-            "user": 17
-        }
-    },
-    {
-        "model": "basic.EventRoleMapping",
-        "pk": 6,
-        "fields": {
-            "id": 6,
-            "event": 1,
-            "event_role": 1,
-            "user": 1
-        }
-    },
-    {
-        "model": "basic.EventRoleMapping",
-        "pk": 7,
-        "fields": {
-            "id": 7,
-            "event": 4,
-            "event_role": 1,
-            "user": 1
-        }
-    },
-    {
-        "model": "basic.EventRoleMapping",
-        "pk": 8,
-        "fields": {
-            "id": 8,
-            "event": 1,
-            "event_role": 1,
-            "user": 2
-        }
-    },
-    {
-        "model": "basic.EventRoleMapping",
-        "pk": 9,
-        "fields": {
-            "id": 9,
-            "event": 4,
-            "event_role": 1,
-            "user": 2
+            "user": 3
         }
     }
 ]

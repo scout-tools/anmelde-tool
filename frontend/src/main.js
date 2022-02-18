@@ -20,7 +20,7 @@ import auth from './auth';
 
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
-const VueMoment = require('vue-moment');
+require('moment/locale/de');
 
 Vue.config.productionTip = false;
 
@@ -29,7 +29,11 @@ Vue.use(VueJwtDecode);
 Vue.use(VuetifyMoney);
 Vue.use(VueGoogleCharts);
 Vue.use(AsyncComputed);
-Vue.use(VueMoment);
+
+Vue.use(require('vue-moment'), {
+  moment,
+});
+
 Vue.use(CKEditor);
 
 Vue.use(VueLodash, { lodash });
@@ -42,7 +46,7 @@ auth.interceptorsSetup(store, router);
 
 delete Icon.Default.prototype._getIconUrl; //eslint-disable-line
 Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'), //eslint-disable-line 
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'), //eslint-disable-line
   iconUrl: require('leaflet/dist/images/marker-icon.png'), //eslint-disable-line
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'), //eslint-disable-line
 });

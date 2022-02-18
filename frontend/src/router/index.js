@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import CheckTokenMain from '@/views/login/CheckToken.vue';
 import EventOverview from '@/views/event/overview/Overview.vue';
+import EventAdminOverview from '@/views/event/adminOverview/Overview.vue';
 import SettingsUser from '@/views/settings/user/Main.vue';
 import StatisticOverview from '@/views/statistic/Main.vue';
 import RegistrationForm from '@/views/registration/Main.vue';
@@ -37,8 +38,13 @@ const routes = [
     component: CheckTokenMain,
   },
   {
-    path: '/event/create/:id',
+    path: '/event/create',
     name: 'createEvent',
+    component: CreateEvent,
+  },
+  {
+    path: '/event/update/:id',
+    name: 'updateEvent',
     component: CreateEvent,
     props: true,
   },
@@ -46,6 +52,11 @@ const routes = [
     path: '/event/overview',
     name: 'eventOverview',
     component: EventOverview,
+  },
+  {
+    path: '/event/adminOverview',
+    name: 'eventAdminOverview',
+    component: EventAdminOverview,
   },
   {
     path: '/settings/user',
