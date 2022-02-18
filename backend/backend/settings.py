@@ -35,6 +35,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
+    '35.159.35.151',
     'localhost',
     'anmeldetool-backend-dev.eba-sb52mfq3.eu-central-1.elasticbeanstalk.com',
     'anmelde-tool-prod.eu-central-1.elasticbeanstalk.com',
