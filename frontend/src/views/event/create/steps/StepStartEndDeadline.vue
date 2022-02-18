@@ -149,6 +149,7 @@ export default {
       return {
         startTime: this.data.startTime,
         endTime: this.data.endTime,
+        registrationStart: this.data.registrationStart,
         registrationDeadline: this.data.registrationDeadline,
       };
     },

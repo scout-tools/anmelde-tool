@@ -17,7 +17,7 @@
         v-if="isAuthenticated"
         @click="$router.push({ name: 'eventOverview' })"
       >
-        Fahrten
+        Meine Anmeldungen
         <v-icon>mdi-view-list</v-icon>
       </v-tab>
       <v-tab
@@ -25,21 +25,21 @@
         @click="$router.push({ name: 'eventAdminOverview' })"
       >
         Meine Fahrten
-        <v-icon>mdi-view-list</v-icon>
+        <v-icon>mdi-account-key</v-icon>
       </v-tab>
       <v-tab
-        v-if="isAuthenticated"
-        @click="$router.push({ name: 'masterDataOverview' })"
+        v-if="isAuthenticated && !isSimpleUser"
+        @click="$router.push({ name: 'dataOverview' })"
       >
-        Daten
-        <v-icon>mdi-view-list</v-icon>
+        Meine Daten
+        <v-icon>mdi-chart-bar</v-icon>
       </v-tab>
       <v-spacer></v-spacer>
       <v-tab
         v-if="isAuthenticated"
         @click="$router.push({ name: 'settingsUser' })"
       >
-        Profil
+        Mein Profil
         <v-icon>mdi-account-circle</v-icon>
 
       </v-tab>

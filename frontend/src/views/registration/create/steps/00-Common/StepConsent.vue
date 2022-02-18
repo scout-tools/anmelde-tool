@@ -2,7 +2,7 @@
   <v-form ref="formNameDescription" v-model="valid">
     <v-container v-if="!isLoading">
       <v-row class="ma-3">
-        <h4 v-if="!data.registrationType" class="text-left">
+        <h4 v-if="!data.registrationType && this.isBundesfahrt" class="text-left">
           Wähle die Art deiner Anmeldung
         </h4>
       </v-row>
@@ -26,7 +26,7 @@
           Einzelanmeldung
         </v-btn>
       </v-row> -->
-      <v-row>
+      <v-row v-if="this.isBundesfahrt">
         <v-radio-group v-model="data.registrationType">
           <v-radio
             v-for="registrationTyp in registrationTypes"
@@ -41,7 +41,8 @@
           key="1"
           class="mt-2"
           v-if="
-            data.registrationType && data.registrationType === 'group'
+            (data.registrationType && data.registrationType === 'group') &&
+            this.isBundesfahrt
           "
         >
           <span class="text-left subtitle-1">
@@ -64,7 +65,7 @@
                 v-if="isBundesfahrt"
                 target="_blank"
                 href="https://cloud.dpvonline.de/s/5BM6qmNS5Mp7wqG"
-                style="color:blue;"
+                style="color: blue"
               >
                 Link zur DPV-Cloud
               </a>
@@ -74,7 +75,7 @@
         <v-row
           key="33"
           class="mt-2"
-          v-if="data.registrationType && data.registrationType === 'single'"
+          v-if="data.registrationType && data.registrationType === 'single' || !isBundesfahrt"
         >
           <span class="text-left subtitle-1">
             <p>
@@ -96,7 +97,7 @@
                 v-if="isBundesfahrt"
                 target="_blank"
                 href="https://cloud.dpvonline.de/s/5BM6qmNS5Mp7wqG"
-                style="color:blue;"
+                style="color: blue"
               >
                 Link zur DPV-Cloud
               </a>
@@ -110,9 +111,7 @@
         />
         <v-row
           key="2"
-          v-if="
-            data.registrationType && data.registrationType === 'group'
-          "
+          v-if="data.registrationType && data.registrationType === 'group'"
         >
           <v-checkbox
             v-model="data.checkbox1"
@@ -166,7 +165,7 @@
 
         <prev-next-buttons
           key="5"
-          v-if="data.registrationType"
+          v-if="data.registrationType || !isBundesfahrt "
           :position="position"
           :max-pos="maxPos"
           @nextStep="nextStep"
@@ -332,7 +331,7 @@ export default {
     },
     nextStep() {
       this.validate();
-      if (!this.valid) {
+      if (!this.valid && this.isBundesfahrt) {
         return;
       }
       this.$emit('nextStep');

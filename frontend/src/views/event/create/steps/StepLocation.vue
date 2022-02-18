@@ -11,9 +11,9 @@
       </v-row>
       <v-row>
         <v-select
-          v-model="selectedLocation"
+          v-model="data.location"
           :items="items"
-          :error-messages="selectedLocationErrors"
+          :error-messages="locationErrors"
           item-text="preview"
           item-value="id"
           label="Veranstaltungsort wählen"
@@ -55,21 +55,22 @@ export default {
   },
   data: () => ({
     items: [],
-    selectedLocation: null,
     locationDialog: false,
     API_URL: process.env.VUE_APP_API,
     valid: true,
   }),
   validations: {
-    selectedLocation: {
-      required,
+    data: {
+      location: {
+        required,
+      },
     },
   },
   computed: {
-    selectedLocationErrors() {
+    locationErrors() {
       const errors = [];
-      if (!this.$v.selectedLocation.$dirty) return errors;
-      if (!this.$v.selectedLocation.required) {
+      if (!this.$v.data.location.$dirty) return errors;
+      if (!this.$v.data.location.required) {
         errors.push('Es muss ein Veranstaltungsort ausgewählt werden.');
       }
       return errors;
@@ -113,7 +114,7 @@ export default {
     },
     getData() {
       return {
-        location: this.selectedLocation,
+        location: this.data.location,
       };
     },
     newLocation() {

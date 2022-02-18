@@ -2,7 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import CheckTokenMain from '@/views/login/CheckToken.vue';
 import EventOverview from '@/views/event/overview/Overview.vue';
-import EventAdminOverview from '@/views/event/adminOverview/Overview.vue';
+import EventAdminOverview from '@/views/event/admin/Overview.vue';
+import MasterDataOverview from '@/views/event/data/Overview.vue';
 import SettingsUser from '@/views/settings/user/Main.vue';
 import StatisticOverview from '@/views/statistic/Main.vue';
 import RegistrationForm from '@/views/registration/Main.vue';
@@ -57,6 +58,11 @@ const routes = [
     path: '/event/adminOverview',
     name: 'eventAdminOverview',
     component: EventAdminOverview,
+  },
+  {
+    path: '/data/overview',
+    name: 'dataOverview',
+    component: MasterDataOverview,
   },
   {
     path: '/settings/user',

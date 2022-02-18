@@ -5,13 +5,9 @@
         <v-layout column>
           <v-card v-if="!isLoading">
             <v-card-title class="text-center justify-center py-6">
-              Zu diesen Fahrten kannst du deinen Stamm anmelden
+              Hier siehst du alle Fahrten zu denen du Daten freigegeben bekommen hast.
             </v-card-title>
             <v-list subheader two-line>
-              <v-subheader inset>
-                Nicht lange zögern. Melde deinen Stamm zu einer dieser Fahrten
-                an.
-              </v-subheader>
               <v-divider />
               <template v-for="(item, index) in getItems">
                 <v-list-item :key="item.name">
@@ -24,13 +20,13 @@
                     ></v-icon>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title>
-                      {{ getHeaderText(item) }}
-                    </v-list-item-title>
+                    <v-list-item-title
+                      v-text="getHeaderText(item.name, item.participantRole)"
+                    ></v-list-item-title>
 
                     <v-list-item-subtitle
-                      v-text="item.description">
-                    </v-list-item-subtitle>
+                      v-text="item.description"
+                    ></v-list-item-subtitle>
 
                     <v-list-item-subtitle>
                       {{ getLagerText(item) }}
@@ -41,51 +37,24 @@
                     </v-list-item-subtitle>
                   </v-list-item-content>
 
-                  <v-list-item-action
-                    v-show="
-                      isInTimeRange(
-                        item.registrationStart,
-                        item.registrationDeadline,
-                      ) && isNotAlreadyRegistered(item)
-                    ">
+                  <v-list-item-action>
                     <router-link
                       :to="{
-                        name: 'registrationForm',
-                        params: {
-                          id: item.id,
-                        },
+                        name: 'statisticOverview',
+                        params: { id: item.id },
                       }"
                       style="text-decoration: none"
+                      v-if="item.participantRole.length"
                     >
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn icon v-bind="attrs" v-on="on">
-                            <v-icon fab color="green">
-                              mdi-account-multiple-plus
-                            </v-icon>
+                            <v-icon fab color="primary"> mdi-chart-bar </v-icon>
                           </v-btn>
                         </template>
-                        <span>Fahrtenanmeldung</span>
+                        <span>Fahrtenstatistik</span>
                       </v-tooltip>
                     </router-link>
-                  </v-list-item-action>
-
-                  <v-list-item-action
-                    v-show="
-                      isInTimeRange(
-                        item.registrationStart,
-                        item.registrationDeadline,
-                      ) && !isNotAlreadyRegistered(item)
-                    "
-                    class="ml-4"
-                  >
-                    <v-btn
-                      icon
-                      v-if="item.isRegistered.length"
-                      @click="editRegistration(getRegisteredId(item))"
-                    >
-                      <v-icon fab color="blue"> mdi-pencil </v-icon>
-                    </v-btn>
                   </v-list-item-action>
                 </v-list-item>
                 <v-divider
@@ -143,7 +112,7 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
     getItems() {
-      return this.items.filter((item) => item.isPublic);
+      return this.items.filter((item) => item.isRegistered.length);
     },
     hasSetExtendedUserInfos() {
       if (this.userExtendedItems) {
@@ -174,11 +143,11 @@ export default {
     editRegistration(item) {
       this.$refs.confirmRegistrationEditModal.show(item);
     },
-    getHeaderText(item) {
-      if (item && item.isRegistered.length) {
-        return `${item.name} (Dein Stamm ist bereits Angemeldet)`;
+    getHeaderText(header, roles) {
+      if (roles && roles.length) {
+        return `${header} (Deine Rolle: ${roles[0].eventRole_Name})`;
       }
-      return item.name;
+      return header;
     },
     getRegisteredId(item) {
       if (

@@ -5,18 +5,16 @@
         <v-layout column>
           <v-card v-if="!isLoading">
             <v-card-title class="text-center justify-center py-6">
-              Zu diesen Fahrten kannst du deinen Stamm anmelden
+              Hier werden die Fahrten angezeigt, die du bearbeiten darfst.
             </v-card-title>
             <v-list subheader two-line>
               <v-subheader inset>
-                Nicht lange zögern. Melde deinen Stamm zu einer dieser Fahrten
-                an.
               </v-subheader>
 
               <v-btn
                 class="ma-6"
                 color="success"
-                v-if="isAuthenticated && !isSimpleUser"
+                v-if="isAuthenticated"
                 @click="$router.push({ name: 'createEvent' })"
               >
                 <v-icon left>mdi-calendar-plus</v-icon>
@@ -55,7 +53,7 @@
                       isInTimeRange(
                         item.registrationStart,
                         item.registrationDeadline,
-                      ) && !item.isRegistered.length
+                      ) && isNotAlreadyRegistered(item)
                     "
                   >
                     <router-link
@@ -135,7 +133,7 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
     getItems() {
-      return this.items;
+      return this.items.filter((item) => item.canEdit);
     },
     hasSetExtendedUserInfos() {
       if (this.userExtendedItems) {
@@ -160,6 +158,11 @@ export default {
     },
   },
   methods: {
+    isNotAlreadyRegistered(item) {
+      console.log(item);
+      console.log(!item.isRegistered.length);
+      return false;
+    },
     onEventEditClicked(id) {
       this.$router.push({
         name: 'updateEvent',
@@ -173,6 +176,7 @@ export default {
       return header;
     },
     getRegisteredId(item) {
+      console.log(item);
       if (
         item && // eslint-disable-line
         item.isRegistered && // eslint-disable-line

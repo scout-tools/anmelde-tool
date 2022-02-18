@@ -132,6 +132,9 @@ export default {
     callCreateEventPost() {
       return axios.post(`${this.API_URL}basic/event/`, this.data.event);
     },
+    callUpdateEventPost() {
+      return axios.put(`${this.API_URL}basic/event/${this.id}/`, this.data.event);
+    },
     formatCreateEventRequestData() {
       const dataNameDescription = this.$refs.StepNameDescription[0].getData();
       const dataStartEndDeadline = this.$refs.StepStartEndDeadline[0].getData();
@@ -152,6 +155,7 @@ export default {
         startTime: dataStartEndDeadline.startTime,
         eventTags: dataStepEventModul.eventTags,
         endTime: dataStartEndDeadline.endTime,
+        registrationStart: dataStartEndDeadline.registrationStart,
         registrationDeadline: dataStartEndDeadline.registrationDeadline,
         participationFee: dataStepParticipationFee.participationFee,
         invitationCode: dataStepInvitationCode.invitationCode,
@@ -161,7 +165,11 @@ export default {
     async handleCreateEventRequest() {
       try {
         this.formatCreateEventRequestData();
-        await this.callCreateEventPost();
+        if (this.id) {
+          await this.callUpdateEventPost();
+        } else {
+          await this.callCreateEventPost();
+        }
         this.showSuccess = true;
         this.onSuccessfulCreateEvent();
       } catch (e) {

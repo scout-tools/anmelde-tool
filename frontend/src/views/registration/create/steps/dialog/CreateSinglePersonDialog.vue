@@ -175,6 +175,35 @@
                 </template>
               </v-text-field>
             </v-col>
+            <v-col cols="12" sm="6" md="4">
+                <v-select
+                  v-model="data.gender"
+                  prepend-icon="mdi-tent"
+                  :items="genderItems"
+                  item-text="name"
+                  item-value="id"
+                  label="Geschlecht*"
+                :error-messages="genderErrors"
+                @input="$v.data.gender.$touch()"
+                @blur="$v.data.gender.$touch()"
+                  required
+                >
+                  <template slot="append">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon color="success" dark v-bind="attrs" v-on="on">
+                          mdi-help-circle-outline
+                        </v-icon>
+                      </template>
+                      <span>
+                        {{
+                          tooltip.gender
+                        }}
+                      </span>
+                    </v-tooltip>
+                  </template>
+                </v-select>
+            </v-col>
           </v-row>
 
           <v-divider />
@@ -304,14 +333,11 @@
               <v-combobox
                 v-model="eatHabitText"
                 v-show="!isEditWindow"
-                :error-messages="eatHabitTypeErrors"
                 label="weitere Allergien und Unverträglichkeiten (Freitext)"
                 prepend-icon="mdi-food"
                 clearable
                 multiple
                 chips
-                @input="$v.eatHabitText.$touch()"
-                @blur="$v.eatHabitText.$touch()"
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -345,6 +371,9 @@
                   item-text="name"
                   item-value="id"
                   label="Bett/Zelt/Tagesgast"
+                  :error-messages="participantRoleErrors"
+                  @input="$v.data.participantRole.$touch()"
+                  @blur="$v.data.participantRole.$touch()"
                   required
                 >
                   <template slot="append">
@@ -411,17 +440,17 @@ const scoutGroupStartValidator = (groupObjOrGroupName) => {
   return validStarts.includes(name.trim().split(' ')[0]);
 };
 
-const eatHabitStartValidator = (habit) => {
-  if (!habit) {
-    return false;
-  }
-  let oneFalse = 0;
-  habit.forEach((h) => {
-    if (!h.startsWith('Kein')) oneFalse += 1;
-    return oneFalse;
-  });
-  return oneFalse === 0;
-};
+// const eatHabitStartValidator = (habit) => {
+//   if (!habit) {
+//     return false;
+//   }
+//   let oneFalse = 0;
+//   habit.forEach((h) => {
+//     if (!h.startsWith('Kein')) oneFalse += 1;
+//     return oneFalse;
+//   });
+//   return oneFalse === 0;
+// };
 
 const phoneNumStartValidator = (number) => {
   if (!number) return false;
@@ -464,6 +493,7 @@ export default {
       registration: null,
       eatHabitType: [],
       scoutGroup: 'Test',
+      gender: 4,
       isGroupLeader: false,
       participantRole: 5,
     },
@@ -471,6 +501,8 @@ export default {
       scoutName: 'Gib hier bitte deinen Namen oder deinen Fahrtennamen ein.',
       email:
         'Die E-Mail nutzen wir für die Kommunikation mit dem Tool und für Rückfragen.',
+      gender:
+        'Das Geschlecht brauchen wir nur für die Zuschusslisten.',
       mobileNumber:
         'Die Handynummer ist freiwillig und hilft dich zu kontaktieren (Für manche Fahrten ist sie Pflicht)',
       scoutOrganisation: 'Mit dem Stift kannst du deinen Stamm auswählen.',
@@ -493,6 +525,24 @@ export default {
         name: 'Tagesgast 10€.',
         id: 7,
         dayGuest: false,
+      },
+    ],
+    genderItems: [
+      {
+        id: 1,
+        name: 'männlich',
+      },
+      {
+        id: 2,
+        name: 'weiblich',
+      },
+      {
+        name: 'divers',
+        id: 3,
+      },
+      {
+        name: 'keine Angabe',
+        id: 4,
       },
     ],
   }),
@@ -555,6 +605,12 @@ export default {
       birthday: {
         required,
       },
+      gender: {
+        required,
+      },
+      participantRole: {
+        required,
+      },
       street: {
         required,
         minLength: minLength(5),
@@ -564,9 +620,6 @@ export default {
         required,
         minLength: minLength(1),
       },
-    },
-    eatHabitText: {
-      eatHabitStartValidator,
     },
   },
   computed: {
@@ -637,6 +690,22 @@ export default {
       }
       return errors;
     },
+    genderErrors() {
+      const errors = [];
+      if (!this.$v.data.gender.$dirty) return errors;
+      if (!this.$v.data.gender.required) {
+        errors.push('Geschlecht ist erforderlich.');
+      }
+      return errors;
+    },
+    participantRoleErrors() {
+      const errors = [];
+      if (!this.$v.data.participantRole.$dirty) return errors;
+      if (!this.$v.data.participantRole.required) {
+        errors.push('Rolle auf dem Lager ist erforderlich.');
+      }
+      return errors;
+    },
     emailErrors() {
       const errors = [];
       if (!this.$v.data.email.$dirty) return errors;
@@ -688,9 +757,9 @@ export default {
     },
     eatHabitTypeErrors() {
       const errors = [];
-      if (!this.$v.eatHabitText.eatHabitStartValidator) {
-        errors.push('Die Essensgewohnheiten müssen mit Kein(e/r) starten.');
-      }
+      // if (!this.$v.eatHabitText.eatHabitStartValidator) {
+      //   errors.push('Die Essensgewohnheiten müssen mit Kein(e/r) starten.');
+      // }
       return errors;
     },
     getRoleItems() {
