@@ -10,7 +10,7 @@ SENDER = "Pfadfinde Anmelde-Tool <noreply@anmelde-tool.de>"
 
 # Replace recipient@example.com with a "To" address. If your account
 # is still in the sandbox, this address must be verified.
-RECIPIENT = "philiphagemann@icloud.com"
+RECIPIENT = ""
 
 # Specify a configuration set. If you do not want to use a configuration
 # set, comment the following variable, and the
