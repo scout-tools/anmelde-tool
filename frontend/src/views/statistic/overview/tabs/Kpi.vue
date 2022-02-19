@@ -79,14 +79,8 @@ export default {
       return {
         header: 'Anzahl Stämme',
         subheader: 'aus den Bünden',
-        dataOne: this.confirmedData.reduce(
-          (accum, item) => accum + item.numberParticipant,
-          0,
-        ),
-        dataTwo: this.getBundData.reduce(
-          (accum, item) => accum + item.numberParticipant,
-          0,
-        ),
+        dataOne: this.confirmedData.length,
+        dataTwo: this.getBundData.length,
         dataOneName: 'DPV',
         dataTwoName: 'Eigener Bund',
       };
