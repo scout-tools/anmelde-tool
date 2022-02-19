@@ -84,16 +84,6 @@ def create_missing_eat_habit(request):
                 new_type.save()
 
 
-def create_missing_scout_group(request):
-    # Check whether group name exits
-    if 'scout_group' in request.data:
-        scout_group = request.data['scout_group']
-        if not ScoutHierarchy.objects.filter(name__exact=scout_group, level__id=6).exists():
-            new_group = ScoutHierarchy.objects.create(name=scout_group, level=ScoutOrgaLevel.objects.get(pk=6),
-                                                      parent=request.user.userextended.scout_organisation)
-            new_group.save()
-
-
 class EventViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
@@ -287,15 +277,6 @@ class ParticipantPersonalViewSet(viewsets.ModelViewSet):
     queryset = ParticipantPersonal.objects.all()
     serializer_class = ParticipantPersonalSerializer
 
-    def create(self, request, *args, **kwargs):
-        create_missing_scout_group(request)
-        create_missing_eat_habit(request)
-        return super().create(request, *args, **kwargs)
-
-    def update(self, request, *args, **kwargs):
-        create_missing_scout_group(request)
-        create_missing_eat_habit(request)
-        return super().update(request, *args, **kwargs)
 
 
 class EatHabitTypeViewSet(viewsets.ModelViewSet):

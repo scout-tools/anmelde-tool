@@ -269,10 +269,8 @@
               <v-text-field
                 v-model="data.phoneNumber"
                 :counter="30"
-                :error-messages="phoneNumberErrors"
                 label="Telefonnummer"
                 prepend-icon="mdi-phone"
-                required
               >
                 <template slot="append">
                   <v-tooltip bottom>
@@ -419,8 +417,6 @@ import {
   required,
   minLength,
   maxLength,
-  integer,
-  minValue,
   email,
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
@@ -452,11 +448,11 @@ const scoutGroupStartValidator = (groupObjOrGroupName) => {
 //   return oneFalse === 0;
 // };
 
-const phoneNumStartValidator = (number) => {
-  if (!number) return false;
-  console.log(number);
-  return number.startsWith('0');
-};
+// const phoneNumStartValidator = (number) => {
+//   if (!number) return false;
+//   console.log(number);
+//   return number.startsWith('0');
+// };
 
 export default {
   props: ['isOpen'],
@@ -492,7 +488,6 @@ export default {
       ageGroup: 2,
       registration: null,
       eatHabitType: [],
-      scoutGroup: 'Test',
       gender: 4,
       isGroupLeader: false,
       participantRole: 5,
@@ -513,16 +508,16 @@ export default {
     roleItems: [
       {
         id: 5,
-        name: 'Zimmer 30€.',
+        name: 'Zimmer 50€.',
         dayGuest: true,
       },
       {
         id: 6,
-        name: 'Zeltplatz 20€.',
+        name: 'Zeltplatz 25€.',
         dayGuest: true,
       },
       {
-        name: 'Tagesgast 10€.',
+        name: 'Tagesgast 25€.',
         id: 7,
         dayGuest: false,
       },
@@ -595,12 +590,6 @@ export default {
       email: {
         email,
         required,
-      },
-      phoneNumber: {
-        required,
-        integer,
-        minValue: minValue(1),
-        phoneNumStartValidator,
       },
       birthday: {
         required,
@@ -717,23 +706,23 @@ export default {
       }
       return errors;
     },
-    phoneNumberErrors() {
-      const errors = [];
-      if (!this.$v.data.phoneNumber.$dirty) return errors;
-      if (!this.$v.data.phoneNumber.required) {
-        errors.push('Telefonnummer ist erforderlich.');
-      }
-      if (
-        !this.$v.data.phoneNumber.integer || // eslint-disable-line
-        !this.$v.data.phoneNumber.minValue // eslint-disable-line
-      ) {
-        errors.push('Telefonnummer darf nur aus Zahlen bestehen.'); // eslint-disable-line
-      }
-      if (!this.$v.data.phoneNumber.phoneNumStartValidator) {
-        errors.push('Die Telefonnummer muss mit 0 beginnen.');
-      }
-      return errors;
-    },
+    // phoneNumberErrors() {
+    //   const errors = [];
+    //   if (!this.$v.data.phoneNumber.$dirty) return errors;
+    //   if (!this.$v.data.phoneNumber.required) {
+    //     errors.push('Telefonnummer ist erforderlich.');
+    //   }
+    //   if (
+    //     !this.$v.data.phoneNumber.integer || // eslint-disable-line
+    //     !this.$v.data.phoneNumber.minValue // eslint-disable-line
+    //   ) {
+    //     errors.push('Telefonnummer darf nur aus Zahlen bestehen.'); // eslint-disable-line
+    //   }
+    //   if (!this.$v.data.phoneNumber.phoneNumStartValidator) {
+    //     errors.push('Die Telefonnummer muss mit 0 beginnen.');
+    //   }
+    //   return errors;
+    // },
     scoutNameErrors() {
       const errors = [];
       if (!this.$v.data.scoutName.$dirty) return errors;

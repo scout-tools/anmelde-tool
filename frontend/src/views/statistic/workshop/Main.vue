@@ -1,6 +1,6 @@
 <template>
   <v-tabs vertical icons-and-text class="pa-0">
-    <v-tab class="pa-0">
+    <v-tab class="pa-2">
       <v-icon left> mdi-table-headers-eye </v-icon>
       Übersicht
     </v-tab>

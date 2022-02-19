@@ -17,12 +17,18 @@
         <v-header>
           Lade hier deine Excel Datei hoch, um dir die manuelle Eingabe zu
           erleichtern. Die Datei muss in einem bestimmten Format sein.
-          <a target="_blank" style="color:blue;" href="https://cloud.dpvonline.de/s/fMMrgfpf5dAm9Fg"
+          <a
+            target="_blank"
+            style="color: blue"
+            href="https://cloud.dpvonline.de/s/fMMrgfpf5dAm9Fg"
             >Link zur DPV-Cloud</a
           >
         </v-header>
         <v-card class="ma-4 pa-3">
-          <input type="file" @change="onFileChange" />
+          <input type="file" ref="inputFile" @change="onFileChange" />
+          <v-btn icon @click="onFileResetClicked">
+            <v-icon> mdi-close </v-icon>
+          </v-btn>
         </v-card>
         <v-card class="ma-4">
           <v-simple-table dense v-if="chartData.length">
@@ -149,12 +155,21 @@ export default {
         });
       });
     },
+    onFileResetClicked() {
+      this.$refs.inputFile.value = null;
+    },
     async processExcelData(data) {
+      console.log(data);
+      // const header = data[0]
+      const format = data[1];
+      // const primary = data[2]
+      data.splice(0, 3);
       const me = this;
       const output = [];
       let zipCodeTemps = [];
-      data.forEach((element, index, array) => { // eslint-disable-line
-        output.push(me.map(element));
+      data.forEach((element, index, array) => {  // eslint-disable-line
+
+        output.push(me.map(element, format));
       });
       await Promise.all(this.promises).then((array) => {
         zipCodeTemps = array;
@@ -163,6 +178,7 @@ export default {
         element.zipCode = zipCodeTemps[index][0].id; // eslint-disable-line
         element.zipCodeShow = `${zipCodeTemps[index][0].zipCode} - ${zipCodeTemps[index][0].city}`; // eslint-disable-line
       });
+
       return output;
     },
     getJsonFromFile(e) {
@@ -177,6 +193,7 @@ export default {
           const dataExport = XLSX.utils.sheet_to_json(firstWorksheet, {
             range: 0,
             blankRows: false,
+            defval: null,
           });
           resolve(dataExport);
         };
@@ -197,30 +214,35 @@ export default {
       const newInput = input;
       this.$refs.createSinglePersonDialog.openDialogEdit(newInput);
     },
-    map(input) {
+    map(input, format) {
       const dto = {
         firstName: '',
         lastName: '',
         scoutName: '',
         street: '',
         zipCode: '',
+        city: '',
         email: '',
         phoneNumber: '',
         birthday: new Date(),
         participantRole: '',
         eatHabitType: [],
-        scoutGroup: 'Test',
       };
-      dto.firstName = input['Vorname*'];
-      dto.lastName = input['Nachname*'];
-      dto.scoutName = input['Pfadfindername']; // eslint-disable-line
-      dto.street = input['Adresse*'];
-      dto.ageGroup = this.convertAgeGroup(input['Altersstufe*']);
-      dto.zipCode = this.getZipCode(input['Postleitzahl*'], input['Stadt*']);
-      dto.phoneNumber = input['Telefonnummer*'];
-      dto.email = input['E-Mail-Adresse*'];
-      dto.birthday = this.convertBirthday(input['Geburtsdatum*']);
-      dto.participantRole = input['Tagesgast'] === 'x' ? 11 : 1; // eslint-disable-line
+      const keys = Object.keys(format);
+      keys.forEach((key) => {
+        console.log(key);
+        if (format[key] === 'date') {
+          console.log(input[key]);
+          dto[key] = this.convertBirthday(this.excelDateToJSDate(input[key])); // eslint-disable-line
+        } else {
+          dto[key] = input[key];
+        }
+      });
+      dto.zipCode = this.getZipCode(input.zipCode, input.city);
+      dto.gender = 1;
+      dto.participantRole = 6;
+      dto.eatHabitType = [];
+      dto.scoutGroup = 'Eisbär';
       return dto;
     },
     async callSingleZipCode(zipCode) {
@@ -233,15 +255,33 @@ export default {
       this.promises.push(this.callSingleZipCode(zipCode));
       return '...';
     },
+    excelDateToJSDate(serial) {
+      const utcDays = Math.floor(serial - 25569);
+      const utcValue = utcDays * 86400;
+      const dateInfo = new Date(utcValue * 1000);
 
-    convertBirthday(birthdayDays) {
-      const startDate = new Date(1900, 0, 1);
-      const newDate = new Date(
-        startDate.getFullYear(),
-        startDate.getMonth(),
-        startDate.getDate() + birthdayDays - 2,
+      const fractionalDay = serial - Math.floor(serial) + 0.0000001;
+
+      let totalSeconds = Math.floor(86400 * fractionalDay);
+
+      const seconds = totalSeconds % 60;
+
+      totalSeconds -= seconds;
+
+      const hours = Math.floor(totalSeconds / (60 * 60));
+      const minutes = Math.floor(totalSeconds / 60) % 60;
+
+      return new Date(
+        dateInfo.getFullYear(),
+        dateInfo.getMonth(),
+        dateInfo.getDate(),
+        hours,
+        minutes,
+        seconds,
       );
-      return moment(newDate).format('YYYY-MM-DD');
+    },
+    convertBirthday(birthdayDays) {
+      return moment(birthdayDays).format('YYYY-MM-DD');
     },
     convertAgeGroup(ageGroupString) {
       switch (ageGroupString) {

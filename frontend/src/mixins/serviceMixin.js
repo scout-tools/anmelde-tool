@@ -28,5 +28,11 @@ export const serviceMixin = {  // eslint-disable-line
 
       return response.data;
     },
+    async getEventById(id) {
+      const path = `${process.env.VUE_APP_API}basic/event/${id}/`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
   },
 };

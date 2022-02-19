@@ -4,10 +4,10 @@
       <v-icon left> mdi-table-headers-eye </v-icon>
       KPI
     </v-tab>
-    <!-- <v-tab>
+    <v-tab>
       <v-icon left> mdi-table </v-icon>
       Tabelle
-    </v-tab> -->
+    </v-tab>
 
     <v-tab-item>
       <v-card flat>

@@ -19,7 +19,7 @@
           <v-text-field
             v-if="data.kohten"
             v-model="data.kohtenstangen"
-            :label="`Anzahl Kohtenstangen`"
+            :label="`Anzahl benötigter Kohtenstangen`"
           >
           </v-text-field>
         </v-col>
@@ -33,7 +33,7 @@
           <v-text-field
             v-if="data.jurten"
             v-model="data.jurtenstangen"
-            :label="`Anzahl Jurtenstangen`"
+            :label="`Anzahl benötigter Jurtenstangen`"
           >
           </v-text-field>
         </v-col>

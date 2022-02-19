@@ -11,7 +11,8 @@
       <v-row>
         <v-checkbox
           v-model="data.checkbox1"
-          :label="`Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zur Fahrt an.`"
+          :label="`Ich habe meine Daten überprüft und sende diese ` +
+            `Anmeldung verbindlich an die Lagerleitung.`"
         >
         </v-checkbox>
       </v-row>

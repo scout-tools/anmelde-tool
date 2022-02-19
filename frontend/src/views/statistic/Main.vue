@@ -14,7 +14,7 @@
             >
               <v-tabs-slider></v-tabs-slider>
 
-              <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-1">
+              <v-tab v-if="displayEventRoleTab(eventOverview, 1, 1)" href="#tab-1">
                 Übersicht
                 <v-icon>mdi-clipboard-list</v-icon>
               </v-tab>
@@ -39,10 +39,10 @@
                 <v-icon>mdi-run-fast</v-icon>
               </v-tab>
 
-              <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-6">
+              <!-- <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-6">
                 Zusätze
                 <v-icon>mdi-file-download</v-icon>
-              </v-tab>
+              </v-tab> -->
             </v-tabs>
 
             <v-tabs-items v-model="tab">
@@ -97,8 +97,7 @@ export default {
   },
   data() {
     return {
-      tab: null,
-      selected: null,
+      tab: 1,
       eventOverview: [],
     };
   },
