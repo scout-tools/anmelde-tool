@@ -123,10 +123,8 @@ export default {
       );
     },
     setDate(date) {
-      this.date = date ? moment(date)
-        .format('YYYY-MM-DD') : null;
-      this.time = date ? moment(date)
-        .format('HH:mm:ss') : null;
+      this.date = date ? moment(date, 'YYYY-MM-DD') : null;
+      this.time = date ? moment(date, 'HH:mm:ss') : null;
     },
   },
 };

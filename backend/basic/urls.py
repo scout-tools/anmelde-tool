@@ -9,6 +9,7 @@ router.register(r'scout-hierarchy', views.ScoutHierarchyViewSet)
 router.register(r'zip-code', views.ZipCodeViewSet)
 router.register(r'tags', views.TagViewSet)
 router.register(r'tag-types', views.TagTypeViewSet)
+router.register(r'attributes', views.AttributeViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

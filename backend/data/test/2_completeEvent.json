@@ -45,10 +45,10 @@
     "pk": 1,
     "fields": {
       "name": "Introduction",
-      "description": "Hiermit melde ich mich vom Stamm Hratuga aus dem Bund DPB-Mosaik zur BuSife an.  Bevor deine Anmeldung verbindlich wird, musst du sie im letzten Schritt ausdrücklich bestätigen. Du kannst deinen Anmeldevorgang zu jedem Zeitpunkt unterbrechen und später fortsetzen. Die Daten kannst du bis zum Anmeldeschluss (7. Aug. 2022) jederzeit anpassen und ergänzen.  Die folgenden Daten sind nur für das Planungsteam und die Administrator_innen sichtbar. Alle Dokumente findest du hier: Link zur Bundescloud",
       "type": 7,
       "header": "Einverständnis",
-      "internal": false
+      "internal": false,
+      "custom": false
     }
   },
   {
@@ -56,10 +56,10 @@
     "pk": 11,
     "fields": {
       "name": "OfferWorkshop",
-      "description": "",
       "type": 5,
       "header": "AGs",
-      "internal": false
+      "internal": false,
+      "custom": false
     }
   },
   {
@@ -67,10 +67,10 @@
     "pk": 14,
     "fields": {
       "name": "SubscribeWorkshop",
-      "description": "",
       "type": 5,
       "header": "Erlebnisangebote",
-      "internal": false
+      "internal": false,
+      "custom": false
     }
   },
   {
@@ -78,10 +78,10 @@
     "pk": 16,
     "fields": {
       "name": "ParticipantsPersonal",
-      "description": "",
       "type": 4,
       "header": "Teilnehmende",
-      "internal": false
+      "internal": false,
+      "custom": false
     }
   },
   {
@@ -89,10 +89,10 @@
     "pk": 17,
     "fields": {
       "name": "Participants",
-      "description": "",
       "type": 4,
       "header": "Teilnehmende",
-      "internal": false
+      "internal": false,
+      "custom": false
     }
   },
   {
@@ -100,10 +100,10 @@
     "pk": 18,
     "fields": {
       "name": "Food",
-      "description": "",
       "type": 5,
       "header": "Essgewohnheiten",
-      "internal": false
+      "internal": false,
+      "custom": false
     }
   },
   {
@@ -111,10 +111,10 @@
     "pk": 19,
     "fields": {
       "name": "Summary",
-      "description": "",
       "type": 7,
       "header": "Zusammenfassung und Bestätigung",
-      "internal": false
+      "internal": false,
+      "custom": false
     }
   },
   {
@@ -122,10 +122,10 @@
     "pk": 20,
     "fields": {
       "name": "Letter",
-      "description": "",
       "type": 5,
       "header": "Nachricht an die Lagerleitung",
-      "internal": false
+      "internal": false,
+      "custom": false
     }
   },
   {
@@ -133,10 +133,45 @@
     "pk": 21,
     "fields": {
       "name": "Travel",
-      "description": "",
       "type": 5,
       "header": "Anreise",
-      "internal": false
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 22,
+    "fields": {
+      "name": "Travel",
+      "type": 5,
+      "header": "Rückreise",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 1,
+    "fields": {
+      "attribute": 14,
+      "description": "Veranstaltungsbedingungen"
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 2,
+    "fields": {
+      "attribute": 15,
+      "description": "Datenschutzhinweis"
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 3,
+    "fields": {
+      "attribute": 16,
+      "description": "Corona Hinweis"
     }
   },
   {
@@ -144,7 +179,7 @@
     "pk": 1,
     "fields": {
       "created_at": "2022-01-30T11:22:26.220Z",
-      "updated_at": "2022-02-06T20:01:05.433Z",
+      "updated_at": "2022-02-19T18:47:24.037Z",
       "name": "DPV goLd",
       "description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
       "location": 1,
@@ -156,7 +191,7 @@
       "invitation_code": "AAAA",
       "is_public": true,
       "keycloak_path": 3,
-      "keycloak_admin_path": null,
+      "keycloak_admin_path": 3,
       "registration_model": "GOSO",
       "responsible_persons": [
         2
@@ -203,7 +238,13 @@
       "ordering": 0,
       "module": 1,
       "event": 1,
-      "attributes": []
+      "required": true,
+      "overwrite_description": null,
+      "attributes": [
+        1,
+        2,
+        3
+      ]
     }
   },
   {
@@ -213,6 +254,8 @@
       "ordering": 1,
       "module": 16,
       "event": 1,
+      "required": true,
+      "overwrite_description": null,
       "attributes": []
     }
   },
@@ -223,6 +266,8 @@
       "ordering": 3,
       "module": 20,
       "event": 1,
+      "required": false,
+      "overwrite_description": null,
       "attributes": []
     }
   },
@@ -233,6 +278,8 @@
       "ordering": 4,
       "module": 19,
       "event": 1,
+      "required": true,
+      "overwrite_description": null,
       "attributes": []
     }
   },
@@ -243,20 +290,9 @@
       "ordering": 2,
       "module": 18,
       "event": 1,
+      "required": false,
+      "overwrite_description": null,
       "attributes": []
-    }
-  },
-  {
-    "model": "event.sleepinglocation",
-    "pk": 1,
-    "fields": {
-      "name": "Zeltplatz",
-      "description": "",
-      "price": "25.50",
-      "bookable_from": null,
-      "bookable_till": null,
-      "event": 1,
-      "tags": []
     }
   },
   {
@@ -266,6 +302,19 @@
       "name": "Bett",
       "description": "",
       "price": "50.50",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": 1,
+      "tags": []
+    }
+  },
+  {
+    "model": "event.sleepinglocation",
+    "pk": 3,
+    "fields": {
+      "name": "Zeltplatz",
+      "description": "",
+      "price": "25.50",
       "bookable_from": null,
       "bookable_till": null,
       "event": 1,

@@ -3,10 +3,12 @@
     <v-container>
       <v-row class="mb-6">
         <span class="subtitle-1">
-         Jetzt geht es ans eingemacht.
+          Jetzt geht es ans Eingemachte.
           Hier bestimmst du den Ablauf und die Inhalte einer Registrierung.
-          Es gibt eine Liste an Standard Elementen die du hinzufügen kannst, du kannst aber auch
-          selber elemente definieren.
+          Es gibt eine Liste an Standard Modulen die du hinzufügen kannst, du kannst aber auch
+          selber Module definieren.
+          Anhand deiner vorherigen Antworten wurden ein paar Module vorselektiert
+          und sind verpflichtend.
         </span>
       </v-row>
 
@@ -15,9 +17,25 @@
           <v-toolbar class="mb-2" color="primary" dark>
             <v-toolbar-title>Registrierungsmodule</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn>
-              Modul hinzufügen
-            </v-btn>
+            <v-menu offset-y bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="primary"
+                  dark
+                  v-bind="attrs"
+                  v-on="on">
+                  Module hinzufügen
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item
+                  v-for="(item, index) in availableModules"
+                  :key="index"
+                  @click="addModule">
+                  <v-list-item-title>{{ item.header }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
             <v-btn icon @click="action('edit')" v-if="!editing">
               <v-icon>sort</v-icon>
             </v-btn>
@@ -29,19 +47,26 @@
             </v-btn>
           </v-toolbar>
           <v-list two-line>
-            <draggable :disabled="!this.editing" v-model="items" >
+            <draggable :disabled="!this.editing"
+                       v-model="items"
+                       @change="onChanged">
               <template v-for="(moduleMapper, index) in items">
-                <v-list-item :key="moduleMapper.ID">
+                <v-list-item :key="moduleMapper.id">
                   <v-list-item-avatar color="grey">
                     <span>{{ index + 1 }}</span>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title v-html="moduleMapper.Title"/>
-                    <v-list-item-subtitle v-html="moduleMapper.Description"/>
+                    <v-list-item-title v-html="moduleMapper.module.header"/>
+                    <v-list-item-subtitle v-html="moduleMapper.module.description"/>
                   </v-list-item-content>
-                  <v-list-item-action v-if="editing">
+                  <v-list-item-action v-if="editing && !moduleMapper.required">
                     <v-btn @click="remove(index)" icon>
                       <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </v-list-item-action>
+                  <v-list-item-action v-if="editing">
+                    <v-btn icon @click="editModule(moduleMapper)">
+                      <v-icon>mdi-pencil</v-icon>
                     </v-btn>
                   </v-list-item-action>
                 </v-list-item>
@@ -50,6 +75,8 @@
           </v-list>
         </v-flex>
       </v-container>
+
+      <create-event-registration-module ref="newEventDialog" @close="onDialogClosed"/>
 
       <v-divider class="my-3"/>
 
@@ -70,15 +97,19 @@
 <script>
 import { mapGetters } from 'vuex';
 import draggable from 'vuedraggable';
+import { orderBy } from 'lodash';
 import stepMixin from '@/mixins/stepMixin';
-// import store from '@/store';
 import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
+import CreateEventRegistrationModule from '@/components/dialogs/CreateEventRegistrationModule.vue';
+import axios from 'axios';
+// import store from '@/store';
 
 export default {
   name: 'StepRegistrationOverview',
   header: 'Registrierungsübersicht',
   props: ['position', 'maxPos'],
   components: {
+    CreateEventRegistrationModule,
     PrevNextButton,
     draggable,
   },
@@ -88,67 +119,7 @@ export default {
     valid: true,
     before: null,
     editing: false,
-    itemsExample: [
-      {
-        ID: 1,
-        Title: 'Fact sheets, brochures, educational materials',
-        Ordering: 1,
-        Subtitle: '',
-      },
-      {
-        ID: 2,
-        Title: 'HHS Clearance submission',
-        Ordering: 2,
-        Subtitle: '(for campaigns, campaign products, and/or videos)',
-      },
-      {
-        ID: 3,
-        Title: 'Abstracts',
-        Ordering: 3,
-        Subtitle: '',
-      },
-      {
-        ID: 4,
-        Title: 'Non-media Blog/blog posts',
-        Ordering: 4,
-        Subtitle: '(internal or external)',
-      },
-      {
-        ID: 5,
-        Title: 'CDC Connects articles',
-        Ordering: 5,
-        Subtitle: '',
-      },
-      {
-        ID: 6,
-        Title: 'CDC.gov features',
-        Ordering: 6,
-        Subtitle: '',
-      },
-      {
-        ID: 7,
-        Title: 'Logo use/branding',
-        Ordering: 7,
-        Subtitle: '',
-      },
-      {
-        ID: 8,
-        Title: 'External newsletters',
-        Ordering: 8,
-        Subtitle: '',
-      },
-      {
-        ID: 9,
-        Title: 'Infographics',
-        Ordering: 9,
-        Subtitle: '',
-      },
-      {
-        ID: 10,
-        Title: 'Other',
-        Ordering: 10,
-        Subtitle: '',
-      }],
+    availableModules: [],
     items: [],
   }),
   computed: {
@@ -167,19 +138,31 @@ export default {
     remove(i) {
       this.$delete(this.itemsExample, i);
     },
+    onChanged(props) {
+      console.log(props);
+      this.items.forEach((item, index) => {
+        this.items[index].ordering = index;
+      });
+    },
+    onDialogClosed() {
+
+    },
+    editModule(moduleMapper) {
+      console.log(moduleMapper);
+      this.$refs.newEventDialog.openDialogEdit(moduleMapper);
+    },
+    addModule() {
+
+    },
   },
   mounted() {
-    this.items = [];
-    this.event.eventmodulemapperSet.forEach((item) => {
-      const data = {
-        ID: item.id,
-        Title: item.module.header,
-        order: item.ordering,
-        Subtitle: item.module.description,
-      };
-      console.log(data);
-      this.items.push(data);
-    });
+    this.items = orderBy(this.event.eventmodulemapperSet, 'ordering');
+    const urlAvailableModules = `${this.API_URL}/event/event/${this.event.id}/available-modules/`;
+    axios.get(urlAvailableModules)
+      .then((success) => {
+        console.log(success.data);
+        this.availableModules = success.data;
+      });
   },
 };
 </script>

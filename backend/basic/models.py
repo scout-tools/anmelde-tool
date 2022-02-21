@@ -69,6 +69,14 @@ class TimeAttribute(AbstractAttribute):
     date_field = models.DateTimeField()
 
 
+class IntegerAttribute(AbstractAttribute):
+    integer_field = models.IntegerField()
+
+
+class FloatAttribute(AbstractAttribute):
+    float_field = models.FloatField()
+
+
 class ScoutOrgaLevel(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=20)

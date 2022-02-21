@@ -56,6 +56,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
+import store from '@/store';
+import StepRegistrationOverview
+  from '@/views/eventPlaner/create/steps/StepRegistrationOverview.vue';
 import StepNameDescription from './steps/StepNameDescription.vue';
 import StepLocation from './steps/StepLocation.vue';
 import StepEventContact from './steps/StepEventContact.vue';
@@ -64,14 +68,10 @@ import StepParticipationFeeSimple from './steps/StepParticipationFeeSimple.vue';
 import StepInvitationCode from './steps/StepInvitationCode.vue';
 import StepEventTags from './steps/StepEventTags.vue';
 import StepVisibility from './steps/StepVisibility.vue';
-import apiCallsMixin from '@/mixins/apiCallsMixin';
-import store from '@/store';
 import StepParticipationFeeComplex from './steps/StepParticipationFeeComplex.vue';
 import StepEventAuthenticationInternal from './steps/StepEventAuthenticationInternal.vue';
 import StepEventAuthenticationKeycloak from './steps/StepEventAuthenticationKeycloak.vue';
 import StepEventRegistrationModel from './steps/StepEventRegistrationModel.vue';
-import StepRegistrationOverview
-  from '@/views/eventPlaner/create/steps/StepRegistrationOverview.vue';
 
 export default {
   name: 'PlanEvent',

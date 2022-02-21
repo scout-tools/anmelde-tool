@@ -6,6 +6,7 @@ import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
 import EventPlaner from '@/views/eventPlaner/Main.vue';
 import PlanEvent from '@/views/eventPlaner/create/Main.vue';
+
 // import CheckTokenMain from '@/views/login/CheckToken.vue';
 // import EventOverview from '@/views/event/overview/Overview.vue';
 // import StatisticOverview from '@/views/statistic/Main.vue';
@@ -25,11 +26,17 @@ const routes = [
     path: '/eventplaner',
     name: 'eventPlaner',
     component: EventPlaner,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/planevent/:id/:step?',
     name: 'planEvent',
     component: PlanEvent,
+    meta: {
+      requiresAuth: true,
+    },
   },
   // {
   //   path: '/check-token',
@@ -51,6 +58,9 @@ const routes = [
     path: '/settings/user',
     name: 'settingsUser',
     component: SettingsUser,
+    meta: {
+      requiresAuth: true,
+    },
   },
   // {
   //   path: '/statistic/:id',
@@ -86,6 +96,29 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+function sleep(ms) {
+  // eslint-disable-next-line no-promise-executor-return
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    // We wait for Keycloak init, then we can call all methods safely
+    while (router.app.$keycloak.createLoginUrl === null) {
+      // eslint-disable-next-line no-await-in-loop
+      await sleep(100);
+    }
+    if (router.app.$keycloak.authenticated) {
+      next();
+    } else {
+      const loginUrl = router.app.$keycloak.createLoginUrl();
+      window.location.replace(loginUrl);
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

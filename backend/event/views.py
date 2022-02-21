@@ -5,9 +5,11 @@ from rest_framework.exceptions import PermissionDenied, NotFound, MethodNotAllow
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from event.models import Event, EventLocation, SleepingLocation, RegistrationType
+from basic.serializers import AbstractAttributeSerializer, AbstractAttributePolymorphicSerializer
+from event.models import Event, EventLocation, SleepingLocation, RegistrationType, AttributeEventModuleMapper
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
-    EventCompleteSerializer, SleepingLocationSerializer
+    EventCompleteSerializer, SleepingLocationSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
+    EventModuleSerializer, AttributeEventModuleMapperSerializer
 
 
 class EventLocationViewSet(viewsets.ModelViewSet):
@@ -91,3 +93,49 @@ class RegistrationTypeViewSet(viewsets.ViewSet):
 
     def list(self, request, pk=None):
         return Response(RegistrationType.choices, status=status.HTTP_200_OK)
+
+
+class EventModulesMapperViewSet(viewsets.ModelViewSet):
+    # permission_classes = [IsAuthenticated]
+    serializer_class = EventModuleMapperSerializer
+    queryset = EventModuleMapper.objects.all()
+
+
+class EventModulesViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = EventModuleSerializer
+    queryset = EventModule.objects.all()
+
+
+class AvailableEventModulesViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = EventModuleSerializer
+
+    def get_queryset(self):
+        event_id = self.kwargs.get("event_pk", None)
+        mapper = EventModuleMapper.objects.filter(event=event_id).values_list('module_id', flat=True)
+        return EventModule.objects.exclude(id__in=mapper)
+
+
+class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
+    # permission_classes = [IsAuthenticated]
+    serializer_class = AttributeEventModuleMapperSerializer
+
+    def get_queryset(self):
+        mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
+        mapper = EventModuleMapper.objects.get(id=mapper_id)
+        return mapper.attributes.all()
+
+
+# class EventModuleAttributeViewSet(viewsets.ModelViewSet):
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = AbstractAttributePolymorphicSerializer
+#
+#     def get_queryset(self):
+#         mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
+#         mapper = EventModuleMapper.objects.get(id=mapper_id)
+#         attributes = []
+#         for attr in mapper.attributes.all():
+#             attributes.append(attr.attribute)
+#         return attributes
+

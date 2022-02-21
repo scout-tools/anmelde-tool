@@ -7,8 +7,9 @@ from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import ScoutHierarchy, ZipCode, Tag, TagType
-from .serializers import ScoutHierarchySerializer, ZipCodeSerializer, TagShortSerializer, TagTypeShortSerializer
+from .models import ScoutHierarchy, ZipCode, Tag, TagType, AbstractAttribute
+from .serializers import ScoutHierarchySerializer, ZipCodeSerializer, TagShortSerializer, TagTypeShortSerializer, \
+    AbstractAttributeSerializer, BooleanAttributeSerializer, AbstractAttributePolymorphicSerializer
 
 
 def get_dataset(kwargs, pk, dataset):
@@ -62,3 +63,9 @@ class TagTypeViewSet(viewsets.ModelViewSet):
     filter_backends = [SearchFilter, ]
     search_fields = ['name', ]
     ordering_fields = ['id', ]
+
+
+class AttributeViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = AbstractAttribute.objects.all()
+    serializer_class = AbstractAttributePolymorphicSerializer

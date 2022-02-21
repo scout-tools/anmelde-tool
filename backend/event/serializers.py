@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from rest_framework.authtoken.admin import User
 
-from basic.serializers import TagShortSerializer, ZipCodeSerializer
-from .models import Event, EventLocation, SleepingLocation, EventModuleMapper, EventModule
+from basic.serializers import TagShortSerializer, ZipCodeSerializer, AbstractAttributePolymorphicSerializer
+from .models import Event, EventLocation, SleepingLocation, EventModuleMapper, EventModule, AttributeEventModuleMapper
 
 
 class EventLocationGetSerializer(serializers.ModelSerializer):
@@ -58,10 +58,10 @@ class EventModuleMapperShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EventModuleMapper
-        fields = ('ordering', 'module')
+        fields = ('ordering', 'module', 'required')
 
 
-class EventModuleMapperSerializer(serializers.ModelSerializer):
+class EventModuleMapperGetSerializer(serializers.ModelSerializer):
     module = EventModuleSerializer(read_only=True)
 
     class Meta:
@@ -69,8 +69,14 @@ class EventModuleMapperSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class EventModuleMapperSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventModuleMapper
+        fields = '__all__'
+
+
 class EventCompleteSerializer(serializers.ModelSerializer):
-    eventmodulemapper_set = EventModuleMapperSerializer(many=True, read_only=True)
+    eventmodulemapper_set = EventModuleMapperGetSerializer(many=True, read_only=True)
     responsible_persons = serializers.SlugRelatedField(
         many=True,
         read_only=True,
@@ -90,4 +96,12 @@ class EventPlanerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
+        fields = '__all__'
+
+
+class AttributeEventModuleMapperSerializer(serializers.ModelSerializer):
+    attribute = AbstractAttributePolymorphicSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = AttributeEventModuleMapper
         fields = '__all__'
