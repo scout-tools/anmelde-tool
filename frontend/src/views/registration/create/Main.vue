@@ -58,11 +58,13 @@ import LoadingCircual from '@/components/loading/Circual.vue';
 
 import StepConfirm from './steps/00-Common/StepConfirm.vue';
 import StepConsent from './steps/00-Common/StepConsent.vue';
+import StepConsentSwitch from './steps/00-Common/StepConsentSwitch.vue';
 import StepFood from './steps/00-Common/StepFood.vue';
 import StepFreeText from './steps/00-Common/StepFreeText.vue';
 import AddContract from './steps/00-Common/AddContract.vue';
 import StepTents from './steps/00-Common/StepTents.vue';
-import StepTravel from './steps/00-Common/StepTravel.vue';
+import StepArrivalMethod from './steps/00-Common/StepArrivalMethod.vue';
+import StepArrivalTime from './steps/00-Common/StepArrivalTime.vue';
 
 import StepAddParticipantsSingle from './steps/01-MosaikBundesfahrt21/StepAddParticipantsSingle.vue';
 import StepTravelBundesfahrt from './steps/01-MosaikBundesfahrt21/StepTravelBundesfahrt.vue';
@@ -80,6 +82,11 @@ import StepWorkshop from './steps/03-BusiFe21/StepWorkshop.vue';
 import StepConfirmBusife from './steps/03-BusiFe21/StepConfirmBusife.vue';
 
 import DpvGoldErlebnisangebot from './steps/04-DpvGoldErlebnisangebot21/StepErlegbnisAngebot.vue';
+
+// Bundesfahrt 2022 (id=8)
+import StepLunchPacket from './steps/08-MosaikBundesfahrt22/StepLunchPacket.vue';
+import StepShirt from './steps/08-MosaikBundesfahrt22/StepShirt.vue';
+import StepAddParticipantsSingleBundesfahrt from './steps/08-MosaikBundesfahrt22/StepAddParticipantsSingle.vue';
 
 export default {
   components: {
@@ -102,7 +109,9 @@ export default {
     DpvGoldErlebnisangebot,
     AddContract,
     StepTents,
-    StepTravel,
+    StepArrivalMethod,
+    StepArrivalTime,
+    StepAddParticipantsSingleBundesfahrt,
   },
   props: ['scoutOrganisation'],
   data() {
@@ -126,17 +135,18 @@ export default {
       return this.$route.params.id;
     },
     steps() {
-      // Bundesfahrt
+      // DPV-Gold
       if (
         this.currentEvent && // eslint-disable-line
         this.currentEvent.eventTags && // eslint-disable-line
         this.currentEvent.eventTags.includes(1)
       ) {
         return [
-          StepConsent,
+          StepConsentSwitch,
           StepAddParticipantsSingle,
           StepTents,
-          StepTravel,
+          StepArrivalMethod,
+          StepArrivalTime,
           StepFreeText,
           StepConfirmBusife,
         ];
@@ -168,6 +178,22 @@ export default {
           StepConsent,
           DpvGoldErlebnisangebot,
           AddContract,
+          StepFreeText,
+          StepConfirm,
+        ];
+      }
+      // Bundesfahrt 22
+      if (
+        this.currentEvent && // eslint-disable-line
+        this.currentEvent.eventTags && // eslint-disable-line
+        this.currentEvent.eventTags.includes(8)
+      ) {
+        return [
+          StepConsent,
+          StepAddParticipantsSingleBundesfahrt,
+          StepArrivalMethod,
+          StepShirt,
+          StepLunchPacket,
           StepFreeText,
           StepConfirm,
         ];

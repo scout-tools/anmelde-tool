@@ -63,7 +63,7 @@
       <v-divider/>
       <v-row>
         <v-col>
-          <v-btn color="success" @click="this.addTent">
+          <v-btn color="secondary" @click="this.addTent">
             <v-icon>mdi-plus</v-icon>
             Weiteres Zelt
           </v-btn>

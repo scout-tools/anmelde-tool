@@ -3,7 +3,7 @@
     class="bg"
     :style="{
       'background-image':
-        'url(' + require('@/assets/dpvgold/foto_burg_ludwigstein_1.jpeg') + ')',
+        'url(' + require(`@/assets/${this.theme}/image2.jpg`) + ')',
     }"
   >
     <v-container fill-height fluid>
@@ -164,6 +164,7 @@
 import axios from 'axios';
 import { validationMixin } from 'vuelidate';
 import { email, required } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
 
 export default {
   mixins: [validationMixin],
@@ -198,6 +199,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['theme']),
     emailError() {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;

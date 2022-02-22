@@ -4,7 +4,9 @@ import CheckTokenMain from '@/views/login/CheckToken.vue';
 import EventOverview from '@/views/event/overview/Overview.vue';
 import EventAdminOverview from '@/views/event/admin/Overview.vue';
 import MasterDataOverview from '@/views/event/data/Overview.vue';
+import SettingsOverview from '@/views/settings/Main.vue';
 import SettingsUser from '@/views/settings/user/Main.vue';
+import SettingsConfig from '@/views/settings/config/Main.vue';
 import StatisticOverview from '@/views/statistic/Main.vue';
 import RegistrationForm from '@/views/registration/Main.vue';
 import RegistrationCreate from '@/views/registration/create/Main.vue';
@@ -65,9 +67,19 @@ const routes = [
     component: MasterDataOverview,
   },
   {
+    path: '/settings/overview',
+    name: 'settingsOverview',
+    component: SettingsOverview,
+  },
+  {
     path: '/settings/user',
     name: 'settingsUser',
     component: SettingsUser,
+  },
+  {
+    path: '/settings/config',
+    name: 'settingsConfig',
+    component: SettingsConfig,
   },
   {
     path: '/statistic/:id',

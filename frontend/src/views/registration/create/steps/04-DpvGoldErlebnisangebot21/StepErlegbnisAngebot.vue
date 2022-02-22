@@ -13,7 +13,7 @@
         >
         schauen.
       </p>
-      <v-btn class="ma-2" color="success" @click="newAG">
+      <v-btn class="ma-2" color="secondary" @click="newAG">
         <v-icon left> mdi-plus </v-icon>
         Erlebnisangebot hinzufügen
       </v-btn>

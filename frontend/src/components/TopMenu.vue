@@ -1,47 +1,41 @@
 <template>
   <v-app-bar app color="primary" dark absolute>
-    <v-tabs background-color="primary" centered dark icons-and-text>
+    <v-tabs background-color="primary" v-model="tab" centered dark icons-and-text>
       <v-tab>
         <router-link to="/">
-          <img
-            :src="logoPath"
-            height="55"
-            alt="Logo"
-            class="logo-img mx-2"
-          />
+          <img :src="logoPath" height="55" alt="Logo" class="logo-img mx-2" />
         </router-link>
       </v-tab>
 
       <v-spacer></v-spacer>
       <v-tab
+        :to="{ name: 'eventOverview' }"
         v-if="isAuthenticated"
-        @click="$router.push({ name: 'eventOverview' })"
       >
         Meine Anmeldungen
         <v-icon>mdi-view-list</v-icon>
       </v-tab>
       <v-tab
+        :to="{ name: 'eventAdminOverview' }"
         v-if="isAuthenticated"
-        @click="$router.push({ name: 'eventAdminOverview' })"
       >
         Meine Fahrten
         <v-icon>mdi-account-key</v-icon>
       </v-tab>
       <v-tab
+        :to="{ name: 'dataOverview' }"
         v-if="isAuthenticated && !isSimpleUser"
-        @click="$router.push({ name: 'dataOverview' })"
       >
         Meine Daten
         <v-icon>mdi-chart-bar</v-icon>
       </v-tab>
       <v-spacer></v-spacer>
       <v-tab
+        :to="{ name: 'settingsOverview' }"
         v-if="isAuthenticated"
-        @click="$router.push({ name: 'settingsUser' })"
       >
         Mein Profil
         <v-icon>mdi-account-circle</v-icon>
-
       </v-tab>
     </v-tabs>
   </v-app-bar>
@@ -53,17 +47,19 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'TopMenu',
 
-  data: () => ({}),
+  data: () => ({
+    tab: null,
+  }),
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData']),
+    ...mapGetters(['isAuthenticated', 'getJwtData', 'theme']),
     userName() {
       return this.getJwtData.email;
     },
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
-        return require('../assets/dpvgold/dpv-gold-logo-test-simple.png'); // eslint-disable-line
+        return require(`@/assets/${this.theme}/logo-dev.png`); // eslint-disable-line
       }
-      return require('../assets/dpvgold/dpv-gold-logo-white_simple.png'); // eslint-disable-line
+      return require(`@/assets/${this.theme}/logo.png`); // eslint-disable-line
     },
     isSimpleUser() {
       if (this.getJwtData) {

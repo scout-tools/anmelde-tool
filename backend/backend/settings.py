@@ -216,7 +216,7 @@ if env.bool('USE_SES'):
     AWS_SES_SECRET_ACCESS_KEY = env('AWS_SES_SECRET_ACCESS_KEY')
     AWS_SES_REGION_NAME = 'eu-central-1'
     AWS_SES_REGION_ENDPOINT = 'email.eu-central-1.amazonaws.com'
-    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER') # todo: remove
 
 REST_USE_JWT = True
 

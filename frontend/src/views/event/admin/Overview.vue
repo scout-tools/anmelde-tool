@@ -158,9 +158,7 @@ export default {
     },
   },
   methods: {
-    isNotAlreadyRegistered(item) {
-      console.log(item);
-      console.log(!item.isRegistered.length);
+    isNotAlreadyRegistered() {
       return false;
     },
     onEventEditClicked(id) {
@@ -176,7 +174,6 @@ export default {
       return header;
     },
     getRegisteredId(item) {
-      console.log(item);
       if (
         item && // eslint-disable-line
         item.isRegistered && // eslint-disable-line

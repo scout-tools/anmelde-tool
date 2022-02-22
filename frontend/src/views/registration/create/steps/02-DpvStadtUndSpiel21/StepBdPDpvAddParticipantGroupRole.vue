@@ -29,7 +29,7 @@
             </v-slider>
             <v-row class="ml-5">
               <p>
-                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                <v-icon color="info" dark> mdi-help-circle-outline </v-icon>
                 {{ tooltip.normal }}
               </p>
             </v-row>
@@ -49,7 +49,7 @@
             />
             <v-row class="ml-5">
               <p>
-                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                <v-icon color="info" dark> mdi-help-circle-outline </v-icon>
                 {{ tooltip.groupLeader }}
               </p>
             </v-row>
@@ -69,7 +69,7 @@
             />
             <v-row class="ml-5">
               <p>
-                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                <v-icon color="info" dark> mdi-help-circle-outline </v-icon>
                 {{ tooltip.stammes }}
               </p>
             </v-row>
@@ -89,7 +89,7 @@
             />
             <v-row class="ml-5">
               <p>
-                <v-icon color="success" dark> mdi-help-circle-outline </v-icon>
+                <v-icon color="info" dark> mdi-help-circle-outline </v-icon>
                 {{ tooltip.helper }}
               </p>
             </v-row>

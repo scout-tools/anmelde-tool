@@ -17,7 +17,7 @@
           Link zur Beispiel Excel Datei
         </a>
       </p>
-      <v-btn class="ma-2" color="success" @click="newUser">
+      <v-btn class="ma-2" color="secondary" @click="newUser">
         <v-icon left> mdi-plus </v-icon>
         Teilnehmer_innen hinzufügen
       </v-btn>

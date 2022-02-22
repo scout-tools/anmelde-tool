@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <v-parallax :src="require('@/assets/dpvgold/foto_burg_ludwigstein_2.jpeg')">
+      <v-parallax :src="image1Path">
         <v-layout column align-center justify-center class="white--text">
           <h1
             class="white--text mb-2 display-1"
@@ -17,7 +17,7 @@
           </div>
           <v-btn
             class="mt-10"
-            color="success"
+            color="secondary"
             x-large
             @click="$router.push({ name: 'loginParticipants' })"
           >
@@ -53,8 +53,8 @@
         </v-flex>
         <v-flex xs12 class="mb-12">
           <v-container grid-list-xl class="mb-12">
-            <v-layout row wrap align-center>
-              <v-flex xs12 md4>
+            <v-row>
+              <v-col cols="4">
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
                     <div class="headline text-xs-center">
@@ -71,8 +71,8 @@
                     Anmeldeschluss einfach noch schnell angepasst werden.
                   </v-card-text>
                 </v-card>
-              </v-flex>
-              <v-flex xs12 md4>
+              </v-col>
+              <v-col cols="4">
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
                     <div class="headline">
@@ -87,8 +87,8 @@
                     Anmeldung über das Anmelde-Tool ist immer vollständig.
                   </v-card-text>
                 </v-card>
-              </v-flex>
-              <v-flex xs12 md4>
+              </v-col>
+              <v-col cols="4">
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
                     <div class="headline text-xs-center">
@@ -102,8 +102,8 @@
                     sobald sie nicht mehr gebraucht werden.
                   </v-card-text>
                 </v-card>
-              </v-flex>
-            </v-layout>
+              </v-col>
+            </v-row>
           </v-container>
         </v-flex>
       </v-layout>
@@ -112,6 +112,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data: () => ({
     title: 'Endorfine',
@@ -119,11 +121,15 @@ export default {
     subscribed: false,
   }),
   computed: {
+    ...mapGetters(['theme']),
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
-        return require('./../../assets/dpvgold/dpv-gold-logo-test-simple.png'); // eslint-disable-line
+        return require(`./../../assets/${this.theme}/logo-dev.png`); // eslint-disable-line
       }
-      return require('./../../assets/dpvgold/dpv-gold-logo-black.png'); // eslint-disable-line
+      return require(`./../../assets/${this.theme}/logo.png`); // eslint-disable-line
+    },
+    image1Path() {
+      return require(`./../../assets/${this.theme}/image1.jpg`); // eslint-disable-line
     },
   },
 };

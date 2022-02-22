@@ -34,7 +34,7 @@
                 <template slot="append">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                      <v-icon color="info" dark v-bind="attrs" v-on="on">
                         mdi-help-circle-outline
                       </v-icon>
                     </template>
@@ -76,7 +76,7 @@
                 <template slot="append">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                      <v-icon color="info" dark v-bind="attrs" v-on="on">
                         mdi-help-circle-outline
                       </v-icon>
                     </template>
@@ -108,7 +108,7 @@
                 <template slot="append">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
+                      <v-icon color="info" dark v-bind="attrs" v-on="on">
                         mdi-help-circle-outline
                       </v-icon>
                     </template>
@@ -124,7 +124,7 @@
             </v-col>
           </v-row>
           <v-divider class="my-3" />
-          <v-btn color="success" @click="onClickOkay"> Speichern </v-btn>
+          <v-btn color="secondary" @click="onClickOkay"> Speichern </v-btn>
         </v-form>
       </v-container>
       <v-divider class="my-4" />

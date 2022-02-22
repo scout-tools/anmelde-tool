@@ -75,7 +75,6 @@ export default {
       const response = await Promise.all(
         [this.loadParticipants(), this.loadWorkshops()],
       );
-      console.log(response);
       this.participantCount = response[0][0].participantpersonalSet.length;
       this.workshopCount = response[1].length;
       this.isLoading = false;

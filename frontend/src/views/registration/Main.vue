@@ -157,7 +157,7 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
-                      <v-btn color="success" @click="onSaveClicked">
+                      <v-btn color="secondary" @click="onSaveClicked">
                         <v-icon left dark>mdi-check</v-icon>
                         Anmeldung starten
                       </v-btn>

@@ -21,7 +21,7 @@
             target="_blank"
             style="color: blue"
             href="https://cloud.dpvonline.de/s/fMMrgfpf5dAm9Fg"
-            >Link zur DPV-Cloud</a
+            >Link zur Cloud</a
           >
         </v-header>
         <v-card class="ma-4 pa-3">
