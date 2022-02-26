@@ -6,7 +6,7 @@ from rest_framework.exceptions import PermissionDenied, NotFound, MethodNotAllow
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from basic.serializers import AbstractAttributeSerializer, AbstractAttributePolymorphicSerializer
+from basic.models import ScoutHierarchy
 from event.models import Event, EventLocation, SleepingLocation, RegistrationType, AttributeEventModuleMapper
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
     EventCompleteSerializer, SleepingLocationSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
@@ -133,4 +133,10 @@ class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = EventOverviewSerializer
 
     def get_queryset(self):
-        return Event.objects.filter(is_public=True, end_time__gte=timezone.now())
+        list_parent_organistations = []
+        iterator: ScoutHierarchy = self.request.user.userextended.scout_organisation
+        while iterator is not None:
+            list_parent_organistations.append(iterator)
+            iterator = iterator.parent
+        return Event.objects.filter(is_public=True, end_time__gte=timezone.now(),
+                                    limited_registration_hierarchy__in=list_parent_organistations)
