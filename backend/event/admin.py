@@ -1,8 +1,6 @@
 from django.contrib import admin
-from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
-
 from event.models import EventLocation, Event, SleepingLocation, EventModule, EventModuleMapper, \
-    AttributeEventModuleMapper
+    AttributeEventModuleMapper, StandardEventInstance
 
 
 @admin.register(EventLocation)
@@ -35,9 +33,17 @@ class EventModuleAdmin(admin.ModelAdmin):
 
 @admin.register(EventModuleMapper)
 class EventModuleMapperAdmin(admin.ModelAdmin):
-    list_display = ('module', 'ordering')
+    list_display = ('id', 'standard', 'module', 'ordering')
+    search_fields = ('module',)
 
 
 @admin.register(AttributeEventModuleMapper)
 class AttributeEventModuleMapperAdmin(admin.ModelAdmin):
     list_display = ('attribute',)
+
+
+@admin.register(StandardEventInstance)
+class StandardEventInstanceAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('event', 'name', 'introduction', 'confirmation', 'group_registration', 'personal_registration')
+    autocomplete_fields = ('event', 'introduction', 'confirmation', 'group_registration', 'personal_registration')

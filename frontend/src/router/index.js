@@ -6,9 +6,8 @@ import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
 import EventPlaner from '@/views/eventPlaner/Main.vue';
 import PlanEvent from '@/views/eventPlaner/create/Main.vue';
-
+import EventOverview from '@/views/event/overview/Overview.vue';
 // import CheckTokenMain from '@/views/login/CheckToken.vue';
-// import EventOverview from '@/views/event/overview/Overview.vue';
 // import StatisticOverview from '@/views/statistic/Main.vue';
 // import RegistrationForm from '@/views/registration/Main.vue';
 // import RegistrationCreate from '@/views/registration/create/Main.vue';
@@ -49,11 +48,14 @@ const routes = [
   //   component: CreateEvent,
   //   props: true,
   // },
-  // {
-  //   path: '/event/overview',
-  //   name: 'eventOverview',
-  //   component: EventOverview,
-  // },
+  {
+    path: '/event/overview',
+    name: 'eventOverview',
+    component: EventOverview,
+    meta: {
+      requiresAuth: true,
+    },
+  },
   {
     path: '/settings/user',
     name: 'settingsUser',

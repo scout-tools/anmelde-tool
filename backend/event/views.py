@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status
 from rest_framework.exceptions import PermissionDenied, NotFound, MethodNotAllowed
@@ -9,7 +10,7 @@ from basic.serializers import AbstractAttributeSerializer, AbstractAttributePoly
 from event.models import Event, EventLocation, SleepingLocation, RegistrationType, AttributeEventModuleMapper
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
     EventCompleteSerializer, SleepingLocationSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
-    EventModuleSerializer, AttributeEventModuleMapperSerializer
+    EventModuleSerializer, AttributeEventModuleMapperSerializer, EventOverviewSerializer
 
 
 class EventLocationViewSet(viewsets.ModelViewSet):
@@ -118,7 +119,7 @@ class AvailableEventModulesViewSet(viewsets.ModelViewSet):
 
 
 class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = AttributeEventModuleMapperSerializer
 
     def get_queryset(self):
@@ -127,15 +128,9 @@ class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
         return mapper.attributes.all()
 
 
-# class EventModuleAttributeViewSet(viewsets.ModelViewSet):
-#     permission_classes = [IsAuthenticated]
-#     serializer_class = AbstractAttributePolymorphicSerializer
-#
-#     def get_queryset(self):
-#         mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
-#         mapper = EventModuleMapper.objects.get(id=mapper_id)
-#         attributes = []
-#         for attr in mapper.attributes.all():
-#             attributes.append(attr.attribute)
-#         return attributes
+class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = EventOverviewSerializer
 
+    def get_queryset(self):
+        return Event.objects.filter(is_public=True, end_time__gte=timezone.now())

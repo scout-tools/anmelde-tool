@@ -2,6 +2,22 @@ from colorfield.fields import ColorField
 from django.contrib.auth.models import User
 from django.db import models
 from polymorphic.models import PolymorphicModel
+from django.utils.translation import gettext_lazy as _
+
+
+class TravelType(models.TextChoices):
+    Train = 'T', _('Bahn')
+    Bus = 'B', _('Reisebus')
+    Car = 'C', _('PKW')
+    Other = 'O', _('Sonstiges')
+
+
+class TravelSlots(models.TextChoices):
+    Early = 'E', _('16:00-18:00')
+    Normal = 'N', _('18:00-20:00')
+    Late = 'L', _('20:00-22:00')
+    SuperLate = 'SL', _('22:00-24:00')
+    Other = 'O', _('Noch Später')
 
 
 class TimeStampMixin(models.Model):
@@ -70,11 +86,16 @@ class TimeAttribute(AbstractAttribute):
 
 
 class IntegerAttribute(AbstractAttribute):
-    integer_field = models.IntegerField()
+    integer_field = models.IntegerField(default=0)
 
 
 class FloatAttribute(AbstractAttribute):
     float_field = models.FloatField()
+
+
+class TravelAttribute(AbstractAttribute):
+    type_field = models.CharField(max_length=1, choices=TravelType.choices, null=True, blank=True)
+    time_field = models.CharField(max_length=2, choices=TravelSlots.choices, null=True, blank=True)
 
 
 class ScoutOrgaLevel(TimeStampMixin):

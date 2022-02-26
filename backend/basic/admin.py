@@ -2,7 +2,7 @@ from django.contrib import admin
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
 from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, TagType, AbstractAttribute, Tag, \
-    BooleanAttribute, TimeAttribute
+    BooleanAttribute, TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute
 
 admin.site.register(ScoutOrgaLevel)
 
@@ -50,9 +50,24 @@ class EventTagAdmin(AbstractAttributeChildAdmin):
     base_model = Tag
 
 
+@admin.register(IntegerAttribute)
+class IntegerAttributeAdmin(AbstractAttributeChildAdmin):
+    base_model = IntegerAttribute
+
+
+@admin.register(FloatAttribute)
+class FloatAttributeAdmin(AbstractAttributeChildAdmin):
+    base_model = FloatAttribute
+
+
+@admin.register(TravelAttribute)
+class TravelAttributeAdmin(AbstractAttributeChildAdmin):
+    base_model = TravelAttribute
+
+
 @admin.register(AbstractAttribute)
 class AbstractAttributeParentAdmin(PolymorphicParentModelAdmin):
     """ The parent model admin """
     base_model = AbstractAttribute  # Optional, explicitly set here.
-    child_models = (Tag, BooleanAttribute, TimeAttribute)
+    child_models = (Tag, BooleanAttribute, TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute)
     list_filter = (PolymorphicChildModelFilter,)  # This is optional.

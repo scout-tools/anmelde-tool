@@ -6,6 +6,14 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/`;
       return axios.get(path);
     },
+    async getEventPlanerOverview() {
+      const path = `${process.env.VUE_APP_API}/event/event-planer-overview/`;
+      return axios.get(path);
+    },
+    async getEventOverview() {
+      const path = `${process.env.VUE_APP_API}/event/event-overview/`;
+      return axios.get(path);
+    },
     async updateEvent(eventId, data) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/`;
       return axios.put(path, data);

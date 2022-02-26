@@ -87,9 +87,11 @@
 import { mapGetters } from 'vuex';
 import axios from 'axios';
 import moment from 'moment';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
   name: 'Main',
+  mixins: [apiCallsMixin],
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     items: [],
@@ -112,11 +114,6 @@ export default {
     ...mapGetters(['isAuthenticated', 'getJwtData']),
   },
   methods: {
-    async getEventPlanerOverview() {
-      const path = `${this.API_URL}/event/event-planer-overview/`;
-      const response = await axios.get(path);
-      return response;
-    },
     getLagerText(item) {
       const startTime = new Date(item.startTime);
       const endTime = new Date(item.endTime);
@@ -168,6 +165,13 @@ export default {
     this.getEventPlanerOverview()
       .then((respone) => {
         this.items = respone.data;
+      })
+      .catch(() => {
+        this.$root.globalSnackbar.show({
+          message: 'Leider ist ein Problem beim anzeigen der Events aufgetreten, '
+            + 'bitte probiere es später nocheinmal.',
+          color: 'error',
+        });
       })
       .finally(() => {
         this.isLoading = false;

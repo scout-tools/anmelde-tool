@@ -1,16 +1,14 @@
 from django.contrib.auth.models import User, Group
 from django.db import models
-from polymorphic.models import PolymorphicModel
 from django.utils.translation import gettext_lazy as _
 
 from basic.models import ZipCode, Tag, AbstractAttribute, AttributeDescription, TimeStampMixin, ScoutHierarchy, TagType
 
 
 class RegistrationType(models.TextChoices):
-    SingleOnly = 'SO', _('Single Only')
-    GroupOnly = 'GO', _('Groups Only')
-    GroupsOptionalSingleOptional = 'GOSO', _('Groups Optional, Single Optional')
-    GroupsRequiredSingleOptional = 'GRSO', _('Groups Required Single Optional')
+    No = 'N', _('No')
+    Optional = 'O', _('Optional')
+    Required = 'R', _('Required')
 
 
 class EventLocation(TimeStampMixin):
@@ -43,9 +41,13 @@ class EventModule(models.Model):
 
 
 class AttributeEventModuleMapper(models.Model):
+    """
+    if the is_required is set to True the user has explicity do a choice or has to confirm smth.
+    """
     id = models.AutoField(primary_key=True)
     attribute = models.ForeignKey(AbstractAttribute, on_delete=models.PROTECT, null=True)
     description = models.CharField(max_length=1000, null=True)
+    is_required = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.description}'
@@ -69,14 +71,22 @@ class Event(TimeStampMixin):
     keycloak_admin_path = models.ForeignKey(Group, blank=True, on_delete=models.SET_NULL, null=True,
                                             related_name='keycloak_admin_group')
     tags = models.ManyToManyField(Tag, blank=True)
-    registration_model = models.CharField(max_length=4, choices=RegistrationType.choices,
-                                          default=RegistrationType.GroupOnly)
+    limited_registration_hierarchy = models.ForeignKey(ScoutHierarchy, default=493, on_delete=models.SET_DEFAULT)
+    single_registration = models.BooleanField(default=False)
+    group_registration = models.CharField(max_length=1, choices=RegistrationType.choices,
+                                          default=RegistrationType.No)
+    personal_data_required = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name}: {self.start_time} - {self.end_time}, {self.location}"
 
 
 class EventModuleMapper(models.Model):
+    """
+    - a standard module is a prefinded module which will be used
+     for creating new events containing a predefined set of modules
+    - when the required flag is set, this module cannot be deleted/changed by user by hand i.e. in the modules overview
+    """
     id = models.AutoField(primary_key=True)
     ordering = models.IntegerField(default=999, auto_created=True)
     module = models.ForeignKey(EventModule, on_delete=models.PROTECT, null=True, blank=True)
@@ -84,9 +94,10 @@ class EventModuleMapper(models.Model):
     event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
     required = models.BooleanField(default=False)
     overwrite_description = models.CharField(max_length=1000, null=True, blank=True)
+    standard = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.ordering}: {self.module.name}'
+        return f'{self.ordering}: {self.module.name}, {self.standard=}'
 
 
 class SleepingLocation(models.Model):
@@ -111,6 +122,7 @@ class Registration(TimeStampMixin):
     is_accepted = models.BooleanField(default=0)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
     tags = models.ManyToManyField(Tag)
+    personal = models.BooleanField(default=False)
 
 
 class RegistrationParticipant(TimeStampMixin):
@@ -151,3 +163,20 @@ class WorkshopParticipant(TimeStampMixin):
     id = models.AutoField(primary_key=True)
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True)
     participant = models.ForeignKey(RegistrationParticipant, on_delete=models.CASCADE, null=True)
+
+
+class StandardEventInstance(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL, related_name='event')
+    introduction = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
+                                     related_name='introduction')
+    confirmation = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
+                                     related_name='confirmation')
+    group_registration = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
+                                           related_name='group_registration')
+    personal_registration = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
+                                              related_name='personal_registration')
+    letter = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
+                               related_name='letter')
+    other_modules = models.ManyToManyField(EventModuleMapper, blank=True, related_name='other_modules')

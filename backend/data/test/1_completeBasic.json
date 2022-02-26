@@ -291,6 +291,78 @@
     }
   },
   {
+    "model": "basic.abstractattribute",
+    "pk": 17,
+    "fields": {
+      "polymorphic_ctype": 30,
+      "name": "Kothenstangen",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wie viele Stangen für Kothen benötigt ihr?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 18,
+    "fields": {
+      "polymorphic_ctype": 30,
+      "name": "Kothen",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wie viele Kothen bringt ihr mit?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 19,
+    "fields": {
+      "polymorphic_ctype": 30,
+      "name": "Jurten",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wie viele Jurten bringt ihr mit"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 20,
+    "fields": {
+      "polymorphic_ctype": 30,
+      "name": "Jurtenstangen",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wie viele  Stangen benötigt ihr für eure Jurten?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 21,
+    "fields": {
+      "polymorphic_ctype": 35,
+      "name": "Anreise",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wann und womit werden ihr anreisen?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 22,
+    "fields": {
+      "polymorphic_ctype": 35,
+      "name": "Abreise",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wann und womit werdet ihr abreisen?"
+    }
+  },
+  {
     "model": "basic.tag",
     "pk": 1,
     "fields": {}
@@ -374,6 +446,50 @@
     "pk": 16,
     "fields": {
       "boolean_field": false
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 17,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 18,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 19,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 20,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.travelattribute",
+    "pk": 21,
+    "fields": {
+      "type_field": null,
+      "time_field": null
+    }
+  },
+  {
+    "model": "basic.travelattribute",
+    "pk": 22,
+    "fields": {
+      "type_field": null,
+      "time_field": null
     }
   }
 ]
