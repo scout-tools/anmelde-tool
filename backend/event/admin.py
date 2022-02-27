@@ -1,6 +1,6 @@
 from django.contrib import admin
 from event.models import EventLocation, Event, SleepingLocation, EventModule, EventModuleMapper, \
-    AttributeEventModuleMapper, StandardEventInstance
+    AttributeEventModuleMapper, StandardEventTemplate
 
 
 @admin.register(EventLocation)
@@ -42,8 +42,18 @@ class AttributeEventModuleMapperAdmin(admin.ModelAdmin):
     list_display = ('attribute',)
 
 
-@admin.register(StandardEventInstance)
-class StandardEventInstanceAdmin(admin.ModelAdmin):
+@admin.register(StandardEventTemplate)
+class StandardEventTemplateAdmin(admin.ModelAdmin):
     list_display = ('name',)
-    search_fields = ('event', 'name', 'introduction', 'confirmation', 'group_registration', 'personal_registration')
-    autocomplete_fields = ('event', 'introduction', 'confirmation', 'group_registration', 'personal_registration')
+    search_fields = ('event', 'name')
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(StandardEventTemplateAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['introduction'].queryset = EventModuleMapper.objects.exclude(standard=False)
+        form.base_fields['summary'].queryset = EventModuleMapper.objects.exclude(standard=False)
+        form.base_fields['registration'].queryset = EventModuleMapper.objects.exclude(standard=False)
+        form.base_fields['personal_registration'].queryset = EventModuleMapper.objects.exclude(standard=False)
+        form.base_fields['letter'].queryset = EventModuleMapper.objects.exclude(standard=False)
+        form.base_fields['other_required_modules'].queryset = EventModuleMapper.objects.exclude(standard=False)
+        form.base_fields['other_optional_modules'].queryset = EventModuleMapper.objects.exclude(standard=False)
+        return form

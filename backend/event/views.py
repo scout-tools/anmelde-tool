@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db.models import Q
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
@@ -5,12 +6,24 @@ from rest_framework import viewsets, status
 from rest_framework.exceptions import PermissionDenied, NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from copy import deepcopy
 
 from basic.models import ScoutHierarchy
-from event.models import Event, EventLocation, SleepingLocation, RegistrationType, AttributeEventModuleMapper
+from event.models import Event, EventLocation, SleepingLocation, RegistrationTypeGroup, AttributeEventModuleMapper, \
+    StandardEventTemplate
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
     EventCompleteSerializer, SleepingLocationSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
     EventModuleSerializer, AttributeEventModuleMapperSerializer, EventOverviewSerializer
+
+
+def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
+    new_module: EventModuleMapper = deepcopy(module)
+    new_module.pk = None
+    new_module.standard = False
+    new_module.event = event
+    new_module.save()
+    new_module.attributes.add(*module.attributes.all())
+    return new_module
 
 
 class EventLocationViewSet(viewsets.ModelViewSet):
@@ -35,8 +48,29 @@ class EventViewSet(viewsets.ModelViewSet):
         if request.data.get('name', None) is None:
             request.data['name'] = 'Dummy'
         if request.data.get('responsible_persons', None) is None:
-            request.data['responsible_persons'] = request.user.id
-        return super().create(request, *args, **kwargs)
+            request.data['responsible_persons'] = [request.user.id, ]
+        print(request.data)
+        serializer: EventCompleteSerializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid(raise_exception=True):
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        event = serializer.save()
+        event.responsible_persons.add(request.user)
+        standard_event = StandardEventTemplate.objects.get(id=1)
+
+        add_event_module(standard_event.introduction, event)
+
+        if event.personal_data_required:
+            add_event_module(standard_event.personal_registration, event)
+        else:
+            add_event_module(standard_event.registration, event)
+
+        add_event_module(standard_event.summary, event)
+
+        for mapper in standard_event.other_required_modules.all():
+            add_event_module(mapper, event)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
         if request.data.get('name', None) is None:
@@ -93,11 +127,11 @@ class RegistrationTypeViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
     def list(self, request, pk=None):
-        return Response(RegistrationType.choices, status=status.HTTP_200_OK)
+        return Response(RegistrationTypeGroup.choices, status=status.HTTP_200_OK)
 
 
 class EventModulesMapperViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = EventModuleMapperSerializer
     queryset = EventModuleMapper.objects.all()
 

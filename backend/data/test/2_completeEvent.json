@@ -238,7 +238,7 @@
     "pk": 1,
     "fields": {
       "created_at": "2022-01-30T11:22:26.220Z",
-      "updated_at": "2022-02-26T17:25:51.160Z",
+      "updated_at": "2022-02-27T19:00:46.724Z",
       "name": "DPV goLd",
       "description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
       "location": 1,
@@ -252,7 +252,7 @@
       "keycloak_path": 3,
       "keycloak_admin_path": 3,
       "limited_registration_hierarchy": 493,
-      "single_registration": true,
+      "single_registration": "M",
       "group_registration": "O",
       "personal_data_required": true,
       "responsible_persons": [
@@ -271,7 +271,7 @@
     "pk": 2,
     "fields": {
       "created_at": "2022-01-30T11:30:54.932Z",
-      "updated_at": "2022-01-30T13:08:23.319Z",
+      "updated_at": "2022-02-27T19:01:06.576Z",
       "name": "VIA23 DPV Verbandslager",
       "description": "",
       "location": 2,
@@ -285,7 +285,7 @@
       "keycloak_path": 4,
       "keycloak_admin_path": null,
       "limited_registration_hierarchy": 493,
-      "single_registration": false,
+      "single_registration": "N",
       "group_registration": "N",
       "personal_data_required": false,
       "responsible_persons": [
@@ -301,7 +301,7 @@
     "pk": 3,
     "fields": {
       "created_at": "2022-02-26T11:17:52.995Z",
-      "updated_at": "2022-02-26T17:25:44.362Z",
+      "updated_at": "2022-02-27T19:01:14.024Z",
       "name": "Standard",
       "description": "",
       "location": null,
@@ -315,8 +315,8 @@
       "keycloak_path": null,
       "keycloak_admin_path": null,
       "limited_registration_hierarchy": 493,
-      "single_registration": false,
-      "group_registration": "R",
+      "single_registration": "N",
+      "group_registration": "N",
       "personal_data_required": false,
       "responsible_persons": [
         2
@@ -418,7 +418,7 @@
       "ordering": 1,
       "module": 1,
       "event": 3,
-      "required": false,
+      "required": true,
       "overwrite_description": null,
       "standard": true,
       "attributes": [
@@ -432,7 +432,7 @@
     "model": "event.eventmodulemapper",
     "pk": 18,
     "fields": {
-      "ordering": 3,
+      "ordering": 4,
       "module": 19,
       "event": 3,
       "required": true,
@@ -448,7 +448,7 @@
       "ordering": 2,
       "module": 16,
       "event": 3,
-      "required": false,
+      "required": true,
       "overwrite_description": null,
       "standard": true,
       "attributes": []
@@ -461,7 +461,7 @@
       "ordering": 2,
       "module": 17,
       "event": 3,
-      "required": false,
+      "required": true,
       "overwrite_description": null,
       "standard": true,
       "attributes": []
@@ -479,6 +479,37 @@
       "standard": false,
       "attributes": [
         8
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 22,
+    "fields": {
+      "ordering": 3,
+      "module": 20,
+      "event": 3,
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 83,
+    "fields": {
+      "ordering": 3,
+      "module": 23,
+      "event": 3,
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        4,
+        5,
+        6,
+        7
       ]
     }
   },
@@ -509,17 +540,20 @@
     }
   },
   {
-    "model": "event.standardeventinstance",
+    "model": "event.standardeventtemplate",
     "pk": 1,
     "fields": {
       "name": "Standard",
       "event": 3,
       "introduction": 17,
-      "confirmation": 18,
-      "group_registration": 20,
+      "summary": 18,
+      "registration": 20,
       "personal_registration": 19,
-      "letter": null,
-      "other_modules": []
+      "letter": 22,
+      "other_required_modules": [],
+      "other_optional_modules": [
+        83
+      ]
     }
   }
 ]

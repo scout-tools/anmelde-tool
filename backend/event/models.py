@@ -5,10 +5,28 @@ from django.utils.translation import gettext_lazy as _
 from basic.models import ZipCode, Tag, AbstractAttribute, AttributeDescription, TimeStampMixin, ScoutHierarchy, TagType
 
 
-class RegistrationType(models.TextChoices):
+class RegistrationTypeGroup(models.TextChoices):
+    """
+    No = No group registration allowed
+    Optional = Group registration possible
+    Required = Group registration is required => single registration can be only attached or not allowed at all
+    """
     No = 'N', _('No')
     Optional = 'O', _('Optional')
     Required = 'R', _('Required')
+
+
+class RegistrationTypeSingle(models.TextChoices):
+    """
+    No = No single person registrations allowed
+    Attached = A single persons' registration has to be attached to a group registration
+    Mixed = A single persons' registration can be attached to a group registration but is not a must
+    External = Only standalone single persons' registrations allowed
+    """
+    No = 'N', _('No')
+    Attached = 'A', _('Attached')
+    Mixed = 'M', _('Mixed')
+    External = 'E', _('External')
 
 
 class EventLocation(TimeStampMixin):
@@ -72,9 +90,10 @@ class Event(TimeStampMixin):
                                             related_name='keycloak_admin_group')
     tags = models.ManyToManyField(Tag, blank=True)
     limited_registration_hierarchy = models.ForeignKey(ScoutHierarchy, default=493, on_delete=models.SET_DEFAULT)
-    single_registration = models.BooleanField(default=False)
-    group_registration = models.CharField(max_length=1, choices=RegistrationType.choices,
-                                          default=RegistrationType.No)
+    single_registration = models.CharField(max_length=1, choices=RegistrationTypeSingle.choices,
+                                           default=RegistrationTypeSingle.No)
+    group_registration = models.CharField(max_length=1, choices=RegistrationTypeGroup.choices,
+                                          default=RegistrationTypeGroup.No)
     personal_data_required = models.BooleanField(default=False)
 
     def __str__(self):
@@ -165,18 +184,23 @@ class WorkshopParticipant(TimeStampMixin):
     participant = models.ForeignKey(RegistrationParticipant, on_delete=models.CASCADE, null=True)
 
 
-class StandardEventInstance(models.Model):
+class StandardEventTemplate(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL, related_name='event')
     introduction = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
                                      related_name='introduction')
-    confirmation = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
-                                     related_name='confirmation')
-    group_registration = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
-                                           related_name='group_registration')
+    summary = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
+                                related_name='confirmation')
+    registration = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
+                                     related_name='group_registration')
     personal_registration = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
                                               related_name='personal_registration')
     letter = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
                                related_name='letter')
-    other_modules = models.ManyToManyField(EventModuleMapper, blank=True, related_name='other_modules')
+
+    other_required_modules = models.ManyToManyField(EventModuleMapper, blank=True,
+                                                    related_name='other_required_modules')
+
+    other_optional_modules = models.ManyToManyField(EventModuleMapper, blank=True,
+                                                    related_name='other_optional_modules')

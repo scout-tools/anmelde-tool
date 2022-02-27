@@ -1,6 +1,5 @@
 from django.utils import timezone
 from rest_framework import serializers
-from rest_framework.authtoken.admin import User
 
 from basic.serializers import TagShortSerializer, ZipCodeSerializer, AbstractAttributePolymorphicSerializer
 from .models import Event, EventLocation, SleepingLocation, EventModuleMapper, EventModule, AttributeEventModuleMapper
