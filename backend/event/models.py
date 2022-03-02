@@ -108,9 +108,9 @@ class EventModuleMapper(models.Model):
     """
     id = models.AutoField(primary_key=True)
     ordering = models.IntegerField(default=999, auto_created=True)
-    module = models.ForeignKey(EventModule, on_delete=models.PROTECT, null=True, blank=True)
+    module = models.ForeignKey(EventModule, on_delete=models.PROTECT)
     attributes = models.ManyToManyField(AttributeEventModuleMapper, blank=True)
-    event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     required = models.BooleanField(default=False)
     overwrite_description = models.CharField(max_length=1000, null=True, blank=True)
     standard = models.BooleanField(default=False)

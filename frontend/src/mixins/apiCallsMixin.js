@@ -47,5 +47,13 @@ export default {
       const url = `${this.API_URL}/event/event/${eventId}/sleeping-locations/${sleepingLocationId}/`;
       return axios.delete(url);
     },
+    async getAvailableEventModules(eventId) {
+      const urlAvailableModules = `${this.API_URL}/event/event/${eventId}/available-modules/`;
+      return axios.get(urlAvailableModules);
+    },
+    async addEventModule(data) {
+      const url = `${this.API_URL}/event/event-module-mapper/`;
+      return axios.post(url, data);
+    },
   },
 };

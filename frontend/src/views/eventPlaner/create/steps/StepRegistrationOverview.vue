@@ -31,7 +31,7 @@
                 <v-list-item
                   v-for="(item, index) in availableModules"
                   :key="index"
-                  @click="addModule">
+                  @click="addModule(item.id)">
                   <v-list-item-title>{{ item.header }}</v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -101,8 +101,7 @@ import { orderBy } from 'lodash';
 import stepMixin from '@/mixins/stepMixin';
 import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
 import CreateEventRegistrationModule from '@/components/dialogs/CreateEventRegistrationModule.vue';
-import axios from 'axios';
-// import store from '@/store';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
   name: 'StepRegistrationOverview',
@@ -113,7 +112,7 @@ export default {
     PrevNextButton,
     draggable,
   },
-  mixins: [stepMixin],
+  mixins: [stepMixin, apiCallsMixin],
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
@@ -151,18 +150,27 @@ export default {
       console.log(moduleMapper);
       this.$refs.newEventDialog.openDialogEdit(moduleMapper);
     },
-    addModule() {
-
+    addModule(moduleId) {
+      const data = {
+        event: this.event.id,
+        module: moduleId,
+      };
+      this.addEventModule(data)
+        .then((success) => {
+          console.log(success.data);
+          this.gatherAvailableEventModules();
+        });
+    },
+    gatherAvailableEventModules() {
+      this.getAvailableEventModules(this.event.id)
+        .then((success) => {
+          this.availableModules = success.data;
+        });
     },
   },
   mounted() {
     this.items = orderBy(this.event.eventmodulemapperSet, 'ordering');
-    const urlAvailableModules = `${this.API_URL}/event/event/${this.event.id}/available-modules/`;
-    axios.get(urlAvailableModules)
-      .then((success) => {
-        console.log(success.data);
-        this.availableModules = success.data;
-      });
+    this.gatherAvailableEventModules();
   },
 };
 </script>

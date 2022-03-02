@@ -75,6 +75,18 @@ class EventModuleMapperSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class EventModuleMapperPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventModuleMapper
+        fields = (
+            'module',
+            'attributes',
+            'event',
+            'overwrite_description',
+            'ordering'
+        )
+
+
 class EventCompleteSerializer(serializers.ModelSerializer):
     eventmodulemapper_set = EventModuleMapperGetSerializer(many=True, read_only=True)
     responsible_persons = serializers.SlugRelatedField(

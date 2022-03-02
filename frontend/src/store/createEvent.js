@@ -10,14 +10,15 @@ export default {
       name: '',
       price: '',
       registrationDeadline: '',
-      registrationModel: '',
-      registrationStart: '',
+      singleRegistration: '',
+      groupRegistration: '',
       startTime: '',
       tags: [],
       eventmodulemapperSet: [],
       responsiblePersons: [],
       keycloakPath: null,
       keycloakAdminPath: null,
+      personalDataRequired: false,
     },
   }),
   mutations: {
@@ -51,8 +52,14 @@ export default {
     setResponsiblePersons(state, persons) {
       state.event.responsiblePersons = persons;
     },
-    setRegistrationModel(state, model) {
-      state.event.registrationModel = model;
+    setRegistrationTypeSingle(state, model) {
+      state.event.singleRegistration = model;
+    },
+    setRegistrationTypeGroup(state, model) {
+      state.event.groupRegistration = model;
+    },
+    setPersonalDateRequired(state, required) {
+      state.event.personalDataRequired = required;
     },
   },
   actions: {},
