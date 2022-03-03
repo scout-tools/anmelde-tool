@@ -133,8 +133,6 @@ export default {
         axios.get(urlSingleChoices),
       ])
         .then(axios.spread((firstResponse, secondResponse) => {
-          console.log(firstResponse.data);
-          console.log(secondResponse.data);
           this.groupChoices = firstResponse.data;
           this.singleChoices = secondResponse.data;
         }))
@@ -145,7 +143,6 @@ export default {
         });
     },
     updateData() {
-      console.log(this.singleChoice);
       store.commit('createEvent/setRegistrationTypeGroup', this.singleChoice);
       store.commit('createEvent/setRegistrationTypeGroup', this.groupChoice);
       store.commit('createEvent/setPersonalDateRequired', this.personalDataRequired);

@@ -1,15 +1,14 @@
-from django.contrib.auth.models import User
-from django.core import serializers
+from copy import deepcopy
+
 from django.db.models import Q
-from django.http import JsonResponse
+from django.forms.models import model_to_dict
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status, mixins
-from rest_framework.exceptions import PermissionDenied, NotFound, MethodNotAllowed
-from django.shortcuts import get_object_or_404
+from rest_framework.exceptions import NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from copy import deepcopy
 
 from basic.models import ScoutHierarchy
 from event.models import Event, EventLocation, SleepingLocation, RegistrationTypeGroup, RegistrationTypeSingle, \
@@ -17,7 +16,7 @@ from event.models import Event, EventLocation, SleepingLocation, RegistrationTyp
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
     EventCompleteSerializer, SleepingLocationSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
     EventModuleSerializer, AttributeEventModuleMapperSerializer, EventOverviewSerializer, \
-    EventModuleMapperPostSerializer
+    EventModuleMapperPostSerializer, EventModuleMapperGetSerializer
 
 
 def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
@@ -152,7 +151,6 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
     # permission_classes = [IsAuthenticated]
     queryset = EventModuleMapper.objects.all()
 
-    # serializer_class = EventModuleMapperSerializer
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return EventModuleMapperPostSerializer
@@ -171,9 +169,14 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
             return super().create(request, *args, **kwargs)
 
         new_module = add_event_module(module_template, event)
+        json = model_to_dict(new_module)
+        return Response(json, status=status.HTTP_201_CREATED)
 
-        tmp = EventModuleMapper.objects.filter(id=new_module.id).values()
-        return Response(tmp[0], status=status.HTTP_201_CREATED)
+    def destroy(self, request, *args, **kwargs) -> Response:
+        mapper: EventModuleMapper = self.get_object()
+        if mapper.required:
+            raise MethodNotAllowed('module is required')
+        return super().destroy(request, *args, **kwargs)
 
 
 class EventModulesViewSet(viewsets.ModelViewSet):
@@ -189,7 +192,7 @@ class AvailableEventModulesViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         event_id = self.kwargs.get("event_pk", None)
         mapper = EventModuleMapper.objects.filter(event=event_id).values_list('module_id', flat=True)
-        return EventModule.objects.exclude(id__in=mapper)
+        return EventModule.objects.exclude(id__in=mapper).exclude(type__in=[7, 4]).exclude(custom=True)
 
 
 class EventModuleAttributeMapperViewSet(viewsets.ReadOnlyModelViewSet):
@@ -200,6 +203,15 @@ class EventModuleAttributeMapperViewSet(viewsets.ReadOnlyModelViewSet):
         mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
         mapper = EventModuleMapper.objects.get(id=mapper_id)
         return mapper.attributes.all()
+
+
+class AssignedEventModulesViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = EventModuleMapperGetSerializer
+
+    def get_queryset(self):
+        event_id = self.kwargs.get("event_pk", None)
+        return EventModuleMapper.objects.filter(event=event_id)
 
 
 class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):

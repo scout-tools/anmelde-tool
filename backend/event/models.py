@@ -134,14 +134,19 @@ class SleepingLocation(models.Model):
 
 
 class Registration(TimeStampMixin):
+    """
+    is_confirmed = the registrator confirms that the current state of the registration is complete in the last step of
+        the registration
+    is_accepted = the registration is accepted automatically as long as changes are made before the
+        registration deadline after that the registration has to be accepted manually
+    """
     id = models.AutoField(auto_created=True, primary_key=True)
     scout_hierachy = models.ForeignKey(ScoutHierarchy, null=True, on_delete=models.PROTECT)
     responsible_persons = models.ManyToManyField(User)
-    is_confirmed = models.BooleanField(default=0)
-    is_accepted = models.BooleanField(default=0)
+    is_confirmed = models.BooleanField(default=False)
+    is_accepted = models.BooleanField(default=False)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(Tag)
-    personal = models.BooleanField(default=False)
+    tags = models.ManyToManyField(AbstractAttribute)
 
 
 class RegistrationParticipant(TimeStampMixin):
@@ -156,7 +161,7 @@ class RegistrationParticipant(TimeStampMixin):
     email = models.EmailField(null=True)
     birthday = models.DateField(null=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(AbstractAttribute)
     sleeping_location = models.ForeignKey(SleepingLocation, on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):

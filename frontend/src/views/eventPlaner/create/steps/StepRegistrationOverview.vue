@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="StepVisibility" v-model="valid">
+  <v-form ref="StepEventRegistrationModules" v-model="valid">
     <v-container>
       <v-row class="mb-6">
         <span class="subtitle-1">
@@ -60,8 +60,8 @@
                     <v-list-item-subtitle v-html="moduleMapper.module.description"/>
                   </v-list-item-content>
                   <v-list-item-action v-if="editing && !moduleMapper.required">
-                    <v-btn @click="remove(index)" icon>
-                      <v-icon>mdi-close</v-icon>
+                    <v-btn @click="removeModule(moduleMapper.id)" icon>
+                      <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </v-list-item-action>
                   <v-list-item-action v-if="editing">
@@ -134,20 +134,27 @@ export default {
       if (e === 'undo') this.itemsExample = this.before;
       this.editing = !this.editing;
     },
-    remove(i) {
-      this.$delete(this.itemsExample, i);
+    removeModule(mapperId) {
+      this.deleteEventModule(mapperId)
+        .then((success) => {
+          console.log(success);
+          this.gatherAvailableEventModules();
+          this.gatherAssignedEventModules();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    onChanged(props) {
-      console.log(props);
+    onChanged() {
       this.items.forEach((item, index) => {
         this.items[index].ordering = index;
       });
+      //  TODO: Upload updated ordering to backend
     },
     onDialogClosed() {
 
     },
     editModule(moduleMapper) {
-      console.log(moduleMapper);
       this.$refs.newEventDialog.openDialogEdit(moduleMapper);
     },
     addModule(moduleId) {
@@ -156,21 +163,36 @@ export default {
         module: moduleId,
       };
       this.addEventModule(data)
-        .then((success) => {
-          console.log(success.data);
+        .then(() => {
           this.gatherAvailableEventModules();
+          this.gatherAssignedEventModules();
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
     gatherAvailableEventModules() {
       this.getAvailableEventModules(this.event.id)
         .then((success) => {
           this.availableModules = success.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    gatherAssignedEventModules() {
+      this.getAssignedEventModules(this.event.id)
+        .then((success) => {
+          this.items = orderBy(success.data, 'ordering');
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },
   mounted() {
-    this.items = orderBy(this.event.eventmodulemapperSet, 'ordering');
     this.gatherAvailableEventModules();
+    this.gatherAssignedEventModules();
   },
 };
 </script>

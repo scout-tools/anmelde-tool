@@ -3,7 +3,7 @@
     "model": "basic.tagtype",
     "pk": 1,
     "fields": {
-      "name": "age-group",
+      "name": "AgeGroup",
       "description": "",
       "color": "#5E60FF",
       "min": 0,
@@ -14,7 +14,7 @@
     "model": "basic.tagtype",
     "pk": 2,
     "fields": {
-      "name": "event-tag",
+      "name": "EventTag",
       "description": "",
       "color": "#D3FFD5",
       "min": 0,
@@ -25,7 +25,7 @@
     "model": "basic.tagtype",
     "pk": 3,
     "fields": {
-      "name": "event-location-type",
+      "name": "LocationType",
       "description": "",
       "color": "#9DFF70",
       "min": 0,
@@ -36,7 +36,7 @@
     "model": "basic.tagtype",
     "pk": 4,
     "fields": {
-      "name": "module-sleeping",
+      "name": "SleepingModule",
       "description": "",
       "color": "#FF0000",
       "min": 1,
@@ -47,7 +47,7 @@
     "model": "basic.tagtype",
     "pk": 5,
     "fields": {
-      "name": "module-standard",
+      "name": "StandardModule",
       "description": "",
       "color": "#FF0000",
       "min": 0,
@@ -58,7 +58,7 @@
     "model": "basic.tagtype",
     "pk": 6,
     "fields": {
-      "name": "module-event-admin-authorizer",
+      "name": "ResponsiblePersonAuthorisationModule",
       "description": "",
       "color": "#FF0000",
       "min": 1,
@@ -69,7 +69,7 @@
     "model": "basic.tagtype",
     "pk": 7,
     "fields": {
-      "name": "module-required",
+      "name": "RequiredModule",
       "description": "",
       "color": "#FF0000",
       "min": 0,

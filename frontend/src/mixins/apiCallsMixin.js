@@ -51,9 +51,17 @@ export default {
       const urlAvailableModules = `${this.API_URL}/event/event/${eventId}/available-modules/`;
       return axios.get(urlAvailableModules);
     },
+    async getAssignedEventModules(eventId) {
+      const urlAssignedModules = `${this.API_URL}/event/event/${eventId}/assigned-event-modules/`;
+      return axios.get(urlAssignedModules);
+    },
     async addEventModule(data) {
       const url = `${this.API_URL}/event/event-module-mapper/`;
       return axios.post(url, data);
+    },
+    async deleteEventModule(mapperId) {
+      const url = `${this.API_URL}/event/event-module-mapper/${mapperId}/`;
+      return axios.delete(url);
     },
   },
 };

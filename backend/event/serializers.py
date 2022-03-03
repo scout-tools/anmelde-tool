@@ -88,14 +88,11 @@ class EventModuleMapperPostSerializer(serializers.ModelSerializer):
 
 
 class EventCompleteSerializer(serializers.ModelSerializer):
-    eventmodulemapper_set = EventModuleMapperGetSerializer(many=True, read_only=True)
     responsible_persons = serializers.SlugRelatedField(
         many=True,
         read_only=True,
         slug_field='email'
     )
-
-    # tags = TagShortSerializer(many=True, read_only=True)
 
     class Meta:
         model = Event
@@ -122,7 +119,7 @@ class AttributeEventModuleMapperSerializer(serializers.ModelSerializer):
 class EventOverviewSerializer(serializers.ModelSerializer):
     can_register = serializers.SerializerMethodField('get_can_register')
     can_edit = serializers.SerializerMethodField('get_can_edit')
-    existing_registations = serializers.SerializerMethodField('get_existing_registations')
+    registration_modes = serializers.SerializerMethodField('get_registration_modes')
 
     class Meta:
         model = Event
@@ -141,7 +138,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'personal_data_required',
             'can_register',
             'can_edit',
-            'existing_registations'
+            'registration_modes'
         )
 
     def get_can_register(self, obj: Event):
@@ -150,7 +147,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     def get_can_edit(self, obj: Event):
         return obj.last_possible_update >= timezone.now()
 
-    def get_existing_registations(self, obj: Event):
+    def get_registration_modes(self, obj: Event):
         registration = obj.registration_set.filter(
             scout_hierachy=self.context['request'].user.userextended.scout_organisation)
         if len(registration) > 0:
