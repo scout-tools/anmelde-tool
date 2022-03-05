@@ -22,12 +22,6 @@ export const serviceMixin = {  // eslint-disable-line
       const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/workshop-eventmaster-overview/`;
       return axios.get(path);
     },
-    async loadUserExtended() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
     async getEventById(id) {
       const path = `${process.env.VUE_APP_API}basic/event/${id}/`;
       const response = await axios.get(path);

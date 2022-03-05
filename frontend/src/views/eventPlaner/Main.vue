@@ -111,7 +111,7 @@ export default {
     ],
   }),
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData']),
+    ...mapGetters(['isAuthenticated']),
   },
   methods: {
     getLagerText(item) {

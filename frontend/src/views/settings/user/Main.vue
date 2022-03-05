@@ -200,9 +200,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData']),
+    ...mapGetters(['isAuthenticated']),
     email() {
-      return this.getJwtData.email;
+      return ''; // this.getJwtData.email;
     },
     getStammName() {
       if (this.scoutOrganisation && this.scoutOrganisation.name) {

@@ -38,7 +38,8 @@ export default {
 
 <style lang="sass">
 @import '../node_modules/typeface-roboto/index.css'
-
+</style>
+<style scoped>
 .top-margin {
   margin-top: 70px !important;
 }

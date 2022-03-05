@@ -110,7 +110,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData']),
+    ...mapGetters(['isAuthenticated']),
     getItems() {
       return this.items.filter((item) => item.isRegistered.length);
     },
@@ -124,15 +124,15 @@ export default {
       return false;
     },
     isSimpleUser() {
-      if (this.getJwtData) {
-        return !(this.getJwtData.groups.length || this.getJwtData.isStaff);
-      }
+      // if (this.getJwtData) {
+      //   return !(this.getJwtData.groups.length || this.getJwtData.isStaff);
+      // }
       return true;
     },
     isStaff() {
-      if (this.getJwtData) {
-        return this.getJwtData.isStaff;
-      }
+      // if (this.getJwtData) {
+      //   return this.getJwtData.isStaff;
+      // }
       return false;
     },
   },

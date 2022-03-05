@@ -53,9 +53,9 @@ export default {
     tab: null,
   }),
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'theme']),
+    ...mapGetters(['isAuthenticated', 'theme']),
     userName() {
-      return this.getJwtData.email;
+      return '';
     },
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
@@ -64,9 +64,6 @@ export default {
       return require(`@/assets/${this.theme}/logo.png`); // eslint-disable-line
     },
     isSimpleUser() {
-      if (this.getJwtData) {
-        return !(this.getJwtData.groups.length || this.getJwtData.isStaff);
-      }
       return true;
     },
   },

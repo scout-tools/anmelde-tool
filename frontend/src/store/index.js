@@ -38,12 +38,6 @@ export default new Vuex.Store({
     userinfo(state) {
       return state.userinfo;
     },
-    getJwtData(state) {
-      if (state.accessToken) {
-        return VueJwtDecode.decode(state.accessToken);
-      }
-      return {};
-    },
     isAuthenticated(state) {
       return !!state.accessToken;
     },
