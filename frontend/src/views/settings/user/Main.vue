@@ -1,185 +1,150 @@
 <template>
-  <v-form ref="settingsUser">
-    <v-container class="top-margin">
-      <v-row justify="center">
-        <v-flex ma-3 lg9>
-          <v-layout column>
-            <v-card :loading="loading">
-              <v-card-title class="text-center justify-center py-6">
-                Hier kannst du deinen persönlichen Account anpassen.
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-subheader class="ma-5">
-                    Hier musst du deine persönlichen Daten angeben.
-                    ie meisten Daten haben wir schon von der DPV Identiy Provider. Überprüfe
-                    trotzdem ob die Daten stimmen und korrigiere sie gegebenfalls.
-                    Deine Stammes-Zugehörigkeit sowie deinen Fahrtenname sind wichtig, damit du dich
-                    oder deinen Stamm bei
-                    Fahrten anmelden kannst. Fülle die Felder deswegen unbedingt
-                    aus. Die Handynummer ist freiwillig und hilft dich zu
-                    kontaktieren.
-                  </v-subheader>
-                  <v-row>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="scoutName"
-                        label="Fahrtenname*"
-                        prepend-icon="mdi-account-circle"
-                        @change="updateData"
-                        :error-messages="scoutNameErrors"
-                      >
-                        <template slot="append">
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-icon
-                                color="success"
-                                dark
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                mdi-help-circle-outline
-                              </v-icon>
-                            </template>
-                            <span>
-                              {{ tooltip.scoutName }}
-                            </span>
-                          </v-tooltip>
-                        </template>
-                      </v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        readonly
-                        disabled
-                        filled
-                        v-model="email"
-                        label="E-Mail Adresse*"
-                        prepend-icon="mdi-email"
-                      >
-                        <template slot="append">
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-icon
-                                color="success"
-                                dark
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                mdi-help-circle-outline
-                              </v-icon>
-                            </template>
-                            <span>
-                              {{ tooltip.email }}
-                            </span>
-                          </v-tooltip>
-                        </template>
-                      </v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        readonly
-                        disabled
-                        filled
-                        v-model="getStammName"
-                        label="Mein Stamm*"
-                        prepend-icon="mdi-account-group"
-                        :error-messages="stammErrors">
-                        <template slot="append">
-                          <v-btn icon @click="onPickStammClick">
-                            <v-icon>mdi-pencil</v-icon>
-                          </v-btn>
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-icon
-                                color="success"
-                                dark
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                mdi-help-circle-outline
-                              </v-icon>
-                            </template>
-                            <span>
-                              {{ tooltip.scoutOrganisation }}
-                            </span>
-                          </v-tooltip>
-                        </template>
-                      </v-text-field>
-                      <pick-stamm-form
-                        ref="pickStamm"
-                        @sendIdToParent="tranferId"
-                      />
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="mobileNumber"
-                        label="Handynummer"
-                        prepend-icon="mdi-cellphone-android"
-                        @change="updateData"
-                        :error-messages="mobileNumberErrors">
-                        <template slot="append">
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-icon
-                                color="success"
-                                dark
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                mdi-help-circle-outline
-                              </v-icon>
-                            </template>
-                            <span>
-                              {{ tooltip.mobileNumber }}
-                            </span>
-                          </v-tooltip>
-                        </template>
-                      </v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <router-link
-                        to="/datenschutz"
-                        target="_blank">
-                        Link zur Datenschutzerklärung
-                      </router-link>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-checkbox
-                        v-model="checkbox"
-                        label="Ich habe die Datenschutzerklärung gelesen und akzeptiert!"
-                        required
-                        :error-messages="checkboxErrors"
-                      ></v-checkbox>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-btn color="success" @click="onSaveClicked">
-                        <v-icon left dark>mdi-check</v-icon>
-                        Änderungen speichern
-                      </v-btn>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-btn dark color="red" @click="onDeleteClicked">
+  <v-card flat>
+    <v-card-title class="text-center justify-center py-6">
+      Hier kannst du deinen persönlichen Account anpassen.
+    </v-card-title>
+    <v-card-text>
+      <v-container>
+        <v-subheader class="ma-5">
+          Hier musst du deine persönlichen Daten angeben. Deine
+          Stammes-Zugehörigkeit sowie deinen Fahrtenname sind wichtig, damit du
+          dich oder deinen Stamm bei Fahrten anmelden kannst. Fülle die Felder
+          deswegen unbedingt aus. Die Handynummer ist freiwillig und hilft dich
+          zu kontaktieren.
+        </v-subheader>
+        <v-row>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              v-model="scoutName"
+              label="Fahrtenname*"
+              prepend-icon="mdi-account-circle"
+              @change="updateData"
+              :error-messages="scoutNameErrors"
+            >
+              <template slot="append">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon color="info" dark v-bind="attrs" v-on="on">
+                      mdi-help-circle-outline
+                    </v-icon>
+                  </template>
+                  <span>
+                    {{ tooltip.scoutName }}
+                  </span>
+                </v-tooltip>
+              </template>
+            </v-text-field>
+          </v-col>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              readonly
+              disabled
+              filled
+              v-model="email"
+              label="E-Mail Adresse*"
+              prepend-icon="mdi-email"
+            >
+              <template slot="append">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon color="info" dark v-bind="attrs" v-on="on">
+                      mdi-help-circle-outline
+                    </v-icon>
+                  </template>
+                  <span>
+                    {{ tooltip.email }}
+                  </span>
+                </v-tooltip>
+              </template>
+            </v-text-field>
+          </v-col>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              readonly
+              disabled
+              filled
+              v-model="getStammName"
+              label="Mein Stamm*"
+              prepend-icon="mdi-account-group"
+              :error-messages="stammErrors"
+            >
+              <template slot="append">
+                <v-btn icon @click="onPickStammClick">
+                  <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon color="info" dark v-bind="attrs" v-on="on">
+                      mdi-help-circle-outline
+                    </v-icon>
+                  </template>
+                  <span>
+                    {{ tooltip.scoutOrganisation }}
+                  </span>
+                </v-tooltip>
+              </template>
+            </v-text-field>
+            <pick-stamm-form ref="pickStamm" @sendIdToParent="tranferId" />
+          </v-col>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              v-model="mobileNumber"
+              label="Handynummer"
+              prepend-icon="mdi-cellphone-android"
+              @change="updateData"
+              :error-messages="mobileNumberErrors"
+            >
+              <template slot="append">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon color="info" dark v-bind="attrs" v-on="on">
+                      mdi-help-circle-outline
+                    </v-icon>
+                  </template>
+                  <span>
+                    {{ tooltip.mobileNumber }}
+                  </span>
+                </v-tooltip>
+              </template>
+            </v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <router-link to="/datenschutz" target="_blank">
+              Link zur Datenschutzerklärung
+            </router-link>
+          </v-col>
+          <v-col cols="12">
+            <v-checkbox
+              v-model="checkbox"
+              label="Ich habe die Datenschutzerklärung gelesen und akzeptiert!"
+              required
+              :error-messages="checkboxErrors"
+            ></v-checkbox>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="6" md="4">
+            <v-btn color="secondary" @click="onSaveClicked">
+              <v-icon left dark>mdi-check</v-icon>
+              Änderungen speichern
+            </v-btn>
+          </v-col>
+          <!-- TODO: add user-delete service and activate button -->
+          <!-- <v-col cols="12" sm="6" md="4">
+                      <v-btn dark color="red">
                         <v-icon left>mdi-delete</v-icon>
                         Meine Daten löschen.
                       </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-actions>
-            </v-card>
-            <yes-no-dialog ref="yesNoDialog"/>
-          </v-layout>
-        </v-flex>
-      </v-row>
-    </v-container>
-  </v-form>
+                    </v-col> -->
+        </v-row>
+      </v-container>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>

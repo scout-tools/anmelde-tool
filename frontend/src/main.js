@@ -17,13 +17,23 @@ import auth from './auth';
 import 'leaflet/dist/leaflet.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
-const VueMoment = require('vue-moment');
+require('moment/locale/de');
 
 Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
 Vue.use(VueJwtDecode);
 Vue.use(VueMoment);
+Vue.use(VuetifyMoney);
+Vue.use(VueGoogleCharts);
+Vue.use(AsyncComputed);
+
+Vue.use(require('vue-moment'), {
+  moment,
+});
+
+Vue.use(CKEditor);
+
 Vue.use(VueLodash, { lodash });
 Vue.use(vuetifyMoney);
 

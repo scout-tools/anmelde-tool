@@ -79,13 +79,13 @@
                     "
                     class="ml-4"
                   >
-<!--                    <v-btn-->
-<!--                      icon-->
-<!--                      v-if="item.isRegistered.length"-->
-<!--                      @click="editRegistration(getRegisteredId(item))"-->
-<!--                    >-->
-<!--                      <v-icon fab color="blue"> mdi-pencil</v-icon>-->
-<!--                    </v-btn>-->
+                    <v-btn
+                      icon
+                      v-if="item.isRegistered.length"
+                      @click="editRegistration(getRegisteredId(item))"
+                    >
+                      <v-icon fab color="blue"> mdi-pencil </v-icon>
+                    </v-btn>
                   </v-list-item-action>
                 </v-list-item>
                 <v-divider
@@ -134,6 +134,9 @@ export default {
       // }
       return item.name;
     },
+    isNotAlreadyRegistered(item) {
+      return !item.isRegistered.length;
+    },
     getLagerText(item) {
       const startTime = new Date(item.startTime);
       const endTime = new Date(item.endTime);
@@ -146,6 +149,12 @@ export default {
       const registrationDeadline = new Date(item.registrationDeadline);
       return `Anmeldeschluss: ${moment(registrationDeadline, 'll', 'de')
         .format('ll')}`;
+    },
+    getHeaderText(item) {
+      if (item && item.isRegistered.length) {
+        return `${item.name} (Dein Stamm ist bereits Angemeldet)`;
+      }
+      return item.name;
     },
     getRegisteredId(item) {
       console.log(item);
