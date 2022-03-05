@@ -335,14 +335,14 @@
       "type": 9,
       "is_custom": false,
       "is_visible": true,
-      "description": "Wie viele  Stangen benötigt ihr für eure Jurten?"
+      "description": "Wie viele Stangen benötigt ihr für eure Jurten?"
     }
   },
   {
     "model": "basic.abstractattribute",
     "pk": 21,
     "fields": {
-      "polymorphic_ctype": 35,
+      "polymorphic_ctype": 30,
       "name": "Anreise",
       "type": 9,
       "is_custom": false,
@@ -354,7 +354,7 @@
     "model": "basic.abstractattribute",
     "pk": 22,
     "fields": {
-      "polymorphic_ctype": 35,
+      "polymorphic_ctype": 30,
       "name": "Abreise",
       "type": 9,
       "is_custom": false,
@@ -474,22 +474,6 @@
     "pk": 20,
     "fields": {
       "integer_field": 0
-    }
-  },
-  {
-    "model": "basic.travelattribute",
-    "pk": 21,
-    "fields": {
-      "type_field": null,
-      "time_field": null
-    }
-  },
-  {
-    "model": "basic.travelattribute",
-    "pk": 22,
-    "fields": {
-      "type_field": null,
-      "time_field": null
     }
   }
 ]
