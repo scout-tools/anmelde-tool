@@ -99,9 +99,9 @@ import { mapGetters } from 'vuex';
 import draggable from 'vuedraggable';
 import { orderBy } from 'lodash';
 import stepMixin from '@/mixins/stepMixin';
-import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
-import CreateEventRegistrationModule from '@/components/dialogs/CreateEventRegistrationModule.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
+import CreateEventRegistrationModule from '@/components/dialog/CreateEventRegistrationModule.vue';
 
 export default {
   name: 'StepRegistrationOverview',

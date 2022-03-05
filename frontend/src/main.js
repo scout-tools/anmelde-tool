@@ -8,6 +8,8 @@ import { LMap, LMarker, LTileLayer } from 'vue2-leaflet';
 import { Icon } from 'leaflet';
 import VueKeycloakJs from '@dsb-norge/vue-keycloak-js';
 import vuetifyMoney from 'vuetify-money';
+import CKEditor from '@ckeditor/ckeditor5-vue2';
+
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -23,10 +25,6 @@ Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
 Vue.use(VueJwtDecode);
-Vue.use(VueMoment);
-Vue.use(VuetifyMoney);
-Vue.use(VueGoogleCharts);
-Vue.use(AsyncComputed);
 
 Vue.use(require('vue-moment'), {
   moment,

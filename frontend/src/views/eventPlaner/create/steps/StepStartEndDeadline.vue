@@ -77,10 +77,10 @@ import { required } from 'vuelidate/lib/validators';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
-import DateTimePicker from '@/components/picker/DateTimePicker.vue';
-import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
-import apiCallsMixin from '@/mixins/apiCallsMixin';
 import store from '@/store';
+import DateTimePicker from '@/components/picker/DateTimePicker.vue';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
   name: 'StepStartEndDeadline',

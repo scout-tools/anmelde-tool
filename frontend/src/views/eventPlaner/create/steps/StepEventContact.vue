@@ -39,8 +39,8 @@
 
 <script>
 import { required, email } from 'vuelidate/lib/validators';
-import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
 
 export default {
   name: 'StepEventContact',

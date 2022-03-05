@@ -56,7 +56,7 @@
 import { required } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
 import store from '@/store';
 

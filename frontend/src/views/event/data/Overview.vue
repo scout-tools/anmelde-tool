@@ -89,7 +89,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 // eslint-disable-next-line import/extensions
-import ConfirmRegistrationEditModal from '@/views/registration/create/steps/dialog/ConfirmRegistrationEditModal';
+import ConfirmRegistrationEditModal from '@/components/dialog/ConfirmRegistrationEditModal.vue';
 
 export default {
   components: { ConfirmRegistrationEditModal },

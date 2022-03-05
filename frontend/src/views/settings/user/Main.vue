@@ -153,14 +153,14 @@ import auth from '@/mixins/authMixin';
 import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
 import { maxLength, minLength, required } from 'vuelidate/lib/validators';
-import YesNoDialog from '@/components/modals/YesNoDialog.vue';
+// import YesNoDialog from '@/components/modals/YesNoDialog.vue';
 import PickStammForm from './PickStamm.vue';
 
 export default {
   mixins: [validationMixin, auth],
   components: {
     PickStammForm,
-    YesNoDialog,
+    // YesNoDialog,
   },
   validations: {
     scoutOrganisation: {

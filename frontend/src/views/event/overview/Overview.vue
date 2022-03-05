@@ -128,12 +128,6 @@ export default {
     isLoading: true,
   }),
   methods: {
-    getHeaderText(item) {
-      // if (item && item.isRegistered.length) {
-      //   return `${item.name} (Dein Stamm ist bereits Angemeldet)`;
-      // }
-      return item.name;
-    },
     isNotAlreadyRegistered(item) {
       return !item.isRegistered.length;
     },
@@ -165,10 +159,6 @@ export default {
       const endTime = new Date(date2).getTime();
       const today = new Date().getTime();
       return today > startTime && today < endTime;
-    },
-    isNotAlreadyRegistered(item) {
-      console.log(item);
-      return false;
     },
     editRegistration(item) {
       this.$refs.confirmRegistrationEditModal.show(item);

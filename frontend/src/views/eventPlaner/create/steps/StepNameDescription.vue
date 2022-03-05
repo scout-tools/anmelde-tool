@@ -56,7 +56,7 @@ import { required, maxLength } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import store from '@/store';
 
 export default {

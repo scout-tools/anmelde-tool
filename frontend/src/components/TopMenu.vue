@@ -43,8 +43,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import authMixin from '@/mixins/authMixin';
-import basicInfoMixin from '@/mixins/basicInfoMixin';
+// import authMixin from '@/mixins/authMixin';
+// import basicInfoMixin from '@/mixins/basicInfoMixin';
 
 export default {
   name: 'TopMenu',

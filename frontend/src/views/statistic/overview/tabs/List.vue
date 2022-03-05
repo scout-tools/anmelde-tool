@@ -39,19 +39,19 @@
         hide-default-footer
         :item-class="rowClasses"
       >
-        <template v-slot:item.isConfirmed="{ item }">
+        <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
               item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
             }}</v-icon
           >
         </template>
-        <template v-slot:item.createdAt="{ item }">
+        <template v-slot:[`item.createdAt`]="{ item }">
           {{
             getDateFormat(item.createdAt)
           }}
         </template>
-        <template v-slot:item.numberParticipant="{ item }">
+        <template v-slot:[`item.numberParticipant`]="{ item }">
           <td v-html="getNumberParticipant(item)" disabled></td>
         </template>
         <template slot="body.append">

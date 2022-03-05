@@ -92,7 +92,7 @@ import { mapGetters } from 'vuex';
 import moment from 'moment';
 import { isNumber } from 'lodash';
 import Vue from 'vue';
-import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
 import store from '@/store';
 import apiCallsMixin from '@/mixins/apiCallsMixin';

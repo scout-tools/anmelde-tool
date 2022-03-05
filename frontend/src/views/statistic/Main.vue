@@ -48,12 +48,12 @@
             <v-tabs-items v-model="tab">
               <v-tab-item v-for="i in 6" :key="i" :value="'tab-' + i">
                 <v-card-text>
-                  <OverviewMain v-if="i === 1" />
+                  <!-- <OverviewMain v-if="i === 1" />
                   <LeaderMain v-if="i === 2" />
                   <MapsMain v-if="i === 3" />
                   <CashMain v-if="i === 4" />
                   <WorkshopMain v-if="i === 5" />
-                  <PdfGenerationMain v-if="i === 6"/>
+                  <PdfGenerationMain v-if="i === 6"/> -->
                 </v-card-text>
               </v-tab-item>
             </v-tabs-items>
@@ -68,21 +68,21 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 
-import OverviewMain from './overview/Main.vue';
-import LeaderMain from './leader/Main.vue';
-import MapsMain from './maps/Main.vue';
-import CashMain from './cash/Main.vue';
-import WorkshopMain from './workshop/Main.vue';
-import PdfGenerationMain from './downlaods/Main.vue';
+// import OverviewMain from './overview/Main.vue';
+// import LeaderMain from './leader/Main.vue';
+// import MapsMain from './maps/Main.vue';
+// import CashMain from './cash/Main.vue';
+// import WorkshopMain from './workshop/Main.vue';
+// import PdfGenerationMain from './downlaods/Main.vue';
 
 export default {
   components: {
-    MapsMain,
-    LeaderMain,
-    CashMain,
-    WorkshopMain,
-    PdfGenerationMain,
-    OverviewMain,
+    // MapsMain,
+    // LeaderMain,
+    // CashMain,
+    // WorkshopMain,
+    // PdfGenerationMain,
+    // OverviewMain,
   },
   computed: {
     ...mapGetters([

@@ -48,10 +48,10 @@
 <script>
 import { mapGetters } from 'vuex';
 import { isNumber } from 'lodash';
-import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
-import stepMixin from '@/mixins/stepMixin';
 import store from '@/store';
+import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
 
 export default {
   name: 'StepParticipationFeeSimple',

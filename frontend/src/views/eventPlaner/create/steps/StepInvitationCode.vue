@@ -44,7 +44,7 @@
 <script>
 import { alphaNum, minLength, maxLength } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import store from '@/store';

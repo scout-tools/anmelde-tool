@@ -1,7 +1,7 @@
 # myapi/urls.py
 from django.urls import include, path
 from rest_framework_nested import routers
-from graphene_django.views import GraphQLView
+# from graphene_django.views import GraphQLView
 
 from . import views
 
@@ -16,5 +16,5 @@ router.register(r'attributes', views.AttributeViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
-    path("graphql", GraphQLView.as_view(graphiql=True)),
+    # path("graphql", GraphQLView.as_view(graphiql=True)),
 ]

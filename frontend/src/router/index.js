@@ -6,17 +6,15 @@ import EventOverview from '@/views/event/overview/Overview.vue';
 import EventAdminOverview from '@/views/event/admin/Overview.vue';
 import MasterDataOverview from '@/views/event/data/Overview.vue';
 import SettingsOverview from '@/views/settings/Main.vue';
-import SettingsUser from '@/views/settings/user/Main.vue';
 import SettingsConfig from '@/views/settings/config/Main.vue';
-import StatisticOverview from '@/views/statistic/Main.vue';
-import RegistrationForm from '@/views/registration/Main.vue';
-import RegistrationCreate from '@/views/registration/create/Main.vue';
+// import StatisticOverview from '@/views/statistic/Main.vue';
+// import RegistrationForm from '@/views/registration/Main.vue';
+// import RegistrationCreate from '@/views/registration/create/Main.vue';
 import LandingPage from '@/views/landingPage/Main.vue';
 import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
 import EventPlaner from '@/views/eventPlaner/Main.vue';
 import PlanEvent from '@/views/eventPlaner/create/Main.vue';
-import EventOverview from '@/views/event/overview/Overview.vue';
 // import CheckTokenMain from '@/views/login/CheckToken.vue';
 // import StatisticOverview from '@/views/statistic/Main.vue';
 // import RegistrationForm from '@/views/registration/Main.vue';
@@ -46,21 +44,22 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
+  }, {
     path: '/check-token',
     name: 'checkToken',
     component: CheckTokenMain,
   },
-  {
-    path: '/event/create',
-    name: 'createEvent',
-    component: CreateEvent,
-  },
-  {
-    path: '/event/update/:id',
-    name: 'updateEvent',
-    component: CreateEvent,
-    props: true,
-  },
+  // {
+  //   path: '/event/create',
+  //   name: 'createEvent',
+  //   component: CreateEvent,
+  // },
+  // {
+  //   path: '/event/update/:id',
+  //   name: 'updateEvent',
+  //   component: CreateEvent,
+  //   props: true,
+  // },
   // {
   //   path: '/check-token',
   //   name: 'checkToken',
@@ -126,24 +125,24 @@ const routes = [
     name: 'settingsConfig',
     component: SettingsConfig,
   },
-  {
-    path: '/statistic/:id',
-    name: 'statisticOverview',
-    component: StatisticOverview,
-    props: true,
-  },
-  {
-    path: '/registration/form/:id',
-    name: 'registrationForm',
-    component: RegistrationForm,
-    props: true,
-  },
-  {
-    path: '/registration/create/:id',
-    name: 'registrationCreate',
-    component: RegistrationCreate,
-    props: true,
-  },
+  // {
+  //   path: '/statistic/:id',
+  //   name: 'statisticOverview',
+  //   component: StatisticOverview,
+  //   props: true,
+  // },
+  // {
+  //   path: '/registration/form/:id',
+  //   name: 'registrationForm',
+  //   component: RegistrationForm,
+  //   props: true,
+  // },
+  // {
+  //   path: '/registration/create/:id',
+  //   name: 'registrationCreate',
+  //   component: RegistrationCreate,
+  //   props: true,
+  // },
   {
     path: '/impressum',
     name: 'impressum',

@@ -2,8 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueJwtDecode from 'vue-jwt-decode';
 import createPersistedState from 'vuex-persistedstate'; // eslint-disable-line
-import createEvent from './createEvent';
 import vuetify from '@/plugins/vuetify';
+import createEvent from './createEvent';
 
 Vue.use(Vuex);
 Vue.use(VueJwtDecode);
@@ -17,15 +17,21 @@ export default new Vuex.Store({
       fahrtenname: '',
       stamm: '',
       bund: '',
-    scoutGroupMapping: [],
-    myStamm: '',
-    myBund: '',
-    myScoutname: '',
-    registeredTents: [{
-      id: 1, registration: 1, tentType: 1, usedByScoutGroups: [1],
-    }],
-    preferences: {
-      theme: 'default',
+      scoutGroupMapping: [],
+      myStamm: '',
+      myBund: '',
+      myScoutname: '',
+      registeredTents: [
+        {
+          id: 1,
+          registration: 1,
+          tentType: 1,
+          usedByScoutGroups: [1],
+        },
+      ],
+      preferences: {
+        theme: 'default',
+      },
     },
   },
   getters: {

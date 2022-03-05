@@ -41,7 +41,7 @@
 <script>
 import { required, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import PrevNextButton from '@/components/buttons/PrevNextButton.vue';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
 import store from '@/store';
 
