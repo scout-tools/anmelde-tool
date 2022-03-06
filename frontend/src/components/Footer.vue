@@ -25,20 +25,35 @@
           </v-icon>
           Datenschutz
         </v-btn>
+        <v-btn
+          v-if="isAuth"
+          color="white"
+          text
+          rounded
+          class="my-2"
+          @click="onLogoutClicked">
+          <v-icon fab color="white" class="mr-1">
+            mdi-logout
+          </v-icon>
+          Logout
+        </v-btn>
       </v-row>
     </v-footer>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
+import authMixin from '@/mixins/authMixin';
 
 export default {
-  computed: {
-    ...mapGetters(['isAuthenticated']),
+  mixins: [authMixin],
+  methods: {
+    onLogoutClicked() {
+      this.logout();
+    },
   },
   data: () => ({
-    links: ['Impressum', 'Kontakt', 'Planungsjurte'],
   }),
 };
 </script>

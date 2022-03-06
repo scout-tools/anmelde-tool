@@ -108,7 +108,6 @@
 
 <script>
 import axios from 'axios';
-import { mapGetters } from 'vuex';
 import basicInfoMixin from '@/mixins/basicInfoMixin';
 
 export default {
@@ -132,7 +131,6 @@ export default {
   }),
   mixins: [basicInfoMixin],
   computed: {
-    ...mapGetters(['isAuthenticated']),
     selected() {
       if (!this.active.length) return undefined;
       const id = this.active[0];

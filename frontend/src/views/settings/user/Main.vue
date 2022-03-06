@@ -150,7 +150,6 @@
 <script>
 import axios from 'axios';
 import auth from '@/mixins/authMixin';
-import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
 import { maxLength, minLength, required } from 'vuelidate/lib/validators';
 // import YesNoDialog from '@/components/modals/YesNoDialog.vue';
@@ -200,7 +199,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isAuthenticated']),
     email() {
       return ''; // this.getJwtData.email;
     },

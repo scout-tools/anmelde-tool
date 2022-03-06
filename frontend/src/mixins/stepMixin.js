@@ -28,9 +28,12 @@ export default {
     onIngoredClicked() {
       this.$emit('nextStep');
     },
-    errorMessage(field) {
+    errorMessage(field, valdiationObj) {
       const errors = [];
-      const valObj = this.$v.item[field];
+      if (!valdiationObj.data[field]) {
+        return errors;
+      }
+      const valObj = valdiationObj.data[field];
       if (!valObj.$dirty) return errors;
       if (valObj.required === false) {
         errors.push('Dieses Feld ist erforderlich.');

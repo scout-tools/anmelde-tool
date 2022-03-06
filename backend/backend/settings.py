@@ -183,6 +183,14 @@ if env.bool('USE_EMAIL'):
     EMAIL_PORT = env('EMAIL_PORT')
     FRONT_URL = env.str('FRONT_URL')
 
+if env.bool('USE_SES'):
+    EMAIL_BACKEND = 'django_ses.SESBackend'
+    AWS_SES_ACCESS_KEY_ID = env('AWS_SES_ACCESS_KEY_ID')
+    AWS_SES_SECRET_ACCESS_KEY = env('AWS_SES_SECRET_ACCESS_KEY')
+    AWS_SES_REGION_NAME = 'eu-central-1'
+    AWS_SES_REGION_ENDPOINT = 'email.eu-central-1.amazonaws.com'
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER') # todo: remove
+
 REST_USE_JWT = True
 
 REST_FRAMEWORK = {
@@ -221,3 +229,7 @@ OIDC_OP_USER_ENDPOINT = f'{BASE_REALM_URI}/protocol/openid-connect/userinfo'
 OIDC_OP_AUTHORIZATION_ENDPOINT = f'{BASE_REALM_URI}/protocol/openid-connect/auth'
 OIDC_STORE_ID_TOKEN = True
 OIDC_CREATE_USER = True
+
+GRAPHENE = {
+    "SCHEMA": "basic.schema.schema"
+}

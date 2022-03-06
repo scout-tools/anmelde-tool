@@ -1,5 +1,5 @@
 <template>
-  <v-container class="top-margin">
+  <v-container class="top-margin mt-10" >
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
@@ -41,16 +41,10 @@
                     </v-list-item-subtitle>
                   </v-list-item-content>
 
-                  <v-list-item-action
-                    v-show="
-                      isInTimeRange(
-                        item.registrationStart,
-                        item.registrationDeadline,
-                      ) && isNotAlreadyRegistered(item)
-                    ">
+                  <v-list-item-action>
                     <router-link
                       :to="{
-                        name: 'registrationForm',
+                        name: 'registrationNew',
                         params: {
                           id: item.id,
                         },
@@ -60,7 +54,7 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn icon v-bind="attrs" v-on="on">
-                            <v-icon fab color="green">
+                            <v-icon fab color="info">
                               mdi-account-multiple-plus
                             </v-icon>
                           </v-btn>
@@ -81,7 +75,7 @@
                   >
                     <v-btn
                       icon
-                      v-if="item.isRegistered.length"
+                      v-if="item.isRegistered"
                       @click="editRegistration(getRegisteredId(item))"
                     >
                       <v-icon fab color="blue"> mdi-pencil </v-icon>
@@ -145,9 +139,9 @@ export default {
         .format('ll')}`;
     },
     getHeaderText(item) {
-      if (item && item.isRegistered.length) {
-        return `${item.name} (Dein Stamm ist bereits Angemeldet)`;
-      }
+      // if (item && item.isRegistered.length) {
+      //   return `${item.name} (Dein Stamm ist bereits Angemeldet)`;
+      // }
       return item.name;
     },
     getRegisteredId(item) {

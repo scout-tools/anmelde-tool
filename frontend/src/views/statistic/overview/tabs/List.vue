@@ -98,9 +98,6 @@ export default {
     eventId() {
       return this.$route.params.id;
     },
-    isAuthenticated() {
-      return this.$store.getters.isAuthenticated;
-    },
     getItems() {
       let data = this.data.filter(
         (item) =>

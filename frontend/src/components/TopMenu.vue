@@ -10,21 +10,21 @@
       <v-spacer></v-spacer>
       <v-tab
         :to="{ name: 'eventOverview' }"
-        v-if="isAuthenticated"
+        v-if="isAuth"
       >
         Meine Anmeldungen
         <v-icon>mdi-view-list</v-icon>
       </v-tab>
       <v-tab
-        :to="{ name: 'eventAdminOverview' }"
-        v-if="isAuthenticated"
+        :to="{ name: 'eventPlaner' }"
+        v-if="isAuth"
       >
         Meine Fahrten
         <v-icon>mdi-account-key</v-icon>
       </v-tab>
       <v-tab
         :to="{ name: 'dataOverview' }"
-        v-if="isAuthenticated && !isSimpleUser"
+        v-if="isAuth"
       >
         Meine Daten
         <v-icon>mdi-chart-bar</v-icon>
@@ -32,10 +32,15 @@
       <v-spacer></v-spacer>
       <v-tab
         :to="{ name: 'settingsOverview' }"
-        v-if="isAuthenticated"
+        v-if="isAuth"
       >
         Mein Profil
         <v-icon>mdi-account-circle</v-icon>
+      </v-tab>
+      <v-tab v-if="!isAuth">
+        <v-btn color="success" elevation="2" @click="onLoginClicked" >
+          Login
+        </v-btn>
       </v-tab>
     </v-tabs>
   </v-app-bar>
@@ -43,40 +48,26 @@
 
 <script>
 import { mapGetters } from 'vuex';
-// import authMixin from '@/mixins/authMixin';
-// import basicInfoMixin from '@/mixins/basicInfoMixin';
+import authMixin from '@/mixins/authMixin';
 
 export default {
   name: 'TopMenu',
-
+  mixins: [authMixin],
   data: () => ({
     tab: null,
   }),
   computed: {
-    ...mapGetters(['isAuthenticated', 'theme']),
-    userName() {
-      return '';
-    },
+    ...mapGetters(['theme', 'userinfo', 'getUserName']),
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
         return require(`@/assets/${this.theme}/logo-dev.png`); // eslint-disable-line
       }
       return require(`@/assets/${this.theme}/logo.png`); // eslint-disable-line
     },
-    isSimpleUser() {
-      return true;
-    },
   },
   methods: {
-    onLogoutClicked() {
-      this.logout();
-    },
     onLoginClicked() {
       this.$keycloak.login();
-    },
-    goToIdm() { // external keycloak user settings page
-      const link = `${process.env.VUE_APP_KEYCLOAK_URL}/realms/${process.env.VUE_APP_KEYCLOAK_REALM}/account/`;
-      window.open(link, '_blank');
     },
   },
 };

@@ -37,3 +37,10 @@ Windows: `python manage.py add_fixtures test-data`
 Basic: `python manage.py dumpdata basic --exclude=basic.ZipCode --exclude=basic.ScoutOrgaLevel --exclude=basic.ScoutHierarchy -o data\test\1_completeBasic.json `
 
 Event: `python manage.py dumpdata event -o data\test\2_completeEvent.json`
+
+
+# Test mails
+`send_mail('Subject here', 'Here is the message.', 'test@anmelde-tool.de', ['robert@hratuga.de'], fail_silently=False)`
+
+# save new packages
+`pip freeze > requirements.txt`

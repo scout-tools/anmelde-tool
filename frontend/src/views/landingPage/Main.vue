@@ -17,12 +17,23 @@
           </div>
           <v-btn
             class="mt-10"
-            color="secondary"
+            color="success"
+            x-large
+            @click="onLoginClicked"
+            v-if="!isAuth"
+            >
+            <v-icon left>mdi-rocket-launch</v-icon>
+            Los geht's
+          </v-btn>
+          <v-btn
+            class="mt-10"
+            color="success"
             x-large
             @click="$router.push({ name: 'eventOverview' })"
-            v-if="isAuthenticated">
-            <v-icon left>mdi-calendar-plus</v-icon>
-            Zu den Fahrten
+            v-if="isAuth"
+            >
+            <v-icon left>mdi-rocket-launch</v-icon>
+            Zu den Anmeldungen
           </v-btn>
         </v-layout>
       </v-parallax>
@@ -114,16 +125,17 @@
 <script>
 import { mapGetters } from 'vuex';
 import basicInfoMixin from '@/mixins/basicInfoMixin';
+import authMixin from '@/mixins/authMixin';
 
 export default {
-  mixins: [basicInfoMixin],
+  mixins: [basicInfoMixin, authMixin],
   data: () => ({
     title: 'Endorfine',
     email: '',
     subscribed: false,
   }),
   computed: {
-    ...mapGetters(['isAuthenticated', 'theme']),
+    ...mapGetters(['theme']),
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
         return require(`./../../assets/${this.theme}/logo-dev.png`); // eslint-disable-line
@@ -132,6 +144,11 @@ export default {
     },
     image1Path() {
       return require(`./../../assets/${this.theme}/image1.jpg`); // eslint-disable-line
+    },
+  },
+  methods: {
+    onLoginClicked() {
+      this.$keycloak.login();
     },
   },
 };

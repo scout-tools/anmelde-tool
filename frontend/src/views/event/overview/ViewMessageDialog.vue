@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" max-width="800px">
-    <v-card >
+    <v-card>
       <v-card-title>
         <span class="headline">Item</span>
       </v-card-title>

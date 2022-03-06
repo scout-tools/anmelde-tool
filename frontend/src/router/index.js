@@ -3,23 +3,17 @@ import VueRouter from 'vue-router';
 import SettingsUser from '@/views/settings/user/Main.vue';
 import CheckTokenMain from '@/views/login/CheckToken.vue';
 import EventOverview from '@/views/event/overview/Overview.vue';
-import EventAdminOverview from '@/views/event/admin/Overview.vue';
+
 import MasterDataOverview from '@/views/event/data/Overview.vue';
 import SettingsOverview from '@/views/settings/Main.vue';
 import SettingsConfig from '@/views/settings/config/Main.vue';
-// import StatisticOverview from '@/views/statistic/Main.vue';
-// import RegistrationForm from '@/views/registration/Main.vue';
-// import RegistrationCreate from '@/views/registration/create/Main.vue';
 import LandingPage from '@/views/landingPage/Main.vue';
 import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
 import EventPlaner from '@/views/eventPlaner/Main.vue';
 import PlanEvent from '@/views/eventPlaner/create/Main.vue';
-// import CheckTokenMain from '@/views/login/CheckToken.vue';
-// import StatisticOverview from '@/views/statistic/Main.vue';
-// import RegistrationForm from '@/views/registration/Main.vue';
-// import RegistrationCreate from '@/views/registration/create/Main.vue';
-// import CreateEvent from '@/views/event/create/Main.vue';
+import registrationNew from '@/views/registration/Main.vue';
+import registrationEdit from '@/views/registration/CreateUpdateContainer.vue';
 
 Vue.use(VueRouter);
 
@@ -49,28 +43,6 @@ const routes = [
     name: 'checkToken',
     component: CheckTokenMain,
   },
-  // {
-  //   path: '/event/create',
-  //   name: 'createEvent',
-  //   component: CreateEvent,
-  // },
-  // {
-  //   path: '/event/update/:id',
-  //   name: 'updateEvent',
-  //   component: CreateEvent,
-  //   props: true,
-  // },
-  // {
-  //   path: '/check-token',
-  //   name: 'checkToken',
-  //   component: CheckTokenMain,
-  // },
-  // {
-  //   path: '/event/create/:id',
-  //   name: 'createEvent',
-  //   component: CreateEvent,
-  //   props: true,
-  // },
   {
     path: '/event/overview',
     name: 'eventOverview',
@@ -79,11 +51,11 @@ const routes = [
       requiresAuth: true,
     },
   },
-  {
-    path: '/event/adminOverview',
-    name: 'eventAdminOverview',
-    component: EventAdminOverview,
-  },
+  // {
+  //   path: '/event/adminOverview',
+  //   name: 'eventAdminOverview',
+  //   component: EventAdminOverview,
+  // },
   {
     path: '/data/overview',
     name: 'dataOverview',
@@ -108,18 +80,18 @@ const routes = [
   //   component: StatisticOverview,
   //   props: true,
   // },
-  // {
-  //   path: '/registration/form/:id',
-  //   name: 'registrationForm',
-  //   component: RegistrationForm,
-  //   props: true,
-  // },
-  // {
-  //   path: '/registration/create/:id',
-  //   name: 'registrationCreate',
-  //   component: RegistrationCreate,
-  //   props: true,
-  // },
+  {
+    path: '/registration/:id',
+    name: 'registrationNew',
+    component: registrationNew,
+    props: true,
+  },
+  {
+    path: '/registration/edit/:id',
+    name: 'registrationEdit',
+    component: registrationEdit,
+    props: true,
+  },
   {
     path: '/settings/config',
     name: 'settingsConfig',
@@ -129,12 +101,6 @@ const routes = [
   //   path: '/statistic/:id',
   //   name: 'statisticOverview',
   //   component: StatisticOverview,
-  //   props: true,
-  // },
-  // {
-  //   path: '/registration/form/:id',
-  //   name: 'registrationForm',
-  //   component: RegistrationForm,
   //   props: true,
   // },
   // {

@@ -38,8 +38,14 @@ export default new Vuex.Store({
     userinfo(state) {
       return state.userinfo;
     },
-    isAuthenticated(state) {
-      return !!state.accessToken;
+    getUserName(state) {
+      if (state.userinfo) {
+        if (state.userinfo.fahrtenname && state.userinfo.fahrtenname.length > 0) {
+          return state.userinfo.fahrtenname;
+        }
+        return state.userinfo.name;
+      }
+      return '';
     },
     apiIsDown(state) {
       return state.apiIsDown;

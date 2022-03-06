@@ -8,10 +8,7 @@
               Diese Fahrten kannst du bearbeiten
             </v-card-title>
             <v-card-actions class="justify-center align-center">
-              <v-btn
-                x-large
-                color="success"
-                @click=createNewEvent>
+              <v-btn x-large color="success" @click="createNewEvent">
                 <v-icon left>mdi-calendar-plus</v-icon>
                 Neue Fahrt erstellen
               </v-btn>
@@ -21,17 +18,11 @@
                 <v-expansion-panel-header>
                   <v-list-item :key="item.name">
                     <v-list-item-avatar>
-                      <v-icon
-                        :class="'primary'"
-                        dark
-                        v-text="'mdi-tent'"/>
+                      <v-icon :class="'primary'" dark v-text="'mdi-tent'" />
                     </v-list-item-avatar>
                     <v-list-item-content>
-                      <v-list-item-title
-                        v-text="item.name"
-                      ></v-list-item-title>
-                      <v-list-item-subtitle
-                        v-text="item.description">
+                      <v-list-item-title v-text="item.name"></v-list-item-title>
+                      <v-list-item-subtitle v-text="item.description">
                       </v-list-item-subtitle>
 
                       <v-list-item-subtitle>
@@ -45,21 +36,37 @@
                   </v-list-item>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                  <v-row
-                    v-for="(editItem,editIndex) in steps"
-                    :key="editIndex+1">
-                    <v-btn @click="editEvent(editIndex+1,item.id)"
-                           color="blue-grey"
-                           class="ma-2 white--text">
-                      <v-icon dark color="primary"> mdi-pencil</v-icon>
-                      {{ editItem }}
-                    </v-btn>
-                  </v-row>
-                  <v-row>
-                    <v-btn class="ma-2" color="primary" @click="editCompleteEvent(item.id)">
-                      Bearbeite das ganze Event
-                    </v-btn>
-                  </v-row>
+                  <v-card flat max-width="500" class="mx-auto">
+                    <v-list>
+                      <v-list-item>
+                        <v-btn
+                          class="ma-2"
+                          color="info"
+                          @click="editCompleteEvent(item.id)"
+                        >
+                        <v-icon left> mdi-pencil </v-icon>
+                          Bearbeite das ganze Event
+                        </v-btn>
+                      </v-list-item>
+                    <template v-for="(stepName, editIndex) in steps">
+                      <v-list-item :key="editIndex + 1">
+                        <v-list-item-content>
+                          {{ stepName }}
+                        </v-list-item-content>
+                        <v-list-item-action>
+                          <v-btn
+                            @click="editEvent(editIndex + 1, item.id)"
+                            icon
+                            color="secondary"
+                          >
+                            <v-icon dark color="primary"> mdi-pencil</v-icon>
+                          </v-btn>
+                        </v-list-item-action>
+                      </v-list-item>
+                        <v-divider :key="`divider ${editIndex + 1}`"></v-divider>
+                    </template>
+                    </v-list>
+                  </v-card>
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -84,7 +91,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import axios from 'axios';
 import moment from 'moment';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
@@ -110,25 +116,23 @@ export default {
       'Registrierungübersicht',
     ],
   }),
-  computed: {
-    ...mapGetters(['isAuthenticated']),
-  },
+  computed: {},
   methods: {
     getLagerText(item) {
       const startTime = new Date(item.startTime);
       const endTime = new Date(item.endTime);
-      return `Termin: ${moment(startTime, 'll', 'de')
-        .format('ll')} bis
-      ${moment(endTime, 'll', 'de')
-    .format('ll')}`;
+      return `Termin: ${moment(startTime, 'll', 'de').format('ll')} bis
+      ${moment(endTime, 'll', 'de').format('ll')}`;
     },
     getDeadline(item) {
       const registrationDeadline = new Date(item.registrationDeadline);
-      return `Anmeldeschluss: ${moment(registrationDeadline, 'll', 'de')
-        .format('ll')}`;
+      return `Anmeldeschluss: ${moment(registrationDeadline, 'll', 'de').format(
+        'll',
+      )}`;
     },
     createNewEvent() {
-      axios.post(`${this.API_URL}/event/event/`)
+      axios
+        .post(`${this.API_URL}/event/event/`)
         .then((success) => {
           const newEventId = success.data.id;
           this.$router.push({
@@ -138,7 +142,8 @@ export default {
         })
         .catch(() => {
           this.$root.globalSnackbar.show({
-            message: 'Leider ist ein Problem beim erstellen des Events aufgetreten, bitte probiere es später nocheinmal.',
+            message:
+              'Leider ist ein Problem beim erstellen des Events aufgetreten, bitte probiere es später nocheinmal.',
             color: 'error',
           });
         });
@@ -168,7 +173,8 @@ export default {
       })
       .catch(() => {
         this.$root.globalSnackbar.show({
-          message: 'Leider ist ein Problem beim anzeigen der Events aufgetreten, '
+          message:
+            'Leider ist ein Problem beim anzeigen der Events aufgetreten, '
             + 'bitte probiere es später nocheinmal.',
           color: 'error',
         });
@@ -181,5 +187,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

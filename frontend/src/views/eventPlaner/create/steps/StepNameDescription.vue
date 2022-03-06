@@ -9,33 +9,9 @@
           Schritte. Viel Spaß!
         </span>
       </v-row>
-      <v-row>
-        <span class="subtitle-1">
-          Gib deiner Aktion eine passende Überschrift.
-        </span>
-      </v-row>
-      <v-row>
-        <v-text-field
-          v-model="name"
-          :counter="20"
-          :error-messages="nameErrors"
-          label="Name der Aktion"
-          required
-          @input="validate"
-          @blur="validate"
-        />
-      </v-row>
-      <v-row>
-        <v-text-field
-          v-model="description"
-          :counter="100"
-          :error-messages="descriptionErrors"
-          label="Beschreibung der Aktion"
-          required
-          @input="validate"
-          @blur="validate"
-        />
-      </v-row>
+      <div v-for="(field, i) in fields" :key="i">
+        <BaseField :field="field" v-model="data[field.techName]" :valdiationObj="$v" />
+      </div>
 
       <prev-next-button
         :valid="valid"
@@ -52,11 +28,12 @@
 </template>
 
 <script>
-import { required, maxLength } from 'vuelidate/lib/validators';
+import { required, maxLength, minLength } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import PrevNextButton from '@/components/button/PrevNextButton.vue';
+import BaseField from '@/components/common/BaseField.vue';
 import store from '@/store';
 
 export default {
@@ -65,47 +42,59 @@ export default {
   header: 'Aktionsbeschreibung',
   components: {
     PrevNextButton,
+    BaseField,
   },
   mixins: [stepMixin, apiCallsMixin],
   data: () => ({
-    API_URL: process.env.VUE_APP_API,
     valid: true,
-    name: '',
-    description: '',
+    data: {},
+    fields: [
+      {
+        name: 'Name',
+        techName: 'name',
+        tooltip: '123',
+        icon: 'mdi-account-circle',
+        mandatory: true,
+        fieldType: 'textfield',
+        default: '',
+      },
+      {
+        name: 'Zusammenfassung',
+        techName: 'description',
+        tooltip: '123',
+        icon: 'mdi-account-circle',
+        mandatory: true,
+        fieldType: 'textfield',
+        default: '',
+      },
+      {
+        name: 'Beschreibung',
+        techName: 'text',
+        tooltip: '123',
+        icon: 'mdi-account-circle',
+        mandatory: true,
+        fieldType: 'html',
+        default: '',
+        cols: 12,
+      },
+    ],
   }),
   validations: {
-    name: {
-      required,
-      maxLength: maxLength(20),
-    },
-    description: {
-      required,
-      maxLength: maxLength(100),
+    data: {
+      name: {
+        required,
+        minLength: minLength(1),
+        maxLength: maxLength(20),
+
+      },
+      description: {
+        required,
+        minLength: minLength(1),
+        maxLength: maxLength(100),
+      },
     },
   },
   computed: {
-    nameErrors() {
-      const errors = [];
-      if (!this.$v.name.$dirty) return errors;
-      if (!this.$v.name.required) {
-        errors.push('Veranstaltungsname ist notwendig.');
-      }
-      if (!this.$v.name.maxLength) {
-        errors.push('Veranstaltungsname muss kürzer als 20 Zeichen sein.');
-      }
-      return errors;
-    },
-    descriptionErrors() {
-      const errors = [];
-      if (!this.$v.description.$dirty) return errors;
-      if (!this.$v.description.required) {
-        errors.push('Beschreibung ist notwendig.');
-      }
-      if (!this.$v.description.maxLength) {
-        errors.push('Beschreibung muss kürzer als 100 Zeichen sein.');
-      }
-      return errors;
-    },
     ...mapGetters({
       event: 'createEvent/event',
     }),
@@ -115,20 +104,22 @@ export default {
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.$root.globalSnackbar.show({
-          message: 'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
+          message:
+            'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
           color: 'error',
         });
       } else {
-        store.commit('createEvent/setEventName', this.name);
-        store.commit('createEvent/setEventDescription', this.description);
+        store.commit('createEvent/setEventName', this.data.name);
+        store.commit('createEvent/setEventDescription', this.data.description);
       }
     },
   },
   mounted() {
     if (this.event.name !== 'Dummy') {
-      this.name = this.event.name;
+      this.data.name = this.event.name;
     }
-    this.description = this.event.description;
+    this.data.description = this.event.description;
+    this.$forceUpdate();
   },
 };
 </script>
