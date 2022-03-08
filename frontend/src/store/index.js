@@ -29,9 +29,9 @@ export default new Vuex.Store({
           usedByScoutGroups: [1],
         },
       ],
-      preferences: {
-        theme: 'default',
-      },
+    },
+    preferences: {
+      theme: 'default',
     },
   },
   getters: {

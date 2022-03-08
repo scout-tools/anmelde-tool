@@ -74,6 +74,9 @@ Vue.use(VueKeycloakJs, {
 
         keycl.checkPersonalData();
         keycl.setRefreshInterval(keycloak);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   },
 });

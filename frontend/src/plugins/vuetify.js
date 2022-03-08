@@ -8,13 +8,13 @@ export default new Vuetify({
     options: { customProperties: true },
     themes: {
       default: {
-        primary: '#2196f3',
-        secondary: '#009688',
-        accent: '#ff5722',
-        error: '#f44336',
-        warning: '#ffc107',
-        info: '#4CAF50',
-        success: '#4caf50',
+        primary: '#1976D2',
+        secondary: '#424242',
+        accent: '#82B1FF',
+        error: '#FF5252',
+        info: '#2196F3',
+        success: '#4CAF50',
+        warning: '#FFC107',
       },
       mosaik: {
         accent: '#F8D003',

@@ -1,10 +1,17 @@
 <template>
-  <div>
-    <v-btn color="secondary" dark @click="goToIdm">
-      <v-icon left>mdi-open-in-new</v-icon>
-      Zum DPV-Account
-    </v-btn>
-  </div>
+  <v-card flat>
+    <v-card-title class="text-center justify-center py-6">
+      Hier kannst du deine Einstellungen anpassen.
+    </v-card-title>
+    <v-container>
+      <v-row>
+        <v-btn color="secondary" dark @click="goToIdm">
+          <v-icon left>mdi-open-in-new</v-icon>
+          Zum DPV-Account
+        </v-btn>
+      </v-row>
+    </v-container>
+  </v-card>
 </template>
 
 <script>

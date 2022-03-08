@@ -134,13 +134,12 @@
               Änderungen speichern
             </v-btn>
           </v-col>
-          <!-- TODO: add user-delete service and activate button -->
-          <!-- <v-col cols="12" sm="6" md="4">
-                      <v-btn dark color="red">
-                        <v-icon left>mdi-delete</v-icon>
-                        Meine Daten löschen.
-                      </v-btn>
-                    </v-col> -->
+          <v-col cols="12" sm="6" md="4">
+            <v-btn dark color="error" @click="onDeleteClicked">
+              <v-icon left>mdi-delete</v-icon>
+              Meine Daten löschen.
+            </v-btn>
+          </v-col>
         </v-row>
       </v-container>
     </v-card-actions>
@@ -150,6 +149,7 @@
 <script>
 import axios from 'axios';
 import auth from '@/mixins/authMixin';
+import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
 import { maxLength, minLength, required } from 'vuelidate/lib/validators';
 // import YesNoDialog from '@/components/modals/YesNoDialog.vue';
@@ -199,8 +199,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['userinfo']),
     email() {
-      return ''; // this.getJwtData.email;
+      return this.userinfo.email;
     },
     getStammName() {
       if (this.scoutOrganisation && this.scoutOrganisation.name) {
