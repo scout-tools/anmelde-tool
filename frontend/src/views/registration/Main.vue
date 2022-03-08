@@ -1,6 +1,6 @@
 <template>
   <v-form ref="settingsUser">
-    <v-container class="top-margin default-max-width mt-10">
+    <v-container class="top-margin default-max-width">
       <v-row justify="center">
         <v-flex ma-3 lg9>
           <v-layout column>
@@ -75,6 +75,7 @@
 
 <script>
 // import axios from 'axios';
+import axios from 'axios';
 import BaseField from '@/components/common/BaseField.vue';
 import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
@@ -90,6 +91,7 @@ export default {
       API_URL: process.env.VUE_APP_API,
       loading: false,
       showError: false,
+      personalData: {},
       data: {
         invitationCode: '',
         name: '',
@@ -148,7 +150,6 @@ export default {
       },
     },
   },
-  props: ['scoutOrganisation'],
   computed: {
     ...mapGetters(['userinfo']),
     eventId() {
@@ -161,9 +162,9 @@ export default {
     //   }
     //   return false;
     // },
-    // mobileNumber() {
-    //   return this.items.mobileNumber;
-    // },
+    mobileNumber() {
+      return this.personalData.mobileNumber;
+    },
     // getItems() {
     //   return this.items;
     // },
@@ -217,6 +218,26 @@ export default {
     setData() {
       this.data.stamm = this.userinfo.stamm;
       this.data.name = this.userinfo.name;
+
+      this.loadUserData();
+    },
+
+    loadUserData() {
+      this.loading = true;
+      const path = `${this.API_URL}/auth/personal-data/`;
+      axios.get(path)
+        .then((res) => {
+          this.data.mobileNumber = res.data.mobileNumber;
+        })
+        .catch(() => {
+          this.$root.globalSnackbar.show({
+            message: 'Es gab einen Fehler beim runterladen deiner Daten, bitte probiere es später noch einmal.',
+            color: 'error',
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
 
     createRegestration() {

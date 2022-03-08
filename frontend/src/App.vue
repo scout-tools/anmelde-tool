@@ -39,9 +39,9 @@ export default {
 <style lang="sass">
 @import '../node_modules/typeface-roboto/index.css'
 </style>
-<style scoped>
+<style>
 .top-margin {
-  margin-top: 70px !important;
+  margin-top: 80px !important;
 }
 .default-max-width {
   max-width: 800px !important;

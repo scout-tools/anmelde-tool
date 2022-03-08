@@ -1,5 +1,5 @@
 <template>
-  <v-container class="top-margin mt-10">
+  <v-container class="top-margin">
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
@@ -131,6 +131,12 @@ export default {
   methods: {
     editRegistration(item) {
       this.$refs.confirmRegistrationEditModal.show(item);
+    },
+    getHeaderText(header, roles) {
+      if (roles && roles.length) {
+        return `${header} (Deine Rolle: ${roles[0].eventRole_Name})`;
+      }
+      return header;
     },
     getLagerText(item) {
       const startTime = new Date(item.startTime);
