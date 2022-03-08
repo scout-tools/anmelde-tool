@@ -3,7 +3,7 @@ export default {
   state: () => ({
     event: {
       description: '',
-      endTime: '',
+      endDate: '',
       id: '',
       lastPossibleUpdate: '',
       location: '',
@@ -12,7 +12,7 @@ export default {
       registrationDeadline: '',
       singleRegistration: '',
       groupRegistration: '',
-      startTime: '',
+      startDate: '',
       tags: [],
       eventmodulemapperSet: [],
       responsiblePersons: [],

@@ -28,7 +28,7 @@
         <v-icon>mdi-account-key</v-icon>
       </v-tab>
       <v-tab :to="{ name: 'dataOverview' }" v-if="isAuth">
-        Meine Daten
+        Auswertungen
         <v-icon>mdi-chart-bar</v-icon>
       </v-tab>
       <v-spacer></v-spacer>

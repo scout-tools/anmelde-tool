@@ -119,10 +119,10 @@ export default {
   computed: {},
   methods: {
     getLagerText(item) {
-      const startTime = new Date(item.startTime);
-      const endTime = new Date(item.endTime);
-      return `Termin: ${moment(startTime, 'll', 'de').format('ll')} bis
-      ${moment(endTime, 'll', 'de').format('ll')}`;
+      const startDate = new Date(item.startDate);
+      const endDate = new Date(item.endDate);
+      return `Termin: ${moment(startDate, 'll', 'de').format('ll')} bis
+      ${moment(endDate, 'll', 'de').format('ll')}`;
     },
     getDeadline(item) {
       const registrationDeadline = new Date(item.registrationDeadline);

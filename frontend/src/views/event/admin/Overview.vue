@@ -179,20 +179,20 @@ export default {
       return 0;
     },
     isInTimeRange(date1, date2) {
-      const startTime = new Date(date1).getTime();
-      const endTime = new Date(date2).getTime();
+      const startDate = new Date(date1).getTime();
+      const endDate = new Date(date2).getTime();
       const today = new Date().getTime();
 
-      return today > startTime && today < endTime;
+      return today > startDate && today < endDate;
     },
     getLagerText(item) {
-      const startTime = new Date(item.startTime);
-      const endTime = new Date(item.endTime);
+      const startDate = new Date(item.startDate);
+      const endDate = new Date(item.endDate);
       const dateFormat = 'll';
 
-      const text1 = `Termin: ${moment(startTime)
+      const text1 = `Termin: ${moment(startDate)
         .lang('de')
-        .format(dateFormat)} bis ${moment(endTime)
+        .format(dateFormat)} bis ${moment(endDate)
         .lang('de')
         .format(dateFormat)}`;
       return text1;

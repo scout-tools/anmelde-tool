@@ -102,7 +102,7 @@ class SleepingLocationViewSet(viewsets.ModelViewSet):
         request.data['event'] = event_id
 
         if request.data.get('bookable_till', None) is None:
-            request.data['bookable_till'] = event.start_time
+            request.data['bookable_till'] = event.start_date
 
         return super().create(request, *args, **kwargs)
 
@@ -224,5 +224,5 @@ class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
         while iterator is not None:
             list_parent_organistations.append(iterator)
             iterator = iterator.parent
-        return Event.objects.filter(is_public=True, end_time__gte=timezone.now(),
+        return Event.objects.filter(is_public=True, end_date__gte=timezone.now(),
                                     limited_registration_hierarchy__in=list_parent_organistations)

@@ -76,8 +76,8 @@ class Event(TimeStampMixin):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100, blank=True)
     location = models.ForeignKey(EventLocation, on_delete=models.PROTECT, null=True, blank=True)
-    start_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
-    end_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    start_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    end_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     registration_deadline = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     registration_start = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     last_possible_update = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
@@ -97,7 +97,7 @@ class Event(TimeStampMixin):
     personal_data_required = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.name}: {self.start_time} - {self.end_time}, {self.location}"
+        return f"{self.name}: {self.start_date} - {self.end_date}, {self.location}"
 
 
 class EventModuleMapper(models.Model):

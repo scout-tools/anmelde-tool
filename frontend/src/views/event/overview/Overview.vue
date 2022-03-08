@@ -126,11 +126,11 @@ export default {
       return !item.isRegistered.length;
     },
     getLagerText(item) {
-      const startTime = new Date(item.startTime);
-      const endTime = new Date(item.endTime);
-      return `Termin: ${moment(startTime, 'll', 'de')
+      const startDate = new Date(item.startDate);
+      const endDate = new Date(item.endDate);
+      return `Termin: ${moment(startDate, 'll', 'de')
         .format('ll')} bis
-      ${moment(endTime, 'll', 'de')
+      ${moment(endDate, 'll', 'de')
     .format('ll')}`;
     },
     getDeadline(item) {
@@ -149,10 +149,10 @@ export default {
       return 0;
     },
     isInTimeRange(date1, date2) {
-      const startTime = new Date(date1).getTime();
-      const endTime = new Date(date2).getTime();
+      const startDate = new Date(date1).getTime();
+      const endDate = new Date(date2).getTime();
       const today = new Date().getTime();
-      return today > startTime && today < endTime;
+      return today > startDate && today < endDate;
     },
     editRegistration(item) {
       this.$refs.confirmRegistrationEditModal.show(item);

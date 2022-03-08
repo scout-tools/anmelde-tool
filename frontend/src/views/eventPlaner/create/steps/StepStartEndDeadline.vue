@@ -5,58 +5,16 @@
         <span class="subtitle-1"> Zeitraum der Aktion. </span>
       </v-row>
       <v-row>
-        <DateTimePicker
-          ref="startTimeRef"
-          v-model="startTime"
-          :errorMessagesTime="startTimeErrors"
-          :errorMessagesDate="startTimeErrors"
-          title="Aktionstart"
-        />
+        <template v-for="(field, i) in fields">
+          <BaseField
+            :key="i"
+            :field="field"
+            v-model="data[field.techName]"
+            :valdiationObj="$v"
+          />
+        </template>
       </v-row>
-      <v-row>
-        <DateTimePicker
-          ref="endTimeRef"
-          v-model="endTime"
-          title="Aktionende"
-          :errorMessagesTime="endTimeErrors"
-          :errorMessagesDate="endTimeErrors"
-        />
-      </v-row>
-      <v-row>
-        <DateTimePicker
-          ref="registrationStartRef"
-          v-model="registrationStart"
-          title="Anmeldestart"
-          :error-messages-date="registrationStartTimeErrors"
-          :error-messages-time="registrationStartTimeErrors"
-        />
-      </v-row>
-      <v-row>
-        <DateTimePicker
-          ref="registrationDeadlineRef"
-          v-model="registrationDeadline"
-          title="Anmeldeende"
-          :error-messages-date="registrationEndTimeErrors"
-          :error-messages-time="registrationEndTimeErrors"
-        />
-      </v-row>
-      <v-row>
-        <v-card-text>
-          Unabhängig vom Ende der Anmeldephase, kann man einstellen bis wann bereits Angemeldete
-          ihre Daten verändern können. Diese veränderten Daten werden mit einem Tag versehen
-          und müssen von der Lagerleitung bestätigt werden.
-          Wenn es keine Möglichkeit geben soll die Daten nach dem Anmeldeende zu verändern,
-          kann dieses Feld leer gelassen werden.
-        </v-card-text>
-        <DateTimePicker
-          ref="registrationLasPossibleUpdate"
-          v-model="lastPossibleUpdate"
-          title="Bearbeitungsende"
-          :error-messages-date="registrationEndTimeErrors"
-          :error-messages-time="registrationEndTimeErrors"
-        />
-      </v-row>
-      <v-divider class="my-2"/>
+      <v-divider class="my-2" />
       <prev-next-button
         :valid="valid"
         :position="position"
@@ -72,14 +30,12 @@
 </template>
 
 <script>
-
 import { required } from 'vuelidate/lib/validators';
-import moment from 'moment';
 import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import store from '@/store';
-import DateTimePicker from '@/components/picker/DateTimePicker.vue';
 import PrevNextButton from '@/components/button/PrevNextButton.vue';
+import BaseField from '@/components/common/BaseField.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
@@ -88,118 +44,139 @@ export default {
   props: ['position', 'maxPos'],
   components: {
     PrevNextButton,
-    DateTimePicker,
+    BaseField,
   },
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
       valid: true,
-      startTime: null,
-      endTime: null,
-      registrationDeadline: null,
-      registrationStart: null,
-      lastPossibleUpdate: null,
+      data: {
+        startDate: null,
+        endDate: null,
+        registrationDeadline: null,
+        registrationStart: null,
+        lastPossibleUpdate: null,
+      },
+      fields: [
+        {
+          name: 'Start',
+          techName: 'startDate',
+          tooltip: '123',
+          icon: 'mdi-account-circle',
+          mandatory: true,
+          fieldType: 'datetime',
+          default: '',
+          cols: 12,
+        },
+        {
+          name: 'Ende',
+          techName: 'endDate',
+          tooltip: '123',
+          icon: 'mdi-account-circle',
+          mandatory: true,
+          fieldType: 'datetime',
+          default: '',
+          cols: 12,
+        },
+        {
+          name: 'Anmeldestart',
+          techName: 'registrationStart',
+          tooltip: '123',
+          icon: 'mdi-account-circle',
+          mandatory: true,
+          fieldType: 'datetime',
+          default: '',
+          cols: 12,
+        },
+        {
+          name: 'Anmeldeende',
+          techName: 'registrationDeadline',
+          tooltip: '123',
+          icon: 'mdi-account-circle',
+          mandatory: true,
+          fieldType: 'datetime',
+          default: '',
+          cols: 12,
+        },
+        {
+          name: 'Letze Änderung',
+          techName: 'lastPossibleUpdate',
+          tooltip: '123',
+          icon: 'mdi-account-circle',
+          mandatory: true,
+          fieldType: 'datetime',
+          default: '',
+          cols: 12,
+        },
+      ],
     };
   },
+  ...mapGetters({
+    event: 'createEvent/event',
+  }),
   mixins: [stepMixin, apiCallsMixin],
   validations: {
-    startTime: {
-      required,
+    data: {
+      startDate: {
+        required,
+      },
+      endDate: {
+        required,
+      },
+      registrationStart: {
+        required,
+      },
+      registrationDeadline: {
+        required,
+      },
+      lastPossibleUpdate: {
+        required,
+      },
     },
-    endTime: {
-      required,
-    },
-    registrationStart: {
-      required,
-    },
-    registrationDeadline: {
-      required,
-    },
-  },
-  computed: {
-    startTimeErrors() {
-      const errors = [];
-      if (!this.$v.startTime.$dirty) return errors;
-      if (!this.$v.startTime.required) {
-        errors.push('Eine Startzeit muss eingetragen werden.');
-      }
-      return errors;
-    },
-    endTimeErrors() {
-      const errors = [];
-      if (!this.$v.endTime.$dirty) return errors;
-      if (!this.$v.endTime.required) {
-        errors.push('Eine Endzeit muss eingetragen werden.');
-      }
-      return errors;
-    },
-    registrationStartTimeErrors() {
-      const errors = [];
-      if (!this.$v.registrationStart.$dirty) return errors;
-      if (!this.$v.registrationStart.required) {
-        errors.push('Eine Startzeit für die Registration muss eingetragen werden.');
-      }
-      return errors;
-    },
-    registrationEndTimeErrors() {
-      const errors = [];
-      if (!this.$v.registrationDeadline.$dirty) return errors;
-      if (!this.$v.registrationDeadline.required) {
-        errors.push('Eine Zeit für das Ende der Registrierung muss eingetragen werden.');
-      }
-      return errors;
-    },
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
   },
   methods: {
     updateData() {
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.$root.globalSnackbar.show({
-          message: 'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
+          message:
+            'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
           color: 'error',
         });
       } else {
         store.commit('createEvent/setEventAttribute', {
           prop: 'registrationDeadline',
-          value: this.registrationDeadline,
+          value: this.data.registrationDeadline,
         });
         store.commit('createEvent/setEventAttribute', {
           prop: 'registrationStart',
-          value: this.registrationStart,
+          value: this.data.registrationStart,
         });
         store.commit('createEvent/setEventAttribute', {
-          prop: 'startTime',
-          value: this.startTime,
+          prop: 'startDate',
+          value: this.data.startDates,
         });
         store.commit('createEvent/setEventAttribute', {
           prop: 'lastPossibleUpdate',
-          value: this.lastPossibleUpdate,
+          value: this.data.lastPossibleUpdate,
         });
         store.commit('createEvent/setEventAttribute', {
-          prop: 'endTime',
-          value: this.endTime,
+          prop: 'endDate',
+          value: this.data.endDate,
         });
       }
     },
   },
-  mounted() {
-    this.startTime = moment(this.event.startTime)
-      .toDate();
-    this.endTime = moment(this.event.endTime)
-      .toDate();
-    this.registrationDeadline = moment(this.event.registrationDeadline)
-      .toDate();
-    this.registrationStart = moment(this.event.registrationStart)
-      .toDate();
-    this.lastPossibleUpdate = moment(this.event.lastPossibleUpdate)
-      .toDate();
-    this.$refs.startTimeRef.setDate(this.startTime);
-    this.$refs.endTimeRef.setDate(this.endTime);
-    this.$refs.registrationStartRef.setDate(this.registrationStart);
-    this.$refs.registrationDeadlineRef.setDate(this.registrationDeadline);
+  created() {
+    console.log('this.event');
+    console.log(this.event);
+    this.data.startDate = this.$moment(this.event.startDate).toDate();
+    this.data.endDate = this.$moment(this.event.endDate).toDate();
+    this.data.registrationDeadline = this.$moment(
+      this.event.registrationDeadline,
+    ).toDate();
+    this.data.registrationStart = this.$moment(this.event.registrationStart).toDate();
+    this.data.lastPossibleUpdate = this.$moment(this.event.lastPossibleUpdate).toDate();
   },
 };
 </script>

@@ -75,34 +75,77 @@
         ></ckeditor>
       </v-row>
     </v-container>
-    <v-col v-if="field.fieldType === 'date'">
+    <v-container v-if="field.fieldType === 'date'">
       <v-text-field
         :value="value"
-        v-mask="'##/##/####'"
-        placeholder="DD/MM/YYYY"
+        v-mask="'##.##.####'"
+        placeholder="DD.MM.YYYY"
         @input="onDateInputChanged"
         :label="`${field.name}`"
-      ></v-text-field>
-    </v-col>
+        :prepend-icon="field.icon"
+        :error-messages="onErrorMessageChange(field.techName)"
+        :disabled="field.disabled"
+        :readonly="field.readonly"
+        :filled="field.filled"
+      >
+        <template slot="append">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon color="info" dark v-bind="attrs" v-on="on">
+                mdi-help-circle-outline
+              </v-icon>
+            </template>
+            <span>
+              {{ field.tooltip }}
+            </span>
+          </v-tooltip>
+        </template></v-text-field
+      >
+    </v-container>
     <v-container v-if="field.fieldType === 'datetime'">
-      <v-col>
-        <v-text-field
-          :value="valueDate"
-          v-mask="'##/##/####'"
-          placeholder="DD/MM/YYYY"
-          @input="onDateTimeInputChanged"
-          :label="`${field.name}`"
-        ></v-text-field>
-      </v-col>
-      <v-col>
-        <v-text-field
-          :value="valueTime"
-          v-mask="'##:##'"
-          placeholder="hh/mm"
-          @input="onDateTimeInputChanged"
-          :label="`${field.name}`"
-        ></v-text-field>
-      </v-col>
+      <v-row>
+        <v-col>
+          <v-text-field
+            :value="valueDate"
+            v-mask="'##.##.####'"
+            placeholder="DD.MM.YYYY"
+            @input="onDateTimeInputChangedDate"
+            :label="`${field.name}-Datum`"
+            :prepend-icon="field.icon"
+            :error-messages="onErrorMessageChange(field.techName)"
+            :disabled="field.disabled"
+            :readonly="field.readonly"
+            :filled="field.filled"
+          >
+            <template slot="append">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon color="info" dark v-bind="attrs" v-on="on">
+                    mdi-help-circle-outline
+                  </v-icon>
+                </template>
+                <span>
+                  {{ field.tooltip }}
+                </span>
+              </v-tooltip>
+            </template></v-text-field
+          >
+        </v-col>
+        <v-col>
+          <v-text-field
+            :value="valueTime"
+            v-mask="'##:##'"
+            placeholder="hh:mm"
+            @input="onDateTimeInputChangedTime"
+            :label="`${field.name}-Uhrzeit`"
+            :prepend-icon="field.icon"
+            :error-messages="onErrorMessageChange(field.techName)"
+            :disabled="field.disabled"
+            :readonly="field.readonly"
+            :filled="field.filled"
+          ></v-text-field>
+        </v-col>
+      </v-row>
     </v-container>
     <v-container v-if="field.fieldType === 'file'">
       <v-row>
@@ -180,10 +223,10 @@ export default {
   },
   computed: {
     valueDate() {
-      return this.value;
+      return this.$moment(this.value).format('DD.MM.YYYY');
     },
     valueTime() {
-      return this.value;
+      return this.$moment(this.value).format('hh:mm');
     },
   },
   methods: {
@@ -198,10 +241,28 @@ export default {
       console.log(value);
       this.$emit('input', value);
     },
-    onDateTimeInputChanged(value) {
+    onDateTimeInputChangedDate(value) {
       const newDate = this.$moment(value, 'L', 'de');
+      if (newDate.isValid() && value.length === 10) {
+        debugger;
+        this.onInputChanged(newDate.toDate());
+      }
+      this.$forceUpdate();
+    },
+    onDateTimeInputChangedTime(value) {
+      console.log(value);
+      if (value.length !== 5) {
+        return;
+      }
+      debugger;
+      const newDate = this.$moment(
+        `${this.valueDate} ${value}`,
+        'DD.MM.YYYY hh:mm',
+        'de',
+      );
       if (newDate.isValid()) {
-        this.onInputChanged(value);
+        debugger;
+        this.onInputChanged(newDate.toDate());
       }
       this.$forceUpdate();
     },

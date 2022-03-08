@@ -9,6 +9,7 @@ import { Icon } from 'leaflet';
 import VueKeycloakJs from '@dsb-norge/vue-keycloak-js';
 import vuetifyMoney from 'vuetify-money';
 import CKEditor from '@ckeditor/ckeditor5-vue2';
+import VueMask from 'v-mask';
 
 import App from './App.vue';
 import router from './router';
@@ -29,6 +30,8 @@ Vue.use(VueJwtDecode);
 Vue.use(require('vue-moment'), {
   moment,
 });
+
+Vue.use(VueMask);
 
 Vue.use(CKEditor);
 

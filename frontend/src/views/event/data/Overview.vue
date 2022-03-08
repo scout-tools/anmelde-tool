@@ -139,13 +139,13 @@ export default {
       return header;
     },
     getLagerText(item) {
-      const startTime = new Date(item.startTime);
-      const endTime = new Date(item.endTime);
+      const startDate = new Date(item.startDate);
+      const endDate = new Date(item.endDate);
       const dateFormat = 'll';
 
-      const text1 = `Termin: ${moment(startTime)
+      const text1 = `Termin: ${moment(startDate)
         .lang('de')
-        .format(dateFormat)} bis ${moment(endTime)
+        .format(dateFormat)} bis ${moment(endDate)
         .lang('de')
         .format(dateFormat)}`;
       return text1;
