@@ -11,6 +11,12 @@ class ScoutHierarchySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ZipCodeShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ZipCode
+        fields = ('zip_code', 'city')
+
+
 class ZipCodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ZipCode

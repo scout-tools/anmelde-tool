@@ -74,7 +74,8 @@ class AttributeEventModuleMapper(models.Model):
 class Event(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=100, blank=True)
+    short_description = models.CharField(max_length=100, blank=True)
+    long_description = models.CharField(max_length=10000, blank=True)
     location = models.ForeignKey(EventLocation, on_delete=models.PROTECT, null=True, blank=True)
     start_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     end_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
@@ -146,7 +147,8 @@ class Registration(TimeStampMixin):
     is_confirmed = models.BooleanField(default=False)
     is_accepted = models.BooleanField(default=False)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(AbstractAttribute)
+    tags = models.ManyToManyField(AbstractAttribute, blank=True)
+    single = models.BooleanField(default=False)
 
 
 class RegistrationParticipant(TimeStampMixin):
