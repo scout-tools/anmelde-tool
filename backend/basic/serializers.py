@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_polymorphic.serializers import PolymorphicSerializer
 
 from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, Tag, TagType, AbstractAttribute, BooleanAttribute, \
-    TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute
+    TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute
 
 
 class ScoutHierarchySerializer(serializers.ModelSerializer):
@@ -113,6 +113,14 @@ class TravelAttributeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class StringAttributeSerializer(serializers.ModelSerializer):
+    type = TagTypeShortSerializer(many=False)
+
+    class Meta:
+        model = StringAttribute
+        fields = '__all__'
+
+
 class AbstractAttributePolymorphicSerializer(PolymorphicSerializer):
     model_serializer_mapping = {
         FloatAttribute: FloatAttributeSerializer,
@@ -120,4 +128,5 @@ class AbstractAttributePolymorphicSerializer(PolymorphicSerializer):
         TimeAttribute: TimeAttributeSerializer,
         BooleanAttribute: BooleanAttributeSerializer,
         TravelAttribute: TravelAttributeSerializer,
+        StringAttribute: StringAttributeSerializer
     }

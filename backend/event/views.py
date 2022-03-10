@@ -242,7 +242,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
 
         event: Event = get_object_or_404(Event, pk=serializer.data['event'])
         if serializer.data['event_code'] != event.invitation_code:
-            raise PermissionDenied()
+            raise WrongEventCode()
 
         # Check registration type permissions
         if event.single_registration == RegistrationTypeSingle.External and \
@@ -252,7 +252,8 @@ class RegistrationViewSet(mixins.CreateModelMixin,
             raise RegistrationNotSupported
 
         # Check registration type permissions based on existing registrations
-        existing_registration = Registration.objects.filter(scout_hierachy=request.user.userextended.scout_organisation)
+        existing_registration = Registration.objects.filter(
+            scout_organisation=request.user.userextended.scout_organisation)
         if existing_registration.exists():
             single_registration = existing_registration.filter(responsible_persons__in=[request.user.id], single=True)
             existing_group_registration = existing_registration.filter(single=False)
@@ -272,7 +273,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
                 raise WrongRegistrationFormat
 
         registration: Registration = Registration(
-            scout_hierachy=request.user.userextended.scout_organisation,
+            scout_organisation=request.user.userextended.scout_organisation,
             event=event,
             single=serializer.data['single']
         )
@@ -333,10 +334,16 @@ class SingleGroupNotAllowed(APIException):
 class WrongRegistrationFormat(APIException):
     status_code = 405
     default_detail = "You're regisration contains information which does not fit to the event"
-    default_code = 'misleading_information'
+    default_code = 'missleading_information'
 
 
 class RegistrationNotSupported(APIException):
     status_code = 501
     default_detail = "Attached registrations are currently not implemented"
     default_code = 'no_attached_registrations'
+
+
+class WrongEventCode(APIException):
+    status_code = 403
+    default_detail = "Your your typed in code does not match the event code"
+    default_code = 'wrong_code'

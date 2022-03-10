@@ -61,8 +61,8 @@ class StandardEventTemplateAdmin(admin.ModelAdmin):
 
 @admin.register(Registration)
 class RegistrationAdmin(admin.ModelAdmin):
-    list_display = ('scout_hierachy', 'event', 'single')
-    search_fields = ('scout_hierachy', 'event')
+    list_display = ('scout_organisation', 'event', 'single')
+    search_fields = ('scout_organisation', 'event')
     autocomplete_fields = ('event',)
     list_filter = ('event__name',)
 

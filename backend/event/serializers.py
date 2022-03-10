@@ -7,7 +7,7 @@ from authentication.serializers import UserExtendedShortSerializer
 from basic.serializers import TagShortSerializer, ZipCodeSerializer, AbstractAttributePolymorphicSerializer, \
     ZipCodeShortSerializer
 from .models import Event, EventLocation, BookingOption, EventModuleMapper, EventModule, AttributeEventModuleMapper, \
-    RegistrationTypeGroup, RegistrationTypeSingle, Registration
+    RegistrationTypeGroup, RegistrationTypeSingle, Registration, RegistrationParticipant
 
 
 class EventLocationGetSerializer(serializers.ModelSerializer):
@@ -169,7 +169,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
         single_possible = False
 
         registration = obj.registration_set.filter(
-            scout_hierachy=self.context['request'].user.userextended.scout_organisation)
+            scout_organisation=self.context['request'].user.userextended.scout_organisation)
         if registration.exists() > 0:
             existing_group: QuerySet = registration.filter(single=False)
             group: QuerySet = existing_group.filter(responsible_persons__in=[self.context['request'].user.id])
@@ -230,3 +230,9 @@ class RegistrationGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Registration
         fields = '__all__'
+
+
+class RegistrationParticipantShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RegistrationParticipant
+        fields = ('scout_name', 'first_name', 'last_name')

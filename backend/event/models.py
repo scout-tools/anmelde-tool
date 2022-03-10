@@ -151,7 +151,7 @@ class Registration(TimeStampMixin):
         registration deadline after that the registration has to be accepted manually
     """
     id = models.AutoField(auto_created=True, primary_key=True)
-    scout_hierachy = models.ForeignKey(ScoutHierarchy, null=True, on_delete=models.PROTECT)
+    scout_organisation = models.ForeignKey(ScoutHierarchy, null=True, on_delete=models.PROTECT)
     responsible_persons = models.ManyToManyField(User)
     is_confirmed = models.BooleanField(default=False)
     is_accepted = models.BooleanField(default=False)
@@ -177,7 +177,7 @@ class RegistrationParticipant(TimeStampMixin):
     gender = models.CharField(max_length=1, choices=Gender.choices, default=Gender.Nothing)
 
     def __str__(self):
-        return f"{self.registration}: {self.last_name}, {self.first_name}"
+        return f"{self.registration__name}: {self.last_name}, {self.first_name}"
 
 
 class Workshop(TimeStampMixin):
