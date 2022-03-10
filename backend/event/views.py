@@ -11,10 +11,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from basic.models import ScoutHierarchy
-from event.models import Event, EventLocation, SleepingLocation, RegistrationTypeGroup, RegistrationTypeSingle, \
+from event.models import Event, EventLocation, BookingOption, RegistrationTypeGroup, RegistrationTypeSingle, \
     StandardEventTemplate, Registration
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
-    EventCompleteSerializer, SleepingLocationSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
+    EventCompleteSerializer, BookingOptionSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
     EventModuleSerializer, AttributeEventModuleMapperSerializer, EventOverviewSerializer, \
     EventModuleMapperPostSerializer, EventModuleMapperGetSerializer, RegistrationPostSerializer, \
     RegistrationGetSerializer, RegistrationPutSerializer
@@ -81,13 +81,13 @@ class EventViewSet(viewsets.ModelViewSet):
         return super().update(request, *args, **kwargs)
 
 
-class SleepingLocationViewSet(viewsets.ModelViewSet):
+class BookingOptionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = SleepingLocationSerializer
+    serializer_class = BookingOptionSerializer
 
     def get_queryset(self):
         event_id = self.kwargs.get("event_pk", None)
-        return SleepingLocation.objects.filter(event=event_id)
+        return BookingOption.objects.filter(event=event_id)
 
     def create(self, request, *args, **kwargs):
         if request.data.get('name', None) is None:
@@ -117,7 +117,7 @@ class SleepingLocationViewSet(viewsets.ModelViewSet):
             return super().destroy(request, *args, **kwargs)
         else:
             raise MethodNotAllowed(method='delete',
-                                   detail=f'delete not allowed, because there must be at least one sleeping location')
+                                   detail=f'delete not allowed, because there must be at least one booking option')
 
 
 class EventPlanerViewSet(viewsets.ReadOnlyModelViewSet):

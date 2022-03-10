@@ -1,5 +1,5 @@
 from django.contrib import admin
-from event.models import EventLocation, Event, SleepingLocation, EventModule, EventModuleMapper, \
+from event.models import EventLocation, Event, BookingOption, EventModule, EventModuleMapper, \
     AttributeEventModuleMapper, StandardEventTemplate, Registration, RegistrationParticipant
 
 
@@ -17,7 +17,7 @@ class EventAdmin(admin.ModelAdmin):
     autocomplete_fields = ('responsible_persons', 'tags')
 
 
-@admin.register(SleepingLocation)
+@admin.register(BookingOption)
 class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'event')
     search_fields = ('name',)

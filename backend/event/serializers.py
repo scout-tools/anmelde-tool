@@ -6,7 +6,7 @@ from authentication.models import UserExtended
 from authentication.serializers import UserExtendedShortSerializer
 from basic.serializers import TagShortSerializer, ZipCodeSerializer, AbstractAttributePolymorphicSerializer, \
     ZipCodeShortSerializer
-from .models import Event, EventLocation, SleepingLocation, EventModuleMapper, EventModule, AttributeEventModuleMapper, \
+from .models import Event, EventLocation, BookingOption, EventModuleMapper, EventModule, AttributeEventModuleMapper, \
     RegistrationTypeGroup, RegistrationTypeSingle, Registration
 
 
@@ -38,12 +38,13 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
                   'registration_start',
                   'last_possible_update',
                   'tags',
-                  'registration_model')
+                  'registration_model',
+                  'cloud_link')
 
 
-class SleepingLocationSerializer(serializers.ModelSerializer):
+class BookingOptionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SleepingLocation
+        model = BookingOption
         fields = '__all__'
 
 
@@ -150,7 +151,6 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'registration_start',
             'last_possible_update',
             'tags',
-            'personal_data_required',
             'can_register',
             'can_edit',
             'registration'

@@ -129,7 +129,7 @@ export default {
     updateData() {
       this.sleepingLocations.forEach((item, index) => {
         if (isNumber(index)) {
-          this.updateEventSleepingLocation(this.$route.params.id, item.id, item)
+          this.updateEventBookingOption(this.$route.params.id, item.id, item)
             .catch((error) => {
               console.log(error);
             });
@@ -155,13 +155,13 @@ export default {
       });
     },
     addSleepingLocation() {
-      this.addEventSleepingLocation(this.$route.params.id)
+      this.addEventBookingOption(this.$route.params.id)
         .then(() => {
-          this.collectSleepingLocations();
+          this.collectBookingOptionss();
         });
     },
-    collectSleepingLocations() {
-      this.getEventSleepingLocation(this.$route.params.id)
+    collectBookingOptionss() {
+      this.getEventBookingOptions(this.$route.params.id)
         .then((success) => {
           this.sleepingLocations = success.data;
           this.extendedMenu = this.sleepingLocations.length > 1;
@@ -175,16 +175,16 @@ export default {
         });
     },
     deleteSleepingLocation(id) {
-      this.deleteEventSleepingLocation(this.$route.params.id, id)
+      this.deleteEventBookingOption(this.$route.params.id, id)
         .then(() => {
-          this.collectSleepingLocations();
+          this.collectBookingOptionss();
         });
     },
 
   },
   mounted() {
     this.participationFee = this.event.price;
-    this.collectSleepingLocations();
+    this.collectBookingOptionss();
   },
   watch: {
     extendedMenu(newVal) {
