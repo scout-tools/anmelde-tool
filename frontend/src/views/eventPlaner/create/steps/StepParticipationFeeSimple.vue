@@ -83,7 +83,7 @@ export default {
     updateData() {
       this.sleepingLocations.forEach((item, index) => {
         if (isNumber(index)) {
-          this.updateEventSleepingLocation(this.$route.params.id, item.id, item)
+          this.updateEventBookingOption(this.$route.params.id, item.id, item)
             .catch((error) => {
               console.log(error);
             });
@@ -96,7 +96,7 @@ export default {
       });
     },
     collectSleepingLocations() {
-      this.getEventSleepingLocation(this.$route.params.id)
+      this.getEventBookingOptions(this.$route.params.id)
         .then((success) => {
           this.sleepingLocations = success.data;
         })

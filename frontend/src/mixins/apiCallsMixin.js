@@ -31,20 +31,20 @@ export default {
       const url = `${this.API_URL}/event/event-location/?&timestamp=${new Date().getTime()}`;
       return axios.get(url);
     },
-    async getEventSleepingLocation(eventId) {
-      const url = `${this.API_URL}/event/event/${eventId}/sleeping-locations/?&timestamp=${new Date().getTime()}`;
+    async getEventBookingOptions(eventId) {
+      const url = `${this.API_URL}/event/event/${eventId}/booking-options/?&timestamp=${new Date().getTime()}`;
       return axios.get(url);
     },
-    async addEventSleepingLocation(eventId, data) {
-      const url = `${this.API_URL}/event/event/${eventId}/sleeping-locations/`;
+    async addEventBookingOption(eventId, data) {
+      const url = `${this.API_URL}/event/event/${eventId}/booking-options/`;
       return axios.post(url, data);
     },
-    async updateEventSleepingLocation(eventId, sleepingLocationId, data) {
-      const url = `${this.API_URL}/event/event/${eventId}/sleeping-locations/${sleepingLocationId}/`;
+    async updateEventBookingOption(eventId, bookingOptionId, data) {
+      const url = `${this.API_URL}/event/event/${eventId}/booking-options/${bookingOptionId}/`;
       return axios.put(url, data);
     },
-    async deleteEventSleepingLocation(eventId, sleepingLocationId) {
-      const url = `${this.API_URL}/event/event/${eventId}/sleeping-locations/${sleepingLocationId}/`;
+    async deleteEventBookingOption(eventId, bookingOptionId) {
+      const url = `${this.API_URL}/event/event/${eventId}/booking-options/${bookingOptionId}/`;
       return axios.delete(url);
     },
     async getAvailableEventModules(eventId) {

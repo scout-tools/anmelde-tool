@@ -6,7 +6,7 @@ from authentication.models import UserExtended
 from authentication.serializers import UserExtendedShortSerializer
 from basic.serializers import TagShortSerializer, ZipCodeSerializer, AbstractAttributePolymorphicSerializer, \
     ZipCodeShortSerializer
-from .models import Event, EventLocation, SleepingLocation, EventModuleMapper, EventModule, AttributeEventModuleMapper, \
+from .models import Event, EventLocation, BookingOption, EventModuleMapper, EventModule, AttributeEventModuleMapper, \
     RegistrationTypeGroup, RegistrationTypeSingle, Registration
 
 
@@ -41,9 +41,9 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
                   'registration_model')
 
 
-class SleepingLocationSerializer(serializers.ModelSerializer):
+class BookingOptionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SleepingLocation
+        model = BookingOption
         fields = '__all__'
 
 
