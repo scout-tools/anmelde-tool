@@ -69,5 +69,5 @@ class RegistrationAdmin(admin.ModelAdmin):
 
 @admin.register(RegistrationParticipant)
 class RegistrationParticipantAdmin(admin.ModelAdmin):
-    list_display = ('scout_name', 'first_name', 'registration')
+    list_display = ('registration', 'first_name', 'last_name', 'scout_name')
     list_filter = ('registration__event__name',)

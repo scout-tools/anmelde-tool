@@ -2,7 +2,6 @@ from django.db.models import QuerySet
 from django.utils import timezone
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from authentication.models import UserExtended
 from authentication.serializers import UserExtendedShortSerializer
 from basic.serializers import TagShortSerializer, ZipCodeSerializer, AbstractAttributePolymorphicSerializer, \
     ZipCodeShortSerializer
@@ -235,4 +234,23 @@ class RegistrationGetSerializer(serializers.ModelSerializer):
 class RegistrationParticipantShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegistrationParticipant
-        fields = ('scout_name', 'first_name', 'last_name')
+        fields = ('id', 'scout_name', 'first_name', 'last_name')
+
+
+class RegistrationParticipantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RegistrationParticipant
+        fields = '__all__'
+
+
+class RegistrationParticipantPutSerializer(serializers.ModelSerializer):
+    avoid_manual_check = serializers.BooleanField(required=False, default=False)
+    activate = serializers.BooleanField(required=False, default=False)
+
+    class Meta:
+        model = RegistrationParticipant
+        exclude = ('deactivated', 'generated', 'registration', 'needs_confirmation')
+
+
+class RegistrationParticipantGroupSerializer(serializers.ModelSerializer):
+    number = serializers.CharField(required=True)

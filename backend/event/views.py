@@ -6,18 +6,21 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status, mixins
-from rest_framework.exceptions import NotFound, MethodNotAllowed, PermissionDenied, APIException
+from rest_framework.exceptions import NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from basic.models import ScoutHierarchy
+from event.api_exceptions import GroupAlreadyRegistered, NotResponsible, SingleAlreadyRegistered, SingleGroupNotAllowed, \
+    WrongRegistrationFormat, RegistrationNotSupported, WrongEventCode, TooEarly, TooLate
 from event.models import Event, EventLocation, BookingOption, RegistrationTypeGroup, RegistrationTypeSingle, \
-    StandardEventTemplate, Registration
+    StandardEventTemplate, Registration, RegistrationParticipant, Gender, ParticipantActionConfirmation
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
     EventCompleteSerializer, BookingOptionSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
     EventModuleSerializer, AttributeEventModuleMapperSerializer, EventOverviewSerializer, \
     EventModuleMapperPostSerializer, EventModuleMapperGetSerializer, RegistrationPostSerializer, \
-    RegistrationGetSerializer, RegistrationPutSerializer
+    RegistrationGetSerializer, RegistrationPutSerializer, RegistrationParticipantSerializer, \
+    RegistrationParticipantShortSerializer, RegistrationParticipantPutSerializer
 
 
 def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
@@ -294,7 +297,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
         tmp.responsible_persons.add(request.user)
 
         serializer = RegistrationGetSerializer(tmp)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -307,43 +310,83 @@ class RegistrationViewSet(mixins.CreateModelMixin,
             return RegistrationPutSerializer
 
 
-class GroupAlreadyRegistered(APIException):
-    status_code = 403
-    default_detail = 'Your group is already registered'
-    default_code = 'already_registered'
+class GenderViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, pk=None):
+        return Response(Gender.choices, status=status.HTTP_200_OK)
 
 
-class NotResponsible(APIException):
-    status_code = 403
-    default_detail = 'An registration already exists, but you are not responsible'
-    default_code = 'already_registered'
+class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
 
+    def get_queryset(self):
+        registration_id = self.kwargs.get("registration_pk", None)
+        return RegistrationParticipant.objects.filter(registration=registration_id)
 
-class SingleAlreadyRegistered(APIException):
-    status_code = 403
-    default_detail = "You're already registed"
-    default_code = 'already_registered'
+    def create(self, request, *args, **kwargs):
 
+        registration: Registration = self.participant_initialization(request)
 
-class SingleGroupNotAllowed(APIException):
-    status_code = 403
-    default_detail = "You already have a registation, please edit this one"
-    default_code = 'already_registered'
+        request.data['registration'] = registration.id
+        if request.data.get('first_name') or request.data.get('last_name') is None:
+            max_num = self.get_queryset().count()
+            request.data['first_name'] = 'Teilnehmer'
+            request.data['last_name'] = max_num + 1
+        if request.data.get('booking_option') is None:
+            request.data['booking_option'] = registration.event.bookingoption_set.first().id
 
+        if registration.event.registration_deadline < timezone.now():
+            request.data['needs_confirmation'] = ParticipantActionConfirmation.Add
 
-class WrongRegistrationFormat(APIException):
-    status_code = 405
-    default_detail = "You're regisration contains information which does not fit to the event"
-    default_code = 'missleading_information'
+        return super().create(request, *args, **kwargs)
 
+    def update(self, request, *args, **kwargs):
+        registration: Registration = self.participant_initialization(request)
+        participant: RegistrationParticipant = self.get_object()
+        if participant.deactivated:
+            if request.data.get('activate') and registration.event.registration_deadline >= timezone.now():
+                request.data['deactivated'] = False
+                request.data['needs_confirmation'] = ParticipantActionConfirmation.Nothing
+            elif registration.event.last_possible_update >= timezone.now():
+                request.data['needs_confirmation'] = ParticipantActionConfirmation.Add
 
-class RegistrationNotSupported(APIException):
-    status_code = 501
-    default_detail = "Attached registrations are currently not implemented"
-    default_code = 'no_attached_registrations'
+        return super().update(request, *args, **kwargs)
 
+    def destroy(self, request, *args, **kwargs):
+        registration: Registration = self.participant_initialization(request)
 
-class WrongEventCode(APIException):
-    status_code = 403
-    default_detail = "Your your typed in code does not match the event code"
-    default_code = 'wrong_code'
+        if registration.event.last_possible_update < timezone.now():
+            request.data['deactivated'] = True
+            request.data['needs_confirmation'] = ParticipantActionConfirmation.Nothing
+            return super().update(request, *args, **kwargs)
+        elif registration.event.registration_deadline < timezone.now():
+            request.data['deactivated'] = True
+            if not request.data.get('avoid_manual_check'):
+                request.data['needs_confirmation'] = ParticipantActionConfirmation.Delete
+            return super().update(request, *args, **kwargs)
+
+        return super().destroy(request, *args, **kwargs)
+
+    def get_serializer_class(self):
+        serializer = {
+            'create': RegistrationParticipantSerializer,
+            'retrieve': RegistrationParticipantSerializer,
+            'list': RegistrationParticipantShortSerializer,
+            'update': RegistrationParticipantSerializer,
+            'destroy': RegistrationParticipantSerializer
+        }
+        return serializer.get(self.action, RegistrationParticipantPutSerializer)
+
+    def participant_initialization(self, request):
+        input_serializer = RegistrationParticipantPutSerializer(data=request.data)
+        input_serializer.is_valid(raise_exception=True)
+
+        registration_id = self.kwargs.get("registration_pk", None)
+        registration: Registration = get_object_or_404(Registration, pk=registration_id)
+
+        if registration.event.registration_start > timezone.now():
+            raise TooEarly
+        elif self.action != 'destroy' and registration.event.last_possible_update < timezone.now():
+            raise TooLate
+
+        return registration

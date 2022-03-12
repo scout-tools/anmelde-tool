@@ -36,6 +36,12 @@ class Gender(models.TextChoices):
     Nothing = 'N', _('Keine Angabe')
 
 
+class ParticipantActionConfirmation(models.TextChoices):
+    Nothing = 'N', _('Nichts')
+    Delete = 'D', _('Abmelden')
+    Add = 'A', _('Anmelden')
+
+
 class EventLocation(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=60)
@@ -159,6 +165,9 @@ class Registration(TimeStampMixin):
     tags = models.ManyToManyField(AbstractAttribute, blank=True)
     single = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"{self.event.name}: {self.scout_organisation.name}"
+
 
 class RegistrationParticipant(TimeStampMixin):
     scout_name = models.CharField(max_length=100, blank=True, null=True)
@@ -172,12 +181,16 @@ class RegistrationParticipant(TimeStampMixin):
     email = models.EmailField(null=True)
     birthday = models.DateField(null=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(AbstractAttribute)
+    tags = models.ManyToManyField(AbstractAttribute, blank=True)
     booking_option = models.ForeignKey(BookingOption, on_delete=models.SET_NULL, blank=True, null=True)
     gender = models.CharField(max_length=1, choices=Gender.choices, default=Gender.Nothing)
+    deactivated = models.BooleanField(default=False)
+    generated = models.BooleanField(default=False)
+    needs_confirmation = models.CharField(max_length=1, choices=ParticipantActionConfirmation.choices,
+                                          default=ParticipantActionConfirmation.Nothing)
 
     def __str__(self):
-        return f"{self.registration__name}: {self.last_name}, {self.first_name}"
+        return f"{self.registration}: {self.last_name}, {self.first_name}"
 
 
 class Workshop(TimeStampMixin):
