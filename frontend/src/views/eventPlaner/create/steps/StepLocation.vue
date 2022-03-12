@@ -1,42 +1,22 @@
 <template>
-  <v-form
-    ref="formLocation"
-    v-model="valid">
+  <v-form ref="formNameDescription" v-model="valid">
     <v-container>
-      <v-row class="mt-6">
-        <span class="subtitle-1">
-          {{ 'Wähle hier den Veranstaltungsort aus.' }}
+      <v-row>
+        <span class="text-left subtitle-1">
+          <p>Wähle hier den Veranstaltungsort aus.</p>
         </span>
       </v-row>
-      <v-row>
-        <v-select
-          v-model="selectedLocation"
-          :items="items"
-          :error-messages="selectedLocationErrors"
-          item-text="preview"
-          item-value="id"
-          label="Veranstaltungsort wählen"
-          required
-          @input="validate()"
+      <div v-for="(field, i) in fields" :key="i">
+        <BaseField
+          :field="field"
+          v-model="data[field.techName]"
+          :valdiationObj="$v"
         />
-      </v-row>
-      <v-row>
-        <p class="mr-4">
-          Oder erstelle zuerst einen neuen Ort:
-        </p>
-        <v-btn
-          small
-          color="secondary"
-          @click="newLocation()">
-          Neuen Ort anlegen
-        </v-btn>
-        <create-location-dialog ref="newLocationDialog" @close="getEventLocations()"/>
-      </v-row>
-      <v-divider class="my-4"/>
+      </div>
       <prev-next-button
+        :valid="valid"
         :position="position"
         :max-pos="maxPos"
-        :valid="valid"
         @nextStep="nextStep"
         @prevStep="prevStep"
         @submitStep="submitStep"
@@ -49,94 +29,53 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
-import CreateLocationDialog from '@/components/dialog/CreateLocationDialog.vue';
-import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import store from '@/store';
+import serviceMixin from '@/mixins/serviceMixin';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
+import BaseField from '@/components/common/BaseField.vue';
 
 export default {
   name: 'StepLocation',
   header: 'Ort',
   props: ['position', 'maxPos'],
-  mixins: [stepMixin, apiCallsMixin],
   components: {
-    CreateLocationDialog,
     PrevNextButton,
+    BaseField,
   },
+  mixins: [stepMixin, apiCallsMixin, serviceMixin],
   data: () => ({
-    items: [],
-    selectedLocation: null,
-    locationDialog: false,
-    API_URL: process.env.VUE_APP_API,
     valid: true,
+    data: {},
+    modulePath: '/event/event/',
+    fields: [
+      {
+        name: 'Name',
+        techName: 'location',
+        tooltip: '123',
+        icon: 'mdi-account-circle',
+        mandatory: true,
+        lookupPath: '/event/event-location/',
+        lookupListDisplay: ['id', 'name'],
+        fieldType: 'refDropdown',
+        default: '',
+      },
+    ],
   }),
   validations: {
-    selectedLocation: {
-      required,
+    data: {
+      location: {
+        required,
+      },
     },
-  },
-  computed: {
-    selectedLocationErrors() {
-      const errors = [];
-      if (!this.$v.selectedLocation.$dirty) return errors;
-      if (!this.$v.selectedLocation.required) {
-        errors.push('Es muss ein Veranstaltungsort ausgewählt werden.');
-      }
-      return errors;
-    },
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
   },
   methods: {
-    async getEventLocations() {
-      this.getEventLocation()
-        .then((success) => {
-          this.items = success.data;
-          this.formatLocationPreview();
-        })
-        .catch(() => {
-          this.$root.globalSnackbar.show({
-            message: 'Leider ist ein Problem beim runterladen der möglichen Locations aufgetreten, bitte probiere es später noch einmal.',
-            color: 'error',
-          });
-        });
+    beforeTabShow() {
+      this.loadData();
     },
-    formatLocationPreview() {
-      this.items = this.items.map(({
-        name,
-        description,
-        address,
-        zipCode,
-        ...args
-      }) => ({
-        preview: `${name}: ${description} (${address}, ${zipCode.zipCode} ${zipCode.city})`,
-        ...args,
-      }));
+    loadData() {
+      this.getService(this.id, this.modulePath);
     },
-    newLocation() {
-      this.$refs.newLocationDialog.openDialog();
-    },
-    updateData() {
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        this.$root.globalSnackbar.show({
-          message: 'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
-          color: 'error',
-        });
-      } else {
-        store.commit('createEvent/setEventAttribute', {
-          prop: 'location',
-          value: this.selectedLocation,
-        });
-      }
-    },
-  },
-  mounted() {
-    this.getEventLocations();
-    this.selectedLocation = this.event.location;
   },
 };
 </script>

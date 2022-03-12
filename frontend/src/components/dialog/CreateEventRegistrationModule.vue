@@ -14,7 +14,7 @@
       </v-toolbar>
       <v-container>
         <v-form v-model="valid">
-          <v-container v-if="module.custom">
+          <v-container v-if="module && module.custom">
             <v-row>
               <v-text-field
                 v-model="module.header"
@@ -22,7 +22,8 @@
                 label="Name der Schlafstätte"
                 required
                 prepend-icon="mdi-earth"
-                v-if="module.custom">
+                v-if="module && module.custom"
+              >
                 <template slot="append">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -30,63 +31,63 @@
                         mdi-help-circle-outline
                       </v-icon>
                     </template>
-                    <span>
-                         Gib hier den Namen der Schlafstätte ein.
-                      </span>
+                    <span> Gib hier den Namen der Schlafstätte ein. </span>
                   </v-tooltip>
                 </template>
               </v-text-field>
             </v-row>
-            <v-row>
-            </v-row>
+            <v-row> </v-row>
           </v-container>
           <v-container v-else>
             <v-row>
               <v-card-title>
-                {{ module.header }}
+                {{ module && module.header }}
               </v-card-title>
             </v-row>
             <v-row>
               <v-card-text>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
-                eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-                takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-                ipsum dolor sit amet.
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+                est Lorem ipsum dolor sit amet.
               </v-card-text>
             </v-row>
             <v-row>
-              <v-card-title>
-                Individuelle Beschreibung
-              </v-card-title>
+              <v-card-title> Individuelle Beschreibung </v-card-title>
               <v-card-text>
-                Um die Standardbeschreibung zu erstetzen, aktiviere den Texteditor und füge deinen
-                individuellen Touch hinzu.
+                Um die Standardbeschreibung zu erstetzen, aktiviere den
+                Texteditor und füge deinen individuellen Touch hinzu.
               </v-card-text>
             </v-row>
           </v-container>
-          <v-card-title>
-            Verknüpfte Attribute:
-          </v-card-title>
-          <v-list
-            three-line
-          >
-            <v-list-item v-for="(item, index) in attributeMappers" :key="index" three-line>
+          <v-card-title> Verknüpfte Attribute: </v-card-title>
+          <v-list three-line>
+            <v-list-item
+              v-for="(item, index) in attributeMappers"
+              :key="index"
+              three-line
+            >
               <v-list-item-title>{{ item.description }}</v-list-item-title>
-              <v-list-item-subtitle>{{ item.attribute.resourcetype }}:
-                {{ item.attribute.name }}
+              <v-list-item-subtitle
+                >{{ item.attribute }}:
+                {{ item.attribute && item.attribute.name }}
               </v-list-item-subtitle>
-              <v-list-item-subtitle> {{ item.attribute.description }}</v-list-item-subtitle>
+              <v-list-item-subtitle>
+                {{ item.attribute && item.attribute.description }}
+              </v-list-item-subtitle>
             </v-list-item>
           </v-list>
-          <v-divider class="my-3"/>
+          <v-divider class="my-3" />
           <v-btn color="primary" @click="onClickOkay"> Speichern</v-btn>
         </v-form>
       </v-container>
-      <v-divider class="my-4"/>
+      <v-divider class="my-4" />
 
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
         {{ errorText }}
@@ -141,20 +142,23 @@ export default {
       const urlAttributesMapper = `${this.API_URL}/event/event-module-mapper/${moduleMapper.id}/attribute-mapper/`;
       // const urlAttributes =
       // `${this.API_URL}/event/event-module-mapper/${moduleMapper.id}/attributes/`;
-      axios.all([
-        axios.get(urlMapper),
-        axios.get(urlModule),
-        axios.get(urlAttributesMapper),
-        // axios.get(urlAttributes),
-      ])
-        .then(axios.spread((firstResponse, secondResponse, thirdResponse) => {
-          console.log(firstResponse.data);
-          console.log(secondResponse.data);
-          console.log(thirdResponse.data);
-          this.moduleMapper = firstResponse.data;
-          this.module = secondResponse.data;
-          this.attributeMappers = thirdResponse.data;
-        }))
+      axios
+        .all([
+          axios.get(urlMapper),
+          axios.get(urlModule),
+          axios.get(urlAttributesMapper),
+          // axios.get(urlAttributes),
+        ])
+        .then(
+          axios.spread((firstResponse, secondResponse, thirdResponse) => {
+            console.log(firstResponse.data);
+            console.log(secondResponse.data);
+            console.log(thirdResponse.data);
+            this.moduleMapper = firstResponse.data;
+            this.module = secondResponse.data;
+            this.attributeMappers = thirdResponse.data;
+          }),
+        )
         .catch((error) => {
           console.log(error);
           this.errorText = 'Fehler beim laden des Moduls';
@@ -169,10 +173,9 @@ export default {
     closeDialog() {
       this.active = false;
       this.$v.$reset();
-      Object.keys(this.data)
-        .forEach((key) => {
-          this.data[key] = '';
-        });
+      Object.keys(this.data).forEach((key) => {
+        this.data[key] = '';
+      });
       this.$emit('close');
     },
     validate() {
@@ -192,8 +195,6 @@ export default {
       }
     },
   },
-  created() {
-
-  },
+  created() {},
 };
 </script>

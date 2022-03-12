@@ -54,9 +54,29 @@ export default {
       }
       if (valObj.between === false) {
         const { min, max } = valObj.$params.between;
-        errors.push(`Bitte gib einen Wert zwischen ${min}€ und ${max}€ ein. Falls du mehr als ${max} brauchst melde dich bei der Lagerleitung.`);
+        errors.push(
+          `Bitte gib einen Wert zwischen ${min}€ und ${max}€ ein. Falls du mehr als ${max} brauchst melde dich bei der Lagerleitung.`,
+        );
       }
       return errors;
+    },
+    updateData() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.$root.globalSnackbar.show({
+          message: 'Daten prüfen.',
+          color: 'error',
+        });
+      } else {
+        this.fields.forEach((field) => {
+          this.patchService(field.techName, this.data[field.techName], this.modulePath);
+        });
+      }
+    },
+  },
+  computed: {
+    id() {
+      return this.$route.params.id;
     },
   },
 };

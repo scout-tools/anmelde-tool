@@ -21,7 +21,7 @@
             x-large
             @click="onLoginClicked"
             v-if="!isAuth"
-            >
+          >
             <v-icon left>mdi-rocket-launch</v-icon>
             Los geht's
           </v-btn>
@@ -31,7 +31,7 @@
             x-large
             @click="$router.push({ name: 'eventOverview' })"
             v-if="isAuth"
-            >
+          >
             <v-icon left>mdi-rocket-launch</v-icon>
             Zu den Anmeldungen
           </v-btn>
@@ -43,7 +43,7 @@
       <v-container>
         <v-layout column align-center justify-center class="white--text">
           <v-flex xs12 class="text-xs-center">
-            <img height="200px" :src="getLogoPath" alt=""/>
+            <img height="200px" :src="getLogoPath" alt="f" />
           </v-flex>
         </v-layout>
       </v-container>

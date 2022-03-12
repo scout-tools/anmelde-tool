@@ -1,36 +1,26 @@
 <template>
-  <v-form ref="StepInvitationCode" v-model="valid">
+  <v-form ref="formNameDescription" v-model="valid">
     <v-container>
-      <v-row class="mb-6">
-        <span class="subtitle-1">
-          Lege für die Aktion einen 6-Stelligen Verifizierungscode fest. <br/>
+      <v-row>
+        <span class="text-left subtitle-1">
+          Lege für die Aktion einen 6-Stelligen Verifizierungscode fest. <br />
           Dieser besteht aus Buchstaben und Zahlen und wird bei der Anmeldung
           mitgeschickt, damit sich die Anmelder verifizieren können, dass sie
-          eingeladen wurden. <br/>
+          eingeladen wurden. <br />
           Bei leerem Feld gibt es keinen Verifizierungscode.
         </span>
       </v-row>
-      <v-row align="center" justify="center">
-        <v-col cols="3">
-          <v-text-field
-            v-model="invitationCode"
-            :error-messages="invitationCodeErrors"
-            label="Verifizierungscode"
-            required
-            outlined
-            filled
-            prepend-inner-icon="mdi-account-key"
-            @blur="validate"
-          />
-        </v-col>
-      </v-row>
-
-      <v-divider class="my-3"/>
-
+      <div v-for="(field, i) in fields" :key="i">
+        <BaseField
+          :field="field"
+          v-model="data[field.techName]"
+          :valdiationObj="$v"
+        />
+      </div>
       <prev-next-button
+        :valid="valid"
         :position="position"
         :max-pos="maxPos"
-        :valid="valid"
         @nextStep="nextStep"
         @prevStep="prevStep"
         @submitStep="submitStep"
@@ -42,72 +32,54 @@
 </template>
 
 <script>
-import { alphaNum, minLength, maxLength } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
-import PrevNextButton from '@/components/button/PrevNextButton.vue';
+import { required, maxLength, minLength } from 'vuelidate/lib/validators';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import store from '@/store';
+import serviceMixin from '@/mixins/serviceMixin';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
+import BaseField from '@/components/common/BaseField.vue';
 
 export default {
   name: 'StepInvitationCode',
-  header: 'Verifizierungscode',
   props: ['position', 'maxPos'],
-  mixins: [stepMixin, apiCallsMixin],
+  header: 'Verifizierungscode',
   components: {
     PrevNextButton,
+    BaseField,
   },
+  mixins: [stepMixin, apiCallsMixin, serviceMixin],
   data: () => ({
-    API_URL: process.env.VUE_APP_API,
     valid: true,
-    invitationCode: '',
+    data: {},
+    modulePath: '/event/event/',
+    fields: [
+      {
+        name: 'Verifizierungscode',
+        techName: 'invitationCode',
+        tooltip: '123',
+        icon: 'mdi-account-circle',
+        mandatory: true,
+        fieldType: 'textfield',
+        default: '',
+      },
+    ],
   }),
   validations: {
-    invitationCode: {
-      alphaNum,
-      minLength: minLength(4),
-      maxLength: maxLength(10),
+    data: {
+      invitationCode: {
+        required,
+        minLength: minLength(4),
+        maxLength: maxLength(10),
+      },
     },
-  },
-  computed: {
-    invitationCodeErrors() {
-      const errors = [];
-      if (!this.$v.invitationCode.$dirty) return errors;
-      if (!this.$v.invitationCode.alphaNum) {
-        errors.push(
-          'Der Einladungscode muss aus Zahlen und Buchstaben bestehen,',
-        );
-      }
-      if (!this.$v.invitationCode.minLength) {
-        errors.push('Minimal 4 Zeichen sind nötig.');
-      }
-      if (!this.$v.invitationCode.maxLength) {
-        errors.push('Maximal 10 Zeichen sind möglich.');
-      }
-      return errors;
-    },
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
   },
   methods: {
-    updateData() {
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        this.$root.globalSnackbar.show({
-          message: 'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
-          color: 'error',
-        });
-      } else {
-        store.commit('createEvent/setEventAttribute', {
-          prop: 'invitationCode',
-          value: this.invitationCode,
-        });
-      }
+    beforeTabShow() {
+      this.loadData();
     },
-  },
-  mounted() {
-    this.invitationCode = this.event.invitationCode;
+    loadData() {
+      this.getService(this.id, this.modulePath);
+    },
   },
 };
 </script>

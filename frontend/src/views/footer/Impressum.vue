@@ -6,10 +6,10 @@
           <h2 class="py-4">Angaben gemäß § 5 TMG</h2>
 
           <p class="font-weight-medium">
-            Pfadfinder-Bundesamt Köln e.V. <br>
-            Deutscher Pfadfinderbund Mosaik <br/>
-            Robert-Perthel-Str. 79<br/>
-            50739 Köln <br/>
+            Pfadfinder-Bundesamt Köln e.V. <br />
+            Deutscher Pfadfinderbund Mosaik <br />
+            Robert-Perthel-Str. 79<br />
+            50739 Köln <br />
           </p>
 
           <p>
@@ -19,11 +19,12 @@
 
           <p>
             Rechtsträger aller Bundesstellen, Bundeseinrichtungen und
-            Bundesunternehmungen ist: <br> <br>
-            Pfadfinder-Bundesamt Köln e.V., <br>
-            Robert-Perthel-Str. 79, <br>
-            50739 Köln <br>
-            VR 8654, Amtsgericht Köln<br>
+            Bundesunternehmungen ist: <br />
+            <br />
+            Pfadfinder-Bundesamt Köln e.V., <br />
+            Robert-Perthel-Str. 79, <br />
+            50739 Köln <br />
+            VR 8654, Amtsgericht Köln<br />
           </p>
         </div>
       </v-card>
@@ -35,14 +36,14 @@
 
           <p class="font-weight-medium">
             <a href="https://dpbm.de/impressum/">Kontakt zum Bundesamt hier </a>
-            <br/>
+            <br />
             <img
-              alt="Email Adresse für Support Anfragen"
+              alt="Email Adresse für Support Anfragen "
               class="mr-2"
               :src="require('@/assets/anmeldeToolMailAdresse.jpg')"
               height="50"
             />
-            <br/>
+            <br />
           </p>
         </div>
       </v-card>
@@ -94,12 +95,12 @@
               href="https://creativecommons.org/licenses/by-nc/4.0/deed.de"
             >
               <img
-                alt="Creative Commons Lizenzvertrag"
+                alt="Creative Commons Lizenzvertrag "
                 style="border-width: 0"
                 src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png"
               />
             </a>
-            <br/>
+            <br />
             Dieses Werk ist lizenziert unter einer
             <a
               rel="license"

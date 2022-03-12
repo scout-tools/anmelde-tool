@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card v-if="!isLoading" class="mx-auto my-12">
+    <v-card class="mx-auto my-12">
       <v-card-title>
         Aktion bearbeiten
       </v-card-title>
@@ -121,9 +121,7 @@ export default {
         StepInvitationCode,
         StepStartEndDeadline,
         StepLocation,
-        StepEventTags,
         sleepingLocation,
-        StepEventContact,
         authorization,
         StepEventRegistrationModel,
         StepVisibility,
@@ -149,9 +147,21 @@ export default {
   methods: {
     nextStep() {
       this.currentStep += 1;
+      this.callOnBeforeTab(this.currentStep - 1);
     },
     prevStep() {
       this.currentStep -= 1;
+      this.callOnBeforeTab(this.currentStep - 1);
+    },
+    callOnBeforeTab(step) {
+      const nextStepName = this.steps[step].name;
+      if (
+        this.$refs[nextStepName]
+        && this.$refs[nextStepName].length
+        && this.$refs[nextStepName][0].beforeTabShow
+      ) {
+        this.$refs[nextStepName][0].beforeTabShow();
+      }
     },
     onCreateEventClick() {
       this.handleCreateEventRequest();
@@ -198,7 +208,7 @@ export default {
       this.isSingleStep = true;
       this.currentStep = this.$route.params.step;
     }
-    this.getData();
+    this.callOnBeforeTab(this.currentStep - 1);
   },
 };
 </script>

@@ -28,7 +28,7 @@
       v-if="field.fieldType === 'refDropdown'"
       :label="field.name"
       :value="value"
-      :items="getRefList"
+      :items="lookupList"
       required
       @input="onInputChanged"
       item-value="id"
@@ -110,7 +110,7 @@
             v-mask="'##.##.####'"
             placeholder="DD.MM.YYYY"
             @input="onDateTimeInputChangedDate"
-            :label="`${field.name}-Datum`"
+            :label="`${field.name}-Datum (DD.MM.YYYY)`"
             :prepend-icon="field.icon"
             :error-messages="onErrorMessageChange(field.techName)"
             :disabled="field.disabled"
@@ -135,9 +135,9 @@
           <v-text-field
             :value="valueTime"
             v-mask="'##:##'"
-            placeholder="hh:mm"
+            placeholder="HH:mm"
             @input="onDateTimeInputChangedTime"
-            :label="`${field.name}-Uhrzeit`"
+            :label="`${field.name}-Uhrzeit (HH:mm)`"
             :prepend-icon="field.icon"
             :error-messages="onErrorMessageChange(field.techName)"
             :disabled="field.disabled"
@@ -186,6 +186,7 @@
 // import moment from 'moment'; // eslint-disable-line
 // import { uuid } from 'vue-uuid';
 import stepMixin from '@/mixins/stepMixin';
+import serviceMixin from '@/mixins/serviceMixin';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/de';
 
@@ -205,11 +206,11 @@ export default {
       default: null,
     },
   },
-  mixins: [stepMixin],
+  mixins: [stepMixin, serviceMixin],
   data() {
     return {
       itemsPerPage: 1000,
-      getRefList: [],
+      lookupList: [],
       isSelecting: false,
       selectedFile: null,
       ckeditor: {
@@ -223,20 +224,19 @@ export default {
   },
   computed: {
     valueDate() {
-      return this.$moment(this.value).format('DD.MM.YYYY');
+      return this.$moment(this.value).format('DD.MM.YYYY', 'de');
     },
     valueTime() {
-      return this.$moment(this.value).format('hh:mm');
+      return this.$moment(this.value).format('HH:mm', 'de');
     },
   },
   methods: {
     onErrorMessageChange(field) {
       return this.errorMessage(field, this.valdiationObj);
     },
-    // async getData(componentName) {
-    //   let queryName = [];
-    // },
-    // async getQuery(queryName) {},
+    async getData() {
+      this.getLookup(this.field.lookupPath);
+    },
     onInputChanged(value) {
       console.log(value);
       this.$emit('input', value);
@@ -244,7 +244,6 @@ export default {
     onDateTimeInputChangedDate(value) {
       const newDate = this.$moment(value, 'L', 'de');
       if (newDate.isValid() && value.length === 10) {
-        debugger;
         this.onInputChanged(newDate.toDate());
       }
       this.$forceUpdate();
@@ -254,14 +253,12 @@ export default {
       if (value.length !== 5) {
         return;
       }
-      debugger;
       const newDate = this.$moment(
         `${this.valueDate} ${value}`,
         'DD.MM.YYYY hh:mm',
         'de',
       );
       if (newDate.isValid()) {
-        debugger;
         this.onInputChanged(newDate.toDate());
       }
       this.$forceUpdate();
@@ -284,23 +281,23 @@ export default {
     //   this.$refs.uploader.click();
     // },
     // async showPdf() {},
-    // getItemText(item) {
-    //   let template = '';
-    //   this.field.referenceListDisplay.forEach((field, i) => {
-    //     if (i === 0) {
-    //       template = template + item[field];
-    //     } else {
-    //       template = template + ' - ' + item[field];
-    //     }
-    //   });
-    //   return template;
-    // },
+    getItemText(item) {
+      let template = '';
+      this.field.lookupListDisplay.forEach((field, i) => {
+        if (i === 0) {
+          template += item[field];
+        } else {
+          template = `${template}  - ${item[field]}`;
+        }
+      });
+      return template;
+    },
   },
-  // created() {
-  //   if (this.field.fieldType === 'refDropdown') {
-  //     this.getData(this.field.referenceTable);
-  //   }
-  // },
+  created() {
+    if (this.field.fieldType === 'refDropdown') {
+      this.getData(this.field.referenceTable);
+    }
+  },
 };
 </script>
 

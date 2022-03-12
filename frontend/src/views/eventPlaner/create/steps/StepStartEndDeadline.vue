@@ -33,13 +33,13 @@
 import { required } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
-import store from '@/store';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
+import serviceMixin from '@/mixins/serviceMixin';
 import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import BaseField from '@/components/common/BaseField.vue';
-import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
-  name: 'StepStartEndDeadline',
+  name: 'StepNameDescription',
   header: 'Daten und Uhrzeit',
   props: ['position', 'maxPos'],
   components: {
@@ -50,13 +50,8 @@ export default {
     return {
       API_URL: process.env.VUE_APP_API,
       valid: true,
-      data: {
-        startDate: null,
-        endDate: null,
-        registrationDeadline: null,
-        registrationStart: null,
-        lastPossibleUpdate: null,
-      },
+      data: {},
+      modulePath: '/event/event/',
       fields: [
         {
           name: 'Start',
@@ -114,7 +109,7 @@ export default {
   ...mapGetters({
     event: 'createEvent/event',
   }),
-  mixins: [stepMixin, apiCallsMixin],
+  mixins: [stepMixin, apiCallsMixin, serviceMixin],
   validations: {
     data: {
       startDate: {
@@ -135,48 +130,15 @@ export default {
     },
   },
   methods: {
-    updateData() {
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        this.$root.globalSnackbar.show({
-          message:
-            'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
-          color: 'error',
-        });
-      } else {
-        store.commit('createEvent/setEventAttribute', {
-          prop: 'registrationDeadline',
-          value: this.data.registrationDeadline,
-        });
-        store.commit('createEvent/setEventAttribute', {
-          prop: 'registrationStart',
-          value: this.data.registrationStart,
-        });
-        store.commit('createEvent/setEventAttribute', {
-          prop: 'startDate',
-          value: this.data.startDates,
-        });
-        store.commit('createEvent/setEventAttribute', {
-          prop: 'lastPossibleUpdate',
-          value: this.data.lastPossibleUpdate,
-        });
-        store.commit('createEvent/setEventAttribute', {
-          prop: 'endDate',
-          value: this.data.endDate,
-        });
-      }
+    beforeTabShow() {
+      this.loadData();
+    },
+    loadData() {
+      this.getService(this.id, this.modulePath);
     },
   },
   created() {
-    console.log('this.event');
-    console.log(this.event);
-    this.data.startDate = this.$moment(this.event.startDate).toDate();
-    this.data.endDate = this.$moment(this.event.endDate).toDate();
-    this.data.registrationDeadline = this.$moment(
-      this.event.registrationDeadline,
-    ).toDate();
-    this.data.registrationStart = this.$moment(this.event.registrationStart).toDate();
-    this.data.lastPossibleUpdate = this.$moment(this.event.lastPossibleUpdate).toDate();
+    this.loadData();
   },
 };
 </script>

@@ -1,102 +1,95 @@
 <template>
-  <v-form ref="StepParticipationFee">
-    <v-container>
-      <v-row class="mb-6">
-        <span class="subtitle-1">
-          Hier kannst du verschiedene Übernachtungsmöglichkeiten angeben.
-          Dabei können sich die verschiedenen Möglichkeiten Beitragsmäßig unterscheiden,
-          als auch Zeitlich begrenzt werden.
-          Dadurch kannst du dann verschiedene Kategorien bestimmen,
-          wie z.B. schlafen  Bett im Heim und schlafen im Zelt.
-          Aber auch Frühbucher Rabatte können angegeben werden,
-          wenn man eine Übernachtungsmöglichkeit zweimal hinzufügt
-          und eine davon vergünstigt anbietet,
-          sowie eine zeitliche Begrenzung für die Buchung einstellt.
-        </span>
-      </v-row>
-      <div>
-        <v-card v-for="(sleep,index) in sleepingLocations" :key="index" class="my-3">
-          <v-card-title>
-            <v-btn v-if="sleepingLocations.length > 1" icon color="red"
-                   @click="deleteSleepingLocation(sleep.id)">
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-            Schlafplatz: {{ sleep.name }}
-          </v-card-title>
-          <v-card-subtitle>
-            <v-text-field
-              v-model="sleep.name"
-              :counter="100"
-              label="Beschreibung des Schlafplatzes"
-              required
-              @input="validate"
-              @blur="validate"
-            />
-          </v-card-subtitle>
-          <v-card-subtitle>
-            <v-text-field
-              v-model="sleep.description"
-              :counter="100"
-              label="Beschreibung des Schlafplatzes"
-              required
-              @input="validate"
-              @blur="validate"
-            />
-          </v-card-subtitle>
-          <v-card-actions>
-            <vuetify-money
-              v-model="sleep.price"
-              :options="options"
-              label="Teilnehmer_innen Beitrag"/>
-          </v-card-actions>
-
-          <v-card-text>
-            Du kannst auch angeben ob ein Schlafplatz zeitlich begrenzt buchbar ist.
-            Damit kannst du z.B. Frühbucher Rabatte einstellen
-            und diese im Vergleich zu unbegrenzt buchbaren Schlafplätzen vergünstigen.
-          </v-card-text>
-          <v-card-actions>
-            <DateTimePicker
-              :ref="'bookableTillRef-' + sleep.id"
-              v-model="sleep.bookableTill"
-              title="Buchbar bis"
-            />
-          </v-card-actions>
-
-        </v-card>
-
-        <v-row class="align-center justify-center text-center">
-          <v-btn depressed @click="addSleepingLocation" class="my-3"
-                 color="secondary" elevation="2">
-            Weitere Schlafmöglichkeit
-          </v-btn>
-        </v-row>
+  <v-form ref="formNameDescription" v-model="valid">
+    <v-container class="pa-5 my-5">
+      <p>
+        Ich melde folgende Teilnehmende an <br />
+        <br />
+        Die Erfassung erfolgt pro Person. <br />
+        <br />
+        Alternativ kannst du hier die Excelliste hochladen, wenn du die Daten
+        dort bereits erfasst hast.
+        <br />
+        <a
+          target="_blank"
+          href="https://cloud.dpvonline.de/s/fMMrgfpf5dAm9Fg"
+          style="color: blue"
+        >
+          Link zur Beispiel Excel Datei
+        </a>
+      </p>
+      <v-btn class="ma-2" color="success" @click="newUser">
+        <v-icon left> mdi-plus </v-icon>
+        Neu
+      </v-btn>
+      <!-- <v-btn class="ma-2" color="primary" @click="openExcelDialog">
+        <v-icon left> mdi-plus </v-icon>
+        Excel Datei hochladen
+      </v-btn> -->
+      <v-list v-if="!isLoading">
+        <v-subheader>Teilnehmer_innen</v-subheader>
+        <v-list-item-group color="primary">
+          <v-list-item v-for="(item, i) in sleepingLocations" :key="i">
+            <v-list-item-avatar>
+              <v-icon color="black" dark>mdi-account</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title
+                v-text="getDisplayName(item)"
+              ></v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-btn dense icon @click="editParticipant(item.id)">
+                <v-icon color="primary lighten-1">mdi-pencil</v-icon>
+              </v-btn>
+            </v-list-item-action>
+            <v-list-item-action>
+              <v-btn dense icon @click="deleteParticipant(item.id)">
+                <v-icon color="red lighten-1">mdi-trash-can</v-icon>
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
+          <v-list-item v-if="!sleepingLocations.length">
+            Bisher hast du noch niemanden hinzugefügt.
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+      <div v-else>
+        <div class="text-center ma-5">
+          <p>Lade Daten</p>
+          <v-progress-circular
+            :size="80"
+            :width="10"
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+        </div>
       </div>
-      <v-divider class="my-3"/>
+      <v-divider class="my-3" />
       <prev-next-button
-        :valid="true"
         :position="position"
         :max-pos="maxPos"
-        @nextStep="nextStep"
+        @nextStep="nextStep()"
         @prevStep="prevStep"
-        @submitStep="submitStep"
-        @ignore="onIngoredClicked"
-        @update="updateData"
+        @submitStep="submitStep()"
       />
     </v-container>
+    <!-- <create-single-person-dialog
+      ref="createSinglePersonDialog"
+      @refresh="onRefresh()"
+    />
+    <upload-excel-file ref="uploadExcelFile" @refresh="onRefresh()" /> -->
+    <delete-modal ref="deleteModal" @refresh="onRefresh()" />
   </v-form>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import moment from 'moment';
-import { isNumber } from 'lodash';
-import Vue from 'vue';
+import axios from 'axios';
+
+import DeleteModal from '@/components/dialog/DeleteModal.vue';
 import PrevNextButton from '@/components/button/PrevNextButton.vue';
+// import CreateSinglePersonDialog from '../dialog/CreateSinglePersonDialogBundesfahrt.vue';
 import stepMixin from '@/mixins/stepMixin';
-import store from '@/store';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import DateTimePicker from '@/components/picker/DateTimePicker.vue';
 
 export default {
   name: 'StepParticipationFeeComplex',
@@ -105,26 +98,38 @@ export default {
   mixins: [stepMixin, apiCallsMixin],
   components: {
     PrevNextButton,
-    DateTimePicker,
-  },
-  computed: {
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
+    DeleteModal,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
-    options: {
-      locale: 'de-DE',
-      prefix: '€',
-      precision: 2,
-    },
-    test: null,
-    participationFee: 0.0,
-    extendedMenu: false,
+    valid: true,
+    isLoading: true,
+    selectedItem: 1,
+    items: [{ participants: [] }],
     sleepingLocations: [],
-
   }),
+  validations: {},
+  computed: {
+    total() {
+      return Object.values(this.data).reduce(
+        (pv, cv) => parseInt(pv, 10) + parseInt(cv, 10),
+        0,
+      );
+    },
+    getActiveAgeGroups() {
+      if (
+        this.ageGroupMapping && // eslint-disable-line
+        this.currentEvent && // eslint-disable-line
+        this.currentEvent.ageGroups && // eslint-disable-line
+        this.currentEvent.ageGroups.length // eslint-disable-line
+      ) {
+        return this.ageGroupMapping.filter(
+          (item) => this.currentEvent.ageGroups.includes(item.id), // eslint-disable-line
+        ); // eslint-disable-line
+      }
+      return [];
+    },
+  },
   methods: {
     updateData() {
       this.sleepingLocations.forEach((item, index) => {
@@ -135,24 +140,34 @@ export default {
             });
         }
       });
-
-      store.commit('createEvent/setEventAttribute', {
-        prop: 'price',
-        value: this.participationFee,
-      });
     },
-    setTimes() {
-      this.sleepingLocations.forEach((item, index) => {
-        if (isNumber(index)) {
-          const time = moment(item.bookableTill)
-            .toDate();
-          this.sleepingLocations[index].bookableTill = time;
-          const ref = `bookableTillRef-${item.id}`;
-          if (this.$refs[ref]) {
-            this.$refs[ref][0].setDate(time);
-          }
-        }
-      });
+    getDisplayName(item) {
+      const returnString = `${item.name} -  ${item.price} €`;
+      return returnString;
+    },
+    getParticipants() {
+      this.isLoading = true;
+      Promise.all([this.loadParticipants()])
+        .then((values) => {
+          [this.items] = values;
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
+        });
+    },
+    async loadParticipants() {
+      const path = `${this.API_URL}basic/registration/${
+        this.$route.params.id
+      }/participants/?&timestamp=${new Date().getTime()}`;
+      const response = await axios.get(path);
+
+      return response.data;
+    },
+    validate() {
+      this.$v.$touch();
+      this.valid = !this.$v.$error;
     },
     addSleepingLocation() {
       this.addEventBookingOption(this.$route.params.id)
@@ -162,13 +177,37 @@ export default {
     },
     collectBookingOptionss() {
       this.getEventBookingOptions(this.$route.params.id)
+    },
+    prevStep() {
+      this.$emit('prevStep');
+    },
+    nextStep() {
+      this.validate();
+      if (!this.valid) {
+        return;
+      }
+      this.$emit('nextStep');
+    },
+    submitStep() {
+      this.validate();
+      if (!this.valid) {
+        return;
+      }
+      this.$emit('submit');
+    },
+    editParticipant(id) {
+      this.$refs.createSinglePersonDialog.openDialogEdit(
+        this.items[0].participantpersonalSet.filter((i) => i.id === id)[0],
+      );
+    },
+    collectSleepingLocations() {
+      debugger;
+      this.isLoading = true;
+      this.getEventSleepingLocation(this.$route.params.id)
         .then((success) => {
           this.sleepingLocations = success.data;
-          this.extendedMenu = this.sleepingLocations.length > 1;
-          Vue.nextTick()
-            .then(() => {
-              this.setTimes();
-            });
+          debugger;
+          this.isLoading = false;
         })
         .catch((error) => {
           console.log(error);
@@ -194,6 +233,24 @@ export default {
             this.setTimes();
           });
       }
+      this.deleteEventSleepingLocation(this.$route.params.id, id).then(() => {
+        this.collectSleepingLocations();
+      });
+    },
+    onRefresh() {
+      this.collectSleepingLocations();
+    },
+    newUser() {
+      this.$refs.createSinglePersonDialog.openDialog();
+    },
+    openExcelDialog() {
+      this.$refs.uploadExcelFile.openDialog();
+    },
+    deleteParticipant(item) {
+      this.$refs.deleteModal.show(item);
+    },
+    beforeTabShow() {
+      this.onRefresh();
     },
   },
 };

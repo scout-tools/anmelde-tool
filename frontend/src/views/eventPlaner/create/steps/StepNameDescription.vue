@@ -10,9 +10,12 @@
         </span>
       </v-row>
       <div v-for="(field, i) in fields" :key="i">
-        <BaseField :field="field" v-model="data[field.techName]" :valdiationObj="$v" />
+        <BaseField
+          :field="field"
+          v-model="data[field.techName]"
+          :valdiationObj="$v"
+        />
       </div>
-
       <prev-next-button
         :valid="valid"
         :position="position"
@@ -29,12 +32,11 @@
 
 <script>
 import { required, maxLength, minLength } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import serviceMixin from '@/mixins/serviceMixin';
 import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import BaseField from '@/components/common/BaseField.vue';
-import store from '@/store';
 
 export default {
   name: 'StepNameDescription',
@@ -44,10 +46,11 @@ export default {
     PrevNextButton,
     BaseField,
   },
-  mixins: [stepMixin, apiCallsMixin],
+  mixins: [stepMixin, apiCallsMixin, serviceMixin],
   data: () => ({
     valid: true,
     data: {},
+    modulePath: '/event/event/',
     fields: [
       {
         name: 'Name',
@@ -85,7 +88,6 @@ export default {
         required,
         minLength: minLength(1),
         maxLength: maxLength(20),
-
       },
       description: {
         required,
@@ -94,32 +96,16 @@ export default {
       },
     },
   },
-  computed: {
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
-  },
   methods: {
-    updateData() {
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        this.$root.globalSnackbar.show({
-          message:
-            'Deine eingegeben Daten scheinen nicht gültig zu sein, bitte überprüfe dies noch einmal',
-          color: 'error',
-        });
-      } else {
-        store.commit('createEvent/setEventName', this.data.name);
-        store.commit('createEvent/setEventDescription', this.data.description);
-      }
+    beforeTabShow() {
+      this.loadData();
+    },
+    loadData() {
+      this.getService(this.id, this.modulePath);
     },
   },
-  mounted() {
-    if (this.event.name !== 'Dummy') {
-      this.data.name = this.event.name;
-    }
-    this.data.description = this.event.description;
-    this.$forceUpdate();
+  created() {
+    this.loadData();
   },
 };
 </script>
