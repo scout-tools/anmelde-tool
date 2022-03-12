@@ -11,7 +11,7 @@ phases:
     commands:
       - echo Pre_build Phase
       - cd frontend/
-      - yarn install
+      - yarn install --ignore-engines
   build:
     commands:
       - echo Build Phase
