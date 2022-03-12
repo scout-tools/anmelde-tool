@@ -53,8 +53,7 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-btn
                         color="secondary"
-                        @click="onCreateRegistrationClicked"
-                      >
+                        @click="onCreateRegistrationClicked">
                         <v-icon left dark>mdi-check</v-icon>
                         Anmeldung starten
                       </v-btn>

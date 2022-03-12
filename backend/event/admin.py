@@ -1,6 +1,6 @@
 from django.contrib import admin
-from event.models import EventLocation, Event, SleepingLocation, EventModule, EventModuleMapper, \
-    AttributeEventModuleMapper, StandardEventTemplate
+from event.models import EventLocation, Event, BookingOption, EventModule, EventModuleMapper, \
+    AttributeEventModuleMapper, StandardEventTemplate, Registration, RegistrationParticipant
 
 
 @admin.register(EventLocation)
@@ -17,7 +17,7 @@ class EventAdmin(admin.ModelAdmin):
     autocomplete_fields = ('responsible_persons', 'tags')
 
 
-@admin.register(SleepingLocation)
+@admin.register(BookingOption)
 class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'event')
     search_fields = ('name',)
@@ -57,3 +57,17 @@ class StandardEventTemplateAdmin(admin.ModelAdmin):
         form.base_fields['other_required_modules'].queryset = EventModuleMapper.objects.exclude(standard=False)
         form.base_fields['other_optional_modules'].queryset = EventModuleMapper.objects.exclude(standard=False)
         return form
+
+
+@admin.register(Registration)
+class RegistrationAdmin(admin.ModelAdmin):
+    list_display = ('scout_organisation', 'event', 'single')
+    search_fields = ('scout_organisation', 'event')
+    autocomplete_fields = ('event',)
+    list_filter = ('event__name',)
+
+
+@admin.register(RegistrationParticipant)
+class RegistrationParticipantAdmin(admin.ModelAdmin):
+    list_display = ('scout_name', 'first_name', 'registration')
+    list_filter = ('registration__event__name',)

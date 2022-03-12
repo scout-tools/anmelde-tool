@@ -11,9 +11,9 @@ class RegistrationTypeGroup(models.TextChoices):
     Optional = Group registration possible
     Required = Group registration is required => single registration can be only attached or not allowed at all
     """
-    No = 'N', _('No')
+    No = 'N', _('Nicht erlaubt')
     Optional = 'O', _('Optional')
-    Required = 'R', _('Required')
+    Required = 'R', _('Erforderlich')
 
 
 class RegistrationTypeSingle(models.TextChoices):
@@ -23,10 +23,17 @@ class RegistrationTypeSingle(models.TextChoices):
     Mixed = A single persons' registration can be attached to a group registration but is not a must
     External = Only standalone single persons' registrations allowed
     """
-    No = 'N', _('No')
-    Attached = 'A', _('Attached')
-    Mixed = 'M', _('Mixed')
-    External = 'E', _('External')
+    No = 'N', _('Nicht erlaubt')
+    Attached = 'A', _('Angefügt')
+    Mixed = 'M', _('Gemischt')
+    External = 'E', _('Extern')
+
+
+class Gender(models.TextChoices):
+    Male = 'M', _('Männlich')
+    Female = 'F', _('Weiblich')
+    Divers = 'D', _('Divers')
+    Nothing = 'N', _('Keine Angabe')
 
 
 class EventLocation(TimeStampMixin):
@@ -74,7 +81,10 @@ class AttributeEventModuleMapper(models.Model):
 class Event(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=100, blank=True)
+    technical_name = models.CharField(max_length=15, null=True, blank=True)
+    short_description = models.CharField(max_length=100, blank=True)
+    long_description = models.CharField(max_length=10000, blank=True)
+    cloud_link = models.CharField(max_length=200, blank=True, null=True)
     location = models.ForeignKey(EventLocation, on_delete=models.PROTECT, null=True, blank=True)
     start_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     end_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
@@ -119,7 +129,7 @@ class EventModuleMapper(models.Model):
         return f'{self.ordering}: {self.module.name}, {self.standard=}'
 
 
-class SleepingLocation(models.Model):
+class BookingOption(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100, blank=True)
@@ -141,12 +151,13 @@ class Registration(TimeStampMixin):
         registration deadline after that the registration has to be accepted manually
     """
     id = models.AutoField(auto_created=True, primary_key=True)
-    scout_hierachy = models.ForeignKey(ScoutHierarchy, null=True, on_delete=models.PROTECT)
+    scout_organisation = models.ForeignKey(ScoutHierarchy, null=True, on_delete=models.PROTECT)
     responsible_persons = models.ManyToManyField(User)
     is_confirmed = models.BooleanField(default=False)
     is_accepted = models.BooleanField(default=False)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(AbstractAttribute)
+    tags = models.ManyToManyField(AbstractAttribute, blank=True)
+    single = models.BooleanField(default=False)
 
 
 class RegistrationParticipant(TimeStampMixin):
@@ -162,10 +173,11 @@ class RegistrationParticipant(TimeStampMixin):
     birthday = models.DateField(null=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
     tags = models.ManyToManyField(AbstractAttribute)
-    sleeping_location = models.ForeignKey(SleepingLocation, on_delete=models.SET_NULL, blank=True, null=True)
+    booking_option = models.ForeignKey(BookingOption, on_delete=models.SET_NULL, blank=True, null=True)
+    gender = models.CharField(max_length=1, choices=Gender.choices, default=Gender.Nothing)
 
     def __str__(self):
-        return f"{self.registration}: {self.last_name}, {self.first_name}"
+        return f"{self.registration__name}: {self.last_name}, {self.first_name}"
 
 
 class Workshop(TimeStampMixin):

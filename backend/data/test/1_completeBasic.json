@@ -36,7 +36,7 @@
     "model": "basic.tagtype",
     "pk": 4,
     "fields": {
-      "name": "SleepingModule",
+      "name": "BookingOptionModule",
       "description": "",
       "color": "#FF0000",
       "min": 1,
@@ -107,7 +107,7 @@
       "type": 1,
       "is_custom": false,
       "is_visible": true,
-      "description": "10 Jahre oder J³nger"
+      "description": "10 Jahre oder Jünger"
     }
   },
   {
@@ -131,7 +131,7 @@
       "type": 1,
       "is_custom": false,
       "is_visible": true,
-      "description": "16 Jahre oder õlter"
+      "description": "16 Jahre oder älter"
     }
   },
   {
@@ -211,8 +211,8 @@
     "pk": 10,
     "fields": {
       "polymorphic_ctype": 17,
-      "name": "SleepingLocationComplex",
-      "type": 8,
+      "name": "BookingOptionComplex",
+      "type": 4,
       "is_custom": false,
       "is_visible": false,
       "description": ""
@@ -223,8 +223,8 @@
     "pk": 11,
     "fields": {
       "polymorphic_ctype": 17,
-      "name": "SleepingLocationSimple",
-      "type": 8,
+      "name": "BookingOptionSimple",
+      "type": 4,
       "is_custom": false,
       "is_visible": false,
       "description": ""
@@ -236,7 +236,7 @@
     "fields": {
       "polymorphic_ctype": 17,
       "name": "KeycloakAuthorization",
-      "type": 8,
+      "type": 6,
       "is_custom": false,
       "is_visible": false,
       "description": ""
@@ -248,7 +248,7 @@
     "fields": {
       "polymorphic_ctype": 17,
       "name": "InternalAuthorization",
-      "type": 8,
+      "type": 6,
       "is_custom": false,
       "is_visible": false,
       "description": ""
@@ -258,7 +258,7 @@
     "model": "basic.abstractattribute",
     "pk": 14,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 13,
       "name": "Veranstaltungs Bedingungen",
       "type": 9,
       "is_custom": false,
@@ -270,7 +270,7 @@
     "model": "basic.abstractattribute",
     "pk": 15,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 13,
       "name": "DSGVO",
       "type": 9,
       "is_custom": false,
@@ -282,7 +282,7 @@
     "model": "basic.abstractattribute",
     "pk": 16,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 13,
       "name": "Corona Hinweis",
       "type": 9,
       "is_custom": false,
@@ -294,19 +294,7 @@
     "model": "basic.abstractattribute",
     "pk": 17,
     "fields": {
-      "polymorphic_ctype": 30,
-      "name": "Kothenstangen",
-      "type": 9,
-      "is_custom": false,
-      "is_visible": true,
-      "description": "Wie viele Stangen für Kothen benötigt ihr?"
-    }
-  },
-  {
-    "model": "basic.abstractattribute",
-    "pk": 18,
-    "fields": {
-      "polymorphic_ctype": 30,
+      "polymorphic_ctype": 15,
       "name": "Kothen",
       "type": 9,
       "is_custom": false,
@@ -316,21 +304,33 @@
   },
   {
     "model": "basic.abstractattribute",
+    "pk": 18,
+    "fields": {
+      "polymorphic_ctype": 15,
+      "name": "Kothenstangen",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wie viele Stangen für Kothen benötigt ihr?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
     "pk": 19,
     "fields": {
-      "polymorphic_ctype": 30,
+      "polymorphic_ctype": 15,
       "name": "Jurten",
       "type": 9,
       "is_custom": false,
       "is_visible": true,
-      "description": "Wie viele Jurten bringt ihr mit"
+      "description": "Wie viele Jurten bringt ihr mit?"
     }
   },
   {
     "model": "basic.abstractattribute",
     "pk": 20,
     "fields": {
-      "polymorphic_ctype": 30,
+      "polymorphic_ctype": 15,
       "name": "Jurtenstangen",
       "type": 9,
       "is_custom": false,
@@ -342,7 +342,7 @@
     "model": "basic.abstractattribute",
     "pk": 21,
     "fields": {
-      "polymorphic_ctype": 30,
+      "polymorphic_ctype": 19,
       "name": "Anreise",
       "type": 9,
       "is_custom": false,
@@ -354,12 +354,24 @@
     "model": "basic.abstractattribute",
     "pk": 22,
     "fields": {
-      "polymorphic_ctype": 30,
+      "polymorphic_ctype": 19,
       "name": "Abreise",
       "type": 9,
       "is_custom": false,
       "is_visible": true,
       "description": "Wann und womit werdet ihr abreisen?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 23,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "Letter",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": ""
     }
   },
   {
@@ -474,6 +486,29 @@
     "pk": 20,
     "fields": {
       "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.stringattribute",
+    "pk": 23,
+    "fields": {
+      "string_field": null
+    }
+  },
+  {
+    "model": "basic.travelattribute",
+    "pk": 21,
+    "fields": {
+      "type_field": null,
+      "time_field": null
+    }
+  },
+  {
+    "model": "basic.travelattribute",
+    "pk": 22,
+    "fields": {
+      "type_field": null,
+      "time_field": null
     }
   }
 ]

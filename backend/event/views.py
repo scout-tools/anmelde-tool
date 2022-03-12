@@ -6,17 +6,18 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status, mixins
-from rest_framework.exceptions import NotFound, MethodNotAllowed
+from rest_framework.exceptions import NotFound, MethodNotAllowed, PermissionDenied, APIException
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from basic.models import ScoutHierarchy
-from event.models import Event, EventLocation, SleepingLocation, RegistrationTypeGroup, RegistrationTypeSingle, \
-    StandardEventTemplate
+from event.models import Event, EventLocation, BookingOption, RegistrationTypeGroup, RegistrationTypeSingle, \
+    StandardEventTemplate, Registration
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
-    EventCompleteSerializer, SleepingLocationSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
+    EventCompleteSerializer, BookingOptionSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
     EventModuleSerializer, AttributeEventModuleMapperSerializer, EventOverviewSerializer, \
-    EventModuleMapperPostSerializer, EventModuleMapperGetSerializer
+    EventModuleMapperPostSerializer, EventModuleMapperGetSerializer, RegistrationPostSerializer, \
+    RegistrationGetSerializer, RegistrationPutSerializer
 
 
 def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
@@ -52,7 +53,6 @@ class EventViewSet(viewsets.ModelViewSet):
             request.data['name'] = 'Dummy'
         if request.data.get('responsible_persons', None) is None:
             request.data['responsible_persons'] = [request.user.id, ]
-        print(request.data)
         serializer: EventCompleteSerializer = self.get_serializer(data=request.data)
         if not serializer.is_valid(raise_exception=True):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -81,13 +81,13 @@ class EventViewSet(viewsets.ModelViewSet):
         return super().update(request, *args, **kwargs)
 
 
-class SleepingLocationViewSet(viewsets.ModelViewSet):
+class BookingOptionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = SleepingLocationSerializer
+    serializer_class = BookingOptionSerializer
 
     def get_queryset(self):
         event_id = self.kwargs.get("event_pk", None)
-        return SleepingLocation.objects.filter(event=event_id)
+        return BookingOption.objects.filter(event=event_id)
 
     def create(self, request, *args, **kwargs):
         if request.data.get('name', None) is None:
@@ -117,7 +117,7 @@ class SleepingLocationViewSet(viewsets.ModelViewSet):
             return super().destroy(request, *args, **kwargs)
         else:
             raise MethodNotAllowed(method='delete',
-                                   detail=f'delete not allowed, because there must be at least one sleeping location')
+                                   detail=f'delete not allowed, because there must be at least one booking option')
 
 
 class EventPlanerViewSet(viewsets.ReadOnlyModelViewSet):
@@ -148,7 +148,7 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
                                 mixins.UpdateModelMixin,
                                 mixins.DestroyModelMixin,
                                 viewsets.GenericViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = EventModuleMapper.objects.all()
 
     def get_serializer_class(self):
@@ -226,3 +226,124 @@ class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
             iterator = iterator.parent
         return Event.objects.filter(is_public=True, end_date__gte=timezone.now(),
                                     limited_registration_hierarchy__in=list_parent_organistations)
+
+
+class RegistrationViewSet(mixins.CreateModelMixin,
+                          mixins.RetrieveModelMixin,
+                          mixins.UpdateModelMixin,
+                          mixins.DestroyModelMixin,
+                          viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Registration.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        event: Event = get_object_or_404(Event, pk=serializer.data['event'])
+        if serializer.data['event_code'] != event.invitation_code:
+            raise WrongEventCode()
+
+        # Check registration type permissions
+        if event.single_registration == RegistrationTypeSingle.External and \
+                not serializer.data['single']:
+            raise WrongRegistrationFormat
+        elif event.single_registration == RegistrationTypeSingle.Attached:
+            raise RegistrationNotSupported
+
+        # Check registration type permissions based on existing registrations
+        existing_registration = Registration.objects.filter(
+            scout_organisation=request.user.userextended.scout_organisation)
+        if existing_registration.exists():
+            single_registration = existing_registration.filter(responsible_persons__in=[request.user.id], single=True)
+            existing_group_registration = existing_registration.filter(single=False)
+            group_registration = existing_group_registration.filter(responsible_persons__in=[request.user.id])
+
+            if single_registration.exists() and serializer.data['single']:
+                raise SingleAlreadyRegistered()
+            elif existing_group_registration.exists() and not group_registration.exists():
+                raise NotResponsible()
+            elif existing_group_registration.exists() and not serializer.data['single']:
+                raise GroupAlreadyRegistered
+            elif group_registration.exists() and serializer.data['single']:
+                raise SingleGroupNotAllowed
+            elif event.group_registration == RegistrationTypeGroup.Required and \
+                    not group_registration.exists() and \
+                    serializer.data['single']:
+                raise WrongRegistrationFormat
+
+        registration: Registration = Registration(
+            scout_organisation=request.user.userextended.scout_organisation,
+            event=event,
+            single=serializer.data['single']
+        )
+
+        registration.save()
+        registration.responsible_persons.add(request.user)
+
+        json = RegistrationGetSerializer(registration)
+        return Response(json.data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        tmp: Registration = serializer.save()
+
+        tmp.responsible_persons.add(request.user)
+
+        serializer = RegistrationGetSerializer(tmp)
+        return Response(serializer.data)
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return RegistrationPostSerializer
+        elif self.request.method == 'GET':
+            return RegistrationGetSerializer
+        elif self.request.method == 'PUT':
+            return RegistrationPutSerializer
+        elif self.request.method == 'DESTROY':
+            return RegistrationPutSerializer
+
+
+class GroupAlreadyRegistered(APIException):
+    status_code = 403
+    default_detail = 'Your group is already registered'
+    default_code = 'already_registered'
+
+
+class NotResponsible(APIException):
+    status_code = 403
+    default_detail = 'An registration already exists, but you are not responsible'
+    default_code = 'already_registered'
+
+
+class SingleAlreadyRegistered(APIException):
+    status_code = 403
+    default_detail = "You're already registed"
+    default_code = 'already_registered'
+
+
+class SingleGroupNotAllowed(APIException):
+    status_code = 403
+    default_detail = "You already have a registation, please edit this one"
+    default_code = 'already_registered'
+
+
+class WrongRegistrationFormat(APIException):
+    status_code = 405
+    default_detail = "You're regisration contains information which does not fit to the event"
+    default_code = 'missleading_information'
+
+
+class RegistrationNotSupported(APIException):
+    status_code = 501
+    default_detail = "Attached registrations are currently not implemented"
+    default_code = 'no_attached_registrations'
+
+
+class WrongEventCode(APIException):
+    status_code = 403
+    default_detail = "Your your typed in code does not match the event code"
+    default_code = 'wrong_code'

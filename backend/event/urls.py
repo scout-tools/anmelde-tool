@@ -12,10 +12,11 @@ router.register(r'event-planer-overview', views.EventPlanerViewSet, basename='ev
 router.register(r'event-module', views.EventModulesViewSet, basename='eventmodule')
 router.register(r'event-module-mapper', views.EventModulesMapperViewSet, basename='eventmodulemapper')
 router.register(r'event-overview', views.EventOverviewViewSet, basename='event-overview')
+router.register(r'registration', views.RegistrationViewSet, basename='registration')
 
 event_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
-event_router.register(r'sleeping-locations', views.SleepingLocationViewSet,
-                      basename='sleeping-locations')
+event_router.register(r'booking-options', views.BookingOptionViewSet,
+                      basename='booking-options')
 event_router.register(r'assigned-event-modules', views.AssignedEventModulesViewSet,
                       basename='assigned-event-modules')
 event_router.register(r'available-modules', views.AvailableEventModulesViewSet,
@@ -27,7 +28,7 @@ event_module_router.register(r'attribute-mapper', views.EventModuleAttributeMapp
 # event_module_router.register(r'attributes', views.EventModuleAttributeViewSet,
 #                              basename='attributes')
 
-# registration_router = routers.NestedSimpleRouter(router, r'registration', lookup='registration')
+registration_router = routers.NestedSimpleRouter(router, r'registration', lookup='registration')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -35,4 +36,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(event_router.urls)),
     path('', include(event_module_router.urls)),
+    path('', include(registration_router.urls)),
 ]

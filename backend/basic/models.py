@@ -93,6 +93,10 @@ class FloatAttribute(AbstractAttribute):
     float_field = models.FloatField()
 
 
+class StringAttribute(AbstractAttribute):
+    string_field = models.CharField(max_length=10000, blank=True, null=True)
+
+
 class TravelAttribute(AbstractAttribute):
     type_field = models.CharField(max_length=1, choices=TravelType.choices, null=True, blank=True)
     time_field = models.CharField(max_length=2, choices=TravelSlots.choices, null=True, blank=True)

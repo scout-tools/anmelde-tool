@@ -11,6 +11,15 @@ class UserExtendedScoutHierarchySerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'parent', 'zip_code')
 
 
+class UserExtendedShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserExtended
+        fields = (
+            'mobile_number',
+            'scout_name',
+        )
+
+
 class UserExtendedGetSerializer(serializers.ModelSerializer):
     scout_organisation = UserExtendedScoutHierarchySerializer()
 
