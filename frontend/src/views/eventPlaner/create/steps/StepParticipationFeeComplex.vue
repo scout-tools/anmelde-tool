@@ -131,16 +131,6 @@ export default {
     },
   },
   methods: {
-    updateData() {
-      this.sleepingLocations.forEach((item, index) => {
-        if (isNumber(index)) {
-          this.updateEventBookingOption(this.$route.params.id, item.id, item)
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-      });
-    },
     getDisplayName(item) {
       const returnString = `${item.name} -  ${item.price} €`;
       return returnString;
@@ -169,15 +159,6 @@ export default {
       this.$v.$touch();
       this.valid = !this.$v.$error;
     },
-    addSleepingLocation() {
-      this.addEventBookingOption(this.$route.params.id)
-        .then(() => {
-          this.collectBookingOptionss();
-        });
-    },
-    collectBookingOptionss() {
-      this.getEventBookingOptions(this.$route.params.id)
-    },
     prevStep() {
       this.$emit('prevStep');
     },
@@ -201,17 +182,15 @@ export default {
       );
     },
     collectSleepingLocations() {
-      debugger;
       this.isLoading = true;
-      this.getEventSleepingLocation(this.$route.params.id)
-        .then((success) => {
-          this.sleepingLocations = success.data;
-          debugger;
-          this.isLoading = false;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // this.getEventSleepingLocation(this.$route.params.id)
+      //   .then((success) => {
+      //     this.sleepingLocations = success.data;
+      //     this.isLoading = false;
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     },
     deleteSleepingLocation(id) {
       this.deleteEventBookingOption(this.$route.params.id, id)
@@ -219,29 +198,11 @@ export default {
           this.collectBookingOptionss();
         });
     },
-
-  },
-  mounted() {
-    this.participationFee = this.event.price;
-    this.collectBookingOptionss();
-  },
-  watch: {
-    extendedMenu(newVal) {
-      if (newVal) {
-        Vue.nextTick()
-          .then(() => {
-            this.setTimes();
-          });
-      }
-      this.deleteEventSleepingLocation(this.$route.params.id, id).then(() => {
-        this.collectSleepingLocations();
-      });
+    newUser() {
+      this.$refs.createSinglePersonDialog.openDialog();
     },
     onRefresh() {
       this.collectSleepingLocations();
-    },
-    newUser() {
-      this.$refs.createSinglePersonDialog.openDialog();
     },
     openExcelDialog() {
       this.$refs.uploadExcelFile.openDialog();
