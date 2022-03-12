@@ -1,12 +1,9 @@
-import datetime
-
+from basic.models import Registration
+from basic.serializers import RegistrationSummarySerializer
+from django.shortcuts import get_object_or_404
 from django.utils.formats import date_format
 
-from .email import send_responsible_person_mail, send_registration_summary, send_registration_reminder, send_matching
-from basic.serializers import RegistrationSummarySerializer
-from basic.models import Registration, RegistrationMatching, ScoutHierarchy, EventLocation
-from django.shortcuts import get_object_or_404
-from django.forms.models import model_to_dict
+from .email import send_responsible_person_mail, send_registration_summary, send_registration_reminder
 
 
 def registration_responsible_person(data):

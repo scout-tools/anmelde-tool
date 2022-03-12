@@ -27,7 +27,7 @@
               v-text="item[data.rankField]"
             />
             <v-list-item-subtitle
-              >{{ `${item.scoutOrganisation} (${item.verbandName})` }}
+              >{{ `${item.scoutOrganisation} (${item.bundName})` }}
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>

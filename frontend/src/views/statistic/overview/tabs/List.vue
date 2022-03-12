@@ -12,7 +12,7 @@
                   hide-details
                 ></v-checkbox>
               </v-col>
-              <v-col cols="4">
+              <!-- <v-col cols="4">
                 <v-checkbox
                   v-model="filter.withBdp"
                   label="BdP"
@@ -25,7 +25,7 @@
                   label="DPV"
                   hide-details
                 ></v-checkbox>
-              </v-col>
+              </v-col> -->
             </v-row>
           </v-container>
         </v-card-text>
@@ -39,19 +39,19 @@
         hide-default-footer
         :item-class="rowClasses"
       >
-        <template v-slot:item.isConfirmed="{ item }">
+        <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
               item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
             }}</v-icon
           >
         </template>
-        <template v-slot:item.createdAt="{ item }">
+        <template v-slot:[`item.createdAt`]="{ item }">
           {{
             getDateFormat(item.createdAt)
           }}
         </template>
-        <template v-slot:item.numberParticipant="{ item }">
+        <template v-slot:[`item.numberParticipant`]="{ item }">
           <td v-html="getNumberParticipant(item)" disabled></td>
         </template>
         <template slot="body.append">
@@ -85,7 +85,7 @@ export default {
       { text: 'Datum', value: 'createdAt' },
       { text: 'Bund', value: 'bundName' },
       { text: 'Name', value: 'scoutOrganisation' },
-      { text: 'Teilnehmende (Helfer)', value: 'numberParticipant' },
+      { text: 'Teilnehmende', value: 'numberParticipant' },
       { text: '', value: 'data-table-expand' },
     ],
     API_URL: process.env.VUE_APP_API,
@@ -97,9 +97,6 @@ export default {
   computed: {
     eventId() {
       return this.$route.params.id;
-    },
-    isAuthenticated() {
-      return this.$store.getters.isAuthenticated;
     },
     getItems() {
       let data = this.data.filter(
@@ -162,7 +159,7 @@ export default {
       return 'bdp-yellow';
     },
     getNumberParticipant(item) {
-      return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
+      return `${item.numberParticipant || 0}`;
     },
     getData(eventId) {
       this.getRegistrationStats(eventId).then((responseObj) => {

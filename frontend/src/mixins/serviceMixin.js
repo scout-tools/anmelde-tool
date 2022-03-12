@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const serviceMixin = {  // eslint-disable-line
+export default {
+  // eslint-disable-line
   methods: {
     async postExperimentItem(event, experiment, score) {
       const path = `${process.env.VUE_APP_API}basic/experiment-item/`;
@@ -11,22 +12,64 @@ export const serviceMixin = {  // eslint-disable-line
       });
     },
     async getRegistrationStats(eventId) {
-      const path = `${process.env.VUE_APP_API}basic/event/${eventId}/registration-stats/`;
+      const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/registration-stats/`;
       return axios.get(path);
     },
     async getParticipants(eventId) {
-      const path = `${process.env.VUE_APP_API}basic/event/${eventId}/participants/`;
+      const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/participants/`;
       return axios.get(path);
     },
     async getWorkshopStats(eventId) {
-      const path = `${process.env.VUE_APP_API}basic/event/${eventId}/workshop-eventmaster-overview/`;
+      const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/workshop-eventmaster-overview/`;
       return axios.get(path);
     },
-    async loadUserExtended() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
+    async getServiceById(id, modulePath) {
+      const path = `${process.env.VUE_APP_API}${modulePath}${id}/`;
       const response = await axios.get(path);
 
       return response.data;
+    },
+    patchService(field, value, modulePath) {
+      const path = `${process.env.VUE_APP_API}${modulePath}${this.id}/`;
+      return axios.patch(path, { [field]: value });
+    },
+    getSimpleService(modulePath) {
+      const path = `${process.env.VUE_APP_API}${modulePath}`;
+      return axios.get(path);
+    },
+    getService(id, modulePath) {
+      this.isLoading = true;
+      this.getServiceById(id, modulePath)
+        .then((res) => {
+          this.data = res;
+        })
+        .catch(() => {
+          this.$root.globalSnackbar.show({
+            message:
+              'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später nocheinmal.',
+            color: 'error',
+          });
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
+    getLookup(lookupPath) {
+      this.isLoading = true;
+      this.getSimpleService(lookupPath)
+        .then((res) => {
+          this.lookupList = res.data;
+        })
+        .catch(() => {
+          this.$root.globalSnackbar.show({
+            message:
+              'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später nocheinmal.',
+            color: 'error',
+          });
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
   },
 };

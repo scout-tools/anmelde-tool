@@ -1,0 +1,514 @@
+[
+  {
+    "model": "basic.tagtype",
+    "pk": 1,
+    "fields": {
+      "name": "AgeGroup",
+      "description": "",
+      "color": "#5E60FF",
+      "min": 0,
+      "max": 9999
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 2,
+    "fields": {
+      "name": "EventTag",
+      "description": "",
+      "color": "#D3FFD5",
+      "min": 0,
+      "max": 9999
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 3,
+    "fields": {
+      "name": "LocationType",
+      "description": "",
+      "color": "#9DFF70",
+      "min": 0,
+      "max": 9999
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 4,
+    "fields": {
+      "name": "BookingOptionModule",
+      "description": "",
+      "color": "#FF0000",
+      "min": 1,
+      "max": 1
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 5,
+    "fields": {
+      "name": "StandardModule",
+      "description": "",
+      "color": "#FF0000",
+      "min": 0,
+      "max": 9999
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 6,
+    "fields": {
+      "name": "ResponsiblePersonAuthorisationModule",
+      "description": "",
+      "color": "#FF0000",
+      "min": 1,
+      "max": 1
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 7,
+    "fields": {
+      "name": "RequiredModule",
+      "description": "",
+      "color": "#FF0000",
+      "min": 0,
+      "max": 9999
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 8,
+    "fields": {
+      "name": "EventAdmin",
+      "description": "",
+      "color": "#FF0000",
+      "min": 0,
+      "max": 9999
+    }
+  },
+  {
+    "model": "basic.tagtype",
+    "pk": 9,
+    "fields": {
+      "name": "EventAttribute",
+      "description": "",
+      "color": "#FF0000",
+      "min": 0,
+      "max": 9999
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 1,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "Meutenstufe",
+      "type": 1,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "10 Jahre oder Jünger"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 2,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "Sippestufe",
+      "type": 1,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "11-15 Jahre"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 3,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "Roverstufe",
+      "type": 1,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "16 Jahre oder älter"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 4,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "DPV Veranstaltung",
+      "type": 2,
+      "is_custom": false,
+      "is_visible": true,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 5,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "DPBM Veranstaltung",
+      "type": 2,
+      "is_custom": false,
+      "is_visible": true,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 6,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "Zeltplatz",
+      "type": 3,
+      "is_custom": false,
+      "is_visible": true,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 7,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "Heim",
+      "type": 3,
+      "is_custom": false,
+      "is_visible": true,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 8,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "Zeltplatz Vorschlag",
+      "type": 3,
+      "is_custom": false,
+      "is_visible": true,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 9,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "Heim Vorschlag",
+      "type": 3,
+      "is_custom": false,
+      "is_visible": true,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 10,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "BookingOptionComplex",
+      "type": 4,
+      "is_custom": false,
+      "is_visible": false,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 11,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "BookingOptionSimple",
+      "type": 4,
+      "is_custom": false,
+      "is_visible": false,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 12,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "KeycloakAuthorization",
+      "type": 6,
+      "is_custom": false,
+      "is_visible": false,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 13,
+    "fields": {
+      "polymorphic_ctype": 17,
+      "name": "InternalAuthorization",
+      "type": 6,
+      "is_custom": false,
+      "is_visible": false,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 14,
+    "fields": {
+      "polymorphic_ctype": 13,
+      "name": "Veranstaltungs Bedingungen",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Ich stimme den Bedingungen zu und möchte mit der Anmeldung beginnen"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 15,
+    "fields": {
+      "polymorphic_ctype": 13,
+      "name": "DSGVO",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Hiermit bestätige ich, dass alle Teilnehmer_innen, die ich auf diesem Wege zum DPV-Gold anmelde die Datenschutzhinweise zur Kenntnis genommen und diesen zugestimmt haben."
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 16,
+    "fields": {
+      "polymorphic_ctype": 13,
+      "name": "Corona Hinweis",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Ich trage Sorge, dass alle von mir angemeldeten Teilnehmer über die Corona Regel informiert sind und ich achte auf die Einhaltung"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 17,
+    "fields": {
+      "polymorphic_ctype": 15,
+      "name": "Kothen",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wie viele Kothen bringt ihr mit?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 18,
+    "fields": {
+      "polymorphic_ctype": 15,
+      "name": "Kothenstangen",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wie viele Stangen für Kothen benötigt ihr?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 19,
+    "fields": {
+      "polymorphic_ctype": 15,
+      "name": "Jurten",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wie viele Jurten bringt ihr mit?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 20,
+    "fields": {
+      "polymorphic_ctype": 15,
+      "name": "Jurtenstangen",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wie viele Stangen benötigt ihr für eure Jurten?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 21,
+    "fields": {
+      "polymorphic_ctype": 19,
+      "name": "Anreise",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wann und womit werden ihr anreisen?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 22,
+    "fields": {
+      "polymorphic_ctype": 19,
+      "name": "Abreise",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": "Wann und womit werdet ihr abreisen?"
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 23,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "Letter",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.tag",
+    "pk": 1,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 2,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 3,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 4,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 5,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 6,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 7,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 8,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 9,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 10,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 11,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 12,
+    "fields": {}
+  },
+  {
+    "model": "basic.tag",
+    "pk": 13,
+    "fields": {}
+  },
+  {
+    "model": "basic.booleanattribute",
+    "pk": 14,
+    "fields": {
+      "boolean_field": false
+    }
+  },
+  {
+    "model": "basic.booleanattribute",
+    "pk": 15,
+    "fields": {
+      "boolean_field": false
+    }
+  },
+  {
+    "model": "basic.booleanattribute",
+    "pk": 16,
+    "fields": {
+      "boolean_field": false
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 17,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 18,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 19,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 20,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.stringattribute",
+    "pk": 23,
+    "fields": {
+      "string_field": null
+    }
+  },
+  {
+    "model": "basic.travelattribute",
+    "pk": 21,
+    "fields": {
+      "type_field": null,
+      "time_field": null
+    }
+  },
+  {
+    "model": "basic.travelattribute",
+    "pk": 22,
+    "fields": {
+      "type_field": null,
+      "time_field": null
+    }
+  }
+]

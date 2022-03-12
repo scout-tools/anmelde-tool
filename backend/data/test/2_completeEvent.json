@@ -1,0 +1,652 @@
+[
+  {
+    "model": "event.eventlocation",
+    "pk": 1,
+    "fields": {
+      "created_at": "2022-03-10T11:35:03.875Z",
+      "updated_at": "2022-03-10T11:35:03.875Z",
+      "name": "Jugendburg Ludwigstein",
+      "description": "Die Burg Ludwigstein ist eine frühere spätmittelalterliche Burg und heutige Jugendburg bei Werleshausen im Werra-Meißner-Kreis in Hessen",
+      "zip_code": 12582,
+      "address": "Burg Ludwigstein",
+      "contact_name": "Many",
+      "contact_email": "test@test.de",
+      "contact_phone": "",
+      "per_person_fee": null,
+      "fix_fee": null,
+      "tags": [
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "model": "event.eventlocation",
+    "pk": 2,
+    "fields": {
+      "created_at": "2022-03-10T11:35:46.170Z",
+      "updated_at": "2022-03-10T11:35:46.170Z",
+      "name": "Gut Steimke",
+      "description": "",
+      "zip_code": 11674,
+      "address": "",
+      "contact_name": "Inja",
+      "contact_email": "p@p.de",
+      "contact_phone": "",
+      "per_person_fee": null,
+      "fix_fee": null,
+      "tags": [
+        6
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 1,
+    "fields": {
+      "name": "Introduction",
+      "type": 7,
+      "header": "Einverständnis",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 2,
+    "fields": {
+      "name": "ParticipantsPersonal",
+      "type": 5,
+      "header": "Teilnehmende",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 3,
+    "fields": {
+      "name": "Participants",
+      "type": 5,
+      "header": "Teilnehmende",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 4,
+    "fields": {
+      "name": "OfferWorkshop",
+      "type": 5,
+      "header": "AGs",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 5,
+    "fields": {
+      "name": "SubscribeWorkshop",
+      "type": 5,
+      "header": "Erlebnisangebote",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 6,
+    "fields": {
+      "name": "Food",
+      "type": 5,
+      "header": "Essgewohnheiten",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 7,
+    "fields": {
+      "name": "Summary",
+      "type": 7,
+      "header": "Zusammenfassung und Bestätigung",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 8,
+    "fields": {
+      "name": "Letter",
+      "type": 5,
+      "header": "Nachricht an die Lagerleitung",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 9,
+    "fields": {
+      "name": "Travel",
+      "type": 5,
+      "header": "Anreise",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 10,
+    "fields": {
+      "name": "TravelBack",
+      "type": 5,
+      "header": "Rückreise",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 11,
+    "fields": {
+      "name": "Tent",
+      "type": 5,
+      "header": "Zelte",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 1,
+    "fields": {
+      "attribute": 14,
+      "description": "Veranstaltungsbedingungen",
+      "is_required": true
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 2,
+    "fields": {
+      "attribute": 15,
+      "description": "Datenschutzhinweis",
+      "is_required": true
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 3,
+    "fields": {
+      "attribute": 16,
+      "description": "Corona Hinweis",
+      "is_required": true
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 4,
+    "fields": {
+      "attribute": 17,
+      "description": "Anzahl Kothen",
+      "is_required": false
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 5,
+    "fields": {
+      "attribute": 18,
+      "description": "Anzahl Kothenstangen",
+      "is_required": false
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 6,
+    "fields": {
+      "attribute": 19,
+      "description": "Anzahl Jurten",
+      "is_required": false
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 7,
+    "fields": {
+      "attribute": 20,
+      "description": "Anzahl Jurtenstangen",
+      "is_required": false
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 8,
+    "fields": {
+      "attribute": 21,
+      "description": "Anreise",
+      "is_required": false
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 9,
+    "fields": {
+      "attribute": 22,
+      "description": "Abreise",
+      "is_required": false
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 10,
+    "fields": {
+      "attribute": 23,
+      "description": "Nachricht an die Lagerleitung",
+      "is_required": false
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": 1,
+    "fields": {
+      "created_at": "2022-03-10T11:43:48.710Z",
+      "updated_at": "2022-03-10T11:43:48.710Z",
+      "name": "Standard",
+      "technical_name": "standard",
+      "short_description": "",
+      "long_description": "",
+      "cloud_link": null,
+      "location": null,
+      "start_time": null,
+      "end_time": null,
+      "registration_deadline": null,
+      "registration_start": null,
+      "last_possible_update": null,
+      "invitation_code": "AAAA",
+      "is_public": false,
+      "keycloak_path": null,
+      "keycloak_admin_path": null,
+      "limited_registration_hierarchy": 493,
+      "single_registration": "N",
+      "group_registration": "N",
+      "personal_data_required": false,
+      "responsible_persons": [
+        2
+      ],
+      "tags": []
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": 2,
+    "fields": {
+      "created_at": "2022-03-10T11:46:18.946Z",
+      "updated_at": "2022-03-10T15:24:35.669Z",
+      "name": "DPV goLd",
+      "technical_name": "dpv-gold",
+      "short_description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
+      "long_description": "",
+      "cloud_link": null,
+      "location": 1,
+      "start_time": "2022-09-16T14:00:00Z",
+      "end_time": "2022-09-18T09:00:00Z",
+      "registration_deadline": "2022-06-01T19:59:59Z",
+      "registration_start": "2022-07-31T20:00:01Z",
+      "last_possible_update": "2022-09-01T19:59:59Z",
+      "invitation_code": "DPVGOLD",
+      "is_public": true,
+      "keycloak_path": 3,
+      "keycloak_admin_path": 3,
+      "limited_registration_hierarchy": 493,
+      "single_registration": "E",
+      "group_registration": "O",
+      "personal_data_required": true,
+      "responsible_persons": [
+        2
+      ],
+      "tags": [
+        4,
+        10,
+        12
+      ]
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": 3,
+    "fields": {
+      "created_at": "2022-03-10T12:48:32.515Z",
+      "updated_at": "2022-03-10T15:24:54.058Z",
+      "name": "VIA23 DPV Verbandslager",
+      "technical_name": "via23",
+      "short_description": "",
+      "long_description": "",
+      "cloud_link": null,
+      "location": 2,
+      "start_time": "2023-05-26T14:00:00Z",
+      "end_time": "2023-05-30T09:00:00Z",
+      "registration_deadline": "2023-02-01T21:59:59Z",
+      "registration_start": "2022-07-31T20:00:01Z",
+      "last_possible_update": "2023-04-01T19:59:59Z",
+      "invitation_code": "AAAA",
+      "is_public": true,
+      "keycloak_path": 4,
+      "keycloak_admin_path": 4,
+      "limited_registration_hierarchy": 493,
+      "single_registration": "N",
+      "group_registration": "R",
+      "personal_data_required": false,
+      "responsible_persons": [
+        2
+      ],
+      "tags": [
+        4,
+        11,
+        12
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 1,
+    "fields": {
+      "ordering": 1,
+      "module": 1,
+      "event": 1,
+      "required": true,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 2,
+    "fields": {
+      "ordering": 2,
+      "module": 2,
+      "event": 1,
+      "required": true,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 3,
+    "fields": {
+      "ordering": 2,
+      "module": 3,
+      "event": 1,
+      "required": true,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 4,
+    "fields": {
+      "ordering": 3,
+      "module": 8,
+      "event": 1,
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        10
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 5,
+    "fields": {
+      "ordering": 4,
+      "module": 7,
+      "event": 1,
+      "required": true,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 6,
+    "fields": {
+      "ordering": 999,
+      "module": 4,
+      "event": 1,
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 7,
+    "fields": {
+      "ordering": 999,
+      "module": 5,
+      "event": 1,
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 8,
+    "fields": {
+      "ordering": 999,
+      "module": 6,
+      "event": 1,
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 9,
+    "fields": {
+      "ordering": 999,
+      "module": 9,
+      "event": 1,
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        8
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 10,
+    "fields": {
+      "ordering": 999,
+      "module": 10,
+      "event": 1,
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 11,
+    "fields": {
+      "ordering": 999,
+      "module": 11,
+      "event": 1,
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 12,
+    "fields": {
+      "ordering": 1,
+      "module": 1,
+      "event": 2,
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 13,
+    "fields": {
+      "ordering": 2,
+      "module": 2,
+      "event": 2,
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 14,
+    "fields": {
+      "ordering": 3,
+      "module": 6,
+      "event": 2,
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 15,
+    "fields": {
+      "ordering": 5,
+      "module": 8,
+      "event": 2,
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        10
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 16,
+    "fields": {
+      "ordering": 6,
+      "module": 7,
+      "event": 2,
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 17,
+    "fields": {
+      "ordering": 4,
+      "module": 11,
+      "event": 2,
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 1,
+    "fields": {
+      "name": "Bett",
+      "description": "",
+      "price": "50.50",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": 2,
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 2,
+    "fields": {
+      "name": "Zeltplatz",
+      "description": "",
+      "price": "25.50",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": 2,
+      "tags": []
+    }
+  },
+  {
+    "model": "event.standardeventtemplate",
+    "pk": 1,
+    "fields": {
+      "name": "Standard",
+      "event": 1,
+      "introduction": 1,
+      "summary": 5,
+      "registration": 3,
+      "personal_registration": 2,
+      "letter": 4,
+      "other_required_modules": [
+        4
+      ],
+      "other_optional_modules": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    }
+  }
+]

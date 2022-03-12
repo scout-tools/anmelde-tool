@@ -27,7 +27,7 @@
                       verändern.
                     </p>
                   </div>
-                  <v-subheader v-if="isMobilMandatory" class="ma-0">
+                  <v-subheader class="ma-0">
                     <v-icon class="ma-2" color="error"
                       >mdi-alert-circle
                     </v-icon>
@@ -36,120 +36,14 @@
                     Einstellungen ändern.
                   </v-subheader>
                   <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="invitationCode"
-                        label="Code aus der Einladung"
-                        prepend-inner-icon="mdi-lock"
-                        :error-messages="invitationCodeErrors"
-                      >
-                        <template slot="append">
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-icon
-                                color="success"
-                                dark
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                mdi-help-circle-outline
-                              </v-icon>
-                            </template>
-                            <span>
-                              {{ tooltip.invitationCode }}
-                            </span>
-                          </v-tooltip>
-                        </template>
-                      </v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        readonly
-                        disabled
-                        filled
-                        v-model="items.scoutName"
-                        label="Mein Name"
-                        prepend-inner-icon="mdi-account-circle"
-                      >
-                        <template slot="append">
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-icon
-                                color="success"
-                                dark
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                mdi-help-circle-outline
-                              </v-icon>
-                            </template>
-                            <span>
-                              {{ tooltip.scoutName }}
-                            </span>
-                          </v-tooltip>
-                        </template>
-                      </v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        readonly
-                        disabled
-                        filled
-                        v-model="getStammName"
-                        label="Mein Stamm"
-                        prepend-inner-icon="mdi-account-group"
-                      >
-                        <template slot="append">
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-icon
-                                color="success"
-                                dark
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                mdi-help-circle-outline
-                              </v-icon>
-                            </template>
-                            <span>
-                              {{ tooltip.stammName }}
-                            </span>
-                          </v-tooltip>
-                        </template>
-                      </v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        readonly
-                        v-if="isMobilMandatory"
-                        placeholder="Bitte im Profil hinzufügen"
-                        filled
-                        v-model="mobileNumber"
-                        label="Telefonnummer"
-                        prepend-inner-icon="mdi-phone"
-                        :error-messages="mobileNumberErrors"
-                      >
-                        <template slot="append">
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-icon
-                                color="success"
-                                dark
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                mdi-help-circle-outline
-                              </v-icon>
-                            </template>
-                            <span>
-                              {{ tooltip.mobileNumber }}
-                            </span>
-                          </v-tooltip>
-                        </template>
-                      </v-text-field>
-                    </v-col>
+                  <template v-for="(field, i) in fields">
+                    <BaseField
+                      :key="i"
+                      :field="field"
+                      v-model="data[field.techName]"
+                      :valdiationObj="$v"
+                    />
+                  </template>
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -157,7 +51,9 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
-                      <v-btn color="success" @click="onSaveClicked">
+                      <v-btn
+                        color="secondary"
+                        @click="onCreateRegistrationClicked">
                         <v-icon left dark>mdi-check</v-icon>
                         Anmeldung starten
                       </v-btn>
@@ -177,169 +73,198 @@
 </template>
 
 <script>
+// import axios from 'axios';
 import axios from 'axios';
+import BaseField from '@/components/common/BaseField.vue';
 import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
 import { required, requiredIf } from 'vuelidate/lib/validators';
 
 export default {
   mixins: [validationMixin],
-
+  components: {
+    BaseField,
+  },
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
       loading: false,
-      invitationCode: '',
-      scoutName: '',
-      event: null,
-      reg_id: null,
       showError: false,
-      items: {},
-      tooltip: {
-        scoutName:
-          'Name falsch? Ändern kannst du deinen Namen nur unter "Profil" (oben rechts)',
-        stammName:
-          'Stamm falsch? Ändern kannst du deinen Stamm nur unter "Profil" (oben rechts)',
-        invitationCode: 'Der Code steht in der offizellen Anmeldung.',
-        mobileNumber:
-          'Telefonnummer fehlt oder ist falsch? Hinzufügen kannst du deine Nummer nur unter "Profil" (oben rechts)',
+      personalData: {},
+      data: {
+        invitationCode: '',
+        name: '',
+        stamm: '',
+        mobileNumber: '',
       },
+      fields: [
+        {
+          name: 'Code aus der Einladung',
+          techName: 'invitationCode',
+          tooltip: 'Der Code steht in der offizellen Anmeldung.',
+          icon: 'mdi-lock',
+          fieldType: 'textfield',
+          default: '',
+          cols: 7,
+        },
+        {
+          name: 'Mein Name',
+          techName: 'name',
+          tooltip: 'Name falsch? Ändern kannst du deinen Namen nur unter "Profil" (oben rechts)',
+          icon: 'mdi-account-circle',
+          fieldType: 'textfield',
+          default: '',
+          disabled: true,
+          filled: true,
+        },
+        {
+          name: 'Mein Stamm',
+          techName: 'stamm',
+          tooltip: 'Stamm falsch? Ändern kannst du deinen Stamm nur unter "Profil" (oben rechts)',
+          icon: 'mdi-account-group',
+          fieldType: 'textfield',
+          default: '',
+          disabled: true,
+          filled: true,
+        },
+        {
+          name: 'Telefonnummer',
+          techName: 'mobileNumber',
+          tooltip: 'Telefonnummer fehlt oder ist falsch? Hinzufügen kannst du deine Nummer nur unter "Profil" (oben rechts)',
+          icon: 'mdi-phone',
+          mandatory: true,
+          fieldType: 'textfield',
+          default: '',
+        },
+      ],
     };
   },
   validations: {
-    invitationCode: {
-      required,
-    },
-    mobileNumber: {
-      required: requiredIf((main) => { // eslint-disable-line
-        // eslint-disable-next-line
-        return main.isMobilMandatory;
-      }),
+    data: {
+      invitationCode: {
+        required,
+      },
+      mobileNumber: {
+        required: requiredIf(() => true),
+      },
     },
   },
-  props: ['scoutOrganisation'],
   computed: {
+    ...mapGetters(['userinfo']),
     eventId() {
       return this.$route.params.id;
     },
-    isMobilMandatory() {
-      if (this.event) {
-        return false;
-        // return this.event.eventTags.filter((tag) => tag === 1).length;
-      }
-      return false;
-    },
+    // isMobilMandatory() {
+    //   if (this.event) {
+    //     return false;
+    //     // return this.event.eventTags.filter((tag) => tag === 1).length;
+    //   }
+    //   return false;
+    // },
     mobileNumber() {
-      return this.items.mobileNumber;
+      return this.personalData.mobileNumber;
     },
-    getItems() {
-      return this.items;
-    },
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
-    email() {
-      return this.getJwtData.email;
-    },
-    getStammName() {
-      const obj = this.hierarchyMapping.find(
-        (user) => user.id === this.items.scoutOrganisation,
-      );
-      if (obj && obj.name) {
-        return obj.name;
-      }
-      return 'Kein Stamm';
-    },
-    getCodeParam() {
-      if (this.invitationCode) {
-        return this.invitationCode;
-      }
-      return '';
-    },
-    invitationCodeErrors() {
-      const errors = [];
-      if (!this.$v.invitationCode.$dirty) return errors;
-      // eslint-disable-next-line
-      !this.$v.invitationCode.required &&
-        errors.push('Der Einladungscode wird benötigt');
-      return errors;
-    },
-    mobileNumberErrors() {
-      const errors = [];
-      if (!this.$v.mobileNumber.$dirty) return errors;
-      // eslint-disable-next-line
-      !this.$v.mobileNumber.required &&
-        errors.push('Telefonnummer ist für diese Fahrt verpflichtend. Wechsele ins Profil um die Telefonnummer hinzuzufügen');
-      return errors;
-    },
+    // getItems() {
+    //   return this.items;
+    // },
+
+    // email() {
+    //   return this.getJwtData.email;
+    // },
+    // getStammName() {
+    //   const obj = this.hierarchyMapping.find(
+    //     (user) => user.id === this.items.scoutOrganisation,
+    //   );
+    //   if (obj && obj.name) {
+    //     return obj.name;
+    //   }
+    //   return 'Kein Stamm';
+    // },
+    // getCodeParam() {
+    //   if (this.invitationCode) {
+    //     return this.invitationCode;
+    //   }
+    //   return '';
+    // },
+    // invitationCodeErrors() {
+    //   const errors = [];
+    //   if (!this.$v.invitationCode.$dirty) return errors;
+    //   // eslint-disable-next-line
+    //   !this.$v.invitationCode.required &&
+    //     errors.push('Der Einladungscode wird benötigt');
+    //   return errors;
+    // },
+    // mobileNumberErrors() {
+    //   const errors = [];
+    //   if (!this.$v.mobileNumber.$dirty) return errors;
+    //   // eslint-disable-next-line
+    //   !this.$v.mobileNumber.required &&
+    //     errors.push(
+    //       'Telefonnummer ist für diese Fahrt verpflichtend.
+    // Wechsele ins Profil um die Telefonnummer hinzuzufügen',
+    //     );
+    //   return errors;
+    // },
   },
   methods: {
-    tranferId(id) {
-      this.items.scoutOrganisation = id;
-    },
-    onPickStammClick() {
-      this.$refs.pickStamm.show(this.items.scoutOrganisation);
-    },
-    onSaveClicked() {
+    onCreateRegistrationClicked() {
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
       this.createRegestration();
     },
-    getData() {
-      this.isLoading = true;
+    setData() {
+      this.data.stamm = this.userinfo.stamm;
+      this.data.name = this.userinfo.name;
 
-      Promise.all([this.loadUserExtended(), this.getEventById(this.eventId)])
-        .then((values) => {
-          [this.items, this.event] = values;
+      this.loadUserData();
+    },
 
-          // this.$store.commit('setRoleMapping', values[2]);
-
-          this.isLoading = false;
+    loadUserData() {
+      this.loading = true;
+      const path = `${this.API_URL}/auth/personal-data/`;
+      axios.get(path)
+        .then((res) => {
+          this.data.mobileNumber = res.data.mobileNumber;
         })
-        .catch((error) => {
-          this.errormsg = error.response.data.message;
-          this.isLoading = false;
+        .catch(() => {
+          this.$root.globalSnackbar.show({
+            message: 'Es gab einen Fehler beim runterladen deiner Daten, bitte probiere es später noch einmal.',
+            color: 'error',
+          });
+        })
+        .finally(() => {
+          this.loading = false;
         });
-    },
-
-    async loadUserExtended() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
-    async getEventById(id) {
-      const path = `${process.env.VUE_APP_API}basic/event/${id}/`;
-      const response = await axios.get(path);
-
-      return response.data;
     },
 
     createRegestration() {
-      axios
-        .post(`${this.API_URL}basic/registration/?code=${this.getCodeParam}`, {
-          responsiblePersons: [this.getJwtData.email],
-          scoutOrganisation: this.items.scoutOrganisation,
-          event: this.eventId,
-        })
-        .then((response) => {
-          this.$router.push({
-            name: 'registrationCreate',
-            params: {
-              id: response.data.id,
-              event: response.data.event,
-              scoutOrganisation: this.items.scoutOrganisation,
-            },
-          });
-        })
-        .catch(() => {
-          this.showError = true;
-          console.log('Fehler');
-        });
+      // TODO: implement
+      // axios
+      //   .post(`${this.API_URL}basic/registration/?code=${this.getCodeParam}`, {
+      //     responsiblePersons: [this.getJwtData.email],
+      //     scoutOrganisation: this.items.scoutOrganisation,
+      //     event: this.eventId,
+      //   })
+      //   .then((response) => {
+      //     this.$router.push({
+      //       name: 'registrationCreate',
+      //       params: {
+      //         id: response.data.id,
+      //         event: response.data.event,
+      //         scoutOrganisation: this.items.scoutOrganisation,
+      //       },
+      //     });
+      //   })
+      //   .catch(() => {
+      //     this.showError = true;
+      //     console.log('Fehler');
+      //   });
     },
   },
   created() {
-    this.getData();
+    this.setData();
   },
 };
 </script>

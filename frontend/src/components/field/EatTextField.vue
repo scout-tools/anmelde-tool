@@ -12,7 +12,7 @@
     <template slot="append">
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-icon color="success" dark v-bind="attrs" v-on="on">
+          <v-icon color="info" dark v-bind="attrs" v-on="on">
             mdi-help-circle-outline
           </v-icon>
         </template>

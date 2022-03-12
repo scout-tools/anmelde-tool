@@ -1,8 +1,19 @@
-export const stepMixin = { // eslint-disable-line
+export default {
   methods: {
     validate() {
-      this.$v.$touch();
-      this.valid = !this.$v.$error;
+      try {
+        this.$v.$touch();
+        this.valid = !this.$v.$error;
+      } catch (err) {
+        this.valid = true;
+      }
+    },
+    submitStep() {
+      this.validate();
+      if (!this.valid) {
+        return;
+      }
+      this.$emit('submit');
     },
     prevStep() {
       this.$emit('prevStep');
@@ -14,16 +25,15 @@ export const stepMixin = { // eslint-disable-line
       }
       this.$emit('nextStep');
     },
-    submitStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-      this.$emit('submit');
+    onIngoredClicked() {
+      this.$emit('nextStep');
     },
-    errorMessage(field) {
+    errorMessage(field, valdiationObj) {
       const errors = [];
-      const valObj = this.$v.item[field];
+      if (!valdiationObj.data[field]) {
+        return errors;
+      }
+      const valObj = valdiationObj.data[field];
       if (!valObj.$dirty) return errors;
       if (valObj.required === false) {
         errors.push('Dieses Feld ist erforderlich.');
@@ -44,9 +54,29 @@ export const stepMixin = { // eslint-disable-line
       }
       if (valObj.between === false) {
         const { min, max } = valObj.$params.between;
-        errors.push(`Bitte gib einen Wert zwischen ${min}€ und ${max}€ ein. Falls du mehr als ${max} brauchst melde dich bei der Lagerleitung.`);
+        errors.push(
+          `Bitte gib einen Wert zwischen ${min}€ und ${max}€ ein. Falls du mehr als ${max} brauchst melde dich bei der Lagerleitung.`,
+        );
       }
       return errors;
+    },
+    updateData() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.$root.globalSnackbar.show({
+          message: 'Daten prüfen.',
+          color: 'error',
+        });
+      } else {
+        this.fields.forEach((field) => {
+          this.patchService(field.techName, this.data[field.techName], this.modulePath);
+        });
+      }
+    },
+  },
+  computed: {
+    id() {
+      return this.$route.params.id;
     },
   },
 };

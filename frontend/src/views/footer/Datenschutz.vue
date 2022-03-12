@@ -5,6 +5,7 @@
         Bei Fragen aller Art könnt ihr euch bei uns melden:
         <br />
         <img
+          alt="Email Adresse für Support Anfragen "
           class="mr-2"
           :src="require('@/assets/anmeldeToolMailAdresse.jpg')"
           height="50"

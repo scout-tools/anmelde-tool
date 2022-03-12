@@ -6,21 +6,21 @@
           <v-container class="pa-0" fluid>
             <v-row class="pa-0">
               <v-col cols="12" md="6">
-                <kpi-card :data="kpiCardOne" color="red lighten-1" />
+                <!-- <kpi-card :data="kpiCardOne" color="red lighten-1" /> -->
               </v-col>
               <v-col cols="12" md="6">
-                <kpi-card :data="kpiCardTwo" color="blue lighten-1" />
+                <!-- <kpi-card :data="kpiCardTwo" color="blue lighten-1" /> -->
               </v-col>
             </v-row>
             <v-row class="pa-0">
               <v-col cols="12" md="6">
-                <kpi-card-list :data="kpiCardThree" color="teal lighten-1" />
+                <!-- <kpi-card-list :data="kpiCardThree" color="teal lighten-1" /> -->
               </v-col>
               <v-col cols="12" md="6">
-                <kpi-card-list
+                <!-- <kpi-card-list
                   :data="kpiCardFour"
                   color="light-green lighten-1"
-                />
+                /> -->
               </v-col>
             </v-row>
           </v-container>
@@ -31,25 +31,33 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { serviceMixin } from '@/mixins/serviceMixin';
-import kpiCard from '@/components/kpi/Card.vue';
-import kpiCardList from '@/components/kpi/CardList.vue';
+// import kpiCard from '@/components/kpi/Card.vue';
+// import kpiCardList from '@/components/kpi/CardList.vue';
 
 export default {
   mixins: [serviceMixin],
   components: {
-    kpiCard,
-    kpiCardList,
+    // kpiCard,
+    // kpiCardList,
   },
   data: () => ({
     data: [],
   }),
   computed: {
+    ...mapGetters([
+      'myStamm',
+      'myBund',
+    ]),
     eventId() {
       return this.$route.params.id;
     },
     confirmedData() {
       return this.data.filter((item) => item.isConfirmed);
+    },
+    getBundData() {
+      return this.data.filter((item) => item.bundName === this.myBund);
     },
     kpiCardOne() {
       return {
@@ -59,24 +67,22 @@ export default {
           (accum, item) => accum + item.numberParticipant,
           0,
         ),
-        dataTwo: this.confirmedData.reduce(
-          (accum, item) => accum + item.numberHelper,
+        dataTwo: this.getBundData.reduce(
+          (accum, item) => accum + item.numberParticipant,
           0,
         ),
-        dataOneName: 'Teilnehmer',
-        dataTwoName: 'Helfer',
+        dataOneName: 'DPV',
+        dataTwoName: 'Eigener Bund',
       };
     },
     kpiCardTwo() {
       return {
         header: 'Anzahl Stämme',
         subheader: 'aus den Bünden',
-        dataOne: this.confirmedData.filter((item) => item.bundName === 'DPB-Mosaik')
-          .length,
-        dataTwo: this.confirmedData.filter((item) => item.bundName !== 'DPB-Mosaik')
-          .length,
-        dataOneName: 'DPB-Mosaik',
-        dataTwoName: 'Andere',
+        dataOne: this.confirmedData.length,
+        dataTwo: this.getBundData.length,
+        dataOneName: 'DPV',
+        dataTwoName: 'Eigener Bund',
       };
     },
     kpiCardThree() {

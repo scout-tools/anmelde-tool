@@ -1,7 +1,9 @@
 import datetime
-from django.utils.formats import date_format
+
 from basic.models import Registration, RegistrationMatching, EventLocation
 from basic.serializers import RegistrationSummarySerializer
+from django.utils.formats import date_format
+
 from .email import send_matching
 
 
@@ -46,19 +48,19 @@ def create_matching_mail(match: RegistrationMatching, registration: Registration
         if match.event_location is not None:
             sleeping_location += f"<li> Ihr werden das Spiel in {match.event_location.city} spielen"
 
-        if match.sleeping_location is not None:
+        if match.booking_option is not None:
             sleeping_location += " und dort voraussichtlich "
 
-            if match.sleeping_location.location_type is not None and 'Zelt' in match.sleeping_location.location_type.name:
-                sleeping_location += f"auf dem Lagerplatz {match.sleeping_location.name}"
-            elif match.sleeping_location.location_type is not None and 'Heim' in match.sleeping_location.location_type.name:
-                sleeping_location += f"im Heim {match.sleeping_location.name}"
+            if match.booking_option.location_type is not None and 'Zelt' in match.booking_option.location_type.name:
+                sleeping_location += f"auf dem Lagerplatz {match.booking_option.name}"
+            elif match.booking_option.location_type is not None and 'Heim' in match.booking_option.location_type.name:
+                sleeping_location += f"im Heim {match.booking_option.name}"
             else:
-                sleeping_location = f"im {match.sleeping_location.name}"
-            if match.sleeping_location.zip_code is not None:
-                sleeping_location += f", {match.sleeping_location.address}," \
-                                     f" {match.sleeping_location.zip_code.zip_code}," \
-                                     f" {match.sleeping_location.zip_code.city}"
+                sleeping_location = f"im {match.booking_option.name}"
+            if match.booking_option.zip_code is not None:
+                sleeping_location += f", {match.booking_option.address}," \
+                                     f" {match.booking_option.zip_code.zip_code}," \
+                                     f" {match.booking_option.zip_code.city}"
 
             sleeping_location += " schlafen.</li>"
         else:

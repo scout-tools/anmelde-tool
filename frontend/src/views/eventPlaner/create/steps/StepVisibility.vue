@@ -1,0 +1,69 @@
+<template>
+  <v-form ref="StepVisibility" v-model="valid">
+    <v-container>
+      <v-row class="mb-6">
+        <span class="subtitle-1">
+          Ist die Veranstaltung schon öffentlich?
+          Wenn Nein, wird sie in der Liste nicht angezeigt,
+          kann aber natürlich jederzeit bearbeitet werden.
+        </span>
+      </v-row>
+      <v-row align="center" justify="center">
+        <v-col cols="3">
+          <v-switch label="Sichtbar" v-model="isPublic"></v-switch>
+        </v-col>
+      </v-row>
+
+      <v-divider class="my-3"/>
+
+      <prev-next-button
+        :position="position"
+        :max-pos="maxPos"
+        :valid="valid"
+        @nextStep="nextStep"
+        @prevStep="prevStep"
+        @submitStep="submitStep"
+        @ignore="onIngoredClicked"
+        @update="updateData"
+      />
+    </v-container>
+  </v-form>
+</template>
+
+<script>
+import { mapGetters } from 'vuex';
+import stepMixin from '@/mixins/stepMixin';
+import store from '@/store';
+import PrevNextButton from '@/components/button/PrevNextButton.vue';
+
+export default {
+  name: 'StepVisibility',
+  header: 'Sichtbarkeit',
+  props: ['position', 'maxPos'],
+  components: {
+    PrevNextButton,
+  },
+  mixins: [stepMixin],
+  data: () => ({
+    API_URL: process.env.VUE_APP_API,
+    valid: true,
+    isPublic: false,
+  }),
+  computed: {
+    ...mapGetters({
+      event: 'createEvent/event',
+    }),
+  },
+  methods: {
+    updateData() {
+      store.commit('createEvent/setEventAttribute', {
+        prop: 'isPublic',
+        value: this.isPublic,
+      });
+    },
+  },
+  mounted() {
+    this.isPublic = this.event.isPublic;
+  },
+};
+</script>

@@ -1,47 +1,45 @@
 <template>
   <v-app-bar app color="primary" dark absolute>
-    <v-tabs background-color="primary" centered dark icons-and-text>
+    <v-tabs
+      background-color="primary"
+      v-model="tab"
+      centered
+      dark
+      icons-and-text
+    >
       <v-tab>
         <router-link to="/">
           <img
             :src="logoPath"
             height="55"
             alt="Logo"
-            class="logo-img mx-2"
+            class="logo-img mx-2 mt-2"
           />
         </router-link>
       </v-tab>
 
       <v-spacer></v-spacer>
-      <v-tab
-        v-if="isAuthenticated"
-        @click="$router.push({ name: 'eventOverview' })"
-      >
-        Fahrten
+      <v-tab :to="{ name: 'eventOverview' }" v-if="isAuth">
+        Meine Anmeldungen
         <v-icon>mdi-view-list</v-icon>
       </v-tab>
-      <v-tab
-        v-if="isAuthenticated"
-        @click="$router.push({ name: 'eventAdminOverview' })"
-      >
+      <v-tab :to="{ name: 'eventPlaner' }" v-if="isAuth">
         Meine Fahrten
-        <v-icon>mdi-view-list</v-icon>
+        <v-icon>mdi-account-key</v-icon>
       </v-tab>
-      <v-tab
-        v-if="isAuthenticated"
-        @click="$router.push({ name: 'masterDataOverview' })"
-      >
-        Daten
-        <v-icon>mdi-view-list</v-icon>
+      <v-tab :to="{ name: 'dataOverview' }" v-if="isAuth">
+        Auswertungen
+        <v-icon>mdi-chart-bar</v-icon>
       </v-tab>
       <v-spacer></v-spacer>
-      <v-tab
-        v-if="isAuthenticated"
-        @click="$router.push({ name: 'settingsUser' })"
-      >
-        Profil
+      <v-tab :to="{ name: 'settingsOverview' }" v-if="isAuth">
+        Mein Profil
         <v-icon>mdi-account-circle</v-icon>
-
+      </v-tab>
+      <v-tab v-if="!isAuth">
+        <v-btn color="success" elevation="2" @click="onLoginClicked">
+          Login
+        </v-btn>
       </v-tab>
     </v-tabs>
   </v-app-bar>
@@ -49,39 +47,26 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import authMixin from '@/mixins/authMixin';
 
 export default {
   name: 'TopMenu',
-
-  data: () => ({}),
+  mixins: [authMixin],
+  data: () => ({
+    tab: null,
+  }),
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData']),
-    userName() {
-      return this.getJwtData.email;
-    },
+    ...mapGetters(['theme', 'userinfo', 'getUserName']),
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
-        return require('../assets/dpvgold/dpv-gold-logo-test-simple.png'); // eslint-disable-line
+        return require(`@/assets/${this.theme}/logo-dev.png`); // eslint-disable-line
       }
-      return require('../assets/dpvgold/dpv-gold-logo-white_simple.png'); // eslint-disable-line
-    },
-    isSimpleUser() {
-      if (this.getJwtData) {
-        return !(this.getJwtData.groups.length || this.getJwtData.isStaff);
-      }
-      return true;
-    },
-    logoutText() {
-      if (this.$vuetify.breakpoint.mobile) {
-        return '';
-      }
-      return 'Logout';
+      return require(`@/assets/${this.theme}/logo.png`); // eslint-disable-line
     },
   },
   methods: {
-    onLogoutClicked() {
-      this.$store.commit('clearTokens');
-      this.$router.push({ name: 'landing' });
+    onLoginClicked() {
+      this.$keycloak.login();
     },
   },
 };
