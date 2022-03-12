@@ -4,17 +4,18 @@ phases:
   install:
     commands:
       - npm i npm@latest -g
+      - npm install -g yarn
       - pip install --upgrade pip
       - pip install --upgrade awscli
   pre_build:
     commands:
       - echo Pre_build Phase
       - cd frontend/
-      - npm install
+      - yarn install
   build:
     commands:
       - echo Build Phase
-      - npm run build
+      - yarn run build
   post_build:
     commands:
       - echo PostBuild Phase
