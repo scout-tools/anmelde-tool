@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import SettingsUser from '@/views/settings/user/Main.vue';
-import CheckTokenMain from '@/views/login/CheckToken.vue';
 import EventOverview from '@/views/event/overview/Overview.vue';
 
 import MasterDataOverview from '@/views/event/data/Overview.vue';
@@ -38,10 +37,6 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
-  }, {
-    path: '/check-token',
-    name: 'checkToken',
-    component: CheckTokenMain,
   },
   {
     path: '/event/overview',

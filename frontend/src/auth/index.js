@@ -7,13 +7,17 @@ export default {
   },
 
   interceptorsSetup() {
-    axios.interceptors.request.use((config) => {
-      if (Vue.prototype.$keycloak.authenticated) {
-        // eslint-disable-next-line no-param-reassign
-        config.headers.Authorization = `Bearer ${Vue.prototype.$keycloak.token}`;
-      }
-      return config;
-    }, (err) => Promise.reject(err));
+    axios.interceptors.request.use(
+      async (config) => {
+        const token = await this.getToken();
+        if (Vue.prototype.$keycloak.authenticated) {
+          // eslint-disable-next-line no-param-reassign
+          config.headers.Authorization = token;
+        }
+        return config;
+      },
+      (err) => Promise.reject(err),
+    );
 
     // axios.interceptors.response.use((response) => {
     //   store.commit('apiIsDown', false);
@@ -32,5 +36,16 @@ export default {
     //   }
     //   return Promise.reject(error);
     // });
+  },
+  getToken() {
+    return new Promise((resolve) => {
+      if (Vue.prototype.$keycloak.authenticated) {
+        resolve(`Bearer ${Vue.prototype.$keycloak.token}`);
+      } else {
+        setTimeout(() => {
+          resolve(`Bearer ${Vue.prototype.$keycloak.token}`);
+        }, 500);
+      }
+    });
   },
 };

@@ -27,23 +27,23 @@
                       verändern.
                     </p>
                   </div>
-                  <v-subheader class="ma-0">
+                  <!-- <v-subheader class="ma-0">
                     <v-icon class="ma-2" color="error"
                       >mdi-alert-circle
                     </v-icon>
                     Für diese Fahrt ist die Handynummer Pflicht. Falls du sie
                     nicht eintragen hast, kannst du sie nur unter den Profil
                     Einstellungen ändern.
-                  </v-subheader>
+                  </v-subheader> -->
                   <v-row>
-                  <template v-for="(field, i) in fields">
-                    <BaseField
-                      :key="i"
-                      :field="field"
-                      v-model="data[field.techName]"
-                      :valdiationObj="$v"
-                    />
-                  </template>
+                    <template v-for="(field, i) in fields">
+                      <BaseField
+                        :key="i"
+                        :field="field"
+                        v-model="data[field.techName]"
+                        :valdiationObj="$v"
+                      />
+                    </template>
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -53,7 +53,8 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-btn
                         color="secondary"
-                        @click="onCreateRegistrationClicked">
+                        @click="onCreateRegistrationClicked"
+                      >
                         <v-icon left dark>mdi-check</v-icon>
                         Anmeldung starten
                       </v-btn>
@@ -66,19 +67,18 @@
         </v-flex>
       </v-row>
       <v-snackbar v-model="showError" color="error" y="top">
-        {{ 'Der Code ist falsch' }}
+        {{ errorMessage }}
       </v-snackbar>
     </v-container>
   </v-form>
 </template>
 
 <script>
-// import axios from 'axios';
 import axios from 'axios';
 import BaseField from '@/components/common/BaseField.vue';
 import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
-import { required, requiredIf } from 'vuelidate/lib/validators';
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   mixins: [validationMixin],
@@ -90,12 +90,14 @@ export default {
       API_URL: process.env.VUE_APP_API,
       loading: false,
       showError: false,
+      errorMessage: 'Fehler',
       personalData: {},
       data: {
         invitationCode: '',
         name: '',
         stamm: '',
         mobileNumber: '',
+        single: false,
       },
       fields: [
         {
@@ -110,7 +112,8 @@ export default {
         {
           name: 'Mein Name',
           techName: 'name',
-          tooltip: 'Name falsch? Ändern kannst du deinen Namen nur unter "Profil" (oben rechts)',
+          tooltip:
+            'Name falsch? Ändern kannst du deinen Namen nur unter "Profil" (oben rechts)',
           icon: 'mdi-account-circle',
           fieldType: 'textfield',
           default: '',
@@ -120,7 +123,8 @@ export default {
         {
           name: 'Mein Stamm',
           techName: 'stamm',
-          tooltip: 'Stamm falsch? Ändern kannst du deinen Stamm nur unter "Profil" (oben rechts)',
+          tooltip:
+            'Stamm falsch? Ändern kannst du deinen Stamm nur unter "Profil" (oben rechts)',
           icon: 'mdi-account-group',
           fieldType: 'textfield',
           default: '',
@@ -128,13 +132,21 @@ export default {
           filled: true,
         },
         {
-          name: 'Telefonnummer',
-          techName: 'mobileNumber',
-          tooltip: 'Telefonnummer fehlt oder ist falsch? Hinzufügen kannst du deine Nummer nur unter "Profil" (oben rechts)',
-          icon: 'mdi-phone',
-          mandatory: true,
-          fieldType: 'textfield',
-          default: '',
+          name: 'Einzel/Gruppen Anmeldung',
+          techName: 'single',
+          tooltip: 'Meldest du dich oder deinen Stamm an?',
+          icon: 'mdi-account-group',
+          fieldType: 'radio',
+          referenceTable: [
+            {
+              name: 'Stammesanmeldung',
+              value: false,
+            },
+            {
+              name: 'Einzelanmeldung',
+              value: true,
+            },
+          ],
         },
       ],
     };
@@ -144,9 +156,12 @@ export default {
       invitationCode: {
         required,
       },
-      mobileNumber: {
-        required: requiredIf(() => true),
+      single: {
+        required,
       },
+      // mobileNumber: {
+      //   required: requiredIf(() => true),
+      // },
     },
   },
   computed: {
@@ -180,31 +195,6 @@ export default {
     //   }
     //   return 'Kein Stamm';
     // },
-    // getCodeParam() {
-    //   if (this.invitationCode) {
-    //     return this.invitationCode;
-    //   }
-    //   return '';
-    // },
-    // invitationCodeErrors() {
-    //   const errors = [];
-    //   if (!this.$v.invitationCode.$dirty) return errors;
-    //   // eslint-disable-next-line
-    //   !this.$v.invitationCode.required &&
-    //     errors.push('Der Einladungscode wird benötigt');
-    //   return errors;
-    // },
-    // mobileNumberErrors() {
-    //   const errors = [];
-    //   if (!this.$v.mobileNumber.$dirty) return errors;
-    //   // eslint-disable-next-line
-    //   !this.$v.mobileNumber.required &&
-    //     errors.push(
-    //       'Telefonnummer ist für diese Fahrt verpflichtend.
-    // Wechsele ins Profil um die Telefonnummer hinzuzufügen',
-    //     );
-    //   return errors;
-    // },
   },
   methods: {
     onCreateRegistrationClicked() {
@@ -224,13 +214,15 @@ export default {
     loadUserData() {
       this.loading = true;
       const path = `${this.API_URL}/auth/personal-data/`;
-      axios.get(path)
+      axios
+        .get(path)
         .then((res) => {
           this.data.mobileNumber = res.data.mobileNumber;
         })
         .catch(() => {
           this.$root.globalSnackbar.show({
-            message: 'Es gab einen Fehler beim runterladen deiner Daten, bitte probiere es später noch einmal.',
+            message:
+              'Es gab einen Fehler beim runterladen deiner Daten, bitte probiere es später noch einmal.',
             color: 'error',
           });
         })
@@ -240,27 +232,26 @@ export default {
     },
 
     createRegestration() {
-      // TODO: implement
-      // axios
-      //   .post(`${this.API_URL}basic/registration/?code=${this.getCodeParam}`, {
-      //     responsiblePersons: [this.getJwtData.email],
-      //     scoutOrganisation: this.items.scoutOrganisation,
-      //     event: this.eventId,
-      //   })
-      //   .then((response) => {
-      //     this.$router.push({
-      //       name: 'registrationCreate',
-      //       params: {
-      //         id: response.data.id,
-      //         event: response.data.event,
-      //         scoutOrganisation: this.items.scoutOrganisation,
-      //       },
-      //     });
-      //   })
-      //   .catch(() => {
-      //     this.showError = true;
-      //     console.log('Fehler');
-      //   });
+      axios
+        .post(`${this.API_URL}/event/registration/`, {
+          eventCode: this.data.invitationCode,
+          event: this.eventId,
+          single: this.data.single,
+        })
+        .then((response) => {
+          console.log(response.data.id);
+          this.$router.push({
+            name: 'registrationEdit',
+            params: {
+              id: response.data.id,
+            },
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.showError = true;
+          this.errorMessage = error.response.data.detail;
+        });
     },
   },
   created() {

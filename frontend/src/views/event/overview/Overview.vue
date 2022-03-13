@@ -37,11 +37,11 @@
                     </v-list-item-subtitle>
 
                     <v-list-item-subtitle>
-                      {{ getDeadline(item) }}
+                      {{ getAnmeldephase(item) }}
                     </v-list-item-subtitle>
                   </v-list-item-content>
 
-                  <v-list-item-action>
+                  <v-list-item-action v-show="item.canRegister && !getRegisteredId(item)">
                     <router-link
                       :to="{
                         name: 'registrationNew',
@@ -65,17 +65,11 @@
                   </v-list-item-action>
 
                   <v-list-item-action
-                    v-show="
-                      isInTimeRange(
-                        item.registrationStart,
-                        item.registrationDeadline,
-                      ) && !isNotAlreadyRegistered(item)
-                    "
+                    v-show="item.canEdit && getRegisteredId(item)"
                     class="ml-4"
                   >
                     <v-btn
                       icon
-                      v-if="item.isRegistered"
                       @click="editRegistration(getRegisteredId(item))"
                     >
                       <v-icon fab color="blue"> mdi-pencil </v-icon>
@@ -105,13 +99,14 @@
         </v-layout>
       </v-flex>
     </v-row>
-    <!--    <confirm-registration-edit-modal ref="confirmRegistrationEditModal"/>-->
+    <confirm-registration-edit-modal ref="confirmRegistrationEditModal"/>
   </v-container>
 </template>
 
 <script>
 import moment from 'moment';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import ConfirmRegistrationEditModal from '@/views/registration/components/PreForm.vue';
 
 export default {
   name: 'Main',
@@ -121,10 +116,10 @@ export default {
     items: [],
     isLoading: true,
   }),
+  components: {
+    ConfirmRegistrationEditModal,
+  },
   methods: {
-    isNotAlreadyRegistered(item) {
-      return !item.isRegistered.length;
-    },
     getLagerText(item) {
       const startDate = new Date(item.startDate);
       const endDate = new Date(item.endDate);
@@ -133,26 +128,39 @@ export default {
       ${moment(endDate, 'll', 'de')
     .format('ll')}`;
     },
-    getDeadline(item) {
+    getAnmeldephase(item) {
       const registrationDeadline = new Date(item.registrationDeadline);
-      return `Anmeldeschluss: ${moment(registrationDeadline, 'll', 'de')
+      const formatedRegistrationDeadline = moment(registrationDeadline, 'll', 'de').format('ll');
+
+      const registrationStart = new Date(item.registrationStart);
+      const formatedRegistrationStart = moment(registrationStart, 'll', 'de').format('ll');
+      return `Anmeldephase ${formatedRegistrationStart} - ${formatedRegistrationDeadline}`;
+    },
+    getStartDate(item) {
+      const registrationStart = new Date(item.registrationStart);
+      return `Anmelde-Start: ${moment(registrationStart, 'll', 'de')
         .format('ll')}`;
     },
     getHeaderText(item) {
-      // if (item && item.isRegistered.length) {
-      //   return `${item.name} (Dein Stamm ist bereits Angemeldet)`;
-      // }
+      if (item && item.registration.groupId) {
+        return `${item.name} (Dein Stamm ist bereits Angemeldet)`;
+      }
+      if (item && item.registration.singleId) {
+        return `${item.name} (Du bist bereits Angemeldet)`;
+      }
       return item.name;
     },
     getRegisteredId(item) {
-      console.log(item);
-      return 0;
-    },
-    isInTimeRange(date1, date2) {
-      const startDate = new Date(date1).getTime();
-      const endDate = new Date(date2).getTime();
-      const today = new Date().getTime();
-      return today > startDate && today < endDate;
+      if (!item.registration) {
+        return null;
+      }
+      if (item.registration.groupId) {
+        return item.registration.groupId;
+      }
+      if (item.registration.singleId) {
+        return item.registration.singleId;
+      }
+      return null;
     },
     editRegistration(item) {
       this.$refs.confirmRegistrationEditModal.show(item);

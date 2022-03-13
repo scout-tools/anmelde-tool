@@ -1,6 +1,9 @@
 import axios from 'axios';
 
 export default {
+  data: () => ({
+    API_URL: process.env.VUE_APP_API,
+  }),
   methods: {
     async getEvent(eventId) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/`;
@@ -62,6 +65,10 @@ export default {
     async deleteEventModule(mapperId) {
       const url = `${this.API_URL}/event/event-module-mapper/${mapperId}/`;
       return axios.delete(url);
+    },
+    async getModule(mapperId) {
+      const url = `${this.API_URL}/event/event-module-mapper/${mapperId}/attribute-mapper/`;
+      return axios.get(url);
     },
   },
 };

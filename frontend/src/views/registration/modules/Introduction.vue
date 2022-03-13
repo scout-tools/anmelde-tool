@@ -90,8 +90,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import moment from 'moment';
-import axios from 'axios';
 
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 import { required } from 'vuelidate/lib/validators';
 import PrevNextButtons from '@/components/button/PrevNextButton.vue';
 
@@ -103,11 +103,12 @@ export default {
     'maxPos',
     'currentEvent',
     'currentRegistration',
-    'scoutOrganisation',
+    'moduleId',
   ],
   components: {
     PrevNextButtons,
   },
+  mixins: [apiCallsMixin],
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
@@ -142,7 +143,6 @@ export default {
     ...mapGetters([
       'isAuthenticated',
       'hierarchyMapping',
-      'getJwtData',
       'myStamm',
       'myBund',
       'myScoutname',
@@ -182,13 +182,10 @@ export default {
         .lang('de')
         .format('ll');
     },
-    myEmail() {
-      return this.getJwtData.email;
-    },
     isBundesfahrt() {
-      if (this.currentEvent) {
-        return this.currentEvent.eventTags.filter((tag) => tag === 1).length;
-      }
+      // if (this.currentEvent) {
+      //   return this.currentEvent.eventTags.filter((tag) => tag === 1).length;
+      // }
       return false;
     },
   },
@@ -216,7 +213,7 @@ export default {
     loadData() {
       this.isLoading = true;
 
-      Promise.all([this.loadUserExtended()])
+      Promise.all([this.getModule(this.moduleId)])
         .then((values) => {
           this.setMyStamm(values[0]);
           this.isLoading = false;
@@ -247,12 +244,6 @@ export default {
         this.$store.commit('setMyStamm', myStamm);
         this.$store.commit('setMyScoutname', data.scoutName);
       }
-    },
-    async loadUserExtended() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
-      const response = await axios.get(path);
-
-      return response.data;
     },
   },
 };
