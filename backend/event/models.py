@@ -78,11 +78,12 @@ class AttributeEventModuleMapper(models.Model):
     """
     id = models.AutoField(primary_key=True)
     attribute = models.ForeignKey(AbstractAttribute, on_delete=models.PROTECT, null=True)
-    description = models.CharField(max_length=1000, null=True)
+    title = models.CharField(max_length=1000, null=True)
+    text = models.CharField(max_length=10000, null=True)
     is_required = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.description}'
+        return f'{self.title}'
 
 
 class Event(TimeStampMixin):

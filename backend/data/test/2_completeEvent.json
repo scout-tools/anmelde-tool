@@ -166,7 +166,8 @@
     "pk": 1,
     "fields": {
       "attribute": 14,
-      "description": "Veranstaltungsbedingungen",
+      "title": "Veranstaltungsbedingungen",
+      "text": "Ich stimme den Bedingungen zu und möchte mit der Anmeldung beginnen",
       "is_required": true
     }
   },
@@ -175,7 +176,8 @@
     "pk": 2,
     "fields": {
       "attribute": 15,
-      "description": "Datenschutzhinweis",
+      "title": "Datenschutzhinweis",
+      "text": "Hiermit bestätige ich, dass alle Teilnehmer_innen, die ich auf diesem Wege zum DPV-Gold anmelde die Datenschutzhinweise zur Kenntnis genommen und diesen zugestimmt haben.",
       "is_required": true
     }
   },
@@ -184,7 +186,8 @@
     "pk": 3,
     "fields": {
       "attribute": 16,
-      "description": "Corona Hinweis",
+      "title": "Corona Hinweis",
+      "text": "Ich trage Sorge, dass alle von mir angemeldeten Teilnehmer über die Corona Regel informiert sind und ich achte auf die Einhaltung",
       "is_required": true
     }
   },
@@ -193,7 +196,8 @@
     "pk": 4,
     "fields": {
       "attribute": 17,
-      "description": "Anzahl Kothen",
+      "title": "Anzahl Kothen",
+      "text": "Wie viele Kothen bringt ihr mit?",
       "is_required": false
     }
   },
@@ -202,7 +206,8 @@
     "pk": 5,
     "fields": {
       "attribute": 18,
-      "description": "Anzahl Kothenstangen",
+      "title": "Anzahl Kothenstangen",
+      "text": "Wie viele Stangen für Kothen benötigt ihr?",
       "is_required": false
     }
   },
@@ -211,7 +216,8 @@
     "pk": 6,
     "fields": {
       "attribute": 19,
-      "description": "Anzahl Jurten",
+      "title": "Anzahl Jurten",
+      "text": "Wie viele Jurten bringt ihr mit?",
       "is_required": false
     }
   },
@@ -220,7 +226,8 @@
     "pk": 7,
     "fields": {
       "attribute": 20,
-      "description": "Anzahl Jurtenstangen",
+      "title": "Anzahl Jurtenstangen",
+      "text": null,
       "is_required": false
     }
   },
@@ -229,7 +236,8 @@
     "pk": 8,
     "fields": {
       "attribute": 21,
-      "description": "Anreise",
+      "title": "Anreise",
+      "text": "Wann und womit werden ihr anreisen?",
       "is_required": false
     }
   },
@@ -238,7 +246,8 @@
     "pk": 9,
     "fields": {
       "attribute": 22,
-      "description": "Abreise",
+      "title": "Abreise",
+      "text": "Wann und womit werdet ihr abreisen?",
       "is_required": false
     }
   },
@@ -247,7 +256,18 @@
     "pk": 10,
     "fields": {
       "attribute": 23,
-      "description": "Nachricht an die Lagerleitung",
+      "title": "Nachricht an die Lagerleitung",
+      "text": "Hier ist Platz für eine Nachricht an die Lagerleitung .",
+      "is_required": false
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 11,
+    "fields": {
+      "attribute": 26,
+      "title": "Bestätigung",
+      "text": "Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zur Fahrt an.",
       "is_required": false
     }
   },
@@ -287,7 +307,7 @@
     "pk": 2,
     "fields": {
       "created_at": "2022-03-10T11:46:18.946Z",
-      "updated_at": "2022-03-10T15:24:35.669Z",
+      "updated_at": "2022-03-14T18:11:19.775Z",
       "name": "DPV goLd",
       "technical_name": "dpv-gold",
       "short_description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
@@ -296,8 +316,8 @@
       "location": 1,
       "start_date": "2022-09-16T14:00:00Z",
       "end_date": "2022-09-18T09:00:00Z",
-      "registration_deadline": "2022-06-01T19:59:59Z",
-      "registration_start": "2022-07-31T20:00:01Z",
+      "registration_deadline": "2022-07-31T19:59:59Z",
+      "registration_start": "2022-02-28T23:00:01Z",
       "last_possible_update": "2022-09-01T19:59:59Z",
       "invitation_code": "DPVGOLD",
       "is_public": true,
@@ -322,7 +342,7 @@
     "pk": 3,
     "fields": {
       "created_at": "2022-03-10T12:48:32.515Z",
-      "updated_at": "2022-03-10T15:24:54.058Z",
+      "updated_at": "2022-03-14T18:11:50.240Z",
       "name": "VIA23 DPV Verbandslager",
       "technical_name": "via23",
       "short_description": "",
@@ -332,7 +352,7 @@
       "start_date": "2023-05-26T14:00:00Z",
       "end_date": "2023-05-30T09:00:00Z",
       "registration_deadline": "2023-02-01T21:59:59Z",
-      "registration_start": "2022-07-31T20:00:01Z",
+      "registration_start": "2022-09-30T22:00:01Z",
       "last_possible_update": "2023-04-01T19:59:59Z",
       "invitation_code": "AAAA",
       "is_public": true,
@@ -420,7 +440,9 @@
       "required": true,
       "overwrite_description": null,
       "standard": true,
-      "attributes": []
+      "attributes": [
+        11
+      ]
     }
   },
   {
@@ -578,7 +600,9 @@
       "required": true,
       "overwrite_description": null,
       "standard": false,
-      "attributes": []
+      "attributes": [
+        11
+      ]
     }
   },
   {

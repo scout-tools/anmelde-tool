@@ -31,7 +31,7 @@
       <v-row v-for="checkbox in moduleData" :key="checkbox.id">
         <v-checkbox
           v-model="data.checkboxes[checkbox.id]"
-          :label="checkbox.attribute ? checkbox.attribute.description : ''"
+          :label="checkbox.text ? checkbox.text : ''"
           :error-messages="errorMessage('checkboxes', $v)"
         >
         </v-checkbox>

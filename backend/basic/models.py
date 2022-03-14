@@ -67,7 +67,6 @@ class AbstractAttribute(PolymorphicModel):
     type = models.ForeignKey(TagType, null=True, blank=False, on_delete=models.PROTECT)
     is_custom = models.BooleanField(default=False)
     is_visible = models.BooleanField(default=True)
-    description = models.CharField(max_length=1000, blank=True)
 
     def __str__(self):
         return f'{self.type}: {self.name}'
