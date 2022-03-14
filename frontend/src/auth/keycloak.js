@@ -7,13 +7,13 @@ const keycl = {
     axios.get(path)
       .then((res) => {
         if (res.status === 426) {
-          router.push({ name: 'settingsUser' });
+          router.push({ name: 'settingsOverview' });
         }
       })
       .catch((err) => {
         console.log(err);
         if (err.response.status === 426) {
-          router.push({ name: 'settingsUser' });
+          router.push({ name: 'settingsOverview' });
         }
       });
   },

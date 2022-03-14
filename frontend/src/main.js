@@ -77,9 +77,13 @@ Vue.use(VueKeycloakJs, {
 
         keycl.checkPersonalData();
         keycl.setRefreshInterval(keycloak);
+        if (router.history.current.name === 'landing') {
+          router.push({ name: 'eventOverview' });
+        }
       })
       .catch((err) => {
         console.log(err);
+        router.push({ name: 'landing' });
       });
   },
 });

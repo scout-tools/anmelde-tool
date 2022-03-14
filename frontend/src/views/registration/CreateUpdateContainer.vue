@@ -3,13 +3,13 @@
     <v-card v-if="!isLoading" class="mx-auto top-margin default-max-width">
       <v-row justify="center">
         <v-stepper v-model="currentStep" vertical>
-          <template v-for="(step, index) in steps">
+          <template v-for="(step, index) in currentModules">
             <v-stepper-step
               :key="`stepper-${index}`"
               :complete="currentStep > index + 1"
               :step="index + 1"
             >
-              {{ `${step.displayName}` }}
+              {{ `${step.module.header}` }}
             </v-stepper-step>
 
             <v-divider :key="index"></v-divider>
@@ -17,12 +17,11 @@
             <v-stepper-items :key="`stepper-items-${index}`">
               <v-stepper-content :step="index + 1">
                 <component
-                  :is="step"
-                  :ref="step.name"
+                  :is="step.module.name"
+                  :ref="step.module.name"
                   :position="index + 1"
-                  :max-pos="steps.length"
+                  :max-pos="currentModules.length"
                   :currentRegistration="currentRegistration"
-                  :scoutOrganisation="scoutOrganisation"
                   :currentEvent="currentEvent"
                   @prevStep="prevStep()"
                   @nextStep="nextStep()"
@@ -55,25 +54,38 @@
 import axios from 'axios';
 
 import LoadingCircual from '@/components/loading/Circual.vue';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 import Confirm from './modules/Confirm.vue';
-import Consent from './modules/Consent.vue';
+import Food from './modules/Food.vue';
+import Introduction from './modules/Introduction.vue';
+import Letter from './modules/Letter.vue';
+import ParticipantsPersonal from './modules/ParticipantsPersonal.vue';
+import Summary from './modules/Summary.vue';
+import Tent from './modules/Tent.vue';
 
 export default {
   components: {
     LoadingCircual,
     Confirm,
-    Consent,
+    Food,
+    Introduction,
+    Letter,
+    ParticipantsPersonal,
+    Summary,
+    Tent,
   },
   props: ['scoutOrganisation'],
+  mixins: [apiCallsMixin],
   data() {
     return {
       currentStep: 1,
       showError: false,
       showSuccess: false,
       timeout: 7000,
-      currentEvent: [],
-      currentRegistration: [],
+      currentEvent: {},
+      currentRegistration: {},
+      currentModules: [],
       isLoading: true,
       data: {
         event: {
@@ -86,9 +98,6 @@ export default {
     id() {
       return this.$route.params.id;
     },
-    steps() {
-      return [Consent, Confirm];
-    },
   },
   methods: {
     nextStep() {
@@ -100,7 +109,7 @@ export default {
       this.callOnBeforeTab(this.currentStep - 1);
     },
     callOnBeforeTab(step) {
-      const nextStepName = this.steps[step].name;
+      const nextStepName = this.currentModules[step].module.name;
       if (
         this.$refs[nextStepName]
         && this.$refs[nextStepName].length
@@ -129,46 +138,42 @@ export default {
         },
       );
     },
-    getEvent(id) {
+    getData() {
+      const registrationId = this.$route.params.id;
       this.isLoading = true;
-      Promise.all([this.getEventData(id)])
-        .then((values) => {
-          [this.currentEvent] = values;
+      this.getRegistration(registrationId).then((response) => {
+        this.currentRegistration = response;
+        const eventId = this.currentRegistration.event;
+        Promise.all([
+          this.getEvent(eventId),
+          this.getAssignedEventModules(eventId),
+        ])
+          .then((values) => {
+            [this.currentEvent] = values;
+            this.currentModules = values[1].data // eslint-disable-line
 
-          this.isLoading = false;
-        })
-        .catch((error) => {
-          this.errormsg = error.response.data.message;
-          this.isLoading = false;
-        });
+            this.isLoading = false;
+          })
+          .catch((error) => {
+            this.errormsg = error.response.data.message;
+            this.isLoading = false;
+          });
+      });
     },
 
-    async getEventData(id) {
-      const path = `${process.env.VUE_APP_API}basic/event/${parseInt(id, 10)}/`;
+    async getEvent(id) {
+      const path = `${process.env.VUE_APP_API}/event/event/${parseInt(id, 10)}/`;
       const response = await axios.get(path);
-
       return response.data;
     },
 
-    getRegistration() {
-      const path = `${process.env.VUE_APP_API}basic/registration/${this.$route.params.id}/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.currentRegistration = res.data;
-          this.getEvent(res.data.event);
-          this.unConfirmRegistration();
-        })
-        .catch(() => {
-          this.showError = true;
-        });
+    async getRegistration(id) {
+      const path = `${process.env.VUE_APP_API}/event/registration/${id}/`;
+      const response = await axios.get(path);
+      return response.data;
     },
     loadData() {
-      if (!this.$route.params.event) {
-        this.getRegistration();
-      } else {
-        this.getEvent(this.$route.params.event);
-      }
+      this.getData();
     },
   },
   created() {

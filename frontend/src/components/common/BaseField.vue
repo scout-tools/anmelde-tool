@@ -53,6 +53,30 @@
       @change="onInputChanged"
     >
     </v-switch>
+    <v-container v-if="field.fieldType === 'radio'">
+      <v-row class="mb-1">
+        <v-icon class="mr-2"> {{ field.icon }} </v-icon>
+        {{ field.name }}
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="info" class="mx-2" dark v-bind="attrs" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          <span> {{ field.tooltip }}</span>
+        </v-tooltip>
+      </v-row>
+      <v-row>
+    <v-radio-group :value="value" @change="onRadioInputChanged">
+      <v-radio
+        v-for="choise in field.referenceTable"
+        :key="choise.value"
+        :label="choise.name"
+        :value="choise.value"
+      ></v-radio>
+    </v-radio-group>
+      </v-row>
+    </v-container>
     <v-container v-if="field.fieldType === 'html'">
       <v-row class="mb-1">
         <v-icon class="mr-2"> {{ field.icon }} </v-icon>
@@ -238,7 +262,6 @@ export default {
       this.getLookup(this.field.lookupPath);
     },
     onInputChanged(value) {
-      console.log(value);
       this.$emit('input', value);
     },
     onDateTimeInputChangedDate(value) {
@@ -249,7 +272,6 @@ export default {
       this.$forceUpdate();
     },
     onDateTimeInputChangedTime(value) {
-      console.log(value);
       if (value.length !== 5) {
         return;
       }
@@ -262,6 +284,9 @@ export default {
         this.onInputChanged(newDate.toDate());
       }
       this.$forceUpdate();
+    },
+    onRadioInputChanged(value) {
+      this.onInputChanged(value);
     },
     // async handleChange(file) {},
     // async onFileInputChanged(e) {},
