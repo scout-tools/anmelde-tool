@@ -256,7 +256,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
 
         # Check registration type permissions based on existing registrations
         existing_registration = Registration.objects.filter(
-            scout_organisation=request.user.userextended.scout_organisation)
+            scout_organisation=request.user.userextended.scout_organisation).filter(event=event.id)
         if existing_registration.exists():
             single_registration = existing_registration.filter(responsible_persons__in=[request.user.id], single=True)
             existing_group_registration = existing_registration.filter(single=False)

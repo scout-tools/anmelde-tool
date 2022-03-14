@@ -52,6 +52,9 @@ export default {
       if (valObj.maxValue === false) {
         errors.push(`Maximal sind ${valObj.$params.maxValue.max} erlaubt.`);
       }
+      if (valObj.allChecked === false) {
+        errors.push('Es müssen allen Bedindungen zugestimmt werden.');
+      }
       if (valObj.between === false) {
         const { min, max } = valObj.$params.between;
         errors.push(
