@@ -1,23 +1,14 @@
 from django.db.models import Q
-from django_filters import CharFilter, filters
+from django_filters import CharFilter
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
-from rest_framework import status, viewsets
+from rest_framework import viewsets
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 
 from .models import ScoutHierarchy, ZipCode, Tag, TagType, AbstractAttribute
 from .serializers import ScoutHierarchySerializer, ZipCodeSerializer, TagShortSerializer, TagTypeShortSerializer, \
-    AbstractAttributeSerializer, BooleanAttributeSerializer, AbstractAttributePolymorphicSerializer
-
-
-def get_dataset(kwargs, pk, dataset):
-    dataset_id = kwargs.get(pk, None)
-    if dataset_id is not None:
-        return dataset.objects.filter(id=dataset_id)
-    else:
-        return Response('No dataset selected', status=status.HTTP_400_BAD_REQUEST)
+    AbstractAttributePolymorphicSerializer
 
 
 class ScoutHierarchyViewSet(viewsets.ReadOnlyModelViewSet):

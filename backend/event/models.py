@@ -39,7 +39,8 @@ class Gender(models.TextChoices):
 class ParticipantActionConfirmation(models.TextChoices):
     Nothing = 'N', _('Nichts')
     Delete = 'D', _('Abmelden')
-    Add = 'A', _('Anmelden')
+    AddFromExisting = 'AE', _('Anmelden von deaktivierten Teilnehmern'),
+    AddCompletyNew = 'AN', _('Anmelden von neuen Teilnehmern'),
 
 
 class EventLocation(TimeStampMixin):
@@ -178,15 +179,15 @@ class RegistrationParticipant(TimeStampMixin):
     age = models.IntegerField(null=True, blank=True)
     scout_group = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
-    email = models.EmailField(null=True)
-    birthday = models.DateField(null=True)
+    email = models.EmailField(null=True, blank=True)
+    birthday = models.DateField(null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
     tags = models.ManyToManyField(AbstractAttribute, blank=True)
     booking_option = models.ForeignKey(BookingOption, on_delete=models.SET_NULL, blank=True, null=True)
     gender = models.CharField(max_length=1, choices=Gender.choices, default=Gender.Nothing)
     deactivated = models.BooleanField(default=False)
     generated = models.BooleanField(default=False)
-    needs_confirmation = models.CharField(max_length=1, choices=ParticipantActionConfirmation.choices,
+    needs_confirmation = models.CharField(max_length=2, choices=ParticipantActionConfirmation.choices,
                                           default=ParticipantActionConfirmation.Nothing)
 
     def __str__(self):

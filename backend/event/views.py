@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django.forms.models import model_to_dict
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -20,7 +20,7 @@ from event.serializers import EventPlanerSerializer, EventLocationGetSerializer,
     EventModuleSerializer, AttributeEventModuleMapperSerializer, EventOverviewSerializer, \
     EventModuleMapperPostSerializer, EventModuleMapperGetSerializer, RegistrationPostSerializer, \
     RegistrationGetSerializer, RegistrationPutSerializer, RegistrationParticipantSerializer, \
-    RegistrationParticipantShortSerializer, RegistrationParticipantPutSerializer
+    RegistrationParticipantShortSerializer, RegistrationParticipantPutSerializer, RegistrationParticipantGroupSerializer
 
 
 def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
@@ -256,7 +256,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
 
         # Check registration type permissions based on existing registrations
         existing_registration = Registration.objects.filter(
-            scout_organisation=request.user.userextended.scout_organisation)
+            scout_organisation=request.user.userextended.scout_organisation, event=event.id)
         if existing_registration.exists():
             single_registration = existing_registration.filter(responsible_persons__in=[request.user.id], single=True)
             existing_group_registration = existing_registration.filter(single=False)
@@ -336,7 +336,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
             request.data['booking_option'] = registration.event.bookingoption_set.first().id
 
         if registration.event.registration_deadline < timezone.now():
-            request.data['needs_confirmation'] = ParticipantActionConfirmation.Add
+            request.data['needs_confirmation'] = ParticipantActionConfirmation.AddCompletyNew
 
         return super().create(request, *args, **kwargs)
 
@@ -348,8 +348,10 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
                 request.data['deactivated'] = False
                 request.data['needs_confirmation'] = ParticipantActionConfirmation.Nothing
             elif registration.event.last_possible_update >= timezone.now():
-                request.data['needs_confirmation'] = ParticipantActionConfirmation.Add
+                request.data['deactivated'] = False
+                request.data['needs_confirmation'] = ParticipantActionConfirmation.AddFromExisting
 
+        request.data['generated'] = False
         return super().update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
@@ -379,6 +381,91 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
 
     def participant_initialization(self, request):
         input_serializer = RegistrationParticipantPutSerializer(data=request.data)
+        input_serializer.is_valid(raise_exception=True)
+
+        registration_id = self.kwargs.get("registration_pk", None)
+        registration: Registration = get_object_or_404(Registration, pk=registration_id)
+
+        if registration.event.registration_start > timezone.now():
+            raise TooEarly
+        elif self.action != 'destroy' and registration.event.last_possible_update < timezone.now():
+            raise TooLate
+
+        return registration
+
+
+class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
+    serializer_class = RegistrationParticipantShortSerializer
+
+    def create(self, request, *args, **kwargs) -> Response:
+        registration: Registration = self.participant_group_initialization(request)
+        number: int = request.data.get('number', 0)
+        existing_participants: QuerySet = RegistrationParticipant.objects.filter(registration=registration.id)
+        active_participants: QuerySet = existing_participants.filter(deactivated=False)
+        inactive_participants: QuerySet = existing_participants.filter(deactivated=True)
+        active_participant_count: int = active_participants.count()
+        inactive_participant_count: int = inactive_participants.count()
+        total_participant_count: int = active_participant_count + inactive_participant_count
+        activate = min(inactive_participant_count, number)
+        create: int = max(number - total_participant_count, 0)
+        confirm_needed: bool = registration.event.registration_deadline < timezone.now()
+
+        if activate > 0:
+            confirm = ParticipantActionConfirmation.AddFromExisting if confirm_needed else ParticipantActionConfirmation.Nothing
+            RegistrationParticipant.objects \
+                .filter(pk__in=inactive_participants.order_by('created_at').values_list('pk', flat=True)[:activate]) \
+                .update(deactivated=False, needs_confirmation=confirm)
+
+        if create > 0:
+            new_participants = []
+            confirm = ParticipantActionConfirmation.AddCompletyNew if confirm_needed else ParticipantActionConfirmation.Nothing
+            for i in range(total_participant_count + 1, number + 1):
+                participant = RegistrationParticipant(first_name='Teilnehmer',
+                                                      last_name=i,
+                                                      registration=registration,
+                                                      generated=True,
+                                                      needs_confirmation=confirm)
+                new_participants.append(participant)
+            RegistrationParticipant.objects.bulk_create(new_participants)
+
+        return Response({'activated': activate, 'created': create}, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, *args, **kwargs) -> Response:
+        registration: Registration = self.participant_group_initialization(request)
+        number: int = request.data.get('number', 9999)
+        all_participants: QuerySet = RegistrationParticipant.objects.filter(registration=registration.id)
+        participant_count = all_participants.count()
+
+        if number <= participant_count:
+            num_delete: int = max(participant_count - number, 0)
+            deletable_participants: QuerySet[RegistrationParticipant] = all_participants.filter(generated=True)
+            deletable_participants_count: int = deletable_participants.count()
+
+            if num_delete < deletable_participants_count:
+                selected_deletable_participants = RegistrationParticipant.objects.filter(
+                    pk__in=deletable_participants.order_by('-created_at').values_list('pk', flat=True)[:num_delete])
+            else:
+                selected_deletable_participants = deletable_participants
+
+            if registration.event.registration_deadline >= timezone.now():
+                selected_deletable_participants.delete()
+                return Response({'deleted': num_delete}, status=status.HTTP_204_NO_CONTENT)
+            else:
+                if registration.event.last_possible_update >= timezone.now() \
+                        and not request.data.get('avoid_manual_check'):
+                    confirm = ParticipantActionConfirmation.Delete
+                else:
+                    confirm = ParticipantActionConfirmation.Nothing
+
+                selected_deletable_participants.update(deactivated=True, needs_confirmation=confirm)
+                return Response({'deactivated': num_delete}, status=status.HTTP_200_OK)
+
+        else:
+            return Response(f'number: {number} is higher or equal than current participantc count {participant_count}',
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    def participant_group_initialization(self, request) -> Registration:
+        input_serializer = RegistrationParticipantGroupSerializer(data=request.data)
         input_serializer.is_valid(raise_exception=True)
 
         registration_id = self.kwargs.get("registration_pk", None)
