@@ -63,7 +63,7 @@ export default {
       },
       {
         name: 'Zusammenfassung',
-        techName: 'description',
+        techName: 'shortDescription',
         tooltip: '123',
         icon: 'mdi-account-circle',
         mandatory: true,
@@ -72,7 +72,7 @@ export default {
       },
       {
         name: 'Beschreibung',
-        techName: 'text',
+        techName: 'longDescription',
         tooltip: '123',
         icon: 'mdi-account-circle',
         mandatory: true,
@@ -89,7 +89,7 @@ export default {
         minLength: minLength(1),
         maxLength: maxLength(20),
       },
-      description: {
+      shortDescription: {
         required,
         minLength: minLength(1),
         maxLength: maxLength(100),
