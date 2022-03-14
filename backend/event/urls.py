@@ -30,7 +30,7 @@ event_module_router.register(r'attribute-mapper', views.EventModuleAttributeMapp
 registration_router = routers.NestedSimpleRouter(router, r'registration', lookup='registration')
 registration_router.register(r'single-participant', views.RegistrationSingleParticipantViewSet,
                              basename='single-participant')
-registration_router.register(r'group-participants', views.RegistrationSingleParticipantViewSet,
+registration_router.register(r'group-participants', views.RegistrationGroupParticipantViewSet,
                              basename='group-participants')
 
 # Wire up our API using automatic URL routing.

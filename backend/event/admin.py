@@ -63,11 +63,13 @@ class StandardEventTemplateAdmin(admin.ModelAdmin):
 class RegistrationAdmin(admin.ModelAdmin):
     list_display = ('scout_organisation', 'event', 'single')
     search_fields = ('scout_organisation', 'event')
-    autocomplete_fields = ('event',)
+    autocomplete_fields = ('event', 'scout_organisation')
     list_filter = ('event__name',)
 
 
 @admin.register(RegistrationParticipant)
 class RegistrationParticipantAdmin(admin.ModelAdmin):
-    list_display = ('registration', 'first_name', 'last_name', 'scout_name')
+    list_display = (
+        'registration', 'first_name', 'last_name', 'scout_name', 'generated', 'deactivated', 'needs_confirmation')
     list_filter = ('registration__event__name',)
+    autocomplete_fields = ('zip_code',)

@@ -23,8 +23,9 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    'dev.api.anmelde-tool.de',
-    'api.anmelde-tool.de'
+    'api.anmelde-tool.dev.scout-tools.de',
+    'api.anmelde-tool.de',
+    'anmeldetool-dev.eu-central-1.elasticbeanstalk.com'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
