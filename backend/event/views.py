@@ -20,7 +20,8 @@ from event.serializers import EventPlanerSerializer, EventLocationGetSerializer,
     EventModuleSerializer, AttributeEventModuleMapperSerializer, EventOverviewSerializer, \
     EventModuleMapperPostSerializer, EventModuleMapperGetSerializer, RegistrationPostSerializer, \
     RegistrationGetSerializer, RegistrationPutSerializer, RegistrationParticipantSerializer, \
-    RegistrationParticipantShortSerializer, RegistrationParticipantPutSerializer, RegistrationParticipantGroupSerializer
+    RegistrationParticipantShortSerializer, RegistrationParticipantPutSerializer, \
+    RegistrationParticipantGroupSerializer, EventRegistrationSerializer
 
 
 def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
@@ -46,7 +47,14 @@ class EventLocationViewSet(viewsets.ModelViewSet):
         return EventLocationGetSerializer
 
 
+class EventRegistrationViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Event.objects.all()
+    serializer_class = EventRegistrationSerializer
+
+
 class EventViewSet(viewsets.ModelViewSet):
+    # TODO: Limit complete event to creators
     permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventCompleteSerializer
@@ -257,7 +265,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
         # Check registration type permissions based on existing registrations
         existing_registration = Registration.objects.filter(
             scout_organisation=request.user.userextended.scout_organisation, event=event.id)
-        
+
         if existing_registration.exists():
             single_registration = existing_registration.filter(responsible_persons__in=[request.user.id], single=True)
             existing_group_registration = existing_registration.filter(single=False)

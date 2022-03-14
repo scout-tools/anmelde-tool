@@ -37,8 +37,8 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
                   'registration_start',
                   'last_possible_update',
                   'tags',
-                  'registration_model',
-                  'cloud_link')
+                  'cloud_link',
+                  'personal_data_required')
 
 
 class BookingOptionSerializer(serializers.ModelSerializer):
