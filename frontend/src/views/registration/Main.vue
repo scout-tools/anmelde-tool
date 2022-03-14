@@ -79,9 +79,10 @@ import BaseField from '@/components/common/BaseField.vue';
 import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
-  mixins: [validationMixin],
+  mixins: [validationMixin, apiCallsMixin],
   components: {
     BaseField,
   },
@@ -92,6 +93,7 @@ export default {
       showError: false,
       errorMessage: 'Fehler',
       personalData: {},
+      currentEvent: {},
       data: {
         invitationCode: '',
         name: '',
@@ -99,7 +101,24 @@ export default {
         mobileNumber: '',
         single: false,
       },
-      fields: [
+    };
+  },
+  validations: {
+    data: {
+      invitationCode: {
+        required,
+      },
+      single: {
+        required,
+      },
+      // mobileNumber: {
+      //   required: requiredIf(() => true),
+      // },
+    },
+  },
+  computed: {
+    fields() {
+      return [
         {
           name: 'Code aus der Einladung',
           techName: 'invitationCode',
@@ -137,64 +156,33 @@ export default {
           tooltip: 'Meldest du dich oder deinen Stamm an?',
           icon: 'mdi-account-group',
           fieldType: 'radio',
-          referenceTable: [
-            {
-              name: 'Stammesanmeldung',
-              value: false,
-            },
-            {
-              name: 'Einzelanmeldung',
-              value: true,
-            },
-          ],
+          referenceTable: this.getGroupRefTable,
         },
-      ],
-    };
-  },
-  validations: {
-    data: {
-      invitationCode: {
-        required,
-      },
-      single: {
-        required,
-      },
-      // mobileNumber: {
-      //   required: requiredIf(() => true),
-      // },
+      ];
     },
-  },
-  computed: {
     ...mapGetters(['userinfo']),
     eventId() {
       return this.$route.params.id;
     },
-    // isMobilMandatory() {
-    //   if (this.event) {
-    //     return false;
-    //     // return this.event.eventTags.filter((tag) => tag === 1).length;
-    //   }
-    //   return false;
-    // },
+    getGroupRefTable() {
+      const returnArray = [];
+      if (this.currentEvent.singleRegistration !== 'N') {
+        returnArray.push({
+          name: 'Einzelanmeldung',
+          value: true,
+        });
+      }
+      if (this.currentEvent.groupRegistration !== 'N') {
+        returnArray.push({
+          name: 'Stammesanmeldung',
+          value: false,
+        });
+      }
+      return returnArray;
+    },
     mobileNumber() {
       return this.personalData.mobileNumber;
     },
-    // getItems() {
-    //   return this.items;
-    // },
-
-    // email() {
-    //   return this.getJwtData.email;
-    // },
-    // getStammName() {
-    //   const obj = this.hierarchyMapping.find(
-    //     (user) => user.id === this.items.scoutOrganisation,
-    //   );
-    //   if (obj && obj.name) {
-    //     return obj.name;
-    //   }
-    //   return 'Kein Stamm';
-    // },
   },
   methods: {
     onCreateRegistrationClicked() {
@@ -208,29 +196,23 @@ export default {
       this.data.stamm = this.userinfo.stamm;
       this.data.name = this.userinfo.name;
 
-      this.loadUserData();
+      this.loadData();
     },
 
-    loadUserData() {
-      this.loading = true;
-      const path = `${this.API_URL}/auth/personal-data/`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.data.mobileNumber = res.data.mobileNumber;
+    loadData() {
+      this.isLoading = true;
+      Promise.all([this.getPersonalData(), this.getEvent(this.eventId)])
+        .then((values) => {
+          console.log(values);
+          this.data.mobileNumber = values[0].data.mobileNumber; //eslint-disable-line
+          this.currentEvent = values[1].data; //eslint-disable-line
+          this.isLoading = false;
         })
-        .catch(() => {
-          this.$root.globalSnackbar.show({
-            message:
-              'Es gab einen Fehler beim runterladen deiner Daten, bitte probiere es später noch einmal.',
-            color: 'error',
-          });
-        })
-        .finally(() => {
-          this.loading = false;
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
         });
     },
-
     createRegestration() {
       axios
         .post(`${this.API_URL}/event/registration/`, {
