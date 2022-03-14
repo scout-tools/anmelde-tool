@@ -252,5 +252,6 @@ class RegistrationParticipantPutSerializer(serializers.ModelSerializer):
         exclude = ('deactivated', 'generated', 'registration', 'needs_confirmation')
 
 
-class RegistrationParticipantGroupSerializer(serializers.ModelSerializer):
+class RegistrationParticipantGroupSerializer(serializers.Serializer):
     number = serializers.CharField(required=True)
+    avoid_manual_check = serializers.BooleanField(required=False, default=False)
