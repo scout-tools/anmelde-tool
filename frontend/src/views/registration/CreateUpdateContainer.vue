@@ -23,6 +23,8 @@
                   :max-pos="currentModules.length"
                   :currentRegistration="currentRegistration"
                   :currentEvent="currentEvent"
+                  :personalData="personalData"
+                  :currentModule="step"
                   @prevStep="prevStep()"
                   @nextStep="nextStep()"
                   @submit="onRegistrationConfirmed()"
@@ -147,10 +149,12 @@ export default {
         Promise.all([
           this.getEvent(eventId),
           this.getAssignedEventModules(eventId),
+          this.getPersonalData(),
         ])
           .then((values) => {
-            [this.currentEvent] = values;
+            this.currentEvent = values[0]; // eslint-disable-line
             this.currentModules = values[1].data // eslint-disable-line
+            this.personalData = values[2].data // eslint-disable-line
 
             this.isLoading = false;
           })

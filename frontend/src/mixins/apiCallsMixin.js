@@ -70,5 +70,9 @@ export default {
       const url = `${this.API_URL}/event/event-module-mapper/${mapperId}/attribute-mapper/`;
       return axios.get(url);
     },
+    async getPersonalData() {
+      const url = `${this.API_URL}/auth/personal-data/`;
+      return axios.get(url);
+    },
   },
 };

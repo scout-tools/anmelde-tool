@@ -5,7 +5,7 @@
         <span class="text-left subtitle-1">
           <p>
             Hiermit melde ich mich vom<b> {{ myStamm }} </b> aus dem Bund
-            <b> {{ myBund }} </b> zur <b> {{ currentEvent.name }} </b> an.
+            <b> {{ myBund }} </b> zur <b> {{ eventName }} </b> an.
             <br />
             <br />
             Bevor deine Anmeldung verbindlich wird, musst du sie im letzten
@@ -16,11 +16,11 @@
             <br />
             Die folgenden Daten sind nur für das Planungsteam und die
             Administrator_innen sichtbar. <br />
-            <span v-if="isBundesfahrt">Alle Dokumente findest du hier:</span>
+            <span v-if="cloudLink">Alle Dokumente findest du hier:</span>
             <a
-              v-if="isBundesfahrt"
+              v-if="cloudLink"
               target="_blank"
-              href="https://cloud.dpbm.de/s/ZTm4KL2JqtJN9DP"
+              :href="cloudLink"
             >
               Link zur Cloud
             </a>
@@ -28,36 +28,11 @@
         </span>
       </v-row>
       <v-divider class="text-left my-2" />
-      <v-row>
+      <v-row v-for="checkbox in moduleData" :key="checkbox.id">
         <v-checkbox
-          v-model="data.checkbox1"
-          :label="`Ich stimme den Bedingungen zu und möchte mit der Anmeldung beginnen.`"
-          :error-messages="checkbox1Errors"
-        >
-        </v-checkbox>
-      </v-row>
-
-      <v-row>
-        <v-checkbox
-          v-model="data.checkbox2"
-          v-if="isBundesfahrt"
-          :label="`Hiermit bestätige ich, dass alle Teilnehmer_innen,
-          die ich auf diesem Wege zum ${currentEvent.name} anmelde die
-          „Datenschutzhinweise zur
-          Kenntnis genommen und diesen zugestimmt haben.`"
-          :error-messages="checkbox2Errors"
-        >
-        </v-checkbox>
-      </v-row>
-
-      <v-row>
-        <v-checkbox
-          v-model="data.checkbox3"
-          v-if="isBundesfahrt"
-          :label="`Ich trage Sorge, dass alle von mir angemeldeten Teilnehmer
-            über die Corona Regel informiert sind
-            und ich achte auf die Einhaltung.`"
-          :error-messages="checkbox3Errors"
+          v-model="data.checkboxes[checkbox.id]"
+          :label="checkbox.attribute ? checkbox.attribute.description : ''"
+          :error-messages="errorMessage('checkboxes', $v)"
         >
         </v-checkbox>
       </v-row>
@@ -92,6 +67,7 @@ import { mapGetters } from 'vuex';
 import moment from 'moment';
 
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import stepMixin from '@/mixins/stepMixin';
 import { required } from 'vuelidate/lib/validators';
 import PrevNextButtons from '@/components/button/PrevNextButton.vue';
 
@@ -103,147 +79,82 @@ export default {
     'maxPos',
     'currentEvent',
     'currentRegistration',
-    'moduleId',
+    'currentModule',
+    'personalData',
   ],
   components: {
     PrevNextButtons,
   },
-  mixins: [apiCallsMixin],
+  mixins: [apiCallsMixin, stepMixin],
   data: () => ({
-    API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: true,
+    moduleData: [],
     data: {
-      checkbox1: false,
-      checkbox2: false,
-      checkbox3: false,
-      name: '',
-      description: '',
+      checkboxes: [],
     },
   }),
   validations: {
     data: {
-      checkbox1: {
+      checkboxes: {
         required,
-        checked: (value) => value === true,
-      },
-      checkbox2: {
-        function(value) {
-          return value === true || !this.isBundesfahrt;
-        },
-      },
-      checkbox3: {
-        function(value) {
-          return value === true || !this.isBundesfahrt;
+        allChecked: (value) => {
+          const values = Object.values(value);
+          console.log(values && values.every((item) => item));
+          return values && values.every((item) => item);
         },
       },
     },
   },
   computed: {
-    ...mapGetters([
-      'isAuthenticated',
-      'hierarchyMapping',
-      'myStamm',
-      'myBund',
-      'myScoutname',
-    ]),
-    checkbox1Errors() {
-      const errors = [];
-      if (!this.$v.data.checkbox1.$dirty) return errors;
-      if (!this.$v.data.checkbox1.required || !this.$v.data.checkbox1.checked) {
-        errors.push(
-          'Deine Zustimmung ist erforderlich, damit du weiter machen kannst.',
-        );
-      }
-      return errors;
-    },
-    checkbox2Errors() {
-      const errors = [];
-      if (!this.$v.data.checkbox2.$dirty) return errors;
-      if (this.$v.data.checkbox2.$invalid) {
-        errors.push(
-          'Deine Zustimmung ist erforderlich, damit du weiter machen kannst.',
-        );
-      }
-      return errors;
-    },
-    checkbox3Errors() {
-      const errors = [];
-      if (!this.$v.data.checkbox3.$dirty) return errors;
-      if (this.$v.data.checkbox3.$invalid) {
-        errors.push(
-          'Deine Zustimmung ist erforderlich, damit du weiter machen kannst.',
-        );
-      }
-      return errors;
-    },
+    ...mapGetters(['userinfo']),
     registrationDeadlineFormat() {
       return moment(this.currentEvent.registrationDeadline)
         .lang('de')
         .format('ll');
     },
-    isBundesfahrt() {
-      // if (this.currentEvent) {
-      //   return this.currentEvent.eventTags.filter((tag) => tag === 1).length;
-      // }
-      return false;
+    moduleId() {
+      return this.currentModule.module.id;
+    },
+    myStamm() {
+      return this.userinfo.stamm;
+    },
+    myBund() {
+      return this.userinfo.bund;
+    },
+    eventName() {
+      return this.currentEvent.name;
+    },
+    cloudLink() {
+      return this.currentEvent.cloudLink;
     },
   },
   mounted() {
     this.beforeTabShow();
   },
   methods: {
-    validate() {
-      this.$v.$touch();
-      this.valid = !this.$v.$error;
-    },
-    prevStep() {
-      this.$emit('prevStep');
-    },
-    nextStep() {
-      this.validate();
-      if (!this.valid) {
-        return;
-      }
-      this.$emit('nextStep');
-    },
     beforeTabShow() {
       this.loadData();
     },
+    setDefaults() {
+      this.moduleData.forEach((data) => {
+        this.data.checkboxes[data.id] = false;
+      });
+    },
     loadData() {
       this.isLoading = true;
-
-      Promise.all([this.getModule(this.moduleId)])
+      Promise.all([
+        this.getModule(this.moduleId),
+      ])
         .then((values) => {
-          this.setMyStamm(values[0]);
+          this.moduleData = values[0].data; //eslint-disable-line
           this.isLoading = false;
+          this.setDefaults();
         })
         .catch((error) => {
           this.errormsg = error.response.data.message;
           this.isLoading = false;
         });
-    },
-    setMyStamm(data) {
-      let myStamm = 'kein Stamm';
-      if (data.scoutOrganisation) {
-        myStamm = this.hierarchyMapping.find(
-          (item) => item.id === data.scoutOrganisation,
-        ).name;
-        const parentId = this.hierarchyMapping.find(
-          (item) => item.id === data.scoutOrganisation,
-        ).parent;
-        let parentObj = this.hierarchyMapping.find(
-          (item) => item.id === parentId,
-        );
-        if (parentObj.level > 3) {
-          parentObj = this.hierarchyMapping.find(
-            (item) => item.id === parentObj.parent,
-          );
-        }
-        this.$store.commit('setMyBund', parentObj.name);
-        this.$store.commit('setMyStamm', myStamm);
-        this.$store.commit('setMyScoutname', data.scoutName);
-      }
     },
   },
 };
