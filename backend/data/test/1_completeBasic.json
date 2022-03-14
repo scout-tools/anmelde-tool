@@ -106,8 +106,7 @@
       "name": "Meutenstufe",
       "type": 1,
       "is_custom": false,
-      "is_visible": true,
-      "description": "10 Jahre oder Jünger"
+      "is_visible": true
     }
   },
   {
@@ -118,8 +117,7 @@
       "name": "Sippestufe",
       "type": 1,
       "is_custom": false,
-      "is_visible": true,
-      "description": "11-15 Jahre"
+      "is_visible": true
     }
   },
   {
@@ -130,8 +128,7 @@
       "name": "Roverstufe",
       "type": 1,
       "is_custom": false,
-      "is_visible": true,
-      "description": "16 Jahre oder älter"
+      "is_visible": true
     }
   },
   {
@@ -142,8 +139,7 @@
       "name": "DPV Veranstaltung",
       "type": 2,
       "is_custom": false,
-      "is_visible": true,
-      "description": ""
+      "is_visible": true
     }
   },
   {
@@ -154,8 +150,7 @@
       "name": "DPBM Veranstaltung",
       "type": 2,
       "is_custom": false,
-      "is_visible": true,
-      "description": ""
+      "is_visible": true
     }
   },
   {
@@ -166,8 +161,7 @@
       "name": "Zeltplatz",
       "type": 3,
       "is_custom": false,
-      "is_visible": true,
-      "description": ""
+      "is_visible": true
     }
   },
   {
@@ -178,8 +172,7 @@
       "name": "Heim",
       "type": 3,
       "is_custom": false,
-      "is_visible": true,
-      "description": ""
+      "is_visible": true
     }
   },
   {
@@ -190,8 +183,7 @@
       "name": "Zeltplatz Vorschlag",
       "type": 3,
       "is_custom": false,
-      "is_visible": true,
-      "description": ""
+      "is_visible": true
     }
   },
   {
@@ -202,8 +194,7 @@
       "name": "Heim Vorschlag",
       "type": 3,
       "is_custom": false,
-      "is_visible": true,
-      "description": ""
+      "is_visible": true
     }
   },
   {
@@ -214,8 +205,7 @@
       "name": "BookingOptionComplex",
       "type": 4,
       "is_custom": false,
-      "is_visible": false,
-      "description": ""
+      "is_visible": false
     }
   },
   {
@@ -226,8 +216,7 @@
       "name": "BookingOptionSimple",
       "type": 4,
       "is_custom": false,
-      "is_visible": false,
-      "description": ""
+      "is_visible": false
     }
   },
   {
@@ -238,8 +227,7 @@
       "name": "KeycloakAuthorization",
       "type": 6,
       "is_custom": false,
-      "is_visible": false,
-      "description": ""
+      "is_visible": false
     }
   },
   {
@@ -250,8 +238,7 @@
       "name": "InternalAuthorization",
       "type": 6,
       "is_custom": false,
-      "is_visible": false,
-      "description": ""
+      "is_visible": false
     }
   },
   {
@@ -262,8 +249,7 @@
       "name": "Veranstaltungs Bedingungen",
       "type": 9,
       "is_custom": false,
-      "is_visible": true,
-      "description": "Ich stimme den Bedingungen zu und möchte mit der Anmeldung beginnen"
+      "is_visible": true
     }
   },
   {
@@ -274,8 +260,7 @@
       "name": "DSGVO",
       "type": 9,
       "is_custom": false,
-      "is_visible": true,
-      "description": "Hiermit bestätige ich, dass alle Teilnehmer_innen, die ich auf diesem Wege zum DPV-Gold anmelde die Datenschutzhinweise zur Kenntnis genommen und diesen zugestimmt haben."
+      "is_visible": true
     }
   },
   {
@@ -286,8 +271,7 @@
       "name": "Corona Hinweis",
       "type": 9,
       "is_custom": false,
-      "is_visible": true,
-      "description": "Ich trage Sorge, dass alle von mir angemeldeten Teilnehmer über die Corona Regel informiert sind und ich achte auf die Einhaltung"
+      "is_visible": true
     }
   },
   {
@@ -298,8 +282,7 @@
       "name": "Kothen",
       "type": 9,
       "is_custom": false,
-      "is_visible": true,
-      "description": "Wie viele Kothen bringt ihr mit?"
+      "is_visible": true
     }
   },
   {
@@ -310,8 +293,7 @@
       "name": "Kothenstangen",
       "type": 9,
       "is_custom": false,
-      "is_visible": true,
-      "description": "Wie viele Stangen für Kothen benötigt ihr?"
+      "is_visible": true
     }
   },
   {
@@ -322,8 +304,7 @@
       "name": "Jurten",
       "type": 9,
       "is_custom": false,
-      "is_visible": true,
-      "description": "Wie viele Jurten bringt ihr mit?"
+      "is_visible": true
     }
   },
   {
@@ -334,8 +315,7 @@
       "name": "Jurtenstangen",
       "type": 9,
       "is_custom": false,
-      "is_visible": true,
-      "description": "Wie viele Stangen benötigt ihr für eure Jurten?"
+      "is_visible": true
     }
   },
   {
@@ -346,8 +326,7 @@
       "name": "Anreise",
       "type": 9,
       "is_custom": false,
-      "is_visible": true,
-      "description": "Wann und womit werden ihr anreisen?"
+      "is_visible": true
     }
   },
   {
@@ -358,8 +337,7 @@
       "name": "Abreise",
       "type": 9,
       "is_custom": false,
-      "is_visible": true,
-      "description": "Wann und womit werdet ihr abreisen?"
+      "is_visible": true
     }
   },
   {
@@ -370,8 +348,18 @@
       "name": "Letter",
       "type": 9,
       "is_custom": false,
-      "is_visible": true,
-      "description": ""
+      "is_visible": true
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 26,
+    "fields": {
+      "polymorphic_ctype": 13,
+      "name": "RegistrationSummary",
+      "type": 9,
+      "is_custom": false,
+      "is_visible": true
     }
   },
   {
@@ -456,6 +444,13 @@
   {
     "model": "basic.booleanattribute",
     "pk": 16,
+    "fields": {
+      "boolean_field": false
+    }
+  },
+  {
+    "model": "basic.booleanattribute",
+    "pk": 26,
     "fields": {
       "boolean_field": false
     }
