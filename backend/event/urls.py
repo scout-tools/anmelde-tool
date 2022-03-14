@@ -12,6 +12,7 @@ router.register(r'event-planer-overview', views.EventPlanerViewSet, basename='ev
 router.register(r'event-module', views.EventModulesViewSet, basename='eventmodule')
 router.register(r'event-module-mapper', views.EventModulesMapperViewSet, basename='eventmodulemapper')
 router.register(r'event-overview', views.EventOverviewViewSet, basename='event-overview')
+router.register(r'event-registration', views.EventRegistrationViewSet, basename='event-registration')
 router.register(r'registration', views.RegistrationViewSet, basename='registration')
 router.register(r'gender-choices', views.GenderViewSet, basename='gender-choices')
 

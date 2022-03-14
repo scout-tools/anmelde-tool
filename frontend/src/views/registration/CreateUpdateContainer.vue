@@ -147,7 +147,7 @@ export default {
         this.currentRegistration = response;
         const eventId = this.currentRegistration.event;
         Promise.all([
-          this.getEvent(eventId),
+          this.getEventForRegistration(eventId),
           this.getAssignedEventModules(eventId),
           this.getPersonalData(),
         ])
