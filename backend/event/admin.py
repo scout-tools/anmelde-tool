@@ -1,6 +1,6 @@
 from django.contrib import admin
 from event.models import EventLocation, Event, BookingOption, EventModule, EventModuleMapper, \
-    AttributeEventModuleMapper, StandardEventTemplate, Registration, RegistrationParticipant
+    AttributeEventModuleMapper, StandardEventTemplate, Registration, RegistrationParticipant, EventPlanerModule
 
 
 @admin.register(EventLocation)
@@ -10,11 +10,19 @@ class EventLocationAdmin(admin.ModelAdmin):
     autocomplete_fields = ('zip_code',)
 
 
+@admin.register(EventPlanerModule)
+class EventPlanerModuleAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type')
+    search_fields = ('name',)
+    autocomplete_fields = ('type',)
+    list_filter = ('type',)
+
+
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'is_public')
     search_fields = ('name',)
-    autocomplete_fields = ('responsible_persons', 'tags')
+    autocomplete_fields = ('responsible_persons', 'tags', 'event_planer_modules')
 
 
 @admin.register(BookingOption)
@@ -70,6 +78,13 @@ class RegistrationAdmin(admin.ModelAdmin):
 @admin.register(RegistrationParticipant)
 class RegistrationParticipantAdmin(admin.ModelAdmin):
     list_display = (
-        'registration', 'first_name', 'last_name', 'scout_name', 'generated', 'deactivated', 'needs_confirmation')
+        'registration',
+        'first_name',
+        'last_name',
+        'scout_name',
+        'generated',
+        'deactivated',
+        'needs_confirmation'
+    )
     list_filter = ('registration__event__name',)
     autocomplete_fields = ('zip_code',)

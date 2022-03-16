@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "created_at": "2022-03-10T11:35:03.875Z",
-      "updated_at": "2022-03-10T11:35:03.875Z",
+      "updated_at": "2022-03-16T21:31:56.913Z",
       "name": "Jugendburg Ludwigstein",
       "description": "Die Burg Ludwigstein ist eine frühere spätmittelalterliche Burg und heutige Jugendburg bei Werleshausen im Werra-Meißner-Kreis in Hessen",
       "zip_code": 12582,
@@ -25,7 +25,7 @@
     "pk": 2,
     "fields": {
       "created_at": "2022-03-10T11:35:46.170Z",
-      "updated_at": "2022-03-10T11:35:46.170Z",
+      "updated_at": "2022-03-16T21:32:00.133Z",
       "name": "Gut Steimke",
       "description": "",
       "zip_code": 11674,
@@ -38,6 +38,38 @@
       "tags": [
         6
       ]
+    }
+  },
+  {
+    "model": "event.eventplanermodule",
+    "pk": 1,
+    "fields": {
+      "name": "BookingOptionComplex",
+      "type": 4
+    }
+  },
+  {
+    "model": "event.eventplanermodule",
+    "pk": 2,
+    "fields": {
+      "name": "BookingOptionSimple",
+      "type": 4
+    }
+  },
+  {
+    "model": "event.eventplanermodule",
+    "pk": 3,
+    "fields": {
+      "name": "KeycloakAuthorization",
+      "type": 6
+    }
+  },
+  {
+    "model": "event.eventplanermodule",
+    "pk": 4,
+    "fields": {
+      "name": "InternalAuthorization",
+      "type": 6
     }
   },
   {
@@ -168,7 +200,13 @@
       "attribute": 14,
       "title": "Veranstaltungsbedingungen",
       "text": "Ich stimme den Bedingungen zu und möchte mit der Anmeldung beginnen",
-      "is_required": true
+      "is_required": true,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "false",
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -177,8 +215,14 @@
     "fields": {
       "attribute": 15,
       "title": "Datenschutzhinweis",
-      "text": "Hiermit bestätige ich, dass alle Teilnehmer_innen, die ich auf diesem Wege zum DPV-Gold anmelde die Datenschutzhinweise zur Kenntnis genommen und diesen zugestimmt haben.",
-      "is_required": true
+      "text": "Hiermit bestätige ich, dass alle Teilnehmer_innen, die ich auf diesem Wege anmelde die Datenschutzhinweise zur Kenntnis genommen und diesen zugestimmt haben.",
+      "is_required": true,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "false",
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -188,7 +232,13 @@
       "attribute": 16,
       "title": "Corona Hinweis",
       "text": "Ich trage Sorge, dass alle von mir angemeldeten Teilnehmer über die Corona Regel informiert sind und ich achte auf die Einhaltung",
-      "is_required": true
+      "is_required": true,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "false",
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -198,7 +248,13 @@
       "attribute": 17,
       "title": "Anzahl Kothen",
       "text": "Wie viele Kothen bringt ihr mit?",
-      "is_required": false
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -208,7 +264,13 @@
       "attribute": 18,
       "title": "Anzahl Kothenstangen",
       "text": "Wie viele Stangen für Kothen benötigt ihr?",
-      "is_required": false
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -218,7 +280,13 @@
       "attribute": 19,
       "title": "Anzahl Jurten",
       "text": "Wie viele Jurten bringt ihr mit?",
-      "is_required": false
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -227,8 +295,14 @@
     "fields": {
       "attribute": 20,
       "title": "Anzahl Jurtenstangen",
-      "text": null,
-      "is_required": false
+      "text": "Wie viele Stangen für eure Jurten benötigt ihr?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -238,7 +312,13 @@
       "attribute": 21,
       "title": "Anreise",
       "text": "Wann und womit werden ihr anreisen?",
-      "is_required": false
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -248,7 +328,13 @@
       "attribute": 22,
       "title": "Abreise",
       "text": "Wann und womit werdet ihr abreisen?",
-      "is_required": false
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -258,7 +344,13 @@
       "attribute": 23,
       "title": "Nachricht an die Lagerleitung",
       "text": "Hier ist Platz für eine Nachricht an die Lagerleitung .",
-      "is_required": false
+      "is_required": false,
+      "min_length": 10,
+      "max_length": 9000,
+      "tooltip": null,
+      "default_value": "Hallo Lagerleitung,",
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -268,7 +360,13 @@
       "attribute": 26,
       "title": "Bestätigung",
       "text": "Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zur Fahrt an.",
-      "is_required": false
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "false",
+      "field_type": null,
+      "icon": null
     }
   },
   {
@@ -299,7 +397,8 @@
       "responsible_persons": [
         2
       ],
-      "tags": []
+      "tags": [],
+      "event_planer_modules": []
     }
   },
   {
@@ -307,7 +406,7 @@
     "pk": 2,
     "fields": {
       "created_at": "2022-03-10T11:46:18.946Z",
-      "updated_at": "2022-03-14T18:11:19.775Z",
+      "updated_at": "2022-03-16T21:24:03.184Z",
       "name": "DPV goLd",
       "technical_name": "dpv-gold",
       "short_description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
@@ -331,9 +430,12 @@
         2
       ],
       "tags": [
-        4,
-        10,
-        12
+        3,
+        4
+      ],
+      "event_planer_modules": [
+        1,
+        3
       ]
     }
   },
@@ -342,7 +444,7 @@
     "pk": 3,
     "fields": {
       "created_at": "2022-03-10T12:48:32.515Z",
-      "updated_at": "2022-03-14T18:11:50.240Z",
+      "updated_at": "2022-03-16T21:24:34.197Z",
       "name": "VIA23 DPV Verbandslager",
       "technical_name": "via23",
       "short_description": "",
@@ -352,7 +454,7 @@
       "start_date": "2023-05-26T14:00:00Z",
       "end_date": "2023-05-30T09:00:00Z",
       "registration_deadline": "2023-02-01T21:59:59Z",
-      "registration_start": "2022-09-30T22:00:01Z",
+      "registration_start": "2022-03-13T23:00:01Z",
       "last_possible_update": "2023-04-01T19:59:59Z",
       "invitation_code": "AAAA",
       "is_public": true,
@@ -366,9 +468,14 @@
         2
       ],
       "tags": [
-        4,
-        11,
-        12
+        1,
+        2,
+        3,
+        4
+      ],
+      "event_planer_modules": [
+        2,
+        3
       ]
     }
   },

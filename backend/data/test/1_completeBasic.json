@@ -14,7 +14,7 @@
     "model": "basic.tagtype",
     "pk": 2,
     "fields": {
-      "name": "EventTag",
+      "name": "EventDescription",
       "description": "",
       "color": "#D3FFD5",
       "min": 0,
@@ -91,7 +91,7 @@
     "model": "basic.tagtype",
     "pk": 9,
     "fields": {
-      "name": "EventAttribute",
+      "name": "RegistrationAttribute",
       "description": "",
       "color": "#FF0000",
       "min": 0,
@@ -99,10 +99,9 @@
     }
   },
   {
-    "model": "basic.abstractattribute",
+    "model": "basic.tag",
     "pk": 1,
     "fields": {
-      "polymorphic_ctype": 17,
       "name": "Meutenstufe",
       "type": 1,
       "is_custom": false,
@@ -110,10 +109,9 @@
     }
   },
   {
-    "model": "basic.abstractattribute",
+    "model": "basic.tag",
     "pk": 2,
     "fields": {
-      "polymorphic_ctype": 17,
       "name": "Sippestufe",
       "type": 1,
       "is_custom": false,
@@ -121,10 +119,9 @@
     }
   },
   {
-    "model": "basic.abstractattribute",
+    "model": "basic.tag",
     "pk": 3,
     "fields": {
-      "polymorphic_ctype": 17,
       "name": "Roverstufe",
       "type": 1,
       "is_custom": false,
@@ -132,10 +129,9 @@
     }
   },
   {
-    "model": "basic.abstractattribute",
+    "model": "basic.tag",
     "pk": 4,
     "fields": {
-      "polymorphic_ctype": 17,
       "name": "DPV Veranstaltung",
       "type": 2,
       "is_custom": false,
@@ -143,10 +139,9 @@
     }
   },
   {
-    "model": "basic.abstractattribute",
+    "model": "basic.tag",
     "pk": 5,
     "fields": {
-      "polymorphic_ctype": 17,
       "name": "DPBM Veranstaltung",
       "type": 2,
       "is_custom": false,
@@ -154,10 +149,9 @@
     }
   },
   {
-    "model": "basic.abstractattribute",
+    "model": "basic.tag",
     "pk": 6,
     "fields": {
-      "polymorphic_ctype": 17,
       "name": "Zeltplatz",
       "type": 3,
       "is_custom": false,
@@ -165,10 +159,9 @@
     }
   },
   {
-    "model": "basic.abstractattribute",
+    "model": "basic.tag",
     "pk": 7,
     "fields": {
-      "polymorphic_ctype": 17,
       "name": "Heim",
       "type": 3,
       "is_custom": false,
@@ -176,10 +169,9 @@
     }
   },
   {
-    "model": "basic.abstractattribute",
+    "model": "basic.tag",
     "pk": 8,
     "fields": {
-      "polymorphic_ctype": 17,
       "name": "Zeltplatz Vorschlag",
       "type": 3,
       "is_custom": false,
@@ -187,58 +179,13 @@
     }
   },
   {
-    "model": "basic.abstractattribute",
+    "model": "basic.tag",
     "pk": 9,
     "fields": {
-      "polymorphic_ctype": 17,
       "name": "Heim Vorschlag",
       "type": 3,
       "is_custom": false,
       "is_visible": true
-    }
-  },
-  {
-    "model": "basic.abstractattribute",
-    "pk": 10,
-    "fields": {
-      "polymorphic_ctype": 17,
-      "name": "BookingOptionComplex",
-      "type": 4,
-      "is_custom": false,
-      "is_visible": false
-    }
-  },
-  {
-    "model": "basic.abstractattribute",
-    "pk": 11,
-    "fields": {
-      "polymorphic_ctype": 17,
-      "name": "BookingOptionSimple",
-      "type": 4,
-      "is_custom": false,
-      "is_visible": false
-    }
-  },
-  {
-    "model": "basic.abstractattribute",
-    "pk": 12,
-    "fields": {
-      "polymorphic_ctype": 17,
-      "name": "KeycloakAuthorization",
-      "type": 6,
-      "is_custom": false,
-      "is_visible": false
-    }
-  },
-  {
-    "model": "basic.abstractattribute",
-    "pk": 13,
-    "fields": {
-      "polymorphic_ctype": 17,
-      "name": "InternalAuthorization",
-      "type": 6,
-      "is_custom": false,
-      "is_visible": false
     }
   },
   {
@@ -248,8 +195,7 @@
       "polymorphic_ctype": 13,
       "name": "Veranstaltungs Bedingungen",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
   },
   {
@@ -259,8 +205,7 @@
       "polymorphic_ctype": 13,
       "name": "DSGVO",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
   },
   {
@@ -270,8 +215,7 @@
       "polymorphic_ctype": 13,
       "name": "Corona Hinweis",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
   },
   {
@@ -281,8 +225,7 @@
       "polymorphic_ctype": 15,
       "name": "Kothen",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
   },
   {
@@ -292,8 +235,7 @@
       "polymorphic_ctype": 15,
       "name": "Kothenstangen",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
   },
   {
@@ -303,8 +245,7 @@
       "polymorphic_ctype": 15,
       "name": "Jurten",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
   },
   {
@@ -314,8 +255,7 @@
       "polymorphic_ctype": 15,
       "name": "Jurtenstangen",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
   },
   {
@@ -325,8 +265,7 @@
       "polymorphic_ctype": 19,
       "name": "Anreise",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
   },
   {
@@ -336,8 +275,7 @@
       "polymorphic_ctype": 19,
       "name": "Abreise",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
   },
   {
@@ -345,10 +283,9 @@
     "pk": 23,
     "fields": {
       "polymorphic_ctype": 16,
-      "name": "Letter",
+      "name": "Nachricht an die Lagerleitung",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
   },
   {
@@ -356,76 +293,10 @@
     "pk": 26,
     "fields": {
       "polymorphic_ctype": 13,
-      "name": "RegistrationSummary",
+      "name": "Registrierungs Bestätigung",
       "type": 9,
-      "is_custom": false,
-      "is_visible": true
+      "template": true
     }
-  },
-  {
-    "model": "basic.tag",
-    "pk": 1,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 2,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 3,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 4,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 5,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 6,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 7,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 8,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 9,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 10,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 11,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 12,
-    "fields": {}
-  },
-  {
-    "model": "basic.tag",
-    "pk": 13,
-    "fields": {}
   },
   {
     "model": "basic.booleanattribute",
