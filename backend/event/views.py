@@ -10,9 +10,9 @@ from rest_framework.exceptions import NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from basic.models import ScoutHierarchy
+from basic.models import ScoutHierarchy, AbstractAttribute
 from event.api_exceptions import GroupAlreadyRegistered, NotResponsible, SingleAlreadyRegistered, SingleGroupNotAllowed, \
-    WrongRegistrationFormat, RegistrationNotSupported, WrongEventCode, TooEarly, TooLate
+    WrongRegistrationFormat, RegistrationNotSupported, WrongEventCode, TooEarly, TooLate, TooManyParticipants
 from event.models import Event, EventLocation, BookingOption, RegistrationTypeGroup, RegistrationTypeSingle, \
     StandardEventTemplate, Registration, RegistrationParticipant, Gender, ParticipantActionConfirmation
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
@@ -32,6 +32,15 @@ def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapp
     new_module.save()
     new_module.attributes.add(*module.attributes.all())
     return new_module
+
+
+def add_event_attribute(attribute: AbstractAttribute) -> AbstractAttribute:
+    new_attribute: AbstractAttribute = deepcopy(attribute)
+    new_attribute.pk = None
+    new_attribute.id = None
+    new_attribute.template = False
+    new_attribute.save()
+    return new_attribute
 
 
 class EventLocationViewSet(viewsets.ModelViewSet):
@@ -255,20 +264,19 @@ class RegistrationViewSet(mixins.CreateModelMixin,
         if serializer.data['event_code'] != event.invitation_code:
             raise WrongEventCode()
 
-        # Check registration type permissions
-        if event.single_registration == RegistrationTypeSingle.External and \
-                not serializer.data['single']:
-            raise WrongRegistrationFormat
-        elif event.single_registration == RegistrationTypeSingle.Attached:
+        #  Check registration type permissions
+        # if event.group_registration == RegistrationTypeSingle.External and not serializer.data['single']:
+        #      raise WrongRegistrationFormat
+        if event.single_registration == RegistrationTypeSingle.Attached:
             raise RegistrationNotSupported
 
         # Check registration type permissions based on existing registrations
-        existing_registration = Registration.objects.filter(
-            scout_organisation=request.user.userextended.scout_organisation, event=event.id)
+        existing_registration = Registration.objects.filter(event=event.id)
 
         if existing_registration.exists():
             single_registration = existing_registration.filter(responsible_persons__in=[request.user.id], single=True)
-            existing_group_registration = existing_registration.filter(single=False)
+            existing_group_registration = existing_registration. \
+                filter(scout_organisation=request.user.userextended.scout_organisation, single=False)
             group_registration = existing_group_registration.filter(responsible_persons__in=[request.user.id])
 
             if single_registration.exists() and serializer.data['single']:
@@ -280,8 +288,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
             elif group_registration.exists() and serializer.data['single']:
                 raise SingleGroupNotAllowed
             elif event.group_registration == RegistrationTypeGroup.Required and \
-                    not group_registration.exists() and \
-                    serializer.data['single']:
+                    not group_registration.exists() and serializer.data['single']:
                 raise WrongRegistrationFormat
 
         registration: Registration = Registration(
@@ -292,6 +299,13 @@ class RegistrationViewSet(mixins.CreateModelMixin,
 
         registration.save()
         registration.responsible_persons.add(request.user)
+
+        event_module: QuerySet[EventModuleMapper] = EventModuleMapper.objects.filter(event=event.id, required=True)
+        for mapper in event_module:
+            for attribute_mapper in mapper.attributes.all():
+                attribute = attribute_mapper.attribute
+                new_attribute = add_event_attribute(attribute)
+                registration.tags.add(new_attribute.id)
 
         json = RegistrationGetSerializer(registration)
         return Response(json.data, status=status.HTTP_201_CREATED)
@@ -307,6 +321,19 @@ class RegistrationViewSet(mixins.CreateModelMixin,
 
         serializer = RegistrationGetSerializer(tmp)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        registration: Registration = self.get_object()
+        participants_count = RegistrationParticipant.objects.filter(registration=registration.id).count()
+        if participants_count == 0:
+            return super().destroy(request, *args, **kwargs)
+
+        if registration.event.last_possible_update < timezone.now():
+            raise TooLate
+        elif registration.event.registration_deadline < timezone.now():
+            raise TooManyParticipants
+
+        return super().destroy(request, *args, **kwargs)
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -327,6 +354,7 @@ class GenderViewSet(viewsets.ViewSet):
 
 
 class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         registration_id = self.kwargs.get("registration_pk", None)
@@ -404,6 +432,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
 
 
 class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
     serializer_class = RegistrationParticipantShortSerializer
 
     def create(self, request, *args, **kwargs) -> Response:

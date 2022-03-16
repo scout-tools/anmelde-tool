@@ -100,6 +100,12 @@ class EventCompleteSerializer(serializers.ModelSerializer):
         slug_field='email'
     )
 
+    event_planer_modules = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='name'
+    )
+
     class Meta:
         model = Event
         fields = '__all__'
@@ -167,32 +173,32 @@ class EventOverviewSerializer(serializers.ModelSerializer):
         group_possible = False
         single_possible = False
 
-        registration = obj.registration_set.filter(
-            scout_organisation=self.context['request'].user.userextended.scout_organisation)
-        if registration.exists() > 0:
-            existing_group: QuerySet = registration.filter(single=False)
-            group: QuerySet = existing_group.filter(responsible_persons__in=[self.context['request'].user.id])
-            single: QuerySet = registration.filter(responsible_persons__in=[self.context['request'].user.id],
-                                                   single=True)
+        existing_group: QuerySet = obj.registration_set. \
+            filter(single=False, scout_organisation=self.context['request'].user.userextended.scout_organisation)
+        group: QuerySet = existing_group.filter(responsible_persons__in=[self.context['request'].user.id])
+        single: QuerySet = obj.registration_set.filter(responsible_persons__in=[self.context['request'].user.id],
+                                                       single=True)
 
-            if existing_group.exists():
-                group_id = existing_group.first().id
+        if existing_group.exists():
+            group_id = existing_group.first().id
 
-            if single.exists():
-                single_id = single.first().id
+        if single.exists():
+            single_id = single.first().id
 
         if obj.group_registration != RegistrationTypeGroup.No:
             if group_id:
                 group_possible = group.exists() and existing_group.exists() \
                     if group is not None and existing_group is not None else False
-            else:
+            elif single_id is None:
                 group_possible = True
+
         if obj.single_registration != RegistrationTypeSingle.No:
             if obj.group_registration == RegistrationTypeGroup.Required:
-                if group_id is None:
+                if group_id is not None:
                     single_possible = True
-            else:
+            elif group_id is None:
                 single_possible = True
+
         return {
             'group_id': group_id,
             'single_id': single_id,

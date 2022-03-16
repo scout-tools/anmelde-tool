@@ -60,8 +60,17 @@ class EventLocation(TimeStampMixin):
         return f'{self.name}: ({self.address}, {self.zip_code})'
 
 
+class EventPlanerModule(models.Model):
+    id = models.AutoField(auto_created=True, primary_key=True)
+    name = models.CharField(max_length=100, blank=True)
+    type = models.ForeignKey(TagType, null=True, blank=False, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f'{self.type}: {self.name}'
+
+
 class EventModule(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=100, default='', blank=True)
     type = models.ForeignKey(TagType, on_delete=models.PROTECT)
     header = models.CharField(max_length=100, default='Default Header')
@@ -75,12 +84,20 @@ class EventModule(models.Model):
 class AttributeEventModuleMapper(models.Model):
     """
     if the is_required is set to True the user has explicity do a choice or has to confirm smth.
+    min_length, max_length are only relevant for attributes with texts
+    tooltip = extra description which appears when hovering above the element
     """
     id = models.AutoField(primary_key=True)
     attribute = models.ForeignKey(AbstractAttribute, on_delete=models.PROTECT, null=True)
     title = models.CharField(max_length=1000, null=True)
     text = models.CharField(max_length=10000, null=True)
     is_required = models.BooleanField(default=False)
+    min_length = models.IntegerField(default=0)
+    max_length = models.IntegerField(default=0)
+    tooltip = models.CharField(max_length=1000, null=True, blank=True)
+    default_value = models.CharField(max_length=1000, null=True, blank=True)
+    field_type = models.CharField(max_length=25, null=True, blank=True)
+    icon = models.CharField(max_length=25, null=True, blank=True)
 
     def __str__(self):
         return f'{self.title}'
@@ -107,6 +124,7 @@ class Event(TimeStampMixin):
     keycloak_admin_path = models.ForeignKey(Group, blank=True, on_delete=models.SET_NULL, null=True,
                                             related_name='keycloak_admin_group')
     tags = models.ManyToManyField(Tag, blank=True)
+    event_planer_modules = models.ManyToManyField(EventPlanerModule, blank=True)
     limited_registration_hierarchy = models.ForeignKey(ScoutHierarchy, default=493, on_delete=models.SET_DEFAULT)
     single_registration = models.CharField(max_length=1, choices=RegistrationTypeSingle.choices,
                                            default=RegistrationTypeSingle.No)

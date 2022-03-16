@@ -7,6 +7,13 @@ from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, TagType, AbstractAt
 admin.site.register(ScoutOrgaLevel)
 
 
+@admin.register(Tag)
+class ScoutHierarchyAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type')
+    search_fields = ('name',)
+    autocomplete_fields = ('type',)
+
+
 @admin.register(ScoutHierarchy)
 class ScoutHierarchyAdmin(admin.ModelAdmin):
     list_display = ('name', 'level', 'zip_code', 'parent')
@@ -29,7 +36,7 @@ class TagTypeAdmin(admin.ModelAdmin):
 class AbstractAttributeChildAdmin(PolymorphicChildModelAdmin):
     """ Base admin class for all child models """
     base_model = AbstractAttribute  # Optional, explicitly set here.
-    list_display = ('name', 'type',)
+    list_display = ('name', 'type', 'template')
     search_fields = ('name', 'type')
     autocomplete_fields = ('type',)
     show_in_index = True
@@ -43,11 +50,6 @@ class BooleanAttributeAdmin(AbstractAttributeChildAdmin):
 @admin.register(TimeAttribute)
 class TimeAttributeAdmin(AbstractAttributeChildAdmin):
     base_model = TimeAttribute
-
-
-@admin.register(Tag)
-class EventTagAdmin(AbstractAttributeChildAdmin):
-    base_model = Tag
 
 
 @admin.register(IntegerAttribute)
@@ -74,6 +76,6 @@ class StringAttributeAdmin(AbstractAttributeChildAdmin):
 class AbstractAttributeParentAdmin(PolymorphicParentModelAdmin):
     """ The parent model admin """
     base_model = AbstractAttribute  # Optional, explicitly set here.
-    child_models = (
-        Tag, BooleanAttribute, TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute)
+    child_models = (BooleanAttribute, TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute)
     list_filter = (PolymorphicChildModelFilter,)  # This is optional.
+    list_display = ('name', 'type', 'template')

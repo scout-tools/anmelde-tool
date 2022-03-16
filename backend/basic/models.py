@@ -61,7 +61,7 @@ class AttributeDescription(models.Model):
         return self.name
 
 
-class AbstractAttribute(PolymorphicModel):
+class Tag(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=100, blank=True)
     type = models.ForeignKey(TagType, null=True, blank=False, on_delete=models.PROTECT)
@@ -72,8 +72,14 @@ class AbstractAttribute(PolymorphicModel):
         return f'{self.type}: {self.name}'
 
 
-class Tag(AbstractAttribute):
-    pass
+class AbstractAttribute(PolymorphicModel):
+    id = models.AutoField(auto_created=True, primary_key=True)
+    name = models.CharField(max_length=100, blank=True)
+    type = models.ForeignKey(TagType, null=True, blank=False, on_delete=models.PROTECT)
+    template = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.type}: {self.name}'
 
 
 class BooleanAttribute(AbstractAttribute):
