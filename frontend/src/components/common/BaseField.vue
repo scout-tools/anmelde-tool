@@ -29,6 +29,7 @@
       :label="field.name"
       :value="value"
       :items="lookupList"
+      :prepend-icon="field.icon"
       required
       @input="onInputChanged"
       item-value="id"
@@ -39,10 +40,11 @@
       v-if="field.fieldType === 'localRefDropdown'"
       :label="field.name"
       :value="value"
+      :prepend-icon="field.icon"
       :items="field.referenceTable"
       required
       @input="onInputChanged"
-      item-value="id"
+      item-value="value"
       :item-text="field.referenceDisplay"
     >
     </v-select>
@@ -263,6 +265,13 @@ export default {
     },
     onInputChanged(value) {
       this.$emit('input', value);
+    },
+    onDateInputChanged(value) {
+      const newDate = this.$moment(value, 'L', 'de');
+      if (newDate.isValid() && value.length === 10) {
+        this.onInputChanged(newDate.toDate());
+      }
+      this.$forceUpdate();
     },
     onDateTimeInputChangedDate(value) {
       const newDate = this.$moment(value, 'L', 'de');

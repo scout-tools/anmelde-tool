@@ -52,7 +52,7 @@
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-btn
-                        color="secondary"
+                        color="primary"
                         @click="onCreateRegistrationClicked"
                       >
                         <v-icon left dark>mdi-check</v-icon>

@@ -28,6 +28,9 @@ export default {
     onIngoredClicked() {
       this.$emit('nextStep');
     },
+    ignore() {
+      this.$emit('ignore');
+    },
     errorMessage(field, valdiationObj) {
       const errors = [];
       if (!valdiationObj.data[field]) {

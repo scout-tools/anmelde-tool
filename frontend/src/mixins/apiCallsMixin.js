@@ -9,6 +9,21 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/`;
       return axios.get(path);
     },
+    async getRegService(route, registration) {
+      const path = `${process.env.VUE_APP_API}/event/registration/${registration}/${route}/`;
+      console.log(path);
+      return axios.get(path);
+    },
+    async getRegServiceById(route, registration, id) {
+      const path = `${process.env.VUE_APP_API}/event/registration/${registration}/${route}/${id}/`;
+      console.log(path);
+      return axios.get(path);
+    },
+    async updateRegServiceById(route, registration, data) {
+      const path = `${process.env.VUE_APP_API}/event/registration/${registration}/${route}/${data.id}/`;
+      console.log(path);
+      return axios.put(path, data);
+    },
     async getEventPlanerOverview() {
       const path = `${process.env.VUE_APP_API}/event/event-planer-overview/`;
       return axios.get(path);

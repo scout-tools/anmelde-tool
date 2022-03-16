@@ -57,7 +57,7 @@
               Der beste Weg, um große Anmeldezahlen übersichtlich zu gestalten.
             </h2>
             <span class="subheading">
-              Kein E-Mail Krieg. Keine Missverständnisse. Zeit für das
+              Keine E-Mail Missverständnisse. Zeit für das
               Wesentliche.
             </span>
           </div>

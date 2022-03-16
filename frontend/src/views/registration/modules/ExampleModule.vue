@@ -8,29 +8,20 @@
     @nextStep="nextStep"
   >
     <template v-slot:header>
-      <p>Hier ist Platz für eine Nachricht an die Lagerleitung</p>
     </template>
 
     <template v-slot:main>
-      <div v-for="(field, i) in fields" :key="i">
-        <BaseField
-          :field="field"
-          v-model="data[field.techName]"
-          :valdiationObj="$v"
-        />
-      </div>
     </template>
   </GenericRegModul>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import GenericRegModul from '@/views/registration/components/GenericRegModul.vue';
-import BaseField from '@/components/common/BaseField.vue';
 
 export default {
+  name: 'StepConsent',
   props: [
     'position',
     'maxPos',
@@ -41,27 +32,14 @@ export default {
   ],
   components: {
     GenericRegModul,
-    BaseField,
   },
   mixins: [apiCallsMixin, stepMixin],
   data: () => ({
     valid: true,
     isLoading: true,
     moduleData: [],
-    xxx: {},
-    data: {},
-    modulePath: '/event/event/',
-    fields: [
-      {
-        name: 'Verifizierungscode',
-        techName: 'invitationCode',
-        tooltip: '123',
-        icon: 'mdi-account-circle',
-        mandatory: true,
-        fieldType: 'textfield',
-        default: '',
-      },
-    ],
+    data: {
+    },
   }),
   validations: {
     data: {
@@ -92,6 +70,9 @@ export default {
       return this.currentEvent.cloudLink;
     },
   },
+  mounted() {
+    this.beforeTabShow();
+  },
   methods: {
     beforeTabShow() {
       this.loadData();
@@ -100,21 +81,6 @@ export default {
     },
     loadData() {
       this.isLoading = true;
-      Promise.all([
-        this.getModule(this.moduleId),
-      ])
-        .then((values) => {
-          this.moduleData = values[0].data; //eslint-disable-line
-          this.isLoading = false;
-          this.setDefaults();
-          this.loadAttributeEventModule();
-        })
-        .catch((error) => {
-          this.errormsg = error.response.data.message;
-          this.isLoading = false;
-        });
-    },
-    loadAttributeEventModule() {
     },
   },
 };

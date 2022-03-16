@@ -152,7 +152,7 @@ export default {
           this.getPersonalData(),
         ])
           .then((values) => {
-            this.currentEvent = values[0]; // eslint-disable-line
+            this.currentEvent = values[0].data; // eslint-disable-line
             this.currentModules = values[1].data // eslint-disable-line
             this.personalData = values[2].data // eslint-disable-line
 
