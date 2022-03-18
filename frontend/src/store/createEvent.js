@@ -19,6 +19,7 @@ export default {
       keycloakPath: null,
       keycloakAdminPath: null,
       personalDataRequired: false,
+      eventPlanerModules: [],
     },
   }),
   mutations: {

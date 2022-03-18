@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+from basic.models import AbstractAttribute
 from event.models import EventLocation, Event, BookingOption, EventModule, EventModuleMapper, \
     AttributeEventModuleMapper, StandardEventTemplate, Registration, RegistrationParticipant, EventPlanerModule
 
@@ -73,6 +75,11 @@ class RegistrationAdmin(admin.ModelAdmin):
     search_fields = ('scout_organisation', 'event')
     autocomplete_fields = ('event', 'scout_organisation')
     list_filter = ('event__name',)
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(RegistrationAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['tags'].queryset = AbstractAttribute.objects.exclude(template=True)
+        return form
 
 
 @admin.register(RegistrationParticipant)

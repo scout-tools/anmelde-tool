@@ -104,13 +104,13 @@ export default {
   computed: {
     steps() {
       let sleepingLocation;
-      if (this.event.tags.includes(10)) {
+      if (this.event.eventPlanerModules.includes('BookingOptionComplex')) {
         sleepingLocation = StepParticipationFeeComplex;
       } else {
         sleepingLocation = StepParticipationFeeSimple;
       }
       let authorization;
-      if (this.event.tags.includes(12)) {
+      if (this.event.eventPlanerModules.includes('KeycloakAuthorization')) {
         authorization = StepEventAuthenticationKeycloak;
       } else {
         authorization = StepEventAuthenticationInternal;
@@ -203,6 +203,8 @@ export default {
       });
       this.$router.push({ name: 'eventPlaner' });
     }
+
+    this.getData();
 
     if (this.$route.params.step) {
       this.isSingleStep = true;

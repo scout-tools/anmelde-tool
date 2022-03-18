@@ -11,6 +11,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from basic.models import ScoutHierarchy, AbstractAttribute
+from basic.serializers import AbstractAttributeGetPolymorphicSerializer, AbstractAttributePostPolymorphicSerializer, \
+    AbstractAttributePostSerializer, assign_value_attribute
 from event.api_exceptions import GroupAlreadyRegistered, NotResponsible, SingleAlreadyRegistered, SingleGroupNotAllowed, \
     WrongRegistrationFormat, RegistrationNotSupported, WrongEventCode, TooEarly, TooLate, TooManyParticipants
 from event.models import Event, EventLocation, BookingOption, RegistrationTypeGroup, RegistrationTypeSingle, \
@@ -21,7 +23,7 @@ from event.serializers import EventPlanerSerializer, EventLocationGetSerializer,
     EventModuleMapperPostSerializer, EventModuleMapperGetSerializer, RegistrationPostSerializer, \
     RegistrationGetSerializer, RegistrationPutSerializer, RegistrationParticipantSerializer, \
     RegistrationParticipantShortSerializer, RegistrationParticipantPutSerializer, \
-    RegistrationParticipantGroupSerializer, EventRegistrationSerializer
+    RegistrationParticipantGroupSerializer, EventRegistrationSerializer, RegistrationAttributePostSerializer
 
 
 def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
@@ -389,6 +391,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
                 request.data['needs_confirmation'] = ParticipantActionConfirmation.AddFromExisting
 
         request.data['generated'] = False
+
         return super().update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
@@ -515,3 +518,42 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
             raise TooLate
 
         return registration
+
+
+class RegistrationAttributeViewSet(viewsets.ModelViewSet):
+    serializer_class = AbstractAttributeGetPolymorphicSerializer
+
+    def create(self, request, *args, **kwargs) -> Response:
+        serializer: RegistrationAttributePostSerializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        registration_id = self.kwargs.get("registration_pk", None)
+        registration: Registration = get_object_or_404(Registration, pk=registration_id)
+
+        template_attribute: AbstractAttribute = get_object_or_404(AbstractAttribute,
+                                                                  pk=serializer.data.get('template_id', -1))
+
+        new_attribute = add_event_attribute(template_attribute)
+
+        if serializer.data.get('value', None) is not None:
+            assign_value_attribute(new_attribute, serializer.data.get('value'))
+
+        registration.tags.add(new_attribute.id)
+
+        json = AbstractAttributeGetPolymorphicSerializer(new_attribute)
+        return Response(json.data, status=status.HTTP_201_CREATED)
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return RegistrationAttributePostSerializer
+        elif self.request.method == 'GET':
+            return AbstractAttributeGetPolymorphicSerializer
+        elif self.request.method == 'PUT':
+            return AbstractAttributePostPolymorphicSerializer
+        elif self.request.method == 'DESTROY':
+            return AbstractAttributeGetPolymorphicSerializer
+
+    def get_queryset(self) -> QuerySet:
+        registration_id = self.kwargs.get("registration_pk", None)
+        registration: Registration = get_object_or_404(Registration, pk=registration_id)
+        return registration.tags

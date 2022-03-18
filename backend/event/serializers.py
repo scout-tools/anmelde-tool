@@ -3,7 +3,7 @@ from django.utils import timezone
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from authentication.serializers import UserExtendedShortSerializer
-from basic.serializers import TagShortSerializer, ZipCodeSerializer, AbstractAttributePolymorphicSerializer, \
+from basic.serializers import TagShortSerializer, ZipCodeSerializer, AbstractAttributeGetPolymorphicSerializer, \
     ZipCodeShortSerializer
 from .models import Event, EventLocation, BookingOption, EventModuleMapper, EventModule, AttributeEventModuleMapper, \
     RegistrationTypeGroup, RegistrationTypeSingle, Registration, RegistrationParticipant
@@ -121,7 +121,7 @@ class EventPlanerSerializer(serializers.ModelSerializer):
 
 
 class AttributeEventModuleMapperSerializer(serializers.ModelSerializer):
-    attribute = AbstractAttributePolymorphicSerializer(many=False, read_only=True)
+    attribute = AbstractAttributeGetPolymorphicSerializer(many=False, read_only=True)
 
     class Meta:
         model = AttributeEventModuleMapper
@@ -261,3 +261,8 @@ class RegistrationParticipantPutSerializer(serializers.ModelSerializer):
 class RegistrationParticipantGroupSerializer(serializers.Serializer):
     number = serializers.CharField(required=True)
     avoid_manual_check = serializers.BooleanField(required=False, default=False)
+
+
+class RegistrationAttributePostSerializer(serializers.Serializer):
+    template_id = serializers.IntegerField(required=True)
+    value = serializers.CharField(required=False)

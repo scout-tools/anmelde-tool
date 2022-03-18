@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import ScoutHierarchy, ZipCode, Tag, TagType, AbstractAttribute
 from .serializers import ScoutHierarchySerializer, ZipCodeSerializer, TagShortSerializer, TagTypeShortSerializer, \
-    AbstractAttributePolymorphicSerializer
+    AbstractAttributeGetPolymorphicSerializer
 
 
 class ScoutHierarchyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -59,4 +59,4 @@ class TagTypeViewSet(viewsets.ModelViewSet):
 class AttributeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = AbstractAttribute.objects.all()
-    serializer_class = AbstractAttributePolymorphicSerializer
+    serializer_class = AbstractAttributeGetPolymorphicSerializer

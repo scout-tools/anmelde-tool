@@ -33,6 +33,8 @@ registration_router.register(r'single-participant', views.RegistrationSinglePart
                              basename='single-participant')
 registration_router.register(r'group-participants', views.RegistrationGroupParticipantViewSet,
                              basename='group-participants')
+registration_router.register(r'attribute', views.RegistrationAttributeViewSet,
+                             basename='attribute')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

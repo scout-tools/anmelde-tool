@@ -262,7 +262,7 @@
     "model": "basic.abstractattribute",
     "pk": 21,
     "fields": {
-      "polymorphic_ctype": 19,
+      "polymorphic_ctype": 18,
       "name": "Anreise",
       "type": 9,
       "template": true
@@ -272,7 +272,7 @@
     "model": "basic.abstractattribute",
     "pk": 22,
     "fields": {
-      "polymorphic_ctype": 19,
+      "polymorphic_ctype": 18,
       "name": "Abreise",
       "type": 9,
       "template": true

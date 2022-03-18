@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import GenericRegModul from '@/views/registration/components/GenericRegModul.vue';

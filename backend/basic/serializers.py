@@ -1,8 +1,34 @@
+from datetime import datetime
+
 from rest_framework import serializers
 from rest_polymorphic.serializers import PolymorphicSerializer
 
 from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, Tag, TagType, AbstractAttribute, BooleanAttribute, \
-    TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute
+    TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute, TravelType, TravelSlots
+
+"""
+# noqa turn off pycharm warnings about missing abstract methods, which is a bug of pycharm
+"""
+
+
+def assign_value_attribute(attribute: AbstractAttribute, value) -> AbstractAttribute:
+    if isinstance(attribute, BooleanAttribute):
+        attribute.boolean_field = bool(value)
+    elif isinstance(attribute, TimeAttribute):
+        attribute.date_field = datetime(value)
+    elif isinstance(attribute, IntegerAttribute):
+        attribute.integer_field = int(value)
+    elif isinstance(attribute, FloatAttribute):
+        attribute.float_field = float(value)
+    elif isinstance(attribute, StringAttribute):
+        attribute.string_field = str(value)
+    elif isinstance(attribute, TravelAttribute):
+        attribute.type_field = TravelType(value[:1])
+        attribute.time_field = TravelSlots(value[1:])
+    else:
+        raise Exception('attribute type not found')
+    attribute.save()
+    return attribute
 
 
 class ScoutHierarchySerializer(serializers.ModelSerializer):
@@ -73,7 +99,7 @@ class AbstractAttributeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class BooleanAttributeSerializer(serializers.ModelSerializer):
+class BooleanAttributeGetSerializer(serializers.ModelSerializer):
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
@@ -81,7 +107,7 @@ class BooleanAttributeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TimeAttributeSerializer(serializers.ModelSerializer):
+class TimeAttributeGetSerializer(serializers.ModelSerializer):
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
@@ -89,7 +115,7 @@ class TimeAttributeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class IntegerAttributeSerializer(serializers.ModelSerializer):
+class IntegerAttributeGetSerializer(serializers.ModelSerializer):
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
@@ -97,7 +123,7 @@ class IntegerAttributeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FloatAttributeSerializer(serializers.ModelSerializer):
+class FloatAttributeGetSerializer(serializers.ModelSerializer):
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
@@ -105,7 +131,7 @@ class FloatAttributeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TravelAttributeSerializer(serializers.ModelSerializer):
+class TravelAttributeGetSerializer(serializers.ModelSerializer):
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
@@ -113,7 +139,7 @@ class TravelAttributeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class StringAttributeSerializer(serializers.ModelSerializer):
+class StringAttributeGetSerializer(serializers.ModelSerializer):
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
@@ -121,12 +147,59 @@ class StringAttributeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class AbstractAttributePolymorphicSerializer(PolymorphicSerializer):
+class AbstractAttributeGetPolymorphicSerializer(PolymorphicSerializer):
     model_serializer_mapping = {
-        FloatAttribute: FloatAttributeSerializer,
-        IntegerAttribute: IntegerAttributeSerializer,
-        TimeAttribute: TimeAttributeSerializer,
-        BooleanAttribute: BooleanAttributeSerializer,
-        TravelAttribute: TravelAttributeSerializer,
-        StringAttribute: StringAttributeSerializer
+        FloatAttribute: FloatAttributeGetSerializer,
+        IntegerAttribute: IntegerAttributeGetSerializer,
+        TimeAttribute: TimeAttributeGetSerializer,
+        BooleanAttribute: BooleanAttributeGetSerializer,
+        TravelAttribute: TravelAttributeGetSerializer,
+        StringAttribute: StringAttributeGetSerializer
     }
+
+
+class BooleanAttributePostSerializer(serializers.Serializer):  # noqa
+    template_id = serializers.IntegerField(required=True)
+    boolean_field = serializers.BooleanField(required=False)
+
+
+class TimeAttributePostSerializer(serializers.Serializer):  # noqa
+    template_id = serializers.IntegerField(required=True)
+    date_field = serializers.DateTimeField(required=False)
+
+
+class IntegerAttributePostSerializer(serializers.Serializer):  # noqa
+    template_id = serializers.IntegerField(required=True)
+    integer_field = serializers.IntegerField(required=False)
+
+
+class FloatAttributePostSerializer(serializers.Serializer):  # noqa
+    template_id = serializers.IntegerField(required=True)
+    float_field = serializers.FloatField(required=False)
+
+
+class TravelAttributePostSerializer(serializers.Serializer):  # noqa
+    template_id = serializers.IntegerField(required=True)
+    time_field = serializers.CharField(required=False, max_length=2)
+    type_field = serializers.CharField(required=False, max_length=2)
+
+
+class StringAttributePostSerializer(serializers.Serializer):  # noqa
+    template_id = serializers.IntegerField(required=True)
+    string_field = serializers.CharField(required=False, max_length=9999)
+
+
+class AbstractAttributePostPolymorphicSerializer(PolymorphicSerializer):
+    resource_type_field_name = 'template_id'
+    model_serializer_mapping = {
+        FloatAttribute: FloatAttributePostSerializer,
+        IntegerAttribute: IntegerAttributePostSerializer,
+        TimeAttribute: TimeAttributePostSerializer,
+        BooleanAttribute: BooleanAttributePostSerializer,
+        TravelAttribute: TravelAttributePostSerializer,
+        StringAttribute: StringAttributePostSerializer
+    }
+
+
+class AbstractAttributePostSerializer(serializers.Serializer):
+    template_id = serializers.IntegerField(required=True)
