@@ -77,6 +77,7 @@ class AbstractAttribute(PolymorphicModel):
     name = models.CharField(max_length=100, blank=True)
     type = models.ForeignKey(TagType, null=True, blank=False, on_delete=models.PROTECT)
     template = models.BooleanField(default=False)
+    template_id = models.IntegerField(default=-1)
 
     def __str__(self):
         return f'{self.type}: {self.name}'

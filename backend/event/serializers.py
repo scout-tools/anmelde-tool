@@ -210,7 +210,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
 class RegistrationPostSerializer(serializers.Serializer):
     event_code = serializers.CharField(required=True)
     single = serializers.BooleanField(required=True)
-    event = serializers.IntegerField(required=True)
+    event = serializers.UUIDField(required=True)
 
 
 class RegistrationPutSerializer(serializers.ModelSerializer):
@@ -261,8 +261,3 @@ class RegistrationParticipantPutSerializer(serializers.ModelSerializer):
 class RegistrationParticipantGroupSerializer(serializers.Serializer):
     number = serializers.CharField(required=True)
     avoid_manual_check = serializers.BooleanField(required=False, default=False)
-
-
-class RegistrationAttributePostSerializer(serializers.Serializer):
-    template_id = serializers.IntegerField(required=True)
-    value = serializers.CharField(required=False)

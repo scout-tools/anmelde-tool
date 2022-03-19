@@ -371,7 +371,7 @@
   },
   {
     "model": "event.event",
-    "pk": 1,
+    "pk": "54929341-060c-4e32-bb39-8ba5ba6e6590",
     "fields": {
       "created_at": "2022-03-10T11:43:48.710Z",
       "updated_at": "2022-03-10T11:43:48.710Z",
@@ -403,7 +403,7 @@
   },
   {
     "model": "event.event",
-    "pk": 2,
+    "pk": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
     "fields": {
       "created_at": "2022-03-10T11:46:18.946Z",
       "updated_at": "2022-03-16T21:24:03.184Z",
@@ -441,7 +441,7 @@
   },
   {
     "model": "event.event",
-    "pk": 3,
+    "pk": "1105a19c-0ffb-4242-b662-3556a083346c",
     "fields": {
       "created_at": "2022-03-10T12:48:32.515Z",
       "updated_at": "2022-03-16T21:24:34.197Z",
@@ -485,7 +485,7 @@
     "fields": {
       "ordering": 1,
       "module": 1,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": true,
       "overwrite_description": null,
       "standard": true,
@@ -502,7 +502,7 @@
     "fields": {
       "ordering": 2,
       "module": 2,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": true,
       "overwrite_description": null,
       "standard": true,
@@ -515,7 +515,7 @@
     "fields": {
       "ordering": 2,
       "module": 3,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": true,
       "overwrite_description": null,
       "standard": true,
@@ -528,7 +528,7 @@
     "fields": {
       "ordering": 3,
       "module": 8,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": false,
       "overwrite_description": null,
       "standard": true,
@@ -543,7 +543,7 @@
     "fields": {
       "ordering": 4,
       "module": 7,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": true,
       "overwrite_description": null,
       "standard": true,
@@ -558,7 +558,7 @@
     "fields": {
       "ordering": 999,
       "module": 4,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": false,
       "overwrite_description": null,
       "standard": true,
@@ -571,7 +571,7 @@
     "fields": {
       "ordering": 999,
       "module": 5,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": false,
       "overwrite_description": null,
       "standard": true,
@@ -584,7 +584,7 @@
     "fields": {
       "ordering": 999,
       "module": 6,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": false,
       "overwrite_description": null,
       "standard": true,
@@ -597,7 +597,7 @@
     "fields": {
       "ordering": 999,
       "module": 9,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": false,
       "overwrite_description": null,
       "standard": true,
@@ -612,7 +612,7 @@
     "fields": {
       "ordering": 999,
       "module": 10,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": false,
       "overwrite_description": null,
       "standard": true,
@@ -627,7 +627,7 @@
     "fields": {
       "ordering": 999,
       "module": 11,
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "required": false,
       "overwrite_description": null,
       "standard": true,
@@ -645,7 +645,7 @@
     "fields": {
       "ordering": 1,
       "module": 1,
-      "event": 2,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": true,
       "overwrite_description": null,
       "standard": false,
@@ -662,7 +662,7 @@
     "fields": {
       "ordering": 2,
       "module": 2,
-      "event": 2,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": true,
       "overwrite_description": null,
       "standard": false,
@@ -675,7 +675,7 @@
     "fields": {
       "ordering": 3,
       "module": 6,
-      "event": 2,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": false,
       "overwrite_description": null,
       "standard": false,
@@ -688,7 +688,7 @@
     "fields": {
       "ordering": 5,
       "module": 8,
-      "event": 2,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": false,
       "overwrite_description": null,
       "standard": false,
@@ -703,7 +703,7 @@
     "fields": {
       "ordering": 6,
       "module": 7,
-      "event": 2,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": true,
       "overwrite_description": null,
       "standard": false,
@@ -718,7 +718,7 @@
     "fields": {
       "ordering": 4,
       "module": 11,
-      "event": 2,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": false,
       "overwrite_description": null,
       "standard": false,
@@ -739,7 +739,7 @@
       "price": "50.50",
       "bookable_from": null,
       "bookable_till": null,
-      "event": 2,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "tags": []
     }
   },
@@ -752,7 +752,7 @@
       "price": "25.50",
       "bookable_from": null,
       "bookable_till": null,
-      "event": 2,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "tags": []
     }
   },
@@ -761,7 +761,7 @@
     "pk": 1,
     "fields": {
       "name": "Standard",
-      "event": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
       "introduction": 1,
       "summary": 5,
       "registration": 3,

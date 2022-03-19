@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth.models import User, Group
 from django.db import models
 from basic.models import ZipCode, Tag, AbstractAttribute, AttributeDescription, TimeStampMixin, ScoutHierarchy, TagType
@@ -65,7 +67,7 @@ class AttributeEventModuleMapper(models.Model):
 
 
 class Event(TimeStampMixin):
-    id = models.AutoField(auto_created=True, primary_key=True)
+    id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
     technical_name = models.CharField(max_length=15, null=True, blank=True)
     short_description = models.CharField(max_length=100, blank=True)
@@ -137,7 +139,7 @@ class Registration(TimeStampMixin):
     is_accepted = the registration is accepted automatically as long as changes are made before the
         registration deadline after that the registration has to be accepted manually
     """
-    id = models.AutoField(auto_created=True, primary_key=True)
+    id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
     scout_organisation = models.ForeignKey(ScoutHierarchy, null=True, on_delete=models.PROTECT)
     responsible_persons = models.ManyToManyField(User)
     is_confirmed = models.BooleanField(default=False)

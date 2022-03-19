@@ -1,34 +1,11 @@
-from datetime import datetime
-
 from rest_framework import serializers
-from rest_polymorphic.serializers import PolymorphicSerializer
-
 from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, Tag, TagType, AbstractAttribute, BooleanAttribute, \
     TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute, TravelType, TravelSlots
+from .polymorphic_serializer import PolymorphicSerializer
 
 """
 # noqa turn off pycharm warnings about missing abstract methods, which is a bug of pycharm
 """
-
-
-def assign_value_attribute(attribute: AbstractAttribute, value) -> AbstractAttribute:
-    if isinstance(attribute, BooleanAttribute):
-        attribute.boolean_field = bool(value)
-    elif isinstance(attribute, TimeAttribute):
-        attribute.date_field = datetime(value)
-    elif isinstance(attribute, IntegerAttribute):
-        attribute.integer_field = int(value)
-    elif isinstance(attribute, FloatAttribute):
-        attribute.float_field = float(value)
-    elif isinstance(attribute, StringAttribute):
-        attribute.string_field = str(value)
-    elif isinstance(attribute, TravelAttribute):
-        attribute.type_field = TravelType(value[:1])
-        attribute.time_field = TravelSlots(value[1:])
-    else:
-        raise Exception('attribute type not found')
-    attribute.save()
-    return attribute
 
 
 class ScoutHierarchySerializer(serializers.ModelSerializer):
@@ -91,60 +68,60 @@ class TagLongSerializer(serializers.ModelSerializer):
                   'description')
 
 
-class AbstractAttributeSerializer(serializers.ModelSerializer):
+class AbstractAttributeSerializer(serializers.ModelSerializer):  # noqa
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
         model = AbstractAttribute
-        fields = '__all__'
+        exclude = ('template', 'polymorphic_ctype')
 
 
-class BooleanAttributeGetSerializer(serializers.ModelSerializer):
+class BooleanAttributeGetSerializer(serializers.ModelSerializer):  # noqa
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
         model = BooleanAttribute
-        fields = '__all__'
+        exclude = ('template', 'polymorphic_ctype')
 
 
-class TimeAttributeGetSerializer(serializers.ModelSerializer):
+class TimeAttributeGetSerializer(serializers.ModelSerializer):  # noqa
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
         model = TimeAttribute
-        fields = '__all__'
+        exclude = ('template', 'polymorphic_ctype')
 
 
-class IntegerAttributeGetSerializer(serializers.ModelSerializer):
+class IntegerAttributeGetSerializer(serializers.ModelSerializer):  # noqa
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
         model = IntegerAttribute
-        fields = '__all__'
+        exclude = ('template', 'polymorphic_ctype')
 
 
-class FloatAttributeGetSerializer(serializers.ModelSerializer):
+class FloatAttributeGetSerializer(serializers.ModelSerializer):  # noqa
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
         model = FloatAttribute
-        fields = '__all__'
+        exclude = ('template', 'polymorphic_ctype')
 
 
-class TravelAttributeGetSerializer(serializers.ModelSerializer):
+class TravelAttributeGetSerializer(serializers.ModelSerializer):  # noqa
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
         model = TravelAttribute
-        fields = '__all__'
+        exclude = ('template', 'polymorphic_ctype')
 
 
-class StringAttributeGetSerializer(serializers.ModelSerializer):
+class StringAttributeGetSerializer(serializers.ModelSerializer):  # noqa
     type = TagTypeShortSerializer(many=False)
 
     class Meta:
         model = StringAttribute
-        fields = '__all__'
+        exclude = ('template', 'polymorphic_ctype')
 
 
 class AbstractAttributeGetPolymorphicSerializer(PolymorphicSerializer):
@@ -158,39 +135,102 @@ class AbstractAttributeGetPolymorphicSerializer(PolymorphicSerializer):
     }
 
 
-class BooleanAttributePostSerializer(serializers.Serializer):  # noqa
-    template_id = serializers.IntegerField(required=True)
-    boolean_field = serializers.BooleanField(required=False)
+class BooleanAttributePutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BooleanAttribute
+        fields = ('boolean_field',)
 
 
-class TimeAttributePostSerializer(serializers.Serializer):  # noqa
-    template_id = serializers.IntegerField(required=True)
-    date_field = serializers.DateTimeField(required=False)
+class TimeAttributePutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TimeAttribute
+        fields = ('date_field',)
 
 
-class IntegerAttributePostSerializer(serializers.Serializer):  # noqa
-    template_id = serializers.IntegerField(required=True)
-    integer_field = serializers.IntegerField(required=False)
+class IntegerAttributePutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IntegerAttribute
+        fields = ('integer_field',)
 
 
-class FloatAttributePostSerializer(serializers.Serializer):  # noqa
-    template_id = serializers.IntegerField(required=True)
-    float_field = serializers.FloatField(required=False)
+class FloatAttributePutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FloatAttribute
+        fields = ('float_field',)
 
 
-class TravelAttributePostSerializer(serializers.Serializer):  # noqa
-    template_id = serializers.IntegerField(required=True)
-    time_field = serializers.CharField(required=False, max_length=2)
-    type_field = serializers.CharField(required=False, max_length=2)
+class TravelAttributePutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TravelAttribute
+        fields = ('type_field', 'time_field')
 
 
-class StringAttributePostSerializer(serializers.Serializer):  # noqa
-    template_id = serializers.IntegerField(required=True)
-    string_field = serializers.CharField(required=False, max_length=9999)
+class StringAttributePutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StringAttribute
+        fields = ('string_field',)
+
+
+class AbstractAttributePutPolymorphicSerializer(PolymorphicSerializer):
+    model_serializer_mapping = {
+        FloatAttribute: FloatAttributePutSerializer,
+        IntegerAttribute: IntegerAttributePutSerializer,
+        TimeAttribute: TimeAttributePutSerializer,
+        BooleanAttribute: BooleanAttributePutSerializer,
+        TravelAttribute: TravelAttributePutSerializer,
+        StringAttribute: StringAttributePutSerializer
+    }
+
+
+class BooleanAttributePostSerializer(serializers.ModelSerializer):
+    resourcetype = serializers.CharField()
+
+    class Meta:
+        model = BooleanAttribute
+        fields = ('boolean_field', 'resourcetype', 'template_id')
+
+
+class TimeAttributePostSerializer(serializers.ModelSerializer):
+    resourcetype = serializers.CharField()
+
+    class Meta:
+        model = TimeAttribute
+        fields = ('date_field', 'resourcetype', 'template_id')
+
+
+class IntegerAttributePostSerializer(serializers.ModelSerializer):
+    resourcetype = serializers.CharField()
+
+    class Meta:
+        model = IntegerAttribute
+        fields = ('integer_field', 'resourcetype', 'template_id')
+
+
+class FloatAttributePostSerializer(serializers.ModelSerializer):
+    resourcetype = serializers.CharField()
+
+    class Meta:
+        model = FloatAttribute
+        fields = ('float_field', 'resourcetype', 'template_id')
+
+
+class TravelAttributePostSerializer(serializers.ModelSerializer):
+    resourcetype = serializers.CharField()
+
+    class Meta:
+        model = TravelAttribute
+        fields = ('type_field', 'time_field', 'resourcetype', 'template_id')
+
+
+class StringAttributePostSerializer(serializers.ModelSerializer):
+    resourcetype = serializers.CharField()
+
+    class Meta:
+        model = StringAttribute
+        fields = ('string_field', 'resourcetype', 'template_id')
 
 
 class AbstractAttributePostPolymorphicSerializer(PolymorphicSerializer):
-    resource_type_field_name = 'template_id'
     model_serializer_mapping = {
         FloatAttribute: FloatAttributePostSerializer,
         IntegerAttribute: IntegerAttributePostSerializer,
@@ -199,7 +239,3 @@ class AbstractAttributePostPolymorphicSerializer(PolymorphicSerializer):
         TravelAttribute: TravelAttributePostSerializer,
         StringAttribute: StringAttributePostSerializer
     }
-
-
-class AbstractAttributePostSerializer(serializers.Serializer):
-    template_id = serializers.IntegerField(required=True)

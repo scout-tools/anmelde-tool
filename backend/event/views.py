@@ -11,10 +11,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from basic.models import ScoutHierarchy, AbstractAttribute
-from basic.serializers import AbstractAttributeGetPolymorphicSerializer, AbstractAttributePostPolymorphicSerializer, \
-    AbstractAttributePostSerializer, assign_value_attribute
-from event.api_exceptions import GroupAlreadyRegistered, NotResponsible, SingleAlreadyRegistered, SingleGroupNotAllowed, \
-    WrongRegistrationFormat, RegistrationNotSupported, WrongEventCode, TooEarly, TooLate, TooManyParticipants
+from basic.serializers import AbstractAttributeGetPolymorphicSerializer, AbstractAttributePutPolymorphicSerializer, \
+    AbstractAttributePostPolymorphicSerializer
+from event.api_exceptions import GroupAlreadyRegistered, NotResponsible, SingleAlreadyRegistered, \
+    SingleGroupNotAllowed, WrongRegistrationFormat, RegistrationNotSupported, WrongEventCode, TooEarly, TooLate, \
+    TooManyParticipants
 from event.models import Event, EventLocation, BookingOption, RegistrationTypeGroup, RegistrationTypeSingle, \
     StandardEventTemplate, Registration, RegistrationParticipant, Gender, ParticipantActionConfirmation
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
@@ -23,7 +24,7 @@ from event.serializers import EventPlanerSerializer, EventLocationGetSerializer,
     EventModuleMapperPostSerializer, EventModuleMapperGetSerializer, RegistrationPostSerializer, \
     RegistrationGetSerializer, RegistrationPutSerializer, RegistrationParticipantSerializer, \
     RegistrationParticipantShortSerializer, RegistrationParticipantPutSerializer, \
-    RegistrationParticipantGroupSerializer, EventRegistrationSerializer, RegistrationAttributePostSerializer
+    RegistrationParticipantGroupSerializer, EventRegistrationSerializer
 
 
 def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
@@ -41,6 +42,7 @@ def add_event_attribute(attribute: AbstractAttribute) -> AbstractAttribute:
     new_attribute.pk = None
     new_attribute.id = None
     new_attribute.template = False
+    new_attribute.template_id = attribute.id
     new_attribute.save()
     return new_attribute
 
@@ -521,10 +523,9 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
 
 
 class RegistrationAttributeViewSet(viewsets.ModelViewSet):
-    serializer_class = AbstractAttributeGetPolymorphicSerializer
 
     def create(self, request, *args, **kwargs) -> Response:
-        serializer: RegistrationAttributePostSerializer = self.get_serializer(data=request.data)
+        serializer: AbstractAttributePutPolymorphicSerializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         registration_id = self.kwargs.get("registration_pk", None)
@@ -535,23 +536,33 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
 
         new_attribute = add_event_attribute(template_attribute)
 
-        if serializer.data.get('value', None) is not None:
-            assign_value_attribute(new_attribute, serializer.data.get('value'))
+        serializer.update(new_attribute, serializer.validated_data)
 
         registration.tags.add(new_attribute.id)
 
         json = AbstractAttributeGetPolymorphicSerializer(new_attribute)
         return Response(json.data, status=status.HTTP_201_CREATED)
 
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        json = AbstractAttributeGetPolymorphicSerializer(instance)
+        return Response(json.data, status=status.HTTP_200_OK)
+
+
     def get_serializer_class(self):
         if self.request.method == 'POST':
-            return RegistrationAttributePostSerializer
+            return AbstractAttributePostPolymorphicSerializer
         elif self.request.method == 'GET':
             return AbstractAttributeGetPolymorphicSerializer
         elif self.request.method == 'PUT':
-            return AbstractAttributePostPolymorphicSerializer
-        elif self.request.method == 'DESTROY':
-            return AbstractAttributeGetPolymorphicSerializer
+            return AbstractAttributePutPolymorphicSerializer
+        else:
+            return AbstractAttributePutPolymorphicSerializer
 
     def get_queryset(self) -> QuerySet:
         registration_id = self.kwargs.get("registration_pk", None)

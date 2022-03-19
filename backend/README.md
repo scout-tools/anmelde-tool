@@ -34,9 +34,9 @@ Windows: `python manage.py add_fixtures test-data`
 `brew install postgresql`
 
 # Dumpdata
-Basic: `python manage.py dumpdata basic --exclude=basic.ZipCode --exclude=basic.ScoutOrgaLevel --exclude=basic.ScoutHierarchy -o data\test\1_completeBasic.json `
+Basic: `python -Xutf8 manage.py dumpdata basic contenttypes.contenttype --exclude=basic.ZipCode --exclude=basic.ScoutOrgaLevel --exclude=basic.ScoutHierarchy -o data\test\1_completeBasic.json `
 
-Event: `python manage.py dumpdata event -o data\test\2_completeEvent.json`
+Event: `python -Xutf8 manage.py dumpdata event -o data\test\2_completeEvent.json`
 
 
 # Test mails
