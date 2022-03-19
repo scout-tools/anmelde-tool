@@ -93,6 +93,16 @@ class EventModuleMapperPostSerializer(serializers.ModelSerializer):
         )
 
 
+class EventModuleMapperPutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventModuleMapper
+        fields = (
+            'attributes',
+            'overwrite_description',
+            'ordering'
+        )
+
+
 class EventCompleteSerializer(serializers.ModelSerializer):
     responsible_persons = serializers.SlugRelatedField(
         many=True,

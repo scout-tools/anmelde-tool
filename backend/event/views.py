@@ -24,7 +24,7 @@ from event.serializers import EventPlanerSerializer, EventLocationGetSerializer,
     EventModuleMapperPostSerializer, EventModuleMapperGetSerializer, RegistrationPostSerializer, \
     RegistrationGetSerializer, RegistrationPutSerializer, RegistrationParticipantSerializer, \
     RegistrationParticipantShortSerializer, RegistrationParticipantPutSerializer, \
-    RegistrationParticipantGroupSerializer, EventRegistrationSerializer
+    RegistrationParticipantGroupSerializer, EventRegistrationSerializer, EventModuleMapperPutSerializer
 
 
 def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
@@ -172,12 +172,14 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
                                 mixins.UpdateModelMixin,
                                 mixins.DestroyModelMixin,
                                 viewsets.GenericViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = EventModuleMapper.objects.all()
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return EventModuleMapperPostSerializer
+        elif self.request.method == 'PUT':
+            return EventModuleMapperPutSerializer
         else:
             return EventModuleMapperSerializer
 
@@ -193,8 +195,13 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
             return super().create(request, *args, **kwargs)
 
         new_module = add_event_module(module_template, event)
-        json = model_to_dict(new_module)
-        return Response(json, status=status.HTTP_201_CREATED)
+        json = EventModuleMapperSerializer(new_module)
+        return Response(json.data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        super().update(request, *args, **kwargs)
+        json = EventModuleMapperSerializer(self.get_object())
+        return Response(json.data, status=status.HTTP_200_OK)
 
     def destroy(self, request, *args, **kwargs) -> Response:
         mapper: EventModuleMapper = self.get_object()
@@ -204,7 +211,7 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
 
 
 class EventModulesViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = EventModuleSerializer
     queryset = EventModule.objects.all()
 
@@ -426,7 +433,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         input_serializer.is_valid(raise_exception=True)
 
         registration_id = self.kwargs.get("registration_pk", None)
-        registration: Registration = get_object_or_404(Registration, pk=registration_id)
+        registration: Registration = get_object_or_404(Registration, id=registration_id)
 
         if registration.event.registration_start > timezone.now():
             raise TooEarly
@@ -512,7 +519,7 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
         input_serializer.is_valid(raise_exception=True)
 
         registration_id = self.kwargs.get("registration_pk", None)
-        registration: Registration = get_object_or_404(Registration, pk=registration_id)
+        registration: Registration = get_object_or_404(Registration, id=registration_id)
 
         if registration.event.registration_start > timezone.now():
             raise TooEarly
@@ -529,7 +536,7 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         registration_id = self.kwargs.get("registration_pk", None)
-        registration: Registration = get_object_or_404(Registration, pk=registration_id)
+        registration: Registration = get_object_or_404(Registration, id=registration_id)
 
         template_attribute: AbstractAttribute = get_object_or_404(AbstractAttribute,
                                                                   pk=serializer.data.get('template_id', -1))
@@ -544,15 +551,9 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
         return Response(json.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        json = AbstractAttributeGetPolymorphicSerializer(instance)
+        super().update(request, *args, **kwargs)
+        json = AbstractAttributeGetPolymorphicSerializer(self.get_object())
         return Response(json.data, status=status.HTTP_200_OK)
-
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -566,5 +567,5 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         registration_id = self.kwargs.get("registration_pk", None)
-        registration: Registration = get_object_or_404(Registration, pk=registration_id)
+        registration: Registration = get_object_or_404(Registration, id=registration_id)
         return registration.tags
