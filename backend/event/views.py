@@ -1,7 +1,6 @@
 from copy import deepcopy
 
 from django.db.models import Q, QuerySet
-from django.forms.models import model_to_dict
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
@@ -227,12 +226,12 @@ class AvailableEventModulesViewSet(viewsets.ModelViewSet):
 
 
 class EventModuleAttributeMapperViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = AttributeEventModuleMapperSerializer
 
     def get_queryset(self):
         mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
-        mapper = EventModuleMapper.objects.get(id=mapper_id)
+        mapper = get_object_or_404(EventModuleMapper, id=mapper_id)
         return mapper.attributes.all()
 
 
@@ -444,7 +443,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
 
 
 class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = RegistrationParticipantShortSerializer
 
     def create(self, request, *args, **kwargs) -> Response:

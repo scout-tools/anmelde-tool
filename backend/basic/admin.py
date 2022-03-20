@@ -2,9 +2,10 @@ from django.contrib import admin
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
 from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, TagType, AbstractAttribute, Tag, \
-    BooleanAttribute, TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute
+    BooleanAttribute, TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute, Description
 
 admin.site.register(ScoutOrgaLevel)
+admin.site.register(Description)
 
 
 @admin.register(Tag)

@@ -20,6 +20,12 @@ class TravelSlots(models.TextChoices):
     Other = 'O', _('Noch Später')
 
 
+class DescriptionType(models.TextChoices):
+    FAQ = 'FAQ', _('FAQ')
+    Privacy = 'P', _('Datenschutz')
+    LegalNotice = 'LN', _('Impressum')
+
+
 class TimeStampMixin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
@@ -127,3 +133,14 @@ class ScoutHierarchy(TimeStampMixin):
 
     def __str__(self):
         return f"{self.level} - {self.name}"
+
+
+class Description(TimeStampMixin):
+    id = models.AutoField(auto_created=True, primary_key=True)
+    public = models.BooleanField(default=False)
+    question = models.CharField(max_length=250, null=True, blank=True)
+    answer = models.CharField(max_length=10000, null=True, blank=True)
+    type = models.CharField(max_length=3, choices=DescriptionType.choices, default=DescriptionType.FAQ)
+
+    def __str__(self):
+        return f'{self.get_type_display()}: {self.question}'

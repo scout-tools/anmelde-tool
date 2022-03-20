@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, Tag, TagType, AbstractAttribute, BooleanAttribute, \
-    TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute, TravelType, TravelSlots
+    TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute, TravelType, TravelSlots, \
+    Description
 from .polymorphic_serializer import PolymorphicSerializer
 
 """
@@ -239,3 +240,9 @@ class AbstractAttributePostPolymorphicSerializer(PolymorphicSerializer):
         TravelAttribute: TravelAttributePostSerializer,
         StringAttribute: StringAttributePostSerializer
     }
+
+
+class DescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Description
+        exclude = ('public', 'type')

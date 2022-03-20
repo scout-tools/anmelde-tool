@@ -12,6 +12,10 @@ router.register(r'tags', views.TagViewSet)
 router.register(r'tag-types', views.TagTypeViewSet)
 router.register(r'attributes', views.AttributeViewSet)
 
+router.register(r'faq', views.DescriptionViewSet, basename='faq')
+router.register(r'legal', views.DescriptionViewSet, basename='legal')
+router.register(r'privacy', views.DescriptionViewSet, basename='privacy')
+
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [

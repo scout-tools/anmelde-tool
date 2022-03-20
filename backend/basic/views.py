@@ -2,13 +2,13 @@ from django.db.models import Q
 from django_filters import CharFilter
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import viewsets
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.exceptions import PermissionDenied, NotFound
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 
-from .models import ScoutHierarchy, ZipCode, Tag, TagType, AbstractAttribute
+from .models import ScoutHierarchy, ZipCode, Tag, TagType, AbstractAttribute, Description, DescriptionType
 from .serializers import ScoutHierarchySerializer, ZipCodeSerializer, TagShortSerializer, TagTypeShortSerializer, \
-    AbstractAttributeGetPolymorphicSerializer
+    AbstractAttributeGetPolymorphicSerializer, DescriptionSerializer
 
 
 class ScoutHierarchyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -60,3 +60,18 @@ class AttributeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = AbstractAttribute.objects.all()
     serializer_class = AbstractAttributeGetPolymorphicSerializer
+
+
+class DescriptionViewSet(viewsets.ModelViewSet):
+    # permission_classes = [IsAuthenticated]
+    serializer_class = DescriptionSerializer
+
+    def get_queryset(self):
+        if self.basename == 'faq':
+            return Description.objects.filter(public=True, type=DescriptionType.FAQ)
+        elif self.basename == 'legal':
+            return Description.objects.filter(public=True, type=DescriptionType.LegalNotice)
+        elif self.basename == 'privacy':
+            return Description.objects.filter(public=True, type=DescriptionType.Privacy)
+        else:
+            raise NotFound
