@@ -6,17 +6,29 @@
     :maxPos="maxPos"
     @prevStep="prevStep"
     @nextStep="nextStep"
+    @submit="submitStep"
   >
     <template v-slot:header>
+          <p><b>Zusammenfassung</b></p>
+            Ich habe folgende Daten eingefügt:
     </template>
 
     <template v-slot:main>
+      <v-row v-for="checkbox in moduleData" :key="checkbox.id">
+        <v-checkbox
+          v-model="data.checkboxes[checkbox.id]"
+          :label="checkbox.text ? checkbox.text : ''"
+          :error-messages="errorMessage('checkboxes', $v)"
+        >
+        </v-checkbox>
+      </v-row>
     </template>
   </GenericRegModul>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { required } from 'vuelidate/lib/validators';
 
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
@@ -41,10 +53,19 @@ export default {
     isLoading: true,
     moduleData: [],
     data: {
+      checkboxes: [],
     },
   }),
   validations: {
     data: {
+      checkboxes: {
+        required,
+        allChecked: (value) => {
+          const values = Object.values(value);
+          console.log(values && values.every((item) => item));
+          return values && values.every((item) => item);
+        },
+      },
     },
   },
   computed: {
@@ -57,7 +78,7 @@ export default {
       set() {},
     },
     moduleId() {
-      return this.currentModule.module.id;
+      return this.currentModule.id;
     },
     myStamm() {
       return this.userinfo.stamm;
@@ -80,9 +101,22 @@ export default {
       this.loadData();
     },
     setDefaults() {
+      this.moduleData.forEach((data) => {
+        this.data.checkboxes[data.id] = false;
+      });
     },
     loadData() {
       this.isLoading = true;
+      Promise.all([this.getModule(this.moduleId)])
+        .then((values) => {
+          this.moduleData = values[0].data; //eslint-disable-line
+          this.isLoading = false;
+          this.setDefaults();
+        })
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
+        });
     },
   },
 };

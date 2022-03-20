@@ -6,21 +6,42 @@
     :maxPos="maxPos"
     @prevStep="prevStep"
     @nextStep="nextStep"
+    @ignore="ignore"
   >
     <template v-slot:header>
-      <p>Döner</p>
+      <p>
+        Ich melde folgende Teilnehmende an <br />
+        <br />
+        Die Erfassung erfolgt pro Person. <br>
+        <br>
+      </p>
+      <p v-if="!!dialogMeta.excelUpload">
+        Alternativ kannst du hier die Excelliste hochladen,
+        wenn du die Daten dort bereits erfasst hast.
+        <br>
+        <a
+          v-if="!!dialogMeta.excelUpload"
+          target="_blank"
+          :href="currentRegistration.cloudLink"
+          style="color:blue;"
+        >
+          Link zur Beispiel Excel Datei
+        </a>
+      </p>
     </template>
 
     <template v-slot:main>
       <ListWithDialogMain
         :ref="`dialog-main-${moduleId}`"
         :dialogMeta="dialogMeta"
+        :valdiationObj="$v"
       />
     </template>
   </GenericRegModul>
 </template>
 
 <script>
+// import { required } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
@@ -49,7 +70,35 @@ export default {
     data: {},
   }),
   validations: {
-    data: {},
+    data: {
+      // firstName: {
+      //   required,
+      // },
+      // lastName: {
+      //   required,
+      // },
+      // birthday: {
+      //   required,
+      // },
+      // email: {
+      //   required,
+      // },
+      // gender: {
+      //   required,
+      // },
+      // street: {
+      //   required,
+      // },
+      // zipCode: {
+      //   required,
+      // },
+      // phoneNumber: {
+      //   required,
+      // },
+      // bookingOption: {
+      //   required,
+      // },
+    },
   },
   computed: {
     ...mapGetters(['userinfo']),
@@ -77,6 +126,7 @@ export default {
     dialogMeta() {
       return {
         title: 'Hallo',
+        excelUpload: true,
         path: `event/registration/${this.currentRegistration.id}/single-participant`,
         listDisplay: ['firstName', 'lastName'],
         fields: [

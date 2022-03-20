@@ -12,7 +12,7 @@
       <span class="text-left subtitle-1">
         <p>
           Hiermit melde ich mich vom<b> {{ myStamm }} </b> aus dem Bund
-          <b> {{ myBund }} </b> zur <b> {{ eventName }} </b> an.
+          <b> {{ myBund }} </b> zu/r <b> {{ eventName }} </b> an.
           <br />
           <br />
           Bevor deine Anmeldung verbindlich wird, musst du sie im letzten
@@ -47,6 +47,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import moment from 'moment';
+import axios from 'axios';
 
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import stepMixin from '@/mixins/stepMixin';
@@ -132,7 +133,7 @@ export default {
     },
     loadData() {
       this.isLoading = true;
-      Promise.all([this.getModule(this.moduleId)])
+      Promise.all([this.getModule(this.moduleId), this.unConfirmRegistration()])
         .then((values) => {
           this.moduleData = values[0].data; //eslint-disable-line
           this.isLoading = false;
@@ -142,6 +143,14 @@ export default {
           this.errormsg = error.response.data.message;
           this.isLoading = false;
         });
+    },
+    unConfirmRegistration() {
+      return axios.put(
+        `${process.env.VUE_APP_API}/event/registration/${this.currentRegistration.id}/`,
+        {
+          isConfirmed: false,
+        },
+      );
     },
   },
 };

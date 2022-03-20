@@ -15,6 +15,7 @@
       <ListWithDialogMain
         :ref="`dialog-main-${moduleId}`"
         :dialogMeta="dialogMeta"
+        :valdiationObj="$v"
       />
     </template>
   </GenericRegModul>

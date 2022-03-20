@@ -130,7 +130,6 @@ export default {
         axios.get(`${process.env.VUE_APP_API}/${this.path}`),
       ])
         .then((values) => {
-          debugger;
           this.moduleData = values[0].data; //eslint-disable-line
           this.attributes = values[1].data; //eslint-disable-line
           this.isLoading = false;

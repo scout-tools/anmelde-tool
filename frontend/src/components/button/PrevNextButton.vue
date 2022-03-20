@@ -16,10 +16,10 @@
       class="ml-2"
       icon
       v-if="position < maxPos"
-      color="primary"
+      color="secondary"
       @click="$emit('ignore')"
     >
-      <v-icon right> mdi-debug-step-over</v-icon>
+    <v-icon> mdi-debug-step-over</v-icon>
     </v-btn>
     <v-btn v-else color="success" @click="submit">
       Abschließen
@@ -42,7 +42,7 @@ export default {
     },
     submit() {
       this.$emit('update');
-      this.$emit('submitStep');
+      this.$emit('submit');
     },
   },
 };

@@ -12,6 +12,7 @@
         :max-pos="maxPos"
         @nextStep="nextStep"
         @prevStep="prevStep"
+        @submit="submit"
         @ignore="ignore"
       />
     </v-container>

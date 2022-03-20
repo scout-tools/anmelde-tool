@@ -7,11 +7,9 @@
     @prevStep="prevStep"
     @nextStep="nextStep"
   >
-    <template v-slot:header>
-    </template>
+    <template v-slot:header> </template>
 
-    <template v-slot:main>
-    </template>
+    <template v-slot:main> </template>
   </GenericRegModul>
 </template>
 
@@ -40,12 +38,10 @@ export default {
     valid: true,
     isLoading: true,
     moduleData: [],
-    data: {
-    },
+    data: {},
   }),
   validations: {
-    data: {
-    },
+    data: {},
   },
   computed: {
     ...mapGetters(['userinfo']),
@@ -79,8 +75,7 @@ export default {
     beforeTabShow() {
       this.loadData();
     },
-    setDefaults() {
-    },
+    setDefaults() {},
     loadData() {
       this.isLoading = true;
     },
