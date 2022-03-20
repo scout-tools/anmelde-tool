@@ -56,7 +56,7 @@ export default {
         icon: 'mdi-account-circle',
         mandatory: true,
         lookupPath: '/event/event-location/',
-        lookupListDisplay: ['id', 'name'],
+        lookupListDisplay: ['name'],
         fieldType: 'refDropdown',
         default: '',
       },

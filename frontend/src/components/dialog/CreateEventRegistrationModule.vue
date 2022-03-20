@@ -41,48 +41,23 @@
           <v-container v-else>
             <v-row>
               <v-card-title>
-                {{ module && module.header }}
+                Module Name: {{ module && module.header }}
               </v-card-title>
             </v-row>
             <v-row>
-              <v-card-text>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-                takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
-                dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-                eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-                est Lorem ipsum dolor sit amet.
+              <v-card-text v-if="moduleMapper && moduleMapper.overwriteDescription">
+                {{ moduleMapper.overwriteDescription }}
               </v-card-text>
-            </v-row>
-            <v-row>
-              <v-card-title> Individuelle Beschreibung </v-card-title>
-              <v-card-text>
-                Um die Standardbeschreibung zu erstetzen, aktiviere den
-                Texteditor und füge deinen individuellen Touch hinzu.
+              <v-card-text v-else>
+                Ein gibt keinen Individuellen Text.
               </v-card-text>
             </v-row>
           </v-container>
           <v-card-title> Verknüpfte Attribute: </v-card-title>
-          <v-list three-line>
-            <v-list-item
-              v-for="(item, index) in attributeMappers"
-              :key="index"
-              three-line
-            >
-              <v-list-item-title>{{ item.description }}</v-list-item-title>
-              <v-list-item-subtitle
-                >{{ item.attribute }}:
-                {{ item.attribute && item.attribute.name }}
-              </v-list-item-subtitle>
-              <v-list-item-subtitle>
-                {{ item.attribute && item.attribute.description }}
-              </v-list-item-subtitle>
-            </v-list-item>
-          </v-list>
+          <AttributeList
+            :items="attributeMappers"
+            :ref="`dialog-main`"
+          />
           <v-divider class="my-3" />
           <v-btn color="primary" @click="onClickOkay"> Speichern</v-btn>
         </v-form>
@@ -105,10 +80,14 @@ import {
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import AttributeList from '@/components/dialog/attributeList/Main.vue';
 
 export default {
   props: ['isOpen'],
   mixins: [apiCallsMixin],
+  components: {
+    AttributeList,
+  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     active: false,

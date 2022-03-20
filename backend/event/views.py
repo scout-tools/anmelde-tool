@@ -241,7 +241,7 @@ class AssignedEventModulesViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         event_id = self.kwargs.get("event_pk", None)
-        return EventModuleMapper.objects.filter(event=event_id)
+        return EventModuleMapper.objects.filter(event=event_id).order_by('ordering')
 
 
 class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):

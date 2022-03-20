@@ -71,7 +71,8 @@ Vue.use(VueKeycloakJs, {
   },
   onReady(keycloak) {
     store.commit('setTokens', keycloak.token, keycloak.refreshToken);
-    keycloak.loadUserInfo()
+    keycloak
+      .loadUserInfo()
       .then((userInfo) => {
         store.commit('setUserinfo', userInfo);
 

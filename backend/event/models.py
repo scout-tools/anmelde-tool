@@ -162,7 +162,7 @@ class RegistrationParticipant(TimeStampMixin):
     scout_group = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     email = models.EmailField(null=True, blank=True)
-    birthday = models.DateField(null=True, blank=True)
+    birthday = models.DateTimeField(null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
     tags = models.ManyToManyField(AbstractAttribute, blank=True)
     booking_option = models.ForeignKey(BookingOption, on_delete=models.SET_NULL, blank=True, null=True)

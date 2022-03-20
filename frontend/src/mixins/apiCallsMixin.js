@@ -9,6 +9,11 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/`;
       return axios.get(path);
     },
+    async getService(route) {
+      const path = `${process.env.VUE_APP_API}/${route}/`;
+      console.log(path);
+      return axios.get(path);
+    },
     async getRegService(route, registration) {
       const path = `${process.env.VUE_APP_API}/event/registration/${registration}/${route}/`;
       console.log(path);
@@ -19,10 +24,25 @@ export default {
       console.log(path);
       return axios.get(path);
     },
+    async getServiceById(route, id) {
+      const path = `${process.env.VUE_APP_API}/${route}/${id}/`;
+      console.log(path);
+      return axios.get(path);
+    },
     async updateRegServiceById(route, registration, data) {
       const path = `${process.env.VUE_APP_API}/event/registration/${registration}/${route}/${data.id}/`;
       console.log(path);
       return axios.put(path, data);
+    },
+    async updateServiceById(route, data) {
+      const path = `${process.env.VUE_APP_API}/${route}/${data.id}/`;
+      console.log(path);
+      return axios.put(path, data);
+    },
+    async createServiceById(route, data) {
+      const path = `${process.env.VUE_APP_API}/${route}/`;
+      console.log(path);
+      return axios.post(path, data);
     },
     async getEventPlanerOverview() {
       const path = `${process.env.VUE_APP_API}/event/event-planer-overview/`;
@@ -84,6 +104,10 @@ export default {
     async deleteEventModule(mapperId) {
       const url = `${this.API_URL}/event/event-module-mapper/${mapperId}/`;
       return axios.delete(url);
+    },
+    async updateEventModule(data, id) {
+      const url = `${this.API_URL}/event/event-module-mapper/${id}/`;
+      return axios.put(url, data);
     },
     async getModule(mapperId) {
       const url = `${this.API_URL}/event/event-module-mapper/${mapperId}/attribute-mapper/`;
