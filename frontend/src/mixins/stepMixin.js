@@ -15,6 +15,9 @@ export default {
       }
       this.$emit('submit');
     },
+    submit() {
+      this.$emit('submit');
+    },
     prevStep() {
       this.$emit('prevStep');
     },
@@ -26,10 +29,10 @@ export default {
       this.$emit('nextStep');
     },
     onIngoredClicked() {
-      this.$emit('nextStep');
+      this.$emit('nextStep', true);
     },
     ignore() {
-      this.$emit('ignore');
+      this.$emit('nextStep', true);
     },
     errorMessage(field, valdiationObj) {
       const errors = [];

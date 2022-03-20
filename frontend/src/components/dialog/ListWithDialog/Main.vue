@@ -4,10 +4,15 @@
       <v-icon left> mdi-plus </v-icon>
       Eintrag hinzufügen
     </v-btn>
-    <!-- <v-btn class="ma-2" color="primary" @click="openExcelDialog">
-        <v-icon left> mdi-plus </v-icon>
-        Excel Datei hochladen
-      </v-btn> -->
+    <v-btn
+      v-if="dialogMeta.excelUpload"
+      class="ma-2"
+      color="primary"
+      @click="openExcelDialog"
+    >
+      <v-icon left> mdi-plus </v-icon>
+      Excel Datei hochladen
+    </v-btn>
     <v-list v-if="!isLoading">
       <v-subheader>Einträge</v-subheader>
       <v-list-item-group color="primary">
@@ -44,6 +49,7 @@
       ref="createModal"
       :dialogMeta="dialogMeta"
       @refresh="onRefresh()"
+      :valdiationObj="valdiationObj"
     />
     <delete-modal
       ref="deleteModal"
@@ -74,11 +80,13 @@ export default {
     items: [],
   }),
   props: {
+    valdiationObj: {
+      default: {},
+    },
     dialogMeta: {
       default: {},
     },
   },
-  validations: {},
   computed: {
     regId() {
       return this.$route.params.id;

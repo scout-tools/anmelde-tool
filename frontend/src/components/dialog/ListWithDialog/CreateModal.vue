@@ -20,7 +20,7 @@
               :key="i"
               :field="field"
               v-model="data[field.techName]"
-              :valdiationObj="$v"
+              :valdiationObj="valdiationObj"
             />
           </template>
         </v-row>
@@ -48,6 +48,9 @@ export default {
     dialogMeta: {
       default: {},
     },
+    valdiationObj: {
+      default: {},
+    },
   },
   mixins: [apiCallsMixin],
   data: () => ({
@@ -59,10 +62,6 @@ export default {
     showSuccess: false,
     timeout: 7000,
   }),
-  validations: {
-    data: {
-    },
-  },
   computed: {},
   methods: {
     openDialog() {
@@ -84,17 +83,20 @@ export default {
     },
     closeDialog() {
       this.active = false;
-      this.$v.$reset();
+      this.valdiationObj.$reset();
       Object.keys(this.data).forEach((key) => {
         this.data[key] = '';
       });
       this.$emit('close');
     },
     validate() {
-      this.$v.$touch();
-      this.valid = !this.$v.$anyError;
+      this.valdiationObj.$touch();
+      this.valid = !this.valdiationObj.$anyError;
     },
     onClickOkay() {
+      this.$forceUpdate();
+      console.log(this.data);
+      console.log(this.valdiationObj);
       this.validate();
       if (this.valid) {
         try {

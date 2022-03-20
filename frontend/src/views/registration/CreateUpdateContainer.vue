@@ -58,24 +58,26 @@ import axios from 'axios';
 import LoadingCircual from '@/components/loading/Circual.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 
-import Confirm from './modules/Confirm.vue';
 import Food from './modules/Food.vue';
 import Introduction from './modules/Introduction.vue';
 import Letter from './modules/Letter.vue';
 import ParticipantsPersonal from './modules/ParticipantsPersonal.vue';
 import Summary from './modules/Summary.vue';
 import Tent from './modules/Tent.vue';
+import Travel from './modules/Travel.vue';
+import TravelBack from './modules/TravelBack.vue';
 
 export default {
   components: {
     LoadingCircual,
-    Confirm,
     Food,
     Introduction,
     Letter,
     ParticipantsPersonal,
     Summary,
     Tent,
+    Travel,
+    TravelBack,
   },
   props: ['scoutOrganisation'],
   mixins: [apiCallsMixin],
@@ -113,30 +115,26 @@ export default {
     callOnBeforeTab(step) {
       const nextStepName = this.currentModules[step].module.name;
       if (
-        this.$refs[nextStepName]
-        && this.$refs[nextStepName].length
-        && this.$refs[nextStepName][0].beforeTabShow
+        this.$refs[nextStepName] && // eslint-disable-line
+        this.$refs[nextStepName].length && // eslint-disable-line
+        this.$refs[nextStepName][0].beforeTabShow
       ) {
         this.$refs[nextStepName][0].beforeTabShow();
       }
     },
     onRegistrationConfirmed() {
-      this.callConfirmRegistration();
-      this.$router.push({ name: 'eventOverview' });
+      this.callConfirmRegistration().then(() => {
+        this.$router.push({
+          name: 'registrationCompleted',
+          params: { id: this.currentRegistration.id },
+        });
+      });
     },
     callConfirmRegistration() {
-      return axios.patch(
-        `${process.env.VUE_APP_API}basic/registration/${this.id}/`,
+      return axios.put(
+        `${process.env.VUE_APP_API}/event/registration/${this.currentRegistration.id}/`,
         {
           is_confirmed: true,
-        },
-      );
-    },
-    unConfirmRegistration() {
-      return axios.patch(
-        `${process.env.VUE_APP_API}basic/registration/${this.id}/`,
-        {
-          is_confirmed: false,
         },
       );
     },
@@ -153,8 +151,8 @@ export default {
         ])
           .then((values) => {
             this.currentEvent = values[0].data; // eslint-disable-line
-            this.currentModules = values[1].data // eslint-disable-line
-            this.personalData = values[2].data // eslint-disable-line
+            this.currentModules = values[1].data; // eslint-disable-line
+            this.personalData = values[2].data; // eslint-disable-line
 
             this.isLoading = false;
           })
@@ -166,7 +164,10 @@ export default {
     },
 
     async getEvent(id) {
-      const path = `${process.env.VUE_APP_API}/event/event/${parseInt(id, 10)}/`;
+      const path = `${process.env.VUE_APP_API}/event/event/${parseInt(
+        id,
+        10,
+      )}/`;
       const response = await axios.get(path);
       return response.data;
     },

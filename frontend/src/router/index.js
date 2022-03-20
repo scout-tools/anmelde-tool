@@ -11,8 +11,10 @@ import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
 import EventPlaner from '@/views/eventPlaner/Main.vue';
 import PlanEvent from '@/views/eventPlaner/create/Main.vue';
+
 import registrationNew from '@/views/registration/Main.vue';
 import registrationEdit from '@/views/registration/CreateUpdateContainer.vue';
+import registrationCompleted from '@/views/registration/Completed.vue';
 
 Vue.use(VueRouter);
 
@@ -85,6 +87,12 @@ const routes = [
     path: '/registration/edit/:id',
     name: 'registrationEdit',
     component: registrationEdit,
+    props: true,
+  },
+  {
+    path: '/registration/completed/:id',
+    name: 'registrationCompleted',
+    component: registrationCompleted,
     props: true,
   },
   {
