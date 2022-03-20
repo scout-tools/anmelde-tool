@@ -15,7 +15,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
+import axios from 'axios';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import GenericRegModul from '@/views/registration/components/GenericRegModul.vue';
@@ -38,6 +38,7 @@ export default {
     valid: true,
     isLoading: true,
     moduleData: [],
+    attributes: [],
     data: {},
   }),
   validations: {
@@ -51,6 +52,9 @@ export default {
         return !!this.isloading;
       },
       set() {},
+    },
+    path() {
+      return `event/registration/${this.currentRegistration.id}/attribute/`;
     },
     moduleId() {
       return this.currentModule.module.id;
@@ -78,6 +82,21 @@ export default {
     setDefaults() {},
     loadData() {
       this.isLoading = true;
+      Promise.all([
+        this.getModule(this.currentModule.id),
+        axios.get(`${process.env.VUE_APP_API}/${this.path}`),
+      ])
+        .then((values) => {
+          this.moduleData = values[0].data; //eslint-disable-line
+          this.attributes = values[1].data; //eslint-disable-line
+          this.isLoading = false;
+          this.setDefaults();
+          this.loadAttributeEventModule();
+        })
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
+        });
     },
   },
 };

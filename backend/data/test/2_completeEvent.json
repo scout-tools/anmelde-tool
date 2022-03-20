@@ -197,7 +197,7 @@
     "model": "event.eventmodule",
     "pk": 12,
     "fields": {
-      "name": "T-Shirt",
+      "name": "Tshirts",
       "type": 5,
       "header": "T-Shirts",
       "internal": false,

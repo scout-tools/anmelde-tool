@@ -8,14 +8,20 @@
     @nextStep="nextStep"
   >
     <template v-slot:header>
-      Du kannst eine Nachricht an die Lagerleitung senden
+      Bitte trage hier ein wieviele Lager T-Shirts du haben willst.
     </template>
 
     <template v-slot:main>
-      <v-col cols="12" v-for="(item, index) in moduleData" :key="index">
-        <v-textarea solo auto-grow v-model="data[item.id]" :label="item.title">
-        </v-textarea>
-      </v-col>
+      <v-row>
+        <v-col cols="3" v-for="(item, index) in moduleData" :key="index">
+          <v-text-field
+            type="number"
+            v-model="data[item.attribute.id]"
+            :label="item.title"
+          >
+          </v-text-field>
+        </v-col>
+      </v-row>
     </template>
   </GenericRegModul>
 </template>
@@ -54,25 +60,6 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo']),
-    fields() {
-      if (!this.moduleData || !this.moduleData.length) {
-        return [];
-      }
-      console.log(this.moduleData[0]);
-      return [
-        {
-          name: 'Essenbesonderheiten',
-          techName: 'eatHabit',
-          tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
-          icon: 'mdi-food',
-          mandatory: true,
-          lookupPath: '/basic/eat-habits/',
-          lookupListDisplay: ['name'],
-          fieldType: 'refCombo',
-          default: '',
-        },
-      ];
-    },
     isLoadingRead: {
       // getter
       get() {
@@ -114,7 +101,7 @@ export default {
             axios.put(
               `${process.env.VUE_APP_API}/${this.path}${getAtt[0].id}/`,
               {
-                stringField: this.data[moduleItem.id],
+                integerField: this.data[moduleItem.attribute.id],
               },
             ),
           );
@@ -122,7 +109,7 @@ export default {
           promises.push(
             axios.post(`${process.env.VUE_APP_API}/${this.path}`, {
               templateId: moduleItem.attribute.id,
-              stringField: this.data[moduleItem.id],
+              integerField: this.data[moduleItem.id],
               resourcetype: moduleItem.attribute.resourcetype,
             }),
           );
@@ -141,13 +128,13 @@ export default {
         (att) => att.templateId === item.attribute.id,
       );
       if (value && value.length) {
-        return value[0].stringField;
+        return value[0].integerField;
       }
       return item.defaultValue;
     },
     setDefaults() {
       this.moduleData.forEach((item) => {
-        this.data[item.id] = this.getAttributeValue(item);
+        this.data[item.attribute.id] = this.getAttributeValue(item);
       });
     },
     loadData() {

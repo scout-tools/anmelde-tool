@@ -8,14 +8,18 @@
     @nextStep="nextStep"
   >
     <template v-slot:header>
-      Du kannst eine Nachricht an die Lagerleitung senden
+      Wieviele Lunch Packete wollt ihr?
     </template>
 
     <template v-slot:main>
-      <v-col cols="12" v-for="(item, index) in moduleData" :key="index">
-        <v-textarea solo auto-grow v-model="data[item.id]" :label="item.title">
-        </v-textarea>
-      </v-col>
+      <template v-for="(field, index) in fields">
+        <BaseField
+          :key="index"
+          :field="field"
+          v-model="data[field.techName]"
+          :valdiationObj="$v"
+        />
+      </template>
     </template>
   </GenericRegModul>
 </template>
@@ -26,6 +30,7 @@ import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import GenericRegModul from '@/views/registration/components/GenericRegModul.vue';
+import BaseField from '@/components/common/BaseField.vue';
 
 export default {
   props: [
@@ -38,6 +43,7 @@ export default {
   ],
   components: {
     GenericRegModul,
+    BaseField,
   },
   mixins: [apiCallsMixin, stepMixin],
   data: () => ({
@@ -58,18 +64,15 @@ export default {
       if (!this.moduleData || !this.moduleData.length) {
         return [];
       }
-      console.log(this.moduleData[0]);
       return [
         {
-          name: 'Essenbesonderheiten',
-          techName: 'eatHabit',
+          name: 'Lunch Packe',
+          techName: 'lunchPackets',
           tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
           icon: 'mdi-food',
           mandatory: true,
-          lookupPath: '/basic/eat-habits/',
-          lookupListDisplay: ['name'],
-          fieldType: 'refCombo',
-          default: '',
+          fieldType: 'number',
+          default: 0,
         },
       ];
     },
@@ -82,18 +85,6 @@ export default {
     },
     moduleId() {
       return this.currentModule.module.id;
-    },
-    myStamm() {
-      return this.userinfo.stamm;
-    },
-    myBund() {
-      return this.userinfo.bund;
-    },
-    eventName() {
-      return this.currentEvent.name;
-    },
-    cloudLink() {
-      return this.currentEvent.cloudLink;
     },
     path() {
       return `event/registration/${this.currentRegistration.id}/attribute/`;
@@ -114,7 +105,7 @@ export default {
             axios.put(
               `${process.env.VUE_APP_API}/${this.path}${getAtt[0].id}/`,
               {
-                stringField: this.data[moduleItem.id],
+                integerField: this.data.lunchPackets,
               },
             ),
           );
@@ -122,7 +113,7 @@ export default {
           promises.push(
             axios.post(`${process.env.VUE_APP_API}/${this.path}`, {
               templateId: moduleItem.attribute.id,
-              stringField: this.data[moduleItem.id],
+              integerField: this.data.lunchPackets,
               resourcetype: moduleItem.attribute.resourcetype,
             }),
           );
@@ -141,13 +132,13 @@ export default {
         (att) => att.templateId === item.attribute.id,
       );
       if (value && value.length) {
-        return value[0].stringField;
+        return value[0].integerField;
       }
       return item.defaultValue;
     },
     setDefaults() {
       this.moduleData.forEach((item) => {
-        this.data[item.id] = this.getAttributeValue(item);
+        this.data.lunchPackets = this.getAttributeValue(item);
       });
     },
     loadData() {

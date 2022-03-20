@@ -1,6 +1,6 @@
 <template>
   <GenericRegModul
-    :key="`module-${moduleId}`"
+    :key="`module-${currentModule.id}`"
     :isloading="isLoadingRead"
     :position="position"
     :maxPos="maxPos"
@@ -8,37 +8,21 @@
     @nextStep="nextStep"
   >
     <template v-slot:header>
-          <p>
-            Bitte gebe an mit wievielen Zelten ihr kommen wollt.
-            <br />
-          </p>
+      <p>
+        Bitte gebe an mit wievielen Zelten ihr kommen wollt.
+        <br />
+      </p>
     </template>
 
     <template v-slot:main>
       <v-row>
-        <v-col cols="5">
-          <v-text-field v-model="data.kohten" :label="`Anzahl Kohten`">
-          </v-text-field>
-        </v-col>
-        <v-col cols="5">
+        <v-col cols="6" v-for="(item, index) in moduleData" :key="index">
+          <p>{{ item.text }}</p>
           <v-text-field
-            v-if="data.kohten"
-            v-model="data.kohtenstangen"
-            :label="`Anzahl benötigter Kohtenstangen`"
-          >
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="5">
-          <v-text-field v-model="data.jurten" :label="`Anzahl Jurten`">
-          </v-text-field>
-        </v-col>
-        <v-col cols="5">
-          <v-text-field
-            v-if="data.jurten"
-            v-model="data.jurtenstangen"
-            :label="`Anzahl benötigter Jurtenstangen`"
+            type="number"
+            v-model="data[item.attribute.id]"
+            :label="item.title"
+            @input="checkNeedStangen()"
           >
           </v-text-field>
         </v-col>
@@ -46,7 +30,7 @@
       <v-row align="center" justify="center">
         <p
           class="text-center"
-          v-if="data.jurtenstangen || data.kohtenstangen"
+          v-if="needStangen"
           style="border-style: solid; border-color: red"
         >
           <v-icon color="red darken-1" large class="ma-2">
@@ -60,11 +44,7 @@
         </p>
         <p
           class="text-center"
-          v-if="
-            !data.jurtenstangen &&
-            !data.kohtenstangen &&
-            (data.jurten > 0 || data.kohten > 0)
-          "
+          v-else
           style="border-style: solid; border-color: green"
         >
           <v-icon color="green darken-1" large class="ma-2">
@@ -76,14 +56,13 @@
           </v-icon>
         </p>
       </v-row>
-
     </template>
   </GenericRegModul>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-
+import axios from 'axios';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import GenericRegModul from '@/views/registration/components/GenericRegModul.vue';
@@ -106,12 +85,12 @@ export default {
     valid: true,
     isLoading: true,
     moduleData: [],
-    data: {
-    },
+    attributes: [],
+    needStangen: false,
+    data: {},
   }),
   validations: {
-    data: {
-    },
+    data: {},
   },
   computed: {
     ...mapGetters(['userinfo']),
@@ -122,33 +101,82 @@ export default {
       },
       set() {},
     },
-    moduleId() {
-      return this.currentModule.module.id;
+    path() {
+      return `event/registration/${this.currentRegistration.id}/attribute/`;
     },
-    myStamm() {
-      return this.userinfo.stamm;
-    },
-    myBund() {
-      return this.userinfo.bund;
-    },
-    eventName() {
-      return this.currentEvent.name;
-    },
-    cloudLink() {
-      return this.currentEvent.cloudLink;
-    },
-  },
-  mounted() {
-    this.beforeTabShow();
   },
   methods: {
+    checkNeedStangen() {
+      this.needStangen = //eslint-disable-line
+        this.data && (this.data['18'] > 0 || this.data['20'] > 0);
+    },
     beforeTabShow() {
       this.loadData();
     },
+    getAttributeValue(item) {
+      const value = this.attributes.filter(
+        (att) => att.templateId === item.attribute.id,
+      );
+      if (value && value.length) {
+        return value[0].integerField;
+      }
+      return item.defaultValue;
+    },
     setDefaults() {
+      this.moduleData.forEach((item) => {
+        this.data[item.attribute.id] = this.getAttributeValue(item);
+      });
+      this.checkNeedStangen();
     },
     loadData() {
       this.isLoading = true;
+      Promise.all([
+        this.getModule(this.currentModule.id),
+        axios.get(`${process.env.VUE_APP_API}/${this.path}`),
+      ])
+        .then((values) => {
+          this.moduleData = values[0].data; //eslint-disable-line
+          this.attributes = values[1].data; //eslint-disable-line
+          this.isLoading = false;
+          this.setDefaults();
+        })
+        .catch((error) => {
+          this.errormsg = error.response.data.message;
+          this.isLoading = false;
+        });
+    },
+    nextStep() {
+      const promises = [];
+      this.moduleData.forEach((moduleItem) => {
+        const getAtt = this.attributes.filter(
+          (att) => att.templateId === moduleItem.attribute.id,
+        );
+        if (getAtt.length > 0) {
+          promises.push(
+            axios.put(
+              `${process.env.VUE_APP_API}/${this.path}${getAtt[0].id}/`,
+              {
+                integerField: this.data[moduleItem.attribute.id],
+              },
+            ),
+          );
+        } else {
+          promises.push(
+            axios.post(`${process.env.VUE_APP_API}/${this.path}`, {
+              templateId: moduleItem.attribute.id,
+              integerField: this.data[moduleItem.attribute.id],
+              resourcetype: moduleItem.attribute.resourcetype,
+            }),
+          );
+        }
+      });
+      if (promises.length > 0) {
+        Promise.all(promises).then(() => {
+          this.$emit('nextStep');
+        });
+      } else {
+        this.$emit('nextStep');
+      }
     },
   },
 };

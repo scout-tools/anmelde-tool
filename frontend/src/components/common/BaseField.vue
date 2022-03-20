@@ -25,6 +25,32 @@
       </template>
     </v-text-field>
 
+    <v-text-field
+      v-if="field.fieldType === 'number'"
+      :label="field.name"
+      :value="value"
+      type="number"
+      @input="onInputChanged"
+      :prepend-icon="field.icon"
+      :error-messages="onErrorMessageChange(field.techName)"
+      :disabled="field.disabled"
+      :readonly="field.readonly"
+      :filled="field.filled"
+    >
+      <template slot="append">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="info" dark v-bind="attrs" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          <span>
+            {{ field.tooltip }}
+          </span>
+        </v-tooltip>
+      </template>
+    </v-text-field>
+
     <v-textarea
       v-if="field.fieldType === 'textarea'"
       :label="field.name"
@@ -89,8 +115,65 @@
       @input="onInputChanged"
       item-value="id"
       :item-text="getItemText"
+      :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-autocomplete>
+
+    <v-combobox
+      v-if="field.fieldType === 'refCombo'"
+      :label="field.name"
+      :value="value"
+      :items="lookupList"
+      :prepend-icon="field.icon"
+      required
+      chips
+      multiple
+      deletable-chips
+      @input="onComboInputChanged"
+      item-value="name"
+      :item-text="getItemText"
+      :error-messages="onErrorMessageChange(field.techName)"
+    >
+      <template slot="append">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="info" dark v-bind="attrs" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          <span>
+            {{ field.tooltip }}
+          </span>
+        </v-tooltip>
+      </template>
+    </v-combobox>
+
+    <v-combobox
+      v-if="field.fieldType === 'enumCombo'"
+      :label="field.name"
+      :value="comboValue"
+      :items="convertEnum(this.lookupList)"
+      :prepend-icon="field.icon"
+      required
+      chips
+      deletable-chips
+      @input="onInputChanged"
+      :item-text="getItemText"
+      :error-messages="onErrorMessageChange(field.techName)"
+    >
+      <template slot="append">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="info" dark v-bind="attrs" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          <span>
+            {{ field.tooltip }}
+          </span>
+        </v-tooltip>
+      </template>
+    </v-combobox>
 
     <v-autocomplete
       v-if="field.fieldType === 'zipField'"
@@ -104,6 +187,7 @@
       :loading="isLoading"
       :item-text="getItemText"
       :search-input.sync="search"
+      :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-autocomplete>
     <v-select
@@ -116,6 +200,7 @@
       @input="onInputChanged"
       item-value="value"
       :item-text="field.referenceDisplay"
+      :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-select>
     <v-switch
@@ -123,6 +208,7 @@
       :label="field.name"
       :input-value="value"
       @change="onInputChanged"
+      :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-switch>
     <v-container v-if="field.fieldType === 'radio'">
@@ -342,6 +428,12 @@ export default {
     },
   },
   computed: {
+    comboValue() {
+      if (typeof this.value === 'object') {
+        return this.value;
+      }
+      return this.convertEnum(this.lookupList).filter((item) => item.value === this.value)[0];
+    },
     valueDate() {
       return this.$moment(this.value).format('DD.MM.YYYY', 'de');
     },
@@ -350,6 +442,14 @@ export default {
     },
   },
   methods: {
+    convertEnum(list) {
+      return list.map((x) => { // eslint-disable-line
+        return {
+          value: x[0],
+          name: x[1],
+        };
+      });
+    },
     onErrorMessageChange(field) {
       return this.errorMessage(field, this.valdiationObj);
     },
@@ -371,6 +471,18 @@ export default {
       if (newDate.isValid() && value.length === 10) {
         this.onInputChanged(newDate.toDate());
       }
+      this.$forceUpdate();
+    },
+    onComboInputChanged(value) {
+      const returnArray = [];
+      value.forEach((item) => {
+        if (typeof item === 'object') {
+          returnArray.push(item.name);
+        } else {
+          returnArray.push(item);
+        }
+      });
+      this.$emit('input', returnArray);
       this.$forceUpdate();
     },
     onDateTimeInputChangedTime(value) {
@@ -421,7 +533,11 @@ export default {
     },
   },
   created() {
-    if (this.field.fieldType === 'refDropdown') {
+    if (
+      this.field.fieldType === 'refDropdown' || // eslint-disable-line
+      this.field.fieldType === 'enumCombo' || // eslint-disable-line
+      this.field.fieldType === 'refCombo'
+    ) {
       this.getData(this.field.referenceTable);
     }
   },

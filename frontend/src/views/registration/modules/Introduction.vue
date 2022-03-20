@@ -118,6 +118,9 @@ export default {
     cloudLink() {
       return this.currentEvent.cloudLink;
     },
+    path() {
+      return `event/registration/${this.currentRegistration.id}/attribute/`;
+    },
   },
   mounted() {
     this.beforeTabShow();
@@ -126,16 +129,63 @@ export default {
     beforeTabShow() {
       this.loadData();
     },
+    nextStep() {
+      const promises = [];
+      this.moduleData.forEach((moduleItem) => {
+        const getAtt = this.attributes.filter(
+          (att) => att.templateId === moduleItem.attribute.id,
+        );
+        if (getAtt.length > 0) {
+          promises.push(
+            axios.put(
+              `${process.env.VUE_APP_API}/${this.path}${getAtt[0].id}/`,
+              {
+                booleanField: this.data.checkboxes[moduleItem.id],
+              },
+            ),
+          );
+        } else {
+          promises.push(
+            axios.post(`${process.env.VUE_APP_API}/${this.path}`, {
+              templateId: moduleItem.attribute.id,
+              booleanField: this.data.checkboxes[moduleItem.id],
+              resourcetype: moduleItem.attribute.resourcetype,
+            }),
+          );
+        }
+      });
+      if (promises.length > 0) {
+        Promise.all(promises).then(() => {
+          this.$emit('nextStep');
+        });
+      } else {
+        this.$emit('nextStep');
+      }
+    },
+    getAttributeValue(item) {
+      const value = this.attributes.filter(
+        (att) => att.templateId === item.attribute.id,
+      );
+      if (value && value.length) {
+        return value[0].booleanField;
+      }
+      return item.defaultValue;
+    },
     setDefaults() {
-      this.moduleData.forEach((data) => {
-        this.data.checkboxes[data.id] = false;
+      this.moduleData.forEach((item) => {
+        this.data.checkboxes[item.id] = this.getAttributeValue(item);
       });
     },
     loadData() {
       this.isLoading = true;
-      Promise.all([this.getModule(this.moduleId), this.unConfirmRegistration()])
+      Promise.all([
+        this.getModule(this.currentModule.id),
+        axios.get(`${process.env.VUE_APP_API}/${this.path}`),
+        this.unConfirmRegistration(),
+      ])
         .then((values) => {
           this.moduleData = values[0].data; //eslint-disable-line
+          this.attributes = values[1].data; //eslint-disable-line
           this.isLoading = false;
           this.setDefaults();
         })

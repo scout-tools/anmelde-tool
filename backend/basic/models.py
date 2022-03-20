@@ -13,6 +13,7 @@ class TravelType(models.TextChoices):
 
 
 class TravelSlots(models.TextChoices):
+    Before = 'B', _('Früher')
     Early = 'E', _('16:00-18:00')
     Normal = 'N', _('18:00-20:00')
     Late = 'L', _('20:00-22:00')

@@ -12,18 +12,18 @@
       <p>
         Ich melde folgende Teilnehmende an <br />
         <br />
-        Die Erfassung erfolgt pro Person. <br>
-        <br>
+        Die Erfassung erfolgt pro Person. <br />
+        <br />
       </p>
       <p v-if="!!dialogMeta.excelUpload">
-        Alternativ kannst du hier die Excelliste hochladen,
-        wenn du die Daten dort bereits erfasst hast.
-        <br>
+        Alternativ kannst du hier die Excelliste hochladen, wenn du die Daten
+        dort bereits erfasst hast.
+        <br />
         <a
           v-if="!!dialogMeta.excelUpload"
           target="_blank"
           :href="currentRegistration.cloudLink"
-          style="color:blue;"
+          style="color: blue"
         >
           Link zur Beispiel Excel Datei
         </a>
@@ -126,7 +126,7 @@ export default {
     dialogMeta() {
       return {
         title: 'Hallo',
-        excelUpload: true,
+        excelUpload: false,
         path: `event/registration/${this.currentRegistration.id}/single-participant`,
         listDisplay: ['firstName', 'lastName'],
         fields: [
@@ -231,6 +231,17 @@ export default {
             icon: 'mdi-phone',
             mandatory: true,
             fieldType: 'textfield',
+            default: '',
+          },
+          {
+            name: 'Essenbesonderheiten',
+            techName: 'eatHabit',
+            tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
+            icon: 'mdi-food',
+            mandatory: true,
+            lookupPath: '/basic/eat-habits/',
+            lookupListDisplay: ['name'],
+            fieldType: 'refCombo',
             default: '',
           },
           {

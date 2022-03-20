@@ -66,6 +66,8 @@ import Summary from './modules/Summary.vue';
 import Tent from './modules/Tent.vue';
 import Travel from './modules/Travel.vue';
 import TravelBack from './modules/TravelBack.vue';
+import LunchMeals from './modules/LunchMeals.vue';
+import Tshirts from './modules/Tshirts.vue';
 
 export default {
   components: {
@@ -78,6 +80,8 @@ export default {
     Tent,
     Travel,
     TravelBack,
+    LunchMeals,
+    Tshirts,
   },
   props: ['scoutOrganisation'],
   mixins: [apiCallsMixin],
