@@ -48,7 +48,7 @@ def add_event_attribute(attribute: AbstractAttribute) -> AbstractAttribute:
 
 
 def create_missing_eat_habits(request) -> None:
-    eat_habits = request.data.get('eat_habit', None)
+    eat_habits = request.data.get('eat_habit', [])
     for habit in eat_habits:
         if not EatHabit.objects.filter(name__exact=habit).exists():
             EatHabit.objects.create(name=habit)

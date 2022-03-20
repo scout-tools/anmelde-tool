@@ -265,7 +265,8 @@ class RegistrationParticipantSerializer(serializers.ModelSerializer):
         many=True,
         read_only=False,
         slug_field='name',
-        queryset=EatHabit.objects.all()
+        queryset=EatHabit.objects.all(),
+        required=False
     )
 
     class Meta:
@@ -280,7 +281,8 @@ class RegistrationParticipantPutSerializer(serializers.ModelSerializer):
         many=True,
         read_only=False,
         slug_field='name',
-        queryset=EatHabit.objects.all()
+        queryset=EatHabit.objects.all(),
+        required=False
     )
 
     class Meta:
