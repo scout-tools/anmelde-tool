@@ -99,6 +99,17 @@
     }
   },
   {
+    "model": "basic.tagtype",
+    "pk": 10,
+    "fields": {
+      "name": "CustomModule",
+      "description": "",
+      "color": "#FF0000",
+      "min": 0,
+      "max": 9999
+    }
+  },
+  {
     "model": "basic.tag",
     "pk": 1,
     "fields": {
