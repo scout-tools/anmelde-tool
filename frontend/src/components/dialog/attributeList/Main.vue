@@ -8,7 +8,7 @@
         <v-icon left> mdi-plus </v-icon>
         Excel Datei hochladen
       </v-btn> -->
-    <v-list v-if="!isLoading">
+    <v-list>
       <v-subheader>Einträge</v-subheader>
       <v-list-item-group color="primary">
         <v-list-item v-for="(item, i) in items" :key="i">
@@ -36,18 +36,14 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-    <div v-else>
-      <Circual />
-      <v-btn @click="beforeTabShow">Refresh</v-btn>
-    </div>
     <create-modal
-      ref="createModal"
       :dialogMeta="dialogMeta"
+      ref="createModal"
       @refresh="onRefresh()"
     />
     <delete-modal
-      ref="deleteModal"
       :dialogMeta="dialogMeta"
+      ref="deleteModal"
       @refresh="onRefresh()"
     />
   </v-container>
@@ -56,7 +52,6 @@
 <script>
 import CreateModal from '@/components/dialog/ListWithDialog/CreateModal.vue';
 import DeleteModal from '@/components/dialog/ListWithDialog/DeleteModal.vue';
-import Circual from '@/components/loading/Circual.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
@@ -64,17 +59,15 @@ export default {
   components: {
     CreateModal,
     DeleteModal,
-    Circual,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: true,
     selectedItem: 1,
-    items: [],
   }),
   props: {
-    dialogMeta: {
+    items: {
       default: {},
     },
   },
@@ -83,30 +76,49 @@ export default {
     regId() {
       return this.$route.params.id;
     },
+    dialogMeta() {
+      return {
+        path: `event/registration/${this.regId}/attribute`,
+        fields: [
+          {
+            name: 'Name*',
+            techName: 'name',
+            tooltip: '',
+            mandatory: true,
+            fieldType: 'textfield',
+            default: '',
+          },
+          {
+            name: 'Beschreibung*',
+            techName: 'description',
+            tooltip: '',
+            mandatory: true,
+            fieldType: 'textfield',
+            default: '',
+          },
+          {
+            name: 'Preis*',
+            techName: 'price',
+            tooltip: '',
+            mandatory: true,
+            fieldType: 'currency',
+            default: '',
+          },
+        ],
+      };
+    },
   },
   methods: {
     getDisplayName(item) {
-      let template = '';
-      this.dialogMeta.listDisplay.forEach((field, i) => {
-        if (i === 0) {
-          template += ` ${item[field]}`;
-        } else {
-          template += ` - ${item[field]}`;
-        }
-      });
-      return template;
-    },
-    getItems() {
-      this.isLoading = true;
-      Promise.all([this.getService(this.dialogMeta.path)])
-        .then((values) => {
-          this.items = values[0].data;
-          this.isLoading = false;
-        })
-        .catch((error) => {
-          this.errormsg = error.response.data.message;
-          this.isLoading = false;
-        });
+      // const template = '';
+      // this.dialogMeta.listDisplay.forEach((field, i) => {
+      //   if (i === 0) {
+      //     template += ` ${item[field]}`;
+      //   } else {
+      //     template += ` - ${item[field]}`;
+      //   }
+      // });
+      return item.title;
     },
     editParticipant(id) {
       this.$refs.createModal.openDialogEdit(id);

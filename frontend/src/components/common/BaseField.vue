@@ -24,6 +24,61 @@
         </v-tooltip>
       </template>
     </v-text-field>
+
+    <v-textarea
+      v-if="field.fieldType === 'textarea'"
+      :label="field.name"
+      :value="value"
+      @input="onInputChanged"
+      solo
+      auto-grow
+      :prepend-icon="field.icon"
+      :error-messages="onErrorMessageChange(field.techName)"
+      :disabled="field.disabled"
+      :readonly="field.readonly"
+      :filled="field.filled"
+    >
+      <template slot="append">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="info" dark v-bind="attrs" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          <span>
+            {{ field.tooltip }}
+          </span>
+        </v-tooltip>
+      </template>
+    </v-textarea>
+
+    <v-text-field
+      v-if="field.fieldType === 'currency'"
+      :label="field.name"
+      :value="value"
+      prefix="€"
+      type="number"
+      @input="onInputChanged"
+      :prepend-icon="field.icon"
+      :error-messages="onErrorMessageChange(field.techName)"
+      :disabled="field.disabled"
+      :readonly="field.readonly"
+      :filled="field.filled"
+    >
+      <template slot="append">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="info" dark v-bind="attrs" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          <span>
+            {{ field.tooltip }}
+          </span>
+        </v-tooltip>
+      </template>
+    </v-text-field>
+
     <v-autocomplete
       v-if="field.fieldType === 'refDropdown'"
       :label="field.name"
@@ -34,6 +89,21 @@
       @input="onInputChanged"
       item-value="id"
       :item-text="getItemText"
+    >
+    </v-autocomplete>
+
+    <v-autocomplete
+      v-if="field.fieldType === 'zipField'"
+      :label="field.name"
+      :value="value"
+      :items="lookupList"
+      :prepend-icon="field.icon"
+      required
+      @input="onInputChanged"
+      item-value="id"
+      :loading="isLoading"
+      :item-text="getItemText"
+      :search-input.sync="search"
     >
     </v-autocomplete>
     <v-select
@@ -69,14 +139,14 @@
         </v-tooltip>
       </v-row>
       <v-row>
-    <v-radio-group :value="value" @change="onRadioInputChanged">
-      <v-radio
-        v-for="choise in field.referenceTable"
-        :key="choise.value"
-        :label="choise.name"
-        :value="choise.value"
-      ></v-radio>
-    </v-radio-group>
+        <v-radio-group :value="value" @change="onRadioInputChanged">
+          <v-radio
+            v-for="choise in field.referenceTable"
+            :key="choise.value"
+            :label="choise.name"
+            :value="choise.value"
+          ></v-radio>
+        </v-radio-group>
       </v-row>
     </v-container>
     <v-container v-if="field.fieldType === 'html'">
@@ -103,7 +173,7 @@
     </v-container>
     <v-container v-if="field.fieldType === 'date'">
       <v-text-field
-        :value="value"
+        :value="valueDate"
         v-mask="'##.##.####'"
         placeholder="DD.MM.YYYY"
         @input="onDateInputChanged"
@@ -239,6 +309,8 @@ export default {
       lookupList: [],
       isSelecting: false,
       selectedFile: null,
+      isLoading: false,
+      search: null,
       ckeditor: {
         editor: ClassicEditor,
         editorData: '',
@@ -247,6 +319,27 @@ export default {
         },
       },
     };
+  },
+  watch: {
+    search(searchString) {
+      // still loading
+      if (this.isLoading) return;
+      if (!searchString) return;
+      if (searchString.indexOf(' ') >= 0) return;
+      if (searchString && searchString.length <= 1) return;
+      this.isLoading = true;
+      this.getZipCodeMapping(searchString)
+        .then((res) => {
+          console.log(res);
+          this.lookupList = res;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
   },
   computed: {
     valueDate() {

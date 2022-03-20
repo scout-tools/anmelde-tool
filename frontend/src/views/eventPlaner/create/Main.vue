@@ -28,6 +28,7 @@
             <v-stepper-content :step="index + 1">
               <component
                 :is="step"
+                :event="event"
                 :ref="step.name"
                 :position="index + 1"
                 :max-pos="maxSteps"

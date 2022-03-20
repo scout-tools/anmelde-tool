@@ -71,5 +71,15 @@ export default {
           this.isLoading = false;
         });
     },
+    async getZipCodeMapping(searchString) {
+      const path = `${process.env.VUE_APP_API}/basic/zip-code/?zip_city=${searchString}`;
+      const response = await axios.get(path);
+      return response.data;
+    },
+    async callSingleZipCode(id) {
+      const path = `${process.env.VUE_APP_API}/basic/zip-code/?id=${id}`;
+      const response = await axios.get(path);
+      return response.data;
+    },
   },
 };

@@ -103,7 +103,7 @@ export default {
       set() {},
     },
     moduleId() {
-      return this.currentModule.module.id;
+      return this.currentModule.id;
     },
     myStamm() {
       return this.userinfo.stamm;

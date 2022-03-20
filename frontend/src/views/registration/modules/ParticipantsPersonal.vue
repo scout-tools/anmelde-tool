@@ -77,6 +77,8 @@ export default {
     dialogMeta() {
       return {
         title: 'Hallo',
+        path: `event/registration/${this.currentRegistration.id}/single-participant`,
+        listDisplay: ['firstName', 'lastName'],
         fields: [
           {
             name: 'Vorname*',
@@ -117,7 +119,7 @@ export default {
           },
           {
             name: 'E-Mail Adresse*',
-            techName: 'birthday',
+            techName: 'email',
             tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
             icon: 'mdi-email',
             mandatory: true,
@@ -134,12 +136,20 @@ export default {
             referenceDisplay: 'name',
             referenceTable: [
               {
-                name: 'Frau',
-                value: 'FEMALE',
+                name: 'weiblich',
+                value: 'F',
               },
               {
-                name: 'Mann',
-                value: 'MALE',
+                name: 'männlich',
+                value: 'M',
+              },
+              {
+                name: 'divers',
+                value: 'D',
+              },
+              {
+                name: 'Keine Angabe',
+                value: 'N',
               },
             ],
           },
@@ -156,11 +166,12 @@ export default {
             name: 'Postleitzahl/Ort*',
             techName: 'zipCode',
             tooltip:
-              'Trage bitte den Wohnort oder die Postleitzahl des Wohnorts ein und wähle die richtige Option aus.',
+              'Trage bitte den Wohnort oder die Postleitzahl des WoOption aus.',
             icon: 'mdi-city',
             mandatory: true,
-            fieldType: 'textfield',
+            fieldType: 'zipField',
             default: '',
+            lookupListDisplay: ['zipCode', 'city'],
           },
           {
             name: 'Telefonnummer*',
@@ -179,7 +190,7 @@ export default {
             icon: 'mdi-tent',
             mandatory: true,
             lookupPath: `/event/event/${this.currentEvent.id}/booking-options/`,
-            lookupListDisplay: ['id', 'name'],
+            lookupListDisplay: ['name', 'price'],
             fieldType: 'refDropdown',
             default: '',
           },
