@@ -1,14 +1,17 @@
 from django.db.models import Q
 from django_filters import CharFilter
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.exceptions import PermissionDenied, NotFound
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
-from .models import ScoutHierarchy, ZipCode, Tag, TagType, AbstractAttribute, Description, DescriptionType
+from .models import ScoutHierarchy, ZipCode, Tag, TagType, AbstractAttribute, Description, DescriptionType, TravelType, \
+    TravelSlots
 from .serializers import ScoutHierarchySerializer, ZipCodeSerializer, TagShortSerializer, TagTypeShortSerializer, \
-    AbstractAttributeGetPolymorphicSerializer, DescriptionSerializer
+    AbstractAttributeGetPolymorphicSerializer, DescriptionSerializer, AbstractAttributePutPolymorphicSerializer, \
+    AbstractAttributePostPolymorphicSerializer
 
 
 class ScoutHierarchyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -59,11 +62,16 @@ class TagTypeViewSet(viewsets.ModelViewSet):
 class AttributeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = AbstractAttribute.objects.all()
-    serializer_class = AbstractAttributeGetPolymorphicSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'create' or self.action == 'update':
+            return AbstractAttributePostPolymorphicSerializer
+        else:
+            return AbstractAttributeGetPolymorphicSerializer
 
 
-class DescriptionViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+class DescriptionViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
     serializer_class = DescriptionSerializer
 
     def get_queryset(self):
@@ -75,3 +83,37 @@ class DescriptionViewSet(viewsets.ModelViewSet):
             return Description.objects.filter(public=True, type=DescriptionType.Privacy)
         else:
             raise NotFound
+
+
+class TravelTypeViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, pk=None):
+        return Response(TravelType.choices, status=status.HTTP_200_OK)
+
+
+class TravelSlotsViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, pk=None):
+        return Response(TravelSlots.choices, status=status.HTTP_200_OK)
+
+
+class AttributeTypeViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def inheritors(self, klass):
+        subclasses = set()
+        work = [klass]
+        while work:
+            parent = work.pop()
+            for child in parent.__subclasses__():
+                if child not in subclasses:
+                    subclasses.add(child.__name__)
+                    work.append(child)
+        return subclasses
+
+    def list(self, request, pk=None):
+        choices = self.inheritors(AbstractAttribute)
+        print(choices)
+        return Response(choices, status=status.HTTP_200_OK)

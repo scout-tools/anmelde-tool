@@ -9,12 +9,12 @@ from rest_framework.exceptions import NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from basic.models import ScoutHierarchy, AbstractAttribute
+from basic.models import ScoutHierarchy, AbstractAttribute, TagType
 from basic.serializers import AbstractAttributeGetPolymorphicSerializer, AbstractAttributePutPolymorphicSerializer, \
     AbstractAttributePostPolymorphicSerializer
 from event.api_exceptions import GroupAlreadyRegistered, NotResponsible, SingleAlreadyRegistered, \
     SingleGroupNotAllowed, WrongRegistrationFormat, RegistrationNotSupported, WrongEventCode, TooEarly, TooLate, \
-    TooManyParticipants
+    TooManyParticipants, ModuleRequired
 from event.models import Event, EventLocation, BookingOption, RegistrationTypeGroup, RegistrationTypeSingle, \
     StandardEventTemplate, Registration, RegistrationParticipant, Gender, ParticipantActionConfirmation
 from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
@@ -23,7 +23,8 @@ from event.serializers import EventPlanerSerializer, EventLocationGetSerializer,
     EventModuleMapperPostSerializer, EventModuleMapperGetSerializer, RegistrationPostSerializer, \
     RegistrationGetSerializer, RegistrationPutSerializer, RegistrationParticipantSerializer, \
     RegistrationParticipantShortSerializer, RegistrationParticipantPutSerializer, \
-    RegistrationParticipantGroupSerializer, EventRegistrationSerializer, EventModuleMapperPutSerializer
+    RegistrationParticipantGroupSerializer, EventRegistrationSerializer, EventModuleMapperPutSerializer, \
+    AttributeEventModuleMapperPostSerializer
 
 
 def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
@@ -171,7 +172,7 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
                                 mixins.UpdateModelMixin,
                                 mixins.DestroyModelMixin,
                                 viewsets.GenericViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = EventModuleMapper.objects.all()
 
     def get_serializer_class(self):
@@ -183,17 +184,22 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
             return EventModuleMapperSerializer
 
     def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
         event_id = request.data.get("event")
         module_id = request.data.get("module")
 
         event = get_object_or_404(Event, pk=event_id)
         standard_event = get_object_or_404(StandardEventTemplate, pk=1)
 
-        module_template = standard_event.other_optional_modules.filter(module__id=module_id).first()
-        if module_template is None:
-            return super().create(request, *args, **kwargs)
+        module_mapper_template = standard_event.other_optional_modules.filter(module__id=module_id).first()
+        if module_mapper_template is None:
+            module_type = TagType.objects.get(id=10)
+            module_template = EventModule.objects.create(name="Custom", custom=True, type=module_type, header="Custom")
+            module_mapper_template = EventModuleMapper.objects.create(module=module_template, event=event)
 
-        new_module = add_event_module(module_template, event)
+        new_module = add_event_module(module_mapper_template, event)
         json = EventModuleMapperSerializer(new_module)
         return Response(json.data, status=status.HTTP_201_CREATED)
 
@@ -205,17 +211,17 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
     def destroy(self, request, *args, **kwargs) -> Response:
         mapper: EventModuleMapper = self.get_object()
         if mapper.required:
-            raise MethodNotAllowed('module is required')
+            raise ModuleRequired
         return super().destroy(request, *args, **kwargs)
 
 
 class EventModulesViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = EventModuleSerializer
     queryset = EventModule.objects.all()
 
 
-class AvailableEventModulesViewSet(viewsets.ModelViewSet):
+class AvailableEventModulesViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = EventModuleSerializer
 
@@ -225,14 +231,38 @@ class AvailableEventModulesViewSet(viewsets.ModelViewSet):
         return EventModule.objects.exclude(id__in=mapper).exclude(type__in=[7, 4]).exclude(custom=True)
 
 
-class EventModuleAttributeMapperViewSet(viewsets.ReadOnlyModelViewSet):
-    # permission_classes = [IsAuthenticated]
-    serializer_class = AttributeEventModuleMapperSerializer
+class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        serializer: AttributeEventModuleMapperSerializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
+        mapper = get_object_or_404(EventModuleMapper, id=mapper_id)
+
+        attribute = serializer.data.get('attribute')
+        attribute['type'] = TagType.objects.get(name=attribute['type']['name'])
+        test = AbstractAttributePostPolymorphicSerializer().create(attribute)
+        request.data['attribute'] = test
+
+        attribute_mapper = serializer.create(request.data)
+
+        mapper.attributes.add(attribute_mapper)
+
+        json = self.get_serializer(attribute_mapper)
+        return Response(json.data, status=status.HTTP_201_CREATED)
 
     def get_queryset(self):
         mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
         mapper = get_object_or_404(EventModuleMapper, id=mapper_id)
         return mapper.attributes.all()
+
+    def get_serializer_class(self):
+        if self.action == 'update':
+            return AttributeEventModuleMapperPostSerializer
+        else:
+            return AttributeEventModuleMapperSerializer
 
 
 class AssignedEventModulesViewSet(viewsets.ModelViewSet):
@@ -443,7 +473,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
 
 
 class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = RegistrationParticipantShortSerializer
 
     def create(self, request, *args, **kwargs) -> Response:
@@ -473,7 +503,8 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
                                                       last_name=i,
                                                       registration=registration,
                                                       generated=True,
-                                                      needs_confirmation=confirm)
+                                                      needs_confirmation=confirm,
+                                                      booking_option=registration.event.bookingoption_set.first().id)
                 new_participants.append(participant)
             RegistrationParticipant.objects.bulk_create(new_participants)
 

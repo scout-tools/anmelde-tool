@@ -81,7 +81,7 @@ class Tag(models.Model):
 class AbstractAttribute(PolymorphicModel):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=100, blank=True)
-    type = models.ForeignKey(TagType, null=True, blank=False, on_delete=models.PROTECT)
+    type = models.ForeignKey(TagType, null=True, blank=True, on_delete=models.PROTECT)
     template = models.BooleanField(default=False)
     template_id = models.IntegerField(default=-1)
 

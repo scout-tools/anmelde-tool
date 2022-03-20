@@ -61,6 +61,7 @@ class AttributeEventModuleMapper(models.Model):
     default_value = models.CharField(max_length=1000, null=True, blank=True)
     field_type = models.CharField(max_length=25, null=True, blank=True)
     icon = models.CharField(max_length=25, null=True, blank=True)
+    max_entries = models.IntegerField(default=1)
 
     def __str__(self):
         return f'{self.title}'

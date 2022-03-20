@@ -12,6 +12,10 @@ router.register(r'tags', views.TagViewSet)
 router.register(r'tag-types', views.TagTypeViewSet)
 router.register(r'attributes', views.AttributeViewSet)
 
+router.register(r'travel-type-choices', views.TravelTypeViewSet, basename='travel-type-choices')
+router.register(r'travel-slots-choices', views.TravelSlotsViewSet, basename='travel-slots-choices')
+router.register(r'attribute-choices', views.AttributeTypeViewSet, basename='attribute-choices')
+
 router.register(r'faq', views.DescriptionViewSet, basename='faq')
 router.register(r'legal', views.DescriptionViewSet, basename='legal')
 router.register(r'privacy', views.DescriptionViewSet, basename='privacy')

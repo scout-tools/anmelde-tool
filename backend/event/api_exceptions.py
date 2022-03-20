@@ -61,3 +61,9 @@ class TooManyParticipants(APIException):
     status_code = 405
     default_detail = "Bitte melde erst alle Teilnehmer ab, da dies die Lagerleitung bestätigen musst."
     default_code = 'too_late'
+
+
+class ModuleRequired(APIException):
+    status_code = 405
+    default_detail = "Du kannst dieses Modul nicht löschen, da es ein Pflichtmodul ist"
+    default_code = 'required_module'

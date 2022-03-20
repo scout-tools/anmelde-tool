@@ -183,7 +183,7 @@ class AbstractAttributePutPolymorphicSerializer(PolymorphicSerializer):
     }
 
 
-class BooleanAttributePostSerializer(serializers.ModelSerializer):
+class BooleanAttributeTemplatePostSerializer(serializers.ModelSerializer):
     resourcetype = serializers.CharField()
 
     class Meta:
@@ -191,7 +191,7 @@ class BooleanAttributePostSerializer(serializers.ModelSerializer):
         fields = ('boolean_field', 'resourcetype', 'template_id')
 
 
-class TimeAttributePostSerializer(serializers.ModelSerializer):
+class TimeAttributeTemplatePostSerializer(serializers.ModelSerializer):
     resourcetype = serializers.CharField()
 
     class Meta:
@@ -199,7 +199,7 @@ class TimeAttributePostSerializer(serializers.ModelSerializer):
         fields = ('date_field', 'resourcetype', 'template_id')
 
 
-class IntegerAttributePostSerializer(serializers.ModelSerializer):
+class IntegerAttributeTemplatePostSerializer(serializers.ModelSerializer):
     resourcetype = serializers.CharField()
 
     class Meta:
@@ -207,7 +207,7 @@ class IntegerAttributePostSerializer(serializers.ModelSerializer):
         fields = ('integer_field', 'resourcetype', 'template_id')
 
 
-class FloatAttributePostSerializer(serializers.ModelSerializer):
+class FloatAttributeTemplatePostSerializer(serializers.ModelSerializer):
     resourcetype = serializers.CharField()
 
     class Meta:
@@ -215,7 +215,7 @@ class FloatAttributePostSerializer(serializers.ModelSerializer):
         fields = ('float_field', 'resourcetype', 'template_id')
 
 
-class TravelAttributePostSerializer(serializers.ModelSerializer):
+class TravelAttributeTemplatePostSerializer(serializers.ModelSerializer):
     resourcetype = serializers.CharField()
 
     class Meta:
@@ -223,12 +223,65 @@ class TravelAttributePostSerializer(serializers.ModelSerializer):
         fields = ('type_field', 'time_field', 'resourcetype', 'template_id')
 
 
-class StringAttributePostSerializer(serializers.ModelSerializer):
+class StringAttributeTemplatePostSerializer(serializers.ModelSerializer):
     resourcetype = serializers.CharField()
 
     class Meta:
         model = StringAttribute
         fields = ('string_field', 'resourcetype', 'template_id')
+
+
+class AbstractAttributeTemplatePostPolymorphicSerializer(PolymorphicSerializer):
+    model_serializer_mapping = {
+        FloatAttribute: FloatAttributeTemplatePostSerializer,
+        IntegerAttribute: IntegerAttributeTemplatePostSerializer,
+        TimeAttribute: TimeAttributeTemplatePostSerializer,
+        BooleanAttribute: BooleanAttributeTemplatePostSerializer,
+        TravelAttribute: TravelAttributeTemplatePostSerializer,
+        StringAttribute: StringAttributeTemplatePostSerializer
+    }
+
+
+class DescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Description
+        exclude = ('public', 'type')
+
+
+class BooleanAttributePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BooleanAttribute
+        fields = '__all__'
+
+
+class TimeAttributePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TimeAttribute
+        fields = '__all__'
+
+
+class IntegerAttributePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IntegerAttribute
+        fields = '__all__'
+
+
+class FloatAttributePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FloatAttribute
+        fields = '__all__'
+
+
+class TravelAttributePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TravelAttribute
+        fields = '__all__'
+
+
+class StringAttributePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StringAttribute
+        fields = '__all__'
 
 
 class AbstractAttributePostPolymorphicSerializer(PolymorphicSerializer):
@@ -240,9 +293,3 @@ class AbstractAttributePostPolymorphicSerializer(PolymorphicSerializer):
         TravelAttribute: TravelAttributePostSerializer,
         StringAttribute: StringAttributePostSerializer
     }
-
-
-class DescriptionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Description
-        exclude = ('public', 'type')

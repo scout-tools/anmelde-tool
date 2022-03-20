@@ -85,12 +85,12 @@ class EventModuleMapperPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventModuleMapper
         fields = (
-            'module',
             'attributes',
             'event',
             'overwrite_description',
             'ordering'
         )
+        optional_fields = ('module',)
 
 
 class EventModuleMapperPutSerializer(serializers.ModelSerializer):
@@ -131,8 +131,14 @@ class EventPlanerSerializer(serializers.ModelSerializer):
 
 
 class AttributeEventModuleMapperSerializer(serializers.ModelSerializer):
-    attribute = AbstractAttributeGetPolymorphicSerializer(many=False, read_only=True)
+    attribute = AbstractAttributeGetPolymorphicSerializer(many=False, read_only=False)
 
+    class Meta:
+        model = AttributeEventModuleMapper
+        fields = '__all__'
+
+
+class AttributeEventModuleMapperPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = AttributeEventModuleMapper
         fields = '__all__'
