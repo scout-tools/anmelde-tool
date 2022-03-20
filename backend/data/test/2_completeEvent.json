@@ -88,7 +88,7 @@
     "pk": 2,
     "fields": {
       "name": "ParticipantsPersonal",
-      "type": 5,
+      "type": 7,
       "header": "Teilnehmende",
       "internal": false,
       "custom": false
@@ -99,7 +99,7 @@
     "pk": 3,
     "fields": {
       "name": "Participants",
-      "type": 5,
+      "type": 7,
       "header": "Teilnehmende",
       "internal": false,
       "custom": false
@@ -194,6 +194,28 @@
     }
   },
   {
+    "model": "event.eventmodule",
+    "pk": 12,
+    "fields": {
+      "name": "T-Shirt",
+      "type": 5,
+      "header": "T-Shirts",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 13,
+    "fields": {
+      "name": "LunchMeals",
+      "type": 5,
+      "header": "Lunch Paket",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
     "model": "event.attributeeventmodulemapper",
     "pk": 1,
     "fields": {
@@ -206,7 +228,8 @@
       "tooltip": null,
       "default_value": "false",
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -222,7 +245,8 @@
       "tooltip": null,
       "default_value": "false",
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -238,7 +262,8 @@
       "tooltip": null,
       "default_value": "false",
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -254,7 +279,8 @@
       "tooltip": null,
       "default_value": "0",
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -270,7 +296,8 @@
       "tooltip": null,
       "default_value": "0",
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -286,7 +313,8 @@
       "tooltip": null,
       "default_value": "0",
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -302,7 +330,8 @@
       "tooltip": null,
       "default_value": "0",
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -318,7 +347,8 @@
       "tooltip": null,
       "default_value": null,
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -334,7 +364,8 @@
       "tooltip": null,
       "default_value": null,
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -350,7 +381,8 @@
       "tooltip": null,
       "default_value": "Hallo Lagerleitung,",
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -366,39 +398,127 @@
       "tooltip": null,
       "default_value": "false",
       "field_type": null,
-      "icon": null
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
-    "model": "event.event",
-    "pk": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+    "model": "event.attributeeventmodulemapper",
+    "pk": 12,
     "fields": {
-      "created_at": "2022-03-10T11:43:48.710Z",
-      "updated_at": "2022-03-10T11:43:48.710Z",
-      "name": "Standard",
-      "technical_name": "standard",
-      "short_description": "",
-      "long_description": "",
-      "cloud_link": null,
-      "location": null,
-      "start_date": null,
-      "end_date": null,
-      "registration_deadline": null,
-      "registration_start": null,
-      "last_possible_update": null,
-      "invitation_code": "AAAA",
-      "is_public": false,
-      "keycloak_path": null,
-      "keycloak_admin_path": null,
-      "limited_registration_hierarchy": 493,
-      "single_registration": "N",
-      "group_registration": "N",
-      "personal_data_required": false,
-      "responsible_persons": [
-        2
-      ],
-      "tags": [],
-      "event_planer_modules": []
+      "attribute": 27,
+      "title": "T-Shirt XS",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe XS?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 13,
+    "fields": {
+      "attribute": 28,
+      "title": "T-Shirt S",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe S?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 14,
+    "fields": {
+      "attribute": 29,
+      "title": "T-Shirt M",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe M?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 15,
+    "fields": {
+      "attribute": 30,
+      "title": "T-Shirt L",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe L?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 16,
+    "fields": {
+      "attribute": 31,
+      "title": "T-Shirt XL",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe XL?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 17,
+    "fields": {
+      "attribute": 32,
+      "title": "T-Shirts XXL",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe XL?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 18,
+    "fields": {
+      "attribute": 33,
+      "title": "Lunch Pakete",
+      "text": "Wie viele Lunch Pakete braucht ihr?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
     }
   },
   {
@@ -406,7 +526,7 @@
     "pk": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
     "fields": {
       "created_at": "2022-03-10T11:46:18.946Z",
-      "updated_at": "2022-03-16T21:24:03.184Z",
+      "updated_at": "2022-03-20T16:03:20.356Z",
       "name": "DPV goLd",
       "technical_name": "dpv-gold",
       "short_description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
@@ -477,6 +597,38 @@
         2,
         3
       ]
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+    "fields": {
+      "created_at": "2022-03-10T11:43:48.710Z",
+      "updated_at": "2022-03-10T11:43:48.710Z",
+      "name": "Standard",
+      "technical_name": "standard",
+      "short_description": "",
+      "long_description": "",
+      "cloud_link": null,
+      "location": null,
+      "start_date": null,
+      "end_date": null,
+      "registration_deadline": null,
+      "registration_start": null,
+      "last_possible_update": null,
+      "invitation_code": "AAAA",
+      "is_public": false,
+      "keycloak_path": null,
+      "keycloak_admin_path": null,
+      "limited_registration_hierarchy": 493,
+      "single_registration": "N",
+      "group_registration": "N",
+      "personal_data_required": false,
+      "responsible_persons": [
+        2
+      ],
+      "tags": [],
+      "event_planer_modules": []
     }
   },
   {
@@ -643,7 +795,7 @@
     "model": "event.eventmodulemapper",
     "pk": 12,
     "fields": {
-      "ordering": 1,
+      "ordering": 0,
       "module": 1,
       "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": true,
@@ -660,7 +812,7 @@
     "model": "event.eventmodulemapper",
     "pk": 13,
     "fields": {
-      "ordering": 2,
+      "ordering": 1,
       "module": 2,
       "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": true,
@@ -673,7 +825,7 @@
     "model": "event.eventmodulemapper",
     "pk": 14,
     "fields": {
-      "ordering": 3,
+      "ordering": 2,
       "module": 6,
       "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": false,
@@ -716,7 +868,7 @@
     "model": "event.eventmodulemapper",
     "pk": 17,
     "fields": {
-      "ordering": 4,
+      "ordering": 3,
       "module": 11,
       "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": false,
@@ -727,6 +879,41 @@
         5,
         6,
         7
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 18,
+    "fields": {
+      "ordering": 999,
+      "module": 12,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 24,
+    "fields": {
+      "ordering": 999,
+      "module": 13,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        18
       ]
     }
   },
@@ -776,7 +963,8 @@
         8,
         9,
         10,
-        11
+        11,
+        18
       ]
     }
   }

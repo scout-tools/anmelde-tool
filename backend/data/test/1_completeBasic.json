@@ -192,7 +192,7 @@
     "model": "basic.abstractattribute",
     "pk": 14,
     "fields": {
-      "polymorphic_ctype": 13,
+      "polymorphic_ctype": 14,
       "name": "Veranstaltungs Bedingungen",
       "type": 9,
       "template": true,
@@ -203,7 +203,7 @@
     "model": "basic.abstractattribute",
     "pk": 15,
     "fields": {
-      "polymorphic_ctype": 13,
+      "polymorphic_ctype": 14,
       "name": "DSGVO",
       "type": 9,
       "template": true,
@@ -214,7 +214,7 @@
     "model": "basic.abstractattribute",
     "pk": 16,
     "fields": {
-      "polymorphic_ctype": 13,
+      "polymorphic_ctype": 14,
       "name": "Corona Hinweis",
       "type": 9,
       "template": true,
@@ -225,7 +225,7 @@
     "model": "basic.abstractattribute",
     "pk": 17,
     "fields": {
-      "polymorphic_ctype": 15,
+      "polymorphic_ctype": 16,
       "name": "Kothen",
       "type": 9,
       "template": true,
@@ -236,7 +236,7 @@
     "model": "basic.abstractattribute",
     "pk": 18,
     "fields": {
-      "polymorphic_ctype": 15,
+      "polymorphic_ctype": 16,
       "name": "Kothenstangen",
       "type": 9,
       "template": true,
@@ -247,7 +247,7 @@
     "model": "basic.abstractattribute",
     "pk": 19,
     "fields": {
-      "polymorphic_ctype": 15,
+      "polymorphic_ctype": 16,
       "name": "Jurten",
       "type": 9,
       "template": true,
@@ -258,7 +258,7 @@
     "model": "basic.abstractattribute",
     "pk": 20,
     "fields": {
-      "polymorphic_ctype": 15,
+      "polymorphic_ctype": 16,
       "name": "Jurtenstangen",
       "type": 9,
       "template": true,
@@ -269,7 +269,7 @@
     "model": "basic.abstractattribute",
     "pk": 21,
     "fields": {
-      "polymorphic_ctype": 18,
+      "polymorphic_ctype": 19,
       "name": "Anreise",
       "type": 9,
       "template": true,
@@ -280,7 +280,7 @@
     "model": "basic.abstractattribute",
     "pk": 22,
     "fields": {
-      "polymorphic_ctype": 18,
+      "polymorphic_ctype": 19,
       "name": "Abreise",
       "type": 9,
       "template": true,
@@ -291,7 +291,7 @@
     "model": "basic.abstractattribute",
     "pk": 23,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 17,
       "name": "Nachricht an die Lagerleitung",
       "type": 9,
       "template": true,
@@ -302,8 +302,85 @@
     "model": "basic.abstractattribute",
     "pk": 26,
     "fields": {
-      "polymorphic_ctype": 13,
+      "polymorphic_ctype": 14,
       "name": "Registrierungs Bestätigung",
+      "type": 9,
+      "template": true,
+      "template_id": -1
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 27,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "T-Shirt XS",
+      "type": 9,
+      "template": true,
+      "template_id": -1
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 28,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "T-Shirt S",
+      "type": 9,
+      "template": true,
+      "template_id": -1
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 29,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "T-Shirt M",
+      "type": 9,
+      "template": true,
+      "template_id": -1
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 30,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "T-Shirt L",
+      "type": 9,
+      "template": true,
+      "template_id": -1
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 31,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "T-Shirt XL",
+      "type": 9,
+      "template": true,
+      "template_id": -1
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 32,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "T-Shirt XXL",
+      "type": 9,
+      "template": true,
+      "template_id": -1
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 33,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "Lunch Paket",
       "type": 9,
       "template": true,
       "template_id": -1
@@ -361,6 +438,55 @@
   {
     "model": "basic.integerattribute",
     "pk": 20,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 27,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 28,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 29,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 30,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 31,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 32,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 33,
     "fields": {
       "integer_field": 0
     }
@@ -386,270 +512,6 @@
     "fields": {
       "type_field": null,
       "time_field": null
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 1,
-    "fields": {
-      "app_label": "admin",
-      "model": "logentry"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 2,
-    "fields": {
-      "app_label": "auth",
-      "model": "permission"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 3,
-    "fields": {
-      "app_label": "auth",
-      "model": "group"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 4,
-    "fields": {
-      "app_label": "auth",
-      "model": "user"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 5,
-    "fields": {
-      "app_label": "contenttypes",
-      "model": "contenttype"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 6,
-    "fields": {
-      "app_label": "sessions",
-      "model": "session"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 7,
-    "fields": {
-      "app_label": "sites",
-      "model": "site"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 8,
-    "fields": {
-      "app_label": "basic",
-      "model": "abstractattribute"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 9,
-    "fields": {
-      "app_label": "basic",
-      "model": "attributedescription"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 10,
-    "fields": {
-      "app_label": "basic",
-      "model": "scoutorgalevel"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 11,
-    "fields": {
-      "app_label": "basic",
-      "model": "tagtype"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 12,
-    "fields": {
-      "app_label": "basic",
-      "model": "zipcode"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 13,
-    "fields": {
-      "app_label": "basic",
-      "model": "booleanattribute"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 14,
-    "fields": {
-      "app_label": "basic",
-      "model": "floatattribute"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 15,
-    "fields": {
-      "app_label": "basic",
-      "model": "integerattribute"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 16,
-    "fields": {
-      "app_label": "basic",
-      "model": "stringattribute"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 17,
-    "fields": {
-      "app_label": "basic",
-      "model": "timeattribute"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 18,
-    "fields": {
-      "app_label": "basic",
-      "model": "travelattribute"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 19,
-    "fields": {
-      "app_label": "basic",
-      "model": "tag"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 20,
-    "fields": {
-      "app_label": "basic",
-      "model": "scouthierarchy"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 21,
-    "fields": {
-      "app_label": "authentication",
-      "model": "userextended"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 22,
-    "fields": {
-      "app_label": "event",
-      "model": "attributeeventmodulemapper"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 23,
-    "fields": {
-      "app_label": "event",
-      "model": "bookingoption"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 24,
-    "fields": {
-      "app_label": "event",
-      "model": "event"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 25,
-    "fields": {
-      "app_label": "event",
-      "model": "eventmodule"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 26,
-    "fields": {
-      "app_label": "event",
-      "model": "eventmodulemapper"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 27,
-    "fields": {
-      "app_label": "event",
-      "model": "registration"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 28,
-    "fields": {
-      "app_label": "event",
-      "model": "registrationparticipant"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 29,
-    "fields": {
-      "app_label": "event",
-      "model": "workshop"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 30,
-    "fields": {
-      "app_label": "event",
-      "model": "workshopparticipant"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 31,
-    "fields": {
-      "app_label": "event",
-      "model": "standardeventtemplate"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 32,
-    "fields": {
-      "app_label": "event",
-      "model": "eventplanermodule"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 33,
-    "fields": {
-      "app_label": "event",
-      "model": "eventlocation"
     }
   }
 ]

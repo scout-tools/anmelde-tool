@@ -138,8 +138,8 @@ class ScoutHierarchy(TimeStampMixin):
 class Description(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
     public = models.BooleanField(default=False)
-    question = models.CharField(max_length=250, null=True, blank=True)
-    answer = models.CharField(max_length=10000, null=True, blank=True)
+    question = models.TextField(max_length=250, null=True, blank=True)
+    answer = models.TextField(max_length=10000, null=True, blank=True)
     type = models.CharField(max_length=3, choices=DescriptionType.choices, default=DescriptionType.FAQ)
 
     def __str__(self):

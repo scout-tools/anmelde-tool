@@ -36,7 +36,7 @@ export default {
     faqs: [],
   }),
   created() {
-    const path = `${process.env.VUE_APP_API}/basic/privacy/`;
+    const path = `${process.env.VUE_APP_API}/basic/faq/`;
     axios.get(path)
       .then((success) => {
         this.faqs = success.data;

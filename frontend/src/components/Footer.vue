@@ -26,6 +26,17 @@
           Datenschutz
         </v-btn>
         <v-btn
+          color="white"
+          text
+          rounded
+          class="my-2"
+          @click="$router.push({ name: 'faq' })">
+          <v-icon fab color="white" class="mr-1">
+            mdi-frequently-asked-questions
+          </v-icon>
+          FAQ
+        </v-btn>
+        <v-btn
           v-if="isAuth"
           color="white"
           text
@@ -53,7 +64,6 @@ export default {
       this.logout();
     },
   },
-  data: () => ({
-  }),
+  data: () => ({}),
 };
 </script>

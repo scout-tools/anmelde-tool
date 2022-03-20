@@ -9,6 +9,7 @@ import SettingsConfig from '@/views/settings/config/Main.vue';
 import LandingPage from '@/views/landingPage/Main.vue';
 import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
+import FAQ from '@/views/footer/FAQ.vue';
 import EventPlaner from '@/views/eventPlaner/Main.vue';
 import PlanEvent from '@/views/eventPlaner/create/Main.vue';
 import registrationNew from '@/views/registration/Main.vue';
@@ -113,6 +114,11 @@ const routes = [
     path: '/datenschutz',
     name: 'datenschutz',
     component: Datenschutz,
+  },
+  {
+    path: '/faq',
+    name: 'faq',
+    component: FAQ,
   },
 ];
 
