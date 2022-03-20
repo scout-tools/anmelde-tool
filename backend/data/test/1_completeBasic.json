@@ -513,5 +513,54 @@
       "type_field": null,
       "time_field": null
     }
+  },
+  {
+    "model": "basic.eathabit",
+    "pk": 1,
+    "fields": {
+      "name": "Kein Fleisch (Vegetarisch)"
+    }
+  },
+  {
+    "model": "basic.eathabit",
+    "pk": 2,
+    "fields": {
+      "name": "Keine Tierprodukte (Vegan)"
+    }
+  },
+  {
+    "model": "basic.eathabit",
+    "pk": 3,
+    "fields": {
+      "name": "Keine Nüsse"
+    }
+  },
+  {
+    "model": "basic.eathabit",
+    "pk": 4,
+    "fields": {
+      "name": "Kein Gluten"
+    }
+  },
+  {
+    "model": "basic.eathabit",
+    "pk": 5,
+    "fields": {
+      "name": "Keine Hülsenfrüchte"
+    }
+  },
+  {
+    "model": "basic.eathabit",
+    "pk": 6,
+    "fields": {
+      "name": "Kein Laktose"
+    }
+  },
+  {
+    "model": "basic.eathabit",
+    "pk": 7,
+    "fields": {
+      "name": "Keine Eier"
+    }
   }
 ]

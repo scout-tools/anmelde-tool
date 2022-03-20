@@ -36,6 +36,8 @@ Windows: `python manage.py add_fixtures test-data`
 # Dumpdata
 Contenttypes: `python -Xutf8 manage.py dumpdata contenttypes.contenttype -o data\main\0_contenTypes.json`
 
+Descriptions: `python -Xutf8 manage.py dumpdata basic.description -o data\main\0_contenTypes.json`
+
 Basic: `python -Xutf8 manage.py dumpdata basic --exclude=basic.ZipCode --exclude=basic.description --exclude=basic.ScoutOrgaLevel --exclude=basic.ScoutHierarchy -o data\test\1_completeBasic.json`
 
 Event: `python -Xutf8 manage.py dumpdata event -o data\test\2_completeEvent.json`

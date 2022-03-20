@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, Tag, TagType, AbstractAttribute, BooleanAttribute, \
     TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute, TravelType, TravelSlots, \
-    Description
+    Description, EatHabit
 from .polymorphic_serializer import PolymorphicSerializer
 
 """
@@ -293,3 +293,9 @@ class AbstractAttributePostPolymorphicSerializer(PolymorphicSerializer):
         TravelAttribute: TravelAttributePostSerializer,
         StringAttribute: StringAttributePostSerializer
     }
+
+
+class EatHabitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EatHabit
+        fields = '__all__'

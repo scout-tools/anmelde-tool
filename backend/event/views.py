@@ -9,7 +9,7 @@ from rest_framework.exceptions import NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from basic.models import ScoutHierarchy, AbstractAttribute, TagType
+from basic.models import ScoutHierarchy, AbstractAttribute, TagType, EatHabit
 from basic.serializers import AbstractAttributeGetPolymorphicSerializer, AbstractAttributePutPolymorphicSerializer, \
     AbstractAttributePostPolymorphicSerializer
 from event.api_exceptions import GroupAlreadyRegistered, NotResponsible, SingleAlreadyRegistered, \
@@ -45,6 +45,13 @@ def add_event_attribute(attribute: AbstractAttribute) -> AbstractAttribute:
     new_attribute.template_id = attribute.id
     new_attribute.save()
     return new_attribute
+
+
+def create_missing_eat_habits(request) -> None:
+    eat_habits = request.data.get('eat_habit', None)
+    for habit in eat_habits:
+        if not EatHabit.objects.filter(name__exact=habit).exists():
+            EatHabit.objects.create(name=habit)
 
 
 class EventLocationViewSet(viewsets.ModelViewSet):
@@ -293,7 +300,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
                           mixins.UpdateModelMixin,
                           mixins.DestroyModelMixin,
                           viewsets.GenericViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Registration.objects.all()
 
     def create(self, request, *args, **kwargs):
@@ -394,14 +401,14 @@ class GenderViewSet(viewsets.ViewSet):
 
 
 class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         registration_id = self.kwargs.get("registration_pk", None)
         return RegistrationParticipant.objects.filter(registration=registration_id)
 
     def create(self, request, *args, **kwargs):
-
+        create_missing_eat_habits(request)
         registration: Registration = self.participant_initialization(request)
 
         request.data['registration'] = registration.id
@@ -414,10 +421,10 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
 
         if registration.event.registration_deadline < timezone.now():
             request.data['needs_confirmation'] = ParticipantActionConfirmation.AddCompletyNew
-
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
+        create_missing_eat_habits(request)
         registration: Registration = self.participant_initialization(request)
         participant: RegistrationParticipant = self.get_object()
         if participant.deactivated:
@@ -429,7 +436,6 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
                 request.data['needs_confirmation'] = ParticipantActionConfirmation.AddFromExisting
 
         request.data['generated'] = False
-
         return super().update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):

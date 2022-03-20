@@ -8,10 +8,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import ScoutHierarchy, ZipCode, Tag, TagType, AbstractAttribute, Description, DescriptionType, TravelType, \
-    TravelSlots
+    TravelSlots, EatHabit
 from .serializers import ScoutHierarchySerializer, ZipCodeSerializer, TagShortSerializer, TagTypeShortSerializer, \
     AbstractAttributeGetPolymorphicSerializer, DescriptionSerializer, AbstractAttributePutPolymorphicSerializer, \
-    AbstractAttributePostPolymorphicSerializer
+    AbstractAttributePostPolymorphicSerializer, EatHabitSerializer
 
 
 class ScoutHierarchyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -117,3 +117,9 @@ class AttributeTypeViewSet(viewsets.ViewSet):
         choices = self.inheritors(AbstractAttribute)
         print(choices)
         return Response(choices, status=status.HTTP_200_OK)
+
+
+class EatHabitViewSet(viewsets.ModelViewSet):
+    queryset = EatHabit.objects.all()
+    serializer_class = EatHabitSerializer
+    # permission_classes = [IsAuthenticated]

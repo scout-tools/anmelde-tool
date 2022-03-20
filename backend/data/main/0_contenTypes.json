@@ -270,5 +270,13 @@
       "app_label": "event",
       "model": "eventlocation"
     }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 35,
+    "fields": {
+      "app_label": "basic",
+      "model": "eathabit"
+    }
   }
 ]

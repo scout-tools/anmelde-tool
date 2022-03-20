@@ -3,6 +3,7 @@ from django.utils import timezone
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from authentication.serializers import UserExtendedShortSerializer
+from basic.models import EatHabit
 from basic.serializers import TagShortSerializer, ZipCodeSerializer, AbstractAttributeGetPolymorphicSerializer, \
     ZipCodeShortSerializer
 from .models import Event, EventLocation, BookingOption, EventModuleMapper, EventModule, AttributeEventModuleMapper, \
@@ -260,6 +261,13 @@ class RegistrationParticipantShortSerializer(serializers.ModelSerializer):
 
 
 class RegistrationParticipantSerializer(serializers.ModelSerializer):
+    eat_habit = serializers.SlugRelatedField(
+        many=True,
+        read_only=False,
+        slug_field='name',
+        queryset=EatHabit.objects.all()
+    )
+
     class Meta:
         model = RegistrationParticipant
         fields = '__all__'
@@ -268,6 +276,12 @@ class RegistrationParticipantSerializer(serializers.ModelSerializer):
 class RegistrationParticipantPutSerializer(serializers.ModelSerializer):
     avoid_manual_check = serializers.BooleanField(required=False, default=False)
     activate = serializers.BooleanField(required=False, default=False)
+    eat_habit = serializers.SlugRelatedField(
+        many=True,
+        read_only=False,
+        slug_field='name',
+        queryset=EatHabit.objects.all()
+    )
 
     class Meta:
         model = RegistrationParticipant

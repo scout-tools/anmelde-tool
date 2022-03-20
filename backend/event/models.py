@@ -2,7 +2,8 @@ import uuid
 
 from django.contrib.auth.models import User, Group
 from django.db import models
-from basic.models import ZipCode, Tag, AbstractAttribute, AttributeDescription, TimeStampMixin, ScoutHierarchy, TagType
+from basic.models import ZipCode, Tag, AbstractAttribute, AttributeDescription, TimeStampMixin, ScoutHierarchy, TagType, \
+    EatHabit
 from event.choices import RegistrationTypeSingle, RegistrationTypeGroup, ParticipantActionConfirmation, Gender
 
 
@@ -172,6 +173,7 @@ class RegistrationParticipant(TimeStampMixin):
     generated = models.BooleanField(default=False)
     needs_confirmation = models.CharField(max_length=2, choices=ParticipantActionConfirmation.choices,
                                           default=ParticipantActionConfirmation.Nothing)
+    eat_habit = models.ManyToManyField(EatHabit, blank=True)
 
     def __str__(self):
         return f"{self.registration}: {self.last_name}, {self.first_name}"

@@ -144,3 +144,11 @@ class Description(TimeStampMixin):
 
     def __str__(self):
         return f'{self.get_type_display()}: {self.question}'
+
+
+class EatHabit(models.Model):
+    id = models.AutoField(auto_created=True, primary_key=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
