@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { serviceMixin } from '@/mixins/serviceMixin';
+import serviceMixin from '@/mixins/serviceMixin';
 import moment from 'moment'; // eslint-disable-line
 
 export default {

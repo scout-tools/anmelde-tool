@@ -32,7 +32,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { serviceMixin } from '@/mixins/serviceMixin';
+import serviceMixin from '@/mixins/serviceMixin';
+
 // import kpiCard from '@/components/kpi/Card.vue';
 // import kpiCardList from '@/components/kpi/CardList.vue';
 

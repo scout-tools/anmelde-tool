@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { serviceMixin } from '@/mixins/serviceMixin';
+import serviceMixin from '@/mixins/serviceMixin';
 
 export default {
   mixins: [serviceMixin],
