@@ -16,9 +16,9 @@ from event import api_exceptions as event_api_exceptions
 from event import models as event_models
 
 
-def add_event_module(module: event_serializers.EventModuleMapper,
-                     event: event_models.Event) -> event_serializers.EventModuleMapper:
-    new_module: event_serializers.EventModuleMapper = deepcopy(module)
+def add_event_module(module: event_models.EventModuleMapper,
+                     event: event_models.Event) -> event_models.EventModuleMapper:
+    new_module: event_models.EventModuleMapper = deepcopy(module)
     new_module.pk = None
     new_module.standard = False
     new_module.event = event
@@ -95,11 +95,6 @@ class EventViewSet(viewsets.ModelViewSet):
             add_event_module(mapper, event)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    def update(self, request, *args, **kwargs) -> Response:
-        if request.data.get('name', None) is None:
-            request.data['name'] = self.get_object().name
-        return super().update(request, *args, **kwargs)
 
 
 class BookingOptionViewSet(viewsets.ModelViewSet):
@@ -208,7 +203,7 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
         return Response(json.data, status=status.HTTP_200_OK)
 
     def destroy(self, request, *args, **kwargs) -> Response:
-        mapper: event_serializers.EventModuleMapper = self.get_object()
+        mapper: event_models.EventModuleMapper = self.get_object()
         if mapper.required:
             raise event_api_exceptions.ModuleRequired
         return super().destroy(request, *args, **kwargs)
