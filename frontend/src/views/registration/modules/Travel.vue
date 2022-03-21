@@ -5,7 +5,8 @@
     :position="position"
     :maxPos="maxPos"
     @prevStep="prevStep"
-    @nextStep="nextStep"
+    @nextStep="onNextStep"
+    @ignore="onIngoredClicked"
   >
     <template v-slot:header>
       <p>Wann und wie werdet ihr voraussichtlich an ankommen?</p>
@@ -199,7 +200,7 @@ export default {
       }
       return [null, null];
     },
-    nextStep(force) {
+    onNextStep(force) {
       const promises = [];
       this.moduleData.forEach((moduleItem) => {
         const getAtt = this.attributes.filter(
@@ -247,7 +248,6 @@ export default {
           this.setDefaults();
         })
         .catch((error) => {
-          debugger;
           console.error(error.response);
           this.errormsg = error.response.data.message;
           this.isLoading = false;

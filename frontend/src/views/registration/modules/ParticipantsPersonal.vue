@@ -5,8 +5,8 @@
     :position="position"
     :maxPos="maxPos"
     @prevStep="prevStep"
-    @nextStep="nextStep"
-    @ignore="ignore"
+    @nextStep="onNextStep"
+    @ignore="onIngoredClicked"
   >
     <template v-slot:header>
       <p>
@@ -35,13 +35,19 @@
         :ref="`dialog-main-${moduleId}`"
         :dialogMeta="dialogMeta"
         :valdiationObj="$v"
+        @validate="validate"
       />
     </template>
   </GenericRegModul>
 </template>
 
 <script>
-// import { required } from 'vuelidate/lib/validators';
+import {
+  required,
+  minLength,
+  maxLength,
+  email,
+} from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
@@ -71,33 +77,42 @@ export default {
   }),
   validations: {
     data: {
-      // firstName: {
-      //   required,
-      // },
-      // lastName: {
-      //   required,
-      // },
-      // birthday: {
-      //   required,
-      // },
-      // email: {
-      //   required,
-      // },
-      // gender: {
-      //   required,
-      // },
-      // street: {
-      //   required,
-      // },
-      // zipCode: {
-      //   required,
-      // },
-      // phoneNumber: {
-      //   required,
-      // },
-      // bookingOption: {
-      //   required,
-      // },
+      firstName: {
+        required,
+        minLength: minLength(2),
+        maxLength: maxLength(20),
+      },
+      lastName: {
+        required,
+        minLength: minLength(2),
+        maxLength: maxLength(20),
+      },
+      scoutName: {
+        minLength: minLength(2),
+        maxLength: maxLength(20),
+      },
+      email: {
+        email,
+        required,
+      },
+      birthday: {
+        required,
+      },
+      gender: {
+        required,
+      },
+      bookingOption: {
+        required,
+      },
+      street: {
+        required,
+        minLength: minLength(4),
+        maxLength: maxLength(30),
+      },
+      zipCode: {
+        required,
+        minLength: minLength(1),
+      },
     },
   },
   computed: {
@@ -260,9 +275,16 @@ export default {
     },
   },
   methods: {
+    validate(data) {
+      this.data = data;
+      this.$v.$touch();
+    },
     beforeTabShow() {
       this.loadData();
       this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+    },
+    onNextStep() {
+      this.nextStep();
     },
     setDefaults() {},
     loadData() {

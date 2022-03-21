@@ -5,7 +5,7 @@
     :position="position"
     :maxPos="maxPos"
     @prevStep="prevStep"
-    @nextStep="nextStep"
+    @nextStep="onNextStep"
     @submit="submitStep"
   >
     <template v-slot:header>
@@ -104,6 +104,9 @@ export default {
       this.moduleData.forEach((data) => {
         this.data.checkboxes[data.id] = false;
       });
+    },
+    onNextStep() {
+      this.nextStep();
     },
     loadData() {
       this.isLoading = true;

@@ -50,6 +50,7 @@
       :dialogMeta="dialogMeta"
       @refresh="onRefresh()"
       :valdiationObj="valdiationObj"
+      @validate="validate"
     />
     <delete-modal
       ref="deleteModal"
@@ -81,7 +82,6 @@ export default {
   }),
   props: {
     valdiationObj: {
-      default: {},
     },
     dialogMeta: {
       default: {},
@@ -93,6 +93,9 @@ export default {
     },
   },
   methods: {
+    validate(data) {
+      this.$emit('validate', data);
+    },
     getDisplayName(item) {
       let template = '';
       this.dialogMeta.listDisplay.forEach((field, i) => {

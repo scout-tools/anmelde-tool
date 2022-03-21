@@ -25,6 +25,7 @@
                   :currentEvent="currentEvent"
                   :personalData="personalData"
                   :currentModule="step"
+                  @ignore="nextStep()"
                   @prevStep="prevStep()"
                   @nextStep="nextStep()"
                   @submit="onRegistrationConfirmed()"

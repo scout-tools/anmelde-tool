@@ -49,7 +49,6 @@ export default {
       default: {},
     },
     valdiationObj: {
-      default: {},
     },
   },
   mixins: [apiCallsMixin],
@@ -94,9 +93,8 @@ export default {
       this.valid = !this.valdiationObj.$anyError;
     },
     onClickOkay() {
+      this.$emit('validate', this.data);
       this.$forceUpdate();
-      console.log(this.data);
-      console.log(this.valdiationObj);
       this.validate();
       if (this.valid) {
         try {

@@ -5,7 +5,8 @@
     :position="position"
     :maxPos="maxPos"
     @prevStep="prevStep"
-    @nextStep="nextStep"
+    @nextStep="onNextStep"
+    @ignore="onIngoredClicked"
   >
     <template v-slot:header>
       <p>
@@ -145,7 +146,7 @@ export default {
           this.isLoading = false;
         });
     },
-    nextStep() {
+    onNextStep() {
       const promises = [];
       this.moduleData.forEach((moduleItem) => {
         const getAtt = this.attributes.filter(
@@ -172,10 +173,10 @@ export default {
       });
       if (promises.length > 0) {
         Promise.all(promises).then(() => {
-          this.$emit('nextStep');
+          this.nextStep();
         });
       } else {
-        this.$emit('nextStep');
+        this.nextStep();
       }
     },
   },

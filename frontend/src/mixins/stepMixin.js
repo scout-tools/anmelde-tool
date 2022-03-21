@@ -26,13 +26,13 @@ export default {
       if (!this.valid && !force) {
         return;
       }
-      this.$emit('nextStep');
+      this.$emit('nextStep', force);
     },
     onIngoredClicked() {
       this.$emit('nextStep', true);
     },
     ignore() {
-      this.$emit('nextStep', true);
+      this.$emit('ignore', true);
     },
     errorMessage(field, valdiationObj) {
       const errors = [];

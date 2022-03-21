@@ -5,7 +5,8 @@
     :position="position"
     :maxPos="maxPos"
     @prevStep="prevStep"
-    @nextStep="nextStep"
+    @nextStep="onNextStep"
+    @ignore="onIngoredClicked"
   >
     <template v-slot:header> </template>
 
