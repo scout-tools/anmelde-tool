@@ -32,6 +32,18 @@ class WrongRegistrationFormat(APIException):
     default_code = 'missleading_information'
 
 
+class WrongRegistrationFormatGroup(APIException):
+    status_code = 405
+    default_detail = "Bei diesem Event können sich keine Gruppen registrieren"
+    default_code = 'missleading_information'
+
+
+class WrongRegistrationFormatSingle(APIException):
+    status_code = 405
+    default_detail = "Bei diesem Event können sich keine Einzelpersonen registrieren"
+    default_code = 'missleading_information'
+
+
 class RegistrationNotSupported(APIException):
     status_code = 501
     default_detail = "Angefügte Registrierungen sind leider noch nicht Implementiert " \

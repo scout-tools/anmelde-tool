@@ -10,25 +10,15 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from basic.models import ScoutHierarchy, AbstractAttribute, TagType, EatHabit
-from basic.serializers import AbstractAttributeGetPolymorphicSerializer, AbstractAttributePutPolymorphicSerializer, \
-    AbstractAttributePostPolymorphicSerializer
-from event.api_exceptions import GroupAlreadyRegistered, NotResponsible, SingleAlreadyRegistered, \
-    SingleGroupNotAllowed, WrongRegistrationFormat, RegistrationNotSupported, WrongEventCode, TooEarly, TooLate, \
-    TooManyParticipants, ModuleRequired
-from event.models import Event, EventLocation, BookingOption, RegistrationTypeGroup, RegistrationTypeSingle, \
-    StandardEventTemplate, Registration, RegistrationParticipant, Gender, ParticipantActionConfirmation
-from event.serializers import EventPlanerSerializer, EventLocationGetSerializer, EventLocationPostSerializer, \
-    EventCompleteSerializer, BookingOptionSerializer, EventModuleMapper, EventModule, EventModuleMapperSerializer, \
-    EventModuleSerializer, AttributeEventModuleMapperSerializer, EventOverviewSerializer, \
-    EventModuleMapperPostSerializer, EventModuleMapperGetSerializer, RegistrationPostSerializer, \
-    RegistrationGetSerializer, RegistrationPutSerializer, RegistrationParticipantSerializer, \
-    RegistrationParticipantShortSerializer, RegistrationParticipantPutSerializer, \
-    RegistrationParticipantGroupSerializer, EventRegistrationSerializer, EventModuleMapperPutSerializer, \
-    AttributeEventModuleMapperPostSerializer
+from basic import serializers as basic_serializers
+from event import serializers as event_serializers
+from event import api_exceptions as event_api_exceptions
+from event import models as event_models
 
 
-def add_event_module(module: EventModuleMapper, event: Event) -> EventModuleMapper:
-    new_module: EventModuleMapper = deepcopy(module)
+def add_event_module(module: event_serializers.EventModuleMapper,
+                     event: event_models.Event) -> event_serializers.EventModuleMapper:
+    new_module: event_serializers.EventModuleMapper = deepcopy(module)
     new_module.pk = None
     new_module.standard = False
     new_module.event = event
@@ -58,39 +48,39 @@ class EventLocationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('name',)
-    queryset = EventLocation.objects.all()
-    serializer_class = EventLocationGetSerializer
+    queryset = event_models.EventLocation.objects.all()
+    serializer_class = event_serializers.EventLocationGetSerializer
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
-            return EventLocationPostSerializer
-        return EventLocationGetSerializer
+            return event_serializers.EventLocationPostSerializer
+        return event_serializers.EventLocationGetSerializer
 
 
 class EventRegistrationViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = Event.objects.all()
-    serializer_class = EventRegistrationSerializer
+    queryset = event_models.Event.objects.all()
+    serializer_class = event_serializers.EventRegistrationSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
     # TODO: Limit complete event to creators
     permission_classes = [IsAuthenticated]
-    queryset = Event.objects.all()
-    serializer_class = EventCompleteSerializer
+    queryset = event_models.Event.objects.all()
+    serializer_class = event_serializers.EventCompleteSerializer
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         if request.data.get('name', None) is None:
             request.data['name'] = 'Dummy'
         if request.data.get('responsible_persons', None) is None:
             request.data['responsible_persons'] = [request.user.id, ]
-        serializer: EventCompleteSerializer = self.get_serializer(data=request.data)
+        serializer: event_serializers.EventCompleteSerializer = self.get_serializer(data=request.data)
         if not serializer.is_valid(raise_exception=True):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         event = serializer.save()
         event.responsible_persons.add(request.user)
-        standard_event = get_object_or_404(StandardEventTemplate, pk=1)
+        standard_event = get_object_or_404(event_models.StandardEventTemplate, pk=1)
 
         add_event_module(standard_event.introduction, event)
 
@@ -106,7 +96,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs) -> Response:
         if request.data.get('name', None) is None:
             request.data['name'] = self.get_object().name
         return super().update(request, *args, **kwargs)
@@ -114,13 +104,13 @@ class EventViewSet(viewsets.ModelViewSet):
 
 class BookingOptionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = BookingOptionSerializer
+    serializer_class = event_serializers.BookingOptionSerializer
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
-        return BookingOption.objects.filter(event=event_id)
+        return event_models.BookingOption.objects.filter(event=event_id)
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         if request.data.get('name', None) is None:
             request.data['name'] = 'Standard'
         event_id = self.kwargs.get("event_pk", None)
@@ -128,7 +118,7 @@ class BookingOptionViewSet(viewsets.ModelViewSet):
         if event_id is None:
             raise NotFound()
 
-        event = get_object_or_404(Event.objects, pk=event_id)
+        event = get_object_or_404(event_models.Event.objects, pk=event_id)
 
         request.data['event'] = event_id
 
@@ -137,13 +127,13 @@ class BookingOptionViewSet(viewsets.ModelViewSet):
 
         return super().create(request, *args, **kwargs)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs) -> Response:
         if request.data.get('name', None) is None:
             request.data['name'] = self.get_object().name
         request.data['event'] = self.get_object().event.id
         return super().update(request, *args, **kwargs)
 
-    def destroy(self, request, *args, **kwargs):
+    def destroy(self, request, *args, **kwargs) -> Response:
         if self.get_queryset().count() > 1:
             return super().destroy(request, *args, **kwargs)
         else:
@@ -153,25 +143,26 @@ class BookingOptionViewSet(viewsets.ModelViewSet):
 
 class EventPlanerViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = EventPlanerSerializer
+    serializer_class = event_serializers.EventPlanerSerializer
 
-    def get_queryset(self):
-        return Event.objects.filter(
-            Q(keycloak_path__in=self.request.user.groups.all()) | Q(responsible_persons=self.request.user))
+    def get_queryset(self) -> QuerySet:
+        return event_models.Event.objects.filter(
+            Q(keycloak_path__in=self.request.user.groups.all())
+            | Q(responsible_persons=self.request.user)).distinct()
 
 
 class RegistrationTypeGroupViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
-    def list(self, request, pk=None):
-        return Response(RegistrationTypeGroup.choices, status=status.HTTP_200_OK)
+    def list(self, request) -> Response:
+        return Response(event_models.RegistrationTypeGroup.choices, status=status.HTTP_200_OK)
 
 
 class RegistrationTypeSingleViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
-    def list(self, request, pk=None):
-        return Response(RegistrationTypeSingle.choices, status=status.HTTP_200_OK)
+    def list(self, request) -> Response:
+        return Response(event_models.RegistrationTypeSingle.choices, status=status.HTTP_200_OK)
 
 
 class EventModulesMapperViewSet(mixins.CreateModelMixin,
@@ -180,77 +171,78 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
                                 mixins.DestroyModelMixin,
                                 viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = EventModuleMapper.objects.all()
+    queryset = event_models.EventModuleMapper.objects.all()
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
-            return EventModuleMapperPostSerializer
+            return event_serializers.EventModuleMapperPostSerializer
         elif self.request.method == 'PUT':
-            return EventModuleMapperPutSerializer
+            return event_serializers.EventModuleMapperPutSerializer
         else:
-            return EventModuleMapperSerializer
+            return event_serializers.EventModuleMapperSerializer
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         event_id = request.data.get("event")
         module_id = request.data.get("module")
 
-        event = get_object_or_404(Event, pk=event_id)
-        standard_event = get_object_or_404(StandardEventTemplate, pk=1)
+        event = get_object_or_404(event_models.Event, pk=event_id)
+        standard_event = get_object_or_404(event_models.StandardEventTemplate, pk=1)
 
         module_mapper_template = standard_event.other_optional_modules.filter(module__id=module_id).first()
         if module_mapper_template is None:
             module_type = TagType.objects.get(id=10)
-            module_template = EventModule.objects.create(name="Custom", custom=True, type=module_type, header="Custom")
-            module_mapper_template = EventModuleMapper.objects.create(module=module_template, event=event)
+            module_template = event_models.EventModule.objects.create(name="Custom", custom=True, type=module_type,
+                                                                      header="Custom")
+            module_mapper_template = event_models.EventModuleMapper.objects.create(module=module_template, event=event)
 
         new_module = add_event_module(module_mapper_template, event)
-        json = EventModuleMapperSerializer(new_module)
+        json = event_serializers.EventModuleMapperSerializer(new_module)
         return Response(json.data, status=status.HTTP_201_CREATED)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs) -> Response:
         super().update(request, *args, **kwargs)
-        json = EventModuleMapperSerializer(self.get_object())
+        json = event_serializers.EventModuleMapperSerializer(self.get_object())
         return Response(json.data, status=status.HTTP_200_OK)
 
     def destroy(self, request, *args, **kwargs) -> Response:
-        mapper: EventModuleMapper = self.get_object()
+        mapper: event_serializers.EventModuleMapper = self.get_object()
         if mapper.required:
-            raise ModuleRequired
+            raise event_api_exceptions.ModuleRequired
         return super().destroy(request, *args, **kwargs)
 
 
 class EventModulesViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = EventModuleSerializer
-    queryset = EventModule.objects.all()
+    serializer_class = event_serializers.EventModuleSerializer
+    queryset = event_models.EventModule.objects.all()
 
 
 class AvailableEventModulesViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = EventModuleSerializer
+    serializer_class = event_serializers.EventModuleSerializer
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
-        mapper = EventModuleMapper.objects.filter(event=event_id).values_list('module_id', flat=True)
-        return EventModule.objects.exclude(id__in=mapper).exclude(type__in=[7, 4]).exclude(custom=True)
+        mapper = event_models.EventModuleMapper.objects.filter(event=event_id).values_list('module_id', flat=True)
+        return event_models.EventModule.objects.exclude(id__in=mapper).exclude(type__in=[7, 4]).exclude(custom=True)
 
 
 class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
-    def create(self, request, *args, **kwargs):
-        serializer: AttributeEventModuleMapperSerializer = self.get_serializer(data=request.data)
+    def create(self, request, *args, **kwargs) -> Response:
+        serializer: event_serializers.AttributeEventModuleMapperSerializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
-        mapper = get_object_or_404(EventModuleMapper, id=mapper_id)
+        mapper = get_object_or_404(event_models.EventModuleMapper, id=mapper_id)
 
         attribute = serializer.data.get('attribute')
         attribute['type'] = TagType.objects.get(name=attribute['type']['name'])
-        test = AbstractAttributePostPolymorphicSerializer().create(attribute)
+        test = basic_serializers.AbstractAttributePostPolymorphicSerializer().create(attribute)
         request.data['attribute'] = test
 
         attribute_mapper = serializer.create(request.data)
@@ -260,39 +252,39 @@ class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
         json = self.get_serializer(attribute_mapper)
         return Response(json.data, status=status.HTTP_201_CREATED)
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
-        mapper = get_object_or_404(EventModuleMapper, id=mapper_id)
+        mapper = get_object_or_404(event_models.EventModuleMapper, id=mapper_id)
         return mapper.attributes.all()
 
     def get_serializer_class(self):
         if self.action == 'update':
-            return AttributeEventModuleMapperPostSerializer
+            return event_serializers.AttributeEventModuleMapperPostSerializer
         else:
-            return AttributeEventModuleMapperSerializer
+            return event_serializers.AttributeEventModuleMapperSerializer
 
 
 class AssignedEventModulesViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = EventModuleMapperGetSerializer
+    serializer_class = event_serializers.EventModuleMapperGetSerializer
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
-        return EventModuleMapper.objects.filter(event=event_id).order_by('ordering')
+        return event_models.EventModuleMapper.objects.filter(event=event_id).order_by('ordering')
 
 
 class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = EventOverviewSerializer
+    serializer_class = event_serializers.EventOverviewSerializer
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         list_parent_organistations = []
         iterator: ScoutHierarchy = self.request.user.userextended.scout_organisation
         while iterator is not None:
             list_parent_organistations.append(iterator)
             iterator = iterator.parent
-        return Event.objects.filter(is_public=True, end_date__gte=timezone.now(),
-                                    limited_registration_hierarchy__in=list_parent_organistations)
+        return event_models.Event.objects.filter(is_public=True, end_date__gte=timezone.now(),
+                                                 limited_registration_hierarchy__in=list_parent_organistations)
 
 
 class RegistrationViewSet(mixins.CreateModelMixin,
@@ -300,25 +292,27 @@ class RegistrationViewSet(mixins.CreateModelMixin,
                           mixins.UpdateModelMixin,
                           mixins.DestroyModelMixin,
                           viewsets.GenericViewSet):
-    # permission_classes = [IsAuthenticated]
-    queryset = Registration.objects.all()
+    permission_classes = [IsAuthenticated]
+    queryset = event_models.Registration.objects.all()
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        event: Event = get_object_or_404(Event, pk=serializer.data['event'])
+        event: event_models.Event = get_object_or_404(event_models.Event, pk=serializer.data['event'])
         if serializer.data['event_code'] != event.invitation_code:
-            raise WrongEventCode()
+            raise event_api_exceptions.WrongEventCode()
 
         #  Check registration type permissions
-        # if event.group_registration == RegistrationTypeSingle.External and not serializer.data['single']:
-        #      raise WrongRegistrationFormat
-        if event.single_registration == RegistrationTypeSingle.Attached:
-            raise RegistrationNotSupported
+        if event.group_registration == event_models.RegistrationTypeGroup.No and not serializer.data['single']:
+            raise event_api_exceptions.WrongRegistrationFormatGroup
+        if event.single_registration == event_models.RegistrationTypeSingle.No and serializer.data['single']:
+            raise event_api_exceptions.WrongRegistrationFormatSingle
+        if event.single_registration == event_models.RegistrationTypeSingle.Attached:
+            raise event_api_exceptions.RegistrationNotSupported
 
         # Check registration type permissions based on existing registrations
-        existing_registration = Registration.objects.filter(event=event.id)
+        existing_registration = event_models.Registration.objects.filter(event=event.id)
 
         if existing_registration.exists():
             single_registration = existing_registration.filter(responsible_persons__in=[request.user.id], single=True)
@@ -327,18 +321,18 @@ class RegistrationViewSet(mixins.CreateModelMixin,
             group_registration = existing_group_registration.filter(responsible_persons__in=[request.user.id])
 
             if single_registration.exists() and serializer.data['single']:
-                raise SingleAlreadyRegistered()
+                raise event_api_exceptions.SingleAlreadyRegistered()
             elif existing_group_registration.exists() and not group_registration.exists():
-                raise NotResponsible()
+                raise event_api_exceptions.NotResponsible()
             elif existing_group_registration.exists() and not serializer.data['single']:
-                raise GroupAlreadyRegistered
+                raise event_api_exceptions.GroupAlreadyRegistered
             elif group_registration.exists() and serializer.data['single']:
-                raise SingleGroupNotAllowed
-            elif event.group_registration == RegistrationTypeGroup.Required and \
+                raise event_api_exceptions.SingleGroupNotAllowed
+            elif event.group_registration == event_models.RegistrationTypeGroup.Required and \
                     not group_registration.exists() and serializer.data['single']:
-                raise WrongRegistrationFormat
+                raise event_api_exceptions.WrongRegistrationFormat
 
-        registration: Registration = Registration(
+        registration: event_models.Registration = event_models.Registration(
             scout_organisation=request.user.userextended.scout_organisation,
             event=event,
             single=serializer.data['single']
@@ -347,145 +341,145 @@ class RegistrationViewSet(mixins.CreateModelMixin,
         registration.save()
         registration.responsible_persons.add(request.user)
 
-        event_module: QuerySet[EventModuleMapper] = EventModuleMapper.objects.filter(event=event.id, required=True)
+        event_module: QuerySet = event_models.EventModuleMapper.objects.filter(event=event.id, required=True)
         for mapper in event_module:
             for attribute_mapper in mapper.attributes.all():
                 attribute = attribute_mapper.attribute
                 new_attribute = add_event_attribute(attribute)
                 registration.tags.add(new_attribute.id)
 
-        json = RegistrationGetSerializer(registration)
+        json = event_serializers.RegistrationGetSerializer(registration)
         return Response(json.data, status=status.HTTP_201_CREATED)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs) -> Response:
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
-        tmp: Registration = serializer.save()
+        tmp: event_models.Registration = serializer.save()
 
         tmp.responsible_persons.add(request.user)
 
-        serializer = RegistrationGetSerializer(tmp)
+        serializer = event_serializers.RegistrationGetSerializer(tmp)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def destroy(self, request, *args, **kwargs):
-        registration: Registration = self.get_object()
-        participants_count = RegistrationParticipant.objects.filter(registration=registration.id).count()
+    def destroy(self, request, *args, **kwargs) -> Response:
+        registration: event_models.Registration = self.get_object()
+        participants_count = event_models.RegistrationParticipant.objects.filter(registration=registration.id).count()
         if participants_count == 0:
             return super().destroy(request, *args, **kwargs)
 
         if registration.event.last_possible_update < timezone.now():
-            raise TooLate
+            raise event_api_exceptions.TooLate
         elif registration.event.registration_deadline < timezone.now():
-            raise TooManyParticipants
+            raise event_api_exceptions.TooManyParticipants
 
         return super().destroy(request, *args, **kwargs)
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
-            return RegistrationPostSerializer
+            return event_serializers.RegistrationPostSerializer
         elif self.request.method == 'GET':
-            return RegistrationGetSerializer
+            return event_serializers.RegistrationGetSerializer
         elif self.request.method == 'PUT':
-            return RegistrationPutSerializer
+            return event_serializers.RegistrationPutSerializer
         elif self.request.method == 'DESTROY':
-            return RegistrationPutSerializer
+            return event_serializers.RegistrationPutSerializer
 
 
 class GenderViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
-    def list(self, request, pk=None):
-        return Response(Gender.choices, status=status.HTTP_200_OK)
+    def list(self, request) -> Response:
+        return Response(event_models.Gender.choices, status=status.HTTP_200_OK)
 
 
 class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         registration_id = self.kwargs.get("registration_pk", None)
-        return RegistrationParticipant.objects.filter(registration=registration_id)
+        return event_models.RegistrationParticipant.objects.filter(registration=registration_id)
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         create_missing_eat_habits(request)
-        registration: Registration = self.participant_initialization(request)
+        registration: event_models.Registration = self.participant_initialization(request)
 
         request.data['registration'] = registration.id
-        if request.data.get('first_name') or request.data.get('last_name') is None:
+        if request.data.get('first_name') is None and request.data.get('last_name') is None:
             max_num = self.get_queryset().count()
             request.data['first_name'] = 'Teilnehmer'
             request.data['last_name'] = max_num + 1
         if request.data.get('booking_option') is None:
             request.data['booking_option'] = registration.event.bookingoption_set.first().id
-
         if registration.event.registration_deadline < timezone.now():
-            request.data['needs_confirmation'] = ParticipantActionConfirmation.AddCompletyNew
+            request.data['needs_confirmation'] = event_models.ParticipantActionConfirmation.AddCompletyNew
         return super().create(request, *args, **kwargs)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs) -> Response:
         create_missing_eat_habits(request)
-        registration: Registration = self.participant_initialization(request)
-        participant: RegistrationParticipant = self.get_object()
+        registration: event_models.Registration = self.participant_initialization(request)
+        participant: event_models.RegistrationParticipant = self.get_object()
         if participant.deactivated:
             if request.data.get('activate') and registration.event.registration_deadline >= timezone.now():
                 request.data['deactivated'] = False
-                request.data['needs_confirmation'] = ParticipantActionConfirmation.Nothing
+                request.data['needs_confirmation'] = event_models.ParticipantActionConfirmation.Nothing
             elif registration.event.last_possible_update >= timezone.now():
                 request.data['deactivated'] = False
-                request.data['needs_confirmation'] = ParticipantActionConfirmation.AddFromExisting
+                request.data['needs_confirmation'] = event_models.ParticipantActionConfirmation.AddFromExisting
 
         request.data['generated'] = False
         return super().update(request, *args, **kwargs)
 
-    def destroy(self, request, *args, **kwargs):
-        registration: Registration = self.participant_initialization(request)
+    def destroy(self, request, *args, **kwargs) -> Response:
+        registration: event_models.Registration = self.participant_initialization(request)
 
         if registration.event.last_possible_update < timezone.now():
             request.data['deactivated'] = True
-            request.data['needs_confirmation'] = ParticipantActionConfirmation.Nothing
+            request.data['needs_confirmation'] = event_models.ParticipantActionConfirmation.Nothing
             return super().update(request, *args, **kwargs)
         elif registration.event.registration_deadline < timezone.now():
             request.data['deactivated'] = True
             if not request.data.get('avoid_manual_check'):
-                request.data['needs_confirmation'] = ParticipantActionConfirmation.Delete
+                request.data['needs_confirmation'] = event_models.ParticipantActionConfirmation.Delete
             return super().update(request, *args, **kwargs)
 
         return super().destroy(request, *args, **kwargs)
 
     def get_serializer_class(self):
         serializer = {
-            'create': RegistrationParticipantSerializer,
-            'retrieve': RegistrationParticipantSerializer,
-            'list': RegistrationParticipantShortSerializer,
-            'update': RegistrationParticipantSerializer,
-            'destroy': RegistrationParticipantSerializer
+            'create': event_serializers.RegistrationParticipantSerializer,
+            'retrieve': event_serializers.RegistrationParticipantSerializer,
+            'list': event_serializers.RegistrationParticipantShortSerializer,
+            'update': event_serializers.RegistrationParticipantSerializer,
+            'destroy': event_serializers.RegistrationParticipantSerializer
         }
-        return serializer.get(self.action, RegistrationParticipantPutSerializer)
+        return serializer.get(self.action, event_serializers.RegistrationParticipantPutSerializer)
 
-    def participant_initialization(self, request):
-        input_serializer = RegistrationParticipantPutSerializer(data=request.data)
+    def participant_initialization(self, request) -> event_models.Registration:
+        input_serializer = event_serializers.RegistrationParticipantPutSerializer(data=request.data)
         input_serializer.is_valid(raise_exception=True)
 
         registration_id = self.kwargs.get("registration_pk", None)
-        registration: Registration = get_object_or_404(Registration, id=registration_id)
+        registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
 
         if registration.event.registration_start > timezone.now():
-            raise TooEarly
+            raise event_api_exceptions.TooEarly
         elif self.action != 'destroy' and registration.event.last_possible_update < timezone.now():
-            raise TooLate
+            raise event_api_exceptions.TooLate
 
         return registration
 
 
 class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = RegistrationParticipantShortSerializer
+    serializer_class = event_serializers.RegistrationParticipantShortSerializer
 
     def create(self, request, *args, **kwargs) -> Response:
-        registration: Registration = self.participant_group_initialization(request)
+        registration: event_models.Registration = self.participant_group_initialization(request)
         number: int = request.data.get('number', 0)
-        existing_participants: QuerySet = RegistrationParticipant.objects.filter(registration=registration.id)
+        existing_participants: QuerySet = event_models.RegistrationParticipant.objects.filter(
+            registration=registration.id)
         active_participants: QuerySet = existing_participants.filter(deactivated=False)
         inactive_participants: QuerySet = existing_participants.filter(deactivated=True)
         active_participant_count: int = active_participants.count()
@@ -496,39 +490,51 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
         confirm_needed: bool = registration.event.registration_deadline < timezone.now()
 
         if activate > 0:
-            confirm = ParticipantActionConfirmation.AddFromExisting if confirm_needed else ParticipantActionConfirmation.Nothing
-            RegistrationParticipant.objects \
+
+            if confirm_needed:
+                confirm = event_models.ParticipantActionConfirmation.AddFromExisting
+            else:
+                confirm = event_models.ParticipantActionConfirmation.Nothing
+
+            event_models.RegistrationParticipant.objects \
                 .filter(pk__in=inactive_participants.order_by('created_at').values_list('pk', flat=True)[:activate]) \
                 .update(deactivated=False, needs_confirmation=confirm)
 
         if create > 0:
             new_participants = []
-            confirm = ParticipantActionConfirmation.AddCompletyNew if confirm_needed else ParticipantActionConfirmation.Nothing
+
+            if confirm_needed:
+                confirm = event_models.ParticipantActionConfirmation.AddCompletyNew
+            else:
+                confirm = event_models.ParticipantActionConfirmation.Nothing
+
+            booking: event_models.BookingOption = registration.event.bookingoption_set.first().id
+
             for i in range(total_participant_count + 1, number + 1):
-                participant = RegistrationParticipant(first_name='Teilnehmer',
-                                                      last_name=i,
-                                                      registration=registration,
-                                                      generated=True,
-                                                      needs_confirmation=confirm,
-                                                      booking_option=registration.event.bookingoption_set.first().id)
+                participant = event_models.RegistrationParticipant(first_name='Teilnehmer',
+                                                                   last_name=i,
+                                                                   registration=registration,
+                                                                   generated=True,
+                                                                   needs_confirmation=confirm,
+                                                                   booking_option=booking)
                 new_participants.append(participant)
-            RegistrationParticipant.objects.bulk_create(new_participants)
+            event_models.RegistrationParticipant.objects.bulk_create(new_participants)
 
         return Response({'activated': activate, 'created': create}, status=status.HTTP_201_CREATED)
 
     def delete(self, request, *args, **kwargs) -> Response:
-        registration: Registration = self.participant_group_initialization(request)
+        registration: event_models.Registration = self.participant_group_initialization(request)
         number: int = request.data.get('number', 9999)
-        all_participants: QuerySet = RegistrationParticipant.objects.filter(registration=registration.id)
+        all_participants: QuerySet = event_models.RegistrationParticipant.objects.filter(registration=registration.id)
         participant_count = all_participants.count()
 
         if number <= participant_count:
             num_delete: int = max(participant_count - number, 0)
-            deletable_participants: QuerySet[RegistrationParticipant] = all_participants.filter(generated=True)
+            deletable_participants: QuerySet = all_participants.filter(generated=True)
             deletable_participants_count: int = deletable_participants.count()
 
             if num_delete < deletable_participants_count:
-                selected_deletable_participants = RegistrationParticipant.objects.filter(
+                selected_deletable_participants = event_models.RegistrationParticipant.objects.filter(
                     pk__in=deletable_participants.order_by('-created_at').values_list('pk', flat=True)[:num_delete])
             else:
                 selected_deletable_participants = deletable_participants
@@ -539,9 +545,9 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
             else:
                 if registration.event.last_possible_update >= timezone.now() \
                         and not request.data.get('avoid_manual_check'):
-                    confirm = ParticipantActionConfirmation.Delete
+                    confirm = event_models.ParticipantActionConfirmation.Delete
                 else:
-                    confirm = ParticipantActionConfirmation.Nothing
+                    confirm = event_models.ParticipantActionConfirmation.Nothing
 
                 selected_deletable_participants.update(deactivated=True, needs_confirmation=confirm)
                 return Response({'deactivated': num_delete}, status=status.HTTP_200_OK)
@@ -550,17 +556,17 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
             return Response(f'number: {number} is higher or equal than current participantc count {participant_count}',
                             status=status.HTTP_400_BAD_REQUEST)
 
-    def participant_group_initialization(self, request) -> Registration:
-        input_serializer = RegistrationParticipantGroupSerializer(data=request.data)
+    def participant_group_initialization(self, request) -> event_models.Registration:
+        input_serializer = event_serializers.RegistrationParticipantGroupSerializer(data=request.data)
         input_serializer.is_valid(raise_exception=True)
 
         registration_id = self.kwargs.get("registration_pk", None)
-        registration: Registration = get_object_or_404(Registration, id=registration_id)
+        registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
 
         if registration.event.registration_start > timezone.now():
-            raise TooEarly
+            raise event_api_exceptions.TooEarly
         elif self.action != 'destroy' and registration.event.last_possible_update < timezone.now():
-            raise TooLate
+            raise event_api_exceptions.TooLate
 
         return registration
 
@@ -568,11 +574,11 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
 class RegistrationAttributeViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs) -> Response:
-        serializer: AbstractAttributePutPolymorphicSerializer = self.get_serializer(data=request.data)
+        serializer: basic_serializers.AbstractAttributePutPolymorphicSerializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         registration_id = self.kwargs.get("registration_pk", None)
-        registration: Registration = get_object_or_404(Registration, id=registration_id)
+        registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
 
         template_attribute: AbstractAttribute = get_object_or_404(AbstractAttribute,
                                                                   pk=serializer.data.get('template_id', -1))
@@ -583,25 +589,25 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
 
         registration.tags.add(new_attribute.id)
 
-        json = AbstractAttributeGetPolymorphicSerializer(new_attribute)
+        json = basic_serializers.AbstractAttributeGetPolymorphicSerializer(new_attribute)
         return Response(json.data, status=status.HTTP_201_CREATED)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs) -> Response:
         super().update(request, *args, **kwargs)
-        json = AbstractAttributeGetPolymorphicSerializer(self.get_object())
+        json = basic_serializers.AbstractAttributeGetPolymorphicSerializer(self.get_object())
         return Response(json.data, status=status.HTTP_200_OK)
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
-            return AbstractAttributePostPolymorphicSerializer
+            return basic_serializers.AbstractAttributePostPolymorphicSerializer
         elif self.request.method == 'GET':
-            return AbstractAttributeGetPolymorphicSerializer
+            return basic_serializers.AbstractAttributeGetPolymorphicSerializer
         elif self.request.method == 'PUT':
-            return AbstractAttributePutPolymorphicSerializer
+            return basic_serializers.AbstractAttributePutPolymorphicSerializer
         else:
-            return AbstractAttributePutPolymorphicSerializer
+            return basic_serializers.AbstractAttributePutPolymorphicSerializer
 
     def get_queryset(self) -> QuerySet:
         registration_id = self.kwargs.get("registration_pk", None)
-        registration: Registration = get_object_or_404(Registration, id=registration_id)
+        registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
         return registration.tags

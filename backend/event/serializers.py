@@ -4,29 +4,28 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from authentication.serializers import UserExtendedShortSerializer
 from basic.models import EatHabit
-from basic.serializers import TagShortSerializer, ZipCodeSerializer, AbstractAttributeGetPolymorphicSerializer, \
-    ZipCodeShortSerializer
-from .models import Event, EventLocation, BookingOption, EventModuleMapper, EventModule, AttributeEventModuleMapper, \
-    RegistrationTypeGroup, RegistrationTypeSingle, Registration, RegistrationParticipant
+
+from basic import serializers as basic_serializers
+from event import models as event_models
 
 
 class EventLocationGetSerializer(serializers.ModelSerializer):
-    zip_code = ZipCodeSerializer(many=False, read_only=True)
+    zip_code = basic_serializers.ZipCodeSerializer(many=False, read_only=True)
 
     class Meta:
-        model = EventLocation
+        model = event_models.EventLocation
         fields = '__all__'
 
 
 class EventLocationPostSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EventLocation
+        model = event_models.EventLocation
         fields = '__all__'
 
 
 class EventRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Event
+        model = event_models.Event
         fields = ('id',
                   'name',
                   'short_description',
@@ -44,19 +43,19 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
 
 class BookingOptionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BookingOption
+        model = event_models.BookingOption
         fields = '__all__'
 
 
 class EventModuleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EventModule
+        model = event_models.EventModule
         fields = '__all__'
 
 
 class EventModuleShortSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EventModule
+        model = event_models.EventModule
         fields = ('header', 'name')
 
 
@@ -64,7 +63,7 @@ class EventModuleMapperShortSerializer(serializers.ModelSerializer):
     module = EventModuleShortSerializer(read_only=True)
 
     class Meta:
-        model = EventModuleMapper
+        model = event_models.EventModuleMapper
         fields = ('ordering', 'module', 'required')
 
 
@@ -72,19 +71,19 @@ class EventModuleMapperGetSerializer(serializers.ModelSerializer):
     module = EventModuleSerializer(read_only=True)
 
     class Meta:
-        model = EventModuleMapper
+        model = event_models.EventModuleMapper
         fields = '__all__'
 
 
 class EventModuleMapperSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EventModuleMapper
+        model = event_models.EventModuleMapper
         fields = '__all__'
 
 
 class EventModuleMapperPostSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EventModuleMapper
+        model = event_models.EventModuleMapper
         fields = (
             'attributes',
             'event',
@@ -96,7 +95,7 @@ class EventModuleMapperPostSerializer(serializers.ModelSerializer):
 
 class EventModuleMapperPutSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EventModuleMapper
+        model = event_models.EventModuleMapper
         fields = (
             'attributes',
             'overwrite_description',
@@ -118,38 +117,38 @@ class EventCompleteSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = Event
+        model = event_models.Event
         fields = '__all__'
 
 
 class EventPlanerSerializer(serializers.ModelSerializer):
-    tags = TagShortSerializer(many=True)
+    tags = basic_serializers.TagShortSerializer(many=True)
     eventmodulemapper_set = EventModuleMapperShortSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Event
+        model = event_models.Event
         fields = '__all__'
 
 
 class AttributeEventModuleMapperSerializer(serializers.ModelSerializer):
-    attribute = AbstractAttributeGetPolymorphicSerializer(many=False, read_only=False)
+    attribute = basic_serializers.AbstractAttributeGetPolymorphicSerializer(many=False, read_only=False)
 
     class Meta:
-        model = AttributeEventModuleMapper
+        model = event_models.AttributeEventModuleMapper
         fields = '__all__'
 
 
 class AttributeEventModuleMapperPostSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AttributeEventModuleMapper
+        model = event_models.AttributeEventModuleMapper
         fields = '__all__'
 
 
 class EventLocationShortSerializer(serializers.ModelSerializer):
-    zip_code = ZipCodeShortSerializer(many=False, read_only=True)
+    zip_code = basic_serializers.ZipCodeShortSerializer(many=False, read_only=True)
 
     class Meta:
-        model = EventLocation
+        model = event_models.EventLocation
         fields = ('name', 'zip_code', 'address')
 
 
@@ -160,7 +159,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     location = EventLocationShortSerializer(read_only=True, many=False)
 
     class Meta:
-        model = Event
+        model = event_models.Event
         fields = (
             'id',
             'name',
@@ -178,13 +177,13 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'registration'
         )
 
-    def get_can_register(self, obj: Event):
+    def get_can_register(self, obj: event_models.Event) -> bool:
         return obj.registration_deadline >= timezone.now() >= obj.registration_start
 
-    def get_can_edit(self, obj: Event):
+    def get_can_edit(self, obj: event_models.Event) -> bool:
         return obj.last_possible_update >= timezone.now()
 
-    def get_registration(self, obj: Event):
+    def get_registration(self, obj: event_models.Event) -> dict:
         group_id = None
         single_id = None
         group_possible = False
@@ -202,15 +201,15 @@ class EventOverviewSerializer(serializers.ModelSerializer):
         if single.exists():
             single_id = single.first().id
 
-        if obj.group_registration != RegistrationTypeGroup.No:
+        if obj.group_registration != event_models.RegistrationTypeGroup.No:
             if group_id:
                 group_possible = group.exists() and existing_group.exists() \
                     if group is not None and existing_group is not None else False
             elif single_id is None:
                 group_possible = True
 
-        if obj.single_registration != RegistrationTypeSingle.No:
-            if obj.group_registration == RegistrationTypeGroup.Required:
+        if obj.single_registration != event_models.RegistrationTypeSingle.No:
+            if obj.group_registration == event_models.RegistrationTypeGroup.Required:
                 if group_id is not None:
                     single_possible = True
             elif group_id is None:
@@ -232,7 +231,7 @@ class RegistrationPostSerializer(serializers.Serializer):
 
 class RegistrationPutSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Registration
+        model = event_models.Registration
         fields = ('responsible_persons', 'is_confirmed', 'tags')
         extra_kwargs = {"responsible_persons": {"required": False, "allow_null": True}}
 
@@ -247,16 +246,16 @@ class CurrentUserSerializer(serializers.ModelSerializer):
 
 class RegistrationGetSerializer(serializers.ModelSerializer):
     responsible_persons = CurrentUserSerializer(many=True, read_only=True)
-    tags = TagShortSerializer(many=True, read_only=True)
+    tags = basic_serializers.TagShortSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Registration
+        model = event_models.Registration
         fields = '__all__'
 
 
 class RegistrationParticipantShortSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RegistrationParticipant
+        model = event_models.RegistrationParticipant
         fields = ('id', 'scout_name', 'first_name', 'last_name')
 
 
@@ -270,7 +269,7 @@ class RegistrationParticipantSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = RegistrationParticipant
+        model = event_models.RegistrationParticipant
         fields = '__all__'
 
 
@@ -286,7 +285,7 @@ class RegistrationParticipantPutSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = RegistrationParticipant
+        model = event_models.RegistrationParticipant
         exclude = ('deactivated', 'generated', 'registration', 'needs_confirmation')
 
 

@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django_filters import CharFilter
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import viewsets, status
@@ -6,28 +6,24 @@ from rest_framework.exceptions import PermissionDenied, NotFound
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
-from .models import ScoutHierarchy, ZipCode, Tag, TagType, AbstractAttribute, Description, DescriptionType, TravelType, \
-    TravelSlots, EatHabit
-from .serializers import ScoutHierarchySerializer, ZipCodeSerializer, TagShortSerializer, TagTypeShortSerializer, \
-    AbstractAttributeGetPolymorphicSerializer, DescriptionSerializer, AbstractAttributePutPolymorphicSerializer, \
-    AbstractAttributePostPolymorphicSerializer, EatHabitSerializer
+from basic import models as basic_models
+from basic import serializers as basic_serializers
 
 
 class ScoutHierarchyViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = ScoutHierarchy.objects.all().exclude(level=6)
-    serializer_class = ScoutHierarchySerializer
+    queryset = basic_models.ScoutHierarchy.objects.all().exclude(level=6)
+    serializer_class = basic_serializers.ScoutHierarchySerializer
 
 
 class ZipCodeSearchFilter(FilterSet):
     zip_city = CharFilter(field_name='zip_city', method='get_zip_city')
 
     class Meta:
-        model = ZipCode
+        model = basic_models.ZipCode
         fields = ['zip_code', 'city', 'id']
 
-    def get_zip_city(self, queryset, field_name, value):
+    def get_zip_city(self, queryset, field_name, value) -> QuerySet[basic_models.ZipCode]:
         cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
         if cities.count() > 250:
             raise PermissionDenied('Too many results!!!')
@@ -36,15 +32,15 @@ class ZipCodeSearchFilter(FilterSet):
 
 class ZipCodeViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = ZipCode.objects.all()
-    serializer_class = ZipCodeSerializer
+    queryset = basic_models.ZipCode.objects.all()
+    serializer_class = basic_serializers.ZipCodeSerializer
     filterset_class = ZipCodeSearchFilter
 
 
 class TagViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = Tag.objects.all()
-    serializer_class = TagShortSerializer
+    queryset = basic_models.Tag.objects.all()
+    serializer_class = basic_serializers.TagShortSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['type', 'type__name']
     search_fields = ['type__name', 'name']
@@ -52,8 +48,8 @@ class TagViewSet(viewsets.ModelViewSet):
 
 class TagTypeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = TagType.objects.all()
-    serializer_class = TagTypeShortSerializer
+    queryset = basic_models.TagType.objects.all()
+    serializer_class = basic_serializers.TagTypeShortSerializer
     filter_backends = [SearchFilter, ]
     search_fields = ['name', ]
     ordering_fields = ['id', ]
@@ -61,26 +57,26 @@ class TagTypeViewSet(viewsets.ModelViewSet):
 
 class AttributeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = AbstractAttribute.objects.all()
+    queryset = basic_models.AbstractAttribute.objects.all()
 
     def get_serializer_class(self):
         if self.action == 'create' or self.action == 'update':
-            return AbstractAttributePostPolymorphicSerializer
+            return basic_serializers.AbstractAttributePostPolymorphicSerializer
         else:
-            return AbstractAttributeGetPolymorphicSerializer
+            return basic_serializers.AbstractAttributeGetPolymorphicSerializer
 
 
 class DescriptionViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = DescriptionSerializer
+    serializer_class = basic_serializers.DescriptionSerializer
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         if self.basename == 'faq':
-            return Description.objects.filter(public=True, type=DescriptionType.FAQ)
+            return basic_models.Description.objects.filter(public=True, type=basic_models.DescriptionType.FAQ)
         elif self.basename == 'legal':
-            return Description.objects.filter(public=True, type=DescriptionType.LegalNotice)
+            return basic_models.Description.objects.filter(public=True, type=basic_models.DescriptionType.LegalNotice)
         elif self.basename == 'privacy':
-            return Description.objects.filter(public=True, type=DescriptionType.Privacy)
+            return basic_models.Description.objects.filter(public=True, type=basic_models.DescriptionType.Privacy)
         else:
             raise NotFound
 
@@ -88,21 +84,21 @@ class DescriptionViewSet(viewsets.ReadOnlyModelViewSet):
 class TravelTypeViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
-    def list(self, request, pk=None):
-        return Response(TravelType.choices, status=status.HTTP_200_OK)
+    def list(self, request) -> Response:
+        return Response(basic_models.TravelType.choices, status=status.HTTP_200_OK)
 
 
 class TravelSlotsViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
-    def list(self, request, pk=None):
-        return Response(TravelSlots.choices, status=status.HTTP_200_OK)
+    def list(self, request) -> Response:
+        return Response(basic_models.TravelSlots.choices, status=status.HTTP_200_OK)
 
 
 class AttributeTypeViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
-    def inheritors(self, klass):
+    def inheritors(self, klass) -> [str]:
         subclasses = set()
         work = [klass]
         while work:
@@ -113,13 +109,12 @@ class AttributeTypeViewSet(viewsets.ViewSet):
                     work.append(child)
         return subclasses
 
-    def list(self, request, pk=None):
-        choices = self.inheritors(AbstractAttribute)
-        print(choices)
+    def list(self, request) -> Response:
+        choices = self.inheritors(basic_models.AbstractAttribute)
         return Response(choices, status=status.HTTP_200_OK)
 
 
 class EatHabitViewSet(viewsets.ModelViewSet):
-    queryset = EatHabit.objects.all()
-    serializer_class = EatHabitSerializer
-    # permission_classes = [IsAuthenticated]
+    queryset = basic_models.EatHabit.objects.all()
+    serializer_class = basic_serializers.EatHabitSerializer
+    permission_classes = [IsAuthenticated]
