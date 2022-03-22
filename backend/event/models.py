@@ -75,6 +75,7 @@ class Event(TimeStampMixin):
     short_description = models.CharField(max_length=100, blank=True)
     long_description = models.CharField(max_length=10000, blank=True)
     cloud_link = models.CharField(max_length=200, blank=True, null=True)
+    event_url = models.CharField(max_length=200, blank=True, null=True)
     location = models.ForeignKey(EventLocation, on_delete=models.PROTECT, null=True, blank=True)
     start_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     end_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
@@ -214,6 +215,7 @@ class StandardEventTemplate(models.Model):
                                               related_name='personal_registration')
     letter = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
                                related_name='letter')
+    planer_modules = models.ManyToManyField(EventPlanerModule, null=True, blank=True)
 
     other_required_modules = models.ManyToManyField(EventModuleMapper, blank=True,
                                                     related_name='other_required_modules')

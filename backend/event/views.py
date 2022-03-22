@@ -94,7 +94,18 @@ class EventViewSet(viewsets.ModelViewSet):
         for mapper in standard_event.other_required_modules.all():
             add_event_module(mapper, event)
 
+        for planer_module in standard_event.planer_modules.all():
+            event.event_planer_modules.add(planer_module)
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        event = self.get_object()
+        standard_event = get_object_or_404(event_models.StandardEventTemplate, pk=1)
+
+        # TODO: Check personal data required changed and if so exchange data
+
+        super().update(request, *args, **kwargs)
 
 
 class BookingOptionViewSet(viewsets.ModelViewSet):

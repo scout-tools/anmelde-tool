@@ -41,6 +41,24 @@
     }
   },
   {
+    "model": "event.eventlocation",
+    "pk": 3,
+    "fields": {
+      "created_at": "2022-03-22T21:30:51.525Z",
+      "updated_at": "2022-03-22T21:30:51.525Z",
+      "name": "Pfadfibder",
+      "description": "",
+      "zip_code": 2778,
+      "address": "Tüdal 1",
+      "contact_name": "",
+      "contact_email": "",
+      "contact_phone": "",
+      "per_person_fee": null,
+      "fix_fee": null,
+      "tags": []
+    }
+  },
+  {
     "model": "event.eventplanermodule",
     "pk": 1,
     "fields": {
@@ -522,6 +540,23 @@
     }
   },
   {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 19,
+    "fields": {
+      "attribute": 34,
+      "title": "Fahrzeuge",
+      "text": "Mit wie vielen Autos reist ihr an?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
     "model": "event.event",
     "pk": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
     "fields": {
@@ -532,6 +567,7 @@
       "short_description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
       "long_description": "",
       "cloud_link": null,
+      "event_url": null,
       "location": 1,
       "start_date": "2022-09-16T14:00:00Z",
       "end_date": "2022-09-18T09:00:00Z",
@@ -570,6 +606,7 @@
       "short_description": "",
       "long_description": "",
       "cloud_link": null,
+      "event_url": null,
       "location": 2,
       "start_date": "2023-05-26T14:00:00Z",
       "end_date": "2023-05-30T09:00:00Z",
@@ -601,6 +638,47 @@
   },
   {
     "model": "event.event",
+    "pk": "456953a2-7db5-45dc-8e05-7a4168105e88",
+    "fields": {
+      "created_at": "2022-03-22T21:25:27.169Z",
+      "updated_at": "2022-03-22T21:55:48.844Z",
+      "name": "Bundesfahrt 2022",
+      "technical_name": "bundesfahrt",
+      "short_description": "Bundesfahrt & Kaperfahrt",
+      "long_description": "<p>2021 konnte unsere Bundesfahrt wegen der Corona-Pandemie leider nicht stattfinden, aufgeschoben ist aber nicht aufgehoben. Daher führt es unseren Bund 2022 wieder gemeinsam auf Fahrt in eine Region Norddeutschlands (Nahe der dänischen Grenze). Neben der Bundesfahrt wird es mit der Kaperfahrt auch eine Meutenfahrt geben und ein Aufbaulager (beides im Vorfeld). &nbsp;</p>",
+      "cloud_link": null,
+      "event_url": null,
+      "location": 3,
+      "start_date": "2022-07-30T10:00:00Z",
+      "end_date": "2022-08-06T10:00:00Z",
+      "registration_deadline": "2022-04-17T22:00:00Z",
+      "registration_start": "2022-02-28T23:00:00Z",
+      "last_possible_update": "2022-04-17T22:00:00Z",
+      "invitation_code": "bf2022",
+      "is_public": true,
+      "keycloak_path": 5,
+      "keycloak_admin_path": 5,
+      "limited_registration_hierarchy": 2,
+      "single_registration": "E",
+      "group_registration": "R",
+      "personal_data_required": true,
+      "responsible_persons": [
+        3
+      ],
+      "tags": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "event_planer_modules": [
+        1,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.event",
     "pk": "54929341-060c-4e32-bb39-8ba5ba6e6590",
     "fields": {
       "created_at": "2022-03-10T11:43:48.710Z",
@@ -610,6 +688,7 @@
       "short_description": "",
       "long_description": "",
       "cloud_link": null,
+      "event_url": null,
       "location": null,
       "start_date": null,
       "end_date": null,
@@ -918,6 +997,117 @@
     }
   },
   {
+    "model": "event.eventmodulemapper",
+    "pk": 25,
+    "fields": {
+      "ordering": 0,
+      "module": 1,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 26,
+    "fields": {
+      "ordering": 1,
+      "module": 2,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 27,
+    "fields": {
+      "ordering": 6,
+      "module": 7,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        11
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 28,
+    "fields": {
+      "ordering": 5,
+      "module": 8,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        10
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 29,
+    "fields": {
+      "ordering": 2,
+      "module": 9,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        8,
+        19
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 30,
+    "fields": {
+      "ordering": 3,
+      "module": 12,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 31,
+    "fields": {
+      "ordering": 4,
+      "module": 13,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        18
+      ]
+    }
+  },
+  {
     "model": "event.bookingoption",
     "pk": 1,
     "fields": {
@@ -944,6 +1134,84 @@
     }
   },
   {
+    "model": "event.bookingoption",
+    "pk": 3,
+    "fields": {
+      "name": "Kaperfahrt",
+      "description": "Teilnahme nur an der Kaperfahrt vom 30. Juli - 2. August",
+      "price": "50.00",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 4,
+    "fields": {
+      "name": "Bundesfahrt",
+      "description": "Teilnahme nur an der Bundesfahrt vom 2.- 6. August",
+      "price": "50.00",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 5,
+    "fields": {
+      "name": "Kaperfahrt und Bundesfahrt",
+      "description": "Teilnahme an der Bundesfahrt und an der Kaperfahrt vom 30. Juli - 06. August",
+      "price": "100.00",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 6,
+    "fields": {
+      "name": "Tagesgast Mittwoch",
+      "description": "Tagesgast",
+      "price": "15.00",
+      "bookable_from": null,
+      "bookable_till": "2022-07-30T10:00:00Z",
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 7,
+    "fields": {
+      "name": "Tagesgast Donnerstag",
+      "description": "Tagesgast",
+      "price": "15.00",
+      "bookable_from": null,
+      "bookable_till": "2022-07-30T10:00:00Z",
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 8,
+    "fields": {
+      "name": "Tagesgast Freitag",
+      "description": "Tagesgast",
+      "price": "15.00",
+      "bookable_from": null,
+      "bookable_till": "2022-07-30T10:00:00Z",
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
     "model": "event.standardeventtemplate",
     "pk": 1,
     "fields": {
@@ -954,6 +1222,10 @@
       "registration": 3,
       "personal_registration": 2,
       "letter": 4,
+      "planer_modules": [
+        1,
+        3
+      ],
       "other_required_modules": [
         4
       ],

@@ -398,6 +398,17 @@
     }
   },
   {
+    "model": "basic.abstractattribute",
+    "pk": 34,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "Fahrzeuge",
+      "type": 9,
+      "template": true,
+      "template_id": -1
+    }
+  },
+  {
     "model": "basic.booleanattribute",
     "pk": 14,
     "fields": {
@@ -498,6 +509,13 @@
   {
     "model": "basic.integerattribute",
     "pk": 33,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 34,
     "fields": {
       "integer_field": 0
     }
