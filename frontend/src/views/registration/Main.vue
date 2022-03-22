@@ -193,7 +193,6 @@ export default {
       this.createRegestration();
     },
     setData() {
-      this.data.stamm = this.userinfo.stamm;
       this.data.name = this.userinfo.name;
 
       this.loadData();
@@ -203,9 +202,9 @@ export default {
       this.isLoading = true;
       Promise.all([this.getPersonalData(), this.getEvent(this.eventId)])
         .then((values) => {
-          console.log(values);
           this.data.mobileNumber = values[0].data.mobileNumber; //eslint-disable-line
           this.currentEvent = values[1].data; //eslint-disable-line
+          this.data.stamm = values[0].data.scoutOrganisation.name; //eslint-disable-line
           this.isLoading = false;
         })
         .catch((error) => {

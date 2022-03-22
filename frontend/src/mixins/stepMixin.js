@@ -58,6 +58,9 @@ export default {
       if (valObj.maxValue === false) {
         errors.push(`Maximal sind ${valObj.$params.maxValue.max} erlaubt.`);
       }
+      if (valObj.email === false) {
+        errors.push('Muss eine richtige E-Mail-Adresse sein.');
+      }
       if (valObj.allChecked === false) {
         errors.push('Es müssen allen Bedindungen zugestimmt werden.');
       }

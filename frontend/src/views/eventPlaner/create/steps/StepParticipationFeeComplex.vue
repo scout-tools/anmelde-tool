@@ -4,16 +4,17 @@
     :isloading="isLoadingRead"
     :position="position"
     :maxPos="maxPos"
+    @submit="submit"
     @prevStep="prevStep"
     @nextStep="nextStep"
   >
     <template v-slot:header>
-      <p>Döner</p>
+      Hier kannst du Rollen und Preise für dein Lager anlegen.
     </template>
 
     <template v-slot:main>
       <ListWithDialogMain
-        :ref="`dialog-main-${moduleId}`"
+        :ref="'dialog-main-fee-complex'"
         :dialogMeta="dialogMeta"
         :valdiationObj="$v"
       />
@@ -67,8 +68,7 @@ export default {
           {
             name: 'Name*',
             techName: 'name',
-            tooltip:
-              '',
+            tooltip: '',
             mandatory: true,
             fieldType: 'textfield',
             default: '',
@@ -84,11 +84,28 @@ export default {
           {
             name: 'Preis*',
             techName: 'price',
-            tooltip:
-              '',
+            tooltip: '',
             mandatory: true,
             fieldType: 'currency',
             default: '',
+          },
+          {
+            name: 'Buchbar von*',
+            techName: 'bookableFrom',
+            tooltip: '',
+            mandatory: true,
+            fieldType: 'datetime',
+            default: '',
+            cols: 12,
+          },
+          {
+            name: 'Buchbar bis',
+            techName: 'bookableTill',
+            tooltip: '',
+            mandatory: true,
+            fieldType: 'datetime',
+            default: '',
+            cols: 12,
           },
         ],
       };
@@ -97,12 +114,13 @@ export default {
   methods: {
     beforeTabShow() {
       this.loadData();
-      console.log(this.$refs[`dialog-main-${this.moduleId}`]);
-      // this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+      console.log(this.$refs['dialog-main-fee-complex']);
+      setTimeout(() => {
+        this.$refs['dialog-main-fee-complex'].beforeTabShow();
+      }, 100);
     },
     setDefaults() {},
-    loadData() {
-    },
+    loadData() {},
   },
   created() {
     this.beforeTabShow();

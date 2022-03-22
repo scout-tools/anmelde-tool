@@ -104,6 +104,7 @@ export default {
     isLoading: true,
     steps: [
       'Aktionsbeschreibung',
+      'Stammdaten',
       'Verifizierungscode',
       'Daten und Uhrzeit',
       'Ort',

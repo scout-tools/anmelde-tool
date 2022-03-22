@@ -155,8 +155,6 @@
       :items="convertEnum(this.lookupList)"
       :prepend-icon="field.icon"
       required
-      chips
-      deletable-chips
       @input="onInputChanged"
       :item-text="getItemText"
       :error-messages="onErrorMessageChange(field.techName)"
@@ -187,6 +185,7 @@
       :loading="isLoading"
       :item-text="getItemText"
       :search-input.sync="search"
+      :no-data-text="zipCodeNoDataText"
       :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-autocomplete>
@@ -397,6 +396,7 @@ export default {
       selectedFile: null,
       isLoading: false,
       search: null,
+      zipCodeNoDataText: 'Zuviele Treffer.',
       ckeditor: {
         editor: ClassicEditor,
         editorData: '',
@@ -418,9 +418,11 @@ export default {
         .then((res) => {
           console.log(res);
           this.lookupList = res;
+          this.zipCodeNoDataText = 'Kein Treffer';
         })
         .catch((err) => {
           console.log(err);
+          this.zipCodeNoDataText = 'Zuviele Treffer';
         })
         .finally(() => {
           this.isLoading = false;
@@ -486,15 +488,12 @@ export default {
       this.$forceUpdate();
     },
     onDateTimeInputChangedTime(value) {
-      if (value.length !== 5) {
-        return;
-      }
       const newDate = this.$moment(
         `${this.valueDate} ${value}`,
         'DD.MM.YYYY hh:mm',
         'de',
       );
-      if (newDate.isValid()) {
+      if (newDate.isValid() && value.length === 5) {
         this.onInputChanged(newDate.toDate());
       }
       this.$forceUpdate();
