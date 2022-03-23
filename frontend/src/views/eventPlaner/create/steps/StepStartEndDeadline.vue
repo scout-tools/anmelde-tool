@@ -31,7 +31,6 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import serviceMixin from '@/mixins/serviceMixin';
@@ -106,9 +105,6 @@ export default {
       ],
     };
   },
-  ...mapGetters({
-    event: 'createEvent/event',
-  }),
   mixins: [stepMixin, apiCallsMixin, serviceMixin],
   validations: {
     data: {

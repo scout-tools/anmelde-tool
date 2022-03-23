@@ -82,7 +82,7 @@
         :valid="valid"
         @nextStep="nextStep"
         @prevStep="prevStep"
-        @submitStep="submitStep"
+        @submit="submitStep"
         @ignore="onIngoredClicked"
         @update="updateData"
       />
@@ -91,7 +91,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import draggable from 'vuedraggable';
 import { orderBy } from 'lodash';
 import stepMixin from '@/mixins/stepMixin';
@@ -118,9 +117,6 @@ export default {
     items: [],
   }),
   computed: {
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
   },
   methods: {
     updateData() {},

@@ -1,14 +1,9 @@
 <template>
-  <v-form ref="StepEventAuthenticationKeycloak" v-model="valid">
+  <v-form ref="formNameDescription" v-model="valid">
     <v-container>
-      <v-row class="mt-6">
-        <span class="subtitle-1">
-            Du hast dich für eine Rechtemanagement mit dem DPV IDM entschieden, cool!
-            So kann jeder der z.b. Zugriff im Wiki oder in der Cloud auf dein Event hat, auch hier
-            Einsicht in deine Aktion bekommen.
-          <br/>
-           Wähle dazu einfach aus der Liste die entsprechende IDM Gruppe aus.
-          <br/>
+      <v-row>
+        <span class="text-left subtitle-1">
+          Allgemeine Daten
         </span>
       </v-row>
       <div v-for="(field, i) in fields" :key="i">
@@ -41,9 +36,9 @@ import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import BaseField from '@/components/common/BaseField.vue';
 
 export default {
-  name: 'StepEventAuthenticationKeycloak',
-  header: 'DPV IDM',
+  name: 'StepMasterData',
   props: ['position', 'maxPos'],
+  header: 'Stammdaten',
   components: {
     PrevNextButton,
     BaseField,
@@ -55,22 +50,38 @@ export default {
     modulePath: '/event/event/',
     fields: [
       {
-        name: 'Gruppe auswählen',
-        techName: 'keycloakPath',
+        name: 'Link zur Cloud',
+        techName: 'cloudLink',
         tooltip: '123',
-        icon: 'mdi-account-circle',
-        lookupPath: '/auth/groups/',
-        lookupListDisplay: ['name'],
+        icon: 'mdi-cloud',
         mandatory: true,
-        fieldType: 'refDropdown',
+        fieldType: 'textfield',
         default: '',
       },
       {
-        name: 'Lagerleitungsgruppe auswählen',
-        techName: 'keycloakAdminPath',
+        name: 'Link zur Anmeldeseite',
+        techName: 'event_url',
+        tooltip: '123',
+        icon: 'mdi-cloud',
+        mandatory: true,
+        fieldType: 'textfield',
+        default: '',
+      },
+      {
+        name: 'Technischer Name',
+        techName: 'technicalName',
+        tooltip: '123',
+        icon: 'mdi-robot',
+        mandatory: true,
+        fieldType: 'textfield',
+        default: '',
+      },
+      {
+        name: 'Einladene Organisaion',
+        techName: 'limitedRegistrationHierarchy',
         tooltip: '123',
         icon: 'mdi-account-circle',
-        lookupPath: '/auth/groups/',
+        lookupPath: '/basic/scout-hierarchy/',
         lookupListDisplay: ['name'],
         mandatory: true,
         fieldType: 'refDropdown',
@@ -80,10 +91,10 @@ export default {
   }),
   validations: {
     data: {
-      keycloakPath: {
+      technicalName: {
         required,
       },
-      keycloakAdminPath: {
+      limitedRegistrationHierarchy: {
         required,
       },
     },

@@ -8,18 +8,17 @@
           kann aber natürlich jederzeit bearbeitet werden.
         </span>
       </v-row>
-      <v-row align="center" justify="center">
-        <v-col cols="3">
-          <v-switch label="Sichtbar" v-model="isPublic"></v-switch>
-        </v-col>
-      </v-row>
-
-      <v-divider class="my-3"/>
-
+      <div v-for="(field, i) in fields" :key="i">
+        <BaseField
+          :field="field"
+          v-model="data[field.techName]"
+          :valdiationObj="$v"
+        />
+      </div>
       <prev-next-button
+        :valid="valid"
         :position="position"
         :max-pos="maxPos"
-        :valid="valid"
         @nextStep="nextStep"
         @prevStep="prevStep"
         @submitStep="submitStep"
@@ -31,39 +30,61 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { required } from 'vuelidate/lib/validators';
 import stepMixin from '@/mixins/stepMixin';
-import store from '@/store';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
+import serviceMixin from '@/mixins/serviceMixin';
 import PrevNextButton from '@/components/button/PrevNextButton.vue';
+import BaseField from '@/components/common/BaseField.vue';
 
 export default {
-  name: 'StepVisibility',
-  header: 'Sichtbarkeit',
+  name: 'StepMasterData',
   props: ['position', 'maxPos'],
+  header: 'Stammdaten',
   components: {
     PrevNextButton,
+    BaseField,
   },
-  mixins: [stepMixin],
+  mixins: [stepMixin, apiCallsMixin, serviceMixin],
   data: () => ({
-    API_URL: process.env.VUE_APP_API,
     valid: true,
-    isPublic: false,
+    data: {},
+    modulePath: '/event/event/',
+    fields: [
+      {
+        name: 'Öffentlich sichtbar?',
+        techName: 'isPublic',
+        tooltip: '123',
+        icon: 'mdi-eye',
+        mandatory: true,
+        fieldType: 'checkbox',
+        default: '',
+      },
+    ],
   }),
-  computed: {
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
-  },
-  methods: {
-    updateData() {
-      store.commit('createEvent/setEventAttribute', {
-        prop: 'isPublic',
-        value: this.isPublic,
-      });
+  validations: {
+    data: {
+      cloudLink: {
+        required,
+      },
+      technicalName: {
+        required,
+      },
+      limitedRegistrationHierarchy: {
+        required,
+      },
     },
   },
-  mounted() {
-    this.isPublic = this.event.isPublic;
+  methods: {
+    beforeTabShow() {
+      this.loadData();
+    },
+    loadData() {
+      this.getService(this.id, this.modulePath);
+    },
+  },
+  created() {
+    this.loadData();
   },
 };
 </script>

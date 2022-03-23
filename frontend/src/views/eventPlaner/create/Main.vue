@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import store from '@/store';
 import StepRegistrationOverview
@@ -69,6 +68,7 @@ import StepParticipationFeeSimple from './steps/StepParticipationFeeSimple.vue';
 import StepInvitationCode from './steps/StepInvitationCode.vue';
 import StepEventTags from './steps/StepEventTags.vue';
 import StepVisibility from './steps/StepVisibility.vue';
+import StepMasterData from './steps/StepMasterData.vue';
 import StepParticipationFeeComplex from './steps/StepParticipationFeeComplex.vue';
 import StepEventAuthenticationInternal from './steps/StepEventAuthenticationInternal.vue';
 import StepEventAuthenticationKeycloak from './steps/StepEventAuthenticationKeycloak.vue';
@@ -86,6 +86,7 @@ export default {
     StepInvitationCode,
     StepEventTags,
     StepVisibility,
+    StepMasterData,
     StepParticipationFeeComplex,
     StepEventAuthenticationInternal,
     StepEventAuthenticationKeycloak,
@@ -119,6 +120,7 @@ export default {
 
       return [
         StepNameDescription,
+        StepMasterData,
         StepInvitationCode,
         StepStartEndDeadline,
         StepLocation,
@@ -141,9 +143,6 @@ export default {
       }
       return `Im folgenden führen wir dich durch ${this.maxSteps} kleine Schritt.`;
     },
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
   },
   methods: {
     nextStep() {
