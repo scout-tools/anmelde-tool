@@ -202,6 +202,10 @@ export default {
     },
     onNextStep(force) {
       const promises = [];
+      this.validate();
+      if (!this.valid) {
+        return;
+      }
       this.moduleData.forEach((moduleItem) => {
         const getAtt = this.attributes.filter(
           (att) => att.templateId === moduleItem.attribute.id,
