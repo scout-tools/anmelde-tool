@@ -1,9 +1,18 @@
 <template>
   <v-app>
-    <top-menu-main/>
-    <router-view/>
-    <gobal-snackbar ref="globalSnackbar"/>
-    <footer-main class="mt-auto"/>
+    <top-menu-main v-if="!isMobile" />
+    <router-view v-if="!isMobile" />
+    <v-container fluid v-else>
+      <v-row align="center" justify="center" class="ma-10">
+        Die Smartphone Version befindet sich noch in der Testphase.
+        Bitte wechsel zu einem größeren Bildschirm.
+      </v-row>
+      <v-row align="center" justify="center" class="ma-10">
+        <v-icon large color="error">mdi-cellphone-off</v-icon>
+      </v-row>
+    </v-container>
+    <gobal-snackbar ref="globalSnackbar" />
+    <footer-main class="mt-auto" />
   </v-app>
 </template>
 
@@ -18,6 +27,11 @@ export default {
     TopMenuMain,
     FooterMain,
     GobalSnackbar,
+  },
+  computed: {
+    isMobile() {
+      return !this.$vuetify.breakpoint.md;
+    },
   },
   mounted() {
     this.$root.globalSnackbar = this.$refs.globalSnackbar;
