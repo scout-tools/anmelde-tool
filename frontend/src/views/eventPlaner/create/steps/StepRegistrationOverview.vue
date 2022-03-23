@@ -53,7 +53,7 @@
                     />
                   </v-list-item-content>
                   <v-list-item-action v-if="editing && !moduleMapper.required">
-                    <v-btn @click="removeModule(moduleMapper.id)" icon>
+                    <v-btn @click="removeModule(moduleMapper)" icon>
                       <v-icon color="error">mdi-minus</v-icon>
                     </v-btn>
                   </v-list-item-action>
@@ -124,8 +124,8 @@ export default {
   },
   methods: {
     updateData() {},
-    removeModule(mapperId) {
-      this.deleteEventModule(mapperId)
+    removeModule(mapper) {
+      this.deleteEventModule(mapper.id, mapper.event)
         .then((success) => {
           console.log(success);
           this.gatherAvailableEventModules();
@@ -153,6 +153,7 @@ export default {
               module: item.module.id,
             },
             item.id,
+            item.event,
           ),
         );
       });
@@ -169,7 +170,7 @@ export default {
         event: this.event.id,
         module: moduleId,
       };
-      this.addEventModule(data)
+      this.addEventModule(data, this.event.id)
         .then(() => {
           this.gatherAvailableEventModules();
           this.gatherAssignedEventModules();

@@ -97,20 +97,20 @@ export default {
       const urlAssignedModules = `${this.API_URL}/event/event/${eventId}/assigned-event-modules/`;
       return axios.get(urlAssignedModules);
     },
-    async addEventModule(data) {
-      const url = `${this.API_URL}/event/event-module-mapper/`;
+    async addEventModule(data, eventId) {
+      const url = `${this.API_URL}/event/event/${eventId}/event-module-mapper/`;
       return axios.post(url, data);
     },
-    async deleteEventModule(mapperId) {
-      const url = `${this.API_URL}/event/event-module-mapper/${mapperId}/`;
+    async deleteEventModule(mapperId, eventId) {
+      const url = `${this.API_URL}/event/event/${eventId}/event-module-mapper/${mapperId}/`;
       return axios.delete(url);
     },
-    async updateEventModule(data, id) {
-      const url = `${this.API_URL}/event/event-module-mapper/${id}/`;
+    async updateEventModule(data, id, eventId) {
+      const url = `${this.API_URL}/event/event/${eventId}/event-module-mapper/${id}/`;
       return axios.put(url, data);
     },
-    async getModule(mapperId) {
-      const url = `${this.API_URL}/event/event-module-mapper/${mapperId}/attribute-mapper/`;
+    async getModule(mapperId, eventId) {
+      const url = `${this.API_URL}/event/event/${eventId}/event-module-mapper/${mapperId}/attribute-mapper/`;
       return axios.get(url);
     },
     async getPersonalData() {

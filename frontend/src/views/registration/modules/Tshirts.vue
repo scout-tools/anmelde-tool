@@ -139,7 +139,7 @@ export default {
     loadData() {
       this.isLoading = true;
       Promise.all([
-        this.getModule(this.currentModule.id),
+        this.getModule(this.currentModule.id, this.currentEvent.id),
         axios.get(`${process.env.VUE_APP_API}/${this.path}`),
       ])
         .then((values) => {

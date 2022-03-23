@@ -116,9 +116,9 @@ export default {
     },
     openDialogEdit(moduleMapper) {
       this.loading = true;
-      const urlMapper = `${this.API_URL}/event/event-module-mapper/${moduleMapper.id}/`;
+      const urlMapper = `${this.API_URL}/event/event/${moduleMapper.event}/event-module-mapper/${moduleMapper.id}/`;
       const urlModule = `${this.API_URL}/event/event-module/${moduleMapper.module.id}/`;
-      const urlAttributesMapper = `${this.API_URL}/event/event-module-mapper/${moduleMapper.id}/attribute-mapper/`;
+      const urlAttributesMapper = `${this.API_URL}/event/event/${moduleMapper.event}/event-module-mapper/${moduleMapper.id}/attribute-mapper/`;
       // const urlAttributes =
       // `${this.API_URL}/event/event-module-mapper/${moduleMapper.id}/attributes/`;
       axios

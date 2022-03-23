@@ -27,14 +27,14 @@
                       verändern.
                     </p>
                   </div>
-                  <!-- <v-subheader class="ma-0">
+                  <v-subheader class="ma-0">
                     <v-icon class="ma-2" color="error"
                       >mdi-alert-circle
                     </v-icon>
                     Für diese Fahrt ist die Handynummer Pflicht. Falls du sie
                     nicht eintragen hast, kannst du sie nur unter den Profil
                     Einstellungen ändern.
-                  </v-subheader> -->
+                  </v-subheader>
                   <v-row>
                     <template v-for="(field, i) in fields">
                       <BaseField
@@ -111,9 +111,9 @@ export default {
       single: {
         required,
       },
-      // mobileNumber: {
-      //   required: requiredIf(() => true),
-      // },
+      mobileNumber: {
+        required,
+      },
     },
   },
   computed: {
@@ -151,12 +151,23 @@ export default {
           filled: true,
         },
         {
+          name: 'Telefonnummer',
+          techName: 'mobil',
+          tooltip: '',
+          icon: 'mdi-phone',
+          fieldType: 'textfield',
+          default: '',
+          disabled: true,
+          filled: true,
+        },
+        {
           name: 'Einzel/Gruppen Anmeldung',
           techName: 'single',
           tooltip: 'Meldest du dich oder deinen Stamm an?',
           icon: 'mdi-account-group',
           fieldType: 'radio',
           referenceTable: this.getGroupRefTable,
+          cols: 12,
         },
       ];
     },

@@ -26,7 +26,7 @@
             ></v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn dense icon @click="editParticipant(item.id)">
+            <v-btn dense icon @click="editParticipant(item)">
               <v-icon color="primary lighten-1">mdi-pencil</v-icon>
             </v-btn>
           </v-list-item-action>
@@ -119,8 +119,8 @@ export default {
           this.isLoading = false;
         });
     },
-    editParticipant(id) {
-      this.$refs.createModal.openDialogEdit(id);
+    editParticipant(item) {
+      this.$refs.createModal.openDialogEdit(item);
     },
     deleteSleepingLocation(id) {
       this.deleteEventBookingOption(this.$route.params.id, id).then(() => {

@@ -5,6 +5,7 @@
     :position="position"
     :maxPos="maxPos"
     @submit="submit"
+    @ignore="onIngoredClicked"
     @prevStep="prevStep"
     @nextStep="nextStep"
   >

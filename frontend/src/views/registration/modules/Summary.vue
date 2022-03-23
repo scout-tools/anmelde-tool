@@ -110,7 +110,7 @@ export default {
     },
     loadData() {
       this.isLoading = true;
-      Promise.all([this.getModule(this.moduleId)])
+      Promise.all([this.getModule(this.moduleId, this.currentEvent.id)])
         .then((values) => {
           this.moduleData = values[0].data; //eslint-disable-line
           this.isLoading = false;

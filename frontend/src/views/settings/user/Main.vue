@@ -90,7 +90,7 @@
             <v-text-field
               v-model="mobileNumber"
               label="Handynummer"
-              prepend-icon="mdi-cellphone-android"
+              prepend-icon="mdi-cellphone"
               @change="updateData"
               :error-messages="mobileNumberErrors"
             >
@@ -129,7 +129,7 @@
       <v-container>
         <v-row>
           <v-col cols="12" sm="6" md="4">
-            <v-btn color="secondary" @click="onSaveClicked">
+            <v-btn color="primary" @click="onSaveClicked">
               <v-icon left dark>mdi-check</v-icon>
               Änderungen speichern
             </v-btn>
@@ -143,7 +143,7 @@
         </v-row>
       </v-container>
     </v-card-actions>
-    <YesNoDialog ref="yesNoDialog"/>
+    <YesNoDialog ref="yesNoDialog" />
   </v-card>
 </template>
 
@@ -167,6 +167,7 @@ export default {
       required,
     },
     mobileNumber: {
+      required,
       minLength: minLength(6),
       maxLength: maxLength(20),
     },
@@ -227,6 +228,8 @@ export default {
       // eslint-disable-next-line
       !this.$v.mobileNumber.minLength &&
       errors.push('Eine Handynummer hat mindestens 6 Ziffern.');
+      // eslint-disable-next-line
+      !this.$v.mobileNumber.required && errors.push('Dein Nummer ist erforderlich');
       return errors;
     },
     scoutNameErrors() {
@@ -316,6 +319,7 @@ export default {
         dsgvoConfirmed: this.checkbox,
       })
         .then(() => {
+          this.$router.push({ name: 'eventOverview' });
           this.$root.globalSnackbar.show({
             message: 'Deine Daten wurden erfolgreich geändert.',
             color: 'success',

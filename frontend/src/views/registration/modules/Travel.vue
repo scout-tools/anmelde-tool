@@ -187,8 +187,8 @@ export default {
     },
     setDefaults() {
       this.moduleData.forEach((item) => {
-        this.data.vehicle = this.getAttributeValue(item)[0] //eslint-disable-line
-        this.data.time = this.getAttributeValue(item)[1]; //eslint-disable-line
+        this.data.vehicle = this.getAttributeValue(item)[0].value; //eslint-disable-line
+        this.data.time = this.getAttributeValue(item)[1].value; //eslint-disable-line
       });
     },
     getAttributeValue(item) {
@@ -238,7 +238,7 @@ export default {
     loadData() {
       this.isLoading = true;
       Promise.all([
-        this.getModule(this.currentModule.id),
+        this.getModule(this.currentModule.id, this.currentEvent.id),
         axios.get(`${process.env.VUE_APP_API}/${this.path}`),
       ])
         .then((values) => {
