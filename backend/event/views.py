@@ -623,3 +623,12 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
         registration_id = self.kwargs.get("registration_pk", None)
         registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
         return registration.tags
+
+
+class RegistrationSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    # permission_classes = [IsSubRegistrationResponsiblePerson]
+    serializer_class = event_serializers.RegistrationSummarySerializer
+
+    def get_queryset(self) -> QuerySet:
+        registration_id = self.kwargs.get("registration_pk", None)
+        return event_models.Registration.objects.filter(id=registration_id)
