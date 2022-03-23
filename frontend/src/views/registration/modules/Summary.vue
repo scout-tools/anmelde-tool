@@ -9,8 +9,34 @@
     @submit="submitStep"
   >
     <template v-slot:header>
-          <p><b>Zusammenfassung</b></p>
-            Ich habe folgende Daten eingefügt:
+      <v-container>
+        <v-row>
+      <p><b>Zusammenfassung</b></p>
+      Ich habe folgende Daten eingefügt:
+      <br />
+      <br />
+        </v-row>
+        <v-row>
+      <v-list subheader>
+        <v-subheader>Werte</v-subheader>
+
+        <v-list-item v-for="(attribute, index) in attributes" :key="index" >
+          <v-list-item-content>
+            <v-list-item-title>{{ attribute.name }}</v-list-item-title>
+            <v-list-item-subtitle>{{
+              getValueField(attribute)
+            }}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+        </v-row>
+        <v-row>
+      <p> Gesamtpersonenanzahl: {{ summary.participantCount}}</p>
+        </v-row>
+        <v-row>
+      <p> Gesamtpreis: {{ summary.price}} €</p>
+        </v-row>
+      </v-container>
     </template>
 
     <template v-slot:main>
@@ -52,6 +78,7 @@ export default {
     valid: true,
     isLoading: true,
     moduleData: [],
+    summary: [],
     data: {
       checkboxes: [],
     },
@@ -70,6 +97,12 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo']),
+    attributes() {
+      if (this.summary.tags) {
+        return this.summary.tags.filter((item) => this.getValueField(item));
+      }
+      return [];
+    },
     isLoadingRead: {
       // getter
       get() {
@@ -97,6 +130,18 @@ export default {
     this.beforeTabShow();
   },
   methods: {
+    getValueField(item) {
+      if (item.booleanField) {
+        return item.booleanField;
+      }
+      if (item.integerField) {
+        return item.integerField;
+      }
+      if (item.stringField) {
+        return item.stringField;
+      }
+      return '';
+    },
     beforeTabShow() {
       this.loadData();
     },
@@ -110,11 +155,16 @@ export default {
     },
     loadData() {
       this.isLoading = true;
-      Promise.all([this.getModule(this.moduleId, this.currentEvent.id)])
+      Promise.all([
+        this.getModule(this.moduleId, this.currentEvent.id),
+        this.getRegService('summary', this.currentRegistration.id),
+      ])
         .then((values) => {
           this.moduleData = values[0].data; //eslint-disable-line
+          this.summary = values[1].data[0]; //eslint-disable-line
           this.isLoading = false;
           this.setDefaults();
+          console.log(this.summary);
         })
         .catch((error) => {
           this.errormsg = error.response.data.message;
