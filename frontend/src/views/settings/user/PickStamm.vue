@@ -49,6 +49,7 @@
                 :active.sync="active"
                 :items="hierarchyNested"
                 :open.sync="open"
+                open-all
                 activatable
                 :search="search"
                 color="warning"

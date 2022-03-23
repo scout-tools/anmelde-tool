@@ -64,13 +64,7 @@ export default {
   }),
   validations: {
     data: {
-      cloudLink: {
-        required,
-      },
-      technicalName: {
-        required,
-      },
-      limitedRegistrationHierarchy: {
+      isPublic: {
         required,
       },
     },
