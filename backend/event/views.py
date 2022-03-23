@@ -105,7 +105,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
         # TODO: Check personal data required changed and if so exchange data
 
-        super().update(request, *args, **kwargs)
+        return super().update(request, *args, **kwargs)
 
 
 class BookingOptionViewSet(viewsets.ModelViewSet):

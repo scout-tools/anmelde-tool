@@ -215,7 +215,7 @@ class StandardEventTemplate(models.Model):
                                               related_name='personal_registration')
     letter = models.ForeignKey(EventModuleMapper, null=True, on_delete=models.SET_NULL,
                                related_name='letter')
-    planer_modules = models.ManyToManyField(EventPlanerModule, null=True, blank=True)
+    planer_modules = models.ManyToManyField(EventPlanerModule, blank=True)
 
     other_required_modules = models.ManyToManyField(EventModuleMapper, blank=True,
                                                     related_name='other_required_modules')
