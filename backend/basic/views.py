@@ -6,12 +6,15 @@ from rest_framework.exceptions import PermissionDenied, NotFound
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+
+import basic.choices
 from basic import models as basic_models
 from basic import serializers as basic_serializers
+from basic.permissions import IsStaffOrReadOnly
 
 
 class ScoutHierarchyViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffOrReadOnly]
     queryset = basic_models.ScoutHierarchy.objects.all().exclude(level=6)
     serializer_class = basic_serializers.ScoutHierarchySerializer
 
@@ -31,14 +34,14 @@ class ZipCodeSearchFilter(FilterSet):
 
 
 class ZipCodeViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffOrReadOnly]
     queryset = basic_models.ZipCode.objects.all()
     serializer_class = basic_serializers.ZipCodeSerializer
     filterset_class = ZipCodeSearchFilter
 
 
 class TagViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsStaffOrReadOnly]
     queryset = basic_models.Tag.objects.all()
     serializer_class = basic_serializers.TagShortSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
@@ -47,7 +50,7 @@ class TagViewSet(viewsets.ModelViewSet):
 
 
 class TagTypeViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffOrReadOnly]
     queryset = basic_models.TagType.objects.all()
     serializer_class = basic_serializers.TagTypeShortSerializer
     filter_backends = [SearchFilter, ]
@@ -67,16 +70,14 @@ class AttributeViewSet(viewsets.ModelViewSet):
 
 
 class DescriptionViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffOrReadOnly]
     serializer_class = basic_serializers.DescriptionSerializer
 
     def get_queryset(self) -> QuerySet:
         if self.basename == 'faq':
-            return basic_models.Description.objects.filter(public=True, type=basic_models.DescriptionType.FAQ)
-        elif self.basename == 'legal':
-            return basic_models.Description.objects.filter(public=True, type=basic_models.DescriptionType.LegalNotice)
+            return basic_models.Description.objects.filter(public=True, type=basic.choices.DescriptionType.FAQ)
         elif self.basename == 'privacy':
-            return basic_models.Description.objects.filter(public=True, type=basic_models.DescriptionType.Privacy)
+            return basic_models.Description.objects.filter(public=True, type=basic.choices.DescriptionType.Privacy)
         else:
             raise NotFound
 
@@ -85,14 +86,14 @@ class TravelTypeViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
     def list(self, request) -> Response:
-        return Response(basic_models.TravelType.choices, status=status.HTTP_200_OK)
+        return Response(basic.choices.TravelType.choices, status=status.HTTP_200_OK)
 
 
 class TravelSlotsViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
     def list(self, request) -> Response:
-        return Response(basic_models.TravelSlots.choices, status=status.HTTP_200_OK)
+        return Response(basic.choices.TravelSlots.choices, status=status.HTTP_200_OK)
 
 
 class AttributeTypeViewSet(viewsets.ViewSet):

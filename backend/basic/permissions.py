@@ -1,6 +1,13 @@
-from rest_framework import status, exceptions
+from rest_framework import permissions, status, exceptions
+from rest_framework.permissions import SAFE_METHODS
+from rest_framework.request import Request
 
 
-class NoRegistationId(exceptions.APIException):
-    status_code = status.HTTP_400_BAD_REQUEST
-    default_detail = "No Registration id given"
+class IsStaffOrReadOnly(permissions.BasePermission):
+    message = 'Kann nur von den Admins bearbeitet werden'
+
+    def has_permission(self, request: Request, view):
+        return bool(
+            request.method in SAFE_METHODS or
+            (request.user and request.user.is_authenticated and request.user.is_staff)
+        )

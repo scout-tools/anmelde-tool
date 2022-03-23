@@ -9,11 +9,12 @@ from rest_framework.exceptions import NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from basic.models import ScoutHierarchy, AbstractAttribute, TagType, EatHabit
+from basic import models as basic_models
 from basic import serializers as basic_serializers
 from event import serializers as event_serializers
 from event import api_exceptions as event_api_exceptions
 from event import models as event_models
+from event.permissions import IsEventResponsiblePerson, IsSubEventResponsiblePerson
 
 
 def add_event_module(module: event_models.EventModuleMapper,
@@ -27,8 +28,8 @@ def add_event_module(module: event_models.EventModuleMapper,
     return new_module
 
 
-def add_event_attribute(attribute: AbstractAttribute) -> AbstractAttribute:
-    new_attribute: AbstractAttribute = deepcopy(attribute)
+def add_event_attribute(attribute: basic_models.AbstractAttribute) -> basic_models.AbstractAttribute:
+    new_attribute: basic_models.AbstractAttribute = deepcopy(attribute)
     new_attribute.pk = None
     new_attribute.id = None
     new_attribute.template = False
@@ -40,8 +41,8 @@ def add_event_attribute(attribute: AbstractAttribute) -> AbstractAttribute:
 def create_missing_eat_habits(request) -> None:
     eat_habits = request.data.get('eat_habit', [])
     for habit in eat_habits:
-        if not EatHabit.objects.filter(name__exact=habit).exists():
-            EatHabit.objects.create(name=habit)
+        if not basic_models.EatHabit.objects.filter(name__exact=habit).exists():
+            basic_models.EatHabit.objects.create(name=habit)
 
 
 class EventLocationViewSet(viewsets.ModelViewSet):
@@ -64,8 +65,7 @@ class EventRegistrationViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSe
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    # TODO: Limit complete event to creators
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsEventResponsiblePerson]
     queryset = event_models.Event.objects.all()
     serializer_class = event_serializers.EventCompleteSerializer
 
@@ -109,7 +109,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
 
 class BookingOptionViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.BookingOptionSerializer
 
     def get_queryset(self) -> QuerySet:
@@ -176,8 +176,7 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
                                 mixins.UpdateModelMixin,
                                 mixins.DestroyModelMixin,
                                 viewsets.GenericViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = event_models.EventModuleMapper.objects.all()
+    permission_classes = [IsSubEventResponsiblePerson]
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -199,7 +198,7 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
 
         module_mapper_template = standard_event.other_optional_modules.filter(module__id=module_id).first()
         if module_mapper_template is None:
-            module_type = TagType.objects.get(id=10)
+            module_type = basic_models.TagType.objects.get(id=10)
             module_template = event_models.EventModule.objects.create(name="Custom", custom=True, type=module_type,
                                                                       header="Custom")
             module_mapper_template = event_models.EventModuleMapper.objects.create(module=module_template, event=event)
@@ -219,6 +218,10 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
             raise event_api_exceptions.ModuleRequired
         return super().destroy(request, *args, **kwargs)
 
+    def get_queryset(self):
+        event_id = self.kwargs.get("event_pk", None)
+        return event_models.EventModuleMapper.objects.filter(event=event_id)
+
 
 class EventModulesViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -227,7 +230,7 @@ class EventModulesViewSet(viewsets.ModelViewSet):
 
 
 class AvailableEventModulesViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.EventModuleSerializer
 
     def get_queryset(self) -> QuerySet:
@@ -237,7 +240,7 @@ class AvailableEventModulesViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsSubEventResponsiblePerson]
 
     def create(self, request, *args, **kwargs) -> Response:
         serializer: event_serializers.AttributeEventModuleMapperSerializer = self.get_serializer(data=request.data)
@@ -247,7 +250,7 @@ class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
         mapper = get_object_or_404(event_models.EventModuleMapper, id=mapper_id)
 
         attribute = serializer.data.get('attribute')
-        attribute['type'] = TagType.objects.get(name=attribute['type']['name'])
+        attribute['type'] = basic_models.TagType.objects.get(name=attribute['type']['name'])
         test = basic_serializers.AbstractAttributePostPolymorphicSerializer().create(attribute)
         request.data['attribute'] = test
 
@@ -271,7 +274,7 @@ class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
 
 
 class AssignedEventModulesViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.EventModuleMapperGetSerializer
 
     def get_queryset(self) -> QuerySet:
@@ -285,7 +288,7 @@ class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         list_parent_organistations = []
-        iterator: ScoutHierarchy = self.request.user.userextended.scout_organisation
+        iterator: basic_models.ScoutHierarchy = self.request.user.userextended.scout_organisation
         while iterator is not None:
             list_parent_organistations.append(iterator)
             iterator = iterator.parent
@@ -586,8 +589,9 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
         registration_id = self.kwargs.get("registration_pk", None)
         registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
 
-        template_attribute: AbstractAttribute = get_object_or_404(AbstractAttribute,
-                                                                  pk=serializer.data.get('template_id', -1))
+        template_attribute: basic_models.AbstractAttribute = get_object_or_404(basic_models.AbstractAttribute,
+                                                                               pk=serializer.data.get('template_id',
+                                                                                                      -1))
 
         new_attribute = add_event_attribute(template_attribute)
 
