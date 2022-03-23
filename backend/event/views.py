@@ -626,7 +626,7 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
 
 
 class RegistrationSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    # permission_classes = [IsSubRegistrationResponsiblePerson]
+    permission_classes = [IsSubRegistrationResponsiblePerson]
     serializer_class = event_serializers.RegistrationSummarySerializer
 
     def get_queryset(self) -> QuerySet:
