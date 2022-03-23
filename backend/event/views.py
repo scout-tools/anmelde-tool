@@ -14,7 +14,8 @@ from basic import serializers as basic_serializers
 from event import serializers as event_serializers
 from event import api_exceptions as event_api_exceptions
 from event import models as event_models
-from event.permissions import IsEventResponsiblePerson, IsSubEventResponsiblePerson
+from event.permissions import IsEventResponsiblePerson, IsSubEventResponsiblePerson, IsRegistrationResponsiblePerson, \
+    IsSubRegistrationResponsiblePerson
 
 
 def add_event_module(module: event_models.EventModuleMapper,
@@ -190,7 +191,7 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        event_id = request.data.get("event")
+        event_id = kwargs.get("event_pk", None)
         module_id = request.data.get("module")
 
         event = get_object_or_404(event_models.Event, pk=event_id)
@@ -301,7 +302,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
                           mixins.UpdateModelMixin,
                           mixins.DestroyModelMixin,
                           viewsets.GenericViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsRegistrationResponsiblePerson]
     queryset = event_models.Registration.objects.all()
 
     def create(self, request, *args, **kwargs) -> Response:
@@ -404,7 +405,7 @@ class GenderViewSet(viewsets.ViewSet):
 
 
 class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsSubRegistrationResponsiblePerson]
 
     def get_queryset(self) -> QuerySet:
         registration_id = self.kwargs.get("registration_pk", None)
@@ -481,7 +482,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
 
 
 class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsSubRegistrationResponsiblePerson]
     serializer_class = event_serializers.RegistrationParticipantShortSerializer
 
     def create(self, request, *args, **kwargs) -> Response:
@@ -581,6 +582,7 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
 
 
 class RegistrationAttributeViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsSubRegistrationResponsiblePerson]
 
     def create(self, request, *args, **kwargs) -> Response:
         serializer: basic_serializers.AbstractAttributePutPolymorphicSerializer = self.get_serializer(data=request.data)
