@@ -58,6 +58,7 @@
 <script>
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import store from '@/store';
+import { mapGetters } from 'vuex';
 import StepRegistrationOverview
   from '@/views/eventPlaner/create/steps/StepRegistrationOverview.vue';
 import StepNameDescription from './steps/StepNameDescription.vue';
@@ -106,13 +107,13 @@ export default {
   computed: {
     steps() {
       let sleepingLocation;
-      if (this.event.eventPlanerModules.includes('BookingOptionComplex')) {
+      if (this.event && this.event.eventPlanerModules.includes('BookingOptionComplex')) {
         sleepingLocation = StepParticipationFeeComplex;
       } else {
         sleepingLocation = StepParticipationFeeSimple;
       }
       let authorization;
-      if (this.event.eventPlanerModules.includes('KeycloakAuthorization')) {
+      if (this.event && this.event.eventPlanerModules.includes('KeycloakAuthorization')) {
         authorization = StepEventAuthenticationKeycloak;
       } else {
         authorization = StepEventAuthenticationInternal;
@@ -143,6 +144,9 @@ export default {
       }
       return `Im folgenden führen wir dich durch ${this.maxSteps} kleine Schritt.`;
     },
+    ...mapGetters({
+      event: 'createEvent/event',
+    }),
   },
   methods: {
     nextStep() {

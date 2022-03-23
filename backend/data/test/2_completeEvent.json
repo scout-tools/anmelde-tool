@@ -904,8 +904,8 @@
     "model": "event.eventmodulemapper",
     "pk": 14,
     "fields": {
-      "ordering": 2,
-      "module": 6,
+      "ordering": 4,
+      "module": 9,
       "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
       "required": false,
       "overwrite_description": null,
