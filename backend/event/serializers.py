@@ -7,6 +7,7 @@ from basic.models import EatHabit
 
 from basic import serializers as basic_serializers
 from event import models as event_models
+from event import choices as event_choices
 
 
 class EventLocationGetSerializer(serializers.ModelSerializer):
@@ -201,15 +202,15 @@ class EventOverviewSerializer(serializers.ModelSerializer):
         if single.exists():
             single_id = single.first().id
 
-        if obj.group_registration != event_models.RegistrationTypeGroup.No:
+        if obj.group_registration != event_choices.RegistrationTypeGroup.No:
             if group_id:
                 group_possible = group.exists() and existing_group.exists() \
                     if group is not None and existing_group is not None else False
             elif single_id is None:
                 group_possible = True
 
-        if obj.single_registration != event_models.RegistrationTypeSingle.No:
-            if obj.group_registration == event_models.RegistrationTypeGroup.Required:
+        if obj.single_registration != event_choices.RegistrationTypeSingle.No:
+            if obj.group_registration == event_choices.RegistrationTypeGroup.Required:
                 if group_id is not None:
                     single_possible = True
             elif group_id is None:

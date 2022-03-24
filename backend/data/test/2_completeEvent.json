@@ -557,11 +557,113 @@
     }
   },
   {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 20,
+    "fields": {
+      "attribute": 35,
+      "title": "Tailliertes T-Shirt XS",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe XS?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 21,
+    "fields": {
+      "attribute": 36,
+      "title": "Tailliertes T-Shirts S",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe S?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 22,
+    "fields": {
+      "attribute": 37,
+      "title": "Tailliertes T-Shirts M",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe M?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 23,
+    "fields": {
+      "attribute": 38,
+      "title": "Tailliertes T-Shirt L",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe L?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 24,
+    "fields": {
+      "attribute": 39,
+      "title": "Tailliertes T-Shirt XL",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe XL?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 25,
+    "fields": {
+      "attribute": 32,
+      "title": "Tailiiertes T-Shirt XXL",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe XXL?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
     "model": "event.event",
     "pk": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
     "fields": {
       "created_at": "2022-03-10T11:46:18.946Z",
-      "updated_at": "2022-03-20T16:03:20.356Z",
+      "updated_at": "2022-03-24T10:56:05.078Z",
       "name": "DPV goLd",
       "technical_name": "dpv-gold",
       "short_description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
@@ -582,6 +684,7 @@
       "single_registration": "E",
       "group_registration": "O",
       "personal_data_required": true,
+      "theme": 3,
       "responsible_persons": [
         2
       ],
@@ -621,6 +724,7 @@
       "single_registration": "N",
       "group_registration": "R",
       "personal_data_required": false,
+      "theme": 1,
       "responsible_persons": [
         2
       ],
@@ -641,7 +745,7 @@
     "pk": "456953a2-7db5-45dc-8e05-7a4168105e88",
     "fields": {
       "created_at": "2022-03-22T21:25:27.169Z",
-      "updated_at": "2022-03-22T21:55:48.844Z",
+      "updated_at": "2022-03-24T10:16:01.816Z",
       "name": "Bundesfahrt 2022",
       "technical_name": "bundesfahrt",
       "short_description": "Bundesfahrt & Kaperfahrt",
@@ -662,6 +766,7 @@
       "single_registration": "E",
       "group_registration": "R",
       "personal_data_required": true,
+      "theme": 2,
       "responsible_persons": [
         2
       ],
@@ -703,6 +808,7 @@
       "single_registration": "N",
       "group_registration": "N",
       "personal_data_required": false,
+      "theme": 1,
       "responsible_persons": [
         2
       ],
@@ -910,7 +1016,10 @@
       "required": false,
       "overwrite_description": null,
       "standard": false,
-      "attributes": []
+      "attributes": [
+        8,
+        19
+      ]
     }
   },
   {
@@ -1088,7 +1197,13 @@
         14,
         15,
         16,
-        17
+        17,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
       ]
     }
   },

@@ -207,7 +207,8 @@
       "name": "Veranstaltungs Bedingungen",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": false
     }
   },
   {
@@ -218,7 +219,8 @@
       "name": "DSGVO",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": false
     }
   },
   {
@@ -229,7 +231,8 @@
       "name": "Corona Hinweis",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": false
     }
   },
   {
@@ -240,7 +243,8 @@
       "name": "Kothen",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -251,7 +255,8 @@
       "name": "Kothenstangen",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -262,7 +267,8 @@
       "name": "Jurten",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -273,7 +279,8 @@
       "name": "Jurtenstangen",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -284,7 +291,8 @@
       "name": "Anreise",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -295,7 +303,8 @@
       "name": "Abreise",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -306,7 +315,8 @@
       "name": "Nachricht an die Lagerleitung",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": false
     }
   },
   {
@@ -317,7 +327,8 @@
       "name": "Registrierungs Bestätigung",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": false
     }
   },
   {
@@ -328,7 +339,8 @@
       "name": "T-Shirt XS",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -339,7 +351,8 @@
       "name": "T-Shirt S",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -350,7 +363,8 @@
       "name": "T-Shirt M",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -361,7 +375,8 @@
       "name": "T-Shirt L",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -372,7 +387,8 @@
       "name": "T-Shirt XL",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -383,7 +399,8 @@
       "name": "T-Shirt XXL",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -394,7 +411,8 @@
       "name": "Lunch Paket",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -405,7 +423,80 @@
       "name": "Fahrzeuge",
       "type": 9,
       "template": true,
-      "template_id": -1
+      "template_id": -1,
+      "in_summary": true
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 35,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "Tailliertes T-Shirt XS",
+      "type": 9,
+      "template": true,
+      "template_id": -1,
+      "in_summary": true
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 36,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "Tailliertes T-Shirt S",
+      "type": 9,
+      "template": true,
+      "template_id": -1,
+      "in_summary": true
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 37,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "Tailliertes T-Shirt M",
+      "type": 9,
+      "template": true,
+      "template_id": -1,
+      "in_summary": true
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 38,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "Tailliertes T-Shirt L",
+      "type": 9,
+      "template": true,
+      "template_id": -1,
+      "in_summary": true
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 39,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "Tailliertes T-Shirt XL",
+      "type": 9,
+      "template": true,
+      "template_id": -1,
+      "in_summary": true
+    }
+  },
+  {
+    "model": "basic.abstractattribute",
+    "pk": 40,
+    "fields": {
+      "polymorphic_ctype": 16,
+      "name": "Tailliertes T-Shirt XXL",
+      "type": 9,
+      "template": true,
+      "template_id": -1,
+      "in_summary": true
     }
   },
   {
@@ -521,6 +612,48 @@
     }
   },
   {
+    "model": "basic.integerattribute",
+    "pk": 35,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 36,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 37,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 38,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 39,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
+    "model": "basic.integerattribute",
+    "pk": 40,
+    "fields": {
+      "integer_field": 0
+    }
+  },
+  {
     "model": "basic.stringattribute",
     "pk": 23,
     "fields": {
@@ -590,6 +723,55 @@
     "pk": 7,
     "fields": {
       "name": "Keine Eier"
+    }
+  },
+  {
+    "model": "basic.eathabit",
+    "pk": 8,
+    "fields": {
+      "name": "kein Kohl"
+    }
+  },
+  {
+    "model": "basic.frontendtheme",
+    "pk": 1,
+    "fields": {
+      "name": "default",
+      "primary": "#1976D2",
+      "secondary": "#424242",
+      "accent": "#82B1FF",
+      "error": "#FF5252",
+      "info": "#2196F3",
+      "success": "#4CAF50",
+      "warning": "#FFC107"
+    }
+  },
+  {
+    "model": "basic.frontendtheme",
+    "pk": 2,
+    "fields": {
+      "name": "mosaik",
+      "primary": "#1976D2",
+      "secondary": "#424242",
+      "accent": "#82B1FF",
+      "error": "#FF5252",
+      "info": "#2196F3",
+      "success": "#4CAF50",
+      "warning": "#FFC107"
+    }
+  },
+  {
+    "model": "basic.frontendtheme",
+    "pk": 3,
+    "fields": {
+      "name": "dpvgold",
+      "primary": "#1976D2",
+      "secondary": "#424242",
+      "accent": "#82B1FF",
+      "error": "#FF5252",
+      "info": "#2196F3",
+      "success": "#4CAF50",
+      "warning": "#FFC107"
     }
   }
 ]

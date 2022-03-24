@@ -2,23 +2,25 @@ import uuid
 
 from django.contrib.auth.models import User, Group
 from django.db import models
-from basic.models import ZipCode, Tag, AbstractAttribute, AttributeDescription, TimeStampMixin, ScoutHierarchy, TagType, \
-    EatHabit
-from event.choices import RegistrationTypeSingle, RegistrationTypeGroup, ParticipantActionConfirmation, Gender
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+
+from basic import models as basic_models
+from event import choices as event_choices
 
 
-class EventLocation(TimeStampMixin):
+class EventLocation(basic_models.TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=200, blank=True)
-    zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
+    zip_code = models.ForeignKey(basic_models.ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     address = models.CharField(max_length=60, blank=True)
     contact_name = models.CharField(max_length=30, blank=True)
     contact_email = models.CharField(max_length=30, blank=True)
     contact_phone = models.CharField(max_length=30, blank=True)
     per_person_fee = models.FloatField(blank=True, null=True)
     fix_fee = models.FloatField(blank=True, null=True)
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(basic_models.Tag, blank=True)
 
     def __str__(self):
         return f'{self.name}: ({self.address}, {self.zip_code})'
@@ -27,7 +29,7 @@ class EventLocation(TimeStampMixin):
 class EventPlanerModule(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=100, blank=True)
-    type = models.ForeignKey(TagType, null=True, blank=False, on_delete=models.PROTECT)
+    type = models.ForeignKey(basic_models.TagType, null=True, blank=False, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.type}: {self.name}'
@@ -36,7 +38,7 @@ class EventPlanerModule(models.Model):
 class EventModule(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=100, default='', blank=True)
-    type = models.ForeignKey(TagType, on_delete=models.PROTECT)
+    type = models.ForeignKey(basic_models.TagType, on_delete=models.PROTECT)
     header = models.CharField(max_length=100, default='Default Header')
     internal = models.BooleanField(default=False)
     custom = models.BooleanField(default=False)
@@ -52,7 +54,7 @@ class AttributeEventModuleMapper(models.Model):
     tooltip = extra description which appears when hovering above the element
     """
     id = models.AutoField(primary_key=True)
-    attribute = models.ForeignKey(AbstractAttribute, on_delete=models.PROTECT, null=True)
+    attribute = models.ForeignKey(basic_models.AbstractAttribute, on_delete=models.PROTECT, null=True)
     title = models.CharField(max_length=1000, null=True)
     text = models.CharField(max_length=10000, null=True)
     is_required = models.BooleanField(default=False)
@@ -68,7 +70,7 @@ class AttributeEventModuleMapper(models.Model):
         return f'{self.title}'
 
 
-class Event(TimeStampMixin):
+class Event(basic_models.TimeStampMixin):
     id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
     technical_name = models.CharField(max_length=15, null=True, blank=True)
@@ -89,14 +91,16 @@ class Event(TimeStampMixin):
                                       related_name='keycloak_group')
     keycloak_admin_path = models.ForeignKey(Group, blank=True, on_delete=models.SET_NULL, null=True,
                                             related_name='keycloak_admin_group')
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(basic_models.Tag, blank=True)
     event_planer_modules = models.ManyToManyField(EventPlanerModule, blank=True)
-    limited_registration_hierarchy = models.ForeignKey(ScoutHierarchy, default=493, on_delete=models.SET_DEFAULT)
-    single_registration = models.CharField(max_length=1, choices=RegistrationTypeSingle.choices,
-                                           default=RegistrationTypeSingle.No)
-    group_registration = models.CharField(max_length=1, choices=RegistrationTypeGroup.choices,
-                                          default=RegistrationTypeGroup.No)
+    limited_registration_hierarchy = models.ForeignKey(basic_models.ScoutHierarchy, default=493,
+                                                       on_delete=models.SET_DEFAULT)
+    single_registration = models.CharField(max_length=1, choices=event_choices.RegistrationTypeSingle.choices,
+                                           default=event_choices.RegistrationTypeSingle.No)
+    group_registration = models.CharField(max_length=1, choices=event_choices.RegistrationTypeGroup.choices,
+                                          default=event_choices.RegistrationTypeGroup.No)
     personal_data_required = models.BooleanField(default=False)
+    theme = models.ForeignKey(basic_models.FrontendTheme, on_delete=models.SET_NULL, default=1, null=True, blank=True)
 
     def __str__(self):
         return f"{self.name}: {self.start_date} - {self.end_date}, {self.location}"
@@ -126,7 +130,7 @@ class BookingOption(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100, blank=True)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(basic_models.Tag, blank=True)
     bookable_from = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     bookable_till = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
@@ -135,7 +139,7 @@ class BookingOption(models.Model):
         return self.name
 
 
-class Registration(TimeStampMixin):
+class Registration(basic_models.TimeStampMixin):
     """
     is_confirmed = the registrator confirms that the current state of the registration is complete in the last step of
         the registration
@@ -143,44 +147,52 @@ class Registration(TimeStampMixin):
         registration deadline after that the registration has to be accepted manually
     """
     id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
-    scout_organisation = models.ForeignKey(ScoutHierarchy, null=True, on_delete=models.PROTECT)
+    scout_organisation = models.ForeignKey(basic_models.ScoutHierarchy, null=True, on_delete=models.PROTECT)
     responsible_persons = models.ManyToManyField(User)
     is_confirmed = models.BooleanField(default=False)
     is_accepted = models.BooleanField(default=False)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(AbstractAttribute, blank=True)
+    tags = models.ManyToManyField(basic_models.AbstractAttribute, blank=True)
     single = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.event.name}: {self.scout_organisation.name}"
 
 
-class RegistrationParticipant(TimeStampMixin):
+@receiver(pre_delete, sender=Registration)
+def pre_delete_registration(sender, instance: Registration, **kwargs):
+    for tag in instance.tags.all():
+        tag.delete()
+
+
+class RegistrationParticipant(basic_models.TimeStampMixin):
     scout_name = models.CharField(max_length=100, blank=True, null=True)
     first_name = models.CharField(max_length=100, default="Generated")
     last_name = models.CharField(max_length=100, default="Generated")
     street = models.CharField(max_length=100, blank=True)
-    zip_code = models.ForeignKey(ZipCode, on_delete=models.PROTECT, null=True, blank=True)
+    zip_code = models.ForeignKey(basic_models.ZipCode, on_delete=models.PROTECT, null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
-    scout_group = models.ForeignKey(ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
+    scout_group = models.ForeignKey(basic_models.ScoutHierarchy, on_delete=models.PROTECT, null=True, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     email = models.EmailField(null=True, blank=True)
     birthday = models.DateTimeField(null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(AbstractAttribute, blank=True)
+    tags = models.ManyToManyField(basic_models.AbstractAttribute, blank=True)
     booking_option = models.ForeignKey(BookingOption, on_delete=models.SET_NULL, blank=True, null=True)
-    gender = models.CharField(max_length=1, choices=Gender.choices, default=Gender.Nothing)
+    gender = models.CharField(max_length=1, choices=event_choices.Gender.choices, default=event_choices.Gender.Nothing)
     deactivated = models.BooleanField(default=False)
     generated = models.BooleanField(default=False)
-    needs_confirmation = models.CharField(max_length=2, choices=ParticipantActionConfirmation.choices,
-                                          default=ParticipantActionConfirmation.Nothing)
-    eat_habit = models.ManyToManyField(EatHabit, blank=True)
+    needs_confirmation = models.CharField(max_length=2, choices=event_choices.ParticipantActionConfirmation.choices,
+                                          default=event_choices.ParticipantActionConfirmation.Nothing)
+    eat_habit = models.ManyToManyField(basic_models.EatHabit, blank=True)
+    leader = models.CharField(max_length=6, choices=event_choices.LeaderTypes.choices,
+                              default=event_choices.LeaderTypes.KeineFuehrung)
 
     def __str__(self):
         return f"{self.registration}: {self.last_name}, {self.first_name}"
 
 
-class Workshop(TimeStampMixin):
+class Workshop(basic_models.TimeStampMixin):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100, blank=True)
     free_text = models.CharField(max_length=1000, blank=True)
@@ -189,13 +201,13 @@ class Workshop(TimeStampMixin):
     max_person = models.IntegerField(blank=True, null=True)
     supervisor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(basic_models.Tag)
 
     def __str__(self):
         return self.title
 
 
-class WorkshopParticipant(TimeStampMixin):
+class WorkshopParticipant(basic_models.TimeStampMixin):
     id = models.AutoField(primary_key=True)
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True)
     participant = models.ForeignKey(RegistrationParticipant, on_delete=models.CASCADE, null=True)

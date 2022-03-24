@@ -297,3 +297,9 @@ class EatHabitSerializer(serializers.ModelSerializer):
     class Meta:
         model = basic_models.EatHabit
         fields = '__all__'
+
+
+class FrontendThemeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = basic_models.FrontendTheme
+        fields = '__all__'

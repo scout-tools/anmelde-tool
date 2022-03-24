@@ -119,3 +119,9 @@ class EatHabitViewSet(viewsets.ModelViewSet):
     queryset = basic_models.EatHabit.objects.all()
     serializer_class = basic_serializers.EatHabitSerializer
     permission_classes = [IsAuthenticated]
+
+
+class FrontendThemeViewSet(viewsets.ModelViewSet):
+    queryset = basic_models.FrontendTheme.objects.all()
+    serializer_class = basic_serializers.FrontendThemeSerializer
+    permission_classes = [IsAuthenticated]

@@ -64,6 +64,7 @@ class AbstractAttribute(PolymorphicModel):
     type = models.ForeignKey(TagType, null=True, blank=True, on_delete=models.PROTECT)
     template = models.BooleanField(default=False)
     template_id = models.IntegerField(default=-1)
+    in_summary = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.type}: {self.name}'
@@ -129,6 +130,21 @@ class Description(TimeStampMixin):
 class EatHabit(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class FrontendTheme(models.Model):
+    id = models.AutoField(auto_created=True, primary_key=True)
+    name = models.CharField(max_length=100, default='default')
+    primary = ColorField(default='#1976D2')
+    secondary = ColorField(default='#424242')
+    accent = ColorField(default='#82B1FF')
+    error = ColorField(default='#FF5252')
+    info = ColorField(default='#2196F3')
+    success = ColorField(default='#4CAF50')
+    warning = ColorField(default='#FFC107')
 
     def __str__(self):
         return self.name

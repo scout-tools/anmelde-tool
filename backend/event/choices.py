@@ -38,3 +38,11 @@ class ParticipantActionConfirmation(models.TextChoices):
     Delete = 'D', _('Abmelden')
     AddFromExisting = 'AE', _('Anmelden von deaktivierten Teilnehmern'),
     AddCompletyNew = 'AN', _('Anmelden von neuen Teilnehmern'),
+
+
+class LeaderTypes(models.TextChoices):
+    KeineFuehrung = 'N', _('Kein Amt')
+    StammesFuehrung = 'StaFue', _('Stammesführung')
+    SippenFuehrung = 'SiFue', _('Sippenführung')
+    RoverrundenFuehrung = 'RoFue', _('Roverrundenführung'),
+    Meutenfuehrung = 'MeuFue', _('Meutenfürung')

@@ -26,7 +26,7 @@ def check_registration_permission(registration_id: str, user: User) -> bool:
 class IsStaffOrReadOnly(permissions.BasePermission):
     message = 'Kann nur von den Admins bearbeitet werden'
 
-    def has_permission(self, request: Request, view):
+    def has_permission(self, request: Request, view) -> bool:
         return bool(
             request.method in SAFE_METHODS or
             (request.user and request.user.is_authenticated and request.user.is_staff)
@@ -36,40 +36,42 @@ class IsStaffOrReadOnly(permissions.BasePermission):
 class IsEventResponsiblePerson(permissions.BasePermission):
     message = 'Du darfst dieses Event nicht bearbeiten'
 
-    def has_permission(self, request: Request, view):
+    def has_permission(self, request: Request, view) -> bool:
         if not request.user and not request.user.is_authenticated:
             return False
         if request.method == CREATE_METHOD:
             return True
-        event_id: int = view.kwargs.get("pk", None)
+        event_id: str = view.kwargs.get("pk", None)
         return check_event_permission(event_id, request.user)
 
 
 class IsSubEventResponsiblePerson(permissions.BasePermission):
     message = 'Du darfst dieses Event nicht bearbeiten'
 
-    def has_permission(self, request: Request, view):
+    def has_permission(self, request: Request, view) -> bool:
         if not request.user and not request.user.is_authenticated:
             return False
-        event_id: int = view.kwargs.get('event_pk', None)
+        event_id: str = view.kwargs.get('event_pk', None)
         return check_event_permission(event_id, request.user)
 
 
 class IsRegistrationResponsiblePerson(permissions.BasePermission):
     message = 'Du darfst diese Registrierung nicht bearbeiten'
 
-    def has_permission(self, request: Request, view):
+    def has_permission(self, request: Request, view) -> bool:
         if not request.user and not request.user.is_authenticated:
             return False
-        registration_id: int = view.kwargs.get('pk', None)
+        if request.method == CREATE_METHOD:
+            return True
+        registration_id: str = view.kwargs.get('pk', None)
         return check_registration_permission(registration_id, request.user)
 
 
 class IsSubRegistrationResponsiblePerson(permissions.BasePermission):
     message = 'Du darfst diese Registrierung nicht bearbeiten'
 
-    def has_permission(self, request: Request, view):
+    def has_permission(self, request: Request, view) -> bool:
         if not request.user and not request.user.is_authenticated:
             return False
-        registration_id: int = view.kwargs.get('registration_pk', None)
+        registration_id: str = view.kwargs.get('registration_pk', None)
         return check_registration_permission(registration_id, request.user)

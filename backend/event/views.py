@@ -14,6 +14,7 @@ from basic import serializers as basic_serializers
 from event import serializers as event_serializers
 from event import api_exceptions as event_api_exceptions
 from event import models as event_models
+from event import choices as event_choices
 from event.permissions import IsEventResponsiblePerson, IsSubEventResponsiblePerson, IsRegistrationResponsiblePerson, \
     IsSubRegistrationResponsiblePerson
 
@@ -162,14 +163,14 @@ class RegistrationTypeGroupViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
     def list(self, request) -> Response:
-        return Response(event_models.RegistrationTypeGroup.choices, status=status.HTTP_200_OK)
+        return Response(event_choices.RegistrationTypeGroup.choices, status=status.HTTP_200_OK)
 
 
 class RegistrationTypeSingleViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
     def list(self, request) -> Response:
-        return Response(event_models.RegistrationTypeSingle.choices, status=status.HTTP_200_OK)
+        return Response(event_choices.RegistrationTypeSingle.choices, status=status.HTTP_200_OK)
 
 
 class EventModulesMapperViewSet(mixins.CreateModelMixin,
@@ -314,11 +315,11 @@ class RegistrationViewSet(mixins.CreateModelMixin,
             raise event_api_exceptions.WrongEventCode()
 
         #  Check registration type permissions
-        if event.group_registration == event_models.RegistrationTypeGroup.No and not serializer.data['single']:
+        if event.group_registration == event_choices.RegistrationTypeGroup.No and not serializer.data['single']:
             raise event_api_exceptions.WrongRegistrationFormatGroup
-        if event.single_registration == event_models.RegistrationTypeSingle.No and serializer.data['single']:
+        if event.single_registration == event_choices.RegistrationTypeSingle.No and serializer.data['single']:
             raise event_api_exceptions.WrongRegistrationFormatSingle
-        if event.single_registration == event_models.RegistrationTypeSingle.Attached:
+        if event.single_registration == event_choices.RegistrationTypeSingle.Attached:
             raise event_api_exceptions.RegistrationNotSupported
 
         # Check registration type permissions based on existing registrations
@@ -338,7 +339,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
                 raise event_api_exceptions.GroupAlreadyRegistered
             elif group_registration.exists() and serializer.data['single']:
                 raise event_api_exceptions.SingleGroupNotAllowed
-            elif event.group_registration == event_models.RegistrationTypeGroup.Required and \
+            elif event.group_registration == event_choices.RegistrationTypeGroup.Required and \
                     not group_registration.exists() and serializer.data['single']:
                 raise event_api_exceptions.WrongRegistrationFormat
 
@@ -401,7 +402,14 @@ class GenderViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
     def list(self, request) -> Response:
-        return Response(event_models.Gender.choices, status=status.HTTP_200_OK)
+        return Response(event_choices.Gender.choices, status=status.HTTP_200_OK)
+
+
+class LeaderTypesViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request) -> Response:
+        return Response(event_choices.LeaderTypes.choices, status=status.HTTP_200_OK)
 
 
 class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
@@ -423,7 +431,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         if request.data.get('booking_option') is None:
             request.data['booking_option'] = registration.event.bookingoption_set.first().id
         if registration.event.registration_deadline < timezone.now():
-            request.data['needs_confirmation'] = event_models.ParticipantActionConfirmation.AddCompletyNew
+            request.data['needs_confirmation'] = event_choices.ParticipantActionConfirmation.AddCompletyNew
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs) -> Response:
@@ -433,10 +441,10 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         if participant.deactivated:
             if request.data.get('activate') and registration.event.registration_deadline >= timezone.now():
                 request.data['deactivated'] = False
-                request.data['needs_confirmation'] = event_models.ParticipantActionConfirmation.Nothing
+                request.data['needs_confirmation'] = event_choices.ParticipantActionConfirmation.Nothing
             elif registration.event.last_possible_update >= timezone.now():
                 request.data['deactivated'] = False
-                request.data['needs_confirmation'] = event_models.ParticipantActionConfirmation.AddFromExisting
+                request.data['needs_confirmation'] = event_choices.ParticipantActionConfirmation.AddFromExisting
 
         request.data['generated'] = False
         return super().update(request, *args, **kwargs)
@@ -446,12 +454,12 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
 
         if registration.event.last_possible_update < timezone.now():
             request.data['deactivated'] = True
-            request.data['needs_confirmation'] = event_models.ParticipantActionConfirmation.Nothing
+            request.data['needs_confirmation'] = event_choices.ParticipantActionConfirmation.Nothing
             return super().update(request, *args, **kwargs)
         elif registration.event.registration_deadline < timezone.now():
             request.data['deactivated'] = True
             if not request.data.get('avoid_manual_check'):
-                request.data['needs_confirmation'] = event_models.ParticipantActionConfirmation.Delete
+                request.data['needs_confirmation'] = event_choices.ParticipantActionConfirmation.Delete
             return super().update(request, *args, **kwargs)
 
         return super().destroy(request, *args, **kwargs)
@@ -502,9 +510,9 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
         if activate > 0:
 
             if confirm_needed:
-                confirm = event_models.ParticipantActionConfirmation.AddFromExisting
+                confirm = event_choices.ParticipantActionConfirmation.AddFromExisting
             else:
-                confirm = event_models.ParticipantActionConfirmation.Nothing
+                confirm = event_choices.ParticipantActionConfirmation.Nothing
 
             event_models.RegistrationParticipant.objects \
                 .filter(pk__in=inactive_participants.order_by('created_at').values_list('pk', flat=True)[:activate]) \
@@ -514,9 +522,9 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
             new_participants = []
 
             if confirm_needed:
-                confirm = event_models.ParticipantActionConfirmation.AddCompletyNew
+                confirm = event_choices.ParticipantActionConfirmation.AddCompletyNew
             else:
-                confirm = event_models.ParticipantActionConfirmation.Nothing
+                confirm = event_choices.ParticipantActionConfirmation.Nothing
 
             booking: event_models.BookingOption = registration.event.bookingoption_set.first().id
 
@@ -555,9 +563,9 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
             else:
                 if registration.event.last_possible_update >= timezone.now() \
                         and not request.data.get('avoid_manual_check'):
-                    confirm = event_models.ParticipantActionConfirmation.Delete
+                    confirm = event_choices.ParticipantActionConfirmation.Delete
                 else:
-                    confirm = event_models.ParticipantActionConfirmation.Nothing
+                    confirm = event_choices.ParticipantActionConfirmation.Nothing
 
                 selected_deletable_participants.update(deactivated=True, needs_confirmation=confirm)
                 return Response({'deactivated': num_delete}, status=status.HTTP_200_OK)

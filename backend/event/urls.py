@@ -15,6 +15,7 @@ router.register(r'event-overview', views.EventOverviewViewSet, basename='event-o
 router.register(r'event-registration', views.EventRegistrationViewSet, basename='event-registration')
 router.register(r'registration', views.RegistrationViewSet, basename='registration')
 router.register(r'gender-choices', views.GenderViewSet, basename='gender-choices')
+router.register(r'leader-types', views.LeaderTypesViewSet, basename='leader-types')
 
 event_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
 event_router.register(r'booking-options', views.BookingOptionViewSet, basename='booking-options')
