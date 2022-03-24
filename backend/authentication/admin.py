@@ -7,3 +7,4 @@ from .models import UserExtended
 @admin.register(UserExtended)
 class UserExtendedAdmin(admin.ModelAdmin):
     list_display = ('user', 'scout_organisation')
+    autocomplete_fields = ('scout_organisation',)

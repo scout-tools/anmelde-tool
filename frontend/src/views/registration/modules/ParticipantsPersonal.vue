@@ -194,7 +194,7 @@ export default {
           {
             name: 'Geschlecht*',
             techName: 'gender',
-            tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
+            tooltip: 'Trage bitte das Geschlecht des_der Teilnehmer_in ein.',
             icon: 'mdi-home',
             mandatory: true,
             fieldType: 'localRefDropdown',
@@ -231,7 +231,7 @@ export default {
             name: 'Postleitzahl/Ort*',
             techName: 'zipCode',
             tooltip:
-              'Trage bitte den Wohnort oder die Postleitzahl des WoOption aus.',
+              'Trage bitte den Wohnort oder die Postleitzahl des Wohnortes aus.',
             icon: 'mdi-city',
             mandatory: true,
             fieldType: 'zipField',
@@ -257,6 +257,18 @@ export default {
             lookupPath: '/basic/eat-habits/',
             lookupListDisplay: ['name'],
             fieldType: 'refCombo',
+            default: '',
+          },
+          {
+            name: 'Amt*',
+            techName: 'leader',
+            tooltip: 'Wenn die Person eine Führungsposition ausführt, bitte angeben',
+            icon: 'mdi-office-building ',
+            mandatory: false,
+            lookupPath: '/event/leader-types/',
+            lookupListDisplay: ['name'],
+            fieldType: 'enumCombo',
+            multiple: false,
             default: '',
           },
           {

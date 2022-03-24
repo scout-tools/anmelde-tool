@@ -45,4 +45,4 @@ class LeaderTypes(models.TextChoices):
     StammesFuehrung = 'StaFue', _('Stammesführung')
     SippenFuehrung = 'SiFue', _('Sippenführung')
     RoverrundenFuehrung = 'RoFue', _('Roverrundenführung'),
-    Meutenfuehrung = 'MeuFue', _('Meutenfürung')
+    Meutenfuehrung = 'MeuFue', _('Meutenführung')
