@@ -174,7 +174,7 @@ export default {
             default: '',
           },
           {
-            name: 'Geburtstag',
+            name: 'Geburtstag*',
             techName: 'birthday',
             tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
             icon: 'mdi-calendar',
@@ -266,7 +266,7 @@ export default {
             icon: 'mdi-tent',
             mandatory: true,
             lookupPath: `/event/event/${this.currentEvent.id}/booking-options/`,
-            lookupListDisplay: ['name', 'price'],
+            lookupListDisplay: ['name', 'price', '$ €'],
             fieldType: 'refDropdown',
             default: '',
           },

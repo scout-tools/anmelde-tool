@@ -89,7 +89,7 @@
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="mobileNumber"
-              label="Handynummer"
+              label="Handynummer*"
               prepend-icon="mdi-cellphone"
               @change="updateData"
               :error-messages="mobileNumberErrors"

@@ -11,30 +11,30 @@
     <template v-slot:header>
       <v-container>
         <v-row>
-      <p><b>Zusammenfassung</b></p>
-      Ich habe folgende Daten eingefügt:
-      <br />
-      <br />
+          <p><b>Zusammenfassung</b></p>
+          Ich habe folgende Daten eingefügt:
+          <br />
+          <br />
         </v-row>
         <v-row>
-      <v-list subheader>
-        <v-subheader>Werte</v-subheader>
+          <v-list subheader>
+            <v-subheader>Werte</v-subheader>
 
-        <v-list-item v-for="(attribute, index) in attributes" :key="index" >
-          <v-list-item-content>
-            <v-list-item-title>{{ attribute.name }}</v-list-item-title>
-            <v-list-item-subtitle>{{
-              getValueField(attribute)
-            }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+            <v-list-item v-for="(attribute, index) in attributes" :key="index">
+              <v-list-item-content>
+                <v-list-item-title>{{ attribute.name }}</v-list-item-title>
+                <v-list-item-subtitle>{{
+                  getValueField(attribute)
+                }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </v-row>
         <v-row>
-      <p> Gesamtpersonenanzahl: {{ summary.participantCount}}</p>
+          <p>Gesamtpersonenanzahl: {{ summary.participantCount }}</p>
         </v-row>
         <v-row>
-      <p> Gesamtpreis: {{ summary.price}} €</p>
+          <p>Gesamtpreis: {{ summary.price || 0 }} €</p>
         </v-row>
       </v-container>
     </template>
@@ -131,16 +131,25 @@ export default {
   },
   methods: {
     getValueField(item) {
+      let value = '';
       if (item.booleanField) {
-        return item.booleanField;
+        value = item.booleanField;
       }
       if (item.integerField) {
-        return item.integerField;
+        value = item.integerField;
       }
       if (item.stringField) {
-        return item.stringField;
+        value = item.stringField;
       }
-      return '';
+      console.log(value);
+      switch (value) {
+        case true:
+          return 'Ja';
+        case false:
+          return 'Nein';
+        default:
+          return value;
+      }
     },
     beforeTabShow() {
       this.loadData();

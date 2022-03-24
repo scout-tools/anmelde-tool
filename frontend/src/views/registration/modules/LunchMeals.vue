@@ -9,7 +9,7 @@
     @ignore="onIngoredClicked"
   >
     <template v-slot:header>
-      Wieviele Lunch Packete wollt ihr?
+      Wieviele Lunch Packete braucht ihr am Abreisetag??
     </template>
 
     <template v-slot:main>
