@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return !this.$vuetify.breakpoint.md;
+      return !this.$vuetify.breakpoint.md && !this.$vuetify.breakpoint.lg;
     },
   },
   mounted() {
