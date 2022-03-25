@@ -61,7 +61,6 @@
           <v-col cols="12" sm="6">
             <v-text-field
               readonly
-              disabled
               filled
               v-model="getStammName"
               label="Mein Stamm*"
@@ -129,7 +128,7 @@
       <v-container>
         <v-row>
           <v-col cols="12" sm="6" md="4">
-            <v-btn color="primary" @click="onSaveClicked">
+            <v-btn color="success" @click="onSaveClicked">
               <v-icon left dark>mdi-check</v-icon>
               Änderungen speichern
             </v-btn>
@@ -319,6 +318,7 @@ export default {
         dsgvoConfirmed: this.checkbox,
       })
         .then(() => {
+          this.$store.commit('setAccountIncomplete', false);
           this.$router.push({ name: 'eventOverview' });
           this.$root.globalSnackbar.show({
             message: 'Deine Daten wurden erfolgreich geändert.',

@@ -39,7 +39,6 @@ export default {
     clearInterval(this.interval);
   },
   mounted() {
-    debugger;
     this.interval = setInterval(() => { // eslint-disable-line
       if (this.isAuth) {
         this.$router.push({ name: 'eventOverview' });
@@ -48,12 +47,13 @@ export default {
         this.login();
         return (this.value = 0); // eslint-disable-line
       }
-      this.value += 20;
-    }, 1000);
+      this.value += 25;
+    }, 700);
   },
   methods: {
     login() {
       this.$keycloak.login();
+      this.$store.commit('setAccountIncomplete', true);
     },
   },
 };

@@ -19,15 +19,15 @@
       </v-tab>
 
       <v-spacer></v-spacer>
-      <v-tab :to="{ name: 'eventOverview' }" v-if="isAuth">
+      <v-tab :disabled="accountIncomplete" :to="{ name: 'eventOverview' }" v-if="isAuth">
         Meine Anmeldungen
         <v-icon>mdi-view-list</v-icon>
       </v-tab>
-      <v-tab :to="{ name: 'eventPlaner' }" v-if="isAuth">
+      <v-tab :disabled="accountIncomplete" :to="{ name: 'eventPlaner' }" v-if="isAuth">
         Meine Fahrten
         <v-icon>mdi-account-key</v-icon>
       </v-tab>
-      <v-tab :to="{ name: 'dataOverview' }" v-if="isAuth">
+      <v-tab :disabled="accountIncomplete" :to="{ name: 'dataOverview' }" v-if="isAuth">
         Auswertungen
         <v-icon>mdi-chart-bar</v-icon>
       </v-tab>
@@ -56,7 +56,7 @@ export default {
     tab: null,
   }),
   computed: {
-    ...mapGetters(['theme', 'userinfo', 'getUserName']),
+    ...mapGetters(['theme', 'userinfo', 'getUserName', 'accountIncomplete']),
     logoPath() {
       if (process.env.VUE_APP_ENV === 'DEV') {
         return require(`@/assets/${this.theme}/logo-dev.png`); // eslint-disable-line

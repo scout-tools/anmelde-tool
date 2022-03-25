@@ -1,5 +1,6 @@
 import axios from 'axios';
 import router from '../router';
+import store from '../store';
 
 const keycl = {
   checkPersonalData() {
@@ -7,12 +8,14 @@ const keycl = {
     axios.get(path)
       .then((res) => {
         if (res.status === 426) {
+          store.commit('setAccountIncomplete', true);
           router.push({ name: 'settingsOverview' });
         }
       })
       .catch((err) => {
         console.log(err);
         if (err.response.status === 426) {
+          store.commit('setAccountIncomplete', true);
           router.push({ name: 'settingsOverview' });
         }
       });

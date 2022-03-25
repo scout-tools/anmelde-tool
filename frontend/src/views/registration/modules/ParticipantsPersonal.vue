@@ -260,7 +260,7 @@ export default {
             default: '',
           },
           {
-            name: 'Amt*',
+            name: 'Position*',
             techName: 'leader',
             tooltip: 'Wenn die Person eine Führungsposition ausführt, bitte angeben',
             icon: 'mdi-office-building ',

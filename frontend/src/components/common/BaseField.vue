@@ -148,10 +148,11 @@
       </template>
     </v-combobox>
 
-    <v-combobox
+    <v-autocomplete
       v-if="field.fieldType === 'enumCombo'"
       :label="field.name"
-      :value="comboValue"
+      :value="value"
+      item-value="value"
       :items="convertEnum(this.lookupList)"
       :prepend-icon="field.icon"
       required
@@ -171,7 +172,7 @@
           </span>
         </v-tooltip>
       </template>
-    </v-combobox>
+    </v-autocomplete>
 
     <v-autocomplete
       v-if="field.fieldType === 'zipField'"
@@ -430,12 +431,6 @@ export default {
     },
   },
   computed: {
-    comboValue() {
-      if (typeof this.value === 'object') {
-        return this.value;
-      }
-      return this.convertEnum(this.lookupList).filter((item) => item.value === this.value)[0];
-    },
     valueDate() {
       return this.$moment(this.value).format('DD.MM.YYYY', 'de');
     },

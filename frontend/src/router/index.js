@@ -4,6 +4,10 @@ import SettingsUser from '@/views/settings/user/Main.vue';
 import EventOverview from '@/views/event/overview/Overview.vue';
 
 import MasterDataOverview from '@/views/event/data/Overview.vue';
+
+import StatisticMain from '@/views/statistic/Main.vue';
+import StatisticOverview from '@/views/statistic/overview/Main.vue';
+
 import SettingsOverview from '@/views/settings/Main.vue';
 import SettingsConfig from '@/views/settings/config/Main.vue';
 import LandingPage from '@/views/landingPage/Main.vue';
@@ -78,12 +82,6 @@ const routes = [
       requiresAuth: true,
     },
   },
-  // {
-  //   path: '/statistic/:id',
-  //   name: 'statisticOverview',
-  //   component: StatisticOverview,
-  //   props: true,
-  // },
   {
     path: '/registration/:id',
     name: 'registrationNew',
@@ -107,18 +105,18 @@ const routes = [
     name: 'settingsConfig',
     component: SettingsConfig,
   },
-  // {
-  //   path: '/statistic/:id',
-  //   name: 'statisticOverview',
-  //   component: StatisticOverview,
-  //   props: true,
-  // },
-  // {
-  //   path: '/registration/create/:id',
-  //   name: 'registrationCreate',
-  //   component: RegistrationCreate,
-  //   props: true,
-  // },
+  {
+    path: '/statistic/:id',
+    name: 'statisticOverview',
+    component: StatisticMain,
+    children: [
+      {
+        path: 'overview',
+        name: 'statistic-overview',
+        component: StatisticOverview,
+      },
+    ],
+  },
   {
     path: '/impressum',
     name: 'impressum',

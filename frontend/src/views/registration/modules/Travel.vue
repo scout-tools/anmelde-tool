@@ -21,34 +21,34 @@
           :valdiationObj="$v"
         />
       </template>
-        <p
-          class="text-center"
-          v-if="data.vehicle && data.vehicle.value === 'C'"
-          style="border-style: solid; border-color: red"
-        >
-          <v-icon color="red darken-1" large class="ma-2">
-            mdi-alert mdi-spin
-          </v-icon>
-          Bitte beachtet, dass vor Ort selbst nur sehr wenige bis keine
-          Parkplätze zur Verfügung stehen und PKW daher ggf. in einiger
-          Entfernung im Umland abgestellt werden müssen.
-          <v-icon color="red darken-1" large class="ma-2">
-            mdi-alert mdi-flip-h mdi-spin
-          </v-icon>
-        </p>
-        <p
-          class="text-center"
-          v-else
-          style="border-style: solid; border-color: green"
-        >
-          <v-icon color="green darken-1" large class="ma-2">
-            mdi-emoticon-kiss-outline
-          </v-icon>
-          Mega Cool, dass ihr ohne Auto anreist.
-          <v-icon color="green darken-1" large class="ma-2">
-            mdi-emoticon-kiss-outline mdi-flip-h
-          </v-icon>
-        </p>
+      <p
+        class="text-center"
+        v-if="data.vehicle && data.vehicle === 'C'"
+        style="border-style: solid; border-color: red"
+      >
+        <v-icon color="red darken-1" large class="ma-2">
+          mdi-alert mdi-spin
+        </v-icon>
+        Bitte beachtet, dass vor Ort selbst nur sehr wenige bis keine Parkplätze
+        zur Verfügung stehen und PKW daher ggf. in einiger Entfernung im Umland
+        abgestellt werden müssen.
+        <v-icon color="red darken-1" large class="ma-2">
+          mdi-alert mdi-flip-h mdi-spin
+        </v-icon>
+      </p>
+      <p
+        class="text-center"
+        v-else
+        style="border-style: solid; border-color: green"
+      >
+        <v-icon color="green darken-1" large class="ma-2">
+          mdi-emoticon-kiss-outline
+        </v-icon>
+        Mega Cool, dass ihr ohne Auto anreist.
+        <v-icon color="green darken-1" large class="ma-2">
+          mdi-emoticon-kiss-outline mdi-flip-h
+        </v-icon>
+      </p>
       <!-- <v-row cols="12" class="py-2">
         <p>Wann werdet ihr voraussichtlich an ankommen?</p>
 
@@ -187,8 +187,10 @@ export default {
     },
     setDefaults() {
       this.moduleData.forEach((item) => {
-        this.data.vehicle = this.getAttributeValue(item)[0].value; //eslint-disable-line
-        this.data.time = this.getAttributeValue(item)[1].value; //eslint-disable-line
+        if (item && item.attribute.resourcetype === 'TravelAttribute') {
+          this.data.vehicle = this.getAttributeValue(item)[0]; //eslint-disable-line
+          this.data.time = this.getAttributeValue(item)[1]; //eslint-disable-line
+        }
       });
     },
     getAttributeValue(item) {
@@ -211,24 +213,28 @@ export default {
           (att) => att.templateId === moduleItem.attribute.id,
         );
         if (getAtt.length > 0) {
-          promises.push(
-            axios.put(
-              `${process.env.VUE_APP_API}/${this.path}${getAtt[0].id}/`,
-              {
-                timeField: this.data.time.value,
-                typeField: this.data.vehicle.value,
-              },
-            ),
-          );
+          if (moduleItem && moduleItem.attribute.resourcetype === 'TravelAttribute') {
+            promises.push(
+              axios.put(
+                `${process.env.VUE_APP_API}/${this.path}${getAtt[0].id}/`,
+                {
+                  timeField: this.data.time,
+                  typeField: this.data.vehicle,
+                },
+              ),
+            );
+          }
         } else {
-          promises.push(
-            axios.post(`${process.env.VUE_APP_API}/${this.path}`, {
-              templateId: moduleItem.attribute.id,
-              timeField: this.data.time.value,
-              typeField: this.data.vehicle.value,
-              resourcetype: moduleItem.attribute.resourcetype,
-            }),
-          );
+          if (moduleItem && moduleItem.attribute.resourcetype === 'TravelAttribute') { //eslint-disable-line
+            promises.push(
+              axios.post(`${process.env.VUE_APP_API}/${this.path}`, {
+                templateId: moduleItem.attribute.id,
+                timeField: this.data.time,
+                typeField: this.data.vehicle,
+                resourcetype: moduleItem.attribute.resourcetype,
+              }),
+            );
+          }
         }
       });
       if (promises.length > 0 || force) {

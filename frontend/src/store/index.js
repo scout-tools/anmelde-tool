@@ -13,6 +13,7 @@ export default new Vuex.Store({
     accessToken: null,
     refreshToken: null,
     apiIsDown: false,
+    accountIncomplete: true,
     userinfo: {
       fahrtenname: '',
       stamm: '',
@@ -37,6 +38,9 @@ export default new Vuex.Store({
   getters: {
     userinfo(state) {
       return state.userinfo;
+    },
+    accountIncomplete(state) {
+      return state.accountIncomplete;
     },
     getUserName(state) {
       if (state.userinfo) {
@@ -76,6 +80,9 @@ export default new Vuex.Store({
     },
     setUserinfo(state, userinfo) {
       state.userinfo = userinfo;
+    },
+    setAccountIncomplete(state, accountIncomplete) {
+      state.accountIncomplete = accountIncomplete;
     },
     clearUserinfo(state) {
       state.userinfo = {

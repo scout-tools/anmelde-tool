@@ -171,6 +171,9 @@ export default {
     this.getEventOverview()
       .then((success) => {
         this.items = success.data;
+        if (this.items.length === 0) {
+          this.$router.push({ name: 'settingsUser' });
+        }
       })
       .catch(() => {
         this.$root.globalSnackbar.show({

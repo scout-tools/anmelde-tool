@@ -66,13 +66,14 @@ export default {
     openDialog() {
       this.active = true;
       this.isEditWindow = false;
+      this.setDefaults();
     },
-    openDialogEdit(id) {
+    openDialogEdit(item) {
       this.active = true;
       this.isEditWindow = true;
-      if (id) {
-        this.data.id = id;
-        this.getData(id);
+      if (item.id) {
+        this.data.id = item.id;
+        this.getData(item.id);
       } else {
         this.setDefaults();
       }

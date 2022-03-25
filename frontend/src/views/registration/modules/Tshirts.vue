@@ -105,13 +105,15 @@ export default {
             ),
           );
         } else {
-          promises.push(
-            axios.post(`${process.env.VUE_APP_API}/${this.path}`, {
-              templateId: moduleItem.attribute.id,
-              integerField: this.data[moduleItem.id],
-              resourcetype: moduleItem.attribute.resourcetype,
-            }),
-          );
+          if (this.data[moduleItem.attribute.id] !== null) { // eslint-disable-line
+            promises.push(
+              axios.post(`${process.env.VUE_APP_API}/${this.path}`, {
+                templateId: moduleItem.attribute.id,
+                integerField: this.data[moduleItem.attribute.id],
+                resourcetype: moduleItem.attribute.resourcetype,
+              }),
+            );
+          }
         }
       });
       if (promises.length > 0) {
