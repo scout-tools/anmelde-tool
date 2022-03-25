@@ -11,15 +11,11 @@
     <template v-slot:header>
       <v-container>
         <v-row>
-          <p><b>Zusammenfassung</b></p>
-          Ich habe folgende Daten eingefügt:
-          <br />
-          <br />
+          <p>Ich habe folgende Daten eingefügt:</p>
         </v-row>
         <v-row>
           <v-list subheader>
             <v-subheader>Werte</v-subheader>
-
             <v-list-item v-for="(attribute, index) in attributes" :key="index">
               <v-list-item-content>
                 <v-list-item-title>{{ attribute.name }}</v-list-item-title>

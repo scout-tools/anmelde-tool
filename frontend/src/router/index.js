@@ -7,6 +7,7 @@ import MasterDataOverview from '@/views/event/data/Overview.vue';
 import SettingsOverview from '@/views/settings/Main.vue';
 import SettingsConfig from '@/views/settings/config/Main.vue';
 import LandingPage from '@/views/landingPage/Main.vue';
+import RedirectKeycloak from '@/views/landingPage/RedirectKeycloak.vue';
 import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
 import FAQ from '@/views/footer/FAQ.vue';
@@ -24,6 +25,11 @@ const routes = [
     path: '/',
     name: 'landing',
     component: LandingPage,
+  },
+  {
+    path: '/redirect-keycloak',
+    name: 'redirectKeycloak',
+    component: RedirectKeycloak,
   },
   {
     path: '/eventplaner',
