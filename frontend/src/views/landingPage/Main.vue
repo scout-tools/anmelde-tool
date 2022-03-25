@@ -23,7 +23,7 @@
             v-if="!isAuth"
           >
             <v-icon left>mdi-rocket-launch</v-icon>
-            Los geht's
+            zum Login
           </v-btn>
           <v-btn
             class="mt-10"
@@ -57,8 +57,7 @@
               Der beste Weg, um große Anmeldezahlen übersichtlich zu gestalten.
             </h2>
             <span class="subheading">
-              Keine E-Mail Missverständnisse. Zeit für das
-              Wesentliche.
+              Keine E-Mail Missverständnisse. Zeit für das Wesentliche.
             </span>
           </div>
         </v-flex>
@@ -148,7 +147,7 @@ export default {
   },
   methods: {
     onLoginClicked() {
-      this.$keycloak.login();
+      this.$router.push({ name: 'redirectKeycloak' });
     },
   },
 };
