@@ -522,10 +522,12 @@ export default {
     getItemText(item) {
       let template = '';
       this.field.lookupListDisplay.forEach((field, i) => {
-        if (i === 0) {
+        if (field.charAt(0) === '$') {
+          template += field.substring(1, field.length);
+        } else if (i === 0) {
           template += item[field];
         } else {
-          template = `${template}  - ${item[field]}`;
+          template = `${template} - ${item[field]}`;
         }
       });
       return template;

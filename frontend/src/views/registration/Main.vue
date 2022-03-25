@@ -31,9 +31,7 @@
                     <v-icon class="ma-2" color="error"
                       >mdi-alert-circle
                     </v-icon>
-                    Für diese Fahrt ist die Handynummer Pflicht. Falls du sie
-                    nicht eintragen hast, kannst du sie nur unter den Profil
-                    Einstellungen ändern.
+                    Für diese Fahrt ist die Handynummer Pflicht. Bitte im Profil hinzufügen.
                   </v-subheader>
                   <v-row>
                     <template v-for="(field, i) in fields">
@@ -152,7 +150,7 @@ export default {
         },
         {
           name: 'Telefonnummer',
-          techName: 'mobil',
+          techName: 'mobileNumber',
           tooltip: '',
           icon: 'mdi-phone',
           fieldType: 'textfield',
@@ -190,9 +188,6 @@ export default {
         });
       }
       return returnArray;
-    },
-    mobileNumber() {
-      return this.personalData.mobileNumber;
     },
   },
   methods: {
