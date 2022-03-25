@@ -1,9 +1,9 @@
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import UserExtended
-from .serializers import UserExtendedGetSerializer, UserExtendedPostSerializer, GroupSerializer
+from .models import UserExtended, EmailNotificationType
+from .serializers import UserExtendedGetSerializer, UserExtendedPostSerializer, GroupSerializer, EmailSettingsSerializer
 
 
 class PersonalData(viewsets.ViewSet):
@@ -46,3 +46,18 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return self.request.user.groups.all()
+
+
+class EmailSettingsViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+    serializer_class = EmailSettingsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return UserExtended.objects.filter(id=self.request.user.userextended.id)
+
+
+class EmailNotificationTypeViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request) -> Response:
+        return Response(EmailNotificationType.choices, status=status.HTTP_200_OK)

@@ -1,6 +1,5 @@
 from copy import deepcopy
-
-from django.db.models import Q, QuerySet
+from django.db.models import Q, QuerySet, Prefetch
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
@@ -640,3 +639,12 @@ class RegistrationSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet)
     def get_queryset(self) -> QuerySet:
         registration_id = self.kwargs.get("registration_pk", None)
         return event_models.Registration.objects.filter(id=registration_id)
+
+
+class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    permission_classes = [IsSubEventResponsiblePerson]
+    serializer_class = event_serializers.EventSummarySerializer
+
+    def get_queryset(self) -> QuerySet:
+        event_id = self.kwargs.get("event_pk", None)
+        return event_models.Event.objects.filter(id=event_id)

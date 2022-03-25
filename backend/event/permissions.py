@@ -37,7 +37,7 @@ class IsEventResponsiblePerson(permissions.BasePermission):
     message = 'Du darfst dieses Event nicht bearbeiten'
 
     def has_permission(self, request: Request, view) -> bool:
-        if not request.user and not request.user.is_authenticated:
+        if not request.user or not request.user.is_authenticated:
             return False
         if request.method == CREATE_METHOD:
             return True
@@ -49,7 +49,7 @@ class IsSubEventResponsiblePerson(permissions.BasePermission):
     message = 'Du darfst dieses Event nicht bearbeiten'
 
     def has_permission(self, request: Request, view) -> bool:
-        if not request.user and not request.user.is_authenticated:
+        if not request.user or not request.user.is_authenticated:
             return False
         event_id: str = view.kwargs.get('event_pk', None)
         return check_event_permission(event_id, request.user)
@@ -59,7 +59,7 @@ class IsRegistrationResponsiblePerson(permissions.BasePermission):
     message = 'Du darfst diese Registrierung nicht bearbeiten'
 
     def has_permission(self, request: Request, view) -> bool:
-        if not request.user and not request.user.is_authenticated:
+        if not request.user or not request.user.is_authenticated:
             return False
         if request.method == CREATE_METHOD:
             return True
@@ -71,7 +71,7 @@ class IsSubRegistrationResponsiblePerson(permissions.BasePermission):
     message = 'Du darfst diese Registrierung nicht bearbeiten'
 
     def has_permission(self, request: Request, view) -> bool:
-        if not request.user and not request.user.is_authenticated:
+        if not request.user or not request.user.is_authenticated:
             return False
         registration_id: str = view.kwargs.get('registration_pk', None)
         return check_registration_permission(registration_id, request.user)

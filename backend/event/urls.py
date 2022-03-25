@@ -22,6 +22,7 @@ event_router.register(r'booking-options', views.BookingOptionViewSet, basename='
 event_router.register(r'assigned-event-modules', views.AssignedEventModulesViewSet, basename='assigned-event-modules')
 event_router.register(r'available-modules', views.AvailableEventModulesViewSet, basename='available-modules')
 event_router.register(r'event-module-mapper', views.EventModulesMapperViewSet, basename='eventmodulemapper')
+event_router.register(r'summary', views.EventSummaryViewSet, basename='summary')
 
 event_module_router = routers.NestedSimpleRouter(event_router, r'event-module-mapper', lookup='eventmodulemapper')
 event_module_router.register(r'attribute-mapper', views.EventModuleAttributeMapperViewSet, basename='attribute-mapper')

@@ -1,10 +1,9 @@
 import uuid
-
 from django.contrib.auth.models import User, Group
 from django.db import models
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
 
+from backend.storage_backends import PrivateMediaStorage, PublicMediaStorage, EmailMediaStorage, \
+    EmailAttachmentMediaStorage
 from basic import models as basic_models
 from event import choices as event_choices
 
@@ -155,14 +154,26 @@ class Registration(basic_models.TimeStampMixin):
     tags = models.ManyToManyField(basic_models.AbstractAttribute, blank=True)
     single = models.BooleanField(default=False)
 
+    def save(self, *args, **kwargs):
+        if self.created_at:
+            # If self.pk is not None then it's an update.
+            cls = self.__class__
+            old = cls.objects.get(pk=self.pk)
+            # This will get the current model state since super().save() isn't called yet.
+            new = self  # This gets the newly instantiated Mode object with the new values.
+            changed_fields = []
+            for field in cls._meta.get_fields():
+                field_name = field.name
+                try:
+                    if getattr(old, field_name) != getattr(new, field_name):
+                        changed_fields.append(field_name)
+                except:  # Catch field does not exist exception
+                    pass
+            kwargs['update_fields'] = changed_fields
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.event.name}: {self.scout_organisation.name}"
-
-
-@receiver(pre_delete, sender=Registration)
-def pre_delete_registration(sender, instance: Registration, **kwargs):
-    for tag in instance.tags.all():
-        tag.delete()
 
 
 class RegistrationParticipant(basic_models.TimeStampMixin):
@@ -234,3 +245,20 @@ class StandardEventTemplate(models.Model):
 
     other_optional_modules = models.ManyToManyField(EventModuleMapper, blank=True,
                                                     related_name='other_optional_modules')
+
+
+class EmailAttachment(basic_models.TimeStampMixin):
+    id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
+    file = models.FileField(storage=EmailAttachmentMediaStorage(), blank=True, null=True)
+
+
+class EmailPicture(basic_models.TimeStampMixin):
+    id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
+    file = models.ImageField(storage=PublicMediaStorage())
+
+
+class Email(basic_models.TimeStampMixin):
+    id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
+    html = models.TextField(default='')
+    plain = models.TextField(default='')
+    attachments = models.ManyToManyField(EmailAttachment, blank=True)

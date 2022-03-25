@@ -138,6 +138,7 @@ USE_TZ = True
 # Continue tutorial for uploading images
 if env.bool('USE_S3'):
     # aws settings
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
     AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
@@ -152,6 +153,10 @@ if env.bool('USE_S3'):
     PUBLIC_MEDIA_LOCATION = 'media'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'backend.storage_backends.PublicMediaStorage'
+    # s3 private media settings
+    PRIVATE_MEDIA_LOCATION = 'private'
+    PRIVATE_FILE_STORAGE = 'backend.storage_backends.PrivateMediaStorage'
+    PRIVATE_MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PRIVATE_MEDIA_LOCATION}/'
 else:
     STATIC_URL = '/staticfiles/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -190,7 +195,8 @@ if env.bool('USE_SES'):
     AWS_SES_SECRET_ACCESS_KEY = env('AWS_SES_SECRET_ACCESS_KEY')
     AWS_SES_REGION_NAME = 'eu-central-1'
     AWS_SES_REGION_ENDPOINT = 'email.eu-central-1.amazonaws.com'
-    EMAIL_HOST_USER = env('EMAIL_HOST_USER')  # todo: remove
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    FRONT_URL = env.str('FRONT_URL')
 
 REST_USE_JWT = True
 
@@ -210,7 +216,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'mozilla_django_oidc.contrib.drf.OIDCAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication'
     ],
 }
 

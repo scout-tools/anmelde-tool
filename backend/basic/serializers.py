@@ -80,7 +80,7 @@ class BooleanAttributeGetSerializer(serializers.ModelSerializer):  # noqa
 
     class Meta:
         model = basic_models.BooleanAttribute
-        exclude = ('template', 'polymorphic_ctype')
+        exclude = ('template', 'polymorphic_ctype', 'in_summary')
 
 
 class TimeAttributeGetSerializer(serializers.ModelSerializer):  # noqa
@@ -88,7 +88,7 @@ class TimeAttributeGetSerializer(serializers.ModelSerializer):  # noqa
 
     class Meta:
         model = basic_models.TimeAttribute
-        exclude = ('template', 'polymorphic_ctype')
+        exclude = ('template', 'polymorphic_ctype', 'in_summary')
 
 
 class IntegerAttributeGetSerializer(serializers.ModelSerializer):  # noqa
@@ -96,7 +96,7 @@ class IntegerAttributeGetSerializer(serializers.ModelSerializer):  # noqa
 
     class Meta:
         model = basic_models.IntegerAttribute
-        exclude = ('template', 'polymorphic_ctype')
+        exclude = ('template', 'polymorphic_ctype', 'in_summary')
 
 
 class FloatAttributeGetSerializer(serializers.ModelSerializer):  # noqa
@@ -104,7 +104,7 @@ class FloatAttributeGetSerializer(serializers.ModelSerializer):  # noqa
 
     class Meta:
         model = basic_models.FloatAttribute
-        exclude = ('template', 'polymorphic_ctype')
+        exclude = ('template', 'polymorphic_ctype', 'in_summary')
 
 
 class TravelAttributeGetSerializer(serializers.ModelSerializer):  # noqa
@@ -112,7 +112,7 @@ class TravelAttributeGetSerializer(serializers.ModelSerializer):  # noqa
 
     class Meta:
         model = basic_models.TravelAttribute
-        exclude = ('template', 'polymorphic_ctype')
+        exclude = ('template', 'polymorphic_ctype', 'in_summary')
 
 
 class StringAttributeGetSerializer(serializers.ModelSerializer):  # noqa
@@ -120,7 +120,7 @@ class StringAttributeGetSerializer(serializers.ModelSerializer):  # noqa
 
     class Meta:
         model = basic_models.StringAttribute
-        exclude = ('template', 'polymorphic_ctype')
+        exclude = ('template', 'polymorphic_ctype', 'in_summary')
 
 
 class AbstractAttributeGetPolymorphicSerializer(PolymorphicSerializer):

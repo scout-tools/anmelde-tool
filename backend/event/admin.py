@@ -2,7 +2,12 @@ from django.contrib import admin
 
 from basic.models import AbstractAttribute
 from event.models import EventLocation, Event, BookingOption, EventModule, EventModuleMapper, \
-    AttributeEventModuleMapper, StandardEventTemplate, Registration, RegistrationParticipant, EventPlanerModule
+    AttributeEventModuleMapper, StandardEventTemplate, Registration, RegistrationParticipant, EventPlanerModule, Email, \
+    EmailAttachment, EmailPicture
+
+admin.site.register(Email)
+admin.site.register(EmailAttachment)
+admin.site.register(EmailPicture)
 
 
 @admin.register(EventLocation)

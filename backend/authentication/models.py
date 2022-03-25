@@ -8,9 +8,10 @@ import uuid
 
 
 class EmailNotificationType(models.TextChoices):
-    Full = 'Full', _('Full')
-    Daily = 'Daily', _('Daily')
-    OnlyImportant = 'Important', _('Important')
+    Full = 'Full', _('Alles')
+    Daily = 'Daily', _('täglich'),
+    Weekly = 'Weekly', _('Wöchentlich')
+    OnlyImportant = 'Important', _('Nur wichtiges')
 
 
 class UserExtended(models.Model):

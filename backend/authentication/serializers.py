@@ -48,3 +48,9 @@ class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ('id', 'name',)
+
+
+class EmailSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserExtended
+        fields = ('email_notifaction', 'sms_notifcation')
