@@ -312,7 +312,7 @@
     "pk": 23,
     "fields": {
       "polymorphic_ctype": 19,
-      "name": "Nachricht an die Lagerleitung",
+      "name": "Zusätzliche Anmerkungen",
       "type": 9,
       "template": true,
       "template_id": -1,

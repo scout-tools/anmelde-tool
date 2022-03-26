@@ -11,7 +11,7 @@
     <template v-slot:header>
       <span class="text-left subtitle-1">
         <p>
-          Hiermit melde ich mich vom<b> {{ myStamm }} </b> aus dem Bund
+          Hiermit melde ich meinen <b> {{ myStamm }} </b> aus dem Bund
           <b> {{ myBund }} </b> zu/r <b> {{ eventName }} </b> an.
           <br />
           <br />
