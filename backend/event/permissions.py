@@ -39,7 +39,7 @@ class IsEventResponsiblePerson(permissions.BasePermission):
     def has_permission(self, request: Request, view) -> bool:
         if not request.user or not request.user.is_authenticated:
             return False
-        if request.method == CREATE_METHOD:
+        if request.method != UPDATE_METHOD:
             return True
         event_id: str = view.kwargs.get("pk", None)
         return check_event_permission(event_id, request.user)
@@ -51,6 +51,8 @@ class IsSubEventResponsiblePerson(permissions.BasePermission):
     def has_permission(self, request: Request, view) -> bool:
         if not request.user or not request.user.is_authenticated:
             return False
+        if request.method in SAFE_METHODS:
+            return True
         event_id: str = view.kwargs.get('event_pk', None)
         return check_event_permission(event_id, request.user)
 
