@@ -364,8 +364,9 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
                   'responsible_persons',
                   'tags',
                   'participant_count',
-                  'price'
-                  )
+                  'price',
+                  'created_at',
+                  'updated_at')
 
     def get_participant_count(self, registration: event_models.Registration) -> int:
         return registration.registrationparticipant_set.count()

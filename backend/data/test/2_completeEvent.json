@@ -173,7 +173,7 @@
     "fields": {
       "name": "Letter",
       "type": 5,
-      "header": "Nachricht an die Lagerleitung",
+      "header": "Zusätzliche Anmerkungen",
       "internal": false,
       "custom": false
     }
@@ -256,7 +256,7 @@
     "fields": {
       "attribute": 15,
       "title": "Datenschutzhinweis",
-      "text": "Hiermit bestätige ich, dass alle Teilnehmer_innen, die ich auf diesem Wege anmelde die Datenschutzhinweise zur Kenntnis genommen und diesen zugestimmt haben.",
+      "text": "Hiermit bestätige ich, dass alle Teilnehmer_innen, die ich auf diesem Wege anmelde, die Datenschutzhinweise und Bildrechte zur Kenntnis genommen und diesen zugestimmt haben.",
       "is_required": true,
       "min_length": 0,
       "max_length": 0,
@@ -273,7 +273,7 @@
     "fields": {
       "attribute": 16,
       "title": "Corona Hinweis",
-      "text": "Ich trage Sorge, dass alle von mir angemeldeten Teilnehmer über die Corona Regel informiert sind und ich achte auf die Einhaltung",
+      "text": "Ich trage Sorge, dass alle von mir angemeldeten TeilnehmerInnen über die dann geltenden Coronaregeln informiert sind und ich achte auf die Einhaltung",
       "is_required": true,
       "min_length": 0,
       "max_length": 0,
@@ -391,13 +391,13 @@
     "pk": 10,
     "fields": {
       "attribute": 23,
-      "title": "Nachricht an die Lagerleitung",
-      "text": "Hier ist Platz für eine Nachricht an die Lagerleitung .",
+      "title": "Zusätzliche Anmerkungen",
+      "text": "Hier ist Platz für eine Nachricht an die Lagerleitung.",
       "is_required": false,
       "min_length": 10,
       "max_length": 9000,
       "tooltip": null,
-      "default_value": "Hallo Lagerleitung,",
+      "default_value": "",
       "field_type": null,
       "icon": null,
       "max_entries": 1
@@ -673,7 +673,7 @@
       "location": 1,
       "start_date": "2022-09-16T14:00:00Z",
       "end_date": "2022-09-18T09:00:00Z",
-      "registration_deadline": "2022-07-31T19:59:59Z",
+      "registration_deadline": "2022-06-01T19:59:59Z",
       "registration_start": "2022-02-28T23:00:01Z",
       "last_possible_update": "2022-09-01T19:59:59Z",
       "invitation_code": "DPVGOLD",
