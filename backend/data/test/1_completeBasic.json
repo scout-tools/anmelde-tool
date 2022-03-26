@@ -203,7 +203,7 @@
     "model": "basic.abstractattribute",
     "pk": 14,
     "fields": {
-      "polymorphic_ctype": 14,
+      "polymorphic_ctype": 16,
       "name": "Veranstaltungs Bedingungen",
       "type": 9,
       "template": true,
@@ -215,7 +215,7 @@
     "model": "basic.abstractattribute",
     "pk": 15,
     "fields": {
-      "polymorphic_ctype": 14,
+      "polymorphic_ctype": 16,
       "name": "DSGVO",
       "type": 9,
       "template": true,
@@ -227,7 +227,7 @@
     "model": "basic.abstractattribute",
     "pk": 16,
     "fields": {
-      "polymorphic_ctype": 14,
+      "polymorphic_ctype": 16,
       "name": "Corona Hinweis",
       "type": 9,
       "template": true,
@@ -239,7 +239,7 @@
     "model": "basic.abstractattribute",
     "pk": 17,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Kothen",
       "type": 9,
       "template": true,
@@ -251,7 +251,7 @@
     "model": "basic.abstractattribute",
     "pk": 18,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Kothenstangen",
       "type": 9,
       "template": true,
@@ -263,7 +263,7 @@
     "model": "basic.abstractattribute",
     "pk": 19,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Jurten",
       "type": 9,
       "template": true,
@@ -275,7 +275,7 @@
     "model": "basic.abstractattribute",
     "pk": 20,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Jurtenstangen",
       "type": 9,
       "template": true,
@@ -287,7 +287,7 @@
     "model": "basic.abstractattribute",
     "pk": 21,
     "fields": {
-      "polymorphic_ctype": 19,
+      "polymorphic_ctype": 21,
       "name": "Anreise",
       "type": 9,
       "template": true,
@@ -299,7 +299,7 @@
     "model": "basic.abstractattribute",
     "pk": 22,
     "fields": {
-      "polymorphic_ctype": 19,
+      "polymorphic_ctype": 21,
       "name": "Abreise",
       "type": 9,
       "template": true,
@@ -311,7 +311,7 @@
     "model": "basic.abstractattribute",
     "pk": 23,
     "fields": {
-      "polymorphic_ctype": 17,
+      "polymorphic_ctype": 19,
       "name": "Nachricht an die Lagerleitung",
       "type": 9,
       "template": true,
@@ -323,7 +323,7 @@
     "model": "basic.abstractattribute",
     "pk": 26,
     "fields": {
-      "polymorphic_ctype": 14,
+      "polymorphic_ctype": 16,
       "name": "Registrierungs Bestätigung",
       "type": 9,
       "template": true,
@@ -335,7 +335,7 @@
     "model": "basic.abstractattribute",
     "pk": 27,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "T-Shirt XS",
       "type": 9,
       "template": true,
@@ -347,7 +347,7 @@
     "model": "basic.abstractattribute",
     "pk": 28,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "T-Shirt S",
       "type": 9,
       "template": true,
@@ -359,7 +359,7 @@
     "model": "basic.abstractattribute",
     "pk": 29,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "T-Shirt M",
       "type": 9,
       "template": true,
@@ -371,7 +371,7 @@
     "model": "basic.abstractattribute",
     "pk": 30,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "T-Shirt L",
       "type": 9,
       "template": true,
@@ -383,7 +383,7 @@
     "model": "basic.abstractattribute",
     "pk": 31,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "T-Shirt XL",
       "type": 9,
       "template": true,
@@ -395,7 +395,7 @@
     "model": "basic.abstractattribute",
     "pk": 32,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "T-Shirt XXL",
       "type": 9,
       "template": true,
@@ -407,7 +407,7 @@
     "model": "basic.abstractattribute",
     "pk": 33,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Lunch Paket",
       "type": 9,
       "template": true,
@@ -419,7 +419,7 @@
     "model": "basic.abstractattribute",
     "pk": 34,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Fahrzeuge",
       "type": 9,
       "template": true,
@@ -431,7 +431,7 @@
     "model": "basic.abstractattribute",
     "pk": 35,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Tailliertes T-Shirt XS",
       "type": 9,
       "template": true,
@@ -443,7 +443,7 @@
     "model": "basic.abstractattribute",
     "pk": 36,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Tailliertes T-Shirt S",
       "type": 9,
       "template": true,
@@ -455,7 +455,7 @@
     "model": "basic.abstractattribute",
     "pk": 37,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Tailliertes T-Shirt M",
       "type": 9,
       "template": true,
@@ -467,7 +467,7 @@
     "model": "basic.abstractattribute",
     "pk": 38,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Tailliertes T-Shirt L",
       "type": 9,
       "template": true,
@@ -479,7 +479,7 @@
     "model": "basic.abstractattribute",
     "pk": 39,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Tailliertes T-Shirt XL",
       "type": 9,
       "template": true,
@@ -491,7 +491,7 @@
     "model": "basic.abstractattribute",
     "pk": 40,
     "fields": {
-      "polymorphic_ctype": 16,
+      "polymorphic_ctype": 18,
       "name": "Tailliertes T-Shirt XXL",
       "type": 9,
       "template": true,

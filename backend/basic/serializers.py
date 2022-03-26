@@ -303,3 +303,38 @@ class FrontendThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = basic_models.FrontendTheme
         fields = '__all__'
+
+
+class ZipCodeDetailedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = basic_models.ZipCode
+        fields = ('zip_code', 'city', 'lat', 'lon')
+
+
+class ScoutHierarchyDetailedSerializer(serializers.ModelSerializer):
+    level = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='name'
+    )
+    zip_code = ZipCodeDetailedSerializer(many=False, read_only=True)
+    ring = serializers.SerializerMethodField()
+    bund = serializers.SerializerMethodField()
+
+    class Meta:
+        model = basic_models.ScoutHierarchy
+        fields = ('name', 'abbreviation', 'level', 'zip_code', 'ring', 'bund')
+
+    def get_ring(self, obj: basic_models.ScoutHierarchy) -> str:
+        iterator: basic_models.ScoutHierarchy = obj
+        while iterator is not None:
+            if iterator.level.name == 'Ring/Regional':
+                return iterator.name
+            iterator = iterator.parent
+
+    def get_bund(self, obj: basic_models.ScoutHierarchy) -> str:
+        iterator: basic_models.ScoutHierarchy = obj
+        while iterator is not None:
+            if iterator.level.name == 'Bund':
+                return iterator.name
+            iterator = iterator.parent

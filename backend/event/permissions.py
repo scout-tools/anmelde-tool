@@ -20,7 +20,7 @@ def check_event_permission(event_id: str, user: User) -> bool:
 
 def check_registration_permission(registration_id: str, user: User) -> bool:
     registration: Registration = get_object_or_404(Registration, id=registration_id)
-    return registration.responsible_persons.contains(user)
+    return registration.responsible_persons.contains(user) or check_event_permission(registration.event.id, user)
 
 
 class IsStaffOrReadOnly(permissions.BasePermission):

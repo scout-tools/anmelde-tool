@@ -1228,7 +1228,7 @@
     "fields": {
       "name": "Bett",
       "description": "",
-      "price": "50.50",
+      "price": "50",
       "bookable_from": null,
       "bookable_till": null,
       "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
@@ -1241,7 +1241,7 @@
     "fields": {
       "name": "Zeltplatz",
       "description": "",
-      "price": "25.50",
+      "price": "25",
       "bookable_from": null,
       "bookable_till": null,
       "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",

@@ -84,6 +84,8 @@ class Event(basic_models.TimeStampMixin):
     registration_start = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     last_possible_update = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     invitation_code = models.CharField(max_length=20, blank=True)
+    invitation_code_single = models.CharField(max_length=20, blank=True)
+    invitation_code_group = models.CharField(max_length=20, blank=True)
     is_public = models.BooleanField(default=False)
     responsible_persons = models.ManyToManyField(User)
     keycloak_path = models.ForeignKey(Group, blank=True, on_delete=models.SET_NULL, null=True,

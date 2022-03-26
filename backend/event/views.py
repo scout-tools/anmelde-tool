@@ -312,6 +312,14 @@ class RegistrationViewSet(mixins.CreateModelMixin,
         event: event_models.Event = get_object_or_404(event_models.Event, pk=serializer.data['event'])
         if serializer.data['event_code'] != event.invitation_code:
             raise event_api_exceptions.WrongEventCode()
+        elif event.invitation_code_single \
+                and serializer.data['event_code'] != event.invitation_code_single \
+                and serializer.data['single']:
+            raise event_api_exceptions.WrongEventCodeForSingle()
+        elif event.invitation_code_group \
+                and serializer.data['event_code'] != event.invitation_code_group \
+                and not serializer.data['single']:
+            raise event_api_exceptions.WrongEventCodeForGroup()
 
         #  Check registration type permissions
         if event.group_registration == event_choices.RegistrationTypeGroup.No and not serializer.data['single']:
@@ -642,7 +650,7 @@ class RegistrationSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet)
 
 
 class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    permission_classes = [IsSubEventResponsiblePerson]
+    # permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.EventSummarySerializer
 
     def get_queryset(self) -> QuerySet:

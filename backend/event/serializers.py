@@ -353,7 +353,7 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
     participant_count = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
     tags = serializers.SerializerMethodField()
-    scout_organisation = basic_serializers.ScoutHierarchySerializer(many=False, read_only=True)
+    scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)
 
     class Meta:
         model = event_models.Registration

@@ -57,6 +57,18 @@ class WrongEventCode(APIException):
     default_code = 'wrong_code'
 
 
+class WrongEventCodeForGroup(APIException):
+    status_code = 403
+    default_detail = "Dein eingegebener Code für eine Gruppenanmeldung ist leider nicht Korrekt!"
+    default_code = 'wrong_code'
+
+
+class WrongEventCodeForSingle(APIException):
+    status_code = 403
+    default_detail = "Dein eingegebener Code für eine Einzelanmeldung ist leider nicht Korrekt!"
+    default_code = 'wrong_code'
+
+
 class TooEarly(APIException):
     status_code = 405
     default_detail = "Die Registrierungsphase hat noch nicht begonnen!"
