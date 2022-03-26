@@ -11,8 +11,8 @@ export default {
         score,
       });
     },
-    async getRegistrationStats(eventId) {
-      const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/registration-stats/`;
+    async getRegistrationSummary(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
       return axios.get(path);
     },
     async getParticipants(eventId) {

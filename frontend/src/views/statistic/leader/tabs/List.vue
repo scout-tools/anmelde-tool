@@ -12,20 +12,6 @@
                   hide-details
                 ></v-checkbox>
               </v-col>
-              <!-- <v-col cols="4">
-                <v-checkbox
-                  v-model="filter.withBdp"
-                  label="BdP"
-                  hide-details
-                ></v-checkbox>
-              </v-col>
-              <v-col cols="4">
-                <v-checkbox
-                  v-model="filter.withDpv"
-                  label="DPV"
-                  hide-details
-                ></v-checkbox>
-              </v-col> -->
             </v-row>
           </v-container>
         </v-card-text>
@@ -36,6 +22,8 @@
         :headers="headers"
         :items="getItems"
         :items-per-page="itemsPerPage"
+        :expanded.sync="expanded"
+        show-expand
         hide-default-footer
         :item-class="rowClasses"
       >
@@ -47,12 +35,15 @@
           >
         </template>
         <template v-slot:[`item.createdAt`]="{ item }">
-          {{
-            getDateFormat(item.createdAt)
-          }}
+          {{ moment(item.createdAt).format('DD.MM.YYYY') }}
         </template>
         <template v-slot:[`item.numberParticipant`]="{ item }">
           <td v-html="getNumberParticipant(item)" disabled></td>
+        </template>
+        <template v-slot:expanded-item="{ item }">
+          <td :colspan="headers.length">
+            <pre>{{ getBody(item) }}</pre>
+          </td>
         </template>
         <template slot="body.append">
           <tr>
@@ -67,7 +58,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import serviceMixin from '@/mixins/serviceMixin';
 import moment from 'moment'; // eslint-disable-line
 
@@ -77,16 +67,14 @@ export default {
     data: [],
     expanded: [],
     filter: {
-      withDpv: true,
-      withBdp: true,
       justConfirmed: false,
     },
     headers: [
       { text: 'Bestätigt', value: 'isConfirmed' },
       { text: 'Datum', value: 'createdAt' },
-      { text: 'Bund', value: 'bundName' },
-      { text: 'Name', value: 'scoutOrganisation' },
-      { text: 'Teilnehmende', value: 'numberParticipant' },
+      { text: 'Bund', value: 'scoutOrganisation.bund' },
+      { text: 'Name', value: 'scoutOrganisation.name' },
+      { text: 'Teilnehmende', value: 'participantCount' },
       { text: '', value: 'data-table-expand' },
     ],
     API_URL: process.env.VUE_APP_API,
@@ -94,15 +82,20 @@ export default {
     responseObj: null,
     itemsPerPage: 1000,
   }),
-
   computed: {
     eventId() {
       return this.$route.params.id;
     },
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    },
     getItems() {
-      console.log(this.data);
-      debugger;
-      return this.data;
+      const data = this.data.filter(
+        (item) =>
+          item.isConfirmed === this.filter.justConfirmed || // eslint-disable-line
+          !this.filter.justConfirmed,
+      );
+      return data;
     },
     getTotalParticipant() {
       const numberParticipant = this.getItems.reduce(
@@ -117,20 +110,22 @@ export default {
       return `${numberParticipant || 0} (${numberHelper || 0})`;
     },
     getTotalStamm() {
-      const numberStammDpv = this.getItems.filter((item) => item.verbandName === 'DPV').length;
-      const numberStammBdp = this.getItems.filter((item) => item.verbandName === 'BdP').length;
+      const numberStammDpv = this.getItems.filter(
+        (item) => item.verbandName === 'DPV',
+      ).length;
+      const numberStammBdp = this.getItems.filter(
+        (item) => item.verbandName === 'BdP',
+      ).length;
 
-      return `Stämme DPV: ${numberStammDpv || 0} - Stämme BdP:${numberStammBdp || 0}`;
+      return `Stämme DPV: ${numberStammDpv || 0} - Stämme BdP:${
+        numberStammBdp || 0
+      }`;
     },
   },
 
   methods: {
     getBody(item) {
-      return `Stadt: ${item.stammCity}\nVerantwortlich: ${JSON.stringify(
-        item.responsiblePersons,
-      )
-        .replaceAll('","', '\n\t')
-        .replaceAll('[{"', '\n\t')}`;
+      return item.tags;
     },
     rowClasses(item) {
       if (item.verbandName === 'DPV') {
@@ -139,19 +134,12 @@ export default {
       return 'bdp-yellow';
     },
     getNumberParticipant(item) {
-      return `${item.numberParticipant || 0}`;
+      return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
     getData(eventId) {
       this.getRegistrationSummary(eventId).then((responseObj) => {
-        this.data = responseObj.data;
+        this.data = responseObj.data[0].registrationSet;
       });
-    },
-    async getRegistrationSummary(eventId) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
-      return axios.get(path);
-    },
-    getDateFormat(value) {
-      return moment(value).format('DD.MM.YYYY');
     },
   },
   created() {

@@ -146,26 +146,32 @@ export default {
     getData() {
       const registrationId = this.$route.params.id;
       this.isLoading = true;
-      this.getRegistration(registrationId).then((response) => {
-        this.currentRegistration = response;
-        const eventId = this.currentRegistration.event;
-        Promise.all([
-          this.getEventForRegistration(eventId),
-          this.getAssignedEventModules(eventId),
-          this.getPersonalData(),
-        ])
-          .then((values) => {
-            this.currentEvent = values[0].data; // eslint-disable-line
-            this.currentModules = values[1].data; // eslint-disable-line
-            this.personalData = values[2].data; // eslint-disable-line
+      this.getRegistration(registrationId)
+        .then((response) => {
+          this.currentRegistration = response;
+          const eventId = this.currentRegistration.event;
+          Promise.all([
+            this.getEventForRegistration(eventId),
+            this.getAssignedEventModules(eventId),
+            this.getPersonalData(),
+          ])
+            .then((values) => {
+              this.currentEvent = values[0].data; // eslint-disable-line
+              this.currentModules = values[1].data; // eslint-disable-line
+              this.personalData = values[2].data; // eslint-disable-line
 
-            this.isLoading = false;
-          })
-          .catch((error) => {
-            this.errormsg = error.response.data.message;
-            this.isLoading = false;
-          });
-      });
+              this.isLoading = false;
+            })
+            .catch((error) => {
+              this.errormsg = error.response.data.message;
+              this.isLoading = false;
+            });
+        })
+        .catch((error) => {
+          debugger;
+          console.log(error.response);
+          this.$router.push({ name: 'eventOverview' });
+        });
     },
 
     async getEvent(id) {

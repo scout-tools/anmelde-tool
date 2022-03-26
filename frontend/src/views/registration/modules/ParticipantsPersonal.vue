@@ -269,7 +269,7 @@ export default {
             lookupListDisplay: ['name'],
             fieldType: 'enumCombo',
             multiple: false,
-            default: '',
+            default: 'N',
           },
           {
             name: 'Buchungsoption',

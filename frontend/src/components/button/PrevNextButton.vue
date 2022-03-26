@@ -15,13 +15,13 @@
     <v-btn
       class="ml-2"
       icon
-      v-if="position < maxPos"
+      v-if="position < maxPos && isDev"
       color="secondary"
       @click="$emit('ignore')"
     >
     <v-icon> mdi-debug-step-over</v-icon>
     </v-btn>
-    <v-btn v-else color="success" @click="submit">
+    <v-btn v-if="position >= maxPos" color="success" @click="submit">
       Abschließen
       <v-icon right>mdi-content-save</v-icon>
     </v-btn>
@@ -31,6 +31,11 @@
 <script>
 export default {
   props: ['position', 'maxPos', 'valid'],
+  computed: {
+    isDev() {
+      return process.env.VUE_APP_ENV === 'DEV';
+    },
+  },
   methods: {
     goFurther() {
       this.$emit('update');
