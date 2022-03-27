@@ -18,9 +18,14 @@ def check_event_permission(event_id: str, user: User) -> bool:
     return bool(group_match or responsible_person_match)
 
 
+def check_event_super_permission(event_id: str, user: User) -> bool:
+    event = get_object_or_404(event_models.Event, id=event_id)
+    return user.groups.contains(event.keycloak_admin_path) if event.keycloak_admin_path else False
+
+
 def check_registration_permission(registration_id: str, user: User) -> bool:
     registration: Registration = get_object_or_404(Registration, id=registration_id)
-    return registration.responsible_persons.contains(user) or check_event_permission(registration.event.id, user)
+    return registration.responsible_persons.contains(user)
 
 
 class IsStaffOrReadOnly(permissions.BasePermission):

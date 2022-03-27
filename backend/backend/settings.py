@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'storages',
     'ebhealthcheck.apps.EBHealthCheckConfig',
+    "eb_sqs_worker",
     'django_extensions',
     'django_filters',
     'mozilla_django_oidc',
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'basic',
     'authentication',
     'event',
+    'email_services'
 ]
 
 MIDDLEWARE = [
@@ -197,6 +199,12 @@ if env.bool('USE_SES'):
     AWS_SES_REGION_ENDPOINT = 'email.eu-central-1.amazonaws.com'
     EMAIL_HOST_USER = env('EMAIL_HOST_USER')
     FRONT_URL = env.str('FRONT_URL')
+
+if env.bool('USE_SQS'):
+    AWS_EB_DEFAULT_REGION = 'eu-central-1'
+    AWS_EB_DEFAULT_QUEUE_NAME = "anmelde-tool-queue"
+    AWS_EB_HANDLE_SQS_TASKS = True
+    AWS_EB_RUN_TASKS_LOCALLY = env('AWS_EB_RUN_TASKS_LOCALLY')
 
 REST_USE_JWT = True
 

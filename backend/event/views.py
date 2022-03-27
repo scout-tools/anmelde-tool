@@ -154,8 +154,9 @@ class EventPlanerViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         return event_models.Event.objects.filter(
-            Q(keycloak_path__in=self.request.user.groups.all())
-            | Q(responsible_persons=self.request.user)).distinct()
+            Q(keycloak_admin_path__in=self.request.user.groups.all())
+            | Q(responsible_persons=self.request.user)
+            | Q(self.request.user.is_superuser)).distinct()
 
 
 class RegistrationTypeGroupViewSet(viewsets.ViewSet):

@@ -163,7 +163,7 @@
       "updated_at": "2022-03-20T16:32:16.225Z",
       "public": true,
       "question": "Wer steht hinter dem Anmelde-Tool?",
-      "answer": "Das dem Anmelde-Tool haben Robert (DPBM) und Hagi (DPBM) in verdammt vielen Stunden sich ausgedacht und programmiert. Außerdem haben Daniel (DPBM), Thea (DPBM) und Paul (PBN) mitgewirkt.",
+      "answer": "Das Anmelde-Tool haben Robert (DPBM) und Hagi (DPBM) in verdammt vielen Stunden sich ausgedacht und programmiert. Außerdem haben Daniel (DPBM), Thea (DPBM) und Paul (PBNL) mitgewirkt. Obi hat tatkräftig bei der integration ins digitale DPV Universum unterstützt",
       "type": "FAQ"
     }
   },
@@ -175,7 +175,7 @@
       "updated_at": "2022-03-20T16:32:13.661Z",
       "public": true,
       "question": "Wie funktioniert das Anmelde-Tool?",
-      "answer": "Durch Magie",
+      "answer": "Durch Magie.",
       "type": "FAQ"
     }
   }

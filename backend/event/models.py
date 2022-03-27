@@ -1,11 +1,9 @@
 import uuid
 from django.contrib.auth.models import User, Group
 from django.db import models
-
-from backend.storage_backends import PrivateMediaStorage, PublicMediaStorage, EmailMediaStorage, \
-    EmailAttachmentMediaStorage
 from basic import models as basic_models
 from event import choices as event_choices
+from email_services import models as email_services_model
 
 
 class EventLocation(basic_models.TimeStampMixin):
@@ -102,6 +100,8 @@ class Event(basic_models.TimeStampMixin):
                                           default=event_choices.RegistrationTypeGroup.No)
     personal_data_required = models.BooleanField(default=False)
     theme = models.ForeignKey(basic_models.FrontendTheme, on_delete=models.SET_NULL, default=1, null=True, blank=True)
+    email_set = models.ForeignKey(email_services_model.StandardEmailRegistrationSet, on_delete=models.PROTECT,
+                                  null=True, blank=True)
 
     def __str__(self):
         return f"{self.name}: {self.start_date} - {self.end_date}, {self.location}"
@@ -247,20 +247,3 @@ class StandardEventTemplate(models.Model):
 
     other_optional_modules = models.ManyToManyField(EventModuleMapper, blank=True,
                                                     related_name='other_optional_modules')
-
-
-class EmailAttachment(basic_models.TimeStampMixin):
-    id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
-    file = models.FileField(storage=EmailAttachmentMediaStorage(), blank=True, null=True)
-
-
-class EmailPicture(basic_models.TimeStampMixin):
-    id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
-    file = models.ImageField(storage=PublicMediaStorage())
-
-
-class Email(basic_models.TimeStampMixin):
-    id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
-    html = models.TextField(default='')
-    plain = models.TextField(default='')
-    attachments = models.ManyToManyField(EmailAttachment, blank=True)
