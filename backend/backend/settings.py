@@ -200,11 +200,11 @@ if env.bool('USE_SES', False):
     EMAIL_HOST_USER = env('EMAIL_HOST_USER')
     FRONT_URL = env.str('FRONT_URL')
 
-if env.bool('USE_SQS', False):
-    AWS_EB_DEFAULT_REGION = 'eu-central-1'
-    AWS_EB_DEFAULT_QUEUE_NAME = "anmelde-tool-queue"
-    AWS_EB_HANDLE_SQS_TASKS = True
-    AWS_EB_RUN_TASKS_LOCALLY = env('AWS_EB_RUN_TASKS_LOCALLY')
+# SQS Settings
+AWS_EB_RUN_TASKS_LOCALLY = not env.bool('USE_SQS', False)
+AWS_EB_DEFAULT_REGION = 'eu-central-1'
+AWS_EB_DEFAULT_QUEUE_NAME = "anmelde-tool-queue"
+AWS_EB_HANDLE_SQS_TASKS = env.bool('AWS_EB_HANDLE_SQS_TASKS', False)
 
 REST_USE_JWT = True
 
