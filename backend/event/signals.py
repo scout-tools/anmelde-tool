@@ -12,5 +12,5 @@ def post_save_registation(sender: event_models.Registration,
                           update_fields,
                           raw,
                           **kwargs):
-    if 'is_confirmed' in update_fields and instance.is_confirmed:
+    if update_fields and 'is_confirmed' in update_fields and instance.is_confirmed:
         services.send_registration_created_mail(instance_id=str(instance.id))

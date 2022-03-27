@@ -136,13 +136,14 @@ USE_L10N = True
 
 USE_TZ = True
 
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+
 # https://testdriven.io/blog/storing-django-static-and-media-files-on-amazon-s3/#private-media-files
 # Continue tutorial for uploading images
 if env.bool('USE_S3'):
     # aws settings
     AWS_S3_SIGNATURE_VERSION = 's3v4'
-    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
@@ -203,7 +204,7 @@ if env.bool('USE_SES', False):
 # SQS Settings
 AWS_EB_RUN_TASKS_LOCALLY = not env.bool('USE_SQS', False)
 AWS_EB_DEFAULT_REGION = 'eu-central-1'
-AWS_EB_DEFAULT_QUEUE_NAME = env('AWS_EB_DEFAULT_QUEUE_NAME')
+AWS_EB_DEFAULT_QUEUE_NAME = env.str('AWS_EB_DEFAULT_QUEUE_NAME', '')
 AWS_EB_HANDLE_SQS_TASKS = env.bool('AWS_EB_HANDLE_SQS_TASKS', False)
 
 REST_USE_JWT = True
