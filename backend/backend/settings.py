@@ -181,7 +181,7 @@ CSRF_COOKIE_SECURE = True
 
 SITE_ID = 1
 
-if env.bool('USE_EMAIL'):
+if env.bool('USE_EMAIL', False):
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
     EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL')
@@ -191,7 +191,7 @@ if env.bool('USE_EMAIL'):
     EMAIL_PORT = env('EMAIL_PORT')
     FRONT_URL = env.str('FRONT_URL')
 
-if env.bool('USE_SES'):
+if env.bool('USE_SES', False):
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_ACCESS_KEY_ID = env('AWS_SES_ACCESS_KEY_ID')
     AWS_SES_SECRET_ACCESS_KEY = env('AWS_SES_SECRET_ACCESS_KEY')
@@ -200,7 +200,7 @@ if env.bool('USE_SES'):
     EMAIL_HOST_USER = env('EMAIL_HOST_USER')
     FRONT_URL = env.str('FRONT_URL')
 
-if env.bool('USE_SQS'):
+if env.bool('USE_SQS', False):
     AWS_EB_DEFAULT_REGION = 'eu-central-1'
     AWS_EB_DEFAULT_QUEUE_NAME = "anmelde-tool-queue"
     AWS_EB_HANDLE_SQS_TASKS = True
