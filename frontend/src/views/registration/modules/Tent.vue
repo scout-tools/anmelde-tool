@@ -10,7 +10,7 @@
   >
     <template v-slot:header>
       <p>
-        Bitte gebe an mit wievielen Zelten ihr kommen wollt.
+        Bitte gib an mit wievielen Zelten ihr kommen wollt.
         <br />
       </p>
     </template>

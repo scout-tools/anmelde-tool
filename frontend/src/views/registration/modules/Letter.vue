@@ -9,7 +9,7 @@
     @ignore="onIngoredClicked"
   >
     <template v-slot:header>
-      Du kannst eine Nachricht an die Lagerleitung senden
+      Hier kannst du weitere Besonderheiten der Lagerleitung mitteilen.
     </template>
 
     <template v-slot:main>

@@ -185,7 +185,7 @@ export default {
           {
             name: 'E-Mail Adresse*',
             techName: 'email',
-            tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
+            tooltip: 'Trage bitte die E-Mail Adresse des_der Teilnehmer_in ein.',
             icon: 'mdi-email',
             mandatory: true,
             fieldType: 'textfield',
