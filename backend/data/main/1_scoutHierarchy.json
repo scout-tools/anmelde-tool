@@ -45,7 +45,7 @@
       "created_at": null,
       "updated_at": "2022-02-26T11:03:03.193Z",
       "level": 3,
-      "name": "BP-Horizonte",
+      "name": "PB-Horizonte",
       "zip_code": null,
       "parent": 493,
       "abbreviation": "PBH"
@@ -266,7 +266,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Adler",
+      "name": "Adler",
       "zip_code": 11762,
       "parent": 20,
       "abbreviation": null
@@ -279,7 +279,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Alexander Lion",
+      "name": "Alexander Lion",
       "zip_code": 9632,
       "parent": 22,
       "abbreviation": null
@@ -292,7 +292,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Apollo",
+      "name": "Apollo",
       "zip_code": 2695,
       "parent": 20,
       "abbreviation": null
@@ -305,7 +305,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Argonauten",
+      "name": "Argonauten",
       "zip_code": 6238,
       "parent": 23,
       "abbreviation": null
@@ -318,7 +318,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Condor",
+      "name": "Condor",
       "zip_code": 1819,
       "parent": 21,
       "abbreviation": null
@@ -331,7 +331,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Deutschritter",
+      "name": "Deutschritter",
       "zip_code": 6238,
       "parent": 23,
       "abbreviation": null
@@ -344,7 +344,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Draconis",
+      "name": "Draconis",
       "zip_code": 6202,
       "parent": 22,
       "abbreviation": null
@@ -357,7 +357,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Dumeklemmer",
+      "name": "Dumeklemmer",
       "zip_code": 9414,
       "parent": 20,
       "abbreviation": null
@@ -370,7 +370,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Eulen",
+      "name": "Eulen",
       "zip_code": 11032,
       "parent": 25,
       "abbreviation": null
@@ -383,7 +383,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Galaxias",
+      "name": "Galaxias",
       "zip_code": 6245,
       "parent": 21,
       "abbreviation": null
@@ -396,7 +396,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Graf Luckner",
+      "name": "Graf Luckner",
       "zip_code": 12691,
       "parent": 22,
       "abbreviation": null
@@ -409,7 +409,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Hagazussa",
+      "name": "Hagazussa",
       "zip_code": 8956,
       "parent": 25,
       "abbreviation": null
@@ -422,7 +422,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Hellas",
+      "name": "Hellas",
       "zip_code": 6221,
       "parent": 23,
       "abbreviation": null
@@ -435,7 +435,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Hratuga",
+      "name": "Hratuga",
       "zip_code": 9416,
       "parent": 20,
       "abbreviation": null
@@ -448,7 +448,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Iltis",
+      "name": "Iltis",
       "zip_code": 130,
       "parent": 26,
       "abbreviation": null
@@ -461,7 +461,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Karthago-Persepolis",
+      "name": "Karthago-Persepolis",
       "zip_code": 6214,
       "parent": 23,
       "abbreviation": null
@@ -474,7 +474,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Kliffkieker",
+      "name": "Kliffkieker",
       "zip_code": 7061,
       "parent": 26,
       "abbreviation": null
@@ -487,7 +487,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm König Artus",
+      "name": "König Artus",
       "zip_code": 6480,
       "parent": 24,
       "abbreviation": null
@@ -500,7 +500,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Landesritter",
+      "name": "Landesritter",
       "zip_code": 3046,
       "parent": 21,
       "abbreviation": null
@@ -513,7 +513,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Landgraf Ludwig IX",
+      "name": "Landgraf Ludwig IX",
       "zip_code": 9125,
       "parent": 27,
       "abbreviation": null
@@ -526,7 +526,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Landgräfin Caroline",
+      "name": "Landgräfin Caroline",
       "zip_code": 9125,
       "parent": 27,
       "abbreviation": null
@@ -539,7 +539,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Maximilian Bayer",
+      "name": "Maximilian Bayer",
       "zip_code": 10065,
       "parent": 22,
       "abbreviation": null
@@ -552,7 +552,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Mittelerde",
+      "name": "Mittelerde",
       "zip_code": 640,
       "parent": 20,
       "abbreviation": null
@@ -565,7 +565,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Möhrenköppe",
+      "name": "Möhrenköppe",
       "zip_code": 402,
       "parent": 26,
       "abbreviation": null
@@ -578,7 +578,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Crismeke",
+      "name": "Crismeke",
       "zip_code": 3300,
       "parent": 22,
       "abbreviation": null
@@ -591,7 +591,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Pegasus",
+      "name": "Pegasus",
       "zip_code": 11988,
       "parent": 26,
       "abbreviation": null
@@ -604,7 +604,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Raubvögel",
+      "name": "Raubvögel",
       "zip_code": 45,
       "parent": 24,
       "abbreviation": null
@@ -617,7 +617,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Rheinfranken",
+      "name": "Rheinfranken",
       "zip_code": 569,
       "parent": 22,
       "abbreviation": null
@@ -630,7 +630,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Rote Corsaren",
+      "name": "Rote Corsaren",
       "zip_code": 10065,
       "parent": 22,
       "abbreviation": null
@@ -643,7 +643,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Roter Milan",
+      "name": "Roter Milan",
       "zip_code": 8185,
       "parent": 22,
       "abbreviation": null
@@ -656,7 +656,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Schwarze Löwen",
+      "name": "Schwarze Löwen",
       "zip_code": 7854,
       "parent": 24,
       "abbreviation": null
@@ -669,7 +669,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Seeadler",
+      "name": "Seeadler",
       "zip_code": 749,
       "parent": 26,
       "abbreviation": null
@@ -682,7 +682,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Silberfüchse",
+      "name": "Silberfüchse",
       "zip_code": 3076,
       "parent": 24,
       "abbreviation": null
@@ -695,7 +695,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "﻿Stamm Sperber",
+      "name": "﻿Sperber",
       "zip_code": 1819,
       "parent": 21,
       "abbreviation": null
@@ -708,7 +708,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm St. Willigis",
+      "name": "St. Willigis",
       "zip_code": 7216,
       "parent": 21,
       "abbreviation": null
@@ -721,7 +721,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Steppenwölfe",
+      "name": "Steppenwölfe",
       "zip_code": 11498,
       "parent": 21,
       "abbreviation": null
@@ -734,7 +734,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Sterk Helmes",
+      "name": "Sterk Helmes",
       "zip_code": 11065,
       "parent": 20,
       "abbreviation": null
@@ -747,7 +747,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Troja Toscana",
+      "name": "Troja Toscana",
       "zip_code": 6212,
       "parent": 23,
       "abbreviation": null
@@ -760,7 +760,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Monte Verita",
+      "name": "Monte Verita",
       "zip_code": 4,
       "parent": 21,
       "abbreviation": null
@@ -773,7 +773,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Waldläufer",
+      "name": "Waldläufer",
       "zip_code": 4071,
       "parent": 24,
       "abbreviation": null
@@ -786,7 +786,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Welfen",
+      "name": "Welfen",
       "zip_code": 2103,
       "parent": 25,
       "abbreviation": null
@@ -799,7 +799,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Wikinger",
+      "name": "Wikinger",
       "zip_code": 8301,
       "parent": 21,
       "abbreviation": null
@@ -812,7 +812,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Wildgänse",
+      "name": "Wildgänse",
       "zip_code": 3155,
       "parent": 22,
       "abbreviation": null
@@ -825,7 +825,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Wildkatzen",
+      "name": "Wildkatzen",
       "zip_code": 1819,
       "parent": 21,
       "abbreviation": null
@@ -838,7 +838,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Salzig",
+      "name": "Salzig",
       "zip_code": 2103,
       "parent": 25,
       "abbreviation": null
@@ -851,7 +851,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Zugvögel",
+      "name": "Zugvögel",
       "zip_code": 6221,
       "parent": 23,
       "abbreviation": null
@@ -864,7 +864,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Ekkaia",
+      "name": "Ekkaia",
       "zip_code": 7132,
       "parent": 3,
       "abbreviation": null
@@ -877,7 +877,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Faro",
+      "name": "Faro",
       "zip_code": 4612,
       "parent": 3,
       "abbreviation": null
@@ -890,7 +890,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Caradhras",
+      "name": "Caradhras",
       "zip_code": 4620,
       "parent": 3,
       "abbreviation": null
@@ -903,7 +903,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Ynys Avilion",
+      "name": "Ynys Avilion",
       "zip_code": 4593,
       "parent": 3,
       "abbreviation": null
@@ -916,7 +916,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Walter von Aquitanien",
+      "name": "Walter von Aquitanien",
       "zip_code": 4593,
       "parent": 3,
       "abbreviation": null
@@ -929,7 +929,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Ambronen",
+      "name": "Ambronen",
       "zip_code": 4620,
       "parent": 3,
       "abbreviation": null
@@ -942,7 +942,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Dragon",
+      "name": "Dragon",
       "zip_code": 4257,
       "parent": 3,
       "abbreviation": null
@@ -968,7 +968,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Ambronen",
+      "name": "Ambronen",
       "zip_code": 4620,
       "parent": 6,
       "abbreviation": null
@@ -981,7 +981,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Langobarden",
+      "name": "Langobarden",
       "zip_code": 4600,
       "parent": 6,
       "abbreviation": null
@@ -994,7 +994,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Camelot",
+      "name": "Camelot",
       "zip_code": 8415,
       "parent": 6,
       "abbreviation": null
@@ -1007,7 +1007,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Albis",
+      "name": "Albis",
       "zip_code": 8415,
       "parent": 6,
       "abbreviation": null
@@ -1020,7 +1020,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Taragona",
+      "name": "Taragona",
       "zip_code": 8415,
       "parent": 6,
       "abbreviation": null
@@ -1124,7 +1124,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Calapallo ",
+      "name": "Calapallo ",
       "zip_code": 5816,
       "parent": 5,
       "abbreviation": null
@@ -1137,7 +1137,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Edelweißpiraten ",
+      "name": "Edelweißpiraten ",
       "zip_code": 9443,
       "parent": 5,
       "abbreviation": null
@@ -1150,7 +1150,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Schwarzkittel ",
+      "name": "Schwarzkittel ",
       "zip_code": 10966,
       "parent": 5,
       "abbreviation": null
@@ -1163,7 +1163,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Steppenwolf ",
+      "name": "Steppenwolf ",
       "zip_code": 2009,
       "parent": 5,
       "abbreviation": null
@@ -1176,7 +1176,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Greif",
+      "name": "Greif",
       "zip_code": 1802,
       "parent": 7,
       "abbreviation": null
@@ -1189,7 +1189,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Kondor",
+      "name": "Kondor",
       "zip_code": 5827,
       "parent": 7,
       "abbreviation": null
@@ -1202,7 +1202,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Jörg von Schauenburg",
+      "name": "Jörg von Schauenburg",
       "zip_code": 8591,
       "parent": 7,
       "abbreviation": null
@@ -1215,7 +1215,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Schwarzer Adler ",
+      "name": "Schwarzer Adler ",
       "zip_code": 603,
       "parent": 7,
       "abbreviation": null
@@ -1228,7 +1228,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Treverer",
+      "name": "Treverer",
       "zip_code": 151,
       "parent": 7,
       "abbreviation": null
@@ -1241,7 +1241,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Goten ",
+      "name": "Goten ",
       "zip_code": 7274,
       "parent": 8,
       "abbreviation": null
@@ -1254,7 +1254,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Lichtstafette ",
+      "name": "Lichtstafette ",
       "zip_code": 12698,
       "parent": 8,
       "abbreviation": null
@@ -1267,7 +1267,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Mauritius ",
+      "name": "Mauritius ",
       "zip_code": 6238,
       "parent": 8,
       "abbreviation": null
@@ -1280,7 +1280,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm der Ritter",
+      "name": "der Ritter",
       "zip_code": 6530,
       "parent": 9,
       "abbreviation": null
@@ -1293,7 +1293,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Franken",
+      "name": "Franken",
       "zip_code": 10466,
       "parent": 9,
       "abbreviation": null
@@ -1306,7 +1306,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Seeadler",
+      "name": "Seeadler",
       "zip_code": 4514,
       "parent": 9,
       "abbreviation": null
@@ -1319,7 +1319,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Königstiger",
+      "name": "Königstiger",
       "zip_code": 307,
       "parent": 9,
       "abbreviation": null
@@ -1332,7 +1332,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Walhall",
+      "name": "Walhall",
       "zip_code": 1724,
       "parent": 9,
       "abbreviation": null
@@ -1345,7 +1345,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Zugvögel",
+      "name": "Zugvögel",
       "zip_code": 69,
       "parent": 9,
       "abbreviation": null
@@ -1358,7 +1358,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Excalibur",
+      "name": "Excalibur",
       "zip_code": 3128,
       "parent": 9,
       "abbreviation": null
@@ -1371,7 +1371,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Chawrusen",
+      "name": "Chawrusen",
       "zip_code": 4043,
       "parent": 9,
       "abbreviation": null
@@ -1384,7 +1384,7 @@
       "created_at": null,
       "updated_at": null,
       "level": 5,
-      "name": "Stamm Welfen",
+      "name": "Welfen",
       "zip_code": 3868,
       "parent": 9,
       "abbreviation": null

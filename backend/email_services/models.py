@@ -42,6 +42,9 @@ class StandardEmailSet(models.Model):
                                       limit_choices_to={'type': email_choices.EmailType.EventUpdated},
                                       related_name='event_updated')
 
+    def __str__(self):
+        return self.name
+
 
 class StandardEmailRegistrationSet(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True)
@@ -58,3 +61,6 @@ class StandardEmailRegistrationSet(models.Model):
     registration_accepted = models.ForeignKey(Email, on_delete=models.PROTECT,
                                               limit_choices_to={'type': email_choices.EmailType.RegistrationAccepted},
                                               related_name='registration_accepted')
+
+    def __str__(self):
+        return self.name

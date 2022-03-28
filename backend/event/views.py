@@ -329,16 +329,25 @@ class RegistrationViewSet(mixins.CreateModelMixin,
         serializer.is_valid(raise_exception=True)
 
         event: event_models.Event = get_object_or_404(event_models.Event, pk=serializer.data['event'])
-        if serializer.data['event_code'] != event.invitation_code:
+
+        general_code_check = False
+        single_code_check = False
+        group_code_check = False
+        if serializer.data['event_code'] == event.invitation_code:
+            general_code_check = True
+        elif event.invitation_code_single and serializer.data['event_code'] == event.invitation_code_single:
+            single_code_check = True
+        elif event.invitation_code_group and serializer.data['event_code'] == event.invitation_code_group:
+            group_code_check = True
+
+        if not general_code_check and not single_code_check and not group_code_check:
             raise event_api_exceptions.WrongEventCode()
-        elif event.invitation_code_single \
-                and serializer.data['event_code'] != event.invitation_code_single \
-                and serializer.data['single']:
-            raise event_api_exceptions.WrongEventCodeForSingle()
-        elif event.invitation_code_group \
-                and serializer.data['event_code'] != event.invitation_code_group \
-                and not serializer.data['single']:
+
+        if not general_code_check and single_code_check and not serializer.data['single']:
             raise event_api_exceptions.WrongEventCodeForGroup()
+
+        if not general_code_check and group_code_check and serializer.data['single']:
+            raise event_api_exceptions.WrongEventCodeForSingle()
 
         #  Check registration type permissions
         if event.group_registration == event_choices.RegistrationTypeGroup.No and not serializer.data['single']:
@@ -369,10 +378,11 @@ class RegistrationViewSet(mixins.CreateModelMixin,
                     not group_registration.exists() and serializer.data['single']:
                 raise event_api_exceptions.WrongRegistrationFormat
 
+        single = serializer.data['single'] if general_code_check else single_code_check
         registration: event_models.Registration = event_models.Registration(
             scout_organisation=request.user.userextended.scout_organisation,
             event=event,
-            single=serializer.data['single']
+            single=single
         )
 
         registration.save()

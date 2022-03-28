@@ -273,7 +273,7 @@
     "fields": {
       "attribute": 16,
       "title": "Corona Hinweis",
-      "text": "Ich trage Sorge, dass alle von mir angemeldeten Teilnehmer_innen über die dann geltenden Coronaregeln informiert sind und ich achte auf die Einhaltung",
+      "text": "Ich trage Sorge, dass alle von mir angemeldeten TeilnehmerInnen über die dann geltenden Coronaregeln informiert sind und ich achte auf die Einhaltung",
       "is_required": true,
       "min_length": 0,
       "max_length": 0,
@@ -663,7 +663,7 @@
     "pk": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
     "fields": {
       "created_at": "2022-03-10T11:46:18.946Z",
-      "updated_at": "2022-03-28T09:35:22.316Z",
+      "updated_at": "2022-03-28T16:29:06.456Z",
       "name": "DPV goLd",
       "technical_name": "dpv-gold",
       "short_description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
@@ -677,8 +677,8 @@
       "registration_start": "2022-02-28T23:00:01Z",
       "last_possible_update": "2022-09-01T19:59:59Z",
       "invitation_code": "DPVGOLD",
-      "invitation_code_single": "",
-      "invitation_code_group": "",
+      "invitation_code_single": "1234",
+      "invitation_code_group": "5678",
       "is_public": true,
       "keycloak_path": 3,
       "keycloak_admin_path": 3,
@@ -751,7 +751,7 @@
     "pk": "456953a2-7db5-45dc-8e05-7a4168105e88",
     "fields": {
       "created_at": "2022-03-22T21:25:27.169Z",
-      "updated_at": "2022-03-28T09:10:34.840Z",
+      "updated_at": "2022-03-28T15:05:31.551Z",
       "name": "Bundesfahrt 2022",
       "technical_name": "bundesfahrt",
       "short_description": "Bundesfahrt & Kaperfahrt",
@@ -775,7 +775,7 @@
       "group_registration": "R",
       "personal_data_required": true,
       "theme": 2,
-      "email_set": null,
+      "email_set": 2,
       "responsible_persons": [
         2
       ],
