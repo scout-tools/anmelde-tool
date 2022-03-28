@@ -54,13 +54,34 @@ export default {
     modulePath: '/event/event/',
     fields: [
       {
-        name: 'Verifizierungscode',
+        name: 'Verifizierungscode (Universell)',
         techName: 'invitationCode',
-        tooltip: '123',
+        tooltip: 'Dieser Code gilt immer.',
         icon: 'mdi-account-circle',
         mandatory: true,
         fieldType: 'textfield',
         default: '',
+        cols: 12,
+      },
+      {
+        name: 'Verifizierungscode (Gruppenanmeldung)',
+        techName: 'invitationCodeGroup',
+        tooltip: 'Dieser Code gilt nur für Gruppenanmeldungen.',
+        icon: 'mdi-account-circle',
+        mandatory: true,
+        fieldType: 'textfield',
+        default: '',
+        cols: 12,
+      },
+      {
+        name: 'Verifizierungscode (Einzelanmeldung)',
+        techName: 'invitationCodeSingle',
+        tooltip: 'Dieser Code gilt nur für Einzelanmeldungen.',
+        icon: 'mdi-account-circle',
+        mandatory: true,
+        fieldType: 'textfield',
+        default: '',
+        cols: 12,
       },
     ],
   }),
@@ -68,6 +89,14 @@ export default {
     data: {
       invitationCode: {
         required,
+        minLength: minLength(4),
+        maxLength: maxLength(10),
+      },
+      invitationCodeGroup: {
+        minLength: minLength(4),
+        maxLength: maxLength(10),
+      },
+      invitationCodeSingle: {
         minLength: minLength(4),
         maxLength: maxLength(10),
       },
