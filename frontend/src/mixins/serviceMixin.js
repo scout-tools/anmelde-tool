@@ -38,7 +38,7 @@ export default {
       return axios.get(path);
     },
     getService(id, modulePath) {
-      this.isLoading = true;
+      this.loading = true;
       this.getServiceById(id, modulePath)
         .then((res) => {
           this.data = res;
@@ -51,11 +51,11 @@ export default {
           });
         })
         .finally(() => {
-          this.isLoading = false;
+          this.loading = false;
         });
     },
     getLookup(lookupPath) {
-      this.isLoading = true;
+      this.loading = true;
       this.getSimpleService(lookupPath)
         .then((res) => {
           this.lookupList = res.data;
@@ -68,7 +68,7 @@ export default {
           });
         })
         .finally(() => {
-          this.isLoading = false;
+          this.loading = false;
         });
     },
     async getZipCodeMapping(searchString) {

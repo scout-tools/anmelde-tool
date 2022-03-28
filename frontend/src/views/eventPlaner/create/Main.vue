@@ -100,7 +100,7 @@ export default {
       showError: false,
       showSuccess: false,
       timeout: 7000,
-      isLoading: true,
+      loading: true,
       isSingleStep: false,
     };
   },
@@ -182,7 +182,7 @@ export default {
         });
     },
     getData() {
-      this.isLoading = true;
+      this.loading = true;
       this.getEvent(this.$route.params.id)
         .then((success) => {
           store.commit('createEvent/setEvent', success.data);
@@ -195,7 +195,7 @@ export default {
           this.$router.push({ name: 'eventPlaner' });
         })
         .finally(() => {
-          this.isLoading = false;
+          this.loading = false;
         });
     },
   },

@@ -1,12 +1,14 @@
 <template>
   <GenericRegModul
     :key="`module-${moduleId}`"
-    :isloading="isLoadingRead"
+    :loading="loading"
+    :saving="saving"
     :position="position"
     :maxPos="maxPos"
     @prevStep="prevStep"
     @nextStep="onNextStep"
     @ignore="onIngoredClicked"
+    @saving="onSaving"
   >
     <template v-slot:header>
       <span class="text-left subtitle-1">
@@ -72,7 +74,8 @@ export default {
   data: () => ({
     valid: true,
     moduleData: [],
-    isloading: false,
+    loading: true,
+    saving: false,
     data: {
       checkboxes: [],
     },
@@ -95,13 +98,6 @@ export default {
       return moment(this.currentEvent.registrationDeadline)
         .lang('de')
         .format('ll');
-    },
-    isLoadingRead: {
-      // getter
-      get() {
-        return !!this.isloading;
-      },
-      set() {},
     },
     moduleId() {
       return this.currentModule.id;
@@ -130,6 +126,7 @@ export default {
       this.loadData();
     },
     onNextStep() {
+      this.saving = true;
       const promises = [];
       this.moduleData.forEach((moduleItem) => {
         const getAtt = this.attributes.filter(
@@ -177,7 +174,8 @@ export default {
       });
     },
     loadData() {
-      this.isLoading = true;
+      this.saving = false;
+      this.loading = true;
       Promise.all([
         this.getModule(this.currentModule.id, this.currentEvent.id),
         axios.get(`${process.env.VUE_APP_API}/${this.path}`),
@@ -186,12 +184,12 @@ export default {
         .then((values) => {
           this.moduleData = values[0].data; //eslint-disable-line
           this.attributes = values[1].data; //eslint-disable-line
-          this.isLoading = false;
+          this.loading = false;
           this.setDefaults();
         })
         .catch((error) => {
           this.errormsg = error.response.data.message;
-          this.isLoading = false;
+          this.loading = false;
         });
     },
     unConfirmRegistration() {

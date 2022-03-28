@@ -205,17 +205,17 @@ export default {
     },
 
     loadData() {
-      this.isLoading = true;
+      this.loading = true;
       Promise.all([this.getPersonalData(), this.getEvent(this.eventId)])
         .then((values) => {
           this.data.mobileNumber = values[0].data.mobileNumber; //eslint-disable-line
           this.currentEvent = values[1].data; //eslint-disable-line
           this.data.stamm = values[0].data.scoutOrganisation.name; //eslint-disable-line
-          this.isLoading = false;
+          this.loading = false;
         })
         .catch((error) => {
           this.errormsg = error.response.data.message;
-          this.isLoading = false;
+          this.loading = false;
         });
     },
     createRegestration() {
@@ -247,7 +247,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .default-max-width {
   max-width: 800px !important;
 }

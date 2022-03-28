@@ -1,12 +1,14 @@
 <template>
   <GenericRegModul
     :key="`module-${moduleId}`"
-    :isloading="isLoadingRead"
+    :loading="loading"
+    :saving="saving"
     :position="position"
     :maxPos="maxPos"
     @prevStep="prevStep"
     @nextStep="onNextStep"
     @ignore="onIngoredClicked"
+    @saving="onSaving"
   >
     <template v-slot:header>
       Bitte trage hier ein wieviele Lager T-Shirts du haben willst.
@@ -49,7 +51,8 @@ export default {
   mixins: [apiCallsMixin, stepMixin],
   data: () => ({
     valid: true,
-    isLoading: true,
+    loading: true,
+    saving: false,
     moduleData: [],
     attributes: [],
     data: {},
@@ -59,10 +62,10 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo']),
-    isLoadingRead: {
+    loadingRead: {
       // getter
       get() {
-        return !!this.isloading;
+        return !!this.loading;
       },
       set() {},
     },
@@ -90,6 +93,7 @@ export default {
       this.loadData();
     },
     onNextStep() {
+      this.saving = true;
       const promises = [];
       this.moduleData.forEach((moduleItem) => {
         const getAtt = this.attributes.filter(
@@ -139,7 +143,8 @@ export default {
       });
     },
     loadData() {
-      this.isLoading = true;
+      this.saving = false;
+      this.loading = true;
       Promise.all([
         this.getModule(this.currentModule.id, this.currentEvent.id),
         axios.get(`${process.env.VUE_APP_API}/${this.path}`),
@@ -147,12 +152,12 @@ export default {
         .then((values) => {
           this.moduleData = values[0].data; //eslint-disable-line
           this.attributes = values[1].data; //eslint-disable-line
-          this.isLoading = false;
+          this.loading = false;
           this.setDefaults();
         })
         .catch((error) => {
           this.errormsg = error.response.data.message;
-          this.isLoading = false;
+          this.loading = false;
         });
     },
   },

@@ -16,22 +16,31 @@ export default {
       this.$emit('submit');
     },
     submit() {
+      this.$emit('saving', true);
       this.$emit('submit');
     },
     prevStep() {
+      this.$emit('saving', true);
       this.$emit('prevStep');
     },
     nextStep(force = false) {
       this.validate();
       if (!this.valid && !force) {
+        this.$emit('saving', false);
+        this.saving = false;
         return;
       }
+      this.$emit('saving', true);
       this.$emit('nextStep', force);
+    },
+    onSaving(state) {
+      this.saving = state;
     },
     onIngoredClicked() {
       this.$emit('nextStep', true);
     },
     ignore() {
+      this.$emit('saving', true);
       this.$emit('ignore', true);
     },
     errorMessage(field, valdiationObj) {

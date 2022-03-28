@@ -410,11 +410,11 @@ export default {
   watch: {
     search(searchString) {
       // still loading
-      if (this.isLoading) return;
+      if (this.loading) return;
       if (!searchString) return;
       if (searchString.indexOf(' ') >= 0) return;
       if (searchString && searchString.length <= 1) return;
-      this.isLoading = true;
+      this.loading = true;
       this.getZipCodeMapping(searchString)
         .then((res) => {
           console.log(res);
@@ -426,7 +426,7 @@ export default {
           this.zipCodeNoDataText = 'Zuviele Treffer';
         })
         .finally(() => {
-          this.isLoading = false;
+          this.loading = false;
         });
     },
   },

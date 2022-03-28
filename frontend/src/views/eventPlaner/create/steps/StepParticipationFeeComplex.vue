@@ -1,13 +1,15 @@
 <template>
   <GenericRegModul
     :key="`module-${moduleId}`"
-    :isloading="isLoadingRead"
+    :loading="loading"
+    :saving="saving"
     :position="position"
     :maxPos="maxPos"
     @submit="submit"
     @ignore="onIngoredClicked"
     @prevStep="prevStep"
     @nextStep="nextStep"
+    @saving="onSaving"
   >
     <template v-slot:header>
       Hier kannst du Rollen und Preise für dein Lager anlegen.
@@ -43,7 +45,8 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    isLoading: true,
+    loading: true,
+    saving: false,
     selectedItem: 1,
     moduleData: [],
     data: {},
@@ -54,12 +57,6 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo']),
-    isLoadingRead: {
-      get() {
-        return !!this.isloading;
-      },
-      set() {},
-    },
     dialogMeta() {
       return {
         title: 'Hallo',
@@ -121,7 +118,10 @@ export default {
       }, 100);
     },
     setDefaults() {},
-    loadData() {},
+    loadData() {
+      this.saving = false;
+      this.loading = false;
+    },
   },
   created() {
     this.beforeTabShow();

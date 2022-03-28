@@ -1,12 +1,14 @@
 <template>
   <GenericRegModul
     :key="`module-${moduleId}`"
-    :isloading="isLoadingRead"
+    :loading="loading"
+    :saving="saving"
     :position="position"
     :maxPos="maxPos"
     @prevStep="prevStep"
     @nextStep="onNextStep"
     @ignore="onIngoredClicked"
+    @saving="onSaving"
   >
     <template v-slot:header>
     </template>
@@ -39,7 +41,8 @@ export default {
   mixins: [apiCallsMixin, stepMixin],
   data: () => ({
     valid: true,
-    isLoading: true,
+    loading: true,
+    saving: false,
     moduleData: [],
     data: {
     },
@@ -50,10 +53,10 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo']),
-    isLoadingRead: {
+    loadingRead: {
       // getter
       get() {
-        return !!this.isloading;
+        return !!this.loading;
       },
       set() {},
     },
@@ -83,7 +86,7 @@ export default {
     setDefaults() {
     },
     loadData() {
-      this.isLoading = true;
+      this.loading = true;
     },
   },
 };

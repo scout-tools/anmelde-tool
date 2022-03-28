@@ -100,8 +100,6 @@ export default {
       return this.$route.params.id;
     },
     getItems() {
-      console.log(this.data);
-      debugger;
       return this.data;
     },
     getTotalParticipant() {

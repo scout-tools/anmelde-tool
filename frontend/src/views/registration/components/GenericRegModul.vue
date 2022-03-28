@@ -1,24 +1,31 @@
 <template>
   <v-form v-model="valid">
-    <v-container v-if="!isLoadingProp">
+    <v-container v-show="!loading" :disabled="loading">
       <v-row class="mt-2">
         <slot name="header">Title</slot>
       </v-row>
       <v-divider class="text-left my-2" />
-      <slot name="main">Title</slot>
+      <slot name="main">
+        Title
+      </slot>
       <v-divider class="my-3" />
       <prev-next-buttons
         :position="position"
         :max-pos="maxPos"
-        @nextStep="nextStep"
+        :loading="loading"
+        :saving="saving"
+        @nextStep="nextStep2"
         @prevStep="prevStep"
         @submit="submit"
         @ignore="ignore"
       />
     </v-container>
-    <v-container v-else>
+    <v-container v-show="loading">
       <Circual/>
     </v-container>
+    <!-- <v-container v-show="saving">
+      <Circual :save="true"/>
+    </v-container> -->
   </v-form>
 </template>
 
@@ -35,14 +42,13 @@ export default {
     maxPos: {
       type: Number,
     },
-    isloading: {
+    loading: {
       type: Boolean,
       default: true,
     },
-  },
-  computed: {
-    isLoadingProp() {
-      return !!this.isloading;
+    saving: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {
@@ -50,6 +56,11 @@ export default {
     Circual,
   },
   mixins: [stepMixin],
+  methods: {
+    nextStep2() {
+      this.$emit('nextStep');
+    },
+  },
   data: () => ({
     valid: true,
   }),

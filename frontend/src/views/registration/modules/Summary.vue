@@ -1,12 +1,14 @@
 <template>
   <GenericRegModul
     :key="`module-${moduleId}`"
-    :isloading="isLoadingRead"
+    :loading="loading"
+    :saving="saving"
     :position="position"
     :maxPos="maxPos"
     @prevStep="prevStep"
     @nextStep="onNextStep"
     @submit="submitStep"
+    @saving="onSaving"
   >
     <template v-slot:header>
       <v-container>
@@ -72,7 +74,8 @@ export default {
   mixins: [apiCallsMixin, stepMixin],
   data: () => ({
     valid: true,
-    isLoading: true,
+    loading: true,
+    saving: false,
     moduleData: [],
     summary: [],
     data: {
@@ -99,10 +102,10 @@ export default {
       }
       return [];
     },
-    isLoadingRead: {
+    loadingRead: {
       // getter
       get() {
-        return !!this.isloading;
+        return !!this.loading;
       },
       set() {},
     },
@@ -156,10 +159,12 @@ export default {
       });
     },
     onNextStep() {
+      this.saving = true;
       this.nextStep();
     },
     loadData() {
-      this.isLoading = true;
+      this.saving = false;
+      this.loading = true;
       Promise.all([
         this.getModule(this.moduleId, this.currentEvent.id),
         this.getRegService('summary', this.currentRegistration.id),
@@ -167,13 +172,13 @@ export default {
         .then((values) => {
           this.moduleData = values[0].data; //eslint-disable-line
           this.summary = values[1].data[0]; //eslint-disable-line
-          this.isLoading = false;
+          this.loading = false;
           this.setDefaults();
           console.log(this.summary);
         })
         .catch((error) => {
           this.errormsg = error.response.data.message;
-          this.isLoading = false;
+          this.loading = false;
         });
     },
   },

@@ -43,7 +43,7 @@
     </v-list>
     <div v-else>
       <Circual />
-      <v-btn @click="beforeTabShow">Refresh</v-btn>
+      <v-btn color="success" @click="beforeTabShow">Daten laden</v-btn>
     </div>
     <create-modal
       ref="createModal"
@@ -81,8 +81,7 @@ export default {
     items: [],
   }),
   props: {
-    valdiationObj: {
-    },
+    valdiationObj: {},
     dialogMeta: {
       default: {},
     },

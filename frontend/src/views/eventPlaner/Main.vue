@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
-          <v-card v-if="!isLoading">
+          <v-card v-if="!loading">
             <v-card-title class="text-center justify-center my-6">
               Diese Fahrten kannst du bearbeiten
             </v-card-title>
@@ -101,7 +101,7 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     items: [],
-    isLoading: true,
+    loading: true,
     steps: [
       'Aktionsbeschreibung',
       'Stammdaten',
@@ -179,7 +179,7 @@ export default {
         });
       })
       .finally(() => {
-        this.isLoading = false;
+        this.loading = false;
       });
   },
 };

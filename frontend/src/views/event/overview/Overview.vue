@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
-          <v-card v-if="!isLoading">
+          <v-card v-if="!loading">
             <v-card-title class="text-center justify-center py-6">
               Zu diesen Fahrten kannst du deinen Stamm anmelden
             </v-card-title>
@@ -114,7 +114,7 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     items: [],
-    isLoading: true,
+    loading: true,
   }),
   components: {
     ConfirmRegistrationEditModal,
@@ -167,7 +167,7 @@ export default {
     },
   },
   created() {
-    this.isLoading = true;
+    this.loading = true;
     this.getEventOverview()
       .then((success) => {
         this.items = success.data;
@@ -183,7 +183,7 @@ export default {
         });
       })
       .finally(() => {
-        this.isLoading = false;
+        this.loading = false;
       });
   },
 };

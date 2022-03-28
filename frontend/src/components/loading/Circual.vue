@@ -1,11 +1,11 @@
 <template>
   <div class="text-center ma-5">
-    <p>Lade Daten ...</p>
+    <p>{{ text }}</p>
     <v-progress-circular
       :size="80"
       :width="10"
       class="ma-5"
-      color="primary"
+      :color="save ? 'success' : 'primary'"
       indeterminate
     ></v-progress-circular>
     <p>Bitte hab etwas Geduld.</p>
@@ -13,7 +13,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    save: {
+      default: false,
+    },
+  },
+  computed: {
+    text() {
+      return this.save ? 'Speichere Daten ...' : 'Lade Daten ...';
+    },
+  },
+};
 </script>
 
 <style>

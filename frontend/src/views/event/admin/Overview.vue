@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
-          <v-card v-if="!isLoading">
+          <v-card v-if="!loading">
             <v-card-title class="text-center justify-center py-6">
               Hier werden die Fahrten angezeigt, die du bearbeiten darfst.
             </v-card-title>
@@ -126,7 +126,7 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     items: [],
-    isLoading: true,
+    loading: true,
     userExtendedItems: [],
   }),
 
@@ -276,7 +276,7 @@ export default {
     },
   },
   mounted() {
-    this.isLoading = true;
+    this.loading = true;
 
     Promise.all([
       this.getEvent(),
@@ -304,11 +304,11 @@ export default {
           this.goToSettings();
         }
 
-        this.isLoading = false;
+        this.loading = false;
       })
       .catch((error) => {
         this.errormsg = error.response.data.message;
-        this.isLoading = false;
+        this.loading = false;
       });
   },
 };

@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
-          <v-card v-if="!isLoading">
+          <v-card v-if="!loading">
             <v-card-title class="text-center justify-center py-6">
               Hier siehst du alle Fahrten zu denen du Daten freigegeben bekommen hast.
             </v-card-title>
@@ -98,7 +98,7 @@ export default {
     },
     API_URL: process.env.VUE_APP_API,
     items: [],
-    isLoading: true,
+    loading: true,
     userExtendedItems: [],
     headers: [
       { text: 'Id', value: 'id' },
@@ -120,7 +120,7 @@ export default {
         });
       })
       .finally(() => {
-        this.isLoading = false;
+        this.loading = false;
       });
   },
   computed: {
