@@ -14,8 +14,10 @@ from event import serializers as event_serializers
 from event import api_exceptions as event_api_exceptions
 from event import models as event_models
 from event import choices as event_choices
-from event.permissions import IsEventResponsiblePerson, IsSubEventResponsiblePerson, IsRegistrationResponsiblePerson, \
-    IsSubRegistrationResponsiblePerson
+from event.permissions import IsEventResponsiblePersonOrReadOnly, IsSubEventResponsiblePersonOrReadOnly, \
+    IsRegistrationResponsiblePerson, \
+    IsSubRegistrationResponsiblePerson, IsEventSuperResponsiblePerson, IsSubEventSuperResponsiblePerson, \
+    IsSubEventResponsiblePerson
 
 
 def add_event_module(module: event_models.EventModuleMapper,
@@ -66,7 +68,7 @@ class EventRegistrationViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSe
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsEventResponsiblePerson]
+    permission_classes = [IsEventSuperResponsiblePerson]
     queryset = event_models.Event.objects.all()
     serializer_class = event_serializers.EventCompleteSerializer
 
@@ -110,7 +112,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
 
 class BookingOptionViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventResponsiblePersonOrReadOnly]
     serializer_class = event_serializers.BookingOptionSerializer
 
     def get_queryset(self) -> QuerySet:
@@ -153,10 +155,23 @@ class EventPlanerViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = event_serializers.EventPlanerSerializer
 
     def get_queryset(self) -> QuerySet:
-        return event_models.Event.objects.filter(
-            Q(keycloak_admin_path__in=self.request.user.groups.all())
-            | Q(responsible_persons=self.request.user)
-            | Q(self.request.user.is_superuser)).distinct()
+        if self.request.user.is_superuser:
+            return event_models.Event.objects.all()
+        else:
+            return event_models.Event.objects.filter(Q(keycloak_admin_path__in=self.request.user.groups.all())
+                                                     | Q(responsible_persons=self.request.user)).distinct()
+
+
+class EventStatisticsViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = event_serializers.EventPlanerSerializer
+
+    def get_queryset(self) -> QuerySet:
+        if self.request.user.is_superuser:
+            return event_models.Event.objects.all()
+        else:
+            return event_models.Event.objects.filter(Q(keycloak_path__in=self.request.user.groups.all())
+                                                     | Q(responsible_persons=self.request.user)).distinct()
 
 
 class RegistrationTypeGroupViewSet(viewsets.ViewSet):
@@ -178,7 +193,7 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
                                 mixins.UpdateModelMixin,
                                 mixins.DestroyModelMixin,
                                 viewsets.GenericViewSet):
-    permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventResponsiblePersonOrReadOnly]
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -226,13 +241,13 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
 
 
 class EventModulesViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsEventResponsiblePersonOrReadOnly]
     serializer_class = event_serializers.EventModuleSerializer
     queryset = event_models.EventModule.objects.all()
 
 
 class AvailableEventModulesViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventSuperResponsiblePerson]
     serializer_class = event_serializers.EventModuleSerializer
 
     def get_queryset(self) -> QuerySet:
@@ -242,7 +257,7 @@ class AvailableEventModulesViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventResponsiblePersonOrReadOnly]
 
     def create(self, request, *args, **kwargs) -> Response:
         serializer: event_serializers.AttributeEventModuleMapperSerializer = self.get_serializer(data=request.data)
@@ -276,7 +291,7 @@ class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
 
 
 class AssignedEventModulesViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventResponsiblePersonOrReadOnly]
     serializer_class = event_serializers.EventModuleMapperGetSerializer
 
     def get_queryset(self) -> QuerySet:
@@ -289,13 +304,16 @@ class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = event_serializers.EventOverviewSerializer
 
     def get_queryset(self) -> QuerySet:
-        list_parent_organistations = []
-        iterator: basic_models.ScoutHierarchy = self.request.user.userextended.scout_organisation
-        while iterator is not None:
-            list_parent_organistations.append(iterator)
-            iterator = iterator.parent
-        return event_models.Event.objects.filter(is_public=True, end_date__gte=timezone.now(),
-                                                 limited_registration_hierarchy__in=list_parent_organistations)
+        if self.request.user.is_superuser:
+            return event_models.Event.objects.all()
+        else:
+            list_parent_organistations = []
+            iterator: basic_models.ScoutHierarchy = self.request.user.userextended.scout_organisation
+            while iterator is not None:
+                list_parent_organistations.append(iterator)
+                iterator = iterator.parent
+            return event_models.Event.objects.filter(is_public=True, end_date__gte=timezone.now(),
+                                                     limited_registration_hierarchy__in=list_parent_organistations)
 
 
 class RegistrationViewSet(mixins.CreateModelMixin,
@@ -651,7 +669,7 @@ class RegistrationSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet)
 
 
 class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    # permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.EventSummarySerializer
 
     def get_queryset(self) -> QuerySet:

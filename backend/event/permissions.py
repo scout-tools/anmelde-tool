@@ -8,7 +8,7 @@ from event import models as event_models
 from event.models import Registration
 
 CREATE_METHOD = 'POST'
-UPDATE_METHOD = 'UPDATE'
+UPDATE_METHODS = ('UPDATE', 'PATCH')
 
 
 def check_event_permission(event_id: str, user: User) -> bool:
@@ -38,13 +38,39 @@ class IsStaffOrReadOnly(permissions.BasePermission):
         )
 
 
-class IsEventResponsiblePerson(permissions.BasePermission):
+class IsEventSuperResponsiblePerson(permissions.BasePermission):
     message = 'Du darfst dieses Event nicht bearbeiten'
 
     def has_permission(self, request: Request, view) -> bool:
         if not request.user or not request.user.is_authenticated:
             return False
-        if request.method != UPDATE_METHOD:
+        if request.user.is_superuser:
+            return True
+        event_id: str = view.kwargs.get("pk", None)
+        return check_event_super_permission(event_id, request.user)
+
+
+class IsSubEventSuperResponsiblePerson(permissions.BasePermission):
+    message = 'Du darfst dieses Event nicht bearbeiten'
+
+    def has_permission(self, request: Request, view) -> bool:
+        if not request.user or not request.user.is_authenticated:
+            return False
+        if request.user.is_superuser:
+            return True
+        event_id: str = view.kwargs.get('event_pk', None)
+        return check_event_super_permission(event_id, request.user)
+
+
+class IsEventResponsiblePersonOrReadOnly(permissions.BasePermission):
+    message = 'Du darfst dieses Event nicht bearbeiten'
+
+    def has_permission(self, request: Request, view) -> bool:
+        if not request.user or not request.user.is_authenticated:
+            return False
+        if request.user.is_superuser:
+            return True
+        if request.method in SAFE_METHODS:
             return True
         event_id: str = view.kwargs.get("pk", None)
         return check_event_permission(event_id, request.user)
@@ -56,6 +82,20 @@ class IsSubEventResponsiblePerson(permissions.BasePermission):
     def has_permission(self, request: Request, view) -> bool:
         if not request.user or not request.user.is_authenticated:
             return False
+        if request.user.is_superuser:
+            return True
+        event_id: str = view.kwargs.get('event_pk', None)
+        return check_event_permission(event_id, request.user)
+
+
+class IsSubEventResponsiblePersonOrReadOnly(permissions.BasePermission):
+    message = 'Du darfst dieses Event nicht bearbeiten'
+
+    def has_permission(self, request: Request, view) -> bool:
+        if not request.user or not request.user.is_authenticated:
+            return False
+        if request.user.is_superuser:
+            return True
         if request.method in SAFE_METHODS:
             return True
         event_id: str = view.kwargs.get('event_pk', None)

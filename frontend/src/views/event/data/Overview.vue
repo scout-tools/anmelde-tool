@@ -108,7 +108,7 @@ export default {
     ],
   }),
   created() {
-    this.getEventPlanerOverview()
+    this.getEventStatisticsOverview()
       .then((respone) => {
         this.items = respone.data;
       })
