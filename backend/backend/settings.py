@@ -181,16 +181,6 @@ CSRF_COOKIE_SECURE = True
 
 SITE_ID = 1
 
-if env.bool('USE_EMAIL', False):
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
-    EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL')
-    EMAIL_HOST = env('EMAIL_HOST')
-    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-    EMAIL_PORT = env('EMAIL_PORT')
-    FRONT_URL = env.str('FRONT_URL')
-
 if env.bool('USE_SES', False):
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_ACCESS_KEY_ID = env('AWS_SES_ACCESS_KEY_ID')
