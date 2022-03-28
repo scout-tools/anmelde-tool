@@ -1,14 +1,13 @@
 <template>
   <div>
-    <v-footer color="primary lighten-1" padless>
+    <v-footer color="primary lighten-1">
       <v-row justify="center" no-gutters>
         <v-btn
           color="white"
           text
           rounded
           class="my-2"
-          @click="$router.push({ name: 'impressum' })"
-        >
+          @click="$router.push({ name: 'impressum' })">
           <v-icon fab color="white" class="mr-1">
             mdi-card-text-outline
           </v-icon>
@@ -20,62 +19,51 @@
           text
           rounded
           class="my-2"
-          @click="$router.push({ name: 'datenschutz' })"
-        >
+          @click="$router.push({ name: 'datenschutz' })">
           <v-icon fab color="white" class="mr-1">
             mdi-fingerprint
           </v-icon>
           Datenschutz
-
         </v-btn>
         <v-btn
           color="white"
           text
           rounded
           class="my-2"
-          @click="$router.push({ name: 'loginInterals' })"
-        >
+          @click="$router.push({ name: 'faq' })">
           <v-icon fab color="white" class="mr-1">
-            mdi-chess-king
+            mdi-frequently-asked-questions
           </v-icon>
-          Planungsjurte
+          FAQ
         </v-btn>
         <v-btn
+          v-if="isAuth"
           color="white"
           text
           rounded
           class="my-2"
-          v-if="isAuthenticated"
-          @click="onLogoutClicked"
-        >
+          @click="onLogoutClicked">
           <v-icon fab color="white" class="mr-1">
-            mdi-logout-variant
+            mdi-logout
           </v-icon>
           Logout
         </v-btn>
-        <!-- <v-col class="primary lighten py-1 text-center white--text" cols="12">
-          {{ new Date().getFullYear() }} — <strong>Anmelde-Tool</strong>
-        </v-col> -->
       </v-row>
     </v-footer>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
+import authMixin from '@/mixins/authMixin';
 
 export default {
-  computed: {
-    ...mapGetters(['isAuthenticated']),
-  },
-  data: () => ({
-    links: ['Impressum', 'Kontakt', 'Planungsjurte'],
-  }),
+  mixins: [authMixin],
   methods: {
     onLogoutClicked() {
-      this.$store.commit('clearTokens');
-      this.$router.push({ name: 'landing' });
+      this.logout();
     },
   },
+  data: () => ({}),
 };
 </script>

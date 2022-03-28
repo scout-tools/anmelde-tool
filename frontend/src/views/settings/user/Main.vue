@@ -61,7 +61,6 @@
           <v-col cols="12" sm="6">
             <v-text-field
               readonly
-              disabled
               filled
               v-model="getStammName"
               label="Mein Stamm*"
@@ -89,8 +88,8 @@
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="mobileNumber"
-              label="Handynummer"
-              prepend-icon="mdi-cellphone-android"
+              label="Handynummer*"
+              prepend-icon="mdi-cellphone"
               @change="updateData"
               :error-messages="mobileNumberErrors"
             >
@@ -129,42 +128,45 @@
       <v-container>
         <v-row>
           <v-col cols="12" sm="6" md="4">
-            <v-btn color="secondary" @click="onSaveClicked">
+            <v-btn color="success" @click="onSaveClicked">
               <v-icon left dark>mdi-check</v-icon>
               Änderungen speichern
             </v-btn>
           </v-col>
-          <!-- TODO: add user-delete service and activate button -->
-          <!-- <v-col cols="12" sm="6" md="4">
-                      <v-btn dark color="red">
-                        <v-icon left>mdi-delete</v-icon>
-                        Meine persönlichen Daten löschen.
-                      </v-btn>
-                    </v-col> -->
+          <v-col cols="12" sm="6" md="4">
+            <v-btn dark color="error" @click="onDeleteClicked">
+              <v-icon left>mdi-delete</v-icon>
+              Meine Daten löschen.
+            </v-btn>
+          </v-col>
         </v-row>
       </v-container>
     </v-card-actions>
+    <YesNoDialog ref="yesNoDialog" />
   </v-card>
 </template>
 
 <script>
 import axios from 'axios';
+import auth from '@/mixins/authMixin';
 import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
-import { required, minLength, maxLength } from 'vuelidate/lib/validators';
-
-import PickStammForm from './form/PickStamm.vue';
+import { maxLength, minLength, required } from 'vuelidate/lib/validators';
+import YesNoDialog from '@/components/modals/YesNoDialog.vue';
+import PickStammForm from './PickStamm.vue';
 
 export default {
-  mixins: [validationMixin],
+  mixins: [validationMixin, auth],
   components: {
     PickStammForm,
+    YesNoDialog,
   },
   validations: {
     scoutOrganisation: {
       required,
     },
     mobileNumber: {
+      required,
       minLength: minLength(6),
       maxLength: maxLength(20),
     },
@@ -198,16 +200,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData', 'hierarchyMapping']),
+    ...mapGetters(['userinfo']),
     email() {
-      return this.getJwtData.email;
+      return this.userinfo.email;
     },
     getStammName() {
-      const obj = this.hierarchyMapping.find(
-        (user) => user.id === this.scoutOrganisation,
-      );
-      if (obj && obj.name) {
-        return obj.name;
+      if (this.scoutOrganisation && this.scoutOrganisation.name) {
+        return this.scoutOrganisation.name;
       }
       return 'Noch kein Stamm gewählt';
     },
@@ -216,7 +215,7 @@ export default {
       if (!this.$v.checkbox.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.checkbox.checked &&
-        errors.push('Du musst den Datenschutzbestimmungen zustimmen.');
+      errors.push('Du musst den Datenschutzbestimmungen zustimmen.');
       return errors;
     },
     mobileNumberErrors() {
@@ -224,10 +223,12 @@ export default {
       if (!this.$v.mobileNumber.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.mobileNumber.maxLength &&
-        errors.push('Eine Handynummer hat maxtimal 20 Ziffern');
+      errors.push('Eine Handynummer hat maxtimal 20 Ziffern');
       // eslint-disable-next-line
       !this.$v.mobileNumber.minLength &&
-        errors.push('Eine Handynummer hat mindestens 6 Ziffern.');
+      errors.push('Eine Handynummer hat mindestens 6 Ziffern.');
+      // eslint-disable-next-line
+      !this.$v.mobileNumber.required && errors.push('Dein Nummer ist erforderlich');
       return errors;
     },
     scoutNameErrors() {
@@ -235,7 +236,7 @@ export default {
       if (!this.$v.scoutName.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.scoutName.maxLength &&
-        errors.push('Darf nicht mehr als 20 Zeichen haben');
+      errors.push('Darf nicht mehr als 20 Zeichen haben');
       // eslint-disable-next-line
       !this.$v.scoutName.required && errors.push('Dein Name ist erforderlich');
       return errors;
@@ -245,7 +246,7 @@ export default {
       if (!this.$v.scoutOrganisation.$dirty) return errors;
       // eslint-disable-next-line
       !this.$v.scoutOrganisation.required &&
-        errors.push('Wir brauchen deinen Stamm');
+      errors.push('Wir brauchen deinen Stamm');
       return errors;
     },
   },
@@ -253,8 +254,8 @@ export default {
     updateData(type, data) {
       this[type] = data;
     },
-    tranferId(id) {
-      this.scoutOrganisation = id;
+    tranferId(newScoutOrganistation) {
+      this.scoutOrganisation = newScoutOrganistation;
     },
     onPickStammClick() {
       this.$refs.pickStamm.show(this.scoutOrganisation);
@@ -266,36 +267,93 @@ export default {
       }
       this.saveUserData();
     },
+    async onDeleteClicked() {
+      const text = 'Bist du sicher, dass du deinen Account beim Anmelde Tool löschen möchtest?'
+        + '<p>Dies inkludiert:'
+        + '<ul>'
+        + '<li>Deine persöhnlichen Daten, wie deinen Fahrtennamen, deine Handynummer und deinen Stamm</li>'
+        + '<li>Deine angebotenen Fahrten (sofern es keine anderen verantwortlichen Personen gibt)</li>'
+        + '<li>Deine Registrierungen unabhängig ob sie bereits stattgefunden haben, oder erst noch stattfinden werden'
+        + ' (sofern es keine anderen verantwortlichen Personen gibt)</li>'
+        + '<li>Deine angebotenen Workshops</li>'
+        + '</ul>'
+        + '<p> Deine Daten beim DPV IDM bleiben allerdings weiterhin bestehen';
+      const confirmBox = this.$refs.yesNoDialog.open(
+        'Bestätige',
+        text,
+        'Löschen',
+        'Abbrechen',
+      );
+      if (await confirmBox) {
+        this.deleteUserData();
+      }
+    },
     getData() {
-      const path = `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`;
-      axios
-        .get(path)
+      this.loading = true;
+      const path = `${this.API_URL}/auth/personal-data/`;
+      axios.get(path)
         .then((res) => {
           this.scoutOrganisation = res.data.scoutOrganisation;
           this.mobileNumber = res.data.mobileNumber;
           this.scoutName = res.data.scoutName;
+          this.checkbox = res.data.dsgvoConfirmed;
         })
         .catch(() => {
-          console.log('Fehler');
+          this.$root.globalSnackbar.show({
+            message: 'Es gab einen Fehler beim runterladen deiner Daten, bitte probiere es später noch einmal.',
+            color: 'error',
+          });
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     saveUserData() {
-      axios
-        .put(
-          `${this.API_URL}auth/data/user-extended/${this.getJwtData.userId}/`,
-          {
-            user: this.getJwtData.userId,
-            scoutOrganisation: this.scoutOrganisation,
-            mobileNumber: this.mobileNumber,
-            scoutName: this.scoutName,
-          },
-        )
+      this.loading = true;
+      const path = `${this.API_URL}/auth/personal-data/`;
+      axios.post(path, {
+        scoutOrganisation: this.scoutOrganisation.id,
+        mobileNumber: this.mobileNumber,
+        scoutName: this.scoutName,
+        dsgvoConfirmed: this.checkbox,
+      })
         .then(() => {
-          this.showSuccess = true;
-          setTimeout(() => this.$router.push({ name: 'eventOverview' }), 100);
+          this.$store.commit('setAccountIncomplete', false);
+          this.$router.push({ name: 'eventOverview' });
+          this.$root.globalSnackbar.show({
+            message: 'Deine Daten wurden erfolgreich geändert.',
+            color: 'success',
+          });
         })
         .catch(() => {
-          this.showError = true;
+          this.$root.globalSnackbar.show({
+            message: 'Es gab einen Fehler beim ändern deiner Daten, bitte probiere es später noch einmal.',
+            color: 'error',
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    deleteUserData() {
+      this.loading = true;
+      const path = `${this.API_URL}/auth/personal-data/`;
+      axios.delete(path)
+        .then(() => {
+          this.$root.globalSnackbar.show({
+            message: 'Deine Daten wurden erfolgreich gelöscht.',
+            color: 'success',
+          });
+          this.logout();
+        })
+        .catch(() => {
+          this.$root.globalSnackbar.show({
+            message: 'Es gab einen Fehler beim löschen deiner Daten, bitte probiere es später noch einmal.',
+            color: 'error',
+          });
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
   },

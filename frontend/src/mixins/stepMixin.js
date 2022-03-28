@@ -1,18 +1,12 @@
-export const stepMixin = { // eslint-disable-line
+export default {
   methods: {
     validate() {
-      this.$v.$touch();
-      this.valid = !this.$v.$error;
-    },
-    prevStep() {
-      this.$emit('prevStep');
-    },
-    nextStep(force = false) {
-      this.validate();
-      if (!this.valid && !force) {
-        return;
+      try {
+        this.$v.$touch();
+        this.valid = !this.$v.$error;
+      } catch (err) {
+        this.valid = true;
       }
-      this.$emit('nextStep');
     },
     submitStep() {
       this.validate();
@@ -21,9 +15,40 @@ export const stepMixin = { // eslint-disable-line
       }
       this.$emit('submit');
     },
-    errorMessage(field) {
+    submit() {
+      this.$emit('saving', true);
+      this.$emit('submit');
+    },
+    prevStep() {
+      this.$emit('saving', true);
+      this.$emit('prevStep');
+    },
+    nextStep(force = false) {
+      this.validate();
+      if (!this.valid && !force) {
+        this.$emit('saving', false);
+        this.saving = false;
+        return;
+      }
+      this.$emit('saving', true);
+      this.$emit('nextStep', force);
+    },
+    onSaving(state) {
+      this.saving = state;
+    },
+    onIngoredClicked() {
+      this.$emit('nextStep', true);
+    },
+    ignore() {
+      this.$emit('saving', true);
+      this.$emit('ignore', true);
+    },
+    errorMessage(field, valdiationObj) {
       const errors = [];
-      const valObj = this.$v.item[field];
+      if (!valdiationObj.data[field]) {
+        return errors;
+      }
+      const valObj = valdiationObj.data[field];
       if (!valObj.$dirty) return errors;
       if (valObj.required === false) {
         errors.push('Dieses Feld ist erforderlich.');
@@ -42,11 +67,37 @@ export const stepMixin = { // eslint-disable-line
       if (valObj.maxValue === false) {
         errors.push(`Maximal sind ${valObj.$params.maxValue.max} erlaubt.`);
       }
+      if (valObj.email === false) {
+        errors.push('Muss eine richtige E-Mail-Adresse sein.');
+      }
+      if (valObj.allChecked === false) {
+        errors.push('Es müssen allen Bedindungen zugestimmt werden.');
+      }
       if (valObj.between === false) {
         const { min, max } = valObj.$params.between;
-        errors.push(`Bitte gib einen Wert zwischen ${min}€ und ${max}€ ein. Falls du mehr als ${max} brauchst melde dich bei der Lagerleitung.`);
+        errors.push(
+          `Bitte gib einen Wert zwischen ${min}€ und ${max}€ ein. Falls du mehr als ${max} brauchst melde dich bei der Lagerleitung.`,
+        );
       }
       return errors;
+    },
+    updateData() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.$root.globalSnackbar.show({
+          message: 'Daten prüfen.',
+          color: 'error',
+        });
+      } else {
+        this.fields.forEach((field) => {
+          this.patchService(field.techName, this.data[field.techName], this.modulePath);
+        });
+      }
+    },
+  },
+  computed: {
+    id() {
+      return this.$route.params.id;
     },
   },
 };

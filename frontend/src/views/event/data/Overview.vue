@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
-          <v-card v-if="!isLoading">
+          <v-card v-if="!loading">
             <v-card-title class="text-center justify-center py-6">
               Hier siehst du alle Fahrten zu denen du Daten freigegeben bekommen hast.
             </v-card-title>
@@ -44,7 +44,6 @@
                         params: { id: item.id },
                       }"
                       style="text-decoration: none"
-                      v-if="item.participantRole.length"
                     >
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
@@ -87,19 +86,19 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import { mapGetters } from 'vuex';
-// eslint-disable-next-line import/extensions
-import ConfirmRegistrationEditModal from '@/views/registration/create/steps/dialog/ConfirmRegistrationEditModal';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
+import ConfirmRegistrationEditModal from '@/components/dialog/ConfirmRegistrationEditModal.vue';
 
 export default {
   components: { ConfirmRegistrationEditModal },
+  mixins: [apiCallsMixin],
   data: () => ({
     components: {
       ConfirmRegistrationEditModal,
     },
     API_URL: process.env.VUE_APP_API,
     items: [],
-    isLoading: true,
+    loading: true,
     userExtendedItems: [],
     headers: [
       { text: 'Id', value: 'id' },
@@ -108,38 +107,28 @@ export default {
       { text: 'Actions', value: 'action', sortable: false },
     ],
   }),
-
+  created() {
+    this.getEventStatisticsOverview()
+      .then((respone) => {
+        this.items = respone.data;
+      })
+      .catch(() => {
+        this.$root.globalSnackbar.show({
+          message: 'Leider ist ein Problem beim anzeigen der Events aufgetreten, '
+            + 'bitte probiere es später nocheinmal.',
+          color: 'error',
+        });
+      })
+      .finally(() => {
+        this.loading = false;
+      });
+  },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData']),
     getItems() {
-      return this.items.filter((item) => item.isRegistered.length);
-    },
-    hasSetExtendedUserInfos() {
-      if (this.userExtendedItems) {
-        return (
-          this.userExtendedItems.scoutName && // eslint-disable-line
-          this.userExtendedItems.scoutOrganisation
-        );
-      }
-      return false;
-    },
-    isSimpleUser() {
-      if (this.getJwtData) {
-        return !(this.getJwtData.groups.length || this.getJwtData.isStaff);
-      }
-      return true;
-    },
-    isStaff() {
-      if (this.getJwtData) {
-        return this.getJwtData.isStaff;
-      }
-      return false;
+      return this.items;
     },
   },
   methods: {
-    isNotAlreadyRegistered(item) {
-      return !item.isRegistered.length;
-    },
     editRegistration(item) {
       this.$refs.confirmRegistrationEditModal.show(item);
     },
@@ -149,32 +138,14 @@ export default {
       }
       return header;
     },
-    getRegisteredId(item) {
-      if (
-        item && // eslint-disable-line
-        item.isRegistered && // eslint-disable-line
-        item.isRegistered.length && // eslint-disable-line
-        item.isRegistered[0].id
-      ) {
-        return item.isRegistered[0].id;
-      }
-      return 0;
-    },
-    isInTimeRange(date1, date2) {
-      const startTime = new Date(date1).getTime();
-      const endTime = new Date(date2).getTime();
-      const today = new Date().getTime();
-
-      return today > startTime && today < endTime;
-    },
     getLagerText(item) {
-      const startTime = new Date(item.startTime);
-      const endTime = new Date(item.endTime);
+      const startDate = new Date(item.startDate);
+      const endDate = new Date(item.endDate);
       const dateFormat = 'll';
 
-      const text1 = `Termin: ${moment(startTime)
+      const text1 = `Termin: ${moment(startDate)
         .lang('de')
-        .format(dateFormat)} bis ${moment(endTime)
+        .format(dateFormat)} bis ${moment(endDate)
         .lang('de')
         .format(dateFormat)}`;
       return text1;
@@ -193,105 +164,12 @@ export default {
 
       return response.data;
     },
-    async getUserExtended() {
-      const { userId } = this.getJwtData;
-      const ts = new Date().getTime();
-      const path = `${this.API_URL}auth/data/user-extended/${userId}/?&timestamp=${ts}`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
-    async getRoleMapping() {
-      const path = `${this.API_URL}basic/role/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
-    async getScoutOrgaLevelMapping() {
-      const path = `${this.API_URL}basic/scout-orga-level/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
-    async getEatHabitTypeMapping() {
-      const path = `${this.API_URL}basic/eat-habit-type/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
-
-    async getTravelTypeMapping() {
-      const path = `${this.API_URL}basic/travel-type/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
-    async getHierarchyMapping() {
-      const path = `${process.env.VUE_APP_API}basic/scout-hierarchy/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
-    async getAgeGroupMapping() {
-      const path = `${this.API_URL}basic/age-group/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
-    async getTentTypeMapping() {
-      const path = `${this.API_URL}basic/tent-type/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
-    onGoToSettingsButtonClicked() {
-      this.goToSettings();
-    },
     goToSettings() {
       this.$router.push({ name: 'settingsUser' });
     },
     show(item) {
       this.$refs.messageModal.show(item);
     },
-    onRegistrationClicked() {
-      this.$router.push({ name: 'registrationForm' });
-    },
-  },
-  mounted() {
-    this.isLoading = true;
-
-    Promise.all([
-      this.getEvent(),
-      this.getUserExtended(),
-      this.getRoleMapping(),
-      this.getScoutOrgaLevelMapping(),
-      this.getEatHabitTypeMapping(),
-      this.getTravelTypeMapping(),
-      this.getHierarchyMapping(),
-      this.getAgeGroupMapping(),
-      this.getTentTypeMapping(),
-    ])
-      .then((values) => {
-        [this.items, this.userExtendedItems] = values;
-
-        this.$store.commit('setRoleMapping', values[2]);
-        this.$store.commit('setScoutOrgaLevelMapping', values[3]);
-        this.$store.commit('setEatHabitTypeMapping', values[4]);
-        this.$store.commit('setTravelTypeTypeMapping', values[5]);
-        this.$store.commit('setHierarchyMapping', values[6]);
-        this.$store.commit('setAgeGroupMapping', values[7]);
-        this.$store.commit('setTentTypeMapping', values[8]);
-
-        if (!this.hasSetExtendedUserInfos) {
-          this.goToSettings();
-        }
-
-        this.isLoading = false;
-      })
-      .catch((error) => {
-        this.errormsg = error.response.data.message;
-        this.isLoading = false;
-      });
   },
 };
 </script>

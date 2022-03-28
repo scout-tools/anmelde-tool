@@ -27,6 +27,12 @@
                 Einstellungen
                 <v-icon>mdi-counter</v-icon>
               </v-tab>
+              <v-tab
+                href="#tab-3"
+              >
+                Single Sign On
+                <v-icon>mdi-key</v-icon>
+              </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
@@ -34,6 +40,7 @@
                 <v-card-text>
                   <UserMain v-if="i === 1" />
                   <ConfigMain v-if="i === 2" />
+                  <SsoMain v-if="i === 3" />
                 </v-card-text>
               </v-tab-item>
             </v-tabs-items>
@@ -49,11 +56,13 @@ import { mapGetters } from 'vuex';
 
 import ConfigMain from './config/Main.vue';
 import UserMain from './user/Main.vue';
+import SsoMain from './sso/Main.vue';
 
 export default {
   components: {
     ConfigMain,
     UserMain,
+    SsoMain,
 
   },
   computed: {

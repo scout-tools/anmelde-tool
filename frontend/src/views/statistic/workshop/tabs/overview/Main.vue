@@ -7,7 +7,7 @@
         show-expand
         class="w-75"
       >
-        <template v-slot:item.costs="{ item }"> {{ item.costs }} € </template>
+        <!-- <template v-slot:item.costs="{ item }"> {{ item.costs }} € </template>  -->
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length">
             <v-container>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { serviceMixin } from '@/mixins/serviceMixin';
+import serviceMixin from '@/mixins/serviceMixin';
 
 export default {
   mixins: [serviceMixin],

@@ -1,0 +1,1379 @@
+[
+  {
+    "model": "event.eventlocation",
+    "pk": 1,
+    "fields": {
+      "created_at": "2022-03-10T11:35:03.875Z",
+      "updated_at": "2022-03-16T21:31:56.913Z",
+      "name": "Jugendburg Ludwigstein",
+      "description": "Die Burg Ludwigstein ist eine frühere spätmittelalterliche Burg und heutige Jugendburg bei Werleshausen im Werra-Meißner-Kreis in Hessen",
+      "zip_code": 12582,
+      "address": "Burg Ludwigstein",
+      "contact_name": "Many",
+      "contact_email": "test@test.de",
+      "contact_phone": "",
+      "per_person_fee": null,
+      "fix_fee": null,
+      "tags": [
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "model": "event.eventlocation",
+    "pk": 2,
+    "fields": {
+      "created_at": "2022-03-10T11:35:46.170Z",
+      "updated_at": "2022-03-16T21:32:00.133Z",
+      "name": "Gut Steimke",
+      "description": "",
+      "zip_code": 11674,
+      "address": "",
+      "contact_name": "Inja",
+      "contact_email": "p@p.de",
+      "contact_phone": "",
+      "per_person_fee": null,
+      "fix_fee": null,
+      "tags": [
+        6
+      ]
+    }
+  },
+  {
+    "model": "event.eventlocation",
+    "pk": 3,
+    "fields": {
+      "created_at": "2022-03-22T21:30:51.525Z",
+      "updated_at": "2022-03-22T21:30:51.525Z",
+      "name": "Pfadfibder",
+      "description": "",
+      "zip_code": 2778,
+      "address": "Tüdal 1",
+      "contact_name": "",
+      "contact_email": "",
+      "contact_phone": "",
+      "per_person_fee": null,
+      "fix_fee": null,
+      "tags": []
+    }
+  },
+  {
+    "model": "event.eventplanermodule",
+    "pk": 1,
+    "fields": {
+      "name": "BookingOptionComplex",
+      "type": 4
+    }
+  },
+  {
+    "model": "event.eventplanermodule",
+    "pk": 2,
+    "fields": {
+      "name": "BookingOptionSimple",
+      "type": 4
+    }
+  },
+  {
+    "model": "event.eventplanermodule",
+    "pk": 3,
+    "fields": {
+      "name": "KeycloakAuthorization",
+      "type": 6
+    }
+  },
+  {
+    "model": "event.eventplanermodule",
+    "pk": 4,
+    "fields": {
+      "name": "InternalAuthorization",
+      "type": 6
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 1,
+    "fields": {
+      "name": "Introduction",
+      "type": 7,
+      "header": "Einverständnis",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 2,
+    "fields": {
+      "name": "ParticipantsPersonal",
+      "type": 7,
+      "header": "Teilnehmende",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 3,
+    "fields": {
+      "name": "Participants",
+      "type": 7,
+      "header": "Teilnehmende",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 4,
+    "fields": {
+      "name": "OfferWorkshop",
+      "type": 5,
+      "header": "AGs",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 5,
+    "fields": {
+      "name": "SubscribeWorkshop",
+      "type": 5,
+      "header": "Erlebnisangebote",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 6,
+    "fields": {
+      "name": "Food",
+      "type": 5,
+      "header": "Essgewohnheiten",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 7,
+    "fields": {
+      "name": "Summary",
+      "type": 7,
+      "header": "Zusammenfassung und Bestätigung",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 8,
+    "fields": {
+      "name": "Letter",
+      "type": 5,
+      "header": "Zusätzliche Anmerkungen",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 9,
+    "fields": {
+      "name": "Travel",
+      "type": 5,
+      "header": "Anreise",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 10,
+    "fields": {
+      "name": "TravelBack",
+      "type": 5,
+      "header": "Rückreise",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 11,
+    "fields": {
+      "name": "Tent",
+      "type": 5,
+      "header": "Zelte",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 12,
+    "fields": {
+      "name": "Tshirts",
+      "type": 5,
+      "header": "T-Shirts",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 13,
+    "fields": {
+      "name": "LunchMeals",
+      "type": 5,
+      "header": "Lunch Paket",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 14,
+    "fields": {
+      "name": "ParticipantsPersonalGold",
+      "type": 7,
+      "header": "Teilnehmende",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 1,
+    "fields": {
+      "attribute": 14,
+      "title": "Veranstaltungsbedingungen",
+      "text": "Ich stimme den Bedingungen zu und möchte mit der Anmeldung beginnen",
+      "is_required": true,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "false",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 2,
+    "fields": {
+      "attribute": 15,
+      "title": "Datenschutzhinweis",
+      "text": "Hiermit bestätige ich, dass alle Teilnehmer_innen, die ich auf diesem Wege anmelde, die Datenschutzhinweise und Bildrechte zur Kenntnis genommen und diesen zugestimmt haben.",
+      "is_required": true,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "false",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 3,
+    "fields": {
+      "attribute": 16,
+      "title": "Corona Hinweis",
+      "text": "Ich trage Sorge, dass alle von mir angemeldeten TeilnehmerInnen über die dann geltenden Coronaregeln informiert sind und ich achte auf die Einhaltung",
+      "is_required": true,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "false",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 4,
+    "fields": {
+      "attribute": 17,
+      "title": "Anzahl Kothen",
+      "text": "Wie viele Kothen bringt ihr mit?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 5,
+    "fields": {
+      "attribute": 18,
+      "title": "Anzahl Kothenstangen",
+      "text": "Wie viele Stangen für Kothen benötigt ihr?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 6,
+    "fields": {
+      "attribute": 19,
+      "title": "Anzahl Jurten",
+      "text": "Wie viele Jurten bringt ihr mit?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 7,
+    "fields": {
+      "attribute": 20,
+      "title": "Anzahl Jurtenstangen",
+      "text": "Wie viele Stangen für eure Jurten benötigt ihr?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 8,
+    "fields": {
+      "attribute": 21,
+      "title": "Anreise",
+      "text": "Wann und womit werden ihr anreisen?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 9,
+    "fields": {
+      "attribute": 22,
+      "title": "Abreise",
+      "text": "Wann und womit werdet ihr abreisen?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 10,
+    "fields": {
+      "attribute": 23,
+      "title": "Zusätzliche Anmerkungen",
+      "text": "Hier ist Platz für eine Nachricht an die Lagerleitung.",
+      "is_required": false,
+      "min_length": 10,
+      "max_length": 9000,
+      "tooltip": null,
+      "default_value": "",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 11,
+    "fields": {
+      "attribute": 26,
+      "title": "Bestätigung",
+      "text": "Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zur Fahrt an.",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "false",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 12,
+    "fields": {
+      "attribute": 27,
+      "title": "T-Shirt XS",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe XS?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 13,
+    "fields": {
+      "attribute": 28,
+      "title": "T-Shirt S",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe S?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 14,
+    "fields": {
+      "attribute": 29,
+      "title": "T-Shirt M",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe M?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 15,
+    "fields": {
+      "attribute": 30,
+      "title": "T-Shirt L",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe L?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 16,
+    "fields": {
+      "attribute": 31,
+      "title": "T-Shirt XL",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe XL?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 17,
+    "fields": {
+      "attribute": 32,
+      "title": "T-Shirts XXL",
+      "text": "Wie viele T-Shirts braucht ihr in der Größe XL?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 18,
+    "fields": {
+      "attribute": 33,
+      "title": "Lunch Pakete",
+      "text": "Wie viele Lunch Pakete braucht ihr?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 19,
+    "fields": {
+      "attribute": 34,
+      "title": "Fahrzeuge",
+      "text": "Mit wie vielen Autos reist ihr an?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": "0",
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 20,
+    "fields": {
+      "attribute": 35,
+      "title": "Tailliertes T-Shirt XS",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe XS?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 21,
+    "fields": {
+      "attribute": 36,
+      "title": "Tailliertes T-Shirts S",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe S?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 22,
+    "fields": {
+      "attribute": 37,
+      "title": "Tailliertes T-Shirts M",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe M?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 23,
+    "fields": {
+      "attribute": 38,
+      "title": "Tailliertes T-Shirt L",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe L?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 24,
+    "fields": {
+      "attribute": 39,
+      "title": "Tailliertes T-Shirt XL",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe XL?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.attributeeventmodulemapper",
+    "pk": 25,
+    "fields": {
+      "attribute": 32,
+      "title": "Tailiiertes T-Shirt XXL",
+      "text": "Wie viele taillierte T-Shirts braucht ihr in der Größe XXL?",
+      "is_required": false,
+      "min_length": 0,
+      "max_length": 0,
+      "tooltip": null,
+      "default_value": null,
+      "field_type": null,
+      "icon": null,
+      "max_entries": 1
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+    "fields": {
+      "created_at": "2022-03-10T11:46:18.946Z",
+      "updated_at": "2022-03-28T16:29:06.456Z",
+      "name": "DPV goLd",
+      "technical_name": "dpv-gold",
+      "short_description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
+      "long_description": "",
+      "cloud_link": null,
+      "event_url": null,
+      "location": 1,
+      "start_date": "2022-09-16T14:00:00Z",
+      "end_date": "2022-09-18T09:00:00Z",
+      "registration_deadline": "2022-06-01T19:59:59Z",
+      "registration_start": "2022-02-28T23:00:01Z",
+      "last_possible_update": "2022-09-01T19:59:59Z",
+      "invitation_code": "DPVGOLD",
+      "invitation_code_single": "1234",
+      "invitation_code_group": "5678",
+      "is_public": true,
+      "keycloak_path": 3,
+      "keycloak_admin_path": 3,
+      "limited_registration_hierarchy": 493,
+      "single_registration": "E",
+      "group_registration": "O",
+      "personal_data_required": true,
+      "theme": 3,
+      "email_set": 1,
+      "responsible_persons": [
+        2
+      ],
+      "tags": [
+        3,
+        4
+      ],
+      "event_planer_modules": [
+        1,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": "1105a19c-0ffb-4242-b662-3556a083346c",
+    "fields": {
+      "created_at": "2022-03-10T12:48:32.515Z",
+      "updated_at": "2022-03-28T09:05:44.901Z",
+      "name": "VIA23 DPV Verbandslager",
+      "technical_name": "via23",
+      "short_description": "",
+      "long_description": "",
+      "cloud_link": null,
+      "event_url": null,
+      "location": 2,
+      "start_date": "2023-05-26T14:00:00Z",
+      "end_date": "2023-05-30T09:00:00Z",
+      "registration_deadline": "2023-02-01T21:59:59Z",
+      "registration_start": "2022-03-13T23:00:01Z",
+      "last_possible_update": "2023-04-01T19:59:59Z",
+      "invitation_code": "AAAA",
+      "invitation_code_single": "",
+      "invitation_code_group": "",
+      "is_public": true,
+      "keycloak_path": 4,
+      "keycloak_admin_path": 4,
+      "limited_registration_hierarchy": 493,
+      "single_registration": "N",
+      "group_registration": "R",
+      "personal_data_required": false,
+      "theme": 1,
+      "email_set": null,
+      "responsible_persons": [
+        2
+      ],
+      "tags": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "event_planer_modules": [
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": "456953a2-7db5-45dc-8e05-7a4168105e88",
+    "fields": {
+      "created_at": "2022-03-22T21:25:27.169Z",
+      "updated_at": "2022-03-28T15:05:31.551Z",
+      "name": "Bundesfahrt 2022",
+      "technical_name": "bundesfahrt",
+      "short_description": "Bundesfahrt & Kaperfahrt",
+      "long_description": "<p>2021 konnte unsere Bundesfahrt wegen der Corona-Pandemie leider nicht stattfinden, aufgeschoben ist aber nicht aufgehoben. Daher führt es unseren Bund 2022 wieder gemeinsam auf Fahrt in eine Region Norddeutschlands (Nahe der dänischen Grenze). Neben der Bundesfahrt wird es mit der Kaperfahrt auch eine Meutenfahrt geben und ein Aufbaulager (beides im Vorfeld). &nbsp;</p>",
+      "cloud_link": null,
+      "event_url": null,
+      "location": 3,
+      "start_date": "2022-07-30T10:00:00Z",
+      "end_date": "2022-08-06T10:00:00Z",
+      "registration_deadline": "2022-04-17T22:00:00Z",
+      "registration_start": "2022-02-28T23:00:00Z",
+      "last_possible_update": "2022-04-17T22:00:00Z",
+      "invitation_code": "bf2022",
+      "invitation_code_single": "",
+      "invitation_code_group": "",
+      "is_public": true,
+      "keycloak_path": 5,
+      "keycloak_admin_path": 5,
+      "limited_registration_hierarchy": 2,
+      "single_registration": "E",
+      "group_registration": "R",
+      "personal_data_required": true,
+      "theme": 2,
+      "email_set": 2,
+      "responsible_persons": [
+        2
+      ],
+      "tags": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "event_planer_modules": [
+        1,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+    "fields": {
+      "created_at": "2022-03-10T11:43:48.710Z",
+      "updated_at": "2022-03-10T11:43:48.710Z",
+      "name": "Standard",
+      "technical_name": "standard",
+      "short_description": "",
+      "long_description": "",
+      "cloud_link": null,
+      "event_url": null,
+      "location": null,
+      "start_date": null,
+      "end_date": null,
+      "registration_deadline": null,
+      "registration_start": null,
+      "last_possible_update": null,
+      "invitation_code": "AAAA",
+      "invitation_code_single": "",
+      "invitation_code_group": "",
+      "is_public": false,
+      "keycloak_path": null,
+      "keycloak_admin_path": null,
+      "limited_registration_hierarchy": 493,
+      "single_registration": "N",
+      "group_registration": "N",
+      "personal_data_required": false,
+      "theme": 1,
+      "email_set": null,
+      "responsible_persons": [
+        2
+      ],
+      "tags": [],
+      "event_planer_modules": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 1,
+    "fields": {
+      "ordering": 1,
+      "module": 1,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": true,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 2,
+    "fields": {
+      "ordering": 2,
+      "module": 2,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": true,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 3,
+    "fields": {
+      "ordering": 2,
+      "module": 3,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": true,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 4,
+    "fields": {
+      "ordering": 3,
+      "module": 8,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        10
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 5,
+    "fields": {
+      "ordering": 4,
+      "module": 7,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": true,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        11
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 6,
+    "fields": {
+      "ordering": 999,
+      "module": 4,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 7,
+    "fields": {
+      "ordering": 999,
+      "module": 5,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 8,
+    "fields": {
+      "ordering": 999,
+      "module": 6,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 9,
+    "fields": {
+      "ordering": 999,
+      "module": 9,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        8
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 10,
+    "fields": {
+      "ordering": 999,
+      "module": 10,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 11,
+    "fields": {
+      "ordering": 999,
+      "module": 11,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 12,
+    "fields": {
+      "ordering": 0,
+      "module": 1,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 13,
+    "fields": {
+      "ordering": 1,
+      "module": 14,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 14,
+    "fields": {
+      "ordering": 4,
+      "module": 9,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        8,
+        19
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 15,
+    "fields": {
+      "ordering": 5,
+      "module": 8,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        10
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 16,
+    "fields": {
+      "ordering": 6,
+      "module": 7,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        11
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 17,
+    "fields": {
+      "ordering": 3,
+      "module": 11,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 18,
+    "fields": {
+      "ordering": 999,
+      "module": 12,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 24,
+    "fields": {
+      "ordering": 999,
+      "module": 13,
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "required": false,
+      "overwrite_description": null,
+      "standard": true,
+      "attributes": [
+        18
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 25,
+    "fields": {
+      "ordering": 0,
+      "module": 1,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 26,
+    "fields": {
+      "ordering": 1,
+      "module": 2,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 27,
+    "fields": {
+      "ordering": 5,
+      "module": 7,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        11
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 28,
+    "fields": {
+      "ordering": 4,
+      "module": 8,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        10
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 30,
+    "fields": {
+      "ordering": 2,
+      "module": 12,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 31,
+    "fields": {
+      "ordering": 3,
+      "module": 13,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        18
+      ]
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 1,
+    "fields": {
+      "name": "Bett",
+      "description": "",
+      "price": "50.00",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 2,
+    "fields": {
+      "name": "Zeltplatz",
+      "description": "",
+      "price": "25.00",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 3,
+    "fields": {
+      "name": "Kaperfahrt",
+      "description": "Teilnahme nur an der Kaperfahrt vom 30. Juli - 2. August",
+      "price": "50.00",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 4,
+    "fields": {
+      "name": "Bundesfahrt",
+      "description": "Teilnahme nur an der Bundesfahrt vom 2.- 6. August",
+      "price": "50.00",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 5,
+    "fields": {
+      "name": "Kaperfahrt und Bundesfahrt",
+      "description": "Teilnahme an der Bundesfahrt und an der Kaperfahrt vom 30. Juli - 06. August",
+      "price": "100.00",
+      "bookable_from": null,
+      "bookable_till": null,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 6,
+    "fields": {
+      "name": "Tagesgast Mittwoch",
+      "description": "Tagesgast",
+      "price": "15.00",
+      "bookable_from": null,
+      "bookable_till": "2022-07-30T10:00:00Z",
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 7,
+    "fields": {
+      "name": "Tagesgast Donnerstag",
+      "description": "Tagesgast",
+      "price": "15.00",
+      "bookable_from": null,
+      "bookable_till": "2022-07-30T10:00:00Z",
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 8,
+    "fields": {
+      "name": "Tagesgast Freitag",
+      "description": "Tagesgast",
+      "price": "15.00",
+      "bookable_from": null,
+      "bookable_till": "2022-07-30T10:00:00Z",
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 9,
+    "fields": {
+      "name": "Tagesgast",
+      "description": "Du bist nur am Samstag dabei",
+      "price": "25.00",
+      "bookable_from": null,
+      "bookable_till": "2022-09-16T14:00:00Z",
+      "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.standardeventtemplate",
+    "pk": 1,
+    "fields": {
+      "name": "Standard",
+      "event": "54929341-060c-4e32-bb39-8ba5ba6e6590",
+      "introduction": 1,
+      "summary": 5,
+      "registration": 3,
+      "personal_registration": 2,
+      "letter": 4,
+      "planer_modules": [
+        1,
+        3
+      ],
+      "other_required_modules": [
+        4
+      ],
+      "other_optional_modules": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        18,
+        24
+      ]
+    }
+  }
+]

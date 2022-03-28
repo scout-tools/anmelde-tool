@@ -17,12 +17,23 @@
           </div>
           <v-btn
             class="mt-10"
-            color="secondary"
+            color="success"
             x-large
-            @click="$router.push({ name: 'loginParticipants' })"
+            @click="onLoginClicked"
+            v-if="!isAuth"
           >
-            <v-icon left>mdi-calendar-plus</v-icon>
-            Zur Anmeldung
+            <v-icon left>mdi-rocket-launch</v-icon>
+            zum Login
+          </v-btn>
+          <v-btn
+            class="mt-10"
+            color="success"
+            x-large
+            @click="$router.push({ name: 'eventOverview' })"
+            v-if="isAuth"
+          >
+            <v-icon left>mdi-rocket-launch</v-icon>
+            Zu den Anmeldungen
           </v-btn>
         </v-layout>
       </v-parallax>
@@ -32,7 +43,7 @@
       <v-container>
         <v-layout column align-center justify-center class="white--text">
           <v-flex xs12 class="text-xs-center">
-            <img height="200px" :src="logoPath" />
+            <img height="200px" :src="getLogoPath" alt="f" />
           </v-flex>
         </v-layout>
       </v-container>
@@ -46,8 +57,7 @@
               Der beste Weg, um große Anmeldezahlen übersichtlich zu gestalten.
             </h2>
             <span class="subheading">
-              Kein E-Mail Krieg. Keine Missverständnisse. Zeit für das
-              Wesentliche.
+              Keine E-Mail Missverständnisse. Zeit für das Wesentliche.
             </span>
           </div>
         </v-flex>
@@ -113,8 +123,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import basicInfoMixin from '@/mixins/basicInfoMixin';
+import authMixin from '@/mixins/authMixin';
 
 export default {
+  mixins: [basicInfoMixin, authMixin],
   data: () => ({
     title: 'Endorfine',
     email: '',
@@ -132,8 +145,10 @@ export default {
       return require(`./../../assets/${this.theme}/image1.jpg`); // eslint-disable-line
     },
   },
+  methods: {
+    onLoginClicked() {
+      this.$router.push({ name: 'redirectKeycloak' });
+    },
+  },
 };
 </script>
-
-<style>
-</style>

@@ -1,0 +1,182 @@
+[
+  {
+    "model": "basic.description",
+    "pk": 1,
+    "fields": {
+      "created_at": "2022-03-20T16:08:53.236Z",
+      "updated_at": "2022-03-20T16:11:26.463Z",
+      "public": true,
+      "question": "Zusammenfassung",
+      "answer": "Unser Ziel ist es so wenig persönliche Daten wie möglich zu erfassen, zu verarbeiten und natürlich auch zu speichern. Wir betreiben Datenvermeidung und setzen technisch hohe Maßstäbe an.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 2,
+    "fields": {
+      "created_at": "2022-03-20T16:09:08.315Z",
+      "updated_at": "2022-03-20T16:29:05.279Z",
+      "public": true,
+      "question": "Datenspeicherung für nicht \"eingeloggte User\"",
+      "answer": "Wir speichern keine Daten von nicht eingeloggten Besuchern dauerhaft. Wir nutzen auch keinerlei Cookies, um deinen digitalen Fingerabdruck zu speichern. Unser Server Anbieter hat ebenfalls nicht die Möglichkeit deine Daten zu verarbeiten. <br> <br>Aus technischen Gründen verarbeiten unsere Server deine persönlichen Daten für die Dauer des Besuchs auf unserer Seite. Wir verarbeiten deine IP-Adresse, damit wir in der Lage sind deine Anfrage zum Seitenaufruf zu beantworten. Alle Logdateien werden anonymisiert gespeichert und sich in keine weise nutzbar um dich als Person zu identifizieren.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 3,
+    "fields": {
+      "created_at": "2022-03-20T16:09:18.439Z",
+      "updated_at": "2022-03-20T16:17:14.461Z",
+      "public": true,
+      "question": "Datenschutz für \"eingeloggte User\"",
+      "answer": "Um sich einzuloggen müssen wir deine persönlichen Daten dauerhaft speichern. Es dient dem Zweck des Anmeldetools, dass wir deine Anmeldung dir zuordnen können. Dazu speichern wir: <ul><li>Deine E-Mail-Adresse</li><li>Deinen Pfadfindernamen</li><li>Ggf. deine Telefonnummer (die Fahrtenleitung entscheidet darüber, ob das Feld verpflichtend ist)</li></ul>",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 4,
+    "fields": {
+      "created_at": "2022-03-20T16:09:42.671Z",
+      "updated_at": "2022-03-20T16:18:28.056Z",
+      "public": true,
+      "question": "Empfänger / Weitergabe von Daten (an Dritte )",
+      "answer": "Deine Persönlichen Daten sind grundsätzlich für zwei Personengruppen sichtbar: <br> <br> <b>Fahrtenleitungen:</b> Jede Fahrtenleitung hat Zugriff auf deinen Namen, deine E-Mail-Adresse und deine Telefonnummer nachdem zu dich für die Fahrt ausdrücklich als Verantwortlicher eingetragen hast. <br> <br> <b>Administratoren vom Anmelde-Tool:</b> Um den ordnungsgemäßen Betrieb des Anmelde-Tools zu gewährleisten haben ausdrücklich vom Deutschen Pfadfinderverband eV. ausgewählte Personen Zugriff auf die Daten. Diese Personen können wechseln und werden protokolliert. <br> <br> <b>Dritte: </b> Darüberhinaus erfolg keine Datenweitergabe an Dritte.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 5,
+    "fields": {
+      "created_at": "2022-03-20T16:09:59.421Z",
+      "updated_at": "2022-03-20T16:18:22.335Z",
+      "public": true,
+      "question": "Verschlüsselung",
+      "answer": "Jede Kommunikation mit dem Anmelde-tool läuft über eine im Internet übliche SSL Verschlüsselung.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 6,
+    "fields": {
+      "created_at": "2022-03-20T16:10:22.124Z",
+      "updated_at": "2022-03-20T16:19:52.328Z",
+      "public": true,
+      "question": "Deine Rechte (z.B. Auskunft / Löschung)",
+      "answer": "Recht auf Auskunft (Artikel 15 der Datenschutz-Grundverordnung) <ul> <li> Recht auf Berichtigung (Artikel 16 der Datenschutz-Grundverordnung)</li> <li>Recht auf Löschung (\"Recht auf Vergessenwerden\") (Artikel 17 der Datenschutz-Grundverordnung) </li> <li>Recht auf Einschränkung der Verarbeitung (Artikel 18 der Datenschutz-Grundverordnung) </li> <li> Recht auf Datenübertragbarkeit (Artikel 20 der Datenschutz-Grundverordnung)</li> <li>Recht auf Widerspruch (Artikel 21 der Datenschutz-Grundverordnung)</li> <li>Recht auf Widerruf von Einwilligungen (Artikel 7 Absatz 3 der Datenschutz-Grundverordnung)</li> <li>Recht auf Beschwerde bei der Aufsichtsbehörde (Artikel 57 Absatz 1 Buchstabe f der Datenschutz-Grundverordnung)</li> </ul> <br>Wenn du eine dieser Rechte wahrnehmen willst kannst du uns jederzeit anschreiben. Wir werden dir dann individuell weiterhelfen. <br><br>Bei einer Auskunftsanfrage, die nicht schriftlich erfolgt und die nicht anderweitig sicher verifiziert werden kann, musst du damit rechnen, dass wir Nachfragen stellen. Wir müssen sicherstellen, dass du die Person bist, für die du Dich ausgibst.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 7,
+    "fields": {
+      "created_at": "2022-03-20T16:13:45.351Z",
+      "updated_at": "2022-03-20T16:13:45.351Z",
+      "public": true,
+      "question": "Datenverarbeitung außerhalb der Europäischen Union",
+      "answer": "Wir nutzen für die Datenverarbeitung Server von „Amazon Web Services Inc.“ alle persönlichen Daten sind in den drei Rechenzentren eu-central-1 a,b,c also in Frankfurt gespeichert. Wir nutzen für die Speicherung und der Verarbeitung deiner persönlichen Daten keine Server außerhalb Deutschlands.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 8,
+    "fields": {
+      "created_at": "2022-03-20T16:14:03.133Z",
+      "updated_at": "2022-03-20T16:20:46.571Z",
+      "public": true,
+      "question": "EU-US Privacy Shield",
+      "answer": "Amazon ist ein US-Amerikanisches Unternehmen und seitdem der Europäische Gerichtshof das Privacy-Shield für ungültig erklärt hat ist die Rechtslage undurchsichtiger geworden. <br> <br>Amazon beschreibt die Rechtslage auf der Internetseite wie folgt: <br><br><i>AWS bietet Kunden eine Reihe von Möglichkeiten zur Einhaltung der europäischen Datenschutzgesetze. Beispielsweise können sich Kunden auf den AWS GDPR-Datenverarbeitungszusatz (Data Processing Addendum) verlassen, der die von der Artikel-29-Datenschutzgruppe genehmigten Standardvertragsklauseln enthält (Data Processing Addendum). Der Zusatz zur Datenverarbeitung steht allen AWS-Kunden zur Verfügung, die Daten aus der EU in eine der AWS-Regionen in der ganzen Welt übertragen, ob nun in die USA oder nicht. Der Zusatz zur Datenverarbeitung bietet Kunden die Sicherheit, dass AWS die Daten der Kunden nach den gleichen hohen Sicherheits- und Datenschutzstandards behandelt, die sie auch in der EU erhalten würden.</i><br>Weitere Informationen findest du <a href=\"https://aws.amazon.com/de/compliance/eu-us-privacy-shield-faq/\">hier</a>",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 9,
+    "fields": {
+      "created_at": "2022-03-20T16:14:23.857Z",
+      "updated_at": "2022-03-20T16:20:58.389Z",
+      "public": true,
+      "question": "Cookies",
+      "answer": "Wir speichern keine deiner Cookies, mit denen wir eine Person identifizieren können. <br> Wir tracken kein Nutzerverhalten. <br>Wir speichern keine Daten für eine Webeanalyse. <br>Wir nutzen keinerlei Marketing-Tools. <br><br>Cookies werden nur für die technisch saubere Nutzung der App verwendet.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 10,
+    "fields": {
+      "created_at": "2022-03-20T16:14:37.053Z",
+      "updated_at": "2022-03-20T16:24:47.091Z",
+      "public": false,
+      "question": "Verantwortlich für die Datenverarbeitung",
+      "answer": "Deutscher Pfadfinderverband e.V.<br>'Robert-Perthel-Str. 79<br>50739 Köln<br>'Telefon:(0221) 524018<br><br>Telefax: (0221) 524015\r\n<br>Weitere Informationen findest du <a href=\"https://dpvonline.de/impressum/\">hier</a>.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 11,
+    "fields": {
+      "created_at": "2022-03-20T16:14:55.999Z",
+      "updated_at": "2022-03-20T16:25:00.564Z",
+      "public": true,
+      "question": "Datenschutzbeauftragter",
+      "answer": "Wir nehmen das Thema Datenschutz besonders ernst, weil es einer der Hauptgründe ist warum das Tool entwickelt wurde. <br>Wir sind gesetzlich nicht verpflichtet, einen Datenschutzbeauftragten zu benennen und haben auch keinen Datenschutzbeauftragten benannt.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 12,
+    "fields": {
+      "created_at": "2022-03-20T16:15:14.794Z",
+      "updated_at": "2022-03-20T16:25:09.783Z",
+      "public": true,
+      "question": "Änderung dieser Datenschutzhinweise",
+      "answer": "Wir überarbeiten diese Datenschutzhinweise bei Änderungen an dieser Internetseite oder bei sonstigen Anlässen, die dies erforderlich machen. Die jeweils aktuelle Fassung findest du stets auf dieser Internetseite.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 13,
+    "fields": {
+      "created_at": "2022-03-20T16:15:27.897Z",
+      "updated_at": "2022-03-20T16:25:16.121Z",
+      "public": true,
+      "question": "Sonstige Fragen zum Datenschutz",
+      "answer": "Wenn du Fragen zum Datenschutz hast, kannst du Dich gerne uns mich wenden.",
+      "type": "P"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 14,
+    "fields": {
+      "created_at": "2022-03-20T16:31:52.523Z",
+      "updated_at": "2022-03-20T16:32:16.225Z",
+      "public": true,
+      "question": "Wer steht hinter dem Anmelde-Tool?",
+      "answer": "Das Anmelde-Tool haben Robert (DPBM) und Hagi (DPBM) in verdammt vielen Stunden sich ausgedacht und programmiert. Außerdem haben Daniel (DPBM), Thea (DPBM) und Paul (PBNL) mitgewirkt. Obi hat tatkräftig bei der integration ins digitale DPV Universum unterstützt",
+      "type": "FAQ"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 15,
+    "fields": {
+      "created_at": "2022-03-20T16:32:13.661Z",
+      "updated_at": "2022-03-20T16:32:13.661Z",
+      "public": true,
+      "question": "Wie funktioniert das Anmelde-Tool?",
+      "answer": "Durch Magie.",
+      "type": "FAQ"
+    }
+  }
+]

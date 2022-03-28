@@ -1,62 +1,40 @@
 <template>
   <v-app>
-    <top-menu-main v-show="!isLoginOnly"/>
-    <div v-if="isRouterPageUndefined" class="fullsize pa-10">
-      <v-btn
-        class="ma-10"
-        @click="onRefreshClicked"
-        color="primary"
-      >
-        Weiter
-      </v-btn>
-    </div>
-    <router-view class="fullsize"/>
-    <footer-main v-show="!isLoginOnly"/>
+    <top-menu-main v-if="!isMobile" />
+    <router-view v-if="!isMobile" />
+    <v-container fluid v-else>
+      <v-row align="center" justify="center" class="ma-10">
+        Die Smartphone Version befindet sich noch in der Testphase.
+        Bitte wechsel zu einem größeren Bildschirm.
+      </v-row>
+      <v-row align="center" justify="center" class="ma-10">
+        <v-icon large color="error">mdi-cellphone-off</v-icon>
+      </v-row>
+    </v-container>
+    <gobal-snackbar ref="globalSnackbar" />
+    <footer-main class="mt-auto" />
   </v-app>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 import TopMenuMain from '@/components/TopMenu.vue';
 import FooterMain from '@/components/Footer.vue';
+import GobalSnackbar from '@/components/modals/GlobalSnackbar.vue';
 
 export default {
   name: 'Main',
   components: {
     TopMenuMain,
     FooterMain,
+    GobalSnackbar,
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData']),
-    userName() {
-      return this.getJwtData.email;
-    },
-    isSimpleUser() {
-      if (this.getJwtData) {
-        return !(this.getJwtData.groups.length || this.getJwtData.isStaff);
-      }
-      return true;
-    },
-    isRouterPageUndefined() {
-      return this.$router.history.current.name === null;
-    },
-    isLoginOnly() {
-      return this.$router.history.current.query.header === 'no';
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown;
     },
   },
-  methods: {
-    onRefreshClicked() {
-      this.$router.go();
-    },
-    onGoToStartpageClicked() {
-      this.$router.go();
-    },
+  mounted() {
+    this.$root.globalSnackbar = this.$refs.globalSnackbar;
   },
 };
 </script>
-
-<style scoped>
-.fullsize{
-  min-height: 95vh !important;
-}</style>

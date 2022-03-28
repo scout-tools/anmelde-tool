@@ -39,19 +39,19 @@
         hide-default-footer
         :item-class="rowClasses"
       >
-        <template v-slot:item.isConfirmed="{ item }">
+        <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
               item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
             }}</v-icon
           >
         </template>
-        <template v-slot:item.createdAt="{ item }">
+        <template v-slot:[`item.createdAt`]="{ item }">
           {{
             getDateFormat(item.createdAt)
           }}
         </template>
-        <template v-slot:item.numberParticipant="{ item }">
+        <template v-slot:[`item.numberParticipant`]="{ item }">
           <td v-html="getNumberParticipant(item)" disabled></td>
         </template>
         <template slot="body.append">
@@ -67,7 +67,8 @@
 </template>
 
 <script>
-import { serviceMixin } from '@/mixins/serviceMixin';
+import axios from 'axios';
+import serviceMixin from '@/mixins/serviceMixin';
 import moment from 'moment'; // eslint-disable-line
 
 export default {
@@ -98,34 +99,8 @@ export default {
     eventId() {
       return this.$route.params.id;
     },
-    isAuthenticated() {
-      return this.$store.getters.isAuthenticated;
-    },
     getItems() {
-      let data = this.data.filter(
-        (item) =>
-          item.isConfirmed === this.filter.justConfirmed || // eslint-disable-line
-          !this.filter.justConfirmed,
-      );
-
-      data = data.filter(
-        (item) =>
-          // eslint-disable-next-line
-          !(
-            item.verbandName === 'DPV' && // eslint-disable-line
-            !this.filter.withDpv
-          ),
-      );
-
-      data = data.filter(
-        (item) =>
-          // eslint-disable-next-line
-          !(
-            item.verbandName === 'BdP' && // eslint-disable-line
-            !this.filter.withBdp
-          ),
-      );
-      return data;
+      return this.data;
     },
     getTotalParticipant() {
       const numberParticipant = this.getItems.reduce(
@@ -165,9 +140,13 @@ export default {
       return `${item.numberParticipant || 0}`;
     },
     getData(eventId) {
-      this.getRegistrationStats(eventId).then((responseObj) => {
+      this.getRegistrationSummary(eventId).then((responseObj) => {
         this.data = responseObj.data;
       });
+    },
+    async getRegistrationSummary(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
+      return axios.get(path);
     },
     getDateFormat(value) {
       return moment(value).format('DD.MM.YYYY');

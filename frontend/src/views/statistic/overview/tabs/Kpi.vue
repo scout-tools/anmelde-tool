@@ -32,9 +32,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { serviceMixin } from '@/mixins/serviceMixin';
-import kpiCard from '@/components/kpi/Card.vue';
+import serviceMixin from '@/mixins/serviceMixin';
 import kpiCardList from '@/components/kpi/CardList.vue';
+import kpiCard from '@/components/kpi/Card.vue';
 
 export default {
   mixins: [serviceMixin],
@@ -109,7 +109,7 @@ export default {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
     getData(eventId) {
-      this.getRegistrationStats(eventId).then((responseObj) => {
+      this.getRegistrationSummary(eventId).then((responseObj) => {
         this.data = responseObj.data;
       });
     },

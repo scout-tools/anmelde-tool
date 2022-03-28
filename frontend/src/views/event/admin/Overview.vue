@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-flex ma-3 lg9>
         <v-layout column>
-          <v-card v-if="!isLoading">
+          <v-card v-if="!loading">
             <v-card-title class="text-center justify-center py-6">
               Hier werden die Fahrten angezeigt, die du bearbeiten darfst.
             </v-card-title>
@@ -119,19 +119,19 @@ import axios from 'axios';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 // eslint-disable-next-line import/extensions
-import ConfirmRegistrationEditModal from '@/views/registration/create/steps/dialog/ConfirmRegistrationEditModal';
+import ConfirmRegistrationEditModal from '@/components/dialog/ConfirmRegistrationEditModal.vue';
 
 export default {
   components: { ConfirmRegistrationEditModal },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     items: [],
-    isLoading: true,
+    loading: true,
     userExtendedItems: [],
   }),
 
   computed: {
-    ...mapGetters(['isAuthenticated', 'getJwtData']),
+    ...mapGetters(['isAuthenticated']),
     getItems() {
       return this.items.filter((item) => item.canEdit);
     },
@@ -144,16 +144,10 @@ export default {
       }
       return false;
     },
-    isSimpleUser() {
-      if (this.getJwtData) {
-        return !(this.getJwtData.groups.length || this.getJwtData.isStaff);
-      }
-      return true;
-    },
     isStaff() {
-      if (this.getJwtData) {
-        return this.getJwtData.isStaff;
-      }
+      // if (this.getJwtData) {
+      //   return this.getJwtData.isStaff;
+      // }
       return false;
     },
   },
@@ -185,20 +179,20 @@ export default {
       return 0;
     },
     isInTimeRange(date1, date2) {
-      const startTime = new Date(date1).getTime();
-      const endTime = new Date(date2).getTime();
+      const startDate = new Date(date1).getTime();
+      const endDate = new Date(date2).getTime();
       const today = new Date().getTime();
 
-      return today > startTime && today < endTime;
+      return today > startDate && today < endDate;
     },
     getLagerText(item) {
-      const startTime = new Date(item.startTime);
-      const endTime = new Date(item.endTime);
+      const startDate = new Date(item.startDate);
+      const endDate = new Date(item.endDate);
       const dateFormat = 'll';
 
-      const text1 = `Termin: ${moment(startTime)
+      const text1 = `Termin: ${moment(startDate)
         .lang('de')
-        .format(dateFormat)} bis ${moment(endTime)
+        .format(dateFormat)} bis ${moment(endDate)
         .lang('de')
         .format(dateFormat)}`;
       return text1;
@@ -282,7 +276,7 @@ export default {
     },
   },
   mounted() {
-    this.isLoading = true;
+    this.loading = true;
 
     Promise.all([
       this.getEvent(),
@@ -310,11 +304,11 @@ export default {
           this.goToSettings();
         }
 
-        this.isLoading = false;
+        this.loading = false;
       })
       .catch((error) => {
         this.errormsg = error.response.data.message;
-        this.isLoading = false;
+        this.loading = false;
       });
   },
 };

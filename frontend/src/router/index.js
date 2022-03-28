@@ -1,21 +1,26 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import CheckTokenMain from '@/views/login/CheckToken.vue';
-import EventOverview from '@/views/event/overview/Overview.vue';
-import EventAdminOverview from '@/views/event/admin/Overview.vue';
-import MasterDataOverview from '@/views/event/data/Overview.vue';
-import SettingsOverview from '@/views/settings/Main.vue';
 import SettingsUser from '@/views/settings/user/Main.vue';
+import EventOverview from '@/views/event/overview/Overview.vue';
+
+import MasterDataOverview from '@/views/event/data/Overview.vue';
+
+import StatisticMain from '@/views/statistic/Main.vue';
+import StatisticOverview from '@/views/statistic/overview/Main.vue';
+
+import SettingsOverview from '@/views/settings/Main.vue';
 import SettingsConfig from '@/views/settings/config/Main.vue';
-import StatisticOverview from '@/views/statistic/Main.vue';
-import RegistrationForm from '@/views/registration/Main.vue';
-import RegistrationCreate from '@/views/registration/create/Main.vue';
 import LandingPage from '@/views/landingPage/Main.vue';
-import CreateEvent from '@/views/event/create/Main.vue';
-import LoginParticipantsMain from '@/views/login/LoginParticipants.vue';
-import LoginInteralsMain from '@/views/login/LoginInterals.vue';
+import RedirectKeycloak from '@/views/landingPage/RedirectKeycloak.vue';
 import Impressum from '@/views/footer/Impressum.vue';
 import Datenschutz from '@/views/footer/Datenschutz.vue';
+import FAQ from '@/views/footer/FAQ.vue';
+import EventPlaner from '@/views/eventPlaner/Main.vue';
+import PlanEvent from '@/views/eventPlaner/create/Main.vue';
+
+import registrationNew from '@/views/registration/Main.vue';
+import registrationEdit from '@/views/registration/CreateUpdateContainer.vue';
+import registrationCompleted from '@/views/registration/Completed.vue';
 
 Vue.use(VueRouter);
 
@@ -26,41 +31,39 @@ const routes = [
     component: LandingPage,
   },
   {
-    path: '/login-participants',
-    name: 'loginParticipants',
-    component: LoginParticipantsMain,
+    path: '/redirect-keycloak',
+    name: 'redirectKeycloak',
+    component: RedirectKeycloak,
   },
   {
-    path: '/login-interals',
-    name: 'loginInterals',
-    component: LoginInteralsMain,
+    path: '/eventplaner',
+    name: 'eventPlaner',
+    component: EventPlaner,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
-    path: '/check-token',
-    name: 'checkToken',
-    component: CheckTokenMain,
-  },
-  {
-    path: '/event/create',
-    name: 'createEvent',
-    component: CreateEvent,
-  },
-  {
-    path: '/event/update/:id',
-    name: 'updateEvent',
-    component: CreateEvent,
-    props: true,
+    path: '/planevent/:id/:step?',
+    name: 'planEvent',
+    component: PlanEvent,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/event/overview',
     name: 'eventOverview',
     component: EventOverview,
+    meta: {
+      requiresAuth: true,
+    },
   },
-  {
-    path: '/event/adminOverview',
-    name: 'eventAdminOverview',
-    component: EventAdminOverview,
-  },
+  // {
+  //   path: '/event/adminOverview',
+  //   name: 'eventAdminOverview',
+  //   component: EventAdminOverview,
+  // },
   {
     path: '/data/overview',
     name: 'dataOverview',
@@ -75,6 +78,27 @@ const routes = [
     path: '/settings/user',
     name: 'settingsUser',
     component: SettingsUser,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/registration/:id',
+    name: 'registrationNew',
+    component: registrationNew,
+    props: true,
+  },
+  {
+    path: '/registration/edit/:id',
+    name: 'registrationEdit',
+    component: registrationEdit,
+    props: true,
+  },
+  {
+    path: '/registration/completed/:id',
+    name: 'registrationCompleted',
+    component: registrationCompleted,
+    props: true,
   },
   {
     path: '/settings/config',
@@ -84,20 +108,14 @@ const routes = [
   {
     path: '/statistic/:id',
     name: 'statisticOverview',
-    component: StatisticOverview,
-    props: true,
-  },
-  {
-    path: '/registration/form/:id',
-    name: 'registrationForm',
-    component: RegistrationForm,
-    props: true,
-  },
-  {
-    path: '/registration/create/:id',
-    name: 'registrationCreate',
-    component: RegistrationCreate,
-    props: true,
+    component: StatisticMain,
+    children: [
+      {
+        path: 'overview',
+        name: 'statistic-overview',
+        component: StatisticOverview,
+      },
+    ],
   },
   {
     path: '/impressum',
@@ -109,12 +127,40 @@ const routes = [
     name: 'datenschutz',
     component: Datenschutz,
   },
+  {
+    path: '/faq',
+    name: 'faq',
+    component: FAQ,
+  },
 ];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+function sleep(ms) {
+  // eslint-disable-next-line no-promise-executor-return
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    // We wait for Keycloak init, then we can call all methods safely
+    while (router.app.$keycloak.createLoginUrl === null) {
+      // eslint-disable-next-line no-await-in-loop
+      await sleep(100);
+    }
+    if (router.app.$keycloak.authenticated) {
+      next();
+    } else {
+      const loginUrl = router.app.$keycloak.createLoginUrl();
+      window.location.replace(loginUrl);
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

@@ -1,9 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt import views as jwt_views
+from django_ses.views import SESEventWebhookView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('basic.urls')),
-    path('auth/', include('anmeldung_auth.urls')),
+    path('basic/', include('basic.urls')),
+    path('auth/', include('authentication.urls')),
+    path('event/', include('event.urls')),
+    path(r'ses/event-webhook/', SESEventWebhookView.as_view(), name='handle-event-webhook'),
 ]
+

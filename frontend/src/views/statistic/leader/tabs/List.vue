@@ -12,20 +12,6 @@
                   hide-details
                 ></v-checkbox>
               </v-col>
-              <v-col cols="4">
-                <v-checkbox
-                  v-model="filter.withBdp"
-                  label="BdP"
-                  hide-details
-                ></v-checkbox>
-              </v-col>
-              <v-col cols="4">
-                <v-checkbox
-                  v-model="filter.withDpv"
-                  label="DPV"
-                  hide-details
-                ></v-checkbox>
-              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
@@ -41,19 +27,17 @@
         hide-default-footer
         :item-class="rowClasses"
       >
-        <template v-slot:item.isConfirmed="{ item }">
+        <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
               item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
             }}</v-icon
           >
         </template>
-        <template v-slot:item.createdAt="{ item }">
-          {{
-            moment(item.createdAt).format('DD.MM.YYYY')
-          }}
+        <template v-slot:[`item.createdAt`]="{ item }">
+          {{ moment(item.createdAt).format('DD.MM.YYYY') }}
         </template>
-        <template v-slot:item.numberParticipant="{ item }">
+        <template v-slot:[`item.numberParticipant`]="{ item }">
           <td v-html="getNumberParticipant(item)" disabled></td>
         </template>
         <template v-slot:expanded-item="{ item }">
@@ -74,7 +58,7 @@
 </template>
 
 <script>
-import { serviceMixin } from '@/mixins/serviceMixin';
+import serviceMixin from '@/mixins/serviceMixin';
 import moment from 'moment'; // eslint-disable-line
 
 export default {
@@ -83,16 +67,14 @@ export default {
     data: [],
     expanded: [],
     filter: {
-      withDpv: true,
-      withBdp: true,
       justConfirmed: false,
     },
     headers: [
       { text: 'Bestätigt', value: 'isConfirmed' },
       { text: 'Datum', value: 'createdAt' },
-      { text: 'Bund', value: 'bundName' },
-      { text: 'Name', value: 'scoutOrganisation' },
-      { text: 'Teilnehmende (Helfer)', value: 'numberParticipant' },
+      { text: 'Bund', value: 'scoutOrganisation.bund' },
+      { text: 'Name', value: 'scoutOrganisation.name' },
+      { text: 'Teilnehmende', value: 'participantCount' },
       { text: '', value: 'data-table-expand' },
     ],
     API_URL: process.env.VUE_APP_API,
@@ -100,7 +82,6 @@ export default {
     responseObj: null,
     itemsPerPage: 1000,
   }),
-
   computed: {
     eventId() {
       return this.$route.params.id;
@@ -109,28 +90,10 @@ export default {
       return this.$store.getters.isAuthenticated;
     },
     getItems() {
-      let data = this.data.filter(
+      const data = this.data.filter(
         (item) =>
           item.isConfirmed === this.filter.justConfirmed || // eslint-disable-line
           !this.filter.justConfirmed,
-      );
-
-      data = data.filter(
-        (item) =>
-          // eslint-disable-next-line
-          !(
-            item.verbandName === 'DPV' && // eslint-disable-line
-            !this.filter.withDpv
-          ),
-      );
-
-      data = data.filter(
-        (item) =>
-          // eslint-disable-next-line
-          !(
-            item.verbandName === 'BdP' && // eslint-disable-line
-            !this.filter.withBdp
-          ),
       );
       return data;
     },
@@ -147,20 +110,22 @@ export default {
       return `${numberParticipant || 0} (${numberHelper || 0})`;
     },
     getTotalStamm() {
-      const numberStammDpv = this.getItems.filter((item) => item.verbandName === 'DPV').length;
-      const numberStammBdp = this.getItems.filter((item) => item.verbandName === 'BdP').length;
+      const numberStammDpv = this.getItems.filter(
+        (item) => item.verbandName === 'DPV',
+      ).length;
+      const numberStammBdp = this.getItems.filter(
+        (item) => item.verbandName === 'BdP',
+      ).length;
 
-      return `Stämme DPV: ${numberStammDpv || 0} - Stämme BdP:${numberStammBdp || 0}`;
+      return `Stämme DPV: ${numberStammDpv || 0} - Stämme BdP:${
+        numberStammBdp || 0
+      }`;
     },
   },
 
   methods: {
     getBody(item) {
-      return `Stadt: ${item.stammCity}\nVerantwortlich: ${JSON.stringify(
-        item.responsiblePersons,
-      )
-        .replaceAll('","', '\n\t')
-        .replaceAll('[{"', '\n\t')}`;
+      return item.tags;
     },
     rowClasses(item) {
       if (item.verbandName === 'DPV') {
@@ -172,8 +137,8 @@ export default {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
     getData(eventId) {
-      this.getRegistrationStats(eventId).then((responseObj) => {
-        this.data = responseObj.data;
+      this.getRegistrationSummary(eventId).then((responseObj) => {
+        this.data = responseObj.data[0].registrationSet;
       });
     },
   },

@@ -1,0 +1,56 @@
+from django.contrib.auth.models import Group
+
+from basic.models import ScoutHierarchy
+from rest_framework import serializers
+from .models import UserExtended
+
+
+class UserExtendedScoutHierarchySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ScoutHierarchy
+        fields = ('id', 'name', 'parent', 'zip_code')
+
+
+class UserExtendedShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserExtended
+        fields = (
+            'mobile_number',
+            'scout_name',
+        )
+
+
+class UserExtendedGetSerializer(serializers.ModelSerializer):
+    scout_organisation = UserExtendedScoutHierarchySerializer()
+
+    class Meta:
+        model = UserExtended
+        fields = (
+            'mobile_number',
+            'scout_name',
+            'scout_organisation',
+            'dsgvo_confirmed'
+        )
+
+
+class UserExtendedPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserExtended
+        fields = (
+            'mobile_number',
+            'scout_name',
+            'scout_organisation',
+            'dsgvo_confirmed'
+        )
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('id', 'name',)
+
+
+class EmailSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserExtended
+        fields = ('email_notifaction', 'sms_notifcation')
