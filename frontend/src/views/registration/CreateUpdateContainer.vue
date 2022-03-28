@@ -69,6 +69,7 @@ import Travel from './modules/Travel.vue';
 import TravelBack from './modules/TravelBack.vue';
 import LunchMeals from './modules/LunchMeals.vue';
 import Tshirts from './modules/Tshirts.vue';
+import ParticipantsPersonalGold from './modules/ParticipantsPersonalGold.vue';
 
 export default {
   components: {
@@ -77,6 +78,7 @@ export default {
     Introduction,
     Letter,
     ParticipantsPersonal,
+    ParticipantsPersonalGold,
     Summary,
     Tent,
     Travel,

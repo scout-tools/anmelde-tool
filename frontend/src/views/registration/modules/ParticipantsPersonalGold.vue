@@ -246,16 +246,6 @@ export default {
             lookupListDisplay: ['zipCode', 'city'],
           },
           {
-            name: 'Telefonnummer*',
-            techName: 'phoneNumber',
-            tooltip:
-              'Trage bitte eine Mobil- oder Festnetznummer ein unter der der_die Teilnehmer_in oder die Erziehungsberechtigten nach der Fahrt erreichbar sind.',
-            icon: 'mdi-phone',
-            mandatory: true,
-            fieldType: 'textfield',
-            default: '',
-          },
-          {
             name: 'Essenbesonderheiten',
             techName: 'eatHabit',
             tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
@@ -265,19 +255,6 @@ export default {
             lookupListDisplay: ['name'],
             fieldType: 'refCombo',
             default: '',
-          },
-          {
-            name: 'Position*',
-            techName: 'leader',
-            tooltip:
-              'Wenn die Person eine Führungsposition ausführt, bitte angeben',
-            icon: 'mdi-office-building ',
-            mandatory: false,
-            lookupPath: '/event/leader-types/',
-            lookupListDisplay: ['name'],
-            fieldType: 'enumCombo',
-            multiple: false,
-            default: 'N',
           },
           {
             name: 'Buchungsoption',

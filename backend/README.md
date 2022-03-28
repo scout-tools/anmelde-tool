@@ -40,7 +40,9 @@ Descriptions: `python -Xutf8 manage.py dumpdata basic.description -o data\main\0
 
 Basic: `python -Xutf8 manage.py dumpdata basic --exclude=basic.ZipCode --exclude=basic.description --exclude=basic.ScoutOrgaLevel --exclude=basic.ScoutHierarchy -o data\test\1_completeBasic.json`
 
-Event: `python -Xutf8 manage.py dumpdata event -o data\test\2_completeEvent.json`
+Email: `python -Xutf8 manage.py dumpdata email_services -o data\test\2_completeEmail.json`
+
+Event: `python -Xutf8 manage.py dumpdata event -o data\test\3_completeEvent.json`
 
 
 # Test mails
