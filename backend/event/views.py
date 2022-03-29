@@ -168,7 +168,7 @@ class EventStatisticsViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         if self.request.user.is_superuser:
-            return event_models.Event.objects.all()
+            return event_models.Event.objects.filter(is_public=True)
         else:
             return event_models.Event.objects.filter(Q(keycloak_path__in=self.request.user.groups.all())
                                                      | Q(responsible_persons=self.request.user)).distinct()
@@ -305,7 +305,7 @@ class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         if self.request.user.is_superuser:
-            return event_models.Event.objects.all()
+            return event_models.Event.objects.filter(is_public=True)
         else:
             list_parent_organistations = []
             iterator: basic_models.ScoutHierarchy = self.request.user.userextended.scout_organisation
