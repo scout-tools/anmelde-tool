@@ -10,6 +10,7 @@ import VueKeycloakJs from '@dsb-norge/vue-keycloak-js';
 import vuetifyMoney from 'vuetify-money';
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import VueMask from 'v-mask';
+import VueGoogleCharts from 'vue-google-charts';
 
 import App from './App.vue';
 import router from './router';
@@ -21,6 +22,8 @@ import 'leaflet/dist/leaflet.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 require('moment/locale/de');
+
+Vue.use(VueGoogleCharts);
 
 Vue.config.productionTip = false;
 

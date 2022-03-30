@@ -210,6 +210,7 @@ export default {
       const promises = [];
       this.validate();
       if (!this.valid) {
+        this.saving = false;
         return;
       }
       this.moduleData.forEach((moduleItem) => {

@@ -11,6 +11,7 @@ export default {
     submitStep() {
       this.validate();
       if (!this.valid) {
+        this.saving = false;
         return;
       }
       this.$emit('submit');
@@ -30,7 +31,6 @@ export default {
         this.saving = false;
         return;
       }
-      this.$emit('saving', true);
       this.$emit('nextStep', force);
     },
     onSaving(state) {

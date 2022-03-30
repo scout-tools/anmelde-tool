@@ -34,10 +34,10 @@
                 <v-icon>mdi-currency-eur</v-icon>
               </v-tab>
 
-              <v-tab v-if="displayEventRoleTab(eventOverview, 4, 4)" href="#tab-5">
+              <!-- <v-tab v-if="displayEventRoleTab(eventOverview, 4, 4)" href="#tab-5">
                 Erlebnisangebot
                 <v-icon>mdi-run-fast</v-icon>
-              </v-tab>
+              </v-tab> -->
 
               <!-- <v-tab v-if="displayEventRoleTab(eventOverview, 1)" href="#tab-6">
                 Zusätze
@@ -52,8 +52,8 @@
                   <LeaderMain v-if="i === 2" />
                   <MapsMain v-if="i === 3" />
                   <CashMain v-if="i === 4" />
-                  <WorkshopMain v-if="i === 5" />
-                  <PdfGenerationMain v-if="i === 6"/>
+                  <!-- <WorkshopMain v-if="i === 5" />
+                  <PdfGenerationMain v-if="i === 6"/> -->
                 </v-card-text>
               </v-tab-item>
             </v-tabs-items>
@@ -71,7 +71,7 @@ import { mapGetters } from 'vuex';
 // import OverviewMain from './overview/Main.vue';
 import LeaderMain from './leader/Main.vue';
 import MapsMain from './maps/Main.vue';
-// import CashMain from './cash/Main.vue';
+import CashMain from './cash/Main.vue';
 // import WorkshopMain from './workshop/Main.vue';
 // import PdfGenerationMain from './downlaods/Main.vue';
 
@@ -79,7 +79,7 @@ export default {
   components: {
     MapsMain,
     LeaderMain,
-    // CashMain,
+    CashMain,
     // WorkshopMain,
     // PdfGenerationMain,
     // OverviewMain,
