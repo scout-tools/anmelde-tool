@@ -395,3 +395,18 @@ class EventSummarySerializer(serializers.ModelSerializer):
 
     def get_price(self, event: event_models.Event) -> float:
         return event.registration_set.aggregate(sum=Sum('registrationparticipant__booking_option__price'))['sum']
+
+
+class WorkshopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = event_models.Workshop
+        fields = '__all__'
+
+
+class WorkshopEventSummarySerializer(serializers.ModelSerializer):
+    supervisor = CurrentUserSerializer(many=False, read_only=True)
+
+
+    class Meta:
+        model = event_models.Workshop
+        fields = '__all__'

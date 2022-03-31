@@ -3,7 +3,11 @@ from django.contrib.admin import display
 
 from basic.models import AbstractAttribute
 from event.models import EventLocation, Event, BookingOption, EventModule, EventModuleMapper, \
-    AttributeEventModuleMapper, StandardEventTemplate, Registration, RegistrationParticipant, EventPlanerModule
+    AttributeEventModuleMapper, StandardEventTemplate, Registration, RegistrationParticipant, EventPlanerModule, \
+    Workshop, WorkshopParticipant
+
+admin.site.register(Workshop)
+admin.site.register(WorkshopParticipant)
 
 
 @admin.register(EventLocation)
