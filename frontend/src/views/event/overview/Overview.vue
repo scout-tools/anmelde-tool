@@ -58,17 +58,18 @@
                             id: item.id,
                           },
                         }"
+                        :is="!(item.canRegister && !getRegisteredId(item)) ? 'span' : 'router-link'"
                         style="text-decoration: none"
                         class="ma-3"
                       >
                         <v-tooltip bottom>
                           <template v-slot:activator="{ on, attrs }">
                             <v-btn
+                              v-bind="attrs"
+                              v-on="on"
                               :disabled="
                                 !(item.canRegister && !getRegisteredId(item))
                               "
-                              v-bind="attrs"
-                              v-on="on"
                             >
                               <v-icon fab color="info">
                                 mdi-account-multiple-plus
