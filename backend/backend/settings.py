@@ -181,7 +181,9 @@ CSRF_COOKIE_SECURE = True
 
 SITE_ID = 1
 
-if env.bool('USE_SES', False):
+SEND_MAIL = env.bool('USE_SES', False)
+
+if SEND_MAIL:
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_ACCESS_KEY_ID = env('AWS_SES_ACCESS_KEY_ID')
     AWS_SES_SECRET_ACCESS_KEY = env('AWS_SES_SECRET_ACCESS_KEY')

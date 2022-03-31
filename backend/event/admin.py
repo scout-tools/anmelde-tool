@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.admin import display
 
 from basic.models import AbstractAttribute
 from event.models import EventLocation, Event, BookingOption, EventModule, EventModuleMapper, \
@@ -43,8 +44,12 @@ class EventModuleAdmin(admin.ModelAdmin):
 
 @admin.register(EventModuleMapper)
 class EventModuleMapperAdmin(admin.ModelAdmin):
-    list_display = ('id', 'standard', 'module', 'ordering')
+    list_display = ('id', 'standard', 'module', 'get_event_name', 'ordering')
     search_fields = ('module',)
+
+    @display(ordering='event__name', description='Event name')
+    def get_event_name(self, obj):
+        return obj.event.name
 
 
 @admin.register(AttributeEventModuleMapper)
@@ -71,7 +76,7 @@ class StandardEventTemplateAdmin(admin.ModelAdmin):
 
 @admin.register(Registration)
 class RegistrationAdmin(admin.ModelAdmin):
-    list_display = ('scout_organisation', 'event', 'single')
+    list_display = ('scout_organisation', 'get_event_name', 'single')
     search_fields = ('scout_organisation', 'event')
     autocomplete_fields = ('event', 'scout_organisation')
     list_filter = ('event__name',)
@@ -80,6 +85,10 @@ class RegistrationAdmin(admin.ModelAdmin):
         form = super(RegistrationAdmin, self).get_form(request, obj, **kwargs)
         form.base_fields['tags'].queryset = AbstractAttribute.objects.exclude(template=True)
         return form
+
+    @display(ordering='event__name', description='Event name')
+    def get_event_name(self, obj):
+        return obj.event.name
 
 
 @admin.register(RegistrationParticipant)

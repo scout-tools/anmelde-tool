@@ -154,9 +154,7 @@ class EventLocationShortSerializer(serializers.ModelSerializer):
 
 
 class EventOverviewSerializer(serializers.ModelSerializer):
-    can_register = serializers.SerializerMethodField('get_can_register')
-    can_edit = serializers.SerializerMethodField('get_can_edit')
-    registration = serializers.SerializerMethodField('get_registration')
+    registration_options = serializers.SerializerMethodField()
     location = EventLocationShortSerializer(read_only=True, many=False)
 
     class Meta:
@@ -173,9 +171,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'registration_start',
             'last_possible_update',
             'tags',
-            'can_register',
-            'can_edit',
-            'registration'
+            'registration_options'
         )
 
     def get_can_register(self, obj: event_models.Event) -> bool:
@@ -184,43 +180,41 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     def get_can_edit(self, obj: event_models.Event) -> bool:
         return obj.last_possible_update >= timezone.now()
 
-    def get_registration(self, obj: event_models.Event) -> dict:
+    def get_registration_options(self, obj: event_models.Event) -> dict:
         group_id = None
         single_id = None
-        group_possible = False
-        single_possible = False
+        allow_new_group_reg = False
+        allow_edit_group_reg = False
+        allow_new_single_reg = False
+        allow_edit_single_reg = False
 
         existing_group: QuerySet = obj.registration_set. \
             filter(single=False, scout_organisation=self.context['request'].user.userextended.scout_organisation)
-        group: QuerySet = existing_group.filter(responsible_persons__in=[self.context['request'].user.id])
-        single: QuerySet = obj.registration_set.filter(responsible_persons__in=[self.context['request'].user.id],
-                                                       single=True)
+        group: QuerySet[event_models.Registration] = existing_group. \
+            filter(responsible_persons__in=[self.context['request'].user.id])
+        single: QuerySet[event_models.Registration] = obj.registration_set. \
+            filter(responsible_persons__in=[self.context['request'].user.id], single=True)
 
         if existing_group.exists():
             group_id = existing_group.first().id
+            allow_edit_group_reg = group.exists() and existing_group.exists() and self.get_can_edit(obj)
 
         if single.exists():
             single_id = single.first().id
+            allow_edit_single_reg = self.get_can_edit(obj) and not allow_edit_group_reg
 
-        if obj.group_registration != event_choices.RegistrationTypeGroup.No:
-            if group_id:
-                group_possible = group.exists() and existing_group.exists() \
-                    if group is not None and existing_group is not None else False
-            elif single_id is None:
-                group_possible = True
+        no_registration_exists = not group_id and not single_id
 
-        if obj.single_registration != event_choices.RegistrationTypeSingle.No:
-            if obj.group_registration == event_choices.RegistrationTypeGroup.Required:
-                if group_id is not None:
-                    single_possible = True
-            elif group_id is None:
-                single_possible = True
+        allow_new_group_reg = no_registration_exists and self.get_can_register(obj)
+        allow_new_single_reg = no_registration_exists and self.get_can_register(obj)
 
         return {
             'group_id': group_id,
+            'allow_new_group_reg': allow_new_group_reg,
+            'allow_edit_group_reg': allow_edit_group_reg,
             'single_id': single_id,
-            'group_possible': group_possible,
-            'single_possible': single_possible
+            'allow_new_single_reg': allow_new_single_reg,
+            'allow_edit_single_reg': allow_edit_single_reg
         }
 
 

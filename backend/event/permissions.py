@@ -20,7 +20,9 @@ def check_event_permission(event_id: str, user: User) -> bool:
 
 def check_event_super_permission(event_id: str, user: User) -> bool:
     event = get_object_or_404(event_models.Event, id=event_id)
-    return user.groups.contains(event.keycloak_admin_path) if event.keycloak_admin_path else False
+    group_match: bool = user.groups.contains(event.keycloak_admin_path) if event.keycloak_admin_path else False
+    responsible_person_match: bool = event.responsible_persons.contains(user) if event.responsible_persons else False
+    return bool(group_match or responsible_person_match)
 
 
 def check_registration_permission(registration_id: str, user: User) -> bool:
@@ -46,6 +48,8 @@ class IsEventSuperResponsiblePerson(permissions.BasePermission):
             return False
         if request.user.is_superuser:
             return True
+        if request.method == CREATE_METHOD:
+            return True
         event_id: str = view.kwargs.get("pk", None)
         return check_event_super_permission(event_id, request.user)
 
@@ -57,6 +61,8 @@ class IsSubEventSuperResponsiblePerson(permissions.BasePermission):
         if not request.user or not request.user.is_authenticated:
             return False
         if request.user.is_superuser:
+            return True
+        if request.method == CREATE_METHOD:
             return True
         event_id: str = view.kwargs.get('event_pk', None)
         return check_event_super_permission(event_id, request.user)
