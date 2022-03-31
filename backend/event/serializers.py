@@ -8,6 +8,7 @@ from basic.models import EatHabit
 from basic import serializers as basic_serializers
 from event import models as event_models
 from event import choices as event_choices
+from event import permissions as event_permissions
 
 
 class EventLocationGetSerializer(serializers.ModelSerializer):
@@ -156,6 +157,7 @@ class EventLocationShortSerializer(serializers.ModelSerializer):
 class EventOverviewSerializer(serializers.ModelSerializer):
     registration_options = serializers.SerializerMethodField()
     location = EventLocationShortSerializer(read_only=True, many=False)
+    allow_statistic = serializers.SerializerMethodField()
 
     class Meta:
         model = event_models.Event
@@ -171,8 +173,12 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'registration_start',
             'last_possible_update',
             'tags',
-            'registration_options'
+            'registration_options',
+            'allow_statistic'
         )
+
+    def get_allow_statistic(self, obj: event_models.Event) -> bool:
+        return event_permissions.check_event_permission(obj, self.context['request'].user)
 
     def get_can_register(self, obj: event_models.Event) -> bool:
         return obj.registration_deadline >= timezone.now() >= obj.registration_start
