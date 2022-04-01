@@ -71,7 +71,7 @@ import LunchMeals from './modules/LunchMeals.vue';
 import Tshirts from './modules/Tshirts.vue';
 
 import ParticipantsPersonalGold from './modules/ParticipantsPersonalGold.vue';
-import ParticipantsPersonaSmall from './modules/ParticipantsPersonalSmall.vue';
+import ParticipantsPersonalSmall from './modules/ParticipantsPersonalSmall.vue';
 import ParticipantsPersonalSos from './modules/ParticipantsPersonalSos.vue';
 import TravelBundesfahrt from './modules/TravelBundesfahrt.vue';
 
@@ -91,7 +91,7 @@ export default {
     Tshirts,
     TravelBundesfahrt,
     ParticipantsPersonalSos,
-    ParticipantsPersonaSmall,
+    ParticipantsPersonalSmall,
   },
   props: ['scoutOrganisation'],
   mixins: [apiCallsMixin],
