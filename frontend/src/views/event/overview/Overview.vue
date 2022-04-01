@@ -51,38 +51,45 @@
                       <td v-html="item.longDescription"></td>
                     </v-row>
                     <v-row>
-                      <router-link
-                        :to="{
-                          name: 'registrationNew',
-                          params: {
-                            id: item.id,
-                          },
-                        }"
-                        :is="!(item.canRegister && !getRegisteredId(item)) ? 'span' : 'router-link'"
-                        style="text-decoration: none"
-                        class="ma-3"
-                      >
-                        <v-tooltip bottom>
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-btn
-                              v-bind="attrs"
-                              v-on="on"
-                              :disabled="
-                                !(item.canRegister && !getRegisteredId(item))
-                              "
-                            >
-                              <v-icon fab color="info">
-                                mdi-account-multiple-plus
-                              </v-icon>
-                            </v-btn>
-                          </template>
-                          <span>Fahrtenanmeldung</span>
-                        </v-tooltip>
-                      </router-link>
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                            :disabled="!(item.canEdit && getRegisteredId(item))"
+                            v-bind="attrs"
+                            v-on="on"
+                            class="ma-3"
+                            @click="onSingleRegClicked(item)"
+                            v-if="item.registrationOptions.allowNewSingleReg"
+                          >
+                            <v-icon fab color="info"> mdi-account-plus </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Einzel Fahrtenanmeldung</span>
+                      </v-tooltip>
+
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            v-bind="attrs"
+                            v-on="on"
+                            class="ma-3"
+                            @click="onGroupRegClicked(item)"
+                            v-if="item.registrationOptions.allowNewGroupReg"
+                          >
+                            <v-icon fab color="info">
+                              mdi-account-multiple-plus
+                            </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Gruppen Fahrtenanmeldung</span>
+                      </v-tooltip>
+
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            :disabled="
+                              !item.registrationOptions.allowEditGroupReg &&
+                              !item.registrationOptions.allowEditSingleReg
+                            "
                             class="ma-3"
                             @click="editRegistration(getRegisteredId(item))"
                             v-bind="attrs"
@@ -97,7 +104,10 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                            :disabled="!(item.canEdit && getRegisteredId(item))"
+                            :disabled="
+                              !item.registrationOptions.allowEditGroupReg &&
+                              !item.registrationOptions.allowEditSingleReg
+                            "
                             class="ma-3"
                             @click="deleteRegistration(getRegisteredId(item))"
                             v-bind="attrs"
@@ -135,7 +145,11 @@
                       >
                         <v-tooltip bottom>
                           <template v-slot:activator="{ on, attrs }">
-                            <v-btn v-bind="attrs" v-on="on">
+                            <v-btn
+                              v-bind="attrs"
+                              v-on="on"
+                              v-if="item.registrationOptions.allowStatistic"
+                            >
                               <v-icon color="primary"> mdi-chart-bar </v-icon>
                             </v-btn>
                           </template>
@@ -171,6 +185,7 @@
     <confirm-registration-edit-modal ref="confirmRegistrationEditModal" />
     <DeleteModal ref="deleteModal" />
     <SendMessageModal ref="sendMessageModal" />
+    <EventCodeModal ref="eventCodeModal" />
   </v-container>
 </template>
 
@@ -180,6 +195,7 @@ import apiCallsMixin from '@/mixins/apiCallsMixin';
 import ConfirmRegistrationEditModal from '@/views/registration/components/PreForm.vue';
 import DeleteModal from '@/views/registration/components/DeleteModal.vue';
 import SendMessageModal from '@/views/registration/components/SendMessageModal.vue';
+import EventCodeModal from '@/views/event/components/EventCodeModal.vue';
 
 export default {
   name: 'Main',
@@ -193,6 +209,7 @@ export default {
     ConfirmRegistrationEditModal,
     DeleteModal,
     SendMessageModal,
+    EventCodeModal,
   },
   methods: {
     getLagerText(item) {
@@ -224,28 +241,37 @@ export default {
       )}`;
     },
     getHeaderText(item) {
-      if (item && item.registration.groupId) {
+      if (item && item.registrationOptions.groupId) {
         return `${item.name} (Dein Stamm ist bereits Angemeldet)`;
       }
-      if (item && item.registration.singleId) {
+      if (item && item.registrationOptions.singleId) {
         return `${item.name} (Du bist bereits Angemeldet)`;
       }
       return item.name;
     },
     getRegisteredId(item) {
-      if (!item.registration) {
+      if (!item.registrationOptions) {
         return null;
       }
-      if (item.registration.groupId) {
-        return item.registration.groupId;
+      if (item.registrationOptions.groupId) {
+        return item.registrationOptions.groupId;
       }
-      if (item.registration.singleId) {
-        return item.registration.singleId;
+      if (item.registrationOptions.singleId) {
+        return item.registrationOptions.singleId;
       }
       return null;
     },
     editRegistration(item) {
       this.$refs.confirmRegistrationEditModal.show(item);
+    },
+    onSingleRegClicked(item) {
+      this.openEventCodeModal(item, true);
+    },
+    onGroupRegClicked(item) {
+      this.openEventCodeModal(item, false);
+    },
+    openEventCodeModal(item, single) {
+      this.$refs.eventCodeModal.show(item, single);
     },
     deleteRegistration(item) {
       this.$refs.deleteModal.show(item);
