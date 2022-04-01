@@ -69,7 +69,11 @@ import Travel from './modules/Travel.vue';
 import TravelBack from './modules/TravelBack.vue';
 import LunchMeals from './modules/LunchMeals.vue';
 import Tshirts from './modules/Tshirts.vue';
+
 import ParticipantsPersonalGold from './modules/ParticipantsPersonalGold.vue';
+import ParticipantsPersonalSmall from './modules/ParticipantsPersonalSmall.vue';
+import ParticipantsPersonalSos from './modules/ParticipantsPersonalSos.vue';
+import TravelBundesfahrt from './modules/TravelBundesfahrt.vue';
 
 export default {
   components: {
@@ -85,6 +89,9 @@ export default {
     TravelBack,
     LunchMeals,
     Tshirts,
+    TravelBundesfahrt,
+    ParticipantsPersonalSos,
+    ParticipantsPersonalSmall,
   },
   props: ['scoutOrganisation'],
   mixins: [apiCallsMixin],

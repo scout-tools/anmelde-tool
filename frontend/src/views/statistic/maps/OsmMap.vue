@@ -3,6 +3,7 @@
     <v-row>
       <div style="height: 900px; width: 100%">
         <l-map
+          v-if="data && data.length > 0"
           :zoom="zoom"
           :center="center"
           :options="mapOptions"
@@ -22,33 +23,18 @@
         </l-map>
       </div>
     </v-row>
-    <v-divider class="my-6" />
-    <v-row>
-      <v-col cols="8" sm="8">
-        <v-slider
-          v-model="radiusSlider"
-          color="black"
-          label="Radius in km"
-          min="10"
-          max="250"
-          thumb-label="always"
-        >
-        </v-slider>
-      </v-col>
-      <v-col cols="4" sm="4">
-        <p>Zoom {{ this.currentZoom }}</p>
-      </v-col>
-    </v-row>
   </v-container>
 </template>
 
 <script>
 import { latLng } from 'leaflet';
-import { mapGetters } from 'vuex';
 
 import { LMap, LTileLayer, LPopup, LCircle } from 'vue2-leaflet'; //eslint-disable-line
 
+import serviceMixin from '@/mixins/serviceMixin';
+
 export default {
+  mixins: [serviceMixin],
   name: 'Example',
   components: {
     LMap,
@@ -70,30 +56,38 @@ export default {
         zoomSnap: 0.5,
       },
       showMap: true,
+      data: [],
     };
   },
   computed: {
-    ...mapGetters(['currentEventParticipants']),
     circles() {
-      return this.currentEventParticipants[0].scoutOrganisations;
+      return this.data;
+    },
+    eventId() {
+      return this.$route.params.id;
     },
   },
   methods: {
-    getCoord(item) {
-      return [item.lat, item.lon];
+    getData(eventId) {
+      this.getRegistrationSummary(eventId).then((responseObj) => {
+        this.data = responseObj.data[0].registrationSet;
+      });
     },
-    getColor(item) {
-      return item.bund === 'BdP' ? 'red' : 'blue';
+    getCoord(item) {
+      return [item.scoutOrganisation.zipCode.lat, item.scoutOrganisation.zipCode.lon];
+    },
+    getColor() {
+      return 'blue';
     },
     getRadius() {
-      return this.radiusSlider * 1000;
+      return 100000 / (this.currentZoom * 2);
     },
     createContent(item) {
-      return `${item.bund},
-        ${item.scoutOrganisation_Name}
-         aus ${item.city},
-        Auswahl: ${item.choice},
-        Teilnehmer: ${item.participants}`;
+      console.log(item);
+      return `${item.scoutOrganisation.bund},
+        ${item.scoutOrganisation.name}
+         aus ${item.scoutOrganisation.zipCode.city},
+        Teilnehmer: ${item.participantCount}`;
     },
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
@@ -101,6 +95,9 @@ export default {
     centerUpdate(center) {
       this.currentCenter = center;
     },
+  },
+  created() {
+    this.getData(this.eventId);
   },
 };
 </script>

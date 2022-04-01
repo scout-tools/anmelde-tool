@@ -23,7 +23,6 @@
         :items="getItems"
         :items-per-page="itemsPerPage"
         :expanded.sync="expanded"
-        show-expand
         hide-default-footer
         :item-class="rowClasses"
       >
@@ -40,14 +39,13 @@
         <template v-slot:[`item.numberParticipant`]="{ item }">
           <td v-html="getNumberParticipant(item)" disabled></td>
         </template>
+        <template v-slot:[`item.price`]="{ item }">
+          <td v-html="getPrice(item)"></td>
+        </template>
         <template v-slot:expanded-item="{ item }">
-          <template v-for="(string, index) in getBody(item)" >
-            <v-list-item :key="index">
-              <v-list-item-content>
-                <v-list-item-title>{{ string }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
+          <td :colspan="headers.length">
+            <pre>{{ getBody(item) }}</pre>
+          </td>
         </template>
         <template slot="body.append">
           <tr>
@@ -78,7 +76,7 @@ export default {
       { text: 'Datum', value: 'createdAt' },
       { text: 'Bund', value: 'scoutOrganisation.bund' },
       { text: 'Name', value: 'scoutOrganisation.name' },
-      { text: 'Teilnehmende', value: 'participantCount' },
+      { text: 'Gesamtpreis', value: 'price' },
       { text: '', value: 'data-table-expand' },
     ],
     API_URL: process.env.VUE_APP_API,
@@ -102,11 +100,11 @@ export default {
       return data;
     },
     getTotalParticipant() {
-      const participantCount = this.getItems.reduce(
-        (accum, item) => accum + item.participantCount,
+      const price = this.getItems.reduce(
+        (accum, item) => accum + item.price,
         0,
       ); // eslint-disable-line
-      return `${participantCount || 0} Personen`;
+      return `${price || 0} €`;
     },
     getTotalStamm() {
       const numberStammBdp = this.getItems.length;
@@ -116,31 +114,10 @@ export default {
 
   methods: {
     getBody(item) {
-      return item.tags.map((t) => `${t.name}: ${this.getValueField(t)}`);
+      return item.tags;
     },
-    getValueField(item) {
-      let value = '';
-      if (item.booleanField) {
-        value = item.booleanField;
-      }
-      if (item.integerField) {
-        value = item.integerField;
-      }
-      if (item.timeField) {
-        value = item.timeField;
-      }
-      if (item.stringField) {
-        value = item.stringField;
-      }
-      console.log(value);
-      switch (value) {
-        case true:
-          return 'Ja';
-        case false:
-          return 'Nein';
-        default:
-          return value;
-      }
+    getPrice(item) {
+      return item.price ? `${item.price} €` : '0 €';
     },
     rowClasses(item) {
       if (item.verbandName === 'DPV') {

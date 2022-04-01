@@ -206,15 +206,14 @@ class RegistrationParticipant(basic_models.TimeStampMixin):
 
 
 class Workshop(basic_models.TimeStampMixin):
-    id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=100, blank=True)
+    id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=100)
     free_text = models.CharField(max_length=1000, blank=True)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     min_person = models.IntegerField(blank=True, null=True)
     max_person = models.IntegerField(blank=True, null=True)
     supervisor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
-    tags = models.ManyToManyField(basic_models.Tag)
+    registration = models.ForeignKey(Registration, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

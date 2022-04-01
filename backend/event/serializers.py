@@ -8,6 +8,7 @@ from basic.models import EatHabit
 from basic import serializers as basic_serializers
 from event import models as event_models
 from event import choices as event_choices
+from event import permissions as event_permissions
 
 
 class EventLocationGetSerializer(serializers.ModelSerializer):
@@ -154,10 +155,9 @@ class EventLocationShortSerializer(serializers.ModelSerializer):
 
 
 class EventOverviewSerializer(serializers.ModelSerializer):
-    can_register = serializers.SerializerMethodField('get_can_register')
-    can_edit = serializers.SerializerMethodField('get_can_edit')
-    registration = serializers.SerializerMethodField('get_registration')
+    registration_options = serializers.SerializerMethodField()
     location = EventLocationShortSerializer(read_only=True, many=False)
+    allow_statistic = serializers.SerializerMethodField()
 
     class Meta:
         model = event_models.Event
@@ -173,10 +173,12 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'registration_start',
             'last_possible_update',
             'tags',
-            'can_register',
-            'can_edit',
-            'registration'
+            'registration_options',
+            'allow_statistic'
         )
+
+    def get_allow_statistic(self, obj: event_models.Event) -> bool:
+        return event_permissions.check_event_permission(obj, self.context['request'].user)
 
     def get_can_register(self, obj: event_models.Event) -> bool:
         return obj.registration_deadline >= timezone.now() >= obj.registration_start
@@ -184,43 +186,43 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     def get_can_edit(self, obj: event_models.Event) -> bool:
         return obj.last_possible_update >= timezone.now()
 
-    def get_registration(self, obj: event_models.Event) -> dict:
+    def get_registration_options(self, obj: event_models.Event) -> dict:
         group_id = None
         single_id = None
-        group_possible = False
-        single_possible = False
+        allow_new_group_reg = False
+        allow_edit_group_reg = False
+        allow_new_single_reg = False
+        allow_edit_single_reg = False
 
         existing_group: QuerySet = obj.registration_set. \
             filter(single=False, scout_organisation=self.context['request'].user.userextended.scout_organisation)
-        group: QuerySet = existing_group.filter(responsible_persons__in=[self.context['request'].user.id])
-        single: QuerySet = obj.registration_set.filter(responsible_persons__in=[self.context['request'].user.id],
-                                                       single=True)
+        group: QuerySet[event_models.Registration] = existing_group. \
+            filter(responsible_persons__in=[self.context['request'].user.id])
+        single: QuerySet[event_models.Registration] = obj.registration_set. \
+            filter(responsible_persons__in=[self.context['request'].user.id], single=True)
 
         if existing_group.exists():
             group_id = existing_group.first().id
+            allow_edit_group_reg = group.exists() and existing_group.exists() and self.get_can_edit(obj)
 
         if single.exists():
             single_id = single.first().id
+            allow_edit_single_reg = self.get_can_edit(obj) and not allow_edit_group_reg
 
-        if obj.group_registration != event_choices.RegistrationTypeGroup.No:
-            if group_id:
-                group_possible = group.exists() and existing_group.exists() \
-                    if group is not None and existing_group is not None else False
-            elif single_id is None:
-                group_possible = True
+        no_registration_exists = not group_id and not single_id
 
-        if obj.single_registration != event_choices.RegistrationTypeSingle.No:
-            if obj.group_registration == event_choices.RegistrationTypeGroup.Required:
-                if group_id is not None:
-                    single_possible = True
-            elif group_id is None:
-                single_possible = True
+        allow_new_group_reg = no_registration_exists and self.get_can_register(
+            obj) and obj.group_registration != event_choices.RegistrationTypeGroup.No
+        allow_new_single_reg = no_registration_exists and self.get_can_register(
+            obj) and obj.single_registration != event_choices.RegistrationTypeGroup.No
 
         return {
             'group_id': group_id,
+            'allow_new_group_reg': allow_new_group_reg,
+            'allow_edit_group_reg': allow_edit_group_reg,
             'single_id': single_id,
-            'group_possible': group_possible,
-            'single_possible': single_possible
+            'allow_new_single_reg': allow_new_single_reg,
+            'allow_edit_single_reg': allow_edit_single_reg
         }
 
 
@@ -395,3 +397,17 @@ class EventSummarySerializer(serializers.ModelSerializer):
 
     def get_price(self, event: event_models.Event) -> float:
         return event.registration_set.aggregate(sum=Sum('registrationparticipant__booking_option__price'))['sum']
+
+
+class WorkshopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = event_models.Workshop
+        fields = '__all__'
+
+
+class WorkshopEventSummarySerializer(serializers.ModelSerializer):
+    supervisor = CurrentUserSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = event_models.Workshop
+        fields = '__all__'

@@ -245,6 +245,39 @@
     }
   },
   {
+    "model": "event.eventmodule",
+    "pk": 15,
+    "fields": {
+      "name": "TravelBundesfahrt",
+      "type": 5,
+      "header": "Anreise",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 16,
+    "fields": {
+      "name": "ParticipantsPersonalSos",
+      "type": 7,
+      "header": "Teilnehmende",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 17,
+    "fields": {
+      "name": "ParticipantsPersonalSmall",
+      "type": 7,
+      "header": "Teilnehmende",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
     "model": "event.attributeeventmodulemapper",
     "pk": 1,
     "fields": {
@@ -674,7 +707,7 @@
     "pk": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
     "fields": {
       "created_at": "2022-03-10T11:46:18.946Z",
-      "updated_at": "2022-03-28T16:29:06.456Z",
+      "updated_at": "2022-03-31T16:44:11.206Z",
       "name": "DPV goLd",
       "technical_name": "dpv-gold",
       "short_description": "Jubiläumsveranstaltung zu 50 Jahre DPV",
@@ -762,7 +795,7 @@
     "pk": "456953a2-7db5-45dc-8e05-7a4168105e88",
     "fields": {
       "created_at": "2022-03-22T21:25:27.169Z",
-      "updated_at": "2022-03-28T15:05:31.551Z",
+      "updated_at": "2022-03-31T16:44:25.784Z",
       "name": "Bundesfahrt 2022",
       "technical_name": "bundesfahrt",
       "short_description": "Bundesfahrt & Kaperfahrt",
@@ -794,6 +827,48 @@
         1,
         2,
         3,
+        5
+      ],
+      "event_planer_modules": [
+        1,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": "53b59663-6745-4050-9cc0-e567d42bbf8f",
+    "fields": {
+      "created_at": "2022-03-31T18:15:40.714Z",
+      "updated_at": "2022-03-31T18:18:17.865Z",
+      "name": "Aufbaulager Bundesfahrt",
+      "technical_name": "aufbaulager",
+      "short_description": "",
+      "long_description": "",
+      "cloud_link": null,
+      "event_url": "https://bundesfahrt.de/",
+      "location": 3,
+      "start_date": "2022-07-25T16:00:00Z",
+      "end_date": "2022-08-02T16:00:00Z",
+      "registration_deadline": "2022-04-18T21:59:59Z",
+      "registration_start": "2022-02-28T23:00:01Z",
+      "last_possible_update": "2022-04-18T21:59:59Z",
+      "invitation_code": "aufbaulager",
+      "invitation_code_single": "",
+      "invitation_code_group": "",
+      "is_public": true,
+      "keycloak_path": 5,
+      "keycloak_admin_path": 5,
+      "limited_registration_hierarchy": 2,
+      "single_registration": "E",
+      "group_registration": "N",
+      "personal_data_required": true,
+      "theme": 2,
+      "email_set": 2,
+      "responsible_persons": [
+        2
+      ],
+      "tags": [
         5
       ],
       "event_planer_modules": [
@@ -837,6 +912,90 @@
       ],
       "tags": [],
       "event_planer_modules": []
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": "e05b8df4-bba4-46f7-93c3-7f28d8c46cb2",
+    "fields": {
+      "created_at": "2022-03-31T18:19:05.706Z",
+      "updated_at": "2022-03-31T18:22:10.243Z",
+      "name": "Erlebnisangebote DPV goLd",
+      "technical_name": "dpv-gold",
+      "short_description": "Stelle hier deine Erlebnisangebote ein",
+      "long_description": "",
+      "cloud_link": null,
+      "event_url": "dpvgold.de",
+      "location": 1,
+      "start_date": "2022-09-16T14:00:00Z",
+      "end_date": "2022-09-18T09:00:00Z",
+      "registration_deadline": "2022-09-01T21:59:59Z",
+      "registration_start": "2022-10-31T23:00:01Z",
+      "last_possible_update": "2022-09-01T21:59:59Z",
+      "invitation_code": "DPVGOLD",
+      "invitation_code_single": "",
+      "invitation_code_group": "",
+      "is_public": true,
+      "keycloak_path": 3,
+      "keycloak_admin_path": 3,
+      "limited_registration_hierarchy": 493,
+      "single_registration": "E",
+      "group_registration": "N",
+      "personal_data_required": false,
+      "theme": 3,
+      "email_set": 1,
+      "responsible_persons": [
+        2
+      ],
+      "tags": [
+        4
+      ],
+      "event_planer_modules": [
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.event",
+    "pk": "f8b683dc-e64f-4d84-94d3-886e9cd14269",
+    "fields": {
+      "created_at": "2022-03-31T18:01:29.864Z",
+      "updated_at": "2022-03-31T18:14:31.225Z",
+      "name": "Saintsway",
+      "technical_name": "saintsway",
+      "short_description": "",
+      "long_description": "",
+      "cloud_link": null,
+      "event_url": "https://bundesfahrt.de/",
+      "location": 3,
+      "start_date": "2022-08-02T16:00:00Z",
+      "end_date": "2022-08-06T11:00:00Z",
+      "registration_deadline": "2022-04-18T21:59:59Z",
+      "registration_start": "2022-02-28T23:00:01Z",
+      "last_possible_update": "2022-04-18T21:59:59Z",
+      "invitation_code": "saintsway",
+      "invitation_code_single": "",
+      "invitation_code_group": "",
+      "is_public": true,
+      "keycloak_path": 5,
+      "keycloak_admin_path": 5,
+      "limited_registration_hierarchy": 2,
+      "single_registration": "E",
+      "group_registration": "N",
+      "personal_data_required": true,
+      "theme": 2,
+      "email_set": 2,
+      "responsible_persons": [
+        2
+      ],
+      "tags": [
+        5
+      ],
+      "event_planer_modules": [
+        1,
+        3
+      ]
     }
   },
   {
@@ -1162,7 +1321,7 @@
     "model": "event.eventmodulemapper",
     "pk": 27,
     "fields": {
-      "ordering": 5,
+      "ordering": 6,
       "module": 7,
       "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
       "required": true,
@@ -1177,7 +1336,7 @@
     "model": "event.eventmodulemapper",
     "pk": 28,
     "fields": {
-      "ordering": 4,
+      "ordering": 5,
       "module": 8,
       "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
       "required": false,
@@ -1226,6 +1385,202 @@
       "standard": false,
       "attributes": [
         18
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 32,
+    "fields": {
+      "ordering": 4,
+      "module": 15,
+      "event": "456953a2-7db5-45dc-8e05-7a4168105e88",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        8,
+        19
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 49,
+    "fields": {
+      "ordering": 1,
+      "module": 1,
+      "event": "f8b683dc-e64f-4d84-94d3-886e9cd14269",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 50,
+    "fields": {
+      "ordering": 2,
+      "module": 16,
+      "event": "f8b683dc-e64f-4d84-94d3-886e9cd14269",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 51,
+    "fields": {
+      "ordering": 4,
+      "module": 7,
+      "event": "f8b683dc-e64f-4d84-94d3-886e9cd14269",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        11
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 52,
+    "fields": {
+      "ordering": 3,
+      "module": 8,
+      "event": "f8b683dc-e64f-4d84-94d3-886e9cd14269",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        10
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 53,
+    "fields": {
+      "ordering": 1,
+      "module": 1,
+      "event": "53b59663-6745-4050-9cc0-e567d42bbf8f",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 54,
+    "fields": {
+      "ordering": 2,
+      "module": 17,
+      "event": "53b59663-6745-4050-9cc0-e567d42bbf8f",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 55,
+    "fields": {
+      "ordering": 4,
+      "module": 7,
+      "event": "53b59663-6745-4050-9cc0-e567d42bbf8f",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        11
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 56,
+    "fields": {
+      "ordering": 3,
+      "module": 8,
+      "event": "53b59663-6745-4050-9cc0-e567d42bbf8f",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        10
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 57,
+    "fields": {
+      "ordering": 1,
+      "module": 1,
+      "event": "e05b8df4-bba4-46f7-93c3-7f28d8c46cb2",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 58,
+    "fields": {
+      "ordering": 2,
+      "module": 5,
+      "event": "e05b8df4-bba4-46f7-93c3-7f28d8c46cb2",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": []
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 59,
+    "fields": {
+      "ordering": 4,
+      "module": 7,
+      "event": "e05b8df4-bba4-46f7-93c3-7f28d8c46cb2",
+      "required": true,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        11
+      ]
+    }
+  },
+  {
+    "model": "event.eventmodulemapper",
+    "pk": 60,
+    "fields": {
+      "ordering": 3,
+      "module": 8,
+      "event": "e05b8df4-bba4-46f7-93c3-7f28d8c46cb2",
+      "required": false,
+      "overwrite_description": null,
+      "standard": false,
+      "attributes": [
+        10
       ]
     }
   },
@@ -1343,6 +1698,19 @@
       "bookable_from": null,
       "bookable_till": "2022-09-16T14:00:00Z",
       "event": "079e0619-18f8-4d4c-a1e1-88074529b3c4",
+      "tags": []
+    }
+  },
+  {
+    "model": "event.bookingoption",
+    "pk": 10,
+    "fields": {
+      "name": "Standard",
+      "description": "",
+      "price": "10.00",
+      "bookable_from": null,
+      "bookable_till": "2022-08-01T22:00:00Z",
+      "event": "f8b683dc-e64f-4d84-94d3-886e9cd14269",
       "tags": []
     }
   },

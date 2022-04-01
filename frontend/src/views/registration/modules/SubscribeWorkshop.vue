@@ -218,7 +218,10 @@ export default {
           (att) => att.templateId === moduleItem.attribute.id,
         );
         if (getAtt.length > 0) {
-          if (moduleItem && moduleItem.attribute.resourcetype === 'TravelAttribute') {
+          if (
+            moduleItem &&
+            moduleItem.attribute.resourcetype === 'TravelAttribute'
+          ) {
             promises.push(
               axios.put(
                 `${process.env.VUE_APP_API}/${this.path}${getAtt[0].id}/`,
@@ -230,7 +233,11 @@ export default {
             );
           }
         } else {
-          if (moduleItem && moduleItem.attribute.resourcetype === 'TravelAttribute') { //eslint-disable-line
+          if (
+            moduleItem &&
+            moduleItem.attribute.resourcetype === 'TravelAttribute'
+          ) {
+            //eslint-disable-line
             promises.push(
               axios.post(`${process.env.VUE_APP_API}/${this.path}`, {
                 templateId: moduleItem.attribute.id,

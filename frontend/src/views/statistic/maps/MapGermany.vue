@@ -6,19 +6,25 @@
         mapsApiKey: 'AIzaSyA8b79CjjX-C9VgxMBF2aTs9fOI-UBT850',
       }"
       type="GeoChart"
-      :data="chartData"
+      :data="charData"
       :options="chartOptions"
     />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import serviceMixin from '@/mixins/serviceMixin';
+import { GChart } from 'vue-google-charts';
 
 export default {
+  mixins: [serviceMixin],
+  components: {
+    GChart,
+  },
   data() {
     return {
       API_URL: process.env.VUE_APP_API,
+      data: [],
       chartOptions: {
         region: 'DE',
         displayMode: 'markers',
@@ -30,43 +36,35 @@ export default {
         height: 500,
         legend: false,
       },
-      chartData: [],
     };
   },
   computed: {
-    ...mapGetters(['currentEventParticipants']),
-  },
-  methods: {
-    json_to_chart_data(jsonData) {
+    eventId() {
+      return this.$route.params.id;
+    },
+    charData() {
       const returnData = [];
-      jsonData.forEach((event) => {
-        const buende = [];
+      returnData.push([
+        'Lat',
+        'Lon',
+        'Name',
+      ]);
+
+      this.data.forEach((loc) => {
         returnData.push([
-          'Lat',
-          'Lon',
-          'Name',
-          'Bund',
-          'TN',
-          { role: 'tooltip', p: { html: false } },
+          parseFloat(loc.scoutOrganisation.zipCode.lat),
+          parseFloat(loc.scoutOrganisation.zipCode.lon),
+          loc.scoutOrganisation.name,
         ]);
-        event.scoutOrganisations.forEach((loc) => {
-          if (buende.indexOf(loc.bund) === -1) buende.push(loc.bund);
-        });
-        event.scoutOrganisations.forEach((loc) => {
-          returnData.push([
-            loc.lat,
-            loc.lon,
-            loc.scoutOrganisation_Name,
-            buende.indexOf(loc.bund),
-            loc.participants,
-            `TN: ${loc.participants}\n Bund: ${loc.bund}`,
-          ]);
-        });
       });
       return returnData;
     },
+  },
+  methods: {
     getData() {
-      this.chartData = this.json_to_chart_data(this.currentEventParticipants);
+      this.getRegistrationSummary(this.eventId).then((responseObj) => {
+        this.data = responseObj.data[0].registrationSet;
+      });
     },
   },
   created() {

@@ -110,5 +110,8 @@ export default {
       this.getService(this.id, this.modulePath);
     },
   },
+  created() {
+    this.loadData();
+  },
 };
 </script>

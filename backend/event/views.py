@@ -1,5 +1,5 @@
 from copy import deepcopy
-from django.db.models import Q, QuerySet, Prefetch
+from django.db.models import Q, QuerySet
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
@@ -168,7 +168,7 @@ class EventStatisticsViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         if self.request.user.is_superuser:
-            return event_models.Event.objects.all()
+            return event_models.Event.objects.filter(is_public=True)
         else:
             return event_models.Event.objects.filter(Q(keycloak_path__in=self.request.user.groups.all())
                                                      | Q(responsible_persons=self.request.user)).distinct()
@@ -305,7 +305,7 @@ class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         if self.request.user.is_superuser:
-            return event_models.Event.objects.all()
+            return event_models.Event.objects.filter(is_public=True)
         else:
             list_parent_organistations = []
             iterator: basic_models.ScoutHierarchy = self.request.user.userextended.scout_organisation
@@ -635,9 +635,8 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
         registration_id = self.kwargs.get("registration_pk", None)
         registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
 
-        template_attribute: basic_models.AbstractAttribute = get_object_or_404(basic_models.AbstractAttribute,
-                                                                               pk=serializer.data.get('template_id',
-                                                                                                      -1))
+        template_attribute: basic_models.AbstractAttribute = \
+            get_object_or_404(basic_models.AbstractAttribute, pk=serializer.data.get('template_id', -1))
 
         new_attribute = add_event_attribute(template_attribute)
 
@@ -685,3 +684,32 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
         return event_models.Event.objects.filter(id=event_id)
+
+
+class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    permission_classes = [IsSubEventResponsiblePerson]
+    serializer_class = event_serializers.WorkshopEventSummarySerializer
+
+    def get_queryset(self) -> QuerySet:
+        event_id = self.kwargs.get("event_pk", None)
+        return event_models.Workshop.objects.filter(registration__event__id=event_id)
+
+
+class WorkshopViewSet(viewsets.ModelViewSet):
+    serializer_class = event_serializers.WorkshopSerializer
+    permission_classes = [IsRegistrationResponsiblePerson]
+
+    def create(self, request, *args, **kwargs):
+        if not request.data.get('supervisor'):
+            request.data['supervisor'] = request.user.id
+
+        request.data['registration'] = self.kwargs.get("registration_pk", None)
+        return super().create(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        request.data['registration'] = self.kwargs.get("registration_pk", None)
+        return super().update(request, *args, **kwargs)
+
+    def get_queryset(self):
+        registration_id = self.kwargs.get("registration_pk", None)
+        return event_models.Workshop.objects.filter(registration__id=registration_id)

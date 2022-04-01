@@ -34,6 +34,10 @@ export default {
       console.log(path);
       return axios.put(path, data);
     },
+    async deleteRegistration(registration) {
+      const path = `${process.env.VUE_APP_API}/event/registration/${registration}/`;
+      return axios.delete(path);
+    },
     async updateServiceById(route, data) {
       const path = `${process.env.VUE_APP_API}/${route}/${data.id}/`;
       console.log(path);

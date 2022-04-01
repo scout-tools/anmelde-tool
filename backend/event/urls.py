@@ -24,6 +24,7 @@ event_router.register(r'assigned-event-modules', views.AssignedEventModulesViewS
 event_router.register(r'available-modules', views.AvailableEventModulesViewSet, basename='available-modules')
 event_router.register(r'event-module-mapper', views.EventModulesMapperViewSet, basename='eventmodulemapper')
 event_router.register(r'summary', views.EventSummaryViewSet, basename='summary')
+event_router.register(r'workshop-summary', views.WorkshopEventSummaryViewSet, basename='workshop-summary')
 
 event_module_router = routers.NestedSimpleRouter(event_router, r'event-module-mapper', lookup='eventmodulemapper')
 event_module_router.register(r'attribute-mapper', views.EventModuleAttributeMapperViewSet, basename='attribute-mapper')
@@ -35,6 +36,7 @@ registration_router.register(r'group-participants', views.RegistrationGroupParti
                              basename='group-participants')
 registration_router.register(r'attribute', views.RegistrationAttributeViewSet, basename='attribute')
 registration_router.register(r'summary', views.RegistrationSummaryViewSet, basename='summary')
+registration_router.register(r'workshop', views.WorkshopViewSet, basename='workshop')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

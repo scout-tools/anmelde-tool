@@ -27,10 +27,10 @@
         Meine Fahrten
         <v-icon>mdi-account-key</v-icon>
       </v-tab>
-      <v-tab :disabled="accountIncomplete" :to="{ name: 'dataOverview' }" v-if="isAuth">
+      <!-- <v-tab :disabled="accountIncomplete" :to="{ name: 'dataOverview' }" v-if="isAuth">
         Auswertungen
         <v-icon>mdi-chart-bar</v-icon>
-      </v-tab>
+      </v-tab> -->
       <v-spacer></v-spacer>
       <v-tab :to="{ name: 'settingsOverview' }" v-if="isAuth">
         Mein Profil
