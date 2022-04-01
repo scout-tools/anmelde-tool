@@ -119,7 +119,7 @@
                         <span>Abmelden</span>
                       </v-tooltip>
 
-                      <v-tooltip bottom>
+                      <!-- <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
                             class="ma-3"
@@ -133,7 +133,7 @@
                           </v-btn>
                         </template>
                         <span>Frage an die Lagerleitung</span>
-                      </v-tooltip>
+                      </v-tooltip> -->
 
                       <router-link
                         :to="{
@@ -148,7 +148,7 @@
                             <v-btn
                               v-bind="attrs"
                               v-on="on"
-                              v-if="item.registrationOptions.allowStatistic"
+                              v-if="item.allowStatistic"
                             >
                               <v-icon color="primary"> mdi-chart-bar </v-icon>
                             </v-btn>
