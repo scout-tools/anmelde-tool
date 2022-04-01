@@ -211,8 +211,10 @@ class EventOverviewSerializer(serializers.ModelSerializer):
 
         no_registration_exists = not group_id and not single_id
 
-        allow_new_group_reg = no_registration_exists and self.get_can_register(obj)
-        allow_new_single_reg = no_registration_exists and self.get_can_register(obj)
+        allow_new_group_reg = no_registration_exists and self.get_can_register(
+            obj) and obj.group_registration != event_choices.RegistrationTypeGroup.No
+        allow_new_single_reg = no_registration_exists and self.get_can_register(
+            obj) and obj.single_registration != event_choices.RegistrationTypeGroup.No
 
         return {
             'group_id': group_id,
@@ -405,7 +407,6 @@ class WorkshopSerializer(serializers.ModelSerializer):
 
 class WorkshopEventSummarySerializer(serializers.ModelSerializer):
     supervisor = CurrentUserSerializer(many=False, read_only=True)
-
 
     class Meta:
         model = event_models.Workshop
