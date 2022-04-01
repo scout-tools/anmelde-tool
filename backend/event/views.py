@@ -687,7 +687,7 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    # permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.WorkshopEventSummarySerializer
 
     def get_queryset(self) -> QuerySet:
