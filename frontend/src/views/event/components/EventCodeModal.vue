@@ -40,12 +40,15 @@
 
             <v-btn color="grey darken-1" text @click="cancel()"> Zurück </v-btn>
             <v-btn color="success" text @click="onDeleteClicked">
-              Senden
+              Anmeldung starten
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </v-row>
+      <v-snackbar v-model="showError" color="error" y="top">
+        {{ errorMessage }}
+      </v-snackbar>
   </div>
 </template>
 
@@ -60,7 +63,7 @@ export default {
     API_URL: process.env.VUE_APP_API,
     dialog: false,
     showError: false,
-    showSuccess: false,
+    errorMessage: false,
     timeout: 3000,
     data: {},
   }),

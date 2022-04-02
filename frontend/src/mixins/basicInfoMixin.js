@@ -5,11 +5,11 @@ export default {
     API_URL: process.env.VUE_APP_API,
   }),
   computed: {
-    getLogoPath() {
-      // if (process.env.VUE_APP_ENV === 'DEV') {
-      //   return require('../assets/dpvgold/dpv-gold-logo-test-simple.png'); // eslint-disable-line
-      // }
-      return ''; // require('../assets/dpvgold/dpv-gold-logo-white_simple.png'); // eslint-disable-line
+    logoPath() {
+      if (process.env.VUE_APP_ENV === 'DEV') {
+        return require(`@/assets/${this.theme}/logo-dev.png`); // eslint-disable-line
+      }
+      return require(`@/assets/${this.theme}/logo.png`); // eslint-disable-line
     },
     getUserName() {
       if (this.userinfo) {

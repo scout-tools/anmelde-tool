@@ -1,10 +1,13 @@
 <template>
   <v-form v-model="valid">
     <v-container v-show="!loading" :disabled="loading">
-      <v-row class="mt-2">
-        <slot name="header">Title</slot>
+      <v-row v-if="currentMod &&  !!currentMod.overwriteDescription" class="mt-2">
+        <td class="ma-2" v-html="currentMod && currentMod.overwriteDescription"></td>
       </v-row>
-      <v-divider class="text-left my-2" />
+      <v-row v-else class="mt-2">
+        <slot name="header">Slot fehlt</slot>
+      </v-row>
+      <v-divider class="text-left my-4" />
       <slot name="main">
         Title
       </slot>
@@ -49,6 +52,9 @@ export default {
     saving: {
       type: Boolean,
       default: false,
+    },
+    currentMod: {
+      type: Object,
     },
   },
   components: {

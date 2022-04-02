@@ -5,6 +5,7 @@
     :saving="saving"
     :position="position"
     :maxPos="maxPos"
+    :currentMod="currentModule"
     @prevStep="prevStep"
     @nextStep="onNextStep"
     @submit="submitStep"

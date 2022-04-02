@@ -45,19 +45,18 @@
               </v-card-title>
             </v-row>
             <v-row>
-              <v-card-text v-if="moduleMapper && moduleMapper.overwriteDescription">
-                {{ moduleMapper.overwriteDescription }}
-              </v-card-text>
-              <v-card-text v-else>
-                Ein gibt keinen Individuellen Text.
-              </v-card-text>
+              <v-textarea
+                clearable
+                clear-icon="mdi-close-circle"
+                solo
+                auto-grow
+                v-model="data.overwriteDescription"
+              >
+              </v-textarea>
             </v-row>
           </v-container>
           <v-card-title> Verknüpfte Attribute: </v-card-title>
-          <AttributeList
-            :items="attributeMappers"
-            :ref="`dialog-main`"
-          />
+          <AttributeList :items="attributeMappers" :ref="`dialog-main`" />
           <v-divider class="my-3" />
           <v-btn color="primary" @click="onClickOkay"> Speichern</v-btn>
         </v-form>
@@ -72,12 +71,6 @@
 </template>
 
 <script>
-import {
-  required,
-  // minLength,
-  numeric,
-  // requiredIf,
-} from 'vuelidate/lib/validators';
 import axios from 'axios';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import AttributeList from '@/components/dialog/attributeList/Main.vue';
@@ -100,12 +93,11 @@ export default {
     showSuccess: false,
     timeout: 7000,
     loading: false,
+    data: {
+      overwriteDescription: '',
+    },
   }),
   validations: {
-    locationType: {
-      required,
-      numeric,
-    },
   },
 
   computed: {},
@@ -136,6 +128,7 @@ export default {
             this.moduleMapper = firstResponse.data;
             this.module = secondResponse.data;
             this.attributeMappers = thirdResponse.data;
+            this.data.overwriteDescription = this.moduleMapper.overwriteDescription;
           }),
         )
         .catch((error) => {
@@ -161,12 +154,22 @@ export default {
       this.$v.$touch();
       this.valid = !this.$v.$anyError;
     },
+    onDescriptionSave() {
+      this.updateEventModule(
+        {
+          overwriteDescription: this.data.overwriteDescription,
+        },
+        this.moduleMapper.id,
+        this.moduleMapper.event,
+      ).then(() => {
+        this.closeDialog();
+      });
+    },
     onClickOkay() {
       this.validate();
       if (this.valid) {
         try {
-          this.callCreateEventLocationPost();
-          this.closeDialog();
+          this.onDescriptionSave();
         } catch (e) {
           console.log(e);
           this.showError = true;
