@@ -72,7 +72,6 @@ import Tshirts from './modules/Tshirts.vue';
 
 import ParticipantsPersonalGold from './modules/ParticipantsPersonalGold.vue';
 import ParticipantsPersonalSmall from './modules/ParticipantsPersonalSmall.vue';
-import ParticipantsPersonalSos from './modules/ParticipantsPersonalSos.vue';
 import TravelBundesfahrt from './modules/TravelBundesfahrt.vue';
 
 export default {
@@ -90,7 +89,6 @@ export default {
     LunchMeals,
     Tshirts,
     TravelBundesfahrt,
-    ParticipantsPersonalSos,
     ParticipantsPersonalSmall,
   },
   props: ['scoutOrganisation'],

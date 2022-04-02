@@ -45,19 +45,18 @@
               </v-card-title>
             </v-row>
             <v-row>
-              <v-card-text v-if="moduleMapper && moduleMapper.overwriteDescription">
-                {{ moduleMapper.overwriteDescription }}
-              </v-card-text>
-              <v-card-text v-else>
-                Ein gibt keinen Individuellen Text.
-              </v-card-text>
+              <template v-for="(field, i) in fields">
+                <BaseField
+                  :key="i"
+                  :field="field"
+                  v-model="data[field.techName]"
+                  :valdiationObj="$v"
+                />
+              </template>
             </v-row>
           </v-container>
           <v-card-title> Verknüpfte Attribute: </v-card-title>
-          <AttributeList
-            :items="attributeMappers"
-            :ref="`dialog-main`"
-          />
+          <AttributeList :items="attributeMappers" :ref="`dialog-main`" />
           <v-divider class="my-3" />
           <v-btn color="primary" @click="onClickOkay"> Speichern</v-btn>
         </v-form>
@@ -72,21 +71,17 @@
 </template>
 
 <script>
-import {
-  required,
-  // minLength,
-  numeric,
-  // requiredIf,
-} from 'vuelidate/lib/validators';
 import axios from 'axios';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import AttributeList from '@/components/dialog/attributeList/Main.vue';
+import BaseField from '@/components/common/BaseField.vue';
 
 export default {
   props: ['isOpen'],
   mixins: [apiCallsMixin],
   components: {
     AttributeList,
+    BaseField,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
@@ -100,12 +95,21 @@ export default {
     showSuccess: false,
     timeout: 7000,
     loading: false,
+    data: {
+      overwriteDescription: '',
+    },
+    fields: [
+      {
+        name: 'Modul-Test*',
+        techName: 'overwriteDescription',
+        tooltip: '',
+        mandatory: true,
+        fieldType: 'html',
+        default: '',
+      },
+    ],
   }),
   validations: {
-    locationType: {
-      required,
-      numeric,
-    },
   },
 
   computed: {},
@@ -136,6 +140,7 @@ export default {
             this.moduleMapper = firstResponse.data;
             this.module = secondResponse.data;
             this.attributeMappers = thirdResponse.data;
+            this.data.overwriteDescription = this.moduleMapper.overwriteDescription;
           }),
         )
         .catch((error) => {
@@ -161,12 +166,22 @@ export default {
       this.$v.$touch();
       this.valid = !this.$v.$anyError;
     },
+    onDescriptionSave() {
+      this.updateEventModule(
+        {
+          overwriteDescription: this.data.overwriteDescription,
+        },
+        this.moduleMapper.id,
+        this.moduleMapper.event,
+      ).then(() => {
+        this.closeDialog();
+      });
+    },
     onClickOkay() {
       this.validate();
       if (this.valid) {
         try {
-          this.callCreateEventLocationPost();
-          this.closeDialog();
+          this.onDescriptionSave();
         } catch (e) {
           console.log(e);
           this.showError = true;

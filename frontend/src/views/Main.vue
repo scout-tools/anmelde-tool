@@ -5,7 +5,7 @@
     <v-container fluid v-else>
       <v-row align="center" justify="center" class="ma-10">
         Die Smartphone Version befindet sich noch in der Testphase.
-        Bitte wechsel zu einem größeren Bildschirm.
+        Bitte wechsel zu einem größeren Bildschirm oder maximiere das Fenster.
       </v-row>
       <v-row align="center" justify="center" class="ma-10">
         <v-icon large color="error">mdi-cellphone-off</v-icon>

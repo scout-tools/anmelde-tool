@@ -5,6 +5,7 @@
     :saving="saving"
     :position="position"
     :maxPos="maxPos"
+    :currentMod="currentModule"
     @prevStep="prevStep"
     @nextStep="onNextStep"
     @ignore="onIngoredClicked"
@@ -77,6 +78,8 @@ export default {
     loading: true,
     saving: false,
     moduleData: [],
+    showError: false,
+    errorMessage: 'Fehler',
     data: {},
   }),
   validations: {
@@ -96,9 +99,6 @@ export default {
         maxLength: maxLength(20),
       },
       birthday: {
-        required,
-      },
-      bookingOption: {
         required,
       },
     },
@@ -169,55 +169,6 @@ export default {
             icon: 'mdi-calendar',
             mandatory: true,
             fieldType: 'date',
-            default: '',
-          },
-          {
-            name: 'Geschlecht*',
-            techName: 'gender',
-            tooltip: 'Trage bitte das Geschlecht des_der Teilnehmer_in ein.',
-            icon: 'mdi-home',
-            mandatory: true,
-            fieldType: 'localRefDropdown',
-            referenceDisplay: 'name',
-            referenceTable: [
-              {
-                name: 'weiblich',
-                value: 'F',
-              },
-              {
-                name: 'männlich',
-                value: 'M',
-              },
-              {
-                name: 'divers',
-                value: 'D',
-              },
-              {
-                name: 'Keine Angabe',
-                value: 'N',
-              },
-            ],
-          },
-          {
-            name: 'Essenbesonderheiten',
-            techName: 'eatHabit',
-            tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
-            icon: 'mdi-food',
-            mandatory: true,
-            lookupPath: '/basic/eat-habits/',
-            lookupListDisplay: ['name'],
-            fieldType: 'refCombo',
-            default: '',
-          },
-          {
-            name: 'Buchungsoption',
-            techName: 'bookingOption',
-            tooltip: '123',
-            icon: 'mdi-tent',
-            mandatory: true,
-            lookupPath: `/event/event/${this.currentEvent.id}/booking-options/`,
-            lookupListDisplay: ['name', 'price', '$ €'],
-            fieldType: 'refDropdown',
             default: '',
           },
         ],

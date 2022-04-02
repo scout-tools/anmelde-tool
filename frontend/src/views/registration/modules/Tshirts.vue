@@ -5,18 +5,21 @@
     :saving="saving"
     :position="position"
     :maxPos="maxPos"
+    :currentMod="currentModule"
     @prevStep="prevStep"
     @nextStep="onNextStep"
     @ignore="onIngoredClicked"
     @saving="onSaving"
   >
     <template v-slot:header>
+      <p>
       Bitte trage hier ein wieviele Lager T-Shirts du haben willst.
+      </p>
     </template>
 
     <template v-slot:main>
       <v-row>
-        <v-col cols="3" v-for="(item, index) in moduleData" :key="index">
+        <v-col cols="4" v-for="(item, index) in moduleData" :key="index">
           <v-text-field
             type="number"
             v-model="data[item.attribute.id]"

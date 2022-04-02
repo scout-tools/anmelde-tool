@@ -43,7 +43,7 @@
       <v-container>
         <v-layout column align-center justify-center class="white--text">
           <v-flex xs12 class="text-xs-center">
-            <img height="200px" :src="getLogoPath" alt="f" />
+            <img height="200px" :src="logo2Path" alt="f" />
           </v-flex>
         </v-layout>
       </v-container>
@@ -135,11 +135,11 @@ export default {
   }),
   computed: {
     ...mapGetters(['theme']),
-    logoPath() {
+    logo2Path() {
       if (process.env.VUE_APP_ENV === 'DEV') {
         return require(`./../../assets/${this.theme}/logo-dev.png`); // eslint-disable-line
       }
-      return require(`./../../assets/${this.theme}/logo.png`); // eslint-disable-line
+      return require(`./../../assets/${this.theme}/logo2.png`); // eslint-disable-line
     },
     image1Path() {
       return require(`./../../assets/${this.theme}/image1.jpg`); // eslint-disable-line

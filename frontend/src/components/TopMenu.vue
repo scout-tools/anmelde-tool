@@ -1,5 +1,6 @@
 <template>
   <v-app-bar app color="primary" dark absolute>
+    <div class="my-10" style="color:red"/>
     <v-tabs
       background-color="primary"
       v-model="tab"

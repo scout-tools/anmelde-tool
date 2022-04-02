@@ -5,12 +5,30 @@
         <v-layout column>
           <v-card v-if="!loading">
             <v-card-title class="text-center justify-center py-6">
-              Zu diesen Fahrten kannst du deinen Stamm anmelden
+              Zu diesen Fahrten kannst du deinen Stamm oder dich anmelden
             </v-card-title>
             <v-list subheader two-line>
+              <p
+                class="text-center"
+                v-if="isDev"
+                style="border-style: solid; border-color: red"
+              >
+                <v-icon color="red darken-1" large class="ma-2">
+                  mdi-alert mdi-spin
+                </v-icon>
+                Dies ist ein Test-Server. Die Anmeldung sind <b>nicht verbindlich</b> und
+                werden regelmäßig gelöscht.
+                <v-icon color="red darken-1" large class="ma-2">
+                  mdi-alert mdi-flip-h mdi-spin
+                </v-icon>
+                <br />
+                <br />
+                Immer wenn das Logo <b>oben links rot </b> ist befindest du dich
+                auch dem Test-Server.
+              </p>
               <v-subheader inset>
-                Nicht lange zögern. Melde deinen Stamm zu einer dieser Fahrten
-                an.
+                Folgende Fahrten stehen dir aktuell für die Anmeldung zur
+                Auswahl. Klicke einfach auf eine Fahrt um mehr zu erfahren.
               </v-subheader>
               <v-divider />
               <v-list-group
@@ -33,7 +51,8 @@
                       {{ getHeaderText(item) }}
                     </v-list-item-title>
 
-                    <v-list-item-subtitle v-text="item.description">
+                    <v-list-item-subtitle v-text="item.shortDescription">
+                      {{ item.shortDescription }}
                     </v-list-item-subtitle>
 
                     <v-list-item-subtitle>
@@ -210,6 +229,11 @@ export default {
     DeleteModal,
     SendMessageModal,
     EventCodeModal,
+  },
+  computed: {
+    isDev() {
+      return process.env.VUE_APP_ENV === 'DEV';
+    },
   },
   methods: {
     getLagerText(item) {

@@ -42,8 +42,8 @@ export default {
   mixins: [apiCallsMixin],
   methods: {
     onDeleteClicked() {
-      this.deleteRegistration(this.id).then((response) => {
-        console.log(response);
+      this.deleteRegistration(this.id).then(() => {
+        window.location.reload();
         this.dialog = false;
       });
     },
