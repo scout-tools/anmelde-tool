@@ -38,21 +38,27 @@
     </v-list>
     <create-modal
       :dialogMeta="dialogMeta"
-      ref="createModal"
+      :moduleMapper="moduleMapper"
+      ref="createModalAttribute"
       @refresh="onRefresh()"
+      :valdiationObj="$v"
     />
     <delete-modal
       :dialogMeta="dialogMeta"
-      ref="deleteModal"
+      :moduleMapper="moduleMapper"
+      ref="deleteModalAttribute"
       @refresh="onRefresh()"
+      :valdiationObj="$v"
     />
   </v-container>
 </template>
 
 <script>
-import CreateModal from '@/components/dialog/ListWithDialog/CreateModal.vue';
-import DeleteModal from '@/components/dialog/ListWithDialog/DeleteModal.vue';
+import CreateModal from '@/components/dialog/attributeList/CreateModal.vue';
+import DeleteModal from '@/components/dialog/attributeList/DeleteModal.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   mixins: [apiCallsMixin],
@@ -70,8 +76,20 @@ export default {
     items: {
       default: {},
     },
+    moduleMapper: {
+      default: {},
+    },
   },
-  validations: {},
+  validations: {
+    data: {
+      title: {
+        required,
+      },
+      text: {
+        required,
+      },
+    },
+  },
   computed: {
     regId() {
       return this.$route.params.id;
@@ -79,29 +97,22 @@ export default {
     dialogMeta() {
       return {
         path: `event/registration/${this.regId}/attribute`,
+        regId: this.regId,
         fields: [
           {
-            name: 'Name*',
-            techName: 'name',
+            name: 'Titel',
+            techName: 'title',
             tooltip: '',
             mandatory: true,
             fieldType: 'textfield',
             default: '',
           },
           {
-            name: 'Beschreibung*',
-            techName: 'description',
+            name: 'Text',
+            techName: 'text',
             tooltip: '',
             mandatory: true,
-            fieldType: 'textfield',
-            default: '',
-          },
-          {
-            name: 'Preis*',
-            techName: 'price',
-            tooltip: '',
-            mandatory: true,
-            fieldType: 'currency',
+            fieldType: 'textarea',
             default: '',
           },
         ],
@@ -121,7 +132,7 @@ export default {
       return item.title;
     },
     editParticipant(id) {
-      this.$refs.createModal.openDialogEdit(id);
+      this.$refs.createModalAttribute.openDialogEdit(id);
     },
     deleteSleepingLocation(id) {
       this.deleteEventBookingOption(this.$route.params.id, id).then(() => {
@@ -129,16 +140,16 @@ export default {
       });
     },
     newItem() {
-      this.$refs.createModal.openDialog();
+      this.$refs.createModalAttribute.openDialog();
     },
     onRefresh() {
-      this.getItems();
+      this.$emit('refresh');
     },
     openExcelDialog() {
       this.$refs.uploadExcelFile.openDialog();
     },
-    deleteParticipant(item) {
-      this.$refs.deleteModal.show(item);
+    deleteParticipant(id) {
+      this.$refs.deleteModalAttribute.show(id);
     },
     beforeTabShow() {
       this.onRefresh();

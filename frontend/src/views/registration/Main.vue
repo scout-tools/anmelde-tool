@@ -248,7 +248,7 @@ export default {
 </script>
 
 <style>
-.default-max-width {
-  max-width: 800px !important;
+.default-width {
+  width: 800px !important;
 }
 </style>

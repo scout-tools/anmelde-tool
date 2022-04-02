@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid class="mt-10">
-    <v-card flat v-if="!loading" class="mx-auto top-margin default-max-width">
+  <v-container fluid class="mt-10 default-width top-margin">
+    <v-card flat v-if="!loading" class="mx-auto top-margin default-width">
       <v-row justify="center" style="width: 100%">
         <v-stepper v-model="currentStep" vertical>
           <template v-for="(step, index) in currentModules">
@@ -15,7 +15,7 @@
             <v-divider :key="index"></v-divider>
 
             <v-stepper-items :key="`stepper-items-${index}`">
-              <v-stepper-content :step="index + 1">
+              <v-stepper-content :step="index + 1" class="default-width" style="width: 100%">
                 <component
                   :is="step.module.name"
                   :ref="step.module.name"

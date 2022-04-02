@@ -149,6 +149,8 @@ export default {
         excelUpload: false,
         path: `event/registration/${this.currentRegistration.id}/single-participant`,
         listDisplay: ['firstName', 'lastName'],
+        maxItems: null,
+        minItems: 1,
         fields: [
           {
             name: 'Vorname*',

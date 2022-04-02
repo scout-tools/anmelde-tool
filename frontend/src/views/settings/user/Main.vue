@@ -279,7 +279,7 @@ export default {
         + '</ul>'
         + '<p> Deine Daten beim DPV IDM bleiben allerdings weiterhin bestehen';
       const confirmBox = this.$refs.yesNoDialog.open(
-        'Bestätige',
+        'Account Löschen',
         text,
         'Löschen',
         'Abbrechen',

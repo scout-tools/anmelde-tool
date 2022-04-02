@@ -30,7 +30,7 @@
       y="top"
       :timeout="timeout"
     >
-      {{ 'Diese Person wurde erfolgreich gelöscht' }}
+      {{ 'Dieser Eintrag wurde erfolgreich gelöscht' }}
     </v-snackbar>
   </div>
 </template>
@@ -51,11 +51,25 @@ export default {
     dialogMeta: {
       default: {},
     },
+    valdiationObj: {
+      default: {},
+    },
+    moduleMapper: {
+      default: {},
+    },
+  },
+  computed: {
+    path() {
+      return `${this.API_URL}/event/event/${this.dialogMeta.regId}/event-module-mapper/${this.moduleMapper.id}/attribute-mapper/`;
+    },
+    attributeMapperId() {
+      return this.id;
+    },
   },
   methods: {
     onDeleteClick() {
       axios
-        .delete(`${this.API_URL}/${this.dialogMeta.path}/${this.id}/`)
+        .delete(`${this.path}${this.attributeMapperId}/`)
         .then(() => {
           this.showSuccess = true;
           this.dialog = false;
