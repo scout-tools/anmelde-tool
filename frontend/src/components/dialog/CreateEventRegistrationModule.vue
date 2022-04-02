@@ -45,14 +45,14 @@
               </v-card-title>
             </v-row>
             <v-row>
-              <v-textarea
-                clearable
-                clear-icon="mdi-close-circle"
-                solo
-                auto-grow
-                v-model="data.overwriteDescription"
-              >
-              </v-textarea>
+              <template v-for="(field, i) in fields">
+                <BaseField
+                  :key="i"
+                  :field="field"
+                  v-model="data[field.techName]"
+                  :valdiationObj="$v"
+                />
+              </template>
             </v-row>
           </v-container>
           <v-card-title> Verknüpfte Attribute: </v-card-title>
@@ -74,12 +74,14 @@
 import axios from 'axios';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import AttributeList from '@/components/dialog/attributeList/Main.vue';
+import BaseField from '@/components/common/BaseField.vue';
 
 export default {
   props: ['isOpen'],
   mixins: [apiCallsMixin],
   components: {
     AttributeList,
+    BaseField,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
@@ -96,6 +98,16 @@ export default {
     data: {
       overwriteDescription: '',
     },
+    fields: [
+      {
+        name: 'Modul-Test*',
+        techName: 'overwriteDescription',
+        tooltip: '',
+        mandatory: true,
+        fieldType: 'html',
+        default: '',
+      },
+    ],
   }),
   validations: {
   },
