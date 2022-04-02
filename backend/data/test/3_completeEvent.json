@@ -259,9 +259,9 @@
     "model": "event.eventmodule",
     "pk": 16,
     "fields": {
-      "name": "ParticipantsPersonalSos",
+      "name": "ParticipantsPersonalSmall",
       "type": 7,
-      "header": "Teilnehmende",
+      "header": "Deine Daten",
       "internal": false,
       "custom": false
     }
@@ -270,9 +270,9 @@
     "model": "event.eventmodule",
     "pk": 17,
     "fields": {
-      "name": "ParticipantsPersonalSmall",
+      "name": "ParticipantsPersonal",
       "type": 7,
-      "header": "Teilnehmende",
+      "header": "Deine Daten",
       "internal": false,
       "custom": false
     }

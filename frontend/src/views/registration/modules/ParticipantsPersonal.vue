@@ -98,7 +98,6 @@ export default {
       },
       email: {
         email,
-        required,
       },
       birthday: {
         required,
@@ -189,7 +188,7 @@ export default {
             default: '',
           },
           {
-            name: 'E-Mail Adresse*',
+            name: 'E-Mail Adresse',
             techName: 'email',
             tooltip:
               'Trage bitte die E-Mail Adresse des_der Teilnehmer_in ein.',

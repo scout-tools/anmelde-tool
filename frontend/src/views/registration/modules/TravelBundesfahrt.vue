@@ -5,6 +5,7 @@
     :saving="saving"
     :position="position"
     :maxPos="maxPos"
+    :currentMod="currentModule"
     @prevStep="prevStep"
     @nextStep="onNextStep"
     @ignore="onIngoredClicked"
@@ -34,19 +35,6 @@
           Bitte bildet Fahrgemeinschalten
         <v-icon color="red darken-1" large class="ma-2">
           mdi-alert mdi-flip-h mdi-spin
-        </v-icon>
-      </p>
-      <p
-        class="text-center"
-        v-else
-        style="border-style: solid; border-color: green"
-      >
-        <v-icon color="green darken-1" large class="ma-2">
-          mdi-emoticon-kiss-outline
-        </v-icon>
-        Mega Cool, dass ihr ohne Auto anreist.
-        <v-icon color="green darken-1" large class="ma-2">
-          mdi-emoticon-kiss-outline mdi-flip-h
         </v-icon>
       </p>
     </template>
@@ -100,18 +88,6 @@ export default {
         multiple: false,
         default: '',
       },
-      {
-        name: 'Zeipunkt*',
-        techName: 'time',
-        tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
-        icon: 'mdi-clock',
-        mandatory: true,
-        lookupPath: '/basic/travel-slots-choices/',
-        lookupListDisplay: ['name'],
-        fieldType: 'enumCombo',
-        multiple: false,
-        default: '',
-      },
     ],
   }),
   validations: {
@@ -119,7 +95,6 @@ export default {
       vehicle: {
         required,
       },
-      time: { required },
     },
   },
   computed: {
