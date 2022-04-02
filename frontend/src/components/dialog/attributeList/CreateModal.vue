@@ -20,7 +20,7 @@
               :key="i"
               :field="field"
               v-model="data[field.techName]"
-              :valdiationObj="$v"
+              :valdiationObj="valdiationObj"
             />
           </template>
         </v-row>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import BaseField from '@/components/common/BaseField.vue';
 
@@ -46,6 +48,12 @@ export default {
   },
   props: {
     dialogMeta: {
+      default: {},
+    },
+    valdiationObj: {
+      default: {},
+    },
+    moduleMapper: {
       default: {},
     },
   },
@@ -59,11 +67,14 @@ export default {
     showSuccess: false,
     timeout: 7000,
   }),
-  validations: {
-    data: {
+  computed: {
+    path() {
+      return `${this.API_URL}/event/event/${this.dialogMeta.regId}/event-module-mapper/${this.moduleMapper.id}/attribute-mapper/`;
+    },
+    attributeMapperId() {
+      return this.data.id;
     },
   },
-  computed: {},
   methods: {
     openDialog() {
       this.active = true;
@@ -84,18 +95,18 @@ export default {
     },
     closeDialog() {
       this.active = false;
-      this.$v.$reset();
+      this.valdiationObj.$reset();
       Object.keys(this.data).forEach((key) => {
         this.data[key] = '';
       });
       this.$emit('close');
     },
     validate() {
-      this.$v.$touch();
-      this.valid = !this.$v.$anyError;
+      this.valdiationObj.$touch();
+      this.valid = true; // !this.valdiationObj.$anyError;
     },
     onClickOkay() {
-      this.validate();
+      // this.validate();
       if (this.valid) {
         try {
           this.callCreateService();
@@ -105,24 +116,34 @@ export default {
         }
       }
     },
-    getData(id) {
-      this.getServiceById(this.dialogMeta.path, id).then(
-        (response) => {
+    getData() {
+      axios
+        .get(`${this.path}/${this.attributeMapperId}/`) // eslint-disable-line
+        .then((response) => {
           this.data = response.data;
-        },
-      );
+        });
     },
     async callCreateService() {
       if (!this.isEditWindow) {
-        this.createServiceById(this.dialogMeta.path, this.data).then(() => {
-          this.closeDialog();
-          this.$emit('refresh');
-        });
+        axios
+          .post(this.path, {
+            title: this.data.title,
+            text: this.data.text,
+          })
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
       } else {
-        this.updateServiceById(this.dialogMeta.path, this.data).then(() => {
-          this.closeDialog();
-          this.$emit('refresh');
-        });
+        axios
+          .put(`${this.path}/${this.attributeMapperId}/`, {
+            title: this.data.title,
+            text: this.data.text,
+          })
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          });
       }
     },
   },

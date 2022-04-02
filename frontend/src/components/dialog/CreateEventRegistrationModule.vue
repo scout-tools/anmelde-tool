@@ -56,7 +56,12 @@
             </v-row>
           </v-container>
           <v-card-title> Verknüpfte Attribute: </v-card-title>
-          <AttributeList :items="attributeMappers" :ref="`dialog-main`" />
+          <AttributeList
+            :items="attributeMappers"
+            :moduleMapper="moduleMapper"
+            :ref="`dialog-main`"
+            @refresh="onRefresh()"
+          />
           <v-divider class="my-3" />
           <v-btn color="primary" @click="onClickOkay"> Speichern</v-btn>
         </v-form>
@@ -109,8 +114,7 @@ export default {
       },
     ],
   }),
-  validations: {
-  },
+  validations: {},
 
   computed: {},
   methods: {
@@ -118,10 +122,13 @@ export default {
     openDialog() {
       this.active = true;
     },
+    onRefresh() {
+      this.openDialogEdit(this.moduleMapper);
+    },
     openDialogEdit(moduleMapper) {
       this.loading = true;
       const urlMapper = `${this.API_URL}/event/event/${moduleMapper.event}/event-module-mapper/${moduleMapper.id}/`;
-      const urlModule = `${this.API_URL}/event/event-module/${moduleMapper.module.id}/`;
+      const urlModule = `${this.API_URL}/event/event-module/${moduleMapper.module.id || moduleMapper.module}/`;
       const urlAttributesMapper = `${this.API_URL}/event/event/${moduleMapper.event}/event-module-mapper/${moduleMapper.id}/attribute-mapper/`;
       // const urlAttributes =
       // `${this.API_URL}/event/event-module-mapper/${moduleMapper.id}/attributes/`;
