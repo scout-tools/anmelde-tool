@@ -100,7 +100,7 @@ export default {
     },
     fields: [
       {
-        name: 'Modul-Test*',
+        name: 'Modul-Beschreibung (Optional)',
         techName: 'overwriteDescription',
         tooltip: '',
         mandatory: true,

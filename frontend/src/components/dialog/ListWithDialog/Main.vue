@@ -14,7 +14,7 @@
       Excel Datei hochladen
     </v-btn>
     <v-list v-if="!isLoading">
-      <v-subheader>Einträge</v-subheader>
+      <v-subheader>Einträge ({{ items.length || 0 }})</v-subheader>
       <v-list-item-group color="primary">
         <v-list-item v-for="(item, i) in items" :key="i">
           <v-list-item-avatar>
@@ -41,10 +41,13 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-    <div v-else>
+      <v-row align="center" justify="center" class="ma-2">
+        <p class="red-text" v-if="getValidationErrorMessage"> {{ getValidationErrorMessage }} </p>
+      </v-row>
+    <v-row v-if="isLoading">
       <Circual />
       <v-btn color="success" @click="beforeTabShow">Daten laden</v-btn>
-    </div>
+    </v-row>
     <create-modal
       ref="createModal"
       :dialogMeta="dialogMeta"
@@ -90,6 +93,16 @@ export default {
     regId() {
       return this.$route.params.id;
     },
+    getValidationErrorMessage() {
+      debugger;
+      if (this.dialogMeta.minItems && this.dialogMeta.minItems > this.items.length) {
+        return `Mindestanzahl: ${this.dialogMeta.minItems}.`;
+      }
+      if (this.dialogMeta.maxItems && this.dialogMeta.maxItems < this.items.length) {
+        return `Maximalanzahl: ${this.dialogMeta.maxItems}.`;
+      }
+      return null;
+    },
   },
   methods: {
     validate(data) {
@@ -105,6 +118,9 @@ export default {
         }
       });
       return template;
+    },
+    isValid() {
+      return this.getValidationErrorMessage === null;
     },
     getItems() {
       this.isLoading = true;
@@ -146,4 +162,7 @@ export default {
 </script>
 
 <style>
+.red-text {
+  color: red !important;
+}
 </style>
