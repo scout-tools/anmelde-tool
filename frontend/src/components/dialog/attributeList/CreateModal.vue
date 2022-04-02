@@ -118,7 +118,7 @@ export default {
     },
     getData() {
       axios
-        .get(`${this.path}/${this.attributeMapperId}/`) // eslint-disable-line
+        .get(`${this.path}${this.attributeMapperId}/`) // eslint-disable-line
         .then((response) => {
           this.data = response.data;
         });
@@ -136,7 +136,7 @@ export default {
           });
       } else {
         axios
-          .put(`${this.path}/${this.attributeMapperId}/`, {
+          .put(`${this.path}${this.attributeMapperId}/`, {
             title: this.data.title,
             text: this.data.text,
           })
