@@ -94,7 +94,6 @@ export default {
       return this.$route.params.id;
     },
     getValidationErrorMessage() {
-      debugger;
       if (this.dialogMeta.minItems && this.dialogMeta.minItems > this.items.length) {
         return `Mindestanzahl: ${this.dialogMeta.minItems}.`;
       }
