@@ -154,7 +154,7 @@ export default {
             tooltip: 'Die maximale Anzahl an Teilnehmenden.',
             icon: 'mdi-counter',
             mandatory: true,
-            fieldType: 'date',
+            fieldType: 'number',
             default: '',
           },
           {
