@@ -697,7 +697,7 @@ class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
 
 class WorkshopViewSet(viewsets.ModelViewSet):
     serializer_class = event_serializers.WorkshopSerializer
-    permission_classes = [IsRegistrationResponsiblePerson]
+    permission_classes = [IsSubRegistrationResponsiblePerson]
 
     def create(self, request, *args, **kwargs):
         if not request.data.get('supervisor'):
