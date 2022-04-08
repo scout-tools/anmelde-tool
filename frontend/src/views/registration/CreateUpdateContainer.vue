@@ -69,6 +69,7 @@ import Travel from './modules/Travel.vue';
 import TravelBack from './modules/TravelBack.vue';
 import LunchMeals from './modules/LunchMeals.vue';
 import Tshirts from './modules/Tshirts.vue';
+import SubscribeWorkshop from './modules/SubscribeWorkshop.vue';
 
 import ParticipantsPersonalGold from './modules/ParticipantsPersonalGold.vue';
 import ParticipantsPersonalSmall from './modules/ParticipantsPersonalSmall.vue';
@@ -86,6 +87,7 @@ export default {
     Tent,
     Travel,
     TravelBack,
+    SubscribeWorkshop,
     LunchMeals,
     Tshirts,
     TravelBundesfahrt,
