@@ -60,7 +60,7 @@ export default {
       },
       {
         name: 'Link zur Anmeldeseite',
-        techName: 'event_url',
+        techName: 'eventUrl',
         tooltip: '123',
         icon: 'mdi-cloud',
         mandatory: true,
