@@ -76,6 +76,18 @@ export default {
       title: {
         required,
       },
+      currency: {
+        required,
+      },
+      minPerson: {
+        required,
+      },
+      maxPerson: {
+        required,
+      },
+      freeText: {
+        required,
+      },
     },
   },
   computed: {
