@@ -13,25 +13,16 @@
   >
     <template v-slot:header>
       <p>
-        Ich melde folgende Teilnehmende an <br/>
-        <br/>
-        Die Erfassung erfolgt pro Person. <br/>
-        <br/>
-        <v-icon color="red"> mdi-alert-circle</v-icon>
-        Du musst dich selbst auch in die Liste eintragen.
-      </p>
-      <p v-if="!!dialogMeta.excelUpload">
-        Alternativ kannst du hier die Excelliste hochladen, wenn du die Daten
-        dort bereits erfasst hast.
-        <br/>
+        Bitte trage hier dein Erlebnisangebot ein. <br />
+        <br />
+        Falls du Inspirationen oder Ideen brauchst kannst du gerne
         <a
-          v-if="!!dialogMeta.excelUpload"
-          target="_blank"
-          :href="currentRegistration.cloudLink"
           style="color: blue"
+          target="_blank"
+          href="https://docs.google.com/document/d/1DoACKvb5GdbcfumOU1vLRAM_JXjA_bcdKblyuxDGCwA/edit?usp=sharing"
+          >hier</a
         >
-          Link zur Beispiel Excel Datei
-        </a>
+        schauen.
       </p>
     </template>
 
@@ -121,7 +112,7 @@ export default {
           {
             name: 'Erlebnisangebot-Titel',
             techName: 'title',
-            tooltip: '',
+            tooltip: 'Trage bitte einen kurzen Namen für dein Erlebnisangebot ein.',
             icon: 'mdi-card-account-details-outline',
             mandatory: true,
             fieldType: 'textfield',
@@ -130,7 +121,7 @@ export default {
           {
             name: 'Gesamte Erlebnisangebot-Kosten',
             techName: 'currency',
-            tooltip: '',
+            tooltip: 'Trage die maximalen Gesamtkosten hier ein.',
             icon: 'mdi-card-account-details-outline',
             mandatory: true,
             fieldType: 'number',
@@ -139,7 +130,7 @@ export default {
           {
             name: 'min. Teilnehmende',
             techName: 'minPerson',
-            tooltip: '',
+            tooltip: 'Die minimale Anzahl an Teilnehmenden',
             icon: 'mdi-counter',
             mandatory: true,
             fieldType: 'number',
@@ -148,7 +139,7 @@ export default {
           {
             name: 'max. Teilnehmende*',
             techName: 'maxPerson',
-            tooltip: '',
+            tooltip: 'Die maximale Anzahl an Teilnehmenden.',
             icon: 'mdi-counter',
             mandatory: true,
             fieldType: 'date',
@@ -157,7 +148,7 @@ export default {
           {
             name: 'Erlebnisangebot-Beschreibung',
             techName: 'freeText',
-            tooltip: '',
+            tooltip: 'Beschreibe dein Erlebnisangebot möglichst genau.',
             icon: 'mdi-text',
             mandatory: true,
             fieldType: 'textarea',
