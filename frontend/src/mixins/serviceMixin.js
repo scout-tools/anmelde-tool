@@ -19,8 +19,8 @@ export default {
       const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/participants/`;
       return axios.get(path);
     },
-    async getWorkshopStats(eventId) {
-      const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/workshop-eventmaster-overview/`;
+    async getWorkshopSummary(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/workshop-summary/`;
       return axios.get(path);
     },
     async getServiceById(id, modulePath) {

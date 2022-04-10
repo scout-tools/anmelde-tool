@@ -2,7 +2,7 @@ from django.db.models import QuerySet, Sum, Count
 from django.utils import timezone
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from authentication.serializers import UserExtendedShortSerializer
+from authentication.serializers import UserExtendedGetSerializer
 from basic.models import EatHabit
 
 from basic import serializers as basic_serializers
@@ -240,7 +240,7 @@ class RegistrationPutSerializer(serializers.ModelSerializer):
 
 
 class CurrentUserSerializer(serializers.ModelSerializer):
-    userextended = UserExtendedShortSerializer(many=False, read_only=True)
+    userextended = UserExtendedGetSerializer(many=False, read_only=True)
 
     class Meta:
         model = User

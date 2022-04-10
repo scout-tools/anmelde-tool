@@ -1,22 +1,26 @@
 <template>
   <v-container fluid class="pa-0">
-    <v-row justify="center" class="overflow-y: auto">
+    <v-row justify="center" class="overflow-y: auto ma-3">
       <v-data-table
         :headers="headers"
         :items="getItems()"
         show-expand
-        class="w-75"
+        hide-default-footer
       >
-        <!-- <template v-slot:item.costs="{ item }"> {{ item.costs }} € </template>  -->
+        <template v-slot:item.createdAt="{ item }">
+          {{
+            moment(item.createdAt).format('DD.MM.YYYY')
+          }}
+        </template>
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length">
-            <v-container>
+            <v-container class="ma-3">
               <v-row>
                 <h4>Beschreibung</h4>
               </v-row>
               <v-row>
                 <p class="pt-3">
-                  {{ item.workshopFreeText }}
+                  {{ item.freeText }}
                 </p>
               </v-row>
               <v-row>
@@ -24,14 +28,14 @@
               </v-row>
               <v-row>
                 <p class="pt-3">
-                  Titel: {{ item.workshopTitle }}
+                  Titel: {{ item.title }}
                   <br />
                   <br />
-                  Kosten: {{ item.workshopCosts }} €
+                  Kosten: {{ item.price }} €
                   <br />
                   <br />
-                  von {{ item.workshopMinPerson }} bis
-                  {{ item.workshopMaxPerson }} Personen
+                  von {{ item.minPerson }} bis
+                  {{ item.maxPerson }} Personen
                 </p>
               </v-row>
               <v-row>
@@ -42,13 +46,16 @@
                   Name: {{ item.contactFirstname }} {{ item.contactLastname }}
                   <br />
                   <br />
-                  Pfadfindername: {{ item.contactScoutname }}
+                  Pfadfindername: {{ item.supervisor.userextended.scoutName }}
                   <br />
                   <br />
-                  {{ item.scoutOrganisation}} ({{ item.bundName}})
+                  {{ item.supervisor.userextended.scoutOrganisation.name }} ({{ item.supervisor.userextended.scoutOrganisation.bund}})
                   <br />
                   <br />
-                  E-Mail: {{ item.contactEmail }}
+                  E-Mail: {{ item.supervisor.email }}
+                  <br />
+                  <br />
+                  Nummer: {{ item.supervisor.userextended.mobileNumber }}
                   <br />
                   <br />
                 </p>
@@ -69,10 +76,11 @@ export default {
   data: () => ({
     data: [],
     headers: [
-      { text: 'AG-Name', value: 'workshopTitle' },
-      { text: 'Verantwortlicher', value: 'contactScoutname' },
-      { text: 'Bund', value: 'bundName' },
-      { text: 'Stamm', value: 'scoutOrganisation' },
+      { text: 'AG-Name', value: 'title' },
+      { text: 'Verantwortlicher', value: 'supervisor.userextended.scoutName' },
+      { text: 'Bund', value: 'supervisor.userextended.scoutOrganisation.bund' },
+      { text: 'Stamm', value: 'supervisor.userextended.scoutOrganisation.name' },
+      { text: 'Datum', value: 'createdAt' },
     ],
   }),
   computed: {
@@ -85,7 +93,7 @@ export default {
       return this.data;
     },
     async getData() {
-      const { data } = await this.getWorkshopStats(this.eventId);
+      const { data } = await this.getWorkshopSummary(this.eventId);
       this.data = data;
     },
   },

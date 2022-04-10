@@ -68,7 +68,6 @@ export default {
     saving: false,
     moduleData: [],
     showError: false,
-    errorMessage: 'Fehler',
     data: {},
   }),
   validations: {
