@@ -5,10 +5,22 @@ from rest_framework import serializers
 from .models import UserExtended
 
 
-class UserExtendedScoutHierarchySerializer(serializers.ModelSerializer):
+class UserExtendedScoutHierarchySerializer(serializers.ModelSerializer): #
+
+    bund = serializers.SerializerMethodField()
+
     class Meta:
         model = ScoutHierarchy
-        fields = ('id', 'name', 'parent', 'zip_code')
+        fields = ('id', 'name', 'parent', 'zip_code', 'bund')
+
+    def get_bund(self, obj: ScoutHierarchy) -> str:
+        iterator: ScoutHierarchy = obj
+        while iterator is not None:
+            if iterator.level.name == 'Bund':
+                return iterator.name
+            iterator = iterator.parent
+
+    
 
 
 class UserExtendedShortSerializer(serializers.ModelSerializer):

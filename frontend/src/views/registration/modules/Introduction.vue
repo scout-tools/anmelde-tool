@@ -87,7 +87,10 @@ export default {
         required,
         allChecked: (value) => {
           const values = Object.values(value);
-          console.log(values && values.every((item) => item));
+
+          if (value && !value.length) {
+            return true;
+          }
           return values && values.every((item) => item);
         },
       },
