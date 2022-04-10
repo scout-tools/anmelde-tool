@@ -33,7 +33,6 @@
                 Erlebnisangebot
                 <v-icon>mdi-run-fast</v-icon>
               </v-tab>
-
             </v-tabs>
 
             <v-tabs-items v-model="tab">
@@ -92,13 +91,17 @@ export default {
     getData() {
       const eventId = this.$route.params.id;
       this.loading = true;
-      Promise.all([
-        this.getAssignedEventModules(eventId),
-      ])
+      Promise.all([this.getAssignedEventModules(eventId)])
         .then((values) => {
           this.currentModules = values[0].data; // eslint-disable-line
-          this.hasParticipantsPersonal = this.hasModule(this.currentModules, 'ParticipantsPersonal');
-          this.hasSubscribeWorkshop = this.hasModule(this.currentModules, 'SubscribeWorkshop');
+          this.hasParticipantsPersonal = this.hasModule(this.currentModules, [
+            'ParticipantsPersonal',
+            'ParticipantsPersonalGold',
+            'ParticipantsPersonalSmall',
+          ]);
+          this.hasSubscribeWorkshop = this.hasModule(this.currentModules, [
+            'SubscribeWorkshop',
+          ]);
           this.loading = false;
         })
         .catch((error) => {
@@ -108,11 +111,13 @@ export default {
     },
     hasModule(currentModules, name) {
       console.log(currentModules);
+      console.log(currentModules);
       return (
         currentModules && // eslint-disable-line
         currentModules.length && // eslint-disable-line
-        currentModules.some( // eslint-disable-line
-          (module) => module.module.name === name, // eslint-disable-line
+        currentModules.some(
+          // eslint-disable-line
+          (module) => name.includes(module.module.name), // eslint-disable-line
         )
       );
     },

@@ -7,10 +7,8 @@
         show-expand
         hide-default-footer
       >
-        <template v-slot:item.createdAt="{ item }">
-          {{
-            moment(item.createdAt).format('DD.MM.YYYY')
-          }}
+        <template v-slot:[`item.createdAt`]="{ item }">
+          {{ moment(item.createdAt).format('DD.MM.YYYY') }}
         </template>
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length">
@@ -34,8 +32,7 @@
                   Kosten: {{ item.price }} €
                   <br />
                   <br />
-                  von {{ item.minPerson }} bis
-                  {{ item.maxPerson }} Personen
+                  von {{ item.minPerson }} bis {{ item.maxPerson }} Personen
                 </p>
               </v-row>
               <v-row>
@@ -49,7 +46,9 @@
                   Pfadfindername: {{ item.supervisor.userextended.scoutName }}
                   <br />
                   <br />
-                  {{ item.supervisor.userextended.scoutOrganisation.name }} ({{ item.supervisor.userextended.scoutOrganisation.bund}})
+                  {{ item.supervisor.userextended.scoutOrganisation.name }} ({{
+                    item.supervisor.userextended.scoutOrganisation.bund
+                  }})
                   <br />
                   <br />
                   E-Mail: {{ item.supervisor.email }}
@@ -79,7 +78,10 @@ export default {
       { text: 'AG-Name', value: 'title' },
       { text: 'Verantwortlicher', value: 'supervisor.userextended.scoutName' },
       { text: 'Bund', value: 'supervisor.userextended.scoutOrganisation.bund' },
-      { text: 'Stamm', value: 'supervisor.userextended.scoutOrganisation.name' },
+      {
+        text: 'Stamm',
+        value: 'supervisor.userextended.scoutOrganisation.name',
+      },
       { text: 'Datum', value: 'createdAt' },
     ],
   }),
