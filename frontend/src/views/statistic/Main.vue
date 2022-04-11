@@ -14,34 +14,34 @@
             >
               <v-tabs-slider></v-tabs-slider>
 
-              <!-- <v-tab href="#tab-1">
+              <v-tab v-if="hasParticipantsPersonal" href="#tab-1">
                 Übersicht
                 <v-icon>mdi-clipboard-list</v-icon>
-              </v-tab> -->
+              </v-tab>
 
-              <v-tab v-if="hasParticipantsPersonal" href="#tab-1">
+              <v-tab v-if="hasParticipantsPersonal" href="#tab-2">
                 Teilnehmer
                 <v-icon>mdi-counter</v-icon>
               </v-tab>
 
-              <v-tab v-if="hasParticipantsPersonal" href="#tab-2">
+              <v-tab v-if="hasParticipantsPersonal" href="#tab-3">
                 Karte
                 <v-icon>mdi-map</v-icon>
               </v-tab>
 
-              <v-tab v-if="hasSubscribeWorkshop" href="#tab-3">
+              <v-tab v-if="hasSubscribeWorkshop" href="#tab-4">
                 Erlebnisangebot
                 <v-icon>mdi-run-fast</v-icon>
               </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-              <v-tab-item v-for="i in 3" :key="i" :value="'tab-' + i">
+              <v-tab-item v-for="i in 4" :key="i" :value="'tab-' + i">
                 <v-card-text>
-                  <!-- <OverviewMain v-if="i === 1" /> -->
-                  <LeaderMain v-if="hasParticipantsPersonal && i === 1" />
-                  <MapsMain v-if="hasParticipantsPersonal && i === 2" />
-                  <WorkshopMain v-if="hasSubscribeWorkshop && i === 3" />
+                  <OverviewMain v-if="hasParticipantsPersonal && i === 1" />
+                  <LeaderMain v-if="hasParticipantsPersonal && i === 2" />
+                  <MapsMain v-if="hasParticipantsPersonal && i === 3" />
+                  <WorkshopMain v-if="hasSubscribeWorkshop && i === 4" />
                   <!-- <PdfGenerationMain v-if="i === 6"/> -->
                 </v-card-text>
               </v-tab-item>
@@ -58,7 +58,7 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 
-// import OverviewMain from './overview/Main.vue';
+import OverviewMain from './overview/Main.vue';
 import LeaderMain from './leader/Main.vue';
 import MapsMain from './maps/Main.vue';
 import WorkshopMain from './workshop/Main.vue';
@@ -70,7 +70,7 @@ export default {
     LeaderMain,
     WorkshopMain,
     // PdfGenerationMain,
-    // OverviewMain,
+    OverviewMain,
   },
   mixins: [apiCallsMixin],
   computed: {

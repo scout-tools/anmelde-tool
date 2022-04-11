@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-auto" :color="color" dark>
     <v-container fluid>
-      <v-row align="center" justify="center" v-if="list.length">
+      <v-row align="center" justify="center" v-if="list">
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline">{{
@@ -27,7 +27,7 @@
               v-text="item[data.rankField]"
             />
             <v-list-item-subtitle
-              >{{ `${item.scoutOrganisation} (${item.bundName})` }}
+              >{{ `${item.scoutOrganisation.name} (${item.scoutOrganisation.bund})` }}
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>

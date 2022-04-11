@@ -47,8 +47,6 @@ export default {
   }),
   computed: {
     ...mapGetters([
-      'myStamm',
-      'myBund',
     ]),
     eventId() {
       return this.$route.params.id;
@@ -56,33 +54,23 @@ export default {
     confirmedData() {
       return this.data.filter((item) => item.isConfirmed);
     },
-    getBundData() {
-      return this.data.filter((item) => item.bundName === this.myBund);
-    },
     kpiCardOne() {
       return {
         header: 'Anmeldungen',
-        subheader: 'Bestätigt',
+        subheader: 'Anzahl Personen',
         dataOne: this.confirmedData.reduce(
-          (accum, item) => accum + item.numberParticipant,
+          (accum, item) => accum + item.participantCount,
           0,
         ),
-        dataTwo: this.getBundData.reduce(
-          (accum, item) => accum + item.numberParticipant,
-          0,
-        ),
-        dataOneName: 'DPV',
-        dataTwoName: 'Eigener Bund',
+        dataOneName: '',
       };
     },
     kpiCardTwo() {
       return {
-        header: 'Anzahl Stämme',
-        subheader: 'aus den Bünden',
+        header: 'Anmeldungen',
+        subheader: 'Anzahl Stämme',
         dataOne: this.confirmedData.length,
-        dataTwo: this.getBundData.length,
-        dataOneName: 'DPV',
-        dataTwoName: 'Eigener Bund',
+        dataOneName: '',
       };
     },
     kpiCardThree() {
@@ -99,7 +87,7 @@ export default {
         header: 'Größte Anmeldungen',
         subheader: 'nach Gesamtteilnehmer',
         dataOne: this.confirmedData,
-        rankField: 'numberParticipant',
+        rankField: 'participantCount',
         rankOrder: 'desc',
       };
     },
@@ -110,7 +98,7 @@ export default {
     },
     getData(eventId) {
       this.getRegistrationSummary(eventId).then((responseObj) => {
-        this.data = responseObj.data;
+        this.data = responseObj.data[0].registrationSet;
       });
     },
     sortByKey(array, key) {
