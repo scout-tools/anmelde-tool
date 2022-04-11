@@ -79,7 +79,7 @@
                             @click="onSingleRegClicked(item)"
                             v-if="item.registrationOptions.allowNewSingleReg"
                           >
-                            <v-icon fab color="info"> mdi-account-plus </v-icon>
+                            <v-icon fab color="success"> mdi-account-plus </v-icon>
                           </v-btn>
                         </template>
                         <span>Einzel Fahrtenanmeldung</span>
@@ -94,7 +94,7 @@
                             @click="onGroupRegClicked(item)"
                             v-if="item.registrationOptions.allowNewGroupReg"
                           >
-                            <v-icon fab color="info">
+                            <v-icon fab color="success">
                               mdi-account-multiple-plus
                             </v-icon>
                           </v-btn>
