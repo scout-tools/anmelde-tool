@@ -13,10 +13,11 @@ const keycl = {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.response.status === 426) {
           store.commit('setAccountIncomplete', true);
-          router.push({ name: 'settingsOverview' });
+          if (router.history.current.meta.requiresAuth) {
+            router.push({ name: 'settingsOverview' });
+          }
         }
       });
   },

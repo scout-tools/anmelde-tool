@@ -68,6 +68,9 @@ const routes = [
     path: '/data/overview',
     name: 'dataOverview',
     component: MasterDataOverview,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/settings/overview',
@@ -87,18 +90,27 @@ const routes = [
     name: 'registrationNew',
     component: registrationNew,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/registration/edit/:id',
     name: 'registrationEdit',
     component: registrationEdit,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/registration/completed/:id',
     name: 'registrationCompleted',
     component: registrationCompleted,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/settings/config',
@@ -109,6 +121,9 @@ const routes = [
     path: '/statistic/:id',
     name: 'statisticOverview',
     component: StatisticMain,
+    meta: {
+      requiresAuth: true,
+    },
     children: [
       {
         path: 'overview',
