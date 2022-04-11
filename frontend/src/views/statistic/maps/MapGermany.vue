@@ -51,11 +51,17 @@ export default {
       ]);
 
       this.data.forEach((loc) => {
-        returnData.push([
-          parseFloat(loc.scoutOrganisation.zipCode.lat),
-          parseFloat(loc.scoutOrganisation.zipCode.lon),
-          loc.scoutOrganisation.name,
-        ]);
+        try {
+          returnData.push([
+            parseFloat(loc.scoutOrganisation.zipCode.lat),
+            parseFloat(loc.scoutOrganisation.zipCode.lon),
+            loc.scoutOrganisation.name,
+          ]);
+        } catch (e) {
+          console.log('Fehler');
+          console.log(loc);
+          console.log(e);
+        }
       });
       return returnData;
     },

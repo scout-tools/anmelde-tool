@@ -74,7 +74,17 @@ export default {
       });
     },
     getCoord(item) {
-      return [item.scoutOrganisation.zipCode.lat, item.scoutOrganisation.zipCode.lon];
+      try {
+        return [
+          item.scoutOrganisation.zipCode.lat,
+          item.scoutOrganisation.zipCode.lon,
+        ];
+      } catch (e) {
+        console.log('Fehler');
+        console.log(item);
+        console.log(e);
+        return [1, 1];
+      }
     },
     getColor() {
       return 'blue';
@@ -84,10 +94,17 @@ export default {
     },
     createContent(item) {
       console.log(item);
-      return `${item.scoutOrganisation.bund},
+      try {
+        return `${item.scoutOrganisation.bund},
         ${item.scoutOrganisation.name}
          aus ${item.scoutOrganisation.zipCode.city},
         Teilnehmer: ${item.participantCount}`;
+      } catch (e) {
+        console.log('Fehler');
+        console.log(item);
+        console.log(e);
+        return '';
+      }
     },
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
