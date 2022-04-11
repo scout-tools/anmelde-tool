@@ -6727,10 +6727,10 @@ vuetify-money@^1.2.0:
   resolved "https://registry.npmjs.org/vuetify-money/-/vuetify-money-1.2.0.tgz"
   integrity sha512-YVxO2bNE9HIgRZmF/d3ol4DJrJrbnptzrd72D5KpUxaSyjx0+8bTxUStGRYIHPoFsnUH/uCJOuZkGSVhbdqf3A==
 
-vuetify@2.5.6:
-  version "2.5.6"
-  resolved "https://registry.npmjs.org/vuetify/-/vuetify-2.5.6.tgz"
-  integrity sha512-2T8ML5PYuJ/AdMVH3ZIvzHnsM0nX8t4Xzj+0HFFGfLT7jLlptCFpG+JE8+kyrgGZlbUgulyOwCUu8hJkVsReFA==
+vuetify@^2.6.4:
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.6.4.tgz#18052f77492d32856fea35c910755075ff32acc9"
+  integrity sha512-2wEzU/Gz39gQCxK93xoiWPKCHQUnyUKWd81wB7Q7hfYJWu5QOWQXYlF0X/BgUZzf8IOyHWKiSNEAfEe9OE3b4w==
 
 vuex-persistedstate@^4.1.0:
   version "4.1.0"

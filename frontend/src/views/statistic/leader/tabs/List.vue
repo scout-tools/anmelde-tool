@@ -24,8 +24,9 @@
         :items-per-page="itemsPerPage"
         :expanded.sync="expanded"
         show-expand
+        single-expand
         hide-default-footer
-        :item-class="rowClasses"
+        item-key="createdAt"
       >
         <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
@@ -40,8 +41,8 @@
         <template v-slot:[`item.numberParticipant`]="{ item }">
           <td v-html="getNumberParticipant(item)" disabled></td>
         </template>
-        <template v-slot:expanded-item="{ item }">
-          <template v-for="(string, index) in getBody(item)" >
+          <template v-slot:expanded-item="{ item }">
+          <template v-for="(string, index) in getBody(filterNulls(item))" >
             <v-list-item :key="index">
               <v-list-item-content>
                 <v-list-item-title>{{ string }}</v-list-item-title>
@@ -71,7 +72,7 @@ export default {
     data: [],
     expanded: [],
     filter: {
-      justConfirmed: false,
+      justConfirmed: true,
     },
     headers: [
       { text: 'Bestätigt', value: 'isConfirmed' },
@@ -115,8 +116,11 @@ export default {
   },
 
   methods: {
+    filterNulls(items) {
+      return items.tags.filter((i) => !!this.getValueField(i));
+    },
     getBody(item) {
-      return item.tags.map((t) => `${t.name}: ${this.getValueField(t)}`);
+      return item.map((t) => `${t.name}: ${this.getValueField(t)}`);
     },
     getValueField(item) {
       let value = '';
