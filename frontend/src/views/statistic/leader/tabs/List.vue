@@ -49,6 +49,11 @@
               </v-list-item-content>
             </v-list-item>
           </template>
+            <v-list-item>
+            <v-list-item-content>
+              <b>Verantwortlicher: </b> {{item.responsiblePersons[0]}}
+              </v-list-item-content>
+            </v-list-item>
         </template>
         <template slot="body.append">
           <tr>
