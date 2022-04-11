@@ -69,7 +69,7 @@ export default {
     data: [],
     expanded: [],
     filter: {
-      justConfirmed: false,
+      justConfirmed: true,
     },
     headers: [
       { text: 'Bestätigt', value: 'isConfirmed' },
