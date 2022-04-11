@@ -75,7 +75,7 @@ export default {
       title: {
         required,
       },
-      currency: {
+      price: {
         required,
       },
       minPerson: {
@@ -131,11 +131,11 @@ export default {
           },
           {
             name: 'Gesamte Erlebnisangebot-Kosten',
-            techName: 'currency',
+            techName: 'price',
             tooltip: 'Trage die maximalen Gesamtkosten hier ein.',
             icon: 'mdi-card-account-details-outline',
             mandatory: true,
-            fieldType: 'number',
+            fieldType: 'currency',
             default: '',
           },
           {

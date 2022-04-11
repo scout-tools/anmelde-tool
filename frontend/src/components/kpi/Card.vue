@@ -13,12 +13,10 @@
 
         <v-card-text>
           <v-row align="center">
-            <v-col class="display-3" cols="6">{{ list.dataOne }}</v-col>
-            <v-col class="display-3" cols="6">{{ list.dataTwo }}</v-col>
+            <v-col class="display-3" cols="12">{{ list.dataOne }}</v-col>
           </v-row>
           <v-row align="center">
-            <v-col cols="6">{{ list.dataOneName }}</v-col>
-            <v-col cols="6">{{ list.dataTwoName }}</v-col>
+            <v-col cols="12">{{ list.dataOneName }}</v-col>
           </v-row>
         </v-card-text>
       </v-row>
