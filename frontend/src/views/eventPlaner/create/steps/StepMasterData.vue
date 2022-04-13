@@ -87,6 +87,14 @@ export default {
         fieldType: 'refDropdown',
         default: '',
       },
+      {
+        name: 'Lager-Icon',
+        techName: 'icon',
+        tooltip: 'Das Lager in der Übersicht',
+        icon: 'mdi-penguin',
+        fieldType: 'textfield',
+        default: '',
+      },
     ],
   }),
   validations: {

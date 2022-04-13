@@ -9,8 +9,7 @@
           Hier musst du deine persönlichen Daten angeben. Deine
           Stammes-Zugehörigkeit sowie deinen Fahrtenname sind wichtig, damit du
           dich oder deinen Stamm bei Fahrten anmelden kannst. Fülle die Felder
-          deswegen unbedingt aus. Die Handynummer ist freiwillig und hilft dich
-          zu kontaktieren.
+          deswegen unbedingt aus.
         </v-subheader>
         <v-row>
           <v-col cols="12" sm="6">
@@ -189,7 +188,7 @@ export default {
         email:
           'Die E-Mail nutzen wir für die Kommunikation mit dem Tool und für Rückfragen.',
         mobileNumber:
-          'Die Handynummer ist freiwillig und hilft dich zu kontaktieren (Für manche Fahrten ist sie Pflicht)',
+          'Die Handynummer ist Pflicht und hilft der Lagerleitung dich zu kontaktieren, falls es dringende Probleme gibt.',
         scoutOrganisation: 'Mit dem Stift kannst du deinen Stamm auswählen.',
       },
       user: null,

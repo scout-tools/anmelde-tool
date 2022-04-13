@@ -43,7 +43,7 @@
                       large
                       color="primary"
                       dark
-                      v-text="'mdi-tent'"
+                      v-text="`mdi-${item.icon || 'tent'}`"
                     ></v-icon>
                   </v-list-item-avatar>
                   <v-list-item-content>

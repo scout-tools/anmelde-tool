@@ -75,6 +75,7 @@ class Event(basic_models.TimeStampMixin):
     long_description = models.CharField(max_length=10000, blank=True)
     cloud_link = models.CharField(max_length=200, blank=True, null=True)
     event_url = models.CharField(max_length=200, blank=True, null=True)
+    icon = models.CharField(max_length=20, blank=True, null=True)
     location = models.ForeignKey(EventLocation, on_delete=models.PROTECT, null=True, blank=True)
     start_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     end_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)

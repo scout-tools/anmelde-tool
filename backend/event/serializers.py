@@ -174,7 +174,8 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'last_possible_update',
             'tags',
             'registration_options',
-            'allow_statistic'
+            'allow_statistic',
+            'icon'
         )
 
     def get_allow_statistic(self, obj: event_models.Event) -> bool:
