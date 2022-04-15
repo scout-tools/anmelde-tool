@@ -14,16 +14,16 @@
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-sheet class="ma-5">
-        <v-header>
+        <template>
           Lade hier deine Excel Datei hoch, um dir die manuelle Eingabe zu
           erleichtern. Die Datei muss in einem bestimmten Format sein.
-          <a target="_blank" href="https://cloud.dpvonline.de/s/fMMrgfpf5dAm9Fg">
-            Link zur DPV-Cloud
+          <a style="color: blue" target="_blank" :href="cloudLink">
+            Link zur Cloud
           </a>
-        </v-header>
+        </template>
         <v-card class="ma-4 pa-3">
           <label for="firstName">
-          <input type="file" @change="onFileChange" id="firstName"/>
+            <input type="file" @change="onFileChange" id="firstName" />
           </label>
         </v-card>
         <v-card class="ma-4">
@@ -43,7 +43,13 @@
               <tbody>
                 <tr v-for="row in chartData" :key="row.name">
                   <td v-for="(column, index) in dialogMeta.fields" :key="index">
-                    {{ displayFormt(row[column['techName']], column['techName'], row) }}
+                    {{
+                      displayFormt(
+                        row[column['techName']],
+                        column['techName'],
+                        row,
+                      )
+                    }}
                   </td>
                   <td>
                     <v-btn icon @click="fillParticipant(row)">
@@ -56,17 +62,14 @@
           </v-simple-table>
         </v-card>
       </v-sheet>
-    <CreateModal
-      ref="createModalExel"
-      :dialogMeta="dialogMeta"
-      @refresh="onRefresh()"
-      :valdiationObj="valdiationObj"
-      @validate="validate"
-    />
-      <upload-excel-file
-        ref="uploadExcelFile"
+      <CreateModalExcel
+        ref="createModalExel"
+        :dialogMeta="dialogMeta"
         @refresh="onRefresh()"
+        :valdiationObj="valdiationObj"
+        @validate="validate"
       />
+      <upload-excel-file ref="uploadExcelFile" @refresh="onRefresh()" />
     </v-card>
   </v-dialog>
 </template>
@@ -80,13 +83,15 @@ import CreateModal from './CreateModal.vue';
 
 export default {
   components: {
-    CreateModal,
+    CreateModalExcel: CreateModal,
   },
   props: {
     dialogMeta: {
       default: {},
     },
-    valdiationObj: {
+    valdiationObj: {},
+    currentEvent: {
+      default: {},
     },
   },
   data: () => ({
@@ -102,17 +107,6 @@ export default {
       city: '',
       zipCode: '',
     },
-    columns: [
-      'firstName',
-      'lastName',
-      'scoutName',
-      'birthday',
-      'street',
-      'zipCodeShow',
-      'phoneNumber',
-      'email',
-      'participantRole',
-    ],
     jsonData: [],
     e1: 1,
     showError: false,
@@ -132,6 +126,20 @@ export default {
       if (column === 'zipCode') {
         return row.zipCodeShow;
       }
+      if (column === 'birthday') {
+        return moment(row.birthday).format('DD.MM.YYYY');
+      }
+      if (column === 'eatHabit') {
+        return row.eatHabit.join(', ');
+      }
+      if (column === 'gender') {
+        const fieldDef = this.dialogMeta.fields.filter(
+          (field) => field.techName === 'gender',
+        )[0];
+        return fieldDef.referenceTable.filter(
+          (item) => item.value === row.gender,
+        )[0].name;
+      }
       return value;
     },
     onFileChange(e) {
@@ -147,13 +155,13 @@ export default {
       const me = this;
       const output = [];
       let zipCodeTemps = [];
-      data.forEach((element, index, array) => { // eslint-disable-line
+      data.forEach((element) => {
         output.push(me.map(element)); // eslint-disable-line
       });
       await Promise.all(this.promises).then((array) => {
         zipCodeTemps = array;
       });
-      output.forEach((element, index, array) => { // eslint-disable-line
+      output.forEach((element, index) => {
         element.zipCode = zipCodeTemps[index][0].id; // eslint-disable-line
         element.zipCodeShow = `${zipCodeTemps[index][0].zipCode} - ${zipCodeTemps[index][0].city}`; // eslint-disable-line
       });
@@ -201,6 +209,9 @@ export default {
       if (dto.leaderType) {
         dto.leader = dto.leaderType;
       }
+      if (dto.gender) {
+        dto.gender = dto.gender.toUpperCase();
+      }
 
       if (dto.participantRole) {
         dto.bookingOption = dto.participantRole;
@@ -232,7 +243,7 @@ export default {
         startDate.getMonth(),
         startDate.getDate() + birthdayDays - 2,
       );
-      return moment(newDate).format('DD-MM-YYYY');
+      return newDate;
     },
     removeEmpty(obj) {
       return Object.entries(obj)
@@ -249,7 +260,8 @@ export default {
         const content = data.splice(3);
 
         content.forEach((item) => {
-          const hasValidPrimaryKey = (currentValue) => item[currentValue] !== '';
+          const hasValidPrimaryKey = (currentValue) =>
+            item[currentValue] !== ''; // eslint-disable-line
           if (primaryArray.every(hasValidPrimaryKey)) {
             cleanContent.push(item);
           }
@@ -260,6 +272,10 @@ export default {
     },
   },
   computed: {
+    cloudLink() {
+      debugger;
+      return this.currentEvent.cloudLink;
+    },
     chartData() {
       return this.jsonData;
     },

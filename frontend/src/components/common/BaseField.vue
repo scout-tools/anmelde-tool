@@ -536,6 +536,12 @@ export default {
     ) {
       this.getData(this.field.referenceTable);
     }
+    if (this.field.fieldType === 'zipField') {
+      this.callSingleZipCode(this.value).then((result) => {
+        this.lookupList = result;
+        this.$forceUpdate();
+      });
+    }
   },
 };
 </script>

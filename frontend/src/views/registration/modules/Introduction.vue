@@ -26,8 +26,8 @@
           <br />
           Die folgenden Daten sind nur für das Planungsteam und die
           Administrator_innen sichtbar. <br />
-          <span v-if="cloudLink">Alle Dokumente findest du hier:</span>
-          <a v-if="cloudLink" target="_blank" :href="cloudLink">
+          <span v-if="cloudLink">Alle Dokumente findest du hier: </span>
+          <a target="_blank" :href="cloudLink" style="color: blue">
             Link zur Cloud
           </a>
         </p>
@@ -116,6 +116,7 @@ export default {
       return this.currentEvent.name;
     },
     cloudLink() {
+      debugger;
       return this.currentEvent.cloudLink;
     },
     path() {
