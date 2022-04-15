@@ -146,7 +146,7 @@ export default {
     dialogMeta() {
       return {
         title: 'Hallo',
-        excelUpload: false,
+        excelUpload: true,
         path: `event/registration/${this.currentRegistration.id}/single-participant`,
         listDisplay: ['firstName', 'lastName'],
         maxItems: null,

@@ -6,12 +6,14 @@
     </v-btn>
     <v-btn
       v-if="dialogMeta.excelUpload"
+      :disabled="!isDev"
       class="ma-2"
-      color="primary"
+      color="#008000"
+      dark
       @click="openExcelDialog"
     >
-      <v-icon left> mdi-plus </v-icon>
-      Excel Datei hochladen
+      <v-icon left> mdi-microsoft-excel </v-icon>
+      Excel Datei hochladen (ab morgen!)
     </v-btn>
     <v-list v-if="!isLoading">
       <v-subheader>Einträge ({{ items.length || 0 }})</v-subheader>
@@ -60,6 +62,13 @@
       :dialogMeta="dialogMeta"
       @refresh="onRefresh()"
     />
+    <UploadExcelFile
+      ref="uploadExcelFile"
+      :dialogMeta="dialogMeta"
+      :valdiationObj="valdiationObj"
+      @refresh="onRefresh()"
+      @validate="validate"
+    />
   </v-container>
 </template>
 
@@ -68,11 +77,13 @@ import CreateModal from '@/components/dialog/ListWithDialog/CreateModal.vue';
 import DeleteModal from '@/components/dialog/ListWithDialog/DeleteModal.vue';
 import Circual from '@/components/loading/Circual.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import UploadExcelFile from './ExcelImport.vue';
 
 export default {
   mixins: [apiCallsMixin],
   components: {
     CreateModal,
+    UploadExcelFile,
     DeleteModal,
     Circual,
   },
@@ -90,6 +101,9 @@ export default {
     },
   },
   computed: {
+    isDev() {
+      return process.env.VUE_APP_ENV === 'DEV';
+    },
     regId() {
       return this.$route.params.id;
     },

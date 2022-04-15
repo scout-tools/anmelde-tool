@@ -48,8 +48,7 @@ export default {
     dialogMeta: {
       default: {},
     },
-    valdiationObj: {
-    },
+    valdiationObj: {},
   },
   mixins: [apiCallsMixin],
   data: () => ({
@@ -63,12 +62,19 @@ export default {
   }),
   computed: {},
   methods: {
-    openDialog() {
+    openDialog(item) {
       this.active = true;
       this.isEditWindow = false;
-      this.setDefaults();
+      if (item) {
+        this.data = item;
+      } else {
+        this.setDefaults();
+      }
+      this.$forceUpdate();
+      debugger;
     },
     openDialogEdit(item) {
+      debugger;
       this.active = true;
       this.isEditWindow = true;
       if (item.id) {
@@ -107,11 +113,9 @@ export default {
       }
     },
     getData(id) {
-      this.getServiceById(this.dialogMeta.path, id).then(
-        (response) => {
-          this.data = response.data;
-        },
-      );
+      this.getServiceById(this.dialogMeta.path, id).then((response) => {
+        this.data = response.data;
+      });
     },
     async callCreateService() {
       if (!this.isEditWindow) {
