@@ -8,8 +8,6 @@
       v-if="dialogMeta.excelUpload"
       :disabled="!isDev"
       class="ma-2"
-      color="#008000"
-      dark
       @click="openExcelDialog"
     >
       <v-icon left> mdi-microsoft-excel </v-icon>
@@ -68,6 +66,7 @@
       :valdiationObj="valdiationObj"
       @refresh="onRefresh()"
       @validate="validate"
+      :currentEvent="currentEvent"
     />
   </v-container>
 </template>
@@ -97,6 +96,9 @@ export default {
   props: {
     valdiationObj: {},
     dialogMeta: {
+      default: {},
+    },
+    currentEvent: {
       default: {},
     },
   },

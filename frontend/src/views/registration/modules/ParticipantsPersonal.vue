@@ -24,9 +24,9 @@
         dort bereits erfasst hast.
         <br/>
         <a
-          v-if="!!dialogMeta.excelUpload"
+          v-if="dialogMeta.excelUpload"
           target="_blank"
-          :href="currentRegistration.cloudLink"
+          :href="cloudLink"
           style="color: blue"
         >
           Link zur Beispiel Excel Datei
@@ -39,6 +39,7 @@
         :ref="`dialog-main-${moduleId}`"
         :dialogMeta="dialogMeta"
         :valdiationObj="$v"
+        :currentEvent="currentEvent"
         @validate="validate"
       />
     </template>
@@ -121,6 +122,7 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo']),
+
     loadingRead: {
       get() {
         return !!this.loading;
@@ -297,6 +299,7 @@ export default {
   },
   methods: {
     validate(data) {
+      debugger;
       this.data = data;
       this.$v.$touch();
     },
