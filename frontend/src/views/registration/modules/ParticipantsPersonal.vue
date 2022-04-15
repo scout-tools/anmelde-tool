@@ -299,7 +299,6 @@ export default {
   },
   methods: {
     validate(data) {
-      debugger;
       this.data = data;
       this.$v.$touch();
     },

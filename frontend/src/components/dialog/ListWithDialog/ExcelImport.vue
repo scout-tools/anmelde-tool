@@ -273,7 +273,6 @@ export default {
   },
   computed: {
     cloudLink() {
-      debugger;
       return this.currentEvent.cloudLink;
     },
     chartData() {

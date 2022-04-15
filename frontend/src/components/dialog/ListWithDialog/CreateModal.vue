@@ -71,10 +71,8 @@ export default {
         this.setDefaults();
       }
       this.$forceUpdate();
-      debugger;
     },
     openDialogEdit(item) {
-      debugger;
       this.active = true;
       this.isEditWindow = true;
       if (item.id) {

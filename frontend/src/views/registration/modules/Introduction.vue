@@ -116,7 +116,6 @@ export default {
       return this.currentEvent.name;
     },
     cloudLink() {
-      debugger;
       return this.currentEvent.cloudLink;
     },
     path() {
