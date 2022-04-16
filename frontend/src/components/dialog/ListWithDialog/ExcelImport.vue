@@ -405,7 +405,6 @@ export default {
               this.bookingOptionList = thirdResponse.data;
               this.items = fifthResponse.data;
               this.isLoading = false;
-              debugger;
             },
           ),
         )
