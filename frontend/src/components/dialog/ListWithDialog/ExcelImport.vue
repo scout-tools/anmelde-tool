@@ -215,7 +215,6 @@ export default {
       console.log(e);
       this.getJsonFromFile(e).then((data) => {
         console.log(e);
-        debugger;
         const cleanData = this.keepValid(data);
         me.processExcelData(cleanData).then((data2) => {
           me.jsonData = data2;
