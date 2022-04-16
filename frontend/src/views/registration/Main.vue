@@ -226,6 +226,7 @@ export default {
           single: this.data.single,
         })
         .then((response) => {
+          console.log(response.data.id);
           this.$router.push({
             name: 'registrationEdit',
             params: {

@@ -52,8 +52,7 @@ INSTALLED_APPS = [
     'basic',
     'authentication',
     'event',
-    'email_services',
-    'drf_api_logger',
+    'email_services'
 ]
 
 MIDDLEWARE = [
@@ -66,7 +65,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'mozilla_django_oidc.middleware.SessionRefresh',
-    'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -139,8 +137,6 @@ USE_TZ = True
 
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-
-DRF_API_LOGGER_DATABASE = True
 
 # https://testdriven.io/blog/storing-django-static-and-media-files-on-amazon-s3/#private-media-files
 # Continue tutorial for uploading images

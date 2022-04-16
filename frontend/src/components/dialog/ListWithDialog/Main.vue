@@ -99,8 +99,7 @@ export default {
       default: {},
     },
     currentEvent: {
-      type: Object,
-      default: () => ({}),
+      default: {},
     },
   },
   computed: {

@@ -338,13 +338,3 @@ class ScoutHierarchyDetailedSerializer(serializers.ModelSerializer):
             if iterator.level.name == 'Bund':
                 return iterator.name
             iterator = iterator.parent
-
-class MessageTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = basic_models.MessageType
-        fields = '__all__'
-
-class MessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = basic_models.Message
-        fields = '__all__'

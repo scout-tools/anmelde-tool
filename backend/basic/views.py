@@ -125,11 +125,3 @@ class FrontendThemeViewSet(viewsets.ModelViewSet):
     queryset = basic_models.FrontendTheme.objects.all()
     serializer_class = basic_serializers.FrontendThemeSerializer
     permission_classes = [IsAuthenticated]
-
-class MessageViewSet(viewsets.ModelViewSet):
-    queryset = basic_models.Message.objects.all().order_by('created_at')
-    serializer_class = basic_serializers.MessageSerializer
-
-class MessageTypeViewSet(viewsets.ModelViewSet):
-    queryset = basic_models.MessageType.objects.all()
-    serializer_class = basic_serializers.MessageTypeSerializer

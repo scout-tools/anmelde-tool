@@ -136,12 +136,15 @@ export default {
         });
     },
     onChanged() {
+      console.log(this.items);
       this.items.forEach((item, index) => {
         this.items[index].ordering = index;
       });
+      console.log(this.items);
 
       const promises = [];
       this.items.forEach((item) => {
+        console.log(item);
         promises.push(
           this.updateEventModule(
             {
@@ -153,6 +156,9 @@ export default {
             item.event,
           ),
         );
+      });
+      Promise.all(promises).then(() => {
+        console.log(promises);
       });
     },
     onDialogClosed() {},

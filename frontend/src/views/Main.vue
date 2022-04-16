@@ -11,8 +11,6 @@
         <v-icon large color="error">mdi-cellphone-off</v-icon>
       </v-row>
     </v-container>
-    <MessageButton @onClickNewMessage="onMessageDialog"/>
-    <SendMessageDialog ref="sendMessageDialog"/>
     <gobal-snackbar ref="globalSnackbar" />
     <footer-main class="mt-auto" />
   </v-app>
@@ -20,8 +18,6 @@
 
 <script>
 import TopMenuMain from '@/components/TopMenu.vue';
-import MessageButton from '@/components/button/MessageButton.vue';
-import SendMessageDialog from '@/components/dialog/SendMessageDialog.vue';
 import FooterMain from '@/components/Footer.vue';
 import GobalSnackbar from '@/components/modals/GlobalSnackbar.vue';
 
@@ -31,17 +27,10 @@ export default {
     TopMenuMain,
     FooterMain,
     GobalSnackbar,
-    MessageButton,
-    SendMessageDialog,
   },
   computed: {
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown;
-    },
-  },
-  methods: {
-    onMessageDialog() {
-      this.$refs.sendMessageDialog.open();
     },
   },
   mounted() {

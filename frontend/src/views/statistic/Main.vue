@@ -111,6 +111,8 @@ export default {
         });
     },
     hasModule(currentModules, name) {
+      console.log(currentModules);
+      console.log(currentModules);
       return (
         currentModules && // eslint-disable-line
         currentModules.length && // eslint-disable-line

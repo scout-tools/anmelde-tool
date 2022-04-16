@@ -147,6 +147,7 @@ export default {
       if (item.stringField) {
         value = item.stringField;
       }
+      console.log(value);
       switch (value) {
         case true:
           return 'Ja';
@@ -180,6 +181,7 @@ export default {
           this.summary = values[1].data[0]; //eslint-disable-line
           this.loading = false;
           this.setDefaults();
+          console.log(this.summary);
         })
         .catch((error) => {
           this.errormsg = error.response.data.message;

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import SettingsUser from '@/views/settings/user/Main.vue';
 import EventOverview from '@/views/event/overview/Overview.vue';
 
-import MasterDataOverview from '@/views/masterData/Main.vue';
+import MasterDataOverview from '@/views/event/data/Overview.vue';
 
 import StatisticMain from '@/views/statistic/Main.vue';
 import StatisticOverview from '@/views/statistic/overview/Main.vue';
@@ -59,9 +59,14 @@ const routes = [
       requiresAuth: true,
     },
   },
+  // {
+  //   path: '/event/adminOverview',
+  //   name: 'eventAdminOverview',
+  //   component: EventAdminOverview,
+  // },
   {
-    path: '/masterData/overview',
-    name: 'masterDataOverview',
+    path: '/data/overview',
+    name: 'dataOverview',
     component: MasterDataOverview,
     meta: {
       requiresAuth: true,

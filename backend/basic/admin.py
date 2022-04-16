@@ -3,14 +3,12 @@ from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModel
 
 from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, TagType, AbstractAttribute, Tag, \
     BooleanAttribute, TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute, Description, \
-    EatHabit, FrontendTheme, Message, MessageType
+    EatHabit, FrontendTheme
 
 admin.site.register(ScoutOrgaLevel)
 admin.site.register(Description)
 admin.site.register(EatHabit)
 admin.site.register(FrontendTheme)
-admin.site.register(Message)
-admin.site.register(MessageType)
 
 @admin.register(Tag)
 class ScoutHierarchyAdmin(admin.ModelAdmin):
