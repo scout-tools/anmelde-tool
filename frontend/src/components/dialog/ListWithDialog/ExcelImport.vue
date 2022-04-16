@@ -186,7 +186,7 @@ export default {
             (item) => item.value === row.gender,
           )[0].name;
         } catch (e) {
-          console.log('Gender-Fehler');
+          console.log('Fehler');
         }
       }
       if (column === 'leader') {
@@ -195,7 +195,7 @@ export default {
             (field) => field.value === row.leader,
           )[0].name;
         } catch (e) {
-          console.log('Gender-Fehler');
+          console.log('Fehler');
         }
       }
       if (column === 'bookingOption') {
@@ -204,7 +204,7 @@ export default {
             (field) => field.id === row.bookingOption,
           )[0].name;
         } catch (e) {
-          console.log('Gender-Fehler');
+          console.log('Fehler');
         }
       }
       return value;
@@ -244,7 +244,6 @@ export default {
       return new Promise((resolve) => {
         const reader = new FileReader(); // eslint-disable-line
         reader.onload = (e3) => {
-          console.log(read);
           const data = new Uint8Array(e3.target.result); // eslint-disable-line
           const workbook = read(data, { type: 'array' }); // eslint-disable-line
           const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -443,8 +442,6 @@ export default {
     chartData() {
       const returnData = [];
       this.jsonData.forEach((row) => {
-        console.log(row);
-        console.log(row.firstName);
         const match = !!this.items.filter(
           (item) => item.firstName.trim() === row.firstName.trim(),
         ).length;

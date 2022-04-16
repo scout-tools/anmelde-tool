@@ -11,27 +11,22 @@ export default {
     },
     async getService(route) {
       const path = `${process.env.VUE_APP_API}/${route}/`;
-      console.log(path);
       return axios.get(path);
     },
     async getRegService(route, registration) {
       const path = `${process.env.VUE_APP_API}/event/registration/${registration}/${route}/`;
-      console.log(path);
       return axios.get(path);
     },
     async getRegServiceById(route, registration, id) {
       const path = `${process.env.VUE_APP_API}/event/registration/${registration}/${route}/${id}/`;
-      console.log(path);
       return axios.get(path);
     },
     async getServiceById(route, id) {
       const path = `${process.env.VUE_APP_API}/${route}/${id}/`;
-      console.log(path);
       return axios.get(path);
     },
     async updateRegServiceById(route, registration, data) {
       const path = `${process.env.VUE_APP_API}/event/registration/${registration}/${route}/${data.id}/`;
-      console.log(path);
       return axios.put(path, data);
     },
     async deleteRegistration(registration) {
@@ -40,12 +35,10 @@ export default {
     },
     async updateServiceById(route, data) {
       const path = `${process.env.VUE_APP_API}/${route}/${data.id}/`;
-      console.log(path);
       return axios.put(path, data);
     },
     async createServiceById(route, data) {
       const path = `${process.env.VUE_APP_API}/${route}/`;
-      console.log(path);
       return axios.post(path, data);
     },
     async getEventPlanerOverview() {

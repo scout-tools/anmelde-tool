@@ -443,7 +443,6 @@ export default {
       this.loading = true;
       this.getZipCodeMapping(searchString)
         .then((res) => {
-          console.log(res);
           this.lookupList = res;
           this.zipCodeNoDataText = 'Kein Treffer';
         })
