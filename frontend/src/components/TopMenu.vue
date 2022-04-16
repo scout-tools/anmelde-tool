@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app color="primary" dark absolute>
-    <div class="my-10" style="color:red"/>
+    <div class="my-10" style="color: red" />
     <v-tabs
       background-color="primary"
       v-model="tab"
@@ -20,18 +20,35 @@
       </v-tab>
 
       <v-spacer></v-spacer>
-      <v-tab :disabled="accountIncomplete" :to="{ name: 'eventOverview' }" v-if="isAuth">
+      <v-tab
+        :disabled="accountIncomplete"
+        :to="{ name: 'eventOverview' }"
+        v-if="isAuth"
+      >
         Meine Anmeldungen
         <v-icon>mdi-view-list</v-icon>
       </v-tab>
-      <v-tab :disabled="accountIncomplete" :to="{ name: 'eventPlaner' }" v-if="isAuth">
+      <v-tab
+        :disabled="accountIncomplete"
+        :to="{ name: 'eventPlaner' }"
+        v-if="isAuth"
+      >
         Meine Fahrten
         <v-icon>mdi-account-key</v-icon>
       </v-tab>
-      <!-- <v-tab :disabled="accountIncomplete" :to="{ name: 'dataOverview' }" v-if="isAuth">
-        Auswertungen
-        <v-icon>mdi-chart-bar</v-icon>
-      </v-tab> -->
+      <v-tab
+        :disabled="accountIncomplete"
+        :to="{ name: 'masterDataOverview' }"
+        v-if="
+          userinfo &&
+          isAuth &&
+          userinfo.preferred_username &&
+          userinfo.preferred_username === 'robert'
+        "
+      >
+        Stammdaten
+        <v-icon>mdi-tools</v-icon>
+      </v-tab>
       <v-spacer></v-spacer>
       <v-tab :to="{ name: 'settingsOverview' }" v-if="isAuth">
         Mein Profil

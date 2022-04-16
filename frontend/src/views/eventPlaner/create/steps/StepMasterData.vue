@@ -95,6 +95,17 @@ export default {
         fieldType: 'textfield',
         default: '',
       },
+      {
+        name: 'Theme',
+        techName: 'theme',
+        tooltip: 'Das Farbschema für dein Event',
+        icon: 'mdi-palette',
+        lookupPath: '/basic/theme/',
+        lookupListDisplay: ['name'],
+        mandatory: true,
+        fieldType: 'refDropdown',
+        default: '',
+      },
     ],
   }),
   validations: {

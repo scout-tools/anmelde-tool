@@ -103,7 +103,6 @@
         :valdiationObj="valdiationObj"
         @validate="validate"
       />
-      <upload-excel-file ref="uploadExcelFile" @refresh="onRefresh()" />
     </v-card>
   </v-dialog>
 </template>
@@ -130,7 +129,8 @@ export default {
     },
     valdiationObj: {},
     currentEvent: {
-      default: {},
+      type: Object,
+      default: () => ({}),
     },
   },
   data: () => ({
@@ -462,7 +462,6 @@ export default {
     },
   },
   created() {
-    this.refresh();
   },
 };
 </script>
