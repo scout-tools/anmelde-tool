@@ -12,6 +12,12 @@
     @saving="onSaving"
   >
     <template v-slot:header>
+      Sobald du die Anmeldung abgeschickt hast,
+       bekommst du eine E-Mail mit der Bestätigung. <br>
+      <br>
+    </template>
+
+    <template v-slot:main>
       <v-container>
         <v-row>
           <p>Ich habe folgende Daten eingefügt:</p>
@@ -35,18 +41,15 @@
         <v-row>
           <p>Gesamtpreis: {{ summary.price || 0 }} €</p>
         </v-row>
+        <v-row v-for="checkbox in moduleData" :key="checkbox.id">
+          <v-checkbox
+            v-model="data.checkboxes[checkbox.id]"
+            :label="checkbox.text ? checkbox.text : ''"
+            :error-messages="errorMessage('checkboxes', $v)"
+          >
+          </v-checkbox>
+        </v-row>
       </v-container>
-    </template>
-
-    <template v-slot:main>
-      <v-row v-for="checkbox in moduleData" :key="checkbox.id">
-        <v-checkbox
-          v-model="data.checkboxes[checkbox.id]"
-          :label="checkbox.text ? checkbox.text : ''"
-          :error-messages="errorMessage('checkboxes', $v)"
-        >
-        </v-checkbox>
-      </v-row>
     </template>
   </GenericRegModul>
 </template>
