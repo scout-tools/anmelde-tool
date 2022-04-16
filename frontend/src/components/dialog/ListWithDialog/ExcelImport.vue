@@ -25,12 +25,19 @@
           <v-container>
             <v-row align="center" justify="center">
               <v-col cols="6" align="center" justify="center">
-                <label for="firstName">
-                  <input type="file" @change="onFileChange" id="firstName" />
-                </label>
+                  <v-file-input
+                    label="Wähle eine passende Exceldatei aus."
+                    show-size
+                    truncate-length="20"
+                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    @change="onFileChange"
+                  ></v-file-input>
               </v-col>
               <v-col cols="6" align="center" justify="center">
-                <v-radio-group v-model="filterSelection" row>
+                <v-radio-group
+                  v-model="filterSelection"
+                  row
+                  v-show="jsonData && jsonData.length">
                   <v-radio label="Nicht Angemeldet" value="new"></v-radio>
                   <v-radio label="Bereits Angemeldet" value="old"></v-radio>
                 </v-radio-group>
@@ -43,6 +50,7 @@
             <template v-slot:default>
               <thead>
                 <tr>
+                  <th>Upload</th>
                   <th
                     class="text-left"
                     v-for="(column, index) in dialogMeta.fields"
@@ -54,6 +62,22 @@
               </thead>
               <tbody>
                 <tr v-for="row in chartData" :key="row.name">
+                  <td>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          v-bind="attrs"
+                          v-on="on"
+                          color="success"
+                          icon
+                          @click="fillParticipant(row)"
+                        >
+                          <v-icon> mdi-cloud-upload </v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Diese Person anmelden</span>
+                    </v-tooltip>
+                  </td>
                   <td v-for="(column, index) in dialogMeta.fields" :key="index">
                     {{
                       displayFormt(
@@ -62,11 +86,6 @@
                         row,
                       )
                     }}
-                  </td>
-                  <td>
-                    <v-btn color="success" icon @click="fillParticipant(row)">
-                      <v-icon> mdi-cloud-upload </v-icon>
-                    </v-btn>
                   </td>
                 </tr>
               </tbody>
@@ -193,7 +212,10 @@ export default {
     onFileChange(e) {
       this.isLoading = true;
       const me = this;
+      console.log(e);
       this.getJsonFromFile(e).then((data) => {
+        console.log(e);
+        debugger;
         const cleanData = this.keepValid(data);
         me.processExcelData(cleanData).then((data2) => {
           me.jsonData = data2;
@@ -220,11 +242,7 @@ export default {
       return output;
     },
     getJsonFromFile(e) {
-      console.log(read);
       return new Promise((resolve) => {
-        const files = e.target.files; // eslint-disable-line
-        const f = files[0]; // eslint-disable-line
-        e.target.value = '';
         const reader = new FileReader(); // eslint-disable-line
         reader.onload = (e3) => {
           console.log(read);
@@ -238,7 +256,12 @@ export default {
           });
           resolve(dataExport);
         };
-        reader.readAsArrayBuffer(f);
+        if (e) {
+          reader.readAsArrayBuffer(e);
+        } else {
+          this.jsonData = [];
+          this.isLoading = false;
+        }
       });
     },
     onClickOk() {
@@ -258,12 +281,12 @@ export default {
     },
     convertLeader(inPutString) {
       const mapping = {
-        normal: 'N', // eslint-disable-line
-        'Kein Amt': 'N', // eslint-disable-line
-        Stammesführung: 'StaFue', // eslint-disable-line
-        Sippenführung: 'SiFue', // eslint-disable-line
-        Meutenführung: 'RoFue', // eslint-disable-line
-        Roverrundenführung: 'MeuFue', // eslint-disable-line
+        normal: 'N',
+        'Kein Amt': 'N',
+        Stammesführung: 'StaFue',
+        Sippenführung: 'SiFue',
+        Meutenführung: 'MeuFue',
+        Roverrundenführung: 'RoFue',
       };
       return mapping[inPutString] || mapping.normal;
     },
