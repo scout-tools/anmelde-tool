@@ -141,9 +141,6 @@ export default {
         ])
         .then(
           axios.spread((firstResponse, secondResponse, thirdResponse) => {
-            console.log(firstResponse.data);
-            console.log(secondResponse.data);
-            console.log(thirdResponse.data);
             this.moduleMapper = firstResponse.data;
             this.module = secondResponse.data;
             this.attributeMappers = thirdResponse.data;

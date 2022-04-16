@@ -148,6 +148,32 @@
       </template>
     </v-combobox>
 
+    <v-select
+      v-if="field.fieldType === 'refComboSingle'"
+      :label="field.name"
+      :value="value"
+      :items="lookupList"
+      :prepend-icon="field.icon"
+      required
+      @input="onInputChanged"
+      item-value="id"
+      :item-text="getItemText"
+      :error-messages="onErrorMessageChange(field.techName)"
+    >
+      <template slot="append">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="info" dark v-bind="attrs" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          <span>
+            {{ field.tooltip }}
+          </span>
+        </v-tooltip>
+      </template>
+    </v-select>
+
     <v-autocomplete
       v-if="field.fieldType === 'enumCombo'"
       :label="field.name"
@@ -417,7 +443,6 @@ export default {
       this.loading = true;
       this.getZipCodeMapping(searchString)
         .then((res) => {
-          console.log(res);
           this.lookupList = res;
           this.zipCodeNoDataText = 'Kein Treffer';
         })
@@ -532,6 +557,7 @@ export default {
     if (
       this.field.fieldType === 'refDropdown' || // eslint-disable-line
       this.field.fieldType === 'enumCombo' || // eslint-disable-line
+      this.field.fieldType === 'refComboSingle' || // eslint-disable-line
       this.field.fieldType === 'refCombo'
     ) {
       this.getData(this.field.referenceTable);

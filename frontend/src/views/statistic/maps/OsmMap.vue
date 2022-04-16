@@ -93,7 +93,6 @@ export default {
       return 100000 / (this.currentZoom * 2);
     },
     createContent(item) {
-      console.log(item);
       try {
         return `${item.scoutOrganisation.bund},
         ${item.scoutOrganisation.name}

@@ -110,7 +110,7 @@
                               !item.registrationOptions.allowEditSingleReg
                             "
                             class="ma-3"
-                            @click="editRegistration(getRegisteredId(item))"
+                            @click="editRegistration(item)"
                             v-bind="attrs"
                             v-on="on"
                           >
@@ -215,6 +215,7 @@ import ConfirmRegistrationEditModal from '@/views/registration/components/PreFor
 import DeleteModal from '@/views/registration/components/DeleteModal.vue';
 import SendMessageModal from '@/views/registration/components/SendMessageModal.vue';
 import EventCodeModal from '@/views/event/components/EventCodeModal.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Main',
@@ -231,6 +232,7 @@ export default {
     EventCodeModal,
   },
   computed: {
+    ...mapGetters(['theme']),
     isDev() {
       return process.env.VUE_APP_ENV === 'DEV';
     },
@@ -286,7 +288,8 @@ export default {
       return null;
     },
     editRegistration(item) {
-      this.$refs.confirmRegistrationEditModal.show(item);
+      this.setTheme(item.theme);
+      this.$refs.confirmRegistrationEditModal.show(this.getRegisteredId(item));
     },
     onSingleRegClicked(item) {
       this.openEventCodeModal(item, true);
@@ -295,6 +298,7 @@ export default {
       this.openEventCodeModal(item, false);
     },
     openEventCodeModal(item, single) {
+      this.setTheme(item.theme);
       this.$refs.eventCodeModal.show(item, single);
     },
     deleteRegistration(item) {
@@ -302,6 +306,11 @@ export default {
     },
     sendMessage(item) {
       this.$refs.sendMessageModal.show(item);
+    },
+    setTheme(id) {
+      this.getServiceById('basic/theme', id).then((response) => {
+        this.$store.commit('setTheme', response.data.name);
+      });
     },
   },
   created() {

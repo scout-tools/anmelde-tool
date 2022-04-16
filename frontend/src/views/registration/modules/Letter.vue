@@ -63,7 +63,6 @@ export default {
       if (!this.moduleData || !this.moduleData.length) {
         return [];
       }
-      console.log(this.moduleData[0]);
       return [
         {
           name: 'Essenbesonderheiten',

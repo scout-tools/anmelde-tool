@@ -11,6 +11,8 @@ router.register(r'tag-types', views.TagTypeViewSet)
 router.register(r'attributes', views.AttributeViewSet)
 router.register(r'eat-habits', views.EatHabitViewSet)
 router.register(r'theme', views.FrontendThemeViewSet)
+router.register(r'message', views.MessageViewSet)
+router.register(r'message-type', views.MessageTypeViewSet)
 
 router.register(r'travel-type-choices', views.TravelTypeViewSet, basename='travel-type-choices')
 router.register(r'travel-slots-choices', views.TravelSlotsViewSet, basename='travel-slots-choices')
