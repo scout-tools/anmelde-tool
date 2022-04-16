@@ -7,7 +7,9 @@
     <v-btn
       v-if="dialogMeta.excelUpload"
       class="ma-2"
+      dark
       @click="openExcelDialog"
+      color="#008000"
     >
       <v-icon left> mdi-microsoft-excel </v-icon>
       Excel Datei hochladen
