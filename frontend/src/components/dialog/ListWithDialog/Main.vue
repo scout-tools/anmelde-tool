@@ -6,12 +6,11 @@
     </v-btn>
     <v-btn
       v-if="dialogMeta.excelUpload"
-      :disabled="!isDev"
       class="ma-2"
       @click="openExcelDialog"
     >
       <v-icon left> mdi-microsoft-excel </v-icon>
-      Excel Datei hochladen (ab morgen!)
+      Excel Datei hochladen
     </v-btn>
     <v-list v-if="!isLoading">
       <v-subheader>Einträge ({{ items.length || 0 }})</v-subheader>

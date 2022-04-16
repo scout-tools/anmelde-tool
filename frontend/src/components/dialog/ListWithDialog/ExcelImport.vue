@@ -246,6 +246,7 @@ export default {
     },
     openDialog() {
       this.active = true;
+      this.refresh();
     },
     closeDialog() {
       this.active = false;
@@ -399,18 +400,17 @@ export default {
         .then(
           axios.spread(
             (firstResponse, secondResponse, thirdResponse, fifthResponse) => {
-              debugger;
               this.eatHabitList = firstResponse.data;
               this.leaderList = this.convertEnum(secondResponse.data);
               this.bookingOptionList = thirdResponse.data;
               this.items = fifthResponse.data;
               this.isLoading = false;
+              debugger;
             },
           ),
         )
         .catch((error) => {
           console.error(error);
-          debugger;
           this.isLoading = false;
         });
     },
@@ -427,8 +427,6 @@ export default {
         const match = !!this.items.filter(
           (item) => item.firstName.trim() === row.firstName.trim(),
         ).length;
-        console.log(match);
-        debugger;
         if (this.filterSelection === 'new') {
           if (!match && row.firstName.length > 0) {
             returnData.push(row);
