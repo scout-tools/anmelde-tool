@@ -22,11 +22,23 @@
           </a>
         </template>
         <v-card class="ma-4 pa-3">
-          <label for="firstName">
-            <input type="file" @change="onFileChange" id="firstName" />
-          </label>
+          <v-container>
+            <v-row align="center" justify="center">
+              <v-col cols="6" align="center" justify="center">
+                <label for="firstName">
+                  <input type="file" @change="onFileChange" id="firstName" />
+                </label>
+              </v-col>
+              <v-col cols="6" align="center" justify="center">
+                <v-radio-group v-model="filterSelection" row>
+                  <v-radio label="Nicht Angemeldet" value="new"></v-radio>
+                  <v-radio label="Bereits Angemeldet" value="old"></v-radio>
+                </v-radio-group>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-card>
-        <v-card class="ma-4">
+        <v-card class="ma-4" v-show="!isLoading">
           <v-simple-table dense v-if="chartData.length">
             <template v-slot:default>
               <thead>
@@ -52,7 +64,7 @@
                     }}
                   </td>
                   <td>
-                    <v-btn icon @click="fillParticipant(row)">
+                    <v-btn color="success" icon @click="fillParticipant(row)">
                       <v-icon> mdi-cloud-upload </v-icon>
                     </v-btn>
                   </td>
@@ -61,6 +73,9 @@
             </template>
           </v-simple-table>
         </v-card>
+        <v-container v-show="isLoading">
+          <Circual />
+        </v-container>
       </v-sheet>
       <CreateModalExcel
         ref="createModalExel"
@@ -78,13 +93,18 @@
 import { read, utils } from 'xlsx';
 import moment from 'moment';
 import axios from 'axios';
+import serviceMixin from '@/mixins/serviceMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
+import Circual from '@/components/loading/Circual.vue';
 import CreateModal from './CreateModal.vue';
 
 export default {
   components: {
     CreateModalExcel: CreateModal,
+    Circual,
   },
+  mixins: [serviceMixin, apiCallsMixin],
   props: {
     dialogMeta: {
       default: {},
@@ -99,7 +119,10 @@ export default {
     active: false,
     valid: true,
     files: [],
+    filterSelection: 'new',
     promises: [],
+    isLoading: false,
+    primaryArray: [],
     data: {
       name: '',
       description: '',
@@ -111,6 +134,9 @@ export default {
     e1: 1,
     showError: false,
     showSuccess: false,
+    eatHabitList: [],
+    leaderList: [],
+    bookingOptionList: [],
     timeout: 7000,
     chartOptions: {
       table: {
@@ -129,25 +155,49 @@ export default {
       if (column === 'birthday') {
         return moment(row.birthday).format('DD.MM.YYYY');
       }
-      if (column === 'eatHabit') {
+      if (column === 'eatHabit' && row.eatHabit && row.eatHabit.length > 0) {
         return row.eatHabit.join(', ');
       }
       if (column === 'gender') {
-        const fieldDef = this.dialogMeta.fields.filter(
-          (field) => field.techName === 'gender',
-        )[0];
-        return fieldDef.referenceTable.filter(
-          (item) => item.value === row.gender,
-        )[0].name;
+        try {
+          const fieldDef = this.dialogMeta.fields.filter(
+            (field) => field.techName === 'gender',
+          )[0];
+          return fieldDef.referenceTable.filter(
+            (item) => item.value === row.gender,
+          )[0].name;
+        } catch (e) {
+          console.log('Gender-Fehler');
+        }
+      }
+      if (column === 'leader') {
+        try {
+          return this.leaderList.filter(
+            (field) => field.value === row.leader,
+          )[0].name;
+        } catch (e) {
+          console.log('Gender-Fehler');
+        }
+      }
+      if (column === 'bookingOption') {
+        try {
+          return this.bookingOptionList.filter(
+            (field) => field.id === row.bookingOption,
+          )[0].name;
+        } catch (e) {
+          console.log('Gender-Fehler');
+        }
       }
       return value;
     },
     onFileChange(e) {
+      this.isLoading = true;
       const me = this;
       this.getJsonFromFile(e).then((data) => {
-        const cleanData = this.keeoValid(data);
+        const cleanData = this.keepValid(data);
         me.processExcelData(cleanData).then((data2) => {
           me.jsonData = data2;
+          this.isLoading = false;
         });
       });
     },
@@ -162,8 +212,10 @@ export default {
         zipCodeTemps = array;
       });
       output.forEach((element, index) => {
-        element.zipCode = zipCodeTemps[index][0].id; // eslint-disable-line
-        element.zipCodeShow = `${zipCodeTemps[index][0].zipCode} - ${zipCodeTemps[index][0].city}`; // eslint-disable-line
+        if (zipCodeTemps[index] && zipCodeTemps[index].length) {
+          element.zipCode = zipCodeTemps[index][0].id; // eslint-disable-line
+          element.zipCodeShow = `${zipCodeTemps[index][0].zipCode} - ${zipCodeTemps[index][0].city}`; // eslint-disable-line
+        }
       });
       return output;
     },
@@ -203,24 +255,75 @@ export default {
       const newInput = input;
       this.$refs.createModalExel.openDialog(newInput);
     },
+    convertLeader(inPutString) {
+      const mapping = {
+        normal: 'N', // eslint-disable-line
+        'Kein Amt': 'N', // eslint-disable-line
+        Stammesführung: 'StaFue', // eslint-disable-line
+        Sippenführung: 'SiFue', // eslint-disable-line
+        Meutenführung: 'RoFue', // eslint-disable-line
+        Roverrundenführung: 'MeuFue', // eslint-disable-line
+      };
+      return mapping[inPutString] || mapping.normal;
+    },
+    convertEatHabit(inPutString) {
+      const mapping = {
+        normal: null, // eslint-disable-line
+        Vegetarisch: 'Kein Fleisch (Vegetarisch)', // eslint-disable-line
+        Vegan: 'Keine Tierprodukte (Vegan)', // eslint-disable-line
+        'kein Gluten': 'Kein Gluten', // eslint-disable-line
+        'Keine Hüsenfrüchte': 'Keine Hülsenfrüchte', // eslint-disable-line
+        'Keine Laktose': 'Kein Laktose', // eslint-disable-line
+        'Keine Eier': 'Keine Eier', // eslint-disable-line
+      };
+      return mapping[inPutString] || mapping.normal;
+    },
+    convertBookingOption(inPutString) {
+      const mapping = {
+        normal: null,
+        Kaperfahrt: 3,
+        Bundeslager: 4,
+        'Bundeslager + Kaperfahrt': 5,
+        'Tagesgast Mittwoch': 6,
+        'Tagesgast Donnerstag': 7,
+        'Tagesgast Freitag': 8,
+      };
+      return mapping[inPutString] || mapping.normal;
+    },
+    convertGender(inPutString) {
+      const mapping = {
+        normal: null, // eslint-disable-line
+        m: 'M', // eslint-disable-line
+        w: 'F', // eslint-disable-line
+        d: 'D', // eslint-disable-line
+        '-': 'N', // eslint-disable-line
+      };
+      return mapping[inPutString] || mapping.normal;
+    },
     map(input) {
       const dto = input;
 
       if (dto.leaderType) {
-        dto.leader = dto.leaderType;
+        dto.leader = this.convertLeader(dto.leaderType);
       }
       if (dto.gender) {
-        dto.gender = dto.gender.toUpperCase();
+        dto.gender = this.convertGender(dto.gender);
       }
 
       if (dto.participantRole) {
-        dto.bookingOption = dto.participantRole;
+        dto.bookingOption = this.convertBookingOption(dto.participantRole);
       }
 
       if (dto.eatHabitType) {
-        dto.eatHabit = [dto.eatHabitType];
+        const eatHabitType = this.convertEatHabit(dto.eatHabitType);
+        dto.eatHabit = [];
+        if (eatHabitType) {
+          dto.eatHabit.push(eatHabitType);
+        }
+        if (dto.eatHabitText) {
+          dto.eatHabit.push(dto.eatHabitText);
+        }
       }
-
       dto.zipCode = this.getZipCode(input.zipCode, input.city); // eslint-disable-line
       dto.birthday = this.convertBirthday(input.birthday);
       return dto;
@@ -233,7 +336,7 @@ export default {
     },
     getZipCode(zipCode) {
       this.promises.push(this.callSingleZipCode(zipCode));
-      return '...';
+      return null;
     },
 
     convertBirthday(birthdayDays) {
@@ -250,13 +353,14 @@ export default {
         .filter(([_, v]) => v !== '') // eslint-disable-line
         .reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {});
     },
-    keeoValid(inputData) {
+    keepValid(inputData) {
       const primariyObj = inputData[2];
       const data = inputData;
       const cleanContent = [];
       if (primariyObj) {
         const primaries = this.removeEmpty(primariyObj);
         const primaryArray = Object.keys(primaries);
+        this.primaryArray = primaryArray;
         const content = data.splice(3);
 
         content.forEach((item) => {
@@ -270,14 +374,76 @@ export default {
 
       return cleanContent;
     },
+    convertEnum(list) {
+      return list.map((x) => { // eslint-disable-line
+        return {
+          value: x[0],
+          name: x[1],
+        };
+      });
+    },
+    onRefresh() {
+      this.refresh();
+    },
+    refresh() {
+      this.isLoading = true;
+      axios
+        .all([
+          this.getSimpleService('/basic/eat-habits/'),
+          this.getSimpleService('/event/leader-types/'),
+          this.getSimpleService(
+            `/event/event/${this.currentEvent.id}/booking-options/`, // eslint-disable-line
+          ),
+          this.getService(this.dialogMeta.path),
+        ])
+        .then(
+          axios.spread(
+            (firstResponse, secondResponse, thirdResponse, fifthResponse) => {
+              debugger;
+              this.eatHabitList = firstResponse.data;
+              this.leaderList = this.convertEnum(secondResponse.data);
+              this.bookingOptionList = thirdResponse.data;
+              this.items = fifthResponse.data;
+              this.isLoading = false;
+            },
+          ),
+        )
+        .catch((error) => {
+          console.error(error);
+          debugger;
+          this.isLoading = false;
+        });
+    },
   },
   computed: {
     cloudLink() {
       return this.currentEvent.cloudLink;
     },
     chartData() {
-      return this.jsonData;
+      const returnData = [];
+      this.jsonData.forEach((row) => {
+        console.log(row);
+        console.log(row.firstName);
+        const match = !!this.items.filter(
+          (item) => item.firstName.trim() === row.firstName.trim(),
+        ).length;
+        console.log(match);
+        debugger;
+        if (this.filterSelection === 'new') {
+          if (!match && row.firstName.length > 0) {
+            returnData.push(row);
+          }
+        } else {
+          if (match) { // eslint-disable-line
+            returnData.push(row);
+          }
+        }
+      });
+      return returnData;
     },
+  },
+  created() {
+    this.refresh();
   },
 };
 </script>

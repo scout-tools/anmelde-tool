@@ -5,7 +5,7 @@
     transition="dialog-top-transition"
     fullscreen
   >
-    <v-card>
+    <v-card v-if="!isLoading">
       <v-toolbar dark color="primary">
         <v-btn icon dark @click="active = false">
           <v-icon>mdi-close</v-icon>
@@ -33,16 +33,21 @@
         {{ 'Fehler beim Erstellen des Ortes' }}
       </v-snackbar>
     </v-card>
+    <v-container v-show="isLoading">
+      <Circual />
+    </v-container>
   </v-dialog>
 </template>
 
 <script>
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import BaseField from '@/components/common/BaseField.vue';
+import Circual from '@/components/loading/Circual.vue';
 
 export default {
   components: {
     BaseField,
+    Circual,
   },
   props: {
     dialogMeta: {
@@ -59,6 +64,7 @@ export default {
     showError: false,
     showSuccess: false,
     timeout: 7000,
+    isLoading: true,
   }),
   computed: {},
   methods: {
@@ -71,6 +77,7 @@ export default {
         this.setDefaults();
       }
       this.$forceUpdate();
+      this.isLoading = false;
     },
     openDialogEdit(item) {
       this.active = true;
@@ -113,6 +120,7 @@ export default {
     getData(id) {
       this.getServiceById(this.dialogMeta.path, id).then((response) => {
         this.data = response.data;
+        this.isLoading = false;
       });
     },
     async callCreateService() {
@@ -120,6 +128,27 @@ export default {
         this.createServiceById(this.dialogMeta.path, this.data).then(() => {
           this.closeDialog();
           this.$emit('refresh');
+          this.$root.globalSnackbar.show({
+            message:
+              'Neuer Eintrag angelegt',
+            color: 'success',
+          });
+        }).catch((error) => {
+          let errorMessage = 'Es ist ein Fehler beim speichern aufgetreten.';
+          const errorData = error.response.data;
+          try {
+            errorMessage = '';
+            const keys = Object.keys(errorData);
+            keys.forEach((key) => {
+              errorMessage += `Fehler bei ${key}: ${errorData[key]}  -  `;
+            });
+          } catch {
+            console.log('Fehler');
+          }
+          this.$root.globalSnackbar.show({
+            message: errorMessage,
+            color: 'error',
+          });
         });
       } else {
         this.updateServiceById(this.dialogMeta.path, this.data).then(() => {
@@ -129,6 +158,8 @@ export default {
       }
     },
   },
-  created() {},
+  created() {
+    this.isLoading = true;
+  },
 };
 </script>
