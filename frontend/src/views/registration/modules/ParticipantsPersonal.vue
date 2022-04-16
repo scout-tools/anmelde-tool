@@ -112,7 +112,7 @@ export default {
       street: {
         required,
         minLength: minLength(4),
-        maxLength: maxLength(30),
+        maxLength: maxLength(40),
       },
       zipCode: {
         required,
@@ -151,6 +151,7 @@ export default {
         excelUpload: true,
         path: `event/registration/${this.currentRegistration.id}/single-participant`,
         listDisplay: ['firstName', 'lastName'],
+        orderBy: 'firstName',
         maxItems: null,
         minItems: 1,
         fields: [
@@ -249,7 +250,7 @@ export default {
             lookupListDisplay: ['zipCode', 'city'],
           },
           {
-            name: 'Telefonnummer*',
+            name: 'Telefonnummer',
             techName: 'phoneNumber',
             tooltip:
               'Trage bitte eine Mobil- oder Festnetznummer ein unter der der_die Teilnehmer_in oder die Erziehungsberechtigten nach der Fahrt erreichbar sind.',
@@ -283,7 +284,7 @@ export default {
             default: 'N',
           },
           {
-            name: 'Buchungsoption',
+            name: 'Buchungsoption*',
             techName: 'bookingOption',
             tooltip: '123',
             icon: 'mdi-tent',
@@ -299,7 +300,6 @@ export default {
   },
   methods: {
     validate(data) {
-      debugger;
       this.data = data;
       this.$v.$touch();
     },

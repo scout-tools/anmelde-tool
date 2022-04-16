@@ -142,6 +142,9 @@ export default {
       Promise.all([this.getService(this.dialogMeta.path)])
         .then((values) => {
           this.items = values[0].data;
+          if (this.dialogMeta.orderBy) {
+            this.items.sort((a, b) => a[this.dialogMeta.orderBy].localeCompare(b[this.dialogMeta.orderBy])); // eslint-disable-line
+          }
           this.isLoading = false;
         })
         .catch((error) => {
