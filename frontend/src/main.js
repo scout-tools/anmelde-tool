@@ -11,6 +11,7 @@ import vuetifyMoney from 'vuetify-money';
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import VueMask from 'v-mask';
 import VueGoogleCharts from 'vue-google-charts';
+import VueApexCharts from 'vue-apexcharts';
 
 import App from './App.vue';
 import router from './router';
@@ -36,6 +37,8 @@ Vue.use(require('vue-moment'), {
 
 Vue.use(VueMask);
 
+Vue.use(VueApexCharts);
+
 Vue.use(CKEditor);
 
 Vue.use(VueLodash, { lodash });
@@ -43,6 +46,7 @@ Vue.use(vuetifyMoney);
 
 auth.interceptorsSetup(store, router);
 
+Vue.component('apexchart', VueApexCharts);
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
 Vue.component('l-marker', LMarker);
