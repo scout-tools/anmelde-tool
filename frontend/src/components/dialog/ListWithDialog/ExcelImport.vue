@@ -442,15 +442,18 @@ export default {
     chartData() {
       const returnData = [];
       this.jsonData.forEach((row) => {
-        const match = !!this.items.filter(
+        const matchFirstname = !!this.items.filter(
           (item) => item.firstName.trim() === row.firstName.trim(),
         ).length;
+        const matchLastname = !!this.items.filter(
+          (item) => item.lastName.trim() === row.lastName.trim(),
+        ).length;
         if (this.filterSelection === 'new') {
-          if (!match && row.firstName.length > 0) {
+          if (!matchFirstname && !matchLastname && row.firstName.length > 0) {
             returnData.push(row);
           }
         } else {
-          if (match) { // eslint-disable-line
+          if (matchFirstname && matchLastname) { // eslint-disable-line
             returnData.push(row);
           }
         }
