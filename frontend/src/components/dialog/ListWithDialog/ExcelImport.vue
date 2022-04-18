@@ -25,22 +25,36 @@
           <v-container>
             <v-row align="center" justify="center">
               <v-col cols="6" align="center" justify="center">
-                  <v-file-input
-                    label="Wähle eine passende Exceldatei aus."
-                    show-size
-                    truncate-length="20"
-                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    @change="onFileChange"
-                  ></v-file-input>
+                <v-file-input
+                  label="Wähle eine passende Exceldatei aus."
+                  show-size
+                  truncate-length="20"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                  @change="onFileChange"
+                ></v-file-input>
               </v-col>
-              <v-col cols="6" align="center" justify="center">
+              <v-col cols="4" align="center" justify="center">
                 <v-radio-group
                   v-model="filterSelection"
                   row
                   v-show="jsonData && jsonData.length">
-                  <v-radio label="Nicht Angemeldet" value="new"></v-radio>
-                  <v-radio label="Bereits Angemeldet" value="old"></v-radio>
+                  <v-radio label="Nur nicht Angemeldete" value="new"></v-radio>
+                  <v-radio label="Nur bereits Angemeldete" value="old"></v-radio>
                 </v-radio-group>
+              </v-col>
+              <v-col cols="2" v-show="jsonData && jsonData.length">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon color="info" class="mx-2" dark v-bind="attrs" v-on="on">
+                      mdi-help-circle-outline
+                    </v-icon>
+                  </template>
+                  <span>
+                    Wähle aus welche Daten aus der Excel Tabelle
+                     angezeigt werden sollen. Diese darstellug
+                      soll dir helfen keine Doppelten Einträge hinzuzufügen.
+                  </span>
+                </v-tooltip>
               </v-col>
             </v-row>
           </v-container>
@@ -216,11 +230,21 @@ export default {
       this.getJsonFromFile(e).then((data) => {
         console.log(e);
         const cleanData = this.keepValid(data);
+        const trimmedArray = [];
         me.processExcelData(cleanData).then((data2) => {
-          me.jsonData = data2;
+          data2.forEach((row) => {
+            trimmedArray.push(this.trimObjValues(row));
+          });
+          me.jsonData = trimmedArray;
           this.isLoading = false;
         });
       });
+    },
+    trimObjValues(obj) {
+      return Object.keys(obj).reduce((acc, curr) => {
+        acc[curr] = typeof obj[curr] === 'string' ? obj[curr].trim() : obj[curr];
+        return acc;
+      }, {});
     },
     async processExcelData(data) {
       const me = this;
@@ -320,7 +344,7 @@ export default {
         d: 'D', // eslint-disable-line
         '-': 'N', // eslint-disable-line
       };
-      return mapping[inPutString] || mapping.normal;
+      return mapping[inPutString.toLowerCase()] || mapping.normal;
     },
     map(input) {
       const dto = input;
@@ -426,6 +450,7 @@ export default {
               this.bookingOptionList = thirdResponse.data;
               this.items = fifthResponse.data;
               this.isLoading = false;
+              this.$forceUpdate();
             },
           ),
         )
@@ -449,7 +474,7 @@ export default {
           (item) => item.lastName.trim() === row.lastName.trim(),
         ).length;
         if (this.filterSelection === 'new') {
-          if (!matchFirstname && !matchLastname && row.firstName.length > 0) {
+          if ((!matchFirstname || !matchLastname) && row.firstName.length > 0) {
             returnData.push(row);
           }
         } else {
@@ -460,8 +485,6 @@ export default {
       });
       return returnData;
     },
-  },
-  created() {
   },
 };
 </script>
