@@ -105,12 +105,12 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                            v-if="item.registrationOptions.allowEditGroupReg"
+                            v-if="item.registrationOptions.allowEditSingleReg"
                             :disabled="
-                              !item.registrationOptions.allowEditGroupReg
+                              !item.registrationOptions.allowEditSingleReg
                             "
                             class="ma-3"
-                            @click="editRegistration(item)"
+                            @click="editRegistration(item, true)"
                             v-bind="attrs"
                             v-on="on"
                           >
@@ -123,9 +123,9 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                            v-if="item.registrationOptions.allowEditSingleReg"
+                            v-if="item.registrationOptions.allowEditGroupReg"
                             class="ma-3"
-                            @click="editRegistration(item, true)"
+                            @click="editRegistration(item)"
                             v-bind="attrs"
                             v-on="on"
                           >
