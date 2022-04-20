@@ -55,9 +55,9 @@ export default {
     modulePath: '/event/event/',
     fields: [
       {
-        name: 'Gruppe auswählen',
+        name: 'Planungsteamgruppe auswählen',
         techName: 'keycloakPath',
-        tooltip: '123',
+        tooltip: 'Wähle die Keycloak Gruppe aus in der das Planungsteam ist. Falls die Gruppe fehlt bitte dem DPV bescheid geben.',
         icon: 'mdi-account-circle',
         lookupPath: '/auth/groups/',
         lookupListDisplay: ['name'],
@@ -68,7 +68,7 @@ export default {
       {
         name: 'Lagerleitungsgruppe auswählen',
         techName: 'keycloakAdminPath',
-        tooltip: '123',
+        tooltip: 'Wähle die Keycloak Gruppe aus in die Lagerleitung ist. Falls die Gruppe fehlt bitte dem DPV bescheid geben.',
         icon: 'mdi-account-circle',
         lookupPath: '/auth/groups/',
         lookupListDisplay: ['name'],

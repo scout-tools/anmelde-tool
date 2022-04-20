@@ -126,7 +126,7 @@ export default {
         {
           name: 'Code aus der Einladung',
           techName: 'invitationCode',
-          tooltip: 'Der Code steht in der offizellen Anmeldung.',
+          tooltip: 'Der Code steht im Einladungsschreiben.',
           icon: 'mdi-lock',
           fieldType: 'textfield',
           default: '',

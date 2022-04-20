@@ -105,10 +105,25 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
+                            v-if="item.registrationOptions.allowEditSingleReg"
                             :disabled="
-                              !item.registrationOptions.allowEditGroupReg &&
                               !item.registrationOptions.allowEditSingleReg
                             "
+                            class="ma-3"
+                            @click="editRegistration(item, true)"
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            <v-icon fab color="blue"> mdi-pencil </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Einzelanmeldung bearbeiten</span>
+                      </v-tooltip>
+
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            v-if="item.registrationOptions.allowEditGroupReg"
                             class="ma-3"
                             @click="editRegistration(item)"
                             v-bind="attrs"
@@ -117,15 +132,15 @@
                             <v-icon fab color="blue"> mdi-pencil </v-icon>
                           </v-btn>
                         </template>
-                        <span>Anmeldung bearbeiten</span>
+                        <span>Gruppenanmeldung bearbeiten</span>
                       </v-tooltip>
 
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                            :disabled="
-                              !item.registrationOptions.allowEditGroupReg &&
-                              !item.registrationOptions.allowEditSingleReg
+                            v-if="
+                              item.registrationOptions.allowEditGroupReg ||
+                              item.registrationOptions.allowEditSingleReg
                             "
                             class="ma-3"
                             @click="deleteRegistration(getRegisteredId(item))"
@@ -258,6 +273,12 @@ export default {
         'll',
         'de',
       ).format('ll');
+      if (registrationDeadline < new Date()) {
+        return `Der Anmeldeschluss ist seit dem ${formatedRegistrationDeadline} vorbei.`;
+      }
+      if (formatedRegistrationStart > new Date()) {
+        return `Der Anmeldestart beginnt am ${formatedRegistrationStart}.`;
+      }
       return `Anmeldephase ${formatedRegistrationStart} - ${formatedRegistrationDeadline}`;
     },
     getStartDate(item) {
@@ -275,11 +296,11 @@ export default {
       }
       return item.name;
     },
-    getRegisteredId(item) {
+    getRegisteredId(item, single = true) {
       if (!item.registrationOptions) {
         return null;
       }
-      if (item.registrationOptions.groupId) {
+      if (item.registrationOptions.groupId && !single) {
         return item.registrationOptions.groupId;
       }
       if (item.registrationOptions.singleId) {

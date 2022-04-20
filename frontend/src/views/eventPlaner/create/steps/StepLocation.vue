@@ -52,7 +52,7 @@ export default {
       {
         name: 'Name',
         techName: 'location',
-        tooltip: '123',
+        tooltip: 'Wähle den Ort der Veranstaltung aus.',
         icon: 'mdi-account-circle',
         mandatory: true,
         lookupPath: '/event/event-location/',

@@ -55,7 +55,7 @@ export default {
       {
         name: 'Name',
         techName: 'name',
-        tooltip: '123',
+        tooltip: 'Wie ist der Lagername?',
         icon: 'mdi-account-circle',
         mandatory: true,
         fieldType: 'textfield',
@@ -64,7 +64,7 @@ export default {
       {
         name: 'Zusammenfassung',
         techName: 'shortDescription',
-        tooltip: '123',
+        tooltip: 'Beschreibe dein Lager in einem Satz.',
         icon: 'mdi-account-circle',
         mandatory: true,
         fieldType: 'textfield',
@@ -73,7 +73,7 @@ export default {
       {
         name: 'Beschreibung',
         techName: 'longDescription',
-        tooltip: '123',
+        tooltip: 'Dieser Text wird auf der Startseite angezeigt, wenn jemand auf deine Veranstaltung auswählt.',
         icon: 'mdi-account-circle',
         mandatory: true,
         fieldType: 'html',
