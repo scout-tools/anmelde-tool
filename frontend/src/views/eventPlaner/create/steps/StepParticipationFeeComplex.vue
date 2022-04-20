@@ -66,7 +66,7 @@ export default {
           {
             name: 'Name*',
             techName: 'name',
-            tooltip: '',
+            tooltip: 'Name deiner Buchungsoption.',
             mandatory: true,
             fieldType: 'textfield',
             default: '',
@@ -74,7 +74,7 @@ export default {
           {
             name: 'Beschreibung*',
             techName: 'description',
-            tooltip: '',
+            tooltip: 'Beschreibung deiner Buchungsoption.',
             mandatory: true,
             fieldType: 'textfield',
             default: '',
@@ -82,7 +82,7 @@ export default {
           {
             name: 'Preis*',
             techName: 'price',
-            tooltip: '',
+            tooltip: 'Was kostet die Buchungsoption.',
             mandatory: true,
             fieldType: 'currency',
             default: '',
@@ -90,7 +90,7 @@ export default {
           {
             name: 'Buchbar von*',
             techName: 'bookableFrom',
-            tooltip: '',
+            tooltip: 'Ab welchem Datum die diese Option buchbar?',
             mandatory: true,
             fieldType: 'datetime',
             default: '',
@@ -99,7 +99,7 @@ export default {
           {
             name: 'Buchbar bis',
             techName: 'bookableTill',
-            tooltip: '',
+            tooltip: 'Bis zu welchem Datum die diese Option buchbar?',
             mandatory: true,
             fieldType: 'datetime',
             default: '',
@@ -112,7 +112,6 @@ export default {
   methods: {
     beforeTabShow() {
       this.loadData();
-      console.log(this.$refs['dialog-main-fee-complex']);
       setTimeout(() => {
         this.$refs['dialog-main-fee-complex'].beforeTabShow();
       }, 100);

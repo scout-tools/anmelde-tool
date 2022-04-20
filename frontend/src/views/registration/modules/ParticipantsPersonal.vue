@@ -286,7 +286,7 @@ export default {
           {
             name: 'Buchungsoption*',
             techName: 'bookingOption',
-            tooltip: '123',
+            tooltip: 'Wie möchte diese Person an der Veranstaltung teilnehmen?',
             icon: 'mdi-tent',
             mandatory: true,
             lookupPath: `/event/event/${this.currentEvent.id}/booking-options/`,

@@ -46,7 +46,7 @@ export default {
   data: () => ({
     date: new Date('Jan 2, 2010').toISOString().substr(0, 10),
     menu: false,
-    tooltip: 'Wähle das Geburtsdatum',
+    tooltip: 'Wähle das Geburtsdatum.',
   }),
   watch: {
     menu(val) {

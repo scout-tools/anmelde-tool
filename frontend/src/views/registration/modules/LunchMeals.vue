@@ -31,6 +31,9 @@
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import {
+  required,
+} from 'vuelidate/lib/validators';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import GenericRegModul from '@/views/registration/components/GenericRegModul.vue';
@@ -61,7 +64,11 @@ export default {
     modulePath: '/event/event/',
   }),
   validations: {
-    data: {},
+    data: {
+      lunchPackets: {
+        required,
+      },
+    },
   },
   computed: {
     ...mapGetters(['userinfo']),
@@ -73,7 +80,7 @@ export default {
         {
           name: 'Lunch Packe',
           techName: 'lunchPackets',
-          tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
+          tooltip: 'Wieviele Lunchpackete braucht ihr bei der Abfahrt?',
           icon: 'mdi-food',
           mandatory: true,
           fieldType: 'number',
