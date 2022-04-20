@@ -109,6 +109,8 @@ class FloatAttributeGetSerializer(serializers.ModelSerializer):  # noqa
 
 class TravelAttributeGetSerializer(serializers.ModelSerializer):  # noqa
     type = TagTypeShortSerializer(many=False)
+    type_field = serializers.CharField(source='get_type_field_display')
+    time_field = serializers.CharField(source='get_time_field_display')
 
     class Meta:
         model = basic_models.TravelAttribute

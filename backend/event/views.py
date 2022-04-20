@@ -686,6 +686,24 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         return event_models.Event.objects.filter(id=event_id)
 
 
+class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    permission_classes = [IsSubEventSuperResponsiblePerson]
+    serializer_class = event_serializers.EventDetailedSummarySerializer
+
+    def get_queryset(self) -> QuerySet:
+        event_id = self.kwargs.get("event_pk", None)
+        return event_models.Event.objects.filter(id=event_id)
+
+
+class EventTagsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    permission_classes = [IsSubEventSuperResponsiblePerson]
+    serializer_class = event_serializers.EventDetailedSummarySerializer
+
+    def get_queryset(self) -> QuerySet:
+        event_id = self.kwargs.get("event_pk", None)
+        return event_models.Event.objects.filter(id=event_id)
+
+
 class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.WorkshopEventSummarySerializer
