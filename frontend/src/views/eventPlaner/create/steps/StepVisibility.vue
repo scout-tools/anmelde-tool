@@ -54,7 +54,7 @@ export default {
       {
         name: 'Öffentlich sichtbar?',
         techName: 'isPublic',
-        tooltip: '123',
+        tooltip: 'Soll deine Veranstaltung öffentlich sichtbar sein?',
         icon: 'mdi-eye',
         mandatory: true,
         fieldType: 'checkbox',

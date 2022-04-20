@@ -75,7 +75,7 @@ export default {
       {
         name: 'Model für Einzelanmeldungen auswählen',
         techName: 'singleRegistration',
-        tooltip: '123',
+        tooltip: 'Wähle einen Registrierungsmodel für die Einzelanmeldungen aus.',
         icon: 'mdi-account-circle',
         lookupPath: '/event/event-type-single-choices/',
         lookupListDisplay: ['name'],
@@ -86,7 +86,7 @@ export default {
       {
         name: 'Model für Gruppenanmeldungen auswählen',
         techName: 'groupRegistration',
-        tooltip: '123',
+        tooltip: 'Wähle einen Registrierungsmodel für die Gruppenanmeldungen aus.',
         icon: 'mdi-account-circle',
         lookupPath: '/event/event-type-group-choices/',
         lookupListDisplay: ['name'],
@@ -97,7 +97,7 @@ export default {
       {
         name: 'Persönliche Daten erforderlich?',
         techName: 'personalDataRequired',
-        tooltip: '123',
+        tooltip: 'Möchtest du, dass persönliche Daten erfasst werden?',
         icon: 'mdi-account-circle',
         mandatory: true,
         fieldType: 'checkbox',

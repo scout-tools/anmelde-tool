@@ -52,7 +52,7 @@ export default {
       {
         name: 'Link zur Cloud',
         techName: 'cloudLink',
-        tooltip: '123',
+        tooltip: 'Link zu einem Cloud Ordner mit allen Dokumenten für die Teilnehmer.',
         icon: 'mdi-cloud',
         mandatory: true,
         fieldType: 'textfield',
@@ -61,7 +61,7 @@ export default {
       {
         name: 'Link zur Anmeldeseite',
         techName: 'eventUrl',
-        tooltip: '123',
+        tooltip: 'Link zur Aktionshomepage.',
         icon: 'mdi-cloud',
         mandatory: true,
         fieldType: 'textfield',
@@ -70,7 +70,7 @@ export default {
       {
         name: 'Technischer Name',
         techName: 'technicalName',
-        tooltip: '123',
+        tooltip: 'Dieser Name wird z.B. als Absender für E-Mails verwendet. Er darf keine Sonderzeichen enthallten.',
         icon: 'mdi-robot',
         mandatory: true,
         fieldType: 'textfield',
@@ -79,7 +79,7 @@ export default {
       {
         name: 'Einladene Organisaion',
         techName: 'limitedRegistrationHierarchy',
-        tooltip: '123',
+        tooltip: 'Welche Pfadfinder Organisation lädt ein? Nur die Stämme unterhalb der Organisation können das Event sehen.',
         icon: 'mdi-account-circle',
         lookupPath: '/basic/scout-hierarchy/',
         lookupListDisplay: ['name'],
@@ -90,7 +90,7 @@ export default {
       {
         name: 'Lager-Icon',
         techName: 'icon',
-        tooltip: 'Das Lager in der Übersicht',
+        tooltip: 'Welche Logo soll auf der Startseite erscheinen?',
         icon: 'mdi-penguin',
         fieldType: 'textfield',
         default: '',

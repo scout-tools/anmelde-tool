@@ -55,7 +55,7 @@ export default {
         {
           name: 'Start',
           techName: 'startDate',
-          tooltip: '123',
+          tooltip: 'Wann bedinngt deine Veranstaltung?',
           icon: 'mdi-account-circle',
           mandatory: true,
           fieldType: 'datetime',
@@ -65,7 +65,7 @@ export default {
         {
           name: 'Ende',
           techName: 'endDate',
-          tooltip: '123',
+          tooltip: 'Wann endet deine Veranstaltung?',
           icon: 'mdi-account-circle',
           mandatory: true,
           fieldType: 'datetime',
@@ -75,7 +75,7 @@ export default {
         {
           name: 'Anmeldestart',
           techName: 'registrationStart',
-          tooltip: '123',
+          tooltip: 'Ab wann dürfen sich deine Teilnehmer anmelden?',
           icon: 'mdi-account-circle',
           mandatory: true,
           fieldType: 'datetime',
@@ -85,7 +85,7 @@ export default {
         {
           name: 'Anmeldeende',
           techName: 'registrationDeadline',
-          tooltip: '123',
+          tooltip: 'Was ist der letzte Tag an dem die Anmeldung möglich ist?',
           icon: 'mdi-account-circle',
           mandatory: true,
           fieldType: 'datetime',
@@ -95,7 +95,7 @@ export default {
         {
           name: 'Letze Änderung',
           techName: 'lastPossibleUpdate',
-          tooltip: '123',
+          tooltip: 'Bis wann dürfen Änderungen an der Anmeldung vorgenommen werden?',
           icon: 'mdi-account-circle',
           mandatory: true,
           fieldType: 'datetime',

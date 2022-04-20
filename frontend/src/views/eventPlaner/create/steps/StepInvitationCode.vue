@@ -56,7 +56,7 @@ export default {
       {
         name: 'Verifizierungscode (Universell)',
         techName: 'invitationCode',
-        tooltip: 'Dieser Code gilt immer.',
+        tooltip: 'Dieser Code gilt für Einzel und Gruppenanmeldungen.',
         icon: 'mdi-account-circle',
         mandatory: true,
         fieldType: 'textfield',

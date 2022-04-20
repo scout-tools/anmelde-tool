@@ -123,8 +123,7 @@ export default {
           {
             name: 'Email',
             techName: 'createdByEmail',
-            tooltip:
-              'Vornamen eintragen. Zweitnamen müssen nicht mit angegeben werden.',
+            tooltip: 'Trage deine E-Mail Adresse an mit der wir dich kontaktieren sollen.',
             icon: 'mdi-card-account-details-outline',
             mandatory: true,
             fieldType: 'textfield',
@@ -133,7 +132,7 @@ export default {
           {
             name: 'Nachrichtentyp*',
             techName: 'messageType',
-            tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
+            tooltip: 'Um welchen Nachrichtentyp handelt es sich.',
             icon: 'mdi-food',
             mandatory: true,
             lookupPath: '/basic/message-type/',
@@ -145,8 +144,7 @@ export default {
           {
             name: 'Nachricht',
             techName: 'messageBody',
-            tooltip:
-              'Vornamen eintragen. Zweitnamen müssen nicht mit angegeben werden.',
+            tooltip: 'Was möchtest du uns mitteilen?',
             icon: 'mdi-message',
             mandatory: true,
             fieldType: 'textarea',

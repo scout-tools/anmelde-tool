@@ -138,7 +138,7 @@ export default {
       {
         name: 'Verkehrsmittel*',
         techName: 'vehicle',
-        tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
+        tooltip: 'Mit welchem Verkehrsmittel werdet ihr anreisen?',
         icon: 'mdi-train-car',
         mandatory: true,
         lookupPath: '/basic/travel-type-choices/',
@@ -150,7 +150,7 @@ export default {
       {
         name: 'Zeipunkt*',
         techName: 'time',
-        tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
+        tooltip: 'Zu welchem Zeitpunkt werdet ihr ungefährt ankommen?',
         icon: 'mdi-clock',
         mandatory: true,
         lookupPath: '/basic/travel-slots-choices/',
