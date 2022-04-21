@@ -23,6 +23,12 @@
                 />
               </v-col>
             </v-row>
+            <v-row>
+              <v-col
+                :cols="12 / bookingOptions.length" v-for="(item, i) in bookingOptions" :key="i">
+                <kpi-card :data="bookingOptionData(item)" color="orange lighten-1" />
+              </v-col>
+            </v-row>
           </v-container>
         </v-card-text>
       </v-card>
@@ -48,6 +54,12 @@ export default {
   computed: {
     ...mapGetters([
     ]),
+    bookingOptions() {
+      if (this.data && this.data.length) {
+        return this.data[0].bookingOptions;
+      }
+      return [];
+    },
     eventId() {
       return this.$route.params.id;
     },
@@ -93,6 +105,14 @@ export default {
     },
   },
   methods: {
+    bookingOptionData(item) {
+      return {
+        header: item.bookingOptions,
+        subheader: 'Buchungsoption',
+        dataOne: item.sum,
+        dataOneName: '',
+      };
+    },
     getNumberParticipant(item) {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
