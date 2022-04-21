@@ -55,8 +55,8 @@ export default {
     ...mapGetters([
     ]),
     bookingOptions() {
-      if (this.data && this.data.length) {
-        return this.data[0].bookingOptions;
+      if (this.data) {
+        return this.data.bookingOptions;
       }
       return [];
     },
@@ -64,7 +64,10 @@ export default {
       return this.$route.params.id;
     },
     confirmedData() {
-      return this.data.filter((item) => item.isConfirmed);
+      if (this.data && this.data.registrationSet) {
+        return this.data.registrationSet.filter((item) => item.isConfirmed);
+      }
+      return [];
     },
     kpiCardOne() {
       return {
@@ -109,7 +112,7 @@ export default {
       return {
         header: item.bookingOptions,
         subheader: 'Buchungsoption',
-        dataOne: item.sum,
+        dataOne: item.count,
         dataOneName: '',
       };
     },
@@ -118,7 +121,7 @@ export default {
     },
     getData(eventId) {
       this.getRegistrationSummary(eventId).then((responseObj) => {
-        this.data = responseObj.data[0].registrationSet;
+        this.data = responseObj.data[0]; // eslint-disable-line
       });
     },
     sortByKey(array, key) {
