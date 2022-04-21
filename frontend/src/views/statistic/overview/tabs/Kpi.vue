@@ -26,7 +26,7 @@
             <v-row>
               <v-col
                 :cols="12 / bookingOptions.length" v-for="(item, i) in bookingOptions" :key="i">
-                <kpi-card :data="bookingOptionData(item)" color="orange lighten-1" />
+                <kpi-card :data="bookingOptionData(item)" color="orange darken-1" />
               </v-col>
             </v-row>
           </v-container>
@@ -55,8 +55,8 @@ export default {
     ...mapGetters([
     ]),
     bookingOptions() {
-      if (this.data) {
-        return this.data.bookingOptions;
+      if (this.data && this.data.bookingOptions && this.data.bookingOptions.length) {
+        return this.data.bookingOptions.filter((item) => item.count);
       }
       return [];
     },
@@ -110,8 +110,8 @@ export default {
   methods: {
     bookingOptionData(item) {
       return {
-        header: item.bookingOptions,
-        subheader: 'Buchungsoption',
+        header: item.bookingOption,
+        subheader: 'Personen',
         dataOne: item.count,
         dataOneName: '',
       };
