@@ -25,6 +25,7 @@ event_router.register(r'event-module-mapper', views.EventModulesMapperViewSet, b
 event_router.register(r'summary', views.EventSummaryViewSet, basename='summary')
 event_router.register(r'detailed-summary', views.EventDetailedSummaryViewSet, basename='detailed-summary')
 event_router.register(r'workshop-summary', views.WorkshopEventSummaryViewSet, basename='workshop-summary')
+event_router.register(r'attributes-summary', views.EventAttributeSummaryViewSet, basename='tags-summary')
 
 event_module_router = routers.NestedSimpleRouter(event_router, r'event-module-mapper', lookup='eventmodulemapper')
 event_module_router.register(r'attribute-mapper', views.EventModuleAttributeMapperViewSet, basename='attribute-mapper')

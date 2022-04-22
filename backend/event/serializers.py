@@ -1,10 +1,13 @@
 from django.db.models import QuerySet, Sum, Count, F
 from django.utils import timezone
+from datetime import datetime
+import pytz
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from authentication.serializers import UserExtendedGetSerializer
 from basic.models import EatHabit
 
+from basic import models as basic_models
 from basic import serializers as basic_serializers
 from event import models as event_models
 from event import choices as event_choices
@@ -417,6 +420,8 @@ class EventSummarySerializer(serializers.ModelSerializer):
     participant_count = serializers.SerializerMethodField()
     booking_options = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
+    age_groups = serializers.SerializerMethodField()
+    location = EventLocationGetSerializer(many=False, read_only=True)
 
     class Meta:
         model = event_models.Event
@@ -424,24 +429,87 @@ class EventSummarySerializer(serializers.ModelSerializer):
             'participant_count',
             'price',
             'registration_set',
-            'booking_options'
+            'booking_options',
+            'age_groups',
+            'location'
         )
 
     def get_participant_count(self, event: event_models.Event) -> int:
-        return event.registration_set.aggregate(count=Count('registrationparticipant'))['count']
+        return event.registration_set.filter(is_confirmed=True).aggregate(count=Count('registrationparticipant'))[
+            'count']
 
     def get_booking_options(self, event: event_models.Event) -> dict:
-        return event.registration_set \
+        return event.registration_set.filter(is_confirmed=True) \
             .values(booking_option=F('registrationparticipant__booking_option__name')) \
             .annotate(count=Count('registrationparticipant')) \
             .annotate(price=Sum('registrationparticipant__booking_option__price'))
 
     def get_price(self, event: event_models.Event) -> float:
-        return event.registration_set.aggregate(sum=Sum('registrationparticipant__booking_option__price'))['sum']
+        return event.registration_set.filter(is_confirmed=True) \
+            .aggregate(sum=Sum('registrationparticipant__booking_option__price'))['sum']
+
+    def get_age_groups(self, event: event_models.Event) -> dict:
+        """
+            0-10 Wölfling
+            11-13 Jungpfadfinder
+            14-16 Pfadfinder
+            17-25 Rover
+            25+ Altrover
+        """
+        participant_ids = event.registration_set.filter(is_confirmed=True).values('registrationparticipant')
+        all_participants = event_models.RegistrationParticipant.objects.filter(id__in=participant_ids)
+        woelfling = self.age_range(0, 10, all_participants)
+        jung_pfadfinder = self.age_range(11, 13, all_participants)
+        pfadfinder = self.age_range(14, 16, all_participants)
+        rover = self.age_range(17, 25, all_participants)
+        alt_rover = self.age_range(26, 999, all_participants)
+
+        return {
+            'woelfling': woelfling,
+            'jung_pfadfinder': jung_pfadfinder,
+            'pfadfinder': pfadfinder,
+            'rover': rover,
+            'alt_rover': alt_rover
+        }
+
+    def age_range(self, min_age, max_age, participants: QuerySet[event_models.RegistrationParticipant]) -> int:
+        current = timezone.now().date()
+        min_date = datetime(current.year - min_age, current.month, current.day, tzinfo=pytz.timezone('Europe/Berlin'))
+        max_date = datetime(current.year - max_age, current.month, current.day, tzinfo=pytz.timezone('Europe/Berlin'))
+
+        return participants.filter(birthday__gte=max_date, birthday__lte=min_date).count()
 
 
 class EventDetailedSummarySerializer(EventSummarySerializer):
     registration_set = RegistrationEventDetailedSummarySerializer(many=True, read_only=True)
+
+
+class EventAttributeSummarySerializer(serializers.ModelSerializer):
+    attribute = basic_serializers.AbstractAttributeGetPolymorphicSerializer(many=False, read_only=False)
+    attributes = serializers.SerializerMethodField()
+
+    class Meta:
+        model = event_models.AttributeEventModuleMapper
+        fields = '__all__'
+
+    def get_attributes(self, mapper: event_models.AttributeEventModuleMapper) -> dict:
+        event_id = self.context['view'].kwargs.get("event_pk", None)
+        registration_tag_ids: QuerySet[int] = event_models.Registration.objects.filter(event=event_id) \
+            .values_list('tags', flat=True)
+        tags: QuerySet[basic_models.AbstractAttribute] = basic_models.AbstractAttribute.objects \
+            .filter(id__in=registration_tag_ids, in_summary=True, template=False, template_id=mapper.attribute.id)
+
+        attribute_sum = 0
+        if mapper.attribute.polymorphic_ctype.app_labeled_name == 'basic | integer attribute':
+            attribute_sum = tags.aggregate(sum=Sum('integerattribute__integer_field'))['sum']
+        elif mapper.attribute.polymorphic_ctype.app_labeled_name == 'basic | float attribute':
+            attribute_sum = tags.aggregate(sum=Sum('floatattribute__integer_field'))['sum']
+
+        serializer = basic_serializers.AbstractAttributeGetPolymorphicSerializer(tags, many=True)
+        return {
+            'data': serializer.data,
+            'sum': attribute_sum
+        }
 
 
 class WorkshopSerializer(serializers.ModelSerializer):
