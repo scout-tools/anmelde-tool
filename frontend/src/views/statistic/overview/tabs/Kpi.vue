@@ -23,6 +23,12 @@
                 />
               </v-col>
             </v-row>
+            <v-row>
+              <v-col
+                :cols="12 / bookingOptions.length" v-for="(item, i) in bookingOptions" :key="i">
+                <kpi-card :data="bookingOptionData(item)" color="orange darken-1" />
+              </v-col>
+            </v-row>
           </v-container>
         </v-card-text>
       </v-card>
@@ -48,11 +54,20 @@ export default {
   computed: {
     ...mapGetters([
     ]),
+    bookingOptions() {
+      if (this.data && this.data.bookingOptions && this.data.bookingOptions.length) {
+        return this.data.bookingOptions.filter((item) => item.count);
+      }
+      return [];
+    },
     eventId() {
       return this.$route.params.id;
     },
     confirmedData() {
-      return this.data.filter((item) => item.isConfirmed);
+      if (this.data && this.data.registrationSet) {
+        return this.data.registrationSet.filter((item) => item.isConfirmed);
+      }
+      return [];
     },
     kpiCardOne() {
       return {
@@ -93,12 +108,20 @@ export default {
     },
   },
   methods: {
+    bookingOptionData(item) {
+      return {
+        header: item.bookingOption,
+        subheader: 'Personen',
+        dataOne: item.count,
+        dataOneName: '',
+      };
+    },
     getNumberParticipant(item) {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
     getData(eventId) {
       this.getRegistrationSummary(eventId).then((responseObj) => {
-        this.data = responseObj.data[0].registrationSet;
+        this.data = responseObj.data[0]; // eslint-disable-line
       });
     },
     sortByKey(array, key) {
