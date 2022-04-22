@@ -421,6 +421,7 @@ class EventSummarySerializer(serializers.ModelSerializer):
     booking_options = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
     age_groups = serializers.SerializerMethodField()
+    location = EventLocationGetSerializer(many=False, read_only=True)
 
     class Meta:
         model = event_models.Event
@@ -429,7 +430,8 @@ class EventSummarySerializer(serializers.ModelSerializer):
             'price',
             'registration_set',
             'booking_options',
-            'age_groups'
+            'age_groups',
+            'location'
         )
 
     def get_participant_count(self, event: event_models.Event) -> int:

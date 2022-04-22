@@ -626,7 +626,7 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
 
 
 class RegistrationAttributeViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsSubRegistrationResponsiblePerson]
+    permission_classes = [IsSubRegistrationResponsiblePerson]
 
     def create(self, request, *args, **kwargs) -> Response:
         serializer: basic_serializers.AbstractAttributePutPolymorphicSerializer = self.get_serializer(data=request.data)
@@ -678,7 +678,7 @@ class RegistrationSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet)
 
 
 class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    # permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.EventSummarySerializer
 
     def get_queryset(self) -> QuerySet:
@@ -696,7 +696,7 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
 
 
 class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    # permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.EventAttributeSummarySerializer
 
     def get_queryset(self) -> QuerySet:
