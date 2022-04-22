@@ -341,10 +341,12 @@ class ScoutHierarchyDetailedSerializer(serializers.ModelSerializer):
                 return iterator.name
             iterator = iterator.parent
 
+
 class MessageTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = basic_models.MessageType
         fields = '__all__'
+
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:

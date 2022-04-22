@@ -125,7 +125,7 @@
                           <v-btn
                             v-if="item.registrationOptions.allowEditGroupReg"
                             class="ma-3"
-                            @click="editRegistration(item)"
+                            @click="editRegistration(item, false)"
                             v-bind="attrs"
                             v-on="on"
                           >
@@ -139,18 +139,34 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
                             v-if="
-                              item.registrationOptions.allowEditGroupReg ||
                               item.registrationOptions.allowEditSingleReg
                             "
                             class="ma-3"
-                            @click="deleteRegistration(getRegisteredId(item))"
+                            @click="deleteRegistration(getRegisteredId(item, true))"
                             v-bind="attrs"
                             v-on="on"
                           >
                             <v-icon fab color="red"> mdi-close </v-icon>
                           </v-btn>
                         </template>
-                        <span>Abmelden</span>
+                        <span>Einzelanmeldung Abmelden</span>
+                      </v-tooltip>
+
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            v-if="
+                              item.registrationOptions.allowEditGroupReg
+                            "
+                            class="ma-3"
+                            @click="deleteRegistration(getRegisteredId(item, false))"
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            <v-icon fab color="red"> mdi-close </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Gruppenanmeldung Abmelden</span>
                       </v-tooltip>
 
                       <!-- <v-tooltip bottom>
@@ -296,7 +312,7 @@ export default {
       }
       return item.name;
     },
-    getRegisteredId(item, single = true) {
+    getRegisteredId(item, single = false) {
       if (!item.registrationOptions) {
         return null;
       }
@@ -308,9 +324,9 @@ export default {
       }
       return null;
     },
-    editRegistration(item) {
+    editRegistration(item, single) {
       this.setTheme(item.theme);
-      this.$refs.confirmRegistrationEditModal.show(this.getRegisteredId(item));
+      this.$refs.confirmRegistrationEditModal.show(this.getRegisteredId(item, single));
     },
     onSingleRegClicked(item) {
       this.openEventCodeModal(item, true);

@@ -695,13 +695,15 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
         return event_models.Event.objects.filter(id=event_id)
 
 
-class EventTagsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    permission_classes = [IsSubEventSuperResponsiblePerson]
-    serializer_class = event_serializers.EventDetailedSummarySerializer
+class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    permission_classes = [IsSubEventResponsiblePerson]
+    serializer_class = event_serializers.EventAttributeSummarySerializer
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
-        return event_models.Event.objects.filter(id=event_id)
+        mapper_ids = event_models.EventModuleMapper.objects.filter(event=event_id).values_list('attributes', flat=True)
+        return event_models.AttributeEventModuleMapper.objects.filter(id__in=mapper_ids) \
+            .filter(attribute__in_summary=True)
 
 
 class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -717,17 +719,17 @@ class WorkshopViewSet(viewsets.ModelViewSet):
     serializer_class = event_serializers.WorkshopSerializer
     permission_classes = [IsSubRegistrationResponsiblePerson]
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         if not request.data.get('supervisor'):
             request.data['supervisor'] = request.user.id
 
         request.data['registration'] = self.kwargs.get("registration_pk", None)
         return super().create(request, *args, **kwargs)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs) -> Response:
         request.data['registration'] = self.kwargs.get("registration_pk", None)
         return super().update(request, *args, **kwargs)
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         registration_id = self.kwargs.get("registration_pk", None)
         return event_models.Workshop.objects.filter(registration__id=registration_id)
