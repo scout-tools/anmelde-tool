@@ -482,6 +482,34 @@ class EventDetailedSummarySerializer(EventSummarySerializer):
     registration_set = RegistrationEventDetailedSummarySerializer(many=True, read_only=True)
 
 
+class EventAttributeSummarySerializer(serializers.ModelSerializer):
+    attribute = basic_serializers.AbstractAttributeGetPolymorphicSerializer(many=False, read_only=False)
+    attributes = serializers.SerializerMethodField()
+
+    class Meta:
+        model = event_models.AttributeEventModuleMapper
+        fields = '__all__'
+
+    def get_attributes(self, mapper: event_models.AttributeEventModuleMapper) -> dict:
+        event_id = self.context['view'].kwargs.get("event_pk", None)
+        registration_tag_ids: QuerySet[int] = event_models.Registration.objects.filter(event=event_id) \
+            .values_list('tags', flat=True)
+        tags: QuerySet[basic_models.AbstractAttribute] = basic_models.AbstractAttribute.objects \
+            .filter(id__in=registration_tag_ids, in_summary=True, template=False, template_id=mapper.attribute.id)
+
+        attribute_sum = 0
+        if mapper.attribute.polymorphic_ctype.app_labeled_name == 'basic | integer attribute':
+            attribute_sum = tags.aggregate(sum=Sum('integerattribute__integer_field'))['sum']
+        elif mapper.attribute.polymorphic_ctype.app_labeled_name == 'basic | float attribute':
+            attribute_sum = tags.aggregate(sum=Sum('floatattribute__integer_field'))['sum']
+
+        serializer = basic_serializers.AbstractAttributeGetPolymorphicSerializer(tags, many=True)
+        return {
+            'data': serializer.data,
+            'sum': attribute_sum
+        }
+
+
 class WorkshopSerializer(serializers.ModelSerializer):
     class Meta:
         model = event_models.Workshop
