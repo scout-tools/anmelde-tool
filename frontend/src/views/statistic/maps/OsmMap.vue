@@ -3,7 +3,7 @@
     <v-row>
       <div style="height: 900px; width: 100%">
         <l-map
-          v-if="data && data.length > 0"
+          v-if="circles && circles.length > 0"
           :zoom="zoom"
           :center="center"
           :options="mapOptions"
@@ -20,6 +20,13 @@
           >
             <l-popup :content="createContent(circle)"> </l-popup>
           </l-circle>
+          <l-marker
+            :lat-lng="[data.location.zipCode.lat, data.location.zipCode.lon]"
+            color="green"
+            :radius="10000"
+            >
+            <l-popup content="Ungefährer Lagerplatz"> </l-popup>
+          </l-marker>
         </l-map>
       </div>
     </v-row>
@@ -61,7 +68,7 @@ export default {
   },
   computed: {
     circles() {
-      return this.data;
+      return this.data.registrationSet;
     },
     eventId() {
       return this.$route.params.id;
@@ -70,7 +77,7 @@ export default {
   methods: {
     getData(eventId) {
       this.getRegistrationSummary(eventId).then((responseObj) => {
-        this.data = responseObj.data[0].registrationSet;
+        this.data = responseObj.data[0]; // eslint-disable-line
       });
     },
     getCoord(item) {
