@@ -256,7 +256,7 @@ class AvailableEventModulesViewSet(viewsets.ReadOnlyModelViewSet):
         return event_models.EventModule.objects.exclude(id__in=mapper).exclude(type__in=[7, 4]).exclude(custom=True)
 
 
-class EventModuleAttributeMapperViewSet(viewsets.ModelViewSet):
+class EventModuleAttributeMapperViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsSubEventResponsiblePersonOrReadOnly]
 
     def create(self, request, *args, **kwargs) -> Response:
