@@ -239,7 +239,18 @@
     "fields": {
       "name": "ParticipantsPersonalGold",
       "type": 7,
-      "header": "Teilnehmende",
+      "header": "Teilnehmende Gold",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 99,
+    "fields": {
+      "name": "ParticipantsPersonalPfingsten",
+      "type": 7,
+      "header": "Teilnehmende Pfingsten",
       "internal": false,
       "custom": false
     }

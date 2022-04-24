@@ -8,7 +8,7 @@
               Diese Fahrten kannst du bearbeiten
             </v-card-title>
             <v-card-actions class="justify-center align-center">
-              <v-btn x-large color="success" @click="createNewEvent">
+              <v-btn x-large color="success" @click="onNewClicked">
                 <v-icon left>mdi-calendar-plus</v-icon>
                 Neue Fahrt erstellen
               </v-btn>
@@ -46,6 +46,14 @@
                         >
                         <v-icon left> mdi-pencil </v-icon>
                           Bearbeite das ganze Event
+                        </v-btn>
+                        <v-btn
+                          class="ma-2"
+                          color="error"
+                          @click="deleteEvent(item.id)"
+                        >
+                        <v-icon left> mdi-trash-can </v-icon>
+                          Event löschen
                         </v-btn>
                       </v-list-item>
                     <template v-for="(stepName, editIndex) in steps">
@@ -87,6 +95,15 @@
         </v-layout>
       </v-flex>
     </v-row>
+    <PreEventCreation
+      ref="preEventCreationRef"
+      @createEvent="onCreateEvent"
+    />
+    <EventDeleteModal
+      ref="eventDeleteModalRef"
+      @refresh="refresh"
+
+    />
   </v-container>
 </template>
 
@@ -95,9 +112,16 @@ import axios from 'axios';
 import moment from 'moment';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 
+import PreEventCreation from '@/components/dialog/PreEventCreation.vue';
+import EventDeleteModal from '@/components/dialog/EventDeleteModal.vue';
+
 export default {
   name: 'Main',
   mixins: [apiCallsMixin],
+  components: {
+    PreEventCreation,
+    EventDeleteModal,
+  },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     items: [],
@@ -129,9 +153,22 @@ export default {
         'll',
       )}`;
     },
-    createNewEvent() {
+    onNewClicked() {
+      this.$refs.preEventCreationRef.open();
+    },
+    deleteEvent(id) {
+      this.$refs.eventDeleteModalRef.open(id);
+    },
+    onCreateEvent(data) {
+      this.createNewEvent(data);
+    },
+    createNewEvent(data) {
       axios
-        .post(`${this.API_URL}/event/event/`)
+        .post(`${this.API_URL}/event/event/`, {
+          eventPlanerModules: [data.authName, data.bookingOption],
+          name: data.name,
+          personalDataRequired: data.personalDataRequired,
+        })
         .then((success) => {
           const newEventId = success.data.id;
           this.$router.push({
@@ -164,23 +201,26 @@ export default {
         },
       });
     },
+    refresh() {
+      this.getEventPlanerOverview()
+        .then((respone) => {
+          this.items = respone.data;
+        })
+        .catch(() => {
+          this.$root.globalSnackbar.show({
+            message:
+              'Leider ist ein Problem beim anzeigen der Events aufgetreten, '
+              + 'bitte probiere es später nocheinmal.',
+            color: 'error',
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
   },
   created() {
-    this.getEventPlanerOverview()
-      .then((respone) => {
-        this.items = respone.data;
-      })
-      .catch(() => {
-        this.$root.globalSnackbar.show({
-          message:
-            'Leider ist ein Problem beim anzeigen der Events aufgetreten, '
-            + 'bitte probiere es später nocheinmal.',
-          color: 'error',
-        });
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+    this.refresh();
   },
 };
 </script>

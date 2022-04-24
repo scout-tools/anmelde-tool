@@ -61,7 +61,11 @@ import BaseField from '@/components/common/BaseField.vue';
 export default {
   name: 'StepEventRegistrationModel',
   header: 'Registrierungsmodel',
-  props: ['position', 'maxPos'],
+  props: [
+    'position',
+    'maxPos',
+    'event',
+  ],
   components: {
     PrevNextButton,
     BaseField,
@@ -94,15 +98,6 @@ export default {
         fieldType: 'enumCombo',
         default: '',
       },
-      {
-        name: 'Persönliche Daten erforderlich?',
-        techName: 'personalDataRequired',
-        tooltip: 'Möchtest du, dass persönliche Daten erfasst werden?',
-        icon: 'mdi-account-circle',
-        mandatory: true,
-        fieldType: 'checkbox',
-        default: '',
-      },
     ],
   }),
   validations: {
@@ -113,9 +108,6 @@ export default {
       groupRegistration: {
         required,
       },
-      personalDataRequired: {
-        required,
-      },
     },
   },
   methods: {
@@ -123,7 +115,7 @@ export default {
       this.loadData();
     },
     loadData() {
-      this.getService(this.id, this.modulePath);
+      this.getDataService(this.id, this.modulePath);
     },
   },
   created() {

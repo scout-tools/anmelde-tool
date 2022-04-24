@@ -15,7 +15,8 @@
     </v-btn>
     <v-list v-if="!isLoading">
       <v-subheader>Einträge ({{ items.length || 0 }})</v-subheader>
-      <v-list-item-group color="primary">
+      <v-list-item-group color="primary" :value="value"
+      @change="onInputChanged">
         <v-list-item v-for="(item, i) in items" :key="i">
           <v-list-item-avatar>
             <v-icon color="black" dark>mdi-account</v-icon>
@@ -90,10 +91,12 @@ export default {
     API_URL: process.env.VUE_APP_API,
     valid: true,
     isLoading: true,
-    selectedItem: 1,
     items: [],
   }),
   props: {
+    value: {
+      default: null,
+    },
     valdiationObj: {},
     dialogMeta: {
       default: {},
@@ -121,6 +124,9 @@ export default {
     },
   },
   methods: {
+    onInputChanged(value) {
+      this.$emit('input', value);
+    },
     validate(data) {
       this.$emit('validate', data);
     },

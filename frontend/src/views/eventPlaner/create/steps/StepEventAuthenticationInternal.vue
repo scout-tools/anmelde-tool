@@ -11,28 +11,26 @@
         </span>
       </v-row>
       <v-row>
-        <v-combobox
-          :error-messages="contactsErrors"
-          v-model="contacts"
-          label="Emailadressen der Planenden"
-          multiple
-          required
-          small-chips
-          deletable-chips
-          chips
-        />
+        <div v-for="(field, i) in fields" :key="i">
+          <BaseField
+            :field="field"
+            v-model="data[field.techName]"
+            :valdiationObj="$v"
+          />
+        </div>
       </v-row>
 
       <v-divider class="my-2"/>
 
       <prev-next-button
+        :valid="valid"
         :position="position"
         :max-pos="maxPos"
-        :valid="valid"
         @nextStep="nextStep"
         @prevStep="prevStep"
         @submitStep="submitStep"
         @ignore="onIngoredClicked"
+        @update="updateData"
       />
     </v-container>
   </v-form>
@@ -40,55 +38,65 @@
 
 <script>
 import { required, email } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
 import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
-import store from '@/store';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
+import BaseField from '@/components/common/BaseField.vue';
 
 export default {
   name: 'StepEventAuthenticationInternal',
-  header: 'DPV IDM',
-  props: ['position', 'maxPos'],
-  mixins: [stepMixin],
+  header: 'Intere Auth-Verwaltung',
+  props: [
+    'position',
+    'maxPos',
+    'event',
+  ],
+  mixins: [stepMixin, apiCallsMixin],
   components: {
     PrevNextButton,
+    BaseField,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    contacts: [],
+    modulePath: '/event/event/',
+    data: {},
+    fields: [
+      {
+        name: 'Kontaktdaten',
+        techName: 'responsiblePersons',
+        tooltip: 'Wähle die Keycloak Gruppe aus in der das Planungsteam ist. Falls die Gruppe fehlt bitte dem DPV bescheid geben.',
+        icon: 'mdi-account-circle',
+        mandatory: true,
+        fieldType: 'simpleCombo',
+        default: '',
+        cols: 12,
+      },
+    ],
   }),
   validations: {
-    contacts: {
-      $each: {
-        required,
-        email,
+    data: {
+      responsiblePersons: {
+        $each: {
+          required,
+          email,
+        },
       },
     },
   },
-  computed: {
-    contactsErrors() {
-      const errors = [];
-      if (!this.$v.contacts.$dirty) return errors;
-      if (!this.$v.contacts.required) {
-        errors.push('Es muss mindestens eine Ansprechperson angegeben werden.');
-      }
-      if (this.$v.contacts.$each.$anyError) {
-        errors.push('Es müssen gültige E-Mail-Adressen angegeben werden.');
-      }
-      return errors;
-    },
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
-  },
   methods: {
-    updateData() {
-      store.commit('createEvent/setResponsiblePersons', this.contacts);
+    beforeTabShow() {
+      this.loadData();
+    },
+    loadData() {
+      this.getServiceById('event/event', this.id).then((response) => {
+        this.data.responsiblePersons = response.data.responsiblePersons;
+        this.$forceUpdate();
+      });
     },
   },
-  mounted() {
-    this.contacts = this.event.responsiblePersons;
+  created() {
+    this.loadData();
   },
 };
 </script>

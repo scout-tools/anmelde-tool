@@ -39,12 +39,7 @@
       <v-tab
         :disabled="accountIncomplete"
         :to="{ name: 'masterDataOverview' }"
-        v-if="
-          userinfo &&
-          isAuth &&
-          userinfo.preferred_username &&
-          userinfo.preferred_username === 'robert'
-        "
+        v-if="userinfo && isTeam"
       >
         Stammdaten
         <v-icon>mdi-tools</v-icon>
@@ -80,6 +75,9 @@ export default {
         return require(`@/assets/${this.theme}/logo-dev.png`); // eslint-disable-line
       }
       return require(`@/assets/${this.theme}/logo.png`); // eslint-disable-line
+    },
+    isTeam() {
+      return this.userinfo.roles.includes('anmelde_tool_team');
     },
   },
   methods: {

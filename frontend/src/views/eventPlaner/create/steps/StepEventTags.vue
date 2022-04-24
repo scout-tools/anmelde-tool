@@ -68,7 +68,11 @@ import apiCallsMixin from '@/mixins/apiCallsMixin';
 export default {
   name: 'StepEventTags',
   header: 'Tags',
-  props: ['position', 'maxPos'],
+  props: [
+    'position',
+    'maxPos',
+    'event',
+  ],
   components: {
     PrevNextButton,
   },

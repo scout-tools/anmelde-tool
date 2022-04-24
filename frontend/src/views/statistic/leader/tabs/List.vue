@@ -149,7 +149,6 @@ export default {
       if (item.stringField) {
         value = item.stringField;
       }
-      console.log(value);
       switch (value) {
         case true:
           return 'Ja';

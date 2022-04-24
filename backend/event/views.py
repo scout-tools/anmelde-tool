@@ -53,12 +53,7 @@ class EventLocationViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('name',)
     queryset = event_models.EventLocation.objects.all()
-    serializer_class = event_serializers.EventLocationGetSerializer
-
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return event_serializers.EventLocationPostSerializer
-        return event_serializers.EventLocationGetSerializer
+    serializer_class = event_serializers.EventLocationSerializer
 
 
 class EventRegistrationViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
@@ -76,12 +71,12 @@ class EventViewSet(viewsets.ModelViewSet):
         if request.data.get('name', None) is None:
             request.data['name'] = 'Dummy'
         if request.data.get('responsible_persons', None) is None:
-            request.data['responsible_persons'] = [request.user.id, ]
+            request.data['responsible_persons'] = [request.user.email, ]
         serializer: event_serializers.EventCompleteSerializer = self.get_serializer(data=request.data)
         if not serializer.is_valid(raise_exception=True):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        event = serializer.save()
+        event: event_models.Event = serializer.save()
         event.responsible_persons.add(request.user)
         standard_event = get_object_or_404(event_models.StandardEventTemplate, pk=1)
 
@@ -97,8 +92,10 @@ class EventViewSet(viewsets.ModelViewSet):
         for mapper in standard_event.other_required_modules.all():
             add_event_module(mapper, event)
 
-        for planer_module in standard_event.planer_modules.all():
-            event.event_planer_modules.add(planer_module)
+        # TODO: When event_planer_modules does not contain all necessary modules, they wont be added
+        if request.data.get('event_planer_modules', None) is None:
+            for planer_module in standard_event.planer_modules.all():
+                event.event_planer_modules.add(planer_module)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 

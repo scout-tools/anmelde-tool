@@ -34,7 +34,7 @@
       color="success"
       @click="submit"
     >
-      Abschließen
+      Speichern
       <v-icon right>mdi-content-save</v-icon>
     </v-btn>
   </v-row>
@@ -58,7 +58,7 @@ export default {
       this.$emit('prevStep');
     },
     submit() {
-      this.$emit('update');
+      this.$emit('update', true);
       this.$emit('submit');
     },
   },

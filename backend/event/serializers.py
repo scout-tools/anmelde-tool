@@ -14,7 +14,7 @@ from event import choices as event_choices
 from event import permissions as event_permissions
 
 
-class EventLocationGetSerializer(serializers.ModelSerializer):
+class EventLocationSummarySerializer(serializers.ModelSerializer):
     zip_code = basic_serializers.ZipCodeSerializer(many=False, read_only=True)
 
     class Meta:
@@ -22,7 +22,7 @@ class EventLocationGetSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EventLocationPostSerializer(serializers.ModelSerializer):
+class EventLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = event_models.EventLocation
         fields = '__all__'
@@ -111,14 +111,16 @@ class EventModuleMapperPutSerializer(serializers.ModelSerializer):
 class EventCompleteSerializer(serializers.ModelSerializer):
     responsible_persons = serializers.SlugRelatedField(
         many=True,
-        read_only=True,
-        slug_field='email'
+        read_only=False,
+        slug_field='email',
+        queryset=User.objects.all()
     )
 
     event_planer_modules = serializers.SlugRelatedField(
         many=True,
-        read_only=True,
-        slug_field='name'
+        read_only=False,
+        slug_field='name',
+        queryset=event_models.EventPlanerModule.objects.all()
     )
 
     class Meta:
@@ -421,7 +423,7 @@ class EventSummarySerializer(serializers.ModelSerializer):
     booking_options = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
     age_groups = serializers.SerializerMethodField()
-    location = EventLocationGetSerializer(many=False, read_only=True)
+    location = EventLocationSummarySerializer(many=False, read_only=True)
 
     class Meta:
         model = event_models.Event
@@ -451,22 +453,19 @@ class EventSummarySerializer(serializers.ModelSerializer):
     def get_age_groups(self, event: event_models.Event) -> dict:
         """
             0-10 Wölfling
-            11-13 Jungpfadfinder
-            14-16 Pfadfinder
-            17-25 Rover
-            25+ Altrover
+            11-16 Pfadfinder
+            17-23 Rover
+            23+ Altrover
         """
         participant_ids = event.registration_set.filter(is_confirmed=True).values('registrationparticipant')
         all_participants = event_models.RegistrationParticipant.objects.filter(id__in=participant_ids)
         woelfling = self.age_range(0, 10, all_participants)
-        jung_pfadfinder = self.age_range(11, 13, all_participants)
-        pfadfinder = self.age_range(14, 16, all_participants)
-        rover = self.age_range(17, 25, all_participants)
-        alt_rover = self.age_range(26, 999, all_participants)
+        pfadfinder = self.age_range(11, 16, all_participants)
+        rover = self.age_range(17, 23, all_participants)
+        alt_rover = self.age_range(24, 999, all_participants)
 
         return {
             'woelfling': woelfling,
-            'jung_pfadfinder': jung_pfadfinder,
             'pfadfinder': pfadfinder,
             'rover': rover,
             'alt_rover': alt_rover

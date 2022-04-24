@@ -41,7 +41,11 @@ import BaseField from '@/components/common/BaseField.vue';
 
 export default {
   name: 'StepInvitationCode',
-  props: ['position', 'maxPos'],
+  props: [
+    'position',
+    'maxPos',
+    'event',
+  ],
   header: 'Verifizierungscode',
   components: {
     PrevNextButton,
@@ -107,7 +111,7 @@ export default {
       this.loadData();
     },
     loadData() {
-      this.getService(this.id, this.modulePath);
+      this.getDataService(this.id, this.modulePath);
     },
   },
   created() {
