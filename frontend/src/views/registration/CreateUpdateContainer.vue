@@ -72,6 +72,7 @@ import Tshirts from './modules/Tshirts.vue';
 import SubscribeWorkshop from './modules/SubscribeWorkshop.vue';
 
 import ParticipantsPersonalGold from './modules/ParticipantsPersonalGold.vue';
+import ParticipantsPersonalPfingsten from './modules/ParticipantsPersonalPfingsten.vue';
 import ParticipantsPersonalSmall from './modules/ParticipantsPersonalSmall.vue';
 import TravelBundesfahrt from './modules/TravelBundesfahrt.vue';
 
@@ -83,6 +84,7 @@ export default {
     Letter,
     ParticipantsPersonal,
     ParticipantsPersonalGold,
+    ParticipantsPersonalPfingsten,
     Summary,
     Tent,
     Travel,

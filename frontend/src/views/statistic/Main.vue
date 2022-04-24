@@ -98,6 +98,7 @@ export default {
             'ParticipantsPersonal',
             'ParticipantsPersonalGold',
             'ParticipantsPersonalSmall',
+            'ParticipantsPersonalPfingsten',
             'Participants',
           ]);
           this.hasSubscribeWorkshop = this.hasModule(this.currentModules, [
