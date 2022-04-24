@@ -19,9 +19,9 @@
           <v-col cols="5">
             <v-autocomplete
               label="E-Mail Benachichtungen"
-              :items="emailNotificationList"
+              :items="emailNotifactionList"
               v-model="data.emailNotifaction"
-              @change="onEmailNotificationChanged"
+              @change="onEmailNotifactionChanged"
               item-value="value"
               item-text="name"
             />
@@ -52,7 +52,7 @@ export default {
     return {
       data: {},
       personalData: {},
-      emailNotificationList: [],
+      emailNotifactionList: [],
       themeOptions: [
         {
           text: 'Normal',
@@ -99,12 +99,12 @@ export default {
         };
       });
     },
-    onEmailNotificationChanged() {
+    onEmailNotifactionChanged() {
       this.loading = true;
       const path = `${this.API_URL}/auth/email-settings/${this.personalData.id}/`;
       axios
         .patch(path, {
-          emailNotification: this.data.emailNotification,
+          emailNotifaction: this.data.emailNotifaction,
         })
         .then(() => {
           this.$root.globalSnackbar.show({
@@ -153,7 +153,7 @@ export default {
         this.getSimpleService(`/auth/email-settings/${values[0].data.id}/`).then((response) => {
           this.data = response.data;
         });
-        this.emailNotificationList = this.convertEnum(values[1].data);
+        this.emailNotifactionList = this.convertEnum(values[1].data);
       });
     },
   },
