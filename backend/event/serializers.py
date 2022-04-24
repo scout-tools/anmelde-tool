@@ -111,8 +111,9 @@ class EventModuleMapperPutSerializer(serializers.ModelSerializer):
 class EventCompleteSerializer(serializers.ModelSerializer):
     responsible_persons = serializers.SlugRelatedField(
         many=True,
-        read_only=True,
-        slug_field='email'
+        read_only=False,
+        slug_field='email',
+        queryset=User.objects.all()
     )
 
     event_planer_modules = serializers.SlugRelatedField(

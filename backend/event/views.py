@@ -71,7 +71,7 @@ class EventViewSet(viewsets.ModelViewSet):
         if request.data.get('name', None) is None:
             request.data['name'] = 'Dummy'
         if request.data.get('responsible_persons', None) is None:
-            request.data['responsible_persons'] = [request.user.id, ]
+            request.data['responsible_persons'] = [request.user.email, ]
         serializer: event_serializers.EventCompleteSerializer = self.get_serializer(data=request.data)
         if not serializer.is_valid(raise_exception=True):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
