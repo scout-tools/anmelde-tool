@@ -10,7 +10,7 @@
       </v-toolbar>
       <v-container>
         <v-row class="ma-4">
-          Diese Daten kannst du nach der Erstellung nicht mehr verändern.
+          Bitte fülle diese Daten aus, sie sind teilweise nicht mehr änderbar.
         </v-row>
         <v-row>
           <template v-for="(field, i) in dialogMeta.fields">
@@ -70,6 +70,12 @@ export default {
   },
   validations: {
     data: {
+      name: {
+        required,
+      },
+      personalDataRequired: {
+        required,
+      },
       bookingOption: {
         required,
       },
@@ -90,6 +96,15 @@ export default {
         maxItems: null,
         minItems: 1,
         fields: [
+          {
+            name: 'Veranstaltunganame (änderbar)',
+            techName: 'name',
+            tooltip: 'Wie ist der Lagername?',
+            icon: 'mdi-account-circle',
+            mandatory: true,
+            fieldType: 'textfield',
+            default: '',
+          },
           {
             name: 'Authentifierungsoption',
             techName: 'authName',
@@ -129,6 +144,15 @@ export default {
                 value: 'BookingOptionSimple',
               },
             ],
+          },
+          {
+            name: 'Persönliche Daten erforderlich?',
+            techName: 'personalDataRequired',
+            tooltip: 'Möchtest du, dass persönliche Daten erfasst werden?',
+            icon: 'mdi-account-circle',
+            mandatory: true,
+            fieldType: 'checkbox',
+            default: '',
           },
         ],
       };

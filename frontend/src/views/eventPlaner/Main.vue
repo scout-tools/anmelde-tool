@@ -160,13 +160,14 @@ export default {
       this.$refs.eventDeleteModalRef.open(id);
     },
     onCreateEvent(data) {
-      this.createNewEvent(data.bookingOption, data.authName);
+      this.createNewEvent(data);
     },
-    createNewEvent(bookingOption, authName) {
-      debugger;
+    createNewEvent(data) {
       axios
         .post(`${this.API_URL}/event/event/`, {
-          eventPlanerModules: [authName, bookingOption],
+          eventPlanerModules: [data.authName, data.bookingOption],
+          name: data.name,
+          personalDataRequired: data.personalDataRequired,
         })
         .then((success) => {
           const newEventId = success.data.id;

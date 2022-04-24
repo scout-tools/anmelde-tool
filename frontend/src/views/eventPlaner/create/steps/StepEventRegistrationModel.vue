@@ -98,15 +98,6 @@ export default {
         fieldType: 'enumCombo',
         default: '',
       },
-      {
-        name: 'Persönliche Daten erforderlich?',
-        techName: 'personalDataRequired',
-        tooltip: 'Möchtest du, dass persönliche Daten erfasst werden?',
-        icon: 'mdi-account-circle',
-        mandatory: true,
-        fieldType: 'checkbox',
-        default: '',
-      },
     ],
   }),
   validations: {
@@ -115,9 +106,6 @@ export default {
         required,
       },
       groupRegistration: {
-        required,
-      },
-      personalDataRequired: {
         required,
       },
     },
