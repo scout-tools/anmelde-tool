@@ -11,16 +11,13 @@
         </span>
       </v-row>
       <v-row>
-        <v-combobox
-          :error-messages="contactsErrors"
-          v-model="contacts"
-          label="Emailadressen der Planenden"
-          multiple
-          required
-          small-chips
-          deletable-chips
-          chips
-        />
+        <div v-for="(field, i) in fields" :key="i">
+          <BaseField
+            :field="field"
+            v-model="data[field.techName]"
+            :valdiationObj="$v"
+          />
+        </div>
       </v-row>
 
       <v-divider class="my-2"/>
@@ -40,29 +37,49 @@
 
 <script>
 import { required, email } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
 import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import stepMixin from '@/mixins/stepMixin';
-import store from '@/store';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
+import BaseField from '@/components/common/BaseField.vue';
 
 export default {
   name: 'StepEventAuthenticationInternal',
   header: 'DPV IDM',
-  props: ['position', 'maxPos'],
-  mixins: [stepMixin],
+  props: [
+    'position',
+    'maxPos',
+    'event',
+  ],
+  mixins: [stepMixin, apiCallsMixin],
   components: {
     PrevNextButton,
+    BaseField,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    contacts: [],
+    modulePath: 'event/event',
+    data: {},
+    fields: [
+      {
+        name: 'Kontaktdaten',
+        techName: 'contacts',
+        tooltip: 'Wähle die Keycloak Gruppe aus in der das Planungsteam ist. Falls die Gruppe fehlt bitte dem DPV bescheid geben.',
+        icon: 'mdi-account-circle',
+        mandatory: true,
+        fieldType: 'simpleCombo',
+        default: '',
+        cols: 12,
+      },
+    ],
   }),
   validations: {
-    contacts: {
-      $each: {
-        required,
-        email,
+    data: {
+      contacts: {
+        $each: {
+          required,
+          email,
+        },
       },
     },
   },
@@ -78,17 +95,20 @@ export default {
       }
       return errors;
     },
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
   },
   methods: {
-    updateData() {
-      store.commit('createEvent/setResponsiblePersons', this.contacts);
+    beforeTabShow() {
+      this.loadData();
+    },
+    loadData() {
+      this.getServiceById(this.modulePath, this.id).then((response) => {
+        this.data.contacts = response.data.responsiblePersons;
+        this.$forceUpdate();
+      });
     },
   },
-  mounted() {
-    this.contacts = this.event.responsiblePersons;
+  created() {
+    this.loadData();
   },
 };
 </script>

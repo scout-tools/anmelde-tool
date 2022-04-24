@@ -61,7 +61,11 @@ import BaseField from '@/components/common/BaseField.vue';
 export default {
   name: 'StepEventRegistrationModel',
   header: 'Registrierungsmodel',
-  props: ['position', 'maxPos'],
+  props: [
+    'position',
+    'maxPos',
+    'event',
+  ],
   components: {
     PrevNextButton,
     BaseField,
@@ -123,7 +127,7 @@ export default {
       this.loadData();
     },
     loadData() {
-      this.getService(this.id, this.modulePath);
+      this.getDataService(this.id, this.modulePath);
     },
   },
   created() {

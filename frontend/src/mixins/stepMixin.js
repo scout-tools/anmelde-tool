@@ -81,7 +81,7 @@ export default {
       }
       return errors;
     },
-    updateData() {
+    updateData(isLastStep = false) {
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.$root.globalSnackbar.show({
@@ -90,13 +90,29 @@ export default {
         });
       } else {
         this.fields.forEach((field) => {
-          this.patchService(field.techName, this.data[field.techName], this.modulePath);
+          setTimeout(() => {
+            console.log(this.event.id);
+            this.patchService(
+              field.techName,
+              this.data[field.techName],
+              this.modulePath,
+              this.event.id,
+            );
+          }, 75);
         });
+        if (isLastStep) {
+          this.$root.globalSnackbar.show({
+            message: 'Daten gespeichert.',
+            color: 'success',
+          });
+          this.$router.push({ name: 'eventPlaner' });
+        }
       }
     },
   },
   computed: {
     id() {
+      console.log(this.$route.params.id);
       return this.$route.params.id;
     },
   },

@@ -45,7 +45,11 @@ import PrevNextButton from '@/components/button/PrevNextButton.vue';
 export default {
   name: 'StepEventContact',
   header: 'Kontaktdaten',
-  props: ['position', 'maxPos'],
+  props: [
+    'position',
+    'maxPos',
+    'event',
+  ],
   mixins: [stepMixin],
   components: {
     PrevNextButton,

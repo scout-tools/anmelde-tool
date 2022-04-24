@@ -29,15 +29,15 @@ export default {
 
       return response.data;
     },
-    patchService(field, value, modulePath) {
-      const path = `${process.env.VUE_APP_API}${modulePath}${this.id}/`;
-      return axios.patch(path, { [field]: value });
-    },
+    // patchService(field, value, modulePath) {
+    //   const path = `${process.env.VUE_APP_API}${modulePath}${this.id}/`;
+    //   return axios.patch(path, { [field]: value });
+    // },
     getSimpleService(modulePath) {
       const path = `${process.env.VUE_APP_API}${modulePath}`;
       return axios.get(path);
     },
-    getService(id, modulePath) {
+    getDataService(id, modulePath) {
       this.loading = true;
       this.getServiceById(id, modulePath)
         .then((res) => {

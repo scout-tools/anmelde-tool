@@ -46,9 +46,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { isNumber } from 'lodash';
-import store from '@/store';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import PrevNextButton from '@/components/button/PrevNextButton.vue';
@@ -56,15 +53,14 @@ import PrevNextButton from '@/components/button/PrevNextButton.vue';
 export default {
   name: 'StepParticipationFeeSimple',
   header: 'Teilnehmer_innen Beitrag',
-  props: ['position', 'maxPos'],
+  props: [
+    'position',
+    'maxPos',
+    'event',
+  ],
   mixins: [stepMixin, apiCallsMixin],
   components: {
     PrevNextButton,
-  },
-  computed: {
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
@@ -80,21 +76,6 @@ export default {
 
   }),
   methods: {
-    updateData() {
-      this.sleepingLocations.forEach((item, index) => {
-        if (isNumber(index)) {
-          this.updateEventBookingOption(this.$route.params.id, item.id, item)
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-      });
-
-      store.commit('createEvent/setEventAttribute', {
-        prop: 'price',
-        value: this.participationFee,
-      });
-    },
     collectSleepingLocations() {
       this.getEventBookingOptions(this.$route.params.id)
         .then((success) => {

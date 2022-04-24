@@ -148,6 +148,32 @@
       </template>
     </v-combobox>
 
+    <v-combobox
+      v-if="field.fieldType === 'simpleCombo'"
+      :label="field.name"
+      :value="value"
+      :prepend-icon="field.icon"
+      required
+      chips
+      multiple
+      deletable-chips
+      @input="onComboInputChanged"
+      :error-messages="onErrorMessageChange(field.techName)"
+    >
+      <template slot="append">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="info" dark v-bind="attrs" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          <span>
+            {{ field.tooltip }}
+          </span>
+        </v-tooltip>
+      </template>
+    </v-combobox>
+
     <v-select
       v-if="field.fieldType === 'refComboSingle'"
       :label="field.name"
@@ -554,12 +580,12 @@ export default {
     },
   },
   created() {
-    if (
+    if ((
       this.field.fieldType === 'refDropdown' || // eslint-disable-line
       this.field.fieldType === 'enumCombo' || // eslint-disable-line
       this.field.fieldType === 'refComboSingle' || // eslint-disable-line
       this.field.fieldType === 'refCombo'
-    ) {
+    ) && this.field.lookupPath) {
       this.getData(this.field.referenceTable);
     }
     if (this.field.fieldType === 'zipField') {

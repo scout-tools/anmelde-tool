@@ -57,10 +57,7 @@
 
 <script>
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import store from '@/store';
-import { mapGetters } from 'vuex';
-import StepRegistrationOverview
-  from '@/views/eventPlaner/create/steps/StepRegistrationOverview.vue';
+import StepRegistrationOverview from '@/views/eventPlaner/create/steps/StepRegistrationOverview.vue';
 import StepNameDescription from './steps/StepNameDescription.vue';
 import StepLocation from './steps/StepLocation.vue';
 import StepEventContact from './steps/StepEventContact.vue';
@@ -102,18 +99,19 @@ export default {
       timeout: 7000,
       loading: true,
       isSingleStep: false,
+      event: {},
     };
   },
   computed: {
     steps() {
       let sleepingLocation;
-      if (this.event && this.event.eventPlanerModules.includes('BookingOptionComplex')) {
+      if (this.event && this.event.eventPlanerModules && this.event.eventPlanerModules.includes('BookingOptionComplex')) {
         sleepingLocation = StepParticipationFeeComplex;
       } else {
         sleepingLocation = StepParticipationFeeSimple;
       }
       let authorization;
-      if (this.event && this.event.eventPlanerModules.includes('KeycloakAuthorization')) {
+      if (this.event && this.event.eventPlanerModules && this.event.eventPlanerModules.includes('KeycloakAuthorization')) {
         authorization = StepEventAuthenticationKeycloak;
       } else {
         authorization = StepEventAuthenticationInternal;
@@ -144,9 +142,6 @@ export default {
       }
       return `Im folgenden führen wir dich durch ${this.maxSteps} kleine Schritt.`;
     },
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
   },
   methods: {
     nextStep() {
@@ -171,21 +166,14 @@ export default {
       this.handleCreateEventRequest();
     },
     async handleCreateEventRequest() {
-      this.updateEvent(this.id, this.event)
-        .then(() => {
-          this.showSuccess = true;
-          this.$router.push({ name: 'eventPlaner' });
-        })
-        .catch((error) => {
-          console.log(error);
-          this.showError = true;
-        });
+      this.showSuccess = true;
+      this.$router.push({ name: 'eventPlaner' });
     },
     getData() {
       this.loading = true;
       this.getEvent(this.$route.params.id)
         .then((success) => {
-          store.commit('createEvent/setEvent', success.data);
+          this.event = success.data;
         })
         .catch(() => {
           this.$root.globalSnackbar.show({

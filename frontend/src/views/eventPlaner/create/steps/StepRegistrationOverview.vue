@@ -91,7 +91,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import draggable from 'vuedraggable';
 import { orderBy } from 'lodash';
 import stepMixin from '@/mixins/stepMixin';
@@ -102,7 +101,10 @@ import CreateEventRegistrationModule from '@/components/dialog/CreateEventRegist
 export default {
   name: 'StepRegistrationOverview',
   header: 'Registrierungsübersicht',
-  props: ['position', 'maxPos'],
+  props: [
+    'position',
+    'maxPos',
+  ],
   components: {
     CreateEventRegistrationModule,
     PrevNextButton,
@@ -114,14 +116,11 @@ export default {
     valid: true,
     before: null,
     editing: true,
+    modulePath: 'event/event',
     availableModules: [],
+    event: [],
     items: [],
   }),
-  computed: {
-    ...mapGetters({
-      event: 'createEvent/event',
-    }),
-  },
   methods: {
     updateData() {},
     removeModule(mapper) {
@@ -191,10 +190,20 @@ export default {
           console.log(error);
         });
     },
+    beforeTabShow() {
+      this.loadData();
+    },
+    loadData() {
+      this.getServiceById(this.modulePath, this.id).then((response) => {
+        this.event = response.data;
+        this.gatherAvailableEventModules();
+        this.gatherAssignedEventModules();
+        this.$forceUpdate();
+      });
+    },
   },
-  mounted() {
-    this.gatherAvailableEventModules();
-    this.gatherAssignedEventModules();
+  created() {
+    this.loadData();
   },
 };
 </script>

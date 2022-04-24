@@ -10,7 +10,7 @@
     </v-tab>
     <v-tab>
       <v-icon left> mdi-crowd </v-icon>
-      Alterstruktur
+      Alter
     </v-tab>
 
     <v-tab-item>

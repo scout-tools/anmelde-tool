@@ -53,12 +53,7 @@ class EventLocationViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('name',)
     queryset = event_models.EventLocation.objects.all()
-    serializer_class = event_serializers.EventLocationGetSerializer
-
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return event_serializers.EventLocationPostSerializer
-        return event_serializers.EventLocationGetSerializer
+    serializer_class = event_serializers.EventLocationSerializer
 
 
 class EventRegistrationViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
