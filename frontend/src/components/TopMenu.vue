@@ -77,7 +77,10 @@ export default {
       return require(`@/assets/${this.theme}/logo.png`); // eslint-disable-line
     },
     isTeam() {
-      return this.userinfo.roles.includes('anmelde_tool_team');
+      if (this.userinfo && this.userinfo.role && this.userinfo.roles.length > 0) {
+        return this.userinfo.roles.includes('anmelde_tool_team');
+      }
+      return 0;
     },
   },
   methods: {

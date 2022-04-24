@@ -15,15 +15,44 @@
             />
           </v-col>
         </v-row>
+          <v-row>
+          <v-col cols="5">
+            <v-autocomplete
+              label="E-Mail Benachichtungen"
+              :items="emailNotificationList"
+              v-model="data.emailNotifaction"
+              @change="onEmailNotificationChanged"
+              item-value="value"
+              item-text="name"
+            />
+          </v-col>
+          <v-col cols="5">
+            <v-autocomplete
+              label="SMS Benachrichtungen"
+              :items="smsOptionList"
+              v-model="data.smsNotifcation"
+              @change="onSmsNotificationChanged"
+            />
+          </v-col>
+          </v-row>
       </v-container>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
+import axios from 'axios';
+import serviceMixin from '@/mixins/serviceMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
+import { mapGetters } from 'vuex';
+
 export default {
+  mixins: [serviceMixin, apiCallsMixin],
   data() {
     return {
+      data: {},
+      personalData: {},
+      emailNotificationList: [],
       themeOptions: [
         {
           text: 'Normal',
@@ -38,9 +67,20 @@ export default {
           value: 'mosaik',
         },
       ],
+      smsOptionList: [
+        {
+          text: 'Ja',
+          value: true,
+        },
+        {
+          text: 'Nein',
+          value: false,
+        },
+      ],
     };
   },
   computed: {
+    ...mapGetters(['userinfo']),
     theme: {
       get() {
         return this.$store.state.preferences.theme;
@@ -49,6 +89,76 @@ export default {
         this.$store.commit('setTheme', theme);
       },
     },
+  },
+  methods: {
+    convertEnum(list) {
+      return list.map((x) => { // eslint-disable-line
+        return {
+          value: x[0],
+          name: x[1],
+        };
+      });
+    },
+    onEmailNotificationChanged() {
+      this.loading = true;
+      const path = `${this.API_URL}/auth/email-settings/${this.personalData.id}/`;
+      axios
+        .patch(path, {
+          emailNotification: this.data.emailNotification,
+        })
+        .then(() => {
+          this.$root.globalSnackbar.show({
+            message: 'Gespeichert',
+            color: 'success',
+          });
+          this.loading = false;
+        });
+    },
+    onSmsNotificationChanged() {
+      this.loading = true;
+      const path = `${this.API_URL}/auth/email-settings/${this.personalData.id}/`;
+      axios
+        .patch(path, {
+          smsNotifcation: this.data.smsNotifcation,
+        })
+        .then(() => {
+          this.$root.globalSnackbar.show({
+            message: 'Gespeichert',
+            color: 'success',
+          });
+          this.loading = false;
+        });
+    },
+    saveEmailSettings() {
+      this.loading = true;
+      const path = `${this.API_URL}/auth/email-settings/`;
+      axios
+        .post(path, {
+          scoutOrganisation: this.scoutOrganisation.id,
+        })
+        .then(() => {
+          this.$root.globalSnackbar.show({
+            message: 'Neuer Eintrag angelegt',
+            color: 'success',
+          });
+          this.loading = false;
+        });
+    },
+    loadData() {
+      Promise.all([
+        this.getPersonalData(),
+        this.getSimpleService('/auth/email-notification-types/'),
+      ]).then((values) => {
+        this.personalData = values[0].data;
+        this.getSimpleService(`/auth/email-settings/${values[0].data.id}/`).then((response) => {
+          this.data = response.data;
+        });
+        this.emailNotificationList = this.convertEnum(values[1].data);
+      });
+    },
+  },
+  created() {
+    this.loadData();
   },
 };
 </script>
