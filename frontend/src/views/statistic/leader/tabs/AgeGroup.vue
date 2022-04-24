@@ -16,11 +16,10 @@ export default {
   data: () => ({
     data: [],
     mapping: {
-      woelfling: 'Wölfling',
-      jungPfadfinder: 'Jungpfadfinder',
-      pfadfinder: 'Pfadfinder',
-      rover: 'Rover',
-      altRover: 'Altrover',
+      woelfling: 'Wölfling (bis 10)',
+      pfadfinder: 'Pfadfinder (11-16)',
+      rover: 'Rover (17-23)',
+      altRover: 'Altrover (24+)',
     },
   }),
   methods: {
