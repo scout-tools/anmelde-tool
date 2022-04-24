@@ -38,6 +38,7 @@ class UserExtendedGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserExtended
         fields = (
+            'id',
             'mobile_number',
             'scout_name',
             'scout_organisation',
