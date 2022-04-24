@@ -23,13 +23,14 @@
       <v-divider class="my-2"/>
 
       <prev-next-button
+        :valid="valid"
         :position="position"
         :max-pos="maxPos"
-        :valid="valid"
         @nextStep="nextStep"
         @prevStep="prevStep"
         @submitStep="submitStep"
         @ignore="onIngoredClicked"
+        @update="updateData"
       />
     </v-container>
   </v-form>
@@ -44,7 +45,7 @@ import BaseField from '@/components/common/BaseField.vue';
 
 export default {
   name: 'StepEventAuthenticationInternal',
-  header: 'DPV IDM',
+  header: 'Intere Auth-Verwaltung',
   props: [
     'position',
     'maxPos',
@@ -58,12 +59,12 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    modulePath: 'event/event',
+    modulePath: '/event/event/',
     data: {},
     fields: [
       {
         name: 'Kontaktdaten',
-        techName: 'contacts',
+        techName: 'responsiblePersons',
         tooltip: 'Wähle die Keycloak Gruppe aus in der das Planungsteam ist. Falls die Gruppe fehlt bitte dem DPV bescheid geben.',
         icon: 'mdi-account-circle',
         mandatory: true,
@@ -75,7 +76,7 @@ export default {
   }),
   validations: {
     data: {
-      contacts: {
+      responsiblePersons: {
         $each: {
           required,
           email,
@@ -83,26 +84,13 @@ export default {
       },
     },
   },
-  computed: {
-    contactsErrors() {
-      const errors = [];
-      if (!this.$v.contacts.$dirty) return errors;
-      if (!this.$v.contacts.required) {
-        errors.push('Es muss mindestens eine Ansprechperson angegeben werden.');
-      }
-      if (this.$v.contacts.$each.$anyError) {
-        errors.push('Es müssen gültige E-Mail-Adressen angegeben werden.');
-      }
-      return errors;
-    },
-  },
   methods: {
     beforeTabShow() {
       this.loadData();
     },
     loadData() {
-      this.getServiceById(this.modulePath, this.id).then((response) => {
-        this.data.contacts = response.data.responsiblePersons;
+      this.getServiceById('event/event', this.id).then((response) => {
+        this.data.responsiblePersons = response.data.responsiblePersons;
         this.$forceUpdate();
       });
     },
