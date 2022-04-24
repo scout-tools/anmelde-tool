@@ -117,8 +117,9 @@ class EventCompleteSerializer(serializers.ModelSerializer):
 
     event_planer_modules = serializers.SlugRelatedField(
         many=True,
-        read_only=True,
-        slug_field='name'
+        read_only=False,
+        slug_field='name',
+        queryset=event_models.EventPlanerModule.objects.all()
     )
 
     class Meta:
