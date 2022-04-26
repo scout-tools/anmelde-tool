@@ -37,10 +37,10 @@
             <l-popup :content="createContent(circle)"> </l-popup>
           </l-circle>
           <l-marker
-            :lat-lng="[summary.location.zipCode.lat, summary.location.zipCode.lon]"
+            :lat-lng="getLonLatLocation()"
             color="green"
             :radius="10000"
-            >
+          >
             <l-popup content="Ungefährer Lagerplatz"> </l-popup>
           </l-marker>
         </l-map>
@@ -101,7 +101,9 @@ export default {
   },
   computed: {
     circles() {
-      return this.data.filter((item) => item.level === 'Stamm').filter((item) => this.selectedBunde.includes(item.bund));
+      return this.data
+        .filter((item) => item.level === 'Stamm')
+        .filter((item) => this.selectedBunde.includes(item.bund));
     },
     bunde() {
       return this.data.filter((item) => item.abbreviation !== null);
@@ -111,6 +113,18 @@ export default {
     },
   },
   methods: {
+    getLonLatLocation() {
+      debugger;
+      try {
+        return [
+          this.summary.location.zipCode.lat,
+          this.summary.location.zipCode.lon,
+        ];
+      } catch (e) {
+        console.log('Fehler');
+        return [1, 1];
+      }
+    },
     randomColor() {
       return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
     },
