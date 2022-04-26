@@ -1,5 +1,18 @@
 <template>
-  <v-container class="top-margin">
+  <v-container>
+    <v-row>
+      <template v-for="bund in bunde">
+        <v-checkbox
+          class="mx-2"
+          :key="bund.id"
+          v-model="selectedBunde"
+          :color="bundColorObj[bund.bund]"
+          :label="bund.bund"
+          :value="bund.bund"
+          v-if="bund.bund"
+        ></v-checkbox>
+      </template>
+    </v-row>
     <v-row>
       <div style="height: 900px; width: 100%">
         <l-map
@@ -23,6 +36,13 @@
           >
             <l-popup :content="createContent(circle)"> </l-popup>
           </l-circle>
+          <l-marker
+            :lat-lng="[summary.location.zipCode.lat, summary.location.zipCode.lon]"
+            color="green"
+            :radius="10000"
+            >
+            <l-popup content="Ungefährer Lagerplatz"> </l-popup>
+          </l-marker>
         </l-map>
       </div>
     </v-row>
@@ -63,23 +83,25 @@ export default {
       data: [],
       bundColorObj: {
         BEP: '#831ed',
-        DPBM: '#93f1e5',
-        DPBH: '#eec1c',
-        FPS: '#995aec',
+        DPBM: '#007f4f',
+        DPBH: '#393f4d',
+        FPS: '#feda6a',
         Jomsburg: '#86cc52',
-        'PB Boreas': '#272531',
-        'PB-Horizonte': '#8abc46',
+        'PB Boreas': '#00DDFF',
+        'PB-Horizonte': '#e62739',
         'PB-Nordlicht': '#8076f5',
-        PBMV: '#eb78f6',
+        PBMV: '#ff1d58',
         PBN: '#88dbb4',
-        PBW: '#4bff6e',
-        PSD: '#bbab37',
+        PBW: '#fbaf08',
+        PSD: '#0f2862',
       },
+      selectedBunde: [],
+      summary: [],
     };
   },
   computed: {
     circles() {
-      return this.data.filter((item) => item.level === 'Stamm');
+      return this.data.filter((item) => item.level === 'Stamm').filter((item) => this.selectedBunde.includes(item.bund));
     },
     bunde() {
       return this.data.filter((item) => item.abbreviation !== null);
@@ -103,6 +125,9 @@ export default {
     getData() {
       this.getHierarchyMapping().then((responseObj) => {
         this.data = responseObj; // eslint-disable-line
+      });
+      this.getRegistrationSummary(this.eventId).then((responseObj) => {
+        this.summary = responseObj.data[0]; // eslint-disable-line
       });
     },
     getCoord(item) {
@@ -141,6 +166,7 @@ export default {
     },
   },
   created() {
+    this.selectedBunde = Object.keys(this.bundColorObj);
     this.getData();
   },
 };
