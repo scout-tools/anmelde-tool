@@ -20,7 +20,7 @@ class MyOIDCAB(OIDCAuthenticationBackend):
 
     def update_user(self, user, claims):
         self.set_user_info(user, claims)
-        self.update_groups(user, claims)
+        # self.update_groups(user, claims)
         return user
 
     def update_groups(self, user, claims):
