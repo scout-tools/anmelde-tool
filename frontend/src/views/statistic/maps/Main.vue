@@ -6,7 +6,11 @@
     </v-tab>
     <v-tab>
       <v-icon left> mdi-map </v-icon>
-      Übersicht
+      Grobe
+    </v-tab>
+    <v-tab>
+      <v-icon left> mdi-map </v-icon>
+      Eingeladene
     </v-tab>
 
     <v-tab-item>
@@ -24,17 +28,27 @@
         </v-card-text>
       </v-card>
     </v-tab-item>
+
+    <v-tab-item>
+      <v-card flat class="ma-0">
+        <v-card-text class="ma-0">
+          <OsmMapAll />
+        </v-card-text>
+      </v-card>
+    </v-tab-item>
   </v-tabs>
 </template>
 
 <script>
 import OsmMap from './OsmMap.vue';
 import SimpleMap from './MapGermany.vue';
+import OsmMapAll from './OsmMapAll.vue';
 
 export default {
   components: {
     OsmMap,
     SimpleMap,
+    OsmMapAll,
   },
 };
 </script>
