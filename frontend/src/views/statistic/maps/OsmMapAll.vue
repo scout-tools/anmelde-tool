@@ -124,10 +124,6 @@ export default {
         return [1, 1];
       }
     },
-    randomColor() {
-      return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-    },
-
     async getHierarchyMapping() {
       const path = `${process.env.VUE_APP_API}/basic/scout-hierarchy/`;
       const response = await axios.get(path);
