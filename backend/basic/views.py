@@ -16,7 +16,7 @@ from basic.permissions import IsStaffOrReadOnly
 class ScoutHierarchyViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsStaffOrReadOnly]
     queryset = basic_models.ScoutHierarchy.objects.all().exclude(level=6)
-    serializer_class = basic_serializers.ScoutHierarchySerializer
+    serializer_class = basic_serializers.ScoutHierarchyDetailedSerializer
 
 
 class ZipCodeSearchFilter(FilterSet):
