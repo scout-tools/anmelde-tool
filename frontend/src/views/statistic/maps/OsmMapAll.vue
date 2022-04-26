@@ -114,7 +114,6 @@ export default {
   },
   methods: {
     getLonLatLocation() {
-      debugger;
       try {
         return [
           this.summary.location.zipCode.lat,
