@@ -51,7 +51,10 @@
           </template>
             <v-list-item>
             <v-list-item-content>
-              <b>Verantwortlicher: </b> {{item.responsiblePersons[0]}}
+              <b>Verantwortlich: </b>
+              <template v-for="(string) in item.responsiblePersons">
+                {{ `${string}, `}}
+              </template>
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
