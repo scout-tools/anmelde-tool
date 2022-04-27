@@ -79,7 +79,6 @@ export default {
     saving: false,
     moduleData: [],
     showError: false,
-    errorMessage: 'Fehler',
     data: {},
   }),
   validations: {
@@ -98,7 +97,7 @@ export default {
         minLength: minLength(2),
         maxLength: maxLength(20),
       },
-      eatHabit: {
+      age: {
         required,
       },
       bookingOption: {
@@ -163,6 +162,15 @@ export default {
             icon: 'mdi-campfire',
             mandatory: true,
             fieldType: 'textfield',
+            default: '',
+          },
+          {
+            name: 'Alter*',
+            techName: 'age',
+            tooltip: 'Trage bitte das Alter des_der Teilnehmer_in ein.',
+            icon: 'mdi-calendar',
+            mandatory: true,
+            fieldType: 'number',
             default: '',
           },
           {

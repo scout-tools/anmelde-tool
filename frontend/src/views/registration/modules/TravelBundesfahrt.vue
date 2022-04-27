@@ -118,6 +118,8 @@ export default {
   },
   methods: {
     beforeTabShow() {
+      this.data.vehicle = '';
+      this.data.time = '';
       this.loadData();
     },
     setDefaults() {

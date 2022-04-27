@@ -2,6 +2,7 @@ from copy import deepcopy
 from django.db.models import Q, QuerySet
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from dateutil.relativedelta import relativedelta
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status, mixins
 from rest_framework.exceptions import NotFound, MethodNotAllowed
@@ -455,6 +456,9 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs) -> Response:
         create_missing_eat_habits(request)
         registration: event_models.Registration = self.participant_initialization(request)
+
+        if request.data.get('age'):
+            request.data['birthday'] = timezone.now() - relativedelta(years=int(request.data.get('age')))
 
         request.data['registration'] = registration.id
         if request.data.get('first_name') is None and request.data.get('last_name') is None:
