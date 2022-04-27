@@ -187,6 +187,8 @@ export default {
   },
   methods: {
     beforeTabShow() {
+      this.data.vehicle = '';
+      this.data.time = '';
       this.loadData();
     },
     setDefaults() {
@@ -196,6 +198,7 @@ export default {
           this.data.time = this.getAttributeValue(item)[1]; //eslint-disable-line
         }
       });
+      this.$forceUpdate();
     },
     getAttributeValue(item) {
       const value = this.attributes.filter(

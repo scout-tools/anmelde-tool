@@ -203,7 +203,7 @@
     <v-autocomplete
       v-if="field.fieldType === 'enumCombo'"
       :label="field.name"
-      :value="value"
+      :value="enumValue"
       item-value="value"
       :items="convertEnum(this.lookupList)"
       :prepend-icon="field.icon"
@@ -480,6 +480,9 @@ export default {
           this.loading = false;
         });
     },
+    enumValue() {
+      this.onInputChanged(this.enumValue);
+    },
   },
   computed: {
     valueDate() {
@@ -487,6 +490,19 @@ export default {
     },
     valueTime() {
       return this.$moment(this.value).format('HH:mm', 'de');
+    },
+    enumValue() {
+      const value = this.value; // eslint-disable-line
+      const list = this.convertEnum(this.lookupList);
+      if (list.filter((item) => item.value === value).length) {
+        return value;
+      }
+      try {
+        return list.filter((item) => item.name === value)[0].value;
+      } catch (e) {
+        console.log(e);
+        return '';
+      }
     },
   },
   methods: {
@@ -580,13 +596,13 @@ export default {
     },
   },
   created() {
-    if ((
+    if (
       this.field.fieldType === 'refDropdown' || // eslint-disable-line
       this.field.fieldType === 'enumCombo' || // eslint-disable-line
       this.field.fieldType === 'refComboSingle' || // eslint-disable-line
       this.field.fieldType === 'refCombo'
-    ) && this.field.lookupPath) {
-      this.getData(this.field.referenceTable);
+    ) {
+      this.getData();
     }
     if (this.field.fieldType === 'zipField') {
       this.callSingleZipCode(this.value).then((result) => {
