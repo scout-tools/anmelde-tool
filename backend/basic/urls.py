@@ -5,6 +5,7 @@ from . import views
 
 router = routers.SimpleRouter()
 router.register(r'scout-hierarchy', views.ScoutHierarchyViewSet)
+router.register(r'scout-hierarchy-detail', views.ScoutHierarchyDetailedViewSet)
 router.register(r'zip-code', views.ZipCodeViewSet)
 router.register(r'tags', views.TagViewSet)
 router.register(r'tag-types', views.TagTypeViewSet)
