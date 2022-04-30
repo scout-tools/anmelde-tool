@@ -459,10 +459,10 @@ class EventSummarySerializer(serializers.ModelSerializer):
         """
         participant_ids = event.registration_set.filter(is_confirmed=True).values('registrationparticipant')
         all_participants = event_models.RegistrationParticipant.objects.filter(id__in=participant_ids)
-        woelfling = self.age_range(0, 10, all_participants)
-        pfadfinder = self.age_range(11, 16, all_participants)
-        rover = self.age_range(17, 23, all_participants)
-        alt_rover = self.age_range(24, 999, all_participants)
+        woelfling = self.age_range(0, 12, all_participants, event)
+        pfadfinder = self.age_range(12, 17, all_participants, event)
+        rover = self.age_range(17, 24, all_participants, event)
+        alt_rover = self.age_range(24, 999, all_participants, event)
 
         return {
             'woelfling': woelfling,
@@ -471,10 +471,12 @@ class EventSummarySerializer(serializers.ModelSerializer):
             'alt_rover': alt_rover
         }
 
-    def age_range(self, min_age, max_age, participants: QuerySet[event_models.RegistrationParticipant]) -> int:
-        current = timezone.now().date()
-        min_date = datetime(current.year - min_age, current.month, current.day, tzinfo=pytz.timezone('Europe/Berlin'))
-        max_date = datetime(current.year - max_age, current.month, current.day, tzinfo=pytz.timezone('Europe/Berlin'))
+    def age_range(self, min_age, max_age, participants: QuerySet[event_models.RegistrationParticipant],
+                  event: event_models.Event) -> int:
+        min_date = datetime(event.start_date.year - min_age, event.start_date.month, event.start_date.day,
+                            tzinfo=pytz.timezone('Europe/Berlin'))
+        max_date = datetime(event.start_date.year - max_age, event.start_date.month, event.start_date.day,
+                            tzinfo=pytz.timezone('Europe/Berlin'))
 
         return participants.filter(birthday__gte=max_date, birthday__lte=min_date).count()
 
