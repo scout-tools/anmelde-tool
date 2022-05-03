@@ -91,3 +91,9 @@ class ModuleRequired(APIException):
     status_code = 405
     default_detail = "Du kannst dieses Modul nicht löschen, da es ein Pflichtmodul ist"
     default_code = 'required_module'
+
+
+class EatHabitTooLong(APIException):
+    status_code = 400
+    default_detail = "Dein Eingegebener Essenswunsch ist zu lang, bitte jeden Wunsch einzeln angeben (max 100 Zeichen)"
+    default_code = 'too_long'

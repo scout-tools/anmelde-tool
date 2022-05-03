@@ -13,6 +13,12 @@ class ScoutHierarchySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class NamyOnlyScoutHierarchySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = basic_models.ScoutHierarchy
+        fields = ('name',)
+
+
 class ZipCodeShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = basic_models.ZipCode

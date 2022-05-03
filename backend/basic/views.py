@@ -10,6 +10,7 @@ from rest_framework.response import Response
 import basic.choices
 from basic import models as basic_models
 from basic import serializers as basic_serializers
+from basic.api_exceptions import TooManySearchResults, NoSearchResults, NoSearchValue
 from basic.permissions import IsStaffOrReadOnly
 
 
@@ -33,9 +34,13 @@ class ZipCodeSearchFilter(FilterSet):
         fields = ['zip_code', 'city', 'id']
 
     def get_zip_city(self, queryset, field_name, value) -> QuerySet[basic_models.ZipCode]:
+        if value is None:
+            raise NoSearchValue
         cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
         if cities.count() > 250:
-            raise PermissionDenied('Too many results!!!')
+            raise TooManySearchResults
+        elif cities.count() == 0:
+            raise NoSearchResults
         return cities
 
 

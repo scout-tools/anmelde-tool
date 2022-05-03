@@ -26,8 +26,7 @@
         show-expand
         single-expand
         hide-default-footer
-        item-key="createdAt"
-      >
+        item-key="createdAt">
         <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{

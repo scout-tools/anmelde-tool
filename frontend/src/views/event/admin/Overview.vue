@@ -20,7 +20,7 @@
                 <v-icon left>mdi-calendar-plus</v-icon>
                 Neue Fahrt erstellen
               </v-btn>
-              <v-divider />
+              <v-divider/>
               <template v-for="(item, index) in getItems">
                 <v-list-item :key="item.name">
                   <v-list-item-avatar>
@@ -83,7 +83,7 @@
                       icon
                       @click="onEventEditClicked(item.id)"
                     >
-                      <v-icon fab color="primary"> mdi-pencil </v-icon>
+                      <v-icon fab color="primary"> mdi-pencil</v-icon>
                     </v-btn>
                   </v-list-item-action>
                 </v-list-item>
@@ -110,7 +110,7 @@
         </v-layout>
       </v-flex>
     </v-row>
-    <confirm-registration-edit-modal ref="confirmRegistrationEditModal" />
+    <confirm-registration-edit-modal ref="confirmRegistrationEditModal"/>
   </v-container>
 </template>
 
@@ -188,21 +188,15 @@ export default {
     getLagerText(item) {
       const startDate = new Date(item.startDate);
       const endDate = new Date(item.endDate);
-      const dateFormat = 'll';
-
-      const text1 = `Termin: ${moment(startDate)
-        .lang('de')
-        .format(dateFormat)} bis ${moment(endDate)
-        .lang('de')
-        .format(dateFormat)}`;
-      return text1;
+      return `Termin: ${moment(startDate, 'll', 'de')
+        .format('ll')} bis
+      ${moment(endDate, 'll', 'de')
+    .format('ll')}`;
     },
     getDeadline(item) {
-      const dateFormat = 'll';
       const registrationDeadline = new Date(item.registrationDeadline);
-      const text2 = `Anmeldeschluss: ${moment(registrationDeadline)
-        .lang('de')
-        .format(dateFormat)}`;
+      const text2 = `Anmeldeschluss: ${moment(registrationDeadline, 'll', 'de')
+        .format('ll')}`;
       return text2;
     },
     async getEvent() {
