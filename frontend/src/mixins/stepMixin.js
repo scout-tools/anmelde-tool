@@ -73,8 +73,32 @@ export default {
       if (valObj.allChecked === false) {
         errors.push('Es müssen allen Bedindungen zugestimmt werden.');
       }
+      if (valObj.alphaNumExtendedValidator === false) {
+        errors.push('Es sind nur Kleinbuchstaben, Zahlen und Bindestriche erlaubt.');
+      }
+      if (valObj.alphaNum === false) {
+        errors.push('Es sind nur Buchstaben und Zahlen.');
+      }
+      if (valObj.url === false) {
+        errors.push('Muss eine richtige URL sein.');
+      }
+      if (valObj.minDeadline === false) {
+        errors.push('Der Anmeldeschluss muss nach dem Anmeldestart liegen.');
+      }
+      if (valObj.minLastPossibleUpdate === false) {
+        errors.push('Das Letzte Änderungsdatum muss auf oder nach dem Anmeldeschluss liegen.');
+      }
+      if (valObj.minStartDate === false) {
+        errors.push('Der Beginn der Fahrt muss auf oder nach dem Letzte Änderungsdatum liegen.');
+      }
+      if (valObj.minEndDate === false) {
+        errors.push('Das Ende der Fahrt muss nach dem Start der Fahrt liegen.');
+      }
       if (valObj.between === false) {
-        const { min, max } = valObj.$params.between;
+        const {
+          min,
+          max,
+        } = valObj.$params.between;
         errors.push(
           `Bitte gib einen Wert zwischen ${min}€ und ${max}€ ein. Falls du mehr als ${max} brauchst melde dich bei der Lagerleitung.`,
         );

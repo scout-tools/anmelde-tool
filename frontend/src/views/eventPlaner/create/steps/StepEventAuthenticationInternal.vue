@@ -95,8 +95,8 @@ export default {
       });
     },
   },
-  created() {
-    this.loadData();
-  },
+  // created() {
+  //   this.loadData();
+  // },
 };
 </script>

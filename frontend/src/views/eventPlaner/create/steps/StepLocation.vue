@@ -205,9 +205,9 @@ export default {
       });
     },
   },
-  created() {
-    this.beforeTabShow();
-  },
+  // created() {
+  //   this.beforeTabShow();
+  // },
   watch: {
     selectedItem() {
     },

@@ -122,8 +122,8 @@ export default {
       this.loading = false;
     },
   },
-  created() {
-    this.beforeTabShow();
-  },
+  // created() {
+  //   this.beforeTabShow();
+  // },
 };
 </script>

@@ -38,7 +38,7 @@ import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import BaseField from '@/components/common/BaseField.vue';
 
 export default {
-  name: 'StepMasterData',
+  name: 'StepVisibility',
   props: [
     'position',
     'maxPos',
@@ -81,8 +81,8 @@ export default {
       this.getDataService(this.id, this.modulePath);
     },
   },
-  created() {
-    this.loadData();
-  },
+  // created() {
+  //   this.loadData();
+  // },
 };
 </script>

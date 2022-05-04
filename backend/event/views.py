@@ -1,4 +1,6 @@
 from copy import deepcopy
+from datetime import datetime
+
 from django.db.models import Q, QuerySet
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -66,9 +68,65 @@ class EventRegistrationViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSe
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsEventSuperResponsiblePerson]
+    # permission_classes = [IsEventSuperResponsiblePerson]
     queryset = event_models.Event.objects.all()
     serializer_class = event_serializers.EventCompleteSerializer
+
+    def get_formatted_date(self, date: str, request) -> datetime | None:
+        if request.data.get(date):
+            for fmt in ('%Y-%m-%dT%H:%M:%S%z', '%Y-%m-%dT%H:%M:%S%Z'):
+                try:
+                    return datetime.strptime(request.data.get(date), fmt)
+                except ValueError:
+                    pass
+
+        return None
+
+    def check_event_dates(self, request, event: event_models.Event) -> bool:
+        edited = False
+        start_date = self.get_formatted_date('start_date', request)
+        if start_date is None:
+            start_date = event.start_date
+        else:
+            edited = True
+
+
+        end_date = self.get_formatted_date('end_date', request)
+        if end_date is None:
+            end_date = event.end_date
+        else:
+            edited = True
+
+        registration_deadline = self.get_formatted_date('registration_deadline', request)
+        if registration_deadline is None:
+            registration_deadline = event.registration_deadline
+        else:
+            edited = True
+
+        registration_start = self.get_formatted_date('registration_start', request)
+        if registration_start is None:
+            registration_start = event.registration_start
+        else:
+            edited = True
+
+        last_possible_update = self.get_formatted_date('last_possible_update', request)
+        if last_possible_update is None:
+            last_possible_update = event.last_possible_update
+        else:
+            edited = True
+
+        if not edited:
+            return True
+
+        if end_date < start_date:
+            raise event_api_exceptions.EndBeforeStart
+        if start_date <= last_possible_update:
+            raise event_api_exceptions.StartBeforeLastChange
+        if last_possible_update <= registration_deadline:
+            raise event_api_exceptions.LastChangeBeforeRegistrationDeadline
+        if registration_deadline < registration_start:
+            raise event_api_exceptions.RegistrationDeadlineBeforeRegistrationStart
+        return True
 
     def create(self, request, *args, **kwargs) -> Response:
         if request.data.get('name', None) is None:
@@ -102,9 +160,11 @@ class EventViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def update(self, request, *args, **kwargs):
-        event = self.get_object()
-        standard_event = get_object_or_404(event_models.StandardEventTemplate, pk=1)
+    def update(self, request, *args, **kwargs) -> Response:
+        event: event_models.Event = self.get_object()
+        # standard_event = get_object_or_404(event_models.StandardEventTemplate, pk=1)
+
+        self.check_event_dates(request, event)
 
         # TODO: Check personal data required changed and if so exchange data
 
@@ -700,7 +760,7 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
 
 
 class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    # permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.EventAttributeSummarySerializer
 
     def get_queryset(self) -> QuerySet:
