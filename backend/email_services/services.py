@@ -1,10 +1,10 @@
 from datetime import datetime
 from django.core.mail import EmailMultiAlternatives
 from django.db.models import Sum
-from django.template import Context, Template
+from django.template import Template
 from django.template.context import make_context
 import threading
-from threading import Thread
+import html
 
 from rest_framework.generics import get_object_or_404
 
@@ -32,7 +32,8 @@ class EmailThreadRegistration(threading.Thread):
     def run(self) -> None:
         registration: event_models.Registration = get_object_or_404(event_models.Registration, id=self.registration_id)
 
-        sender = f'{registration.event.name} <{registration.event.technical_name}@{getattr(settings, "EMAIL_HOST_USER")}>'
+        technical_name = registration.event.technical_name or 'info'
+        sender = f'{registration.event.name} <{technical_name}@{getattr(settings, "EMAIL_HOST_USER")}>'
         subject = f'Registrierungsbestätigung für: {registration.event.name}'
 
         email_type_mapping = {
@@ -66,16 +67,27 @@ class EmailThreadRegistration(threading.Thread):
         else:
             list_participants = ''
 
+        event_name = html.escape(registration.event.name)
+        event_pronoun = 'das' if 'lager' in event_name else 'die'
+
+        scout_orga_unit_name = 'Stamm' if registration.scout_organisation.level.id == 5 else ''
+        if not registration.single:
+            scout_organisation = f'{scout_orga_unit_name} {html.escape(registration.scout_organisation.name)}'
+        else:
+            scout_organisation = f'Einzelpersonen aus dem {scout_orga_unit_name} {html.escape(registration.scout_organisation.name)}'
+
         for person in registration.responsible_persons.all():
             receiver = [person.email, ]
 
             data = {
-                'responsible_persons': person.userextended.scout_name or '',
+                'event_name': event_name,
+                'event_pronoun': event_pronoun,
+                'responsible_persons': html.escape(person.userextended.scout_name) or '',
                 'unsubscribe': person.userextended.id,
                 'participant_count': count,
                 'sum': participant_sum,
                 'list_participants': list_participants,
-                'scout_organisation': registration.scout_organisation.name
+                'scout_organisation': scout_organisation
             }
 
             headers = {

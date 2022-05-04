@@ -60,7 +60,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { mapGetters } from 'vuex';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 
@@ -130,17 +129,13 @@ export default {
         )
       );
     },
-    async getRegistration(id) {
-      const path = `${process.env.VUE_APP_API}/event/registration/${id}/`;
-      const response = await axios.get(path);
-      return response.data;
-    },
     loadData() {
       this.getData();
     },
   },
   created() {
     this.loadData();
+    this.tab = 1;
   },
 };
 </script>
