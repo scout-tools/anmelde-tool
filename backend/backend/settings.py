@@ -25,7 +25,6 @@ ALLOWED_HOSTS = [
     'localhost',
     'api.anmelde-tool.dev.scout-tools.de',
     'api.anmelde-tool.de',
-    'anmeldetool-dev.eu-central-1.elasticbeanstalk.com'
 ]
 
 CORS_ALLOW_CREDENTIALS = True

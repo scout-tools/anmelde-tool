@@ -28,6 +28,7 @@ def get_responsible_person_permission(user: User, event: Event) -> bool:
 
 def check_event_permission(event_id: [str, Event], user: User) -> bool:
     event = get_event(event_id)
+    if user.is_superuser: return True
     if get_keycloak_permission(user, event.keycloak_path): return True
     if get_responsible_person_permission(user, event): return True
     return False

@@ -196,9 +196,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     def get_registration_options(self, obj: event_models.Event) -> dict:
         group_id = None
         single_id = None
-        allow_new_group_reg = False
         allow_edit_group_reg = False
-        allow_new_single_reg = False
         allow_edit_single_reg = False
 
         existing_group: QuerySet = obj.registration_set. \
@@ -216,11 +214,9 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             single_id = single.first().id
             allow_edit_single_reg = self.get_can_edit(obj) and not allow_edit_group_reg
 
-        no_registration_exists = not group_id and not single_id
-
-        allow_new_group_reg = no_registration_exists and self.get_can_register(
+        allow_new_group_reg = not group_id and self.get_can_register(
             obj) and obj.group_registration != event_choices.RegistrationTypeGroup.No
-        allow_new_single_reg = no_registration_exists and self.get_can_register(
+        allow_new_single_reg = not single_id and self.get_can_register(
             obj) and obj.single_registration != event_choices.RegistrationTypeGroup.No
 
         return {
@@ -459,10 +455,10 @@ class EventSummarySerializer(serializers.ModelSerializer):
         """
         participant_ids = event.registration_set.filter(is_confirmed=True).values('registrationparticipant')
         all_participants = event_models.RegistrationParticipant.objects.filter(id__in=participant_ids)
-        woelfling = self.age_range(0, 10, all_participants)
-        pfadfinder = self.age_range(11, 16, all_participants)
-        rover = self.age_range(17, 23, all_participants)
-        alt_rover = self.age_range(24, 999, all_participants)
+        woelfling = self.age_range(0, 12, all_participants, event)
+        pfadfinder = self.age_range(12, 17, all_participants, event)
+        rover = self.age_range(17, 24, all_participants, event)
+        alt_rover = self.age_range(24, 999, all_participants, event)
 
         return {
             'woelfling': woelfling,
@@ -471,16 +467,27 @@ class EventSummarySerializer(serializers.ModelSerializer):
             'alt_rover': alt_rover
         }
 
-    def age_range(self, min_age, max_age, participants: QuerySet[event_models.RegistrationParticipant]) -> int:
-        current = timezone.now().date()
-        min_date = datetime(current.year - min_age, current.month, current.day, tzinfo=pytz.timezone('Europe/Berlin'))
-        max_date = datetime(current.year - max_age, current.month, current.day, tzinfo=pytz.timezone('Europe/Berlin'))
+    def age_range(self, min_age, max_age, participants: QuerySet[event_models.RegistrationParticipant],
+                  event: event_models.Event) -> int:
+        min_date = datetime(event.start_date.year - min_age, event.start_date.month, event.start_date.day,
+                            tzinfo=pytz.timezone('Europe/Berlin'))
+        max_date = datetime(event.start_date.year - max_age, event.start_date.month, event.start_date.day,
+                            tzinfo=pytz.timezone('Europe/Berlin'))
 
         return participants.filter(birthday__gte=max_date, birthday__lte=min_date).count()
 
 
 class EventDetailedSummarySerializer(EventSummarySerializer):
     registration_set = RegistrationEventDetailedSummarySerializer(many=True, read_only=True)
+
+
+class RegistrationAttributeGetSerializer(serializers.ModelSerializer):
+    scout_organisation = basic_serializers.NamyOnlyScoutHierarchySerializer(many=False, read_only=True)
+    responsible_persons = CurrentUserSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = event_models.Registration
+        fields = ('scout_organisation', 'is_confirmed', 'is_accepted', 'responsible_persons')
 
 
 class EventAttributeSummarySerializer(serializers.ModelSerializer):
@@ -493,20 +500,29 @@ class EventAttributeSummarySerializer(serializers.ModelSerializer):
 
     def get_attributes(self, mapper: event_models.AttributeEventModuleMapper) -> dict:
         event_id = self.context['view'].kwargs.get("event_pk", None)
-        registration_tag_ids: QuerySet[int] = event_models.Registration.objects.filter(event=event_id) \
-            .values_list('tags', flat=True)
-        tags: QuerySet[basic_models.AbstractAttribute] = basic_models.AbstractAttribute.objects \
-            .filter(id__in=registration_tag_ids, in_summary=True, template=False, template_id=mapper.attribute.id)
+        registrations: QuerySet[event_models.Registration] = event_models.Registration.objects.filter(event=event_id)
 
+        registration_tags = []
         attribute_sum = 0
-        if mapper.attribute.polymorphic_ctype.app_labeled_name == 'basic | integer attribute':
-            attribute_sum = tags.aggregate(sum=Sum('integerattribute__integer_field'))['sum']
-        elif mapper.attribute.polymorphic_ctype.app_labeled_name == 'basic | float attribute':
-            attribute_sum = tags.aggregate(sum=Sum('floatattribute__integer_field'))['sum']
+        for registration in registrations.all():
+            tags = registration.tags.filter(template=False, template_id=mapper.attribute.id)
 
-        serializer = basic_serializers.AbstractAttributeGetPolymorphicSerializer(tags, many=True)
+            if mapper.attribute.polymorphic_ctype.app_labeled_name == 'basic | integer attribute':
+                attribute_sum += tags.aggregate(sum=Sum('integerattribute__integer_field'))['sum'] or 0
+            elif mapper.attribute.polymorphic_ctype.app_labeled_name == 'basic | float attribute':
+                attribute_sum += tags.aggregate(sum=Sum('floatattribute__integer_field'))['sum'] or 0
+
+            serialized_registration = RegistrationAttributeGetSerializer(registration, many=False).data
+            for tag in tags.all():
+                serialized_tag = basic_serializers.AbstractAttributeGetPolymorphicSerializer(tag, many=False).data
+                result = {
+                    'registration': serialized_registration,
+                    'tag': serialized_tag,
+                }
+                registration_tags.append(result)
+
         return {
-            'data': serializer.data,
+            'data': registration_tags,
             'sum': attribute_sum
         }
 

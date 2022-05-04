@@ -45,6 +45,8 @@ def add_event_attribute(attribute: basic_models.AbstractAttribute) -> basic_mode
 def create_missing_eat_habits(request) -> None:
     eat_habits = request.data.get('eat_habit', [])
     for habit in eat_habits:
+        if len(habit) > 100:
+            raise event_api_exceptions.EatHabitTooLong
         if not basic_models.EatHabit.objects.filter(name__exact=habit).exists():
             basic_models.EatHabit.objects.create(name=habit)
 
@@ -366,7 +368,8 @@ class RegistrationViewSet(mixins.CreateModelMixin,
 
             if single_registration.exists() and serializer.data['single']:
                 raise event_api_exceptions.SingleAlreadyRegistered()
-            elif existing_group_registration.exists() and not group_registration.exists():
+            elif existing_group_registration.exists() and not group_registration.exists() \
+                    and not serializer.data['single']:
                 raise event_api_exceptions.NotResponsible()
             elif existing_group_registration.exists() and not serializer.data['single']:
                 raise event_api_exceptions.GroupAlreadyRegistered
@@ -697,14 +700,13 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
 
 
 class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    permission_classes = [IsSubEventResponsiblePerson]
+    # permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.EventAttributeSummarySerializer
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
         mapper_ids = event_models.EventModuleMapper.objects.filter(event=event_id).values_list('attributes', flat=True)
-        return event_models.AttributeEventModuleMapper.objects.filter(id__in=mapper_ids) \
-            .filter(attribute__in_summary=True)
+        return event_models.AttributeEventModuleMapper.objects.filter(id__in=mapper_ids)
 
 
 class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

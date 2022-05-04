@@ -26,8 +26,7 @@
         show-expand
         single-expand
         hide-default-footer
-        item-key="createdAt"
-      >
+        item-key="createdAt">
         <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
@@ -51,7 +50,10 @@
           </template>
             <v-list-item>
             <v-list-item-content>
-              <b>Verantwortlicher: </b> {{item.responsiblePersons[0]}}
+              <b>Verantwortlich: </b>
+              <template v-for="(string) in item.responsiblePersons">
+                {{ `${string}, `}}
+              </template>
               </v-list-item-content>
             </v-list-item>
             <v-list-item>

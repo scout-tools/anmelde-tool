@@ -33,15 +33,21 @@
                 Erlebnisangebot
                 <v-icon>mdi-run-fast</v-icon>
               </v-tab>
+
+              <v-tab v-if="hasAttributes" href="#tab-5">
+                Attribute
+                <v-icon>mdi-ticket</v-icon>
+              </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-              <v-tab-item v-for="i in 4" :key="i" :value="'tab-' + i">
+              <v-tab-item v-for="i in 5" :key="i" :value="'tab-' + i">
                 <v-card-text>
-                  <OverviewMain v-if="hasParticipantsPersonal && i === 1" />
-                  <LeaderMain v-if="hasParticipantsPersonal && i === 2" />
-                  <MapsMain v-if="hasParticipantsPersonal && i === 3" />
-                  <WorkshopMain v-if="hasSubscribeWorkshop && i === 4" />
+                  <OverviewMain v-if="hasParticipantsPersonal && i === 1"/>
+                  <LeaderMain v-if="hasParticipantsPersonal && i === 2"/>
+                  <MapsMain v-if="hasParticipantsPersonal && i === 3"/>
+                  <WorkshopMain v-if="hasSubscribeWorkshop && i === 4"/>
+                  <AttributeMain v-if="hasAttributes && i === 5"/>
                   <!-- <PdfGenerationMain v-if="i === 6"/> -->
                 </v-card-text>
               </v-tab-item>
@@ -62,6 +68,7 @@ import OverviewMain from './overview/Main.vue';
 import LeaderMain from './leader/Main.vue';
 import MapsMain from './maps/Main.vue';
 import WorkshopMain from './workshop/Main.vue';
+import AttributeMain from './attributes/Main.vue';
 // import PdfGenerationMain from './downlaods/Main.vue';
 
 export default {
@@ -71,6 +78,7 @@ export default {
     WorkshopMain,
     // PdfGenerationMain,
     OverviewMain,
+    AttributeMain,
   },
   mixins: [apiCallsMixin],
   computed: {
@@ -85,6 +93,7 @@ export default {
       eventOverview: [],
       hasParticipantsPersonal: false,
       hasSubscribeWorkshop: false,
+      hasAttributes: true,
     };
   },
   methods: {

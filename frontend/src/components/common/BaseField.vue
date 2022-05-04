@@ -265,7 +265,7 @@
     </v-switch>
     <v-container v-if="field.fieldType === 'radio'">
       <v-row class="mb-1">
-        <v-icon class="mr-2"> {{ field.icon }} </v-icon>
+        <v-icon class="mr-2"> {{ field.icon }}</v-icon>
         {{ field.name }}
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -289,7 +289,7 @@
     </v-container>
     <v-container v-if="field.fieldType === 'html'">
       <v-row class="mb-1">
-        <v-icon class="mr-2"> {{ field.icon }} </v-icon>
+        <v-icon class="mr-2"> {{ field.icon }}</v-icon>
         {{ field.name }}
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -333,7 +333,8 @@
               {{ field.tooltip }}
             </span>
           </v-tooltip>
-        </template></v-text-field
+        </template>
+      </v-text-field
       >
     </v-container>
     <v-container v-if="field.fieldType === 'datetime'">
@@ -362,7 +363,8 @@
                   {{ field.tooltip }}
                 </span>
               </v-tooltip>
-            </template></v-text-field
+            </template>
+          </v-text-field
           >
         </v-col>
         <v-col>
@@ -389,7 +391,7 @@
         <v-col cols="1">
           <!-- 1. Create the button that will be clicked to select a file -->
           <v-btn small fab dark color="green" @click="handleFileImport">
-            <v-icon> mdi-cloud-upload </v-icon>
+            <v-icon> mdi-cloud-upload</v-icon>
           </v-btn>
         </v-col>
         <v-col cols="1">
@@ -401,7 +403,7 @@
             :disabled="!value"
             @click="showPdf"
           >
-            <v-icon> mdi-eye </v-icon>
+            <v-icon> mdi-eye</v-icon>
           </v-btn>
         </v-col>
         <!-- Create a File Input that will be hidden but triggered with JavaScript -->
@@ -449,7 +451,7 @@ export default {
       selectedFile: null,
       isLoading: false,
       search: null,
-      zipCodeNoDataText: 'Zuviele Treffer.',
+      zipCodeNoDataText: 'Bitte PLZ oder Ort eingeben.',
       ckeditor: {
         editor: ClassicEditor,
         editorData: '',
@@ -463,9 +465,10 @@ export default {
     search(searchString) {
       // still loading
       if (this.loading) return;
-      if (!searchString) return;
-      if (searchString.indexOf(' ') >= 0) return;
-      if (searchString && searchString.length <= 1) return;
+      if (!searchString || searchString.indexOf(' ') >= 0 || searchString.length <= 1) {
+        this.zipCodeNoDataText = 'Bitte PLZ oder Ort eingeben.';
+        return;
+      }
       this.loading = true;
       this.getZipCodeMapping(searchString)
         .then((res) => {
@@ -473,8 +476,8 @@ export default {
           this.zipCodeNoDataText = 'Kein Treffer';
         })
         .catch((err) => {
-          console.log(err);
-          this.zipCodeNoDataText = 'Zuviele Treffer';
+          this.lookupList = null;
+          this.zipCodeNoDataText = err.response.data.detail;
         })
         .finally(() => {
           this.loading = false;
@@ -486,12 +489,15 @@ export default {
   },
   computed: {
     valueDate() {
-      return this.$moment(this.value).format('DD.MM.YYYY', 'de');
+      return this.$moment(this.value)
+        .format('DD.MM.YYYY', 'de');
     },
     valueTime() {
-      return this.$moment(this.value).format('HH:mm', 'de');
+      return this.$moment(this.value)
+        .format('HH:mm', 'de');
     },
     enumValue() {
+      if (!this.lookupList) return '';
       const value = this.value; // eslint-disable-line
       const list = this.convertEnum(this.lookupList);
       if (list.filter((item) => item.value === value).length) {
@@ -500,7 +506,6 @@ export default {
       try {
         return list.filter((item) => item.name === value)[0].value;
       } catch (e) {
-        console.log(e);
         return '';
       }
     },
@@ -605,10 +610,11 @@ export default {
       this.getData();
     }
     if (this.field.fieldType === 'zipField') {
-      this.callSingleZipCode(this.value).then((result) => {
-        this.lookupList = result;
-        this.$forceUpdate();
-      });
+      this.callSingleZipCode(this.value)
+        .then((result) => {
+          this.lookupList = result;
+          this.$forceUpdate();
+        });
     }
   },
 };
