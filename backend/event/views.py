@@ -1,6 +1,5 @@
 from copy import deepcopy
 from datetime import datetime
-
 from django.db.models import Q, QuerySet
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -72,7 +71,7 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = event_models.Event.objects.all()
     serializer_class = event_serializers.EventCompleteSerializer
 
-    def get_formatted_date(self, date: str, request) -> datetime | None:
+    def get_formatted_date(self, date: str, request):
         if request.data.get(date):
             for fmt in ('%Y-%m-%dT%H:%M:%S%z', '%Y-%m-%dT%H:%M:%S%Z'):
                 try:
@@ -89,7 +88,6 @@ class EventViewSet(viewsets.ModelViewSet):
             start_date = event.start_date
         else:
             edited = True
-
 
         end_date = self.get_formatted_date('end_date', request)
         if end_date is None:
@@ -767,6 +765,49 @@ class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSe
         event_id = self.kwargs.get("event_pk", None)
         mapper_ids = event_models.EventModuleMapper.objects.filter(event=event_id).values_list('attributes', flat=True)
         return event_models.AttributeEventModuleMapper.objects.filter(id__in=mapper_ids)
+
+
+class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    # permission_classes = [IsSubEventResponsiblePerson]
+
+    def list(self, request, *args, **kwargs):
+        participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
+
+        eat_habits_sum = {}
+        eat_habits = {}
+        for participant in participants.all():
+            key = tuple(participant.eat_habit.values_list('id', flat=True))
+            if key in eat_habits_sum:
+                eat_habits_sum[key] += 1
+            else:
+                eat_habits_sum[key] = 1
+                eat_habits[key] = participant.eat_habit.all()
+
+        food_habits = []
+        for key in eat_habits:
+            food = ', '.join(eat_habits[key].values_list('name', flat=True))
+            result = {
+                'sum': eat_habits_sum[key],
+                'food': food,
+            }
+            food_habits.append(result)
+
+        num_total_participants = participants.count()
+        num_eat_habits = sum(eat_habits_sum.values())
+        num_without_habits = num_total_participants - num_eat_habits
+        total_result = {
+            'total_participants': num_total_participants,
+            'no_habits': num_without_habits,
+            'eat_habits': num_eat_habits,
+            'eat_habits_detailed': food_habits
+        }
+
+        return Response(total_result, status=status.HTTP_200_OK)
+
+    def get_queryset(self) -> QuerySet[event_models.RegistrationParticipant]:
+        event_id = self.kwargs.get("event_pk", None)
+        registration_ids = event_models.Registration.objects.filter(event=event_id).values_list('id', flat=True)
+        return event_models.RegistrationParticipant.objects.filter(registration__id__in=registration_ids)
 
 
 class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
