@@ -15,7 +15,7 @@ class NotResponsible(APIException):
 
 class SingleAlreadyRegistered(APIException):
     status_code = 403
-    default_detail = "Du bist bereits Registriert"
+    default_detail = "Du bist bereits Registriert."
     default_code = 'already_registered'
 
 
@@ -34,13 +34,13 @@ class WrongRegistrationFormat(APIException):
 
 class WrongRegistrationFormatGroup(APIException):
     status_code = 405
-    default_detail = "Bei diesem Event können sich keine Gruppen registrieren"
+    default_detail = "Bei diesem Event können sich keine Gruppen registrieren."
     default_code = 'missleading_information'
 
 
 class WrongRegistrationFormatSingle(APIException):
     status_code = 405
-    default_detail = "Bei diesem Event können sich keine Einzelpersonen registrieren"
+    default_detail = "Bei diesem Event können sich keine Einzelpersonen registrieren."
     default_code = 'missleading_information'
 
 
@@ -89,11 +89,35 @@ class TooManyParticipants(APIException):
 
 class ModuleRequired(APIException):
     status_code = 405
-    default_detail = "Du kannst dieses Modul nicht löschen, da es ein Pflichtmodul ist"
+    default_detail = "Du kannst dieses Modul nicht löschen, da es ein Pflichtmodul ist."
     default_code = 'required_module'
 
 
 class EatHabitTooLong(APIException):
     status_code = 400
-    default_detail = "Dein Eingegebener Essenswunsch ist zu lang, bitte jeden Wunsch einzeln angeben (max 100 Zeichen)"
+    default_detail = "Dein Eingegebener Essenswunsch ist zu lang, bitte jeden Wunsch einzeln angeben (max 100 Zeichen)."
     default_code = 'too_long'
+
+
+class EndBeforeStart(APIException):
+    status_code = 400
+    default_detail = "Deine Fahrt fängt an nachdem es beendet ist."
+    default_code = 'wrong_order'
+
+
+class StartBeforeLastChange(APIException):
+    status_code = 400
+    default_detail = "Es dürfen noch Daten geändert werden, nachdem die Fahrt gestartet ist."
+    default_code = 'wrong_order'
+
+
+class LastChangeBeforeRegistrationDeadline(APIException):
+    status_code = 400
+    default_detail = "Das Datum der letzten Änderungen muss gleich oder später dem Anmeldeschluss sein."
+    default_code = 'wrong_order'
+
+
+class RegistrationDeadlineBeforeRegistrationStart(APIException):
+    status_code = 400
+    default_detail = "Der Anmeldeschluss liegt vor dem Anmeldestart."
+    default_code = 'wrong_order'

@@ -87,7 +87,7 @@ class FloatAttribute(AbstractAttribute):
 
 
 class StringAttribute(AbstractAttribute):
-    string_field = models.CharField(max_length=10000, blank=True, null=True)
+    string_field = models.TextField(max_length=10000, blank=True, null=True)
 
 
 class TravelAttribute(AbstractAttribute):

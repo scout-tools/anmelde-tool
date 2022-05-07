@@ -15,6 +15,14 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
       return axios.get(path);
     },
+    async getFoodSummary(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/food-summary/`;
+      return axios.get(path);
+    },
+    async getRegistrationSummaryDetails(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/detailed-summary/`;
+      return axios.get(path);
+    },
     async getParticipants(eventId) {
       const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/participants/`;
       return axios.get(path);

@@ -14,7 +14,7 @@
           />
         </template>
       </v-row>
-      <v-divider class="my-2" />
+      <v-divider class="my-2"/>
       <prev-next-button
         :valid="valid"
         :position="position"
@@ -38,7 +38,7 @@ import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import BaseField from '@/components/common/BaseField.vue';
 
 export default {
-  name: 'StepNameDescription',
+  name: 'StepStartEndDeadline',
   header: 'Daten und Uhrzeit',
   props: [
     'position',
@@ -114,18 +114,30 @@ export default {
     data: {
       startDate: {
         required,
+        minStartDate(val, { lastPossibleUpdate }) {
+          return new Date(val) >= new Date(lastPossibleUpdate);
+        },
       },
       endDate: {
         required,
+        minEndDate(val, { startDate }) {
+          return new Date(val) > new Date(startDate);
+        },
       },
       registrationStart: {
         required,
       },
       registrationDeadline: {
         required,
+        minDeadline(val, { registrationStart }) {
+          return new Date(val) > new Date(registrationStart);
+        },
       },
       lastPossibleUpdate: {
         required,
+        minLastPossibleUpdate(val, { registrationDeadline }) {
+          return new Date(val) >= new Date(registrationDeadline);
+        },
       },
     },
   },
@@ -137,8 +149,8 @@ export default {
       this.getDataService(this.id, this.modulePath);
     },
   },
-  created() {
-    this.loadData();
-  },
+  // created() {
+  //   this.loadData();
+  // },
 };
 </script>

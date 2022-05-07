@@ -1,4 +1,5 @@
 from copy import deepcopy
+from datetime import datetime
 from django.db.models import Q, QuerySet
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -70,6 +71,61 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = event_models.Event.objects.all()
     serializer_class = event_serializers.EventCompleteSerializer
 
+    def get_formatted_date(self, date: str, request) -> datetime:
+        if request.data.get(date):
+            for fmt in ('%Y-%m-%dT%H:%M:%S%z', '%Y-%m-%dT%H:%M:%S%Z'):
+                try:
+                    return datetime.strptime(request.data.get(date), fmt)
+                except ValueError:
+                    pass
+
+        return None
+
+    def check_event_dates(self, request, event: event_models.Event) -> bool:
+        edited = False
+        start_date = self.get_formatted_date('start_date', request)
+        if start_date is None:
+            start_date = event.start_date
+        else:
+            edited = True
+
+        end_date = self.get_formatted_date('end_date', request)
+        if end_date is None:
+            end_date = event.end_date
+        else:
+            edited = True
+
+        registration_deadline = self.get_formatted_date('registration_deadline', request)
+        if registration_deadline is None:
+            registration_deadline = event.registration_deadline
+        else:
+            edited = True
+
+        registration_start = self.get_formatted_date('registration_start', request)
+        if registration_start is None:
+            registration_start = event.registration_start
+        else:
+            edited = True
+
+        last_possible_update = self.get_formatted_date('last_possible_update', request)
+        if last_possible_update is None:
+            last_possible_update = event.last_possible_update
+        else:
+            edited = True
+
+        if not edited:
+            return True
+
+        if end_date < start_date:
+            raise event_api_exceptions.EndBeforeStart
+        if start_date <= last_possible_update:
+            raise event_api_exceptions.StartBeforeLastChange
+        if last_possible_update <= registration_deadline:
+            raise event_api_exceptions.LastChangeBeforeRegistrationDeadline
+        if registration_deadline < registration_start:
+            raise event_api_exceptions.RegistrationDeadlineBeforeRegistrationStart
+        return True
+
     def create(self, request, *args, **kwargs) -> Response:
         if request.data.get('name', None) is None:
             request.data['name'] = 'Dummy'
@@ -102,9 +158,11 @@ class EventViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def update(self, request, *args, **kwargs):
-        event = self.get_object()
-        standard_event = get_object_or_404(event_models.StandardEventTemplate, pk=1)
+    def update(self, request, *args, **kwargs) -> Response:
+        event: event_models.Event = self.get_object()
+        # standard_event = get_object_or_404(event_models.StandardEventTemplate, pk=1)
+
+        self.check_event_dates(request, event)
 
         # TODO: Check personal data required changed and if so exchange data
 
@@ -700,13 +758,56 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
 
 
 class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    # permission_classes = [IsSubEventResponsiblePerson]
+    permission_classes = [IsSubEventResponsiblePerson]
     serializer_class = event_serializers.EventAttributeSummarySerializer
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
         mapper_ids = event_models.EventModuleMapper.objects.filter(event=event_id).values_list('attributes', flat=True)
         return event_models.AttributeEventModuleMapper.objects.filter(id__in=mapper_ids)
+
+
+class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    # permission_classes = [IsSubEventResponsiblePerson]
+
+    def list(self, request, *args, **kwargs):
+        participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
+
+        eat_habits_sum = {}
+        eat_habits = {}
+        for participant in participants.all():
+            key = tuple(participant.eat_habit.values_list('id', flat=True))
+            if key in eat_habits_sum:
+                eat_habits_sum[key] += 1
+            else:
+                eat_habits_sum[key] = 1
+                eat_habits[key] = participant.eat_habit.all()
+
+        food_habits = []
+        for key in eat_habits:
+            food = ', '.join(eat_habits[key].values_list('name', flat=True))
+            result = {
+                'sum': eat_habits_sum[key],
+                'food': food,
+            }
+            food_habits.append(result)
+
+        num_total_participants = participants.count()
+        num_eat_habits = sum(eat_habits_sum.values())
+        num_without_habits = num_total_participants - num_eat_habits
+        total_result = {
+            'total_participants': num_total_participants,
+            'no_habits': num_without_habits,
+            'eat_habits': num_eat_habits,
+            'eat_habits_detailed': food_habits
+        }
+
+        return Response(total_result, status=status.HTTP_200_OK)
+
+    def get_queryset(self) -> QuerySet[event_models.RegistrationParticipant]:
+        event_id = self.kwargs.get("event_pk", None)
+        registration_ids = event_models.Registration.objects.filter(event=event_id).values_list('id', flat=True)
+        return event_models.RegistrationParticipant.objects.filter(registration__id__in=registration_ids)
 
 
 class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

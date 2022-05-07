@@ -52,8 +52,7 @@ export default {
     data: [],
   }),
   computed: {
-    ...mapGetters([
-    ]),
+    ...mapGetters([]),
     bookingOptions() {
       if (this.data && this.data.bookingOptions && this.data.bookingOptions.length) {
         return this.data.bookingOptions.filter((item) => item.count);

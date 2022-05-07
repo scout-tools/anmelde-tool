@@ -1,3 +1,5 @@
+import time
+
 from django.db.models import QuerySet, Sum, Count, F
 from django.utils import timezone
 from datetime import datetime
@@ -194,17 +196,19 @@ class EventOverviewSerializer(serializers.ModelSerializer):
         return obj.last_possible_update >= timezone.now()
 
     def get_registration_options(self, obj: event_models.Event) -> dict:
+        user: User = self.context['request'].user
+
         group_id = None
         single_id = None
         allow_edit_group_reg = False
         allow_edit_single_reg = False
 
         existing_group: QuerySet = obj.registration_set. \
-            filter(single=False, scout_organisation=self.context['request'].user.userextended.scout_organisation)
+            filter(single=False, scout_organisation=user.userextended.scout_organisation)
         group: QuerySet[event_models.Registration] = existing_group. \
-            filter(responsible_persons__in=[self.context['request'].user.id])
+            filter(responsible_persons__in=[user.id])
         single: QuerySet[event_models.Registration] = obj.registration_set. \
-            filter(responsible_persons__in=[self.context['request'].user.id], single=True)
+            filter(responsible_persons__in=[user.id], single=True)
 
         if existing_group.exists():
             group_id = existing_group.first().id
@@ -214,10 +218,14 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             single_id = single.first().id
             allow_edit_single_reg = self.get_can_edit(obj) and not allow_edit_group_reg
 
-        allow_new_group_reg = not group_id and self.get_can_register(
-            obj) and obj.group_registration != event_choices.RegistrationTypeGroup.No
-        allow_new_single_reg = not single_id and self.get_can_register(
-            obj) and obj.single_registration != event_choices.RegistrationTypeGroup.No
+        allow_new_group_reg = not group_id \
+                              and not single_id \
+                              and user.userextended.scout_organisation.level.id == 5 \
+                              and self.get_can_register(obj) \
+                              and obj.group_registration != event_choices.RegistrationTypeGroup.No
+        allow_new_single_reg = not single_id \
+                               and self.get_can_register(obj) \
+                               and obj.single_registration != event_choices.RegistrationTypeGroup.No
 
         return {
             'group_id': group_id,
@@ -398,6 +406,14 @@ class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSer
     booking_option = RegistrationSummaryBookingOptionSerializer(many=False, read_only=True)
     gender = serializers.CharField(source='get_gender_display')
     leader = serializers.CharField(source='get_leader_display')
+    zip_code = basic_serializers.ZipCodeSerializer(many=False, read_only=True)
+    eat_habit = serializers.SlugRelatedField(
+        many=True,
+        read_only=False,
+        slug_field='name',
+        queryset=EatHabit.objects.all(),
+        required=False
+    )
     needs_confirmation = serializers.CharField(source='get_needs_confirmation_display')
 
     class Meta:

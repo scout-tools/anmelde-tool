@@ -1,18 +1,6 @@
 <template>
   <v-container>
     <v-card class="mx-auto my-12">
-      <v-card-title>
-        Aktion bearbeiten
-      </v-card-title>
-      <v-card-subtitle>
-        Viele Pfadfinder_innen und Pfadfinder freuen sich schon auf deine Aktion. {{ maxStepsText }}
-        Viel Spaß!
-      </v-card-subtitle>
-      <v-card-text>
-        Manche Abschnitte geben vor, was abgefragt werden soll und manche sind mehr optionaler
-        Natur.
-        Bei manchen kann man noch zusätzliche Abfragen einbauen.
-      </v-card-text>
       <v-stepper v-model="currentStep" vertical class="mt-5">
         <template v-for="(step, index) in steps">
           <v-stepper-step
@@ -44,8 +32,7 @@
         v-model="showSuccess"
         color="success"
         y="top"
-        :timeout="timeout"
-      >
+        :timeout="timeout">
         {{ 'Die Aktion wurde erfolgreich angelegt.' }}
       </v-snackbar>
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
@@ -57,7 +44,7 @@
 
 <script>
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import StepRegistrationOverview from '@/views/eventPlaner/create/steps/StepRegistrationOverview.vue';
+import StepRegistrationOverview from './steps/StepRegistrationOverview.vue';
 import StepNameDescription from './steps/StepNameDescription.vue';
 import StepLocation from './steps/StepLocation.vue';
 import StepEventContact from './steps/StepEventContact.vue';
@@ -136,12 +123,6 @@ export default {
     maxSteps() {
       return this.isSingleStep ? 1 : this.steps.length;
     },
-    maxStepsText() {
-      if (this.maxSteps === 1) {
-        return 'Bitte bearbeite diesen kleinen Schritt.';
-      }
-      return `Im folgenden führen wir dich durch ${this.maxSteps} kleine Schritt.`;
-    },
   },
   methods: {
     nextStep() {
@@ -154,13 +135,14 @@ export default {
     },
     callOnBeforeTab(step) {
       const nextStepName = this.steps[step].name;
-      if (
-        this.$refs[nextStepName]
-        && this.$refs[nextStepName].length
-        && this.$refs[nextStepName][0].beforeTabShow
-      ) {
-        this.$refs[nextStepName][0].beforeTabShow();
-      }
+      console.log(`4 stepname: ${nextStepName}`);
+      this.$nextTick(() => {
+        if (this.$refs[nextStepName]
+          && this.$refs[nextStepName].length
+          && this.$refs[nextStepName][0].beforeTabShow) {
+          this.$refs[nextStepName][0].beforeTabShow();
+        }
+      });
     },
     onCreateEventClick() {
       this.handleCreateEventRequest();

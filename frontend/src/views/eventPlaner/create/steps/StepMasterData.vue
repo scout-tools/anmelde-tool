@@ -28,12 +28,14 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators';
+import { required, helpers, url } from 'vuelidate/lib/validators';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import serviceMixin from '@/mixins/serviceMixin';
 import PrevNextButton from '@/components/button/PrevNextButton.vue';
 import BaseField from '@/components/common/BaseField.vue';
+
+const alphaNumExtendedValidator = helpers.regex('alphaNumAndHyphen', /^[a-z\d-]*$/);
 
 export default {
   name: 'StepMasterData',
@@ -114,8 +116,15 @@ export default {
   }),
   validations: {
     data: {
+      cloudLink: {
+        url,
+      },
+      eventUrl: {
+        url,
+      },
       technicalName: {
         required,
+        alphaNumExtendedValidator,
       },
       limitedRegistrationHierarchy: {
         required,
@@ -130,8 +139,8 @@ export default {
       this.getDataService(this.id, this.modulePath);
     },
   },
-  created() {
-    this.loadData();
-  },
+  // created() {
+  //   this.loadData();
+  // },
 };
 </script>

@@ -114,8 +114,8 @@ export default {
       this.getDataService(this.id, this.modulePath);
     },
   },
-  created() {
-    this.loadData();
-  },
+  // created() {
+  //   this.loadData();
+  // },
 };
 </script>

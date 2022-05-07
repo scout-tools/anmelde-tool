@@ -5,13 +5,12 @@
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <v-row class="center text-center justify-center pa-0">
-              <v-col cols="12">
-                <v-autocomplete
-                  :items="stammList"
-                  v-model="filter.stamm"
-                  label="Stamm"
-                  item-text="scoutOrganisation.name"
-                ></v-autocomplete>
+              <v-col cols="4">
+                <v-checkbox
+                  v-model="filter.justConfirmed"
+                  label="Nur Bestätigt"
+                  hide-details
+                ></v-checkbox>
               </v-col>
             </v-row>
           </v-container>
@@ -21,14 +20,13 @@
     <v-row justify="center" class="overflow-y: auto">
       <v-data-table
         :headers="headers"
-        :items="getPersons"
+        :items="getItems"
         :items-per-page="itemsPerPage"
         :expanded.sync="expanded"
         show-expand
         single-expand
         hide-default-footer
-        item-key="createdAt"
-      >
+        item-key="createdAt">
         <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
@@ -36,66 +34,43 @@
             }}</v-icon
           >
         </template>
-        <template v-slot:[`item.birthday`]="{ item }">
-          {{ moment(item.birthday).format('DD.MM.YYYY') }}
+        <template v-slot:[`item.createdAt`]="{ item }">
+          {{ moment(item.createdAt).format('DD.MM.YYYY') }}
         </template>
-        <template v-slot:expanded-item="{ item }">
-          <v-list-item
-            v-if="
-              item.street &&
-              item.zipCode
-            "
-          >
+        <template v-slot:[`item.numberParticipant`]="{ item }">
+          <td v-html="getNumberParticipant(item)" disabled></td>
+        </template>
+          <template v-slot:expanded-item="{ item }">
+          <template v-for="(string, index) in getBody(filterNulls(item))" >
+            <v-list-item :key="index">
+              <v-list-item-content>
+                <v-list-item-title>{{ string }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+            <v-list-item>
             <v-list-item-content>
-              <b>Adresse: </b>
-              <template>
-                {{ `${item.street} ${item.zipCode.zipCode} ${item.zipCode.city} ` }}
-                {{ `Tel: ${item.phoneNumber}` }}
+              <b>Verantwortlich: </b>
+              <template v-for="(string) in item.responsiblePersons">
+                {{ `${string}, `}}
               </template>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
-            v-if="
-              item.street
-            "
-          >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
             <v-list-item-content>
-              <b>Essen: </b>
-              <template v-for="habit in item.eatHabit">
-                {{ `${habit}, ` }}
-              </template>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
-            v-if="
-              item.leader
-            "
-          >
-            <v-list-item-content>
-              <b>Amt: </b>
-              {{ item.leader }}
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
-            v-if="
-              item.gender
-            "
-          >
-            <v-list-item-content>
-              <b>Geschlecht: </b>
-              {{ item.gender }}
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
-            v-if="
-              item.bookingOption
-            "
-          >
-            <v-list-item-content>
-              <b>Option: </b>
-              {{ item.bookingOption.name }}
-            </v-list-item-content>
-          </v-list-item>
+              <b>Buchungsoption: </b>
+              <p v-for="(item, i) in item.bookingOptions" :key="i">
+                {{ item.bookingOptions }}: {{ item.sum}}
+              </p>
+              </v-list-item-content>
+            </v-list-item>
+        </template>
+        <template slot="body.append">
+          <tr>
+            <th>Summe</th>
+            <th colspan="3">{{ getTotalStamm }}</th>
+            <th>{{ getTotalParticipant }}</th>
+          </tr>
         </template>
       </v-data-table>
     </v-row>
@@ -115,10 +90,11 @@ export default {
       justConfirmed: true,
     },
     headers: [
-      { text: 'Vorname', value: 'firstName' },
-      { text: 'Fahrtenname', value: 'scoutName' },
-      { text: 'Nachname', value: 'lastName' },
-      { text: 'Geburtsdatum', value: 'birthday' },
+      { text: 'Bestätigt', value: 'isConfirmed' },
+      { text: 'Datum', value: 'createdAt' },
+      { text: 'Bund', value: 'scoutOrganisation.bund' },
+      { text: 'Name', value: 'scoutOrganisation.name' },
+      { text: 'Teilnehmende', value: 'participantCount' },
       { text: '', value: 'data-table-expand' },
     ],
     API_URL: process.env.VUE_APP_API,
@@ -133,23 +109,20 @@ export default {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
     },
-    stammList() {
-      return this.data;
-    },
     getItems() {
       const data = this.data.filter(
-        (item) => item.scoutOrganisation.name === this.filter.stamm,
+        (item) =>
+          item.isConfirmed === this.filter.justConfirmed || // eslint-disable-line
+          !this.filter.justConfirmed,
       );
       return data;
     },
-    getPersons() {
-      const data = this.data.filter(
-        (item) => item.scoutOrganisation.name === this.filter.stamm,
-      );
-      console.log(data);
-      return (
-        (data && data.length > 0 && data[0].registrationparticipantSet) || []
-      );
+    getTotalParticipant() {
+      const participantCount = this.getItems.reduce(
+        (accum, item) => accum + item.participantCount,
+        0,
+      ); // eslint-disable-line
+      return `${participantCount || 0} Personen`;
     },
     getTotalStamm() {
       const numberStammBdp = this.getItems.length;
@@ -197,7 +170,7 @@ export default {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
     getData(eventId) {
-      this.getRegistrationSummaryDetails(eventId).then((responseObj) => {
+      this.getRegistrationSummary(eventId).then((responseObj) => {
         this.data = responseObj.data[0].registrationSet;
       });
     },

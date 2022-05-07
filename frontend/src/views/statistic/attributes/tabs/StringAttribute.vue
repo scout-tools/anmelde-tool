@@ -14,18 +14,18 @@
     </v-row>
     <v-row justify="center" class="overflow-y: auto">
       <v-data-table
-        :headers="headers"
-        :items="getItems"
-        :items-per-page="itemsPerPage"
-        hide-default-footer
-        show-expand
-        single-expand
-        item-key="id">
+          :headers="headers"
+          :items="getItems"
+          :items-per-page="itemsPerPage"
+          :expanded.sync="expanded"
+          show-expand
+          single-expand
+          hide-default-footer
+          item-key="createdAt">
         <template v-slot:expanded-item="{ item }">
-          <td v-html="item.tag.stringField" disabled/>
+          <pre>{{ item.tag.stringField }}</pre>
         </template>
       </v-data-table>
-
     </v-row>
   </v-container>
 </template>
@@ -51,6 +51,7 @@ export default {
     ],
     API_URL: process.env.VUE_APP_API,
     itemsPerPage: 1000,
+    expanded: [],
   }),
   computed: {
     eventId() {

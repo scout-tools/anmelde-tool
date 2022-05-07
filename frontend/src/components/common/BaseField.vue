@@ -9,8 +9,7 @@
       :error-messages="onErrorMessageChange(field.techName)"
       :disabled="field.disabled"
       :readonly="field.readonly"
-      :filled="field.filled"
-    >
+      :filled="field.filled">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
