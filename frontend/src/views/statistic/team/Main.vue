@@ -8,10 +8,6 @@
       <v-icon left> mdi-crowd </v-icon>
       Alter
     </v-tab>
-    <v-tab>
-      <v-icon left> mdi-food </v-icon>
-      Essen
-    </v-tab>
 
     <v-tab-item>
       <v-card flat>
