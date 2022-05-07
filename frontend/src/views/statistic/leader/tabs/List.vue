@@ -7,6 +7,7 @@
             <v-row class="center text-center justify-center pa-0">
               <v-col cols="12">
                 <v-autocomplete
+                  :loading="loading"
                   :items="stammList"
                   v-model="filter.stamm"
                   label="Stamm"
@@ -20,6 +21,7 @@
     </v-row>
     <v-row justify="center" class="overflow-y: auto">
       <v-data-table
+        v-if="filter.stamm"
         :headers="headers"
         :items="getPersons"
         :items-per-page="itemsPerPage"
@@ -98,8 +100,12 @@
           </v-list-item>
         </template>
       </v-data-table>
+      <v-else/>
     </v-row>
-  </v-container>
+    <v-row v-if="!loading && !filter.stamm" justify="center">
+    <p> Bitte wähle einen Stamm</p>
+  </v-row>
+    </v-container>
 </template>
 
 <script>
@@ -111,8 +117,9 @@ export default {
   data: () => ({
     data: [],
     expanded: [],
+    loading: true,
     filter: {
-      justConfirmed: true,
+      stamm: null,
     },
     headers: [
       { text: 'Vorname', value: 'firstName' },
@@ -146,10 +153,15 @@ export default {
       const data = this.data.filter(
         (item) => item.scoutOrganisation.name === this.filter.stamm,
       );
-      console.log(data);
-      return (
-        (data && data.length > 0 && data[0].registrationparticipantSet) || []
-      );
+      const personArray = [];
+      const personsObj = (data && data.length > 0 && data) || [];
+
+      personsObj.forEach((person) => {
+        person.registrationparticipantSet.forEach((item) => {
+          personArray.push(item);
+        });
+      });
+      return personArray;
     },
     getTotalStamm() {
       const numberStammBdp = this.getItems.length;
@@ -197,8 +209,10 @@ export default {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
     getData(eventId) {
+      this.loading = true;
       this.getRegistrationSummaryDetails(eventId).then((responseObj) => {
         this.data = responseObj.data[0].registrationSet;
+        this.loading = false;
       });
     },
   },
