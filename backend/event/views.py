@@ -71,7 +71,7 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = event_models.Event.objects.all()
     serializer_class = event_serializers.EventCompleteSerializer
 
-    def get_formatted_date(self, date: str, request):
+    def get_formatted_date(self, date: str, request) -> datetime:
         if request.data.get(date):
             for fmt in ('%Y-%m-%dT%H:%M:%S%z', '%Y-%m-%dT%H:%M:%S%Z'):
                 try:

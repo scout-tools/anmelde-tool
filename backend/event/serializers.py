@@ -406,6 +406,14 @@ class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSer
     booking_option = RegistrationSummaryBookingOptionSerializer(many=False, read_only=True)
     gender = serializers.CharField(source='get_gender_display')
     leader = serializers.CharField(source='get_leader_display')
+    zip_code = basic_serializers.ZipCodeSerializer(many=False, read_only=True)
+    eat_habit = serializers.SlugRelatedField(
+        many=True,
+        read_only=False,
+        slug_field='name',
+        queryset=EatHabit.objects.all(),
+        required=False
+    )
     needs_confirmation = serializers.CharField(source='get_needs_confirmation_display')
 
     class Meta:

@@ -5,13 +5,13 @@
           <v-container class="pa-0" fluid>
             <v-row>
               <v-col cols="12"  sm="4">
-                <kpi-card :data="kpiCardOne" color="orange darken-1" />
+                <kpi-card :data="kpiCardOne" color="blue darken-1" />
               </v-col>
                <v-col cols="12"  sm="4">
-                <kpi-card :data="kpiCardTwo" color="orange darken-1" />
+                <kpi-card :data="kpiCardTwo" color="green darken-1" />
                </v-col>
                <v-col cols="12" sm="4">
-                <kpi-card :data="kpiCardThree" color="orange darken-1" />
+                <kpi-card :data="kpiCardThree" color="red darken-1" />
                 </v-col>
             </v-row>
           </v-container>
@@ -40,24 +40,24 @@ export default {
     },
     kpiCardOne() {
       return {
-        header: 'Anmeldungen',
-        subheader: 'Anzahl Personen',
+        header: 'Teilnehmer',
+        subheader: 'Anzahl',
         dataOne: this.data.totalParticipants,
         dataOneName: '',
       };
     },
     kpiCardTwo() {
       return {
-        header: 'Anmeldungen',
-        subheader: 'Anzahl Alles Esser',
+        header: 'Normal',
+        subheader: 'Anzahl',
         dataOne: this.data.noHabits,
         dataOneName: '',
       };
     },
     kpiCardThree() {
       return {
-        header: 'Anmeldungen',
-        subheader: 'Personen mit Besonderheiten',
+        header: 'Einschränkungen',
+        subheader: 'Anzahl',
         dataOne: this.data.eatHabits,
         dataOneName: '',
       };

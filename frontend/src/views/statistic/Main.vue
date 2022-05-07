@@ -20,40 +20,47 @@
               </v-tab>
 
               <v-tab v-if="hasParticipantsPersonal" href="#tab-2">
-                Teilnehmer
+                Leitung
                 <v-icon>mdi-counter</v-icon>
               </v-tab>
 
               <v-tab v-if="hasParticipantsPersonal" href="#tab-3">
+                Team
+                <v-icon>mdi-counter</v-icon>
+              </v-tab>
+
+              <v-tab v-if="hasParticipantsPersonal" href="#tab-4">
+                Essen
+                <v-icon>mdi-food</v-icon>
+              </v-tab>
+
+              <v-tab v-if="hasParticipantsPersonal" href="#tab-5">
                 Karte
                 <v-icon>mdi-map</v-icon>
               </v-tab>
 
-              <v-tab v-if="hasSubscribeWorkshop" href="#tab-4">
+              <v-tab v-if="hasSubscribeWorkshop" href="#tab-6">
                 Erlebnisangebot
                 <v-icon>mdi-run-fast</v-icon>
               </v-tab>
 
-              <v-tab v-if="hasAttributes" href="#tab-5">
+              <v-tab v-if="hasAttributes" href="#tab-7">
                 Attribute
                 <v-icon>mdi-ticket</v-icon>
               </v-tab>
 
-              <v-tab v-if="hasParticipantsPersonal" href="#tab-6">
-                Essen
-                <v-icon>mdi-food</v-icon>
-              </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-              <v-tab-item v-for="i in 6" :key="i" :value="'tab-' + i">
+              <v-tab-item v-for="i in 7" :key="i" :value="'tab-' + i">
                 <v-card-text>
                   <OverviewMain v-if="hasParticipantsPersonal && i === 1"/>
                   <LeaderMain v-if="hasParticipantsPersonal && i === 2"/>
-                  <MapsMain v-if="hasParticipantsPersonal && i === 3"/>
-                  <WorkshopMain v-if="hasSubscribeWorkshop && i === 4"/>
-                  <AttributeMain v-if="hasAttributes && i === 5"/>
-                  <FoodMain v-if="hasParticipantsPersonal && i === 6"/>
+                  <TeamMain v-if="hasParticipantsPersonal && i === 3"/>
+                  <FoodMain v-if="hasParticipantsPersonal && i === 4"/>
+                  <MapsMain v-if="hasParticipantsPersonal && i === 5"/>
+                  <WorkshopMain v-if="hasSubscribeWorkshop && i === 6"/>
+                  <AttributeMain v-if="hasAttributes && i === 7"/>
                   <!-- <PdfGenerationMain v-if="i === 6"/> -->
                 </v-card-text>
               </v-tab-item>
@@ -71,6 +78,7 @@ import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 import OverviewMain from './overview/Main.vue';
 import LeaderMain from './leader/Main.vue';
+import TeamMain from './team/Main.vue';
 import MapsMain from './maps/Main.vue';
 import WorkshopMain from './workshop/Main.vue';
 import AttributeMain from './attributes/Main.vue';
@@ -81,6 +89,7 @@ export default {
   components: {
     MapsMain,
     LeaderMain,
+    TeamMain,
     WorkshopMain,
     // PdfGenerationMain,
     OverviewMain,

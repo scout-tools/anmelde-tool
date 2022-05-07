@@ -5,8 +5,12 @@
       Tabelle
     </v-tab>
     <v-tab>
-      <v-icon left> mdi-currency-eur </v-icon>
-      Kasse
+      <v-icon left> mdi-crowd </v-icon>
+      Alter
+    </v-tab>
+    <v-tab>
+      <v-icon left> mdi-food </v-icon>
+      Essen
     </v-tab>
 
     <v-tab-item>
@@ -19,7 +23,7 @@
     <v-tab-item>
       <v-card flat>
         <v-card-text>
-          <Cash />
+          <AgeGroup />
         </v-card-text>
       </v-card>
     </v-tab-item>
@@ -28,12 +32,12 @@
 
 <script>
 import List from './tabs/List.vue';
-import Cash from './tabs/Cash.vue';
+import AgeGroup from './tabs/AgeGroup.vue';
 
 export default {
   components: {
     List,
-    Cash,
+    AgeGroup,
   },
 };
 </script>
