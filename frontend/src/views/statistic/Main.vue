@@ -29,11 +29,6 @@
                 <v-icon>mdi-counter</v-icon>
               </v-tab>
 
-              <v-tab v-if="hasParticipantsPersonal" href="#tab-4">
-                Essen
-                <v-icon>mdi-food</v-icon>
-              </v-tab>
-
               <v-tab v-if="hasParticipantsPersonal" href="#tab-5">
                 Karte
                 <v-icon>mdi-map</v-icon>
@@ -57,10 +52,9 @@
                   <OverviewMain v-if="hasParticipantsPersonal && i === 1"/>
                   <LeaderMain v-if="hasParticipantsPersonal && i === 2"/>
                   <TeamMain v-if="hasParticipantsPersonal && i === 3"/>
-                  <FoodMain v-if="hasParticipantsPersonal && i === 4"/>
-                  <MapsMain v-if="hasParticipantsPersonal && i === 5"/>
-                  <WorkshopMain v-if="hasSubscribeWorkshop && i === 6"/>
-                  <AttributeMain v-if="hasAttributes && i === 7"/>
+                  <MapsMain v-if="hasParticipantsPersonal && i === 4"/>
+                  <WorkshopMain v-if="hasSubscribeWorkshop && i === 5"/>
+                  <AttributeMain v-if="hasAttributes && i === 6"/>
                   <!-- <PdfGenerationMain v-if="i === 6"/> -->
                 </v-card-text>
               </v-tab-item>
@@ -82,7 +76,6 @@ import TeamMain from './team/Main.vue';
 import MapsMain from './maps/Main.vue';
 import WorkshopMain from './workshop/Main.vue';
 import AttributeMain from './attributes/Main.vue';
-import FoodMain from './food/Main.vue';
 // import PdfGenerationMain from './downlaods/Main.vue';
 
 export default {
@@ -94,7 +87,6 @@ export default {
     // PdfGenerationMain,
     OverviewMain,
     AttributeMain,
-    FoodMain,
   },
   mixins: [apiCallsMixin],
   computed: {

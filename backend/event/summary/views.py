@@ -62,23 +62,15 @@ class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         food_habits = []
         for key in eat_habits:
             food = ', '.join(eat_habits[key].values_list('name', flat=True))
+            if food is None or food == '':
+                food = 'Normal'
             result = {
                 'sum': eat_habits_sum[key],
                 'food': food,
             }
             food_habits.append(result)
 
-        num_total_participants = participants.count()
-        num_eat_habits = sum(eat_habits_sum.values())
-        num_without_habits = num_total_participants - num_eat_habits
-        total_result = {
-            'total_participants': num_total_participants,
-            'no_habits': num_without_habits,
-            'eat_habits': num_eat_habits,
-            'eat_habits_detailed': food_habits
-        }
-
-        return Response(total_result, status=status.HTTP_200_OK)
+        return Response(food_habits, status=status.HTTP_200_OK)
 
     def get_queryset(self) -> QuerySet[event_models.RegistrationParticipant]:
         event_id = self.kwargs.get("event_pk", None)

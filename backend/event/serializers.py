@@ -217,6 +217,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
                               and self.get_can_register(obj) \
                               and obj.group_registration != event_choices.RegistrationTypeGroup.No
         allow_new_single_reg = not single_id \
+                               and not allow_edit_group_reg \
                                and self.get_can_register(obj) \
                                and obj.single_registration != event_choices.RegistrationTypeGroup.No
 
