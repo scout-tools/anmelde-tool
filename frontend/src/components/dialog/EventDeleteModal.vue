@@ -52,7 +52,6 @@ export default {
 
   methods: {
     onDeleteClick() {
-      console.log(`${this.API_URL}/event/event/${this.data}/`);
       axios
         .delete(`${this.API_URL}/event/event/${this.data}/`)
         .then(() => {

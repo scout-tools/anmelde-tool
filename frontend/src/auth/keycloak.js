@@ -27,9 +27,6 @@ const keycl = {
         .then((refreshed) => {
           if (refreshed) {
             console.log(`Token refreshed ${refreshed}`);
-          } else {
-            console.log(`Token not refreshed, valid for ${
-              Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000)} seconds`);
           }
         })
         .catch(() => {

@@ -99,9 +99,7 @@ export default {
   computed: {
     ...mapGetters(['userinfo']),
     registrationDeadlineFormat() {
-      return moment(this.currentEvent.registrationDeadline)
-        .lang('de')
-        .format('ll');
+      return moment(this.currentEvent.registrationDeadline, 'll', 'de');
     },
     moduleId() {
       return this.currentModule.id;

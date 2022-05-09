@@ -135,7 +135,6 @@ export default {
     },
     callOnBeforeTab(step) {
       const nextStepName = this.steps[step].name;
-      console.log(`4 stepname: ${nextStepName}`);
       this.$nextTick(() => {
         if (this.$refs[nextStepName]
           && this.$refs[nextStepName].length
