@@ -74,5 +74,6 @@ class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
     def get_queryset(self) -> QuerySet[event_models.RegistrationParticipant]:
         event_id = self.kwargs.get("event_pk", None)
-        registration_ids = event_models.Registration.objects.filter(event=event_id).values_list('id', flat=True)
+        registration_ids = event_models.Registration.objects.filter(event=event_id, is_confirmed=True) \
+            .values_list('id', flat=True)
         return event_models.RegistrationParticipant.objects.filter(registration__id__in=registration_ids)
