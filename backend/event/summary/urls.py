@@ -10,6 +10,7 @@ event_summary_router.register(r'summary/detailed', views.EventDetailedSummaryVie
 event_summary_router.register(r'summary/workshop', views.WorkshopEventSummaryViewSet, basename='workshop')
 event_summary_router.register(r'summary/attributes', views.EventAttributeSummaryViewSet, basename='attributes')
 event_summary_router.register(r'summary/food', views.EventFoodSummaryViewSet, basename='food')
+event_summary_router.register(r'summary/cash', views.CashSummaryViewSet, basename='cash')
 
 
 # Wire up our API using automatic URL routing.

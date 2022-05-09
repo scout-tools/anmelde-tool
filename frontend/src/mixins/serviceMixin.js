@@ -15,6 +15,10 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
       return axios.get(path);
     },
+    async getCashSummary(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/cash/`;
+      return axios.get(path);
+    },
     async getFoodSummary(eventId) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/food/`;
       return axios.get(path);

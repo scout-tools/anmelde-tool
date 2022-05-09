@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'drf_api_logger',
     'event.summary',
     'event.registration',
-    'event.choices'
+    'event.choices',
+    'event.cash'
 ]
 
 MIDDLEWARE = [

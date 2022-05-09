@@ -29,5 +29,6 @@ urlpatterns = [
     path('', include(event_module_router.urls)),
     path('', include('event.registration.urls')),
     path('', include('event.summary.urls')),
-    path('choices/', include('event.choices.urls'))
+    path('choices/', include('event.choices.urls')),
+    path('cash/', include('event.cash.urls'))
 ]
