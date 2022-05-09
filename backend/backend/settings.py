@@ -53,6 +53,9 @@ INSTALLED_APPS = [
     'event',
     'email_services',
     'drf_api_logger',
+    'event.summary',
+    'event.registration',
+    'event.choices'
 ]
 
 MIDDLEWARE = [

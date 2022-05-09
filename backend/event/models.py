@@ -2,7 +2,7 @@ import uuid
 from django.contrib.auth.models import User, Group
 from django.db import models
 from basic import models as basic_models
-from event import choices as event_choices
+from event.choices import choices as event_choices
 from email_services import models as email_services_model
 
 
