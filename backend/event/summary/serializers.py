@@ -214,7 +214,8 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = event_models.Registration
-        fields = ('is_confirmed',
+        fields = ('id',
+                  'is_confirmed',
                   'is_accepted',
                   'single',
                   'scout_organisation',

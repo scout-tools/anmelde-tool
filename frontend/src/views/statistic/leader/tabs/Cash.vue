@@ -3,7 +3,7 @@
     <v-row class="center text-center justify-center">
       <v-card class="mx-auto pa-0" flat>
         <v-card-text class="pa-0">
-          <v-container class="pa-0" fluid>
+          <v-container class="pa-0">
             <v-row class="center text-center justify-center pa-0">
               <v-col cols="12">
                 <v-checkbox
@@ -18,29 +18,24 @@
       </v-card>
     </v-row>
     <v-row justify="center" class="overflow-y: auto">
-      <v-data-table
-        :headers="headers"
-        :items="getItems"
-        :items-per-page="itemsPerPage"
-        :expanded.sync="expanded"
-        show-expand
-        single-expand
-        hide-default-footer
-        item-key="createdAt"
-        :loading="loading">
+      <v-data-table :headers="headers"
+                    :items="getItems"
+                    :items-per-page="itemsPerPage"
+                    :expanded.sync="expanded"
+                    show-expand
+                    single-expand
+                    hide-default-footer
+                    item-key="createdAt"
+                    :loading="loading">
         <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
               item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
             }}
-          </v-icon
-          >
+          </v-icon>
         </template>
         <template v-slot:[`item.createdAt`]="{ item }">
-          {{
-            moment(item.createdAt)
-              .format('DD.MM.YYYY')
-          }}
+          {{ formatDate(item.createdAt) }}
         </template>
         <template v-slot:[`item.numberParticipant`]="{ item }">
           <td v-html="getNumberParticipant(item)" disabled></td>
@@ -56,57 +51,110 @@
               v-html="getPrice(item.payement.open)"/>
         </template>
         <template v-slot:expanded-item="{ item }">
-          <!--          <td :colspan="headers.length">-->
-          <!--            <pre>{{ getBody(item) }}</pre>-->
-          <!--          </td>-->
-          <td class="px-2 py-2" :colspan="headers.length">
-            Einzelheiten:
-            <v-data-table
-              :headers="headersBookingOptions"
-              :items="getItemsBookingOptions(item)"
-              :items-per-page="itemsPerPage"
-              hide-default-footer
-              item-key="createdAt">
-            </v-data-table>
-            Überweisungen:
-            <v-data-table
-              :headers="headersCash"
-              :items="getItemsCash(item)"
-              :items-per-page="itemsPerPage"
-              hide-default-footer
-              item-key="createdAt">
-              <template v-slot:[`item.amount`]="{ item }">
-          <td v-html="getPrice(item.amount)"/>
+          <td :colspan="headers.length">
+            <v-list-item>
+              <v-list-item-content>
+                <v-data-table
+                  :headers="headersBookingOptions"
+                  :items="getItemsBookingOptions(item)"
+                  :items-per-page="itemsPerPage"
+                  hide-default-footer
+                  item-key="createdAt">
+                  <template v-slot:top>
+                    <v-toolbar flat>
+                      <v-toolbar-title>Gebuchte Optionen</v-toolbar-title>
+                      <v-spacer/>
+                    </v-toolbar>
+                  </template>
+                </v-data-table>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-data-table
+                  :headers="headersCash"
+                  :items="getItemsCash(item)"
+                  :items-per-page="itemsPerPage"
+                  hide-default-footer
+                  item-key="createdAt">
+                  <template v-slot:top>
+                    <v-toolbar flat>
+                      <v-toolbar-title>Überweisungen</v-toolbar-title>
+                      <v-spacer/>
+                      <v-spacer/>
+                      <v-dialog v-model="dialog" max-width="500px">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            @click="onNewClicked(item)"
+                            color="primary"
+                            dark
+                            class="mb-2"
+                            v-bind="attrs"
+                            v-on="on">
+                            Neue Überweisung
+                          </v-btn>
+                        </template>
+                      </v-dialog>
+                    </v-toolbar>
+                  </template>
+                  <template v-slot:[`item.transferDate`]="{ item }">
+                    {{ formatDate(item.transferDate) }}
+                  </template>
+                  <template v-slot:[`item.amount`]="{ item }">
+                    {{ getPrice(item.amount) }}
+                  </template>
+                  <template v-slot:[`item.actions`]="{ item }">
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="onEditClicked(item)">
+                      mdi-pencil
+                    </v-icon>
+                    <v-icon
+                      small
+                      @click="onDeleteClicked(item)">
+                      mdi-delete
+                    </v-icon>
+                  </template>
+                </v-data-table>
+              </v-list-item-content>
+            </v-list-item>
+          </td>
         </template>
-        <template v-slot:[`item.transferDate`]="{ item }">
-          {{
-            moment(item.transferDate)
-              .format('DD.MM.YYYY')
-          }}
+        <template slot="body.append">
+          <tr>
+            <th colspan="3">Summe</th>
+            <th>{{ getTotalStamm }}</th>
+            <th>{{ getTotalPrice }}</th>
+            <th>{{ getTotalPaid }}</th>
+            <th>{{ getTotalOpen }}</th>
+          </tr>
         </template>
       </v-data-table>
-      </td>
-</template>
-<template slot="body.append">
-  <tr>
-    <th>Summe</th>
-    <th colspan="3">{{ getTotalStamm }}</th>
-    <th>{{ getTotalPrice }}</th>
-    <th>{{ getTotalPaid }}</th>
-    <th>{{ getTotalOpen }}</th>
-  </tr>
-</template>
-</v-data-table>
-</v-row>
-</v-container>
+    </v-row>
+    <TranserCreationModal
+      ref="preEventCreationRef"
+      @createTransfer="createTransfer"
+      @editTransfer="editTransfer"/>
+    <TransferDeleteModal
+      ref="transferDeleteModalRef"
+      @refresh="onRefresh"/>
+  </v-container>
 </template>
 
 <script>
+import TranserCreationModal from '@/components/dialog/TranfserCreationModal.vue';
+import TransferDeleteModal from '@/components/dialog/TransferDeleteModal.vue';
 import serviceMixin from '@/mixins/serviceMixin';
 import moment from 'moment'; // eslint-disable-line
+import axios from 'axios';
 
 export default {
   mixins: [serviceMixin],
+  components: {
+    TranserCreationModal,
+    TransferDeleteModal,
+  },
   data: () => ({
     data: [],
     expanded: [],
@@ -182,7 +230,13 @@ export default {
         text: 'Betrag',
         value: 'amount',
       },
+      {
+        text: 'Aktionen',
+        value: 'actions',
+        sortable: false,
+      },
     ],
+    dialog: false,
     API_URL: process.env.VUE_APP_API,
     showError: false,
     responseObj: null,
@@ -218,6 +272,10 @@ export default {
     },
   },
   methods: {
+    formatDate(item) {
+      return moment(item)
+        .format('DD.MM.YYYY');
+    },
     getBody(item) {
       return item;
     },
@@ -248,6 +306,65 @@ export default {
     },
     getItemsCash(item) {
       return item.cashincomeSet;
+    },
+    onRefresh() {
+      this.getData(this.eventId);
+    },
+    onEditClicked(data) {
+      this.$refs.preEventCreationRef.openEdit(data);
+    },
+    onNewClicked(item) {
+      this.$refs.preEventCreationRef.open(item.id);
+    },
+    onDeleteClicked(data) { //eslint-disable-line
+      this.$refs.transferDeleteModalRef.open(data);
+    },
+    createTransfer(data, registrationId) {
+      axios
+        .post(`${this.API_URL}/event/cash/income/`, {
+          amount: data.amount,
+          transferSubject: data.transferSubject,
+          transferDate: data.transferDate,
+          transferPerson: data.transferPerson,
+          transferReferenceId: data.transferReferenceId,
+          description: data.description,
+          registration: registrationId,
+        })
+        .then(() => {
+        })
+        .catch(() => {
+          this.$root.globalSnackbar.show({
+            message:
+              'Leider ist ein Problem beim erstellen des Überweisungseintrags aufgetreten,'
+              + ' bitte probiere es später nocheinmal.',
+            color: 'error',
+            timer: 5000,
+          });
+        });
+    },
+    editTransfer(data, registrationId) {
+      axios
+        .patch(`${this.API_URL}/event/cash/income/${data.id}/`, {
+          amount: data.amount,
+          transferSubject: data.transferSubject,
+          transferDate: data.transferDate,
+          transferPerson: data.transferPerson,
+          transferReferenceId: data.transferReferenceId,
+          description: data.description,
+          registration: registrationId,
+        })
+        .then(() => {
+          this.onRefresh();
+        })
+        .catch(() => {
+          this.$root.globalSnackbar.show({
+            message:
+              'Leider ist ein Problem beim erstellen des Überweisungseintrags aufgetreten,'
+              + ' bitte probiere es später nocheinmal.',
+            color: 'error',
+            timer: 5000,
+          });
+        });
     },
   },
   created() {

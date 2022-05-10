@@ -173,6 +173,31 @@
       </template>
     </v-combobox>
 
+    <v-combobox
+      v-if="field.fieldType === 'simpleComboSingle'"
+      :label="field.name"
+      :value="value"
+      :prepend-icon="field.icon"
+      required
+      chips
+      deletable-chips
+      @input="onSingleComboInputChanged"
+      :error-messages="onErrorMessageChange(field.techName)"
+    >
+      <template slot="append">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="info" dark v-bind="attrs" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          <span>
+            {{ field.tooltip }}
+          </span>
+        </v-tooltip>
+      </template>
+    </v-combobox>
+
     <v-select
       v-if="field.fieldType === 'refComboSingle'"
       :label="field.name"
@@ -551,6 +576,10 @@ export default {
         }
       });
       this.$emit('input', returnArray);
+      this.$forceUpdate();
+    },
+    onSingleComboInputChanged(value) {
+      this.$emit('input', value);
       this.$forceUpdate();
     },
     onDateTimeInputChangedTime(value) {

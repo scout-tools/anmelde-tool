@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-btn class="ma-2" color="success" @click="newItem">
-      <v-icon left> mdi-plus </v-icon>
+      <v-icon left> mdi-plus</v-icon>
       Eintrag hinzufügen
     </v-btn>
     <v-btn
@@ -10,13 +10,13 @@
       @click="openExcelDialog"
 
     >
-      <v-icon color="#008000" left> mdi-microsoft-excel </v-icon>
+      <v-icon color="#008000" left> mdi-microsoft-excel</v-icon>
       Excel Datei hochladen
     </v-btn>
     <v-list v-if="!isLoading">
       <v-subheader>Einträge ({{ items.length || 0 }})</v-subheader>
       <v-list-item-group color="primary" :value="value"
-      @change="onInputChanged">
+                         @change="onInputChanged">
         <v-list-item v-for="(item, i) in items" :key="i">
           <v-list-item-avatar>
             <v-icon color="black" dark>mdi-account</v-icon>
@@ -42,11 +42,11 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-      <v-row align="center" justify="center" class="ma-2">
-        <p class="red-text" v-if="getValidationErrorMessage"> {{ getValidationErrorMessage }} </p>
-      </v-row>
+    <v-row align="center" justify="center" class="ma-2">
+      <p class="red-text" v-if="getValidationErrorMessage"> {{ getValidationErrorMessage }} </p>
+    </v-row>
     <v-row v-if="isLoading">
-      <Circual />
+      <Circual/>
       <v-btn color="success" @click="beforeTabShow">Daten laden</v-btn>
     </v-row>
     <create-modal
@@ -163,9 +163,10 @@ export default {
       this.$refs.createModal.openDialogEdit(item);
     },
     deleteSleepingLocation(id) {
-      this.deleteEventBookingOption(this.$route.params.id, id).then(() => {
-        this.collectBookingOptionss();
-      });
+      this.deleteEventBookingOption(this.$route.params.id, id)
+        .then(() => {
+          this.collectBookingOptionss();
+        });
     },
     newItem() {
       this.$refs.createModal.openDialog();
