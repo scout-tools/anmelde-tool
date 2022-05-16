@@ -229,7 +229,7 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
         template_attribute: basic_models.AbstractAttribute = \
             get_object_or_404(basic_models.AbstractAttribute, pk=serializer.data.get('template_id', -1))
 
-        new_attribute = event_views.add_event_attribute(template_attribute)
+        new_attribute = add_event_attribute(template_attribute)
 
         serializer.update(new_attribute, serializer.validated_data)
 

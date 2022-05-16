@@ -14,16 +14,21 @@
     </v-row>
     <v-row justify="center" class="overflow-y: auto">
       <v-data-table
-          :headers="headers"
-          :items="getItems"
-          :items-per-page="itemsPerPage"
-          :expanded.sync="expanded"
-          show-expand
-          single-expand
-          hide-default-footer
-          item-key="createdAt">
+        :headers="headers"
+        :items="getItems"
+        :items-per-page="itemsPerPage"
+        :expanded.sync="expanded"
+        show-expand
+        single-expand
+        hide-default-footer
+        item-key="tag.id">
+        <template v-slot:[`item.persons`]="{ item }">
+          {{ getResponsiblePersonsText(item) }}
+        </template>
         <template v-slot:expanded-item="{ item }">
-          <pre>{{ item.tag.stringField }}</pre>
+          <pre style="word-break: break-word" class="text-wrap">
+            {{ item.tag.stringField }}
+          </pre>
         </template>
       </v-data-table>
     </v-row>
@@ -39,6 +44,10 @@ export default {
       {
         text: 'Name',
         value: 'tag.name',
+      },
+      {
+        text: 'Ansprechperson(en)',
+        value: 'persons',
       },
       {
         text: 'Stamm',
@@ -65,6 +74,10 @@ export default {
     },
   },
 
-  methods: {},
+  methods: {
+    getResponsiblePersonsText(item) {
+      return item.registration.responsiblePersons.map((x) => x.userextended.scoutName).join(', ');
+    },
+  },
 };
 </script>

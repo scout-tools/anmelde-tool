@@ -29,19 +29,19 @@
                 <v-icon>mdi-counter</v-icon>
               </v-tab>
 
-              <v-tab v-if="hasParticipantsPersonal" href="#tab-5">
+              <v-tab v-if="hasParticipantsPersonal" href="#tab-4">
                 Karte
                 <v-icon>mdi-map</v-icon>
+              </v-tab>
+
+              <v-tab v-if="hasAttributes" href="#tab-5">
+                Attribute
+                <v-icon>mdi-ticket</v-icon>
               </v-tab>
 
               <v-tab v-if="hasSubscribeWorkshop" href="#tab-6">
                 Erlebnisangebot
                 <v-icon>mdi-run-fast</v-icon>
-              </v-tab>
-
-              <v-tab v-if="hasAttributes" href="#tab-7">
-                Attribute
-                <v-icon>mdi-ticket</v-icon>
               </v-tab>
 
             </v-tabs>
@@ -53,8 +53,8 @@
                   <LeaderMain v-if="hasParticipantsPersonal && i === 2"/>
                   <TeamMain v-if="hasParticipantsPersonal && i === 3"/>
                   <MapsMain v-if="hasParticipantsPersonal && i === 4"/>
-                  <WorkshopMain v-if="hasSubscribeWorkshop && i === 5"/>
-                  <AttributeMain v-if="hasAttributes && i === 6"/>
+                  <AttributeMain v-if="hasAttributes && i === 5"/>
+                  <WorkshopMain v-if="hasSubscribeWorkshop && i === 6"/>
                   <!-- <PdfGenerationMain v-if="i === 6"/> -->
                 </v-card-text>
               </v-tab-item>

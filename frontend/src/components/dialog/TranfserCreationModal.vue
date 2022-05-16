@@ -98,6 +98,9 @@ export default {
       transferDate: {
         required,
       },
+      transferPerson: {
+        email,
+      },
     },
   },
   created() {

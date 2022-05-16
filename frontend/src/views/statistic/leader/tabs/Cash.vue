@@ -211,11 +211,11 @@ export default {
     ],
     headersCash: [
       {
-        text: 'Überweisungsbetreff',
+        text: 'Betreff',
         value: 'transferSubject',
       },
       {
-        text: 'Überweisungsdatum',
+        text: 'Datum',
         value: 'transferDate',
       },
       {
@@ -331,6 +331,7 @@ export default {
           registration: registrationId,
         })
         .then(() => {
+          this.onRefresh();
         })
         .catch(() => {
           this.$root.globalSnackbar.show({

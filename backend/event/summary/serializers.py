@@ -232,7 +232,7 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
 
     def get_payement(self, registration: event_models.Registration) -> dict:
         total_price = registration.registrationparticipant_set.aggregate(
-            sum=Sum('booking_option__price'))['sum']
+            sum=Sum('booking_option__price'))['sum'] or 0
         paid = registration.cashincome_set.aggregate(sum=Sum('amount'))['sum'] or 0
         difference = total_price - paid
 
