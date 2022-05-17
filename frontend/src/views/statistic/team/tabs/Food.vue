@@ -1,11 +1,35 @@
 <template>
   <v-container fluid class="pa-0">
+    <v-row class="center text-center justify-center">
+      <v-card class="mx-auto pa-0" flat>
+        <v-card-text class="pa-0">
+          <v-container class="pa-0" fluid>
+            <v-row class="center text-center justify-center pa-0">
+              <v-col cols="12">
+                Filter nach:
+                <v-autocomplete
+                  clearable
+                  :loading="loading"
+                  :items="bookingOptionList"
+                  v-model="selectedBookingOption"
+                  label="Buchoption"
+                  item-text="name"
+                  item-value="id"
+                  @change="onFilterSelected"
+                  no-data-text="Keine Buchoptionen gefunden."/>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+      </v-card>
+    </v-row>
     <v-row justify="center" class="overflow-y: auto">
       <v-data-table
         :headers="headers"
         :items="data"
         :items-per-page="itemsPerPage"
-        hide-default-footer>
+        hide-default-footer
+        no-data-text="Keine Teilnehmer.">
       </v-data-table>
     </v-row>
   </v-container>
@@ -19,13 +43,22 @@ export default {
   mixins: [serviceMixin],
   data: () => ({
     headers: [
-      { text: 'Besonderheit', value: 'food' },
-      { text: 'Personenanzahl', value: 'sum' },
+      {
+        text: 'Besonderheit',
+        value: 'food',
+      },
+      {
+        text: 'Personenanzahl',
+        value: 'sum',
+      },
     ],
     API_URL: process.env.VUE_APP_API,
     showError: false,
     data: [],
     itemsPerPage: 1000,
+    loading: false,
+    bookingOptionList: [],
+    selectedBookingOption: null,
   }),
 
   computed: {
@@ -34,15 +67,26 @@ export default {
     },
   },
   methods: {
-    getData(eventId) {
-      this.getFoodSummary(eventId)
+    getData(eventId, param) {
+      this.loading = true;
+      this.getFoodSummary(eventId, param)
         .then((responseObj) => {
-        this.data = responseObj.data; // eslint-disable-line
+          this.data = responseObj.data.eatHabits;
+          this.bookingOptionList = responseObj.data.bookingOptions;
+        })
+        .finally(() => {
+          this.loading = false;
         });
+    },
+    onFilterSelected(value) {
+      console.log(value);
+      const params = new URLSearchParams();
+      params.append('bookingOption', value);
+      this.getData(this.eventId, params);
     },
   },
   mounted() {
-    this.getData(this.eventId);
+    this.getData(this.eventId, null);
   },
 };
 </script>

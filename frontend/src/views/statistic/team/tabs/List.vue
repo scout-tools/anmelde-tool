@@ -5,7 +5,7 @@
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <v-row class="center text-center justify-center pa-0">
-              <v-col cols="4">
+              <v-col cols="12">
                 <v-checkbox
                   v-model="filter.justConfirmed"
                   label="Nur Bestätigt"
