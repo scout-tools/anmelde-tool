@@ -11,18 +11,21 @@ export default {
         score,
       });
     },
-    async getRegistrationSummary(eventId) {
+    async getRegistrationSummary(eventId, params) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
-      return axios.get(path);
+      return axios.get(path, { params });
     },
     async getCashSummary(eventId) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/cash/`;
       return axios.get(path);
     },
     async getFoodSummary(eventId, params) {
-      console.log(params);
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/food/`;
       return axios.get(path, { params });
+    },
+    async getBookingOptions(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/booking-options/`;
+      return axios.get(path);
     },
     async getRegistrationSummaryDetails(eventId) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/detailed/`;

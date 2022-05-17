@@ -70,27 +70,17 @@ class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             }
             formatted_eat_habits.append(result)
 
-        booking_options = self.get_booking_options()
-        response = {
-            'eat_habits': formatted_eat_habits,
-            'booking_options': booking_options
-        }
-
-        return Response(response, status=status.HTTP_200_OK)
+        return Response(formatted_eat_habits, status=status.HTTP_200_OK)
 
     def get_queryset(self) -> QuerySet[event_models.RegistrationParticipant]:
         event_id = self.kwargs.get("event_pk", None)
-        booking_option = self.request.query_params.get('bookingOption')
+        booking_option = self.request.query_params.get('booking-option')
         registration_ids = event_models.Registration.objects.filter(event=event_id, is_confirmed=True) \
             .values_list('id', flat=True)
         queryset = event_models.RegistrationParticipant.objects.filter(registration__id__in=registration_ids)
         if booking_option:
             queryset = queryset.filter(booking_option=booking_option)
         return queryset
-
-    def get_booking_options(self) -> QuerySet[event_models.BookingOption]:
-        event_id = self.kwargs.get("event_pk", None)
-        return event_models.BookingOption.objects.filter(event=event_id).values('id', 'name')
 
 
 class CashSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

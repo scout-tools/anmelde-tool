@@ -6,13 +6,12 @@
           <v-container class="pa-0" fluid>
             <v-row class="center text-center justify-center pa-0">
               <v-col cols="12">
-                Filter nach:
                 <v-autocomplete
                   clearable
                   :loading="loading"
                   :items="bookingOptionList"
                   v-model="selectedBookingOption"
-                  label="Buchoption"
+                  label="Filter nach Buchoptionen"
                   item-text="name"
                   item-value="id"
                   @change="onFilterSelected"
@@ -37,7 +36,6 @@
 
 <script>
 import serviceMixin from '@/mixins/serviceMixin';
-import moment from 'moment'; // eslint-disable-line
 
 export default {
   mixins: [serviceMixin],
@@ -69,19 +67,24 @@ export default {
   methods: {
     getData(eventId, param) {
       this.loading = true;
-      this.getFoodSummary(eventId, param)
-        .then((responseObj) => {
-          this.data = responseObj.data.eatHabits;
-          this.bookingOptionList = responseObj.data.bookingOptions;
+
+      Promise.all([
+        this.getFoodSummary(eventId, param),
+        this.getBookingOptions(eventId),
+      ])
+        .then((values) => {
+          this.data = values[0].data; //eslint-disable-line
+          this.bookingOptionList = values[1].data; //eslint-disable-line
         })
         .finally(() => {
           this.loading = false;
         });
     },
     onFilterSelected(value) {
-      console.log(value);
       const params = new URLSearchParams();
-      params.append('bookingOption', value);
+      if (value) {
+        params.append('booking-option', value);
+      }
       this.getData(this.eventId, params);
     },
   },
