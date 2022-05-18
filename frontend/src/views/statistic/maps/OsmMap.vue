@@ -6,16 +6,12 @@
           <v-container class="pa-0" fluid>
             <v-row class="center text-center justify-center pa-0">
               <v-col cols="12">
-                <v-autocomplete
-                  clearable
+                <BookingFilter
+                  :bookingOptionList="bookingOptionList"
                   :loading="loading"
-                  :items="bookingOptionList"
+                  @onFilterSelected="onFilterSelected"
                   v-model="selectedBookingOption"
-                  label="Filter nach Buchoptionen"
-                  item-text="name"
-                  item-value="id"
-                  @change="onFilterSelected"
-                  no-data-text="Keine Buchoptionen gefunden."/>
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -58,6 +54,7 @@ import { latLng } from 'leaflet';
 import { LMap, LTileLayer, LPopup, LCircle } from 'vue2-leaflet'; //eslint-disable-line
 
 import serviceMixin from '@/mixins/serviceMixin';
+import BookingFilter from '@/components/common/BookingFilter.vue';
 
 export default {
   mixins: [serviceMixin],
@@ -67,6 +64,7 @@ export default {
     LTileLayer,
     LPopup,
     LCircle,
+    BookingFilter,
   },
   data() {
     return {
@@ -115,10 +113,12 @@ export default {
           this.loading = false;
         });
     },
-    onFilterSelected(value) {
+    onFilterSelected(values) {
       const params = new URLSearchParams();
-      if (value) {
-        params.append('booking-option', value);
+      if (values) {
+        values.forEach((value) => {
+          params.append('booking-option', value);
+        });
       }
       this.getData(this.eventId, params);
     },

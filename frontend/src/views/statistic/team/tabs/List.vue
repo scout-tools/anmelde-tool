@@ -12,16 +12,12 @@
                   hide-details/>
               </v-col>
               <v-col cols="6">
-                <v-autocomplete
-                  clearable
+                <BookingFilter
+                  :bookingOptionList="bookingOptionList"
                   :loading="loading"
-                  :items="bookingOptionList"
+                  @onFilterSelected="onFilterSelected"
                   v-model="selectedBookingOption"
-                  label="Filter nach Buchoptionen"
-                  item-text="name"
-                  item-value="id"
-                  @change="onFilterSelected"
-                  no-data-text="Keine Buchoptionen gefunden."/>
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -95,9 +91,13 @@
 <script>
 import serviceMixin from '@/mixins/serviceMixin';
 import moment from 'moment'; // eslint-disable-line
+import BookingFilter from '@/components/common/BookingFilter.vue';
 
 export default {
   mixins: [serviceMixin],
+  components: {
+    BookingFilter,
+  },
   data: () => ({
     data: [],
     expanded: [],
@@ -219,10 +219,12 @@ export default {
           this.loading = false;
         });
     },
-    onFilterSelected(value) {
+    onFilterSelected(values) {
       const params = new URLSearchParams();
-      if (value) {
-        params.append('booking-option', value);
+      if (values) {
+        values.forEach((value) => {
+          params.append('booking-option', value);
+        });
       }
       this.getData(this.eventId, params);
     },

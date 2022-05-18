@@ -47,11 +47,13 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
                   'booking_options',)
 
     def get_participant_count(self, registration: event_models.Registration) -> int:
-        booking_option = self.context['request'].query_params.get('booking-option')
-        if booking_option:
-            return registration.registrationparticipant_set.filter(booking_option=booking_option).count()
-        else:
-            return registration.registrationparticipant_set.count()
+        booking_option_list = self.context['request'].query_params.getlist('booking-option')
+        queryset = registration.registrationparticipant_set
+
+        if booking_option_list:
+            queryset = queryset.filter(booking_option__in=booking_option_list)
+
+        return queryset.count()
 
     def get_price(self, registration: event_models.Registration) -> float:
         return registration.registrationparticipant_set.aggregate(
@@ -132,9 +134,11 @@ class EventSummarySerializer(serializers.ModelSerializer):
         """
         participant_ids = event.registration_set.filter(is_confirmed=True).values('registrationparticipant')
         all_participants = event_models.RegistrationParticipant.objects.filter(id__in=participant_ids)
-        booking_option = self.context['request'].query_params.get('booking-option')
-        if booking_option:
-            all_participants = all_participants.filter(booking_option=booking_option)
+        booking_option_list = self.context['request'].query_params.getlist('booking-option')
+
+        if booking_option_list:
+            all_participants = all_participants.filter(booking_option__in=booking_option_list)
+
         woelfling = self.age_range(0, 12, all_participants, event)
         pfadfinder = self.age_range(12, 17, all_participants, event)
         rover = self.age_range(17, 24, all_participants, event)

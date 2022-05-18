@@ -74,12 +74,15 @@ class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
     def get_queryset(self) -> QuerySet[event_models.RegistrationParticipant]:
         event_id = self.kwargs.get("event_pk", None)
-        booking_option = self.request.query_params.get('booking-option')
+        booking_option_list = self.request.query_params.getlist('booking-option')
         registration_ids = event_models.Registration.objects.filter(event=event_id, is_confirmed=True) \
             .values_list('id', flat=True)
         queryset = event_models.RegistrationParticipant.objects.filter(registration__id__in=registration_ids)
-        if booking_option:
-            queryset = queryset.filter(booking_option=booking_option)
+
+
+        if booking_option_list:
+            queryset = queryset.filter(booking_option__in=booking_option_list)
+
         return queryset
 
 
