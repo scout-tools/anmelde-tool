@@ -5,12 +5,19 @@
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <v-row class="center text-center justify-center pa-0">
-              <v-col cols="4">
+              <v-col cols="6">
                 <v-checkbox
                   v-model="filter.justConfirmed"
                   label="Nur Bestätigt"
-                  hide-details
-                ></v-checkbox>
+                  hide-details/>
+              </v-col>
+              <v-col cols="6">
+                <BookingFilter
+                  :bookingOptionList="bookingOptionList"
+                  :loading="loading"
+                  @onFilterSelected="onFilterSelected"
+                  v-model="selectedBookingOption"
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -31,39 +38,43 @@
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
               item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
-            }}</v-icon
+            }}
+          </v-icon
           >
         </template>
         <template v-slot:[`item.createdAt`]="{ item }">
-          {{ moment(item.createdAt).format('DD.MM.YYYY') }}
+          {{
+            moment(item.createdAt)
+              .format('DD.MM.YYYY')
+          }}
         </template>
         <template v-slot:[`item.numberParticipant`]="{ item }">
           <td v-html="getNumberParticipant(item)" disabled></td>
         </template>
-          <template v-slot:expanded-item="{ item }">
-          <template v-for="(string, index) in getBody(filterNulls(item))" >
+        <template v-slot:expanded-item="{ item }">
+          <template v-for="(string, index) in getBody(filterNulls(item))">
             <v-list-item :key="index">
               <v-list-item-content>
                 <v-list-item-title>{{ string }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </template>
-            <v-list-item>
+          <v-list-item>
             <v-list-item-content>
               <b>Verantwortlich: </b>
               <template v-for="(string) in item.responsiblePersons">
-                {{ `${string}, `}}
+                {{ `${string}, ` }}
               </template>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
             <v-list-item-content>
               <b>Buchungsoption: </b>
               <p v-for="(item, i) in item.bookingOptions" :key="i">
-                {{ item.bookingOptions }}: {{ item.sum}}
+                {{ item.bookingOptions }}: {{ item.sum }}
               </p>
-              </v-list-item-content>
-            </v-list-item>
+            </v-list-item-content>
+          </v-list-item>
         </template>
         <template slot="body.append">
           <tr>
@@ -80,9 +91,13 @@
 <script>
 import serviceMixin from '@/mixins/serviceMixin';
 import moment from 'moment'; // eslint-disable-line
+import BookingFilter from '@/components/common/BookingFilter.vue';
 
 export default {
   mixins: [serviceMixin],
+  components: {
+    BookingFilter,
+  },
   data: () => ({
     data: [],
     expanded: [],
@@ -90,17 +105,38 @@ export default {
       justConfirmed: true,
     },
     headers: [
-      { text: 'Bestätigt', value: 'isConfirmed' },
-      { text: 'Datum', value: 'createdAt' },
-      { text: 'Bund', value: 'scoutOrganisation.bund' },
-      { text: 'Name', value: 'scoutOrganisation.name' },
-      { text: 'Teilnehmende', value: 'participantCount' },
-      { text: '', value: 'data-table-expand' },
+      {
+        text: 'Bestätigt',
+        value: 'isConfirmed',
+      },
+      {
+        text: 'Datum',
+        value: 'createdAt',
+      },
+      {
+        text: 'Bund',
+        value: 'scoutOrganisation.bund',
+      },
+      {
+        text: 'Name',
+        value: 'scoutOrganisation.name',
+      },
+      {
+        text: 'Teilnehmende',
+        value: 'participantCount',
+      },
+      {
+        text: '',
+        value: 'data-table-expand',
+      },
     ],
     API_URL: process.env.VUE_APP_API,
     showError: false,
     responseObj: null,
     itemsPerPage: 1000,
+    loading: false,
+    bookingOptionList: [],
+    selectedBookingOption: null,
   }),
   computed: {
     eventId() {
@@ -129,7 +165,6 @@ export default {
       return `Stämme ${numberStammBdp || 0}`;
     },
   },
-
   methods: {
     filterNulls(items) {
       return items.tags.filter((i) => !!this.getValueField(i));
@@ -169,10 +204,29 @@ export default {
     getNumberParticipant(item) {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
-    getData(eventId) {
-      this.getRegistrationSummary(eventId).then((responseObj) => {
-        this.data = responseObj.data[0].registrationSet;
-      });
+    getData(eventId, param) {
+      this.loading = true;
+
+      Promise.all([
+        this.getRegistrationSummary(eventId, param),
+        this.getBookingOptions(eventId),
+      ])
+        .then((values) => {
+          this.data = values[0].data[0].registrationSet; //eslint-disable-line
+          this.bookingOptionList = values[1].data; //eslint-disable-line
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    onFilterSelected(values) {
+      const params = new URLSearchParams();
+      if (values) {
+        values.forEach((value) => {
+          params.append('booking-option', value);
+        });
+      }
+      this.getData(this.eventId, params);
     },
   },
   created() {
@@ -185,6 +239,7 @@ export default {
 .dpv-blue {
   background-color: rgba(56, 117, 238, 0.082);
 }
+
 .bdp-yellow {
   background-color: #ffcc0227;
 }

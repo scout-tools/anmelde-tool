@@ -1,34 +1,49 @@
 <template>
-  <v-container class="top-margin">
+  <v-container>
+    <v-row class="center text-center justify-center">
+      <v-card class="mx-auto pa-0" flat>
+        <v-card-text class="pa-0">
+          <v-container class="pa-0" fluid>
+            <v-row class="center text-center justify-center pa-0">
+              <v-col cols="12">
+                <BookingFilter
+                  :bookingOptionList="bookingOptionList"
+                  :loading="loading"
+                  @onFilterSelected="onFilterSelected"
+                  v-model="selectedBookingOption"
+                />
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+      </v-card>
+    </v-row>
     <v-row>
-      <div style="height: 900px; width: 100%">
+      <v-card style="height: 900px; width: 100%" class="top-margin">
         <l-map
           v-if="circles && circles.length > 0"
           :zoom="zoom"
           :center="center"
           :options="mapOptions"
           @update:center="centerUpdate"
-          @update:zoom="zoomUpdate"
-        >
-          <l-tile-layer :url="url" :attribution="attribution" />
+          @update:zoom="zoomUpdate">
+          <l-tile-layer :url="url" :attribution="attribution"/>
           <l-circle
             v-for="(circle, index) in circles"
             :lat-lng="getCoord(circle)"
             :radius="getRadius(circle)"
             :color="getColor(circle)"
-            :key="index"
-          >
-            <l-popup :content="createContent(circle)"> </l-popup>
+            :key="index">
+            <l-popup :content="createContent(circle)"/>
           </l-circle>
           <l-marker
             :lat-lng="[data.location.zipCode.lat, data.location.zipCode.lon]"
             color="green"
-            :radius="10000"
-            >
-            <l-popup content="Ungefährer Lagerplatz"> </l-popup>
+            :radius="10000">
+            <l-popup content="Ungefährer Lagerplatz"/>
           </l-marker>
         </l-map>
-      </div>
+      </v-card>
     </v-row>
   </v-container>
 </template>
@@ -39,6 +54,7 @@ import { latLng } from 'leaflet';
 import { LMap, LTileLayer, LPopup, LCircle } from 'vue2-leaflet'; //eslint-disable-line
 
 import serviceMixin from '@/mixins/serviceMixin';
+import BookingFilter from '@/components/common/BookingFilter.vue';
 
 export default {
   mixins: [serviceMixin],
@@ -48,6 +64,7 @@ export default {
     LTileLayer,
     LPopup,
     LCircle,
+    BookingFilter,
   },
   data() {
     return {
@@ -64,10 +81,16 @@ export default {
       },
       showMap: true,
       data: [],
+      loading: false,
+      bookingOptionList: [],
+      selectedBookingOption: null,
     };
   },
   computed: {
     circles() {
+      if (this.selectedBookingOption) {
+        return this.data.registrationSet.filter((item) => item.participantCount > 0);
+      }
       return this.data.registrationSet;
     },
     eventId() {
@@ -75,10 +98,29 @@ export default {
     },
   },
   methods: {
-    getData(eventId) {
-      this.getRegistrationSummary(eventId).then((responseObj) => {
-        this.data = responseObj.data[0]; // eslint-disable-line
-      });
+    getData(eventId, param) {
+      this.loading = true;
+
+      Promise.all([
+        this.getRegistrationSummary(eventId, param),
+        this.getBookingOptions(eventId),
+      ])
+        .then((values) => {
+          this.data = values[0].data[0]; //eslint-disable-line
+          this.bookingOptionList = values[1].data; //eslint-disable-line
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    onFilterSelected(values) {
+      const params = new URLSearchParams();
+      if (values) {
+        values.forEach((value) => {
+          params.append('booking-option', value);
+        });
+      }
+      this.getData(this.eventId, params);
     },
     getCoord(item) {
       try {

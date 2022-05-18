@@ -102,6 +102,10 @@ export default {
       },
       birthday: {
         required,
+        minYearAge(val) {
+          const date = new Date(new Date().getFullYear() - 100, 0, 1);
+          return new Date(val) > date;
+        },
       },
       gender: {
         required,
@@ -277,7 +281,7 @@ export default {
               'Wenn die Person eine Führungsposition ausführt, bitte angeben',
             icon: 'mdi-office-building ',
             mandatory: false,
-            lookupPath: '/event/leader-types/',
+            lookupPath: '/event/choices/leader-types/',
             lookupListDisplay: ['name'],
             fieldType: 'enumCombo',
             multiple: false,

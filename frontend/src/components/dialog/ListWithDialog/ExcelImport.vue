@@ -436,7 +436,7 @@ export default {
       axios
         .all([
           this.getSimpleService('/basic/eat-habits/'),
-          this.getSimpleService('/event/leader-types/'),
+          this.getSimpleService('/event/choices/leader-types/'),
           this.getSimpleService(
             `/event/event/${this.currentEvent.id}/booking-options/`, // eslint-disable-line
           ),

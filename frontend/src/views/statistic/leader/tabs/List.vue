@@ -29,8 +29,7 @@
         show-expand
         single-expand
         hide-default-footer
-        item-key="createdAt"
-      >
+        item-key="createdAt">
         <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
@@ -43,11 +42,7 @@
         </template>
         <template v-slot:expanded-item="{ item }">
           <v-list-item
-            v-if="
-              item.street &&
-              item.zipCode
-            "
-          >
+            v-if=" item.street && item.zipCode">
             <v-list-item-content>
               <b>Adresse: </b>
               <template>
@@ -57,10 +52,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-list-item
-            v-if="
-              item.street
-            "
-          >
+            v-if="item.street">
             <v-list-item-content>
               <b>Essen: </b>
               <template v-for="habit in item.eatHabit">
@@ -69,30 +61,21 @@
             </v-list-item-content>
           </v-list-item>
           <v-list-item
-            v-if="
-              item.leader
-            "
-          >
+            v-if="item.leader">
             <v-list-item-content>
               <b>Amt: </b>
               {{ item.leader }}
             </v-list-item-content>
           </v-list-item>
           <v-list-item
-            v-if="
-              item.gender
-            "
-          >
+            v-if="item.gender">
             <v-list-item-content>
               <b>Geschlecht: </b>
               {{ item.gender }}
             </v-list-item-content>
           </v-list-item>
           <v-list-item
-            v-if="
-              item.bookingOption
-            "
-          >
+            v-if="item.bookingOption">
             <v-list-item-content>
               <b>Option: </b>
               {{ item.bookingOption.name }}
@@ -100,7 +83,6 @@
           </v-list-item>
         </template>
       </v-data-table>
-      <v-else/>
     </v-row>
     <v-row v-if="!loading && !filter.stamm" justify="center">
     <p> Bitte wähle einen Stamm</p>

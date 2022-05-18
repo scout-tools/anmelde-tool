@@ -11,16 +11,24 @@ export default {
         score,
       });
     },
-    async getRegistrationSummary(eventId) {
+    async getRegistrationSummary(eventId, params) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
+      return axios.get(path, { params });
+    },
+    async getCashSummary(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/cash/`;
       return axios.get(path);
     },
-    async getFoodSummary(eventId) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/food-summary/`;
+    async getFoodSummary(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/food/`;
+      return axios.get(path, { params });
+    },
+    async getBookingOptions(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/booking-options/`;
       return axios.get(path);
     },
     async getRegistrationSummaryDetails(eventId) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/detailed-summary/`;
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/detailed/`;
       return axios.get(path);
     },
     async getParticipants(eventId) {
@@ -28,7 +36,7 @@ export default {
       return axios.get(path);
     },
     async getWorkshopSummary(eventId) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/workshop-summary/`;
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/workshop/`;
       return axios.get(path);
     },
     async getServiceById(id, modulePath) {

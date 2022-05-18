@@ -51,6 +51,7 @@ import {
   required,
   minLength,
   maxLength,
+  maxValue,
 } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
@@ -99,6 +100,7 @@ export default {
       },
       age: {
         required,
+        minYearAge: maxValue(100),
       },
       bookingOption: {
         required,

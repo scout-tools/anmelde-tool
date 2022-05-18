@@ -94,6 +94,12 @@ export default {
       if (valObj.minEndDate === false) {
         errors.push('Das Ende der Fahrt muss nach dem Start der Fahrt liegen.');
       }
+      if (valObj.minYearRegistration === false) {
+        errors.push('Der Start der Fahrt liegt zuweit in der Vergangenheit (>1 Jahr).');
+      }
+      if (valObj.minYearAge === false) {
+        errors.push('Bisschen alt, nich?');
+      }
       if (valObj.between === false) {
         const {
           min,
@@ -115,7 +121,6 @@ export default {
       } else {
         this.fields.forEach((field) => {
           setTimeout(() => {
-            console.log(this.event.id);
             this.patchService(
               field.techName,
               this.data[field.techName],
@@ -136,7 +141,6 @@ export default {
   },
   computed: {
     id() {
-      console.log(this.$route.params.id);
       return this.$route.params.id;
     },
   },

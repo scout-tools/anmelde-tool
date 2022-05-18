@@ -5,9 +5,9 @@
         <v-stepper v-model="currentStep" vertical>
           <template v-for="(step, index) in currentModules">
             <v-stepper-step
-              :key="`stepper-${index}`"
-              :complete="currentStep > index + 1"
-              :step="index + 1"
+                :key="`stepper-${index}`"
+                :complete="currentStep > index + 1"
+                :step="index + 1"
             >
               {{ `${step.module.header}` }}
             </v-stepper-step>
@@ -17,18 +17,18 @@
             <v-stepper-items :key="`stepper-items-${index}`">
               <v-stepper-content :step="index + 1" class="default-width" style="width: 100%">
                 <component
-                  :is="step.module.name"
-                  :ref="step.module.name"
-                  :position="index + 1"
-                  :max-pos="currentModules.length"
-                  :currentRegistration="currentRegistration"
-                  :currentEvent="currentEvent"
-                  :personalData="personalData"
-                  :currentModule="step"
-                  @ignore="nextStep()"
-                  @prevStep="prevStep()"
-                  @nextStep="nextStep()"
-                  @submit="onRegistrationConfirmed()"
+                    :is="step.module.name"
+                    :ref="step.module.name"
+                    :position="index + 1"
+                    :max-pos="currentModules.length"
+                    :currentRegistration="currentRegistration"
+                    :currentEvent="currentEvent"
+                    :personalData="personalData"
+                    :currentModule="step"
+                    @ignore="nextStep()"
+                    @prevStep="prevStep()"
+                    @nextStep="nextStep()"
+                    @submit="onRegistrationConfirmed()"
                 />
               </v-stepper-content>
             </v-stepper-items>
@@ -36,10 +36,10 @@
         </v-stepper>
       </v-row>
       <v-snackbar
-        v-model="showSuccess"
-        color="success"
-        y="top"
-        :timeout="timeout"
+          v-model="showSuccess"
+          color="success"
+          y="top"
+          :timeout="timeout"
       >
         {{ 'Die Aktion wurde erfolgreich angelegt.' }}
       </v-snackbar>
@@ -48,7 +48,7 @@
       </v-snackbar>
     </v-card>
     <v-card v-else>
-      <LoadingCircual />
+      <LoadingCircual/>
     </v-card>
   </v-container>
 </template>
@@ -131,20 +131,21 @@ export default {
     callOnBeforeTab(step) {
       const nextStepName = this.currentModules[step].module.name;
       if (
-        this.$refs[nextStepName] && // eslint-disable-line
-        this.$refs[nextStepName].length && // eslint-disable-line
-        this.$refs[nextStepName][0].beforeTabShow
+          this.$refs[nextStepName] && // eslint-disable-line
+          this.$refs[nextStepName].length && // eslint-disable-line
+          this.$refs[nextStepName][0].beforeTabShow
       ) {
         this.$refs[nextStepName][0].beforeTabShow();
       }
     },
     onRegistrationConfirmed() {
-      this.callConfirmRegistration().then(() => {
-        this.$router.push({
-          name: 'registrationCompleted',
-          params: { id: this.currentRegistration.id },
+      this.callConfirmRegistration()
+        .then(() => {
+          this.$router.push({
+            name: 'registrationCompleted',
+            params: { id: this.currentRegistration.id },
+          });
         });
-      });
     },
     callConfirmRegistration() {
       return axios.put(
@@ -167,9 +168,9 @@ export default {
             this.getPersonalData(),
           ])
             .then((values) => {
-              this.currentEvent = values[0].data; // eslint-disable-line
-              this.currentModules = values[1].data; // eslint-disable-line
-              this.personalData = values[2].data; // eslint-disable-line
+                  this.currentEvent = values[0].data; // eslint-disable-line
+                  this.currentModules = values[1].data; // eslint-disable-line
+                  this.personalData = values[2].data; // eslint-disable-line
 
               this.loading = false;
             })

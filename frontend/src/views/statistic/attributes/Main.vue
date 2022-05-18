@@ -72,7 +72,7 @@ export default {
         });
     },
     async getAttributeSummary(eventId) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/attributes-summary/`;
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/attributes/`;
       return axios.get(path);
     },
   },

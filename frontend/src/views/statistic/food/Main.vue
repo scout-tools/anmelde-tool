@@ -28,7 +28,7 @@
 
 <script>
 import Kpi from './tabs/Kpi.vue';
-import List from './tabs/List.vue';
+import List from './tabs/Food.vue';
 
 export default {
   components: {

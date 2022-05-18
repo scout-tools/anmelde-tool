@@ -126,6 +126,11 @@ export default {
       },
       registrationStart: {
         required,
+        minYearRegistration(val) {
+          const date = new Date();
+          date.setFullYear(date.getFullYear() - 1);
+          return new Date(val) > date;
+        },
       },
       registrationDeadline: {
         required,

@@ -102,7 +102,6 @@
     <EventDeleteModal
       ref="eventDeleteModalRef"
       @refresh="refresh"
-
     />
   </v-container>
 </template>
