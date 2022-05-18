@@ -123,7 +123,7 @@ export default {
             mandatory: true,
             fieldType: 'currency',
             default: '',
-            cols: 12,
+            cols: 4,
           },
           {
             name: 'Verwendungszweck*',
@@ -134,7 +134,7 @@ export default {
             icon: 'mdi-home',
             mandatory: true,
             fieldType: 'textfield',
-            cols: 12,
+            cols: 8,
           },
           {
             name: 'Überweisungsdatum*',
@@ -146,15 +146,15 @@ export default {
             fieldType: 'datetime',
             cols: 12,
           },
-          {
-            name: 'Überweisende Person (Email-Adresse)',
-            techName: 'transferPerson',
-            icon: 'mdi-account-circle',
-            mandatory: true,
-            fieldType: 'simpleComboSingle',
-            default: '',
-            cols: 12,
-          },
+          // {
+          //   name: 'Überweisende Person (Email-Adresse)',
+          //   techName: 'transferPerson',
+          //   icon: 'mdi-account-circle',
+          //   mandatory: true,
+          //   fieldType: 'simpleComboSingle',
+          //   default: '',
+          //   cols: 12,
+          // },
           {
             name: 'Referenz Id',
             techName: 'transferReferenceId',
@@ -163,7 +163,7 @@ export default {
             icon: 'mdi-account-circle',
             mandatory: false,
             fieldType: 'textfield',
-            cols: 12,
+            cols: 6,
           },
           {
             name: 'Persöhnliche Anmerkung',
@@ -172,7 +172,7 @@ export default {
             icon: 'mdi-semantic-web',
             mandatory: false,
             fieldType: 'textarea',
-            cols: 12,
+            cols: 6,
           },
         ],
       };

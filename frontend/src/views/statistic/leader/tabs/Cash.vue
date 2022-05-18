@@ -76,7 +76,8 @@
                   :items="getItemsCash(item)"
                   :items-per-page="itemsPerPage"
                   hide-default-footer
-                  item-key="createdAt">
+                  item-key="createdAt"
+                  no-data-text="Keine Buchung vorhanden">
                   <template v-slot:top>
                     <v-toolbar flat>
                       <v-toolbar-title>Überweisungen</v-toolbar-title>
