@@ -1,5 +1,7 @@
 from django.contrib import admin
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
+from django.db.models.functions import Concat
+from django.db.models import F, Value, CharField
 
 from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, TagType, AbstractAttribute, Tag, \
     BooleanAttribute, TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute, Description, \
@@ -7,10 +9,23 @@ from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, TagType, AbstractAt
 
 admin.site.register(ScoutOrgaLevel)
 admin.site.register(Description)
-admin.site.register(EatHabit)
 admin.site.register(FrontendTheme)
 admin.site.register(Message)
 admin.site.register(MessageType)
+
+
+@admin.register(EatHabit)
+class EatHabitAdmin(admin.ModelAdmin):
+    def get_participants(self, obj: EatHabit):
+        participants = obj.registrationparticipant_set.all()[:5].values(
+            full_name=Concat(F('first_name'), Value(' '), F('last_name'), Value(' ('), F('registration__event__name'),
+                             Value(')'), output_field=CharField()))
+        list_names = [participant['full_name'] for participant in participants]
+        return ', '.join(list_names)
+
+    list_display = ('name', 'get_participants')
+    search_fields = ('name',)
+
 
 @admin.register(Tag)
 class ScoutHierarchyAdmin(admin.ModelAdmin):
