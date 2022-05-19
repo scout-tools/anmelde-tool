@@ -27,9 +27,9 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/booking-options/`;
       return axios.get(path);
     },
-    async getRegistrationSummaryDetails(eventId) {
+    async getRegistrationSummaryDetails(eventId, params) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/detailed/`;
-      return axios.get(path);
+      return axios.get(path, { params });
     },
     async getParticipants(eventId) {
       const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/participants/`;

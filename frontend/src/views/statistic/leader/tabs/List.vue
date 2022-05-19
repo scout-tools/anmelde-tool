@@ -1,9 +1,19 @@
 <template>
   <v-container fluid class="pa-0">
     <v-row class="center text-center justify-center">
-      <v-card class="mx-auto pa-0" flat>
+      <v-card class="pa-0" flat>
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
+            <v-row class="center text-center justify-center pa-0">
+              <v-col cols="12">
+                <BookingFilter
+                  :bookingOptionList="bookingOptionList"
+                  :loading="loading"
+                  @onFilterSelected="onFilterSelected"
+                  v-model="selectedBookingOption"
+                />
+              </v-col>
+            </v-row>
             <v-row class="center text-center justify-center pa-0">
               <v-col cols="12">
                 <v-autocomplete
@@ -11,7 +21,7 @@
                   :items="stammList"
                   v-model="filter.stamm"
                   label="Stamm"
-                  item-text="scoutOrganisation.name"
+                  item-text="registration.scoutOrganisation.name"
                 ></v-autocomplete>
               </v-col>
             </v-row>
@@ -29,7 +39,8 @@
         show-expand
         single-expand
         hide-default-footer
-        item-key="createdAt">
+        item-key="createdAt"
+      >
         <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
@@ -38,21 +49,26 @@
           >
         </template>
         <template v-slot:[`item.birthday`]="{ item }">
-          {{ moment(item.birthday).format('DD.MM.YYYY') }}
+          {{
+            `${moment().diff(
+              item.birthday,
+              'years',
+            )}`
+          }}
         </template>
         <template v-slot:expanded-item="{ item }">
-          <v-list-item
-            v-if=" item.street && item.zipCode">
+          <v-list-item v-if="item.street && item.zipCode">
             <v-list-item-content>
               <b>Adresse: </b>
               <template>
-                {{ `${item.street} ${item.zipCode.zipCode} ${item.zipCode.city} ` }}
+                {{
+                  `${item.street} ${item.zipCode.zipCode} ${item.zipCode.city} `
+                }}
                 {{ `Tel: ${item.phoneNumber}` }}
               </template>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item
-            v-if="item.street">
+          <v-list-item v-if="item.street">
             <v-list-item-content>
               <b>Essen: </b>
               <template v-for="habit in item.eatHabit">
@@ -60,22 +76,19 @@
               </template>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item
-            v-if="item.leader">
+          <v-list-item v-if="item.leader">
             <v-list-item-content>
               <b>Amt: </b>
               {{ item.leader }}
             </v-list-item-content>
           </v-list-item>
-          <v-list-item
-            v-if="item.gender">
+          <v-list-item v-if="item.gender">
             <v-list-item-content>
               <b>Geschlecht: </b>
               {{ item.gender }}
             </v-list-item-content>
           </v-list-item>
-          <v-list-item
-            v-if="item.bookingOption">
+          <v-list-item v-if="item.bookingOption">
             <v-list-item-content>
               <b>Option: </b>
               {{ item.bookingOption.name }}
@@ -85,17 +98,21 @@
       </v-data-table>
     </v-row>
     <v-row v-if="!loading && !filter.stamm" justify="center">
-    <p> Bitte wähle einen Stamm</p>
-  </v-row>
-    </v-container>
+      <p>Bitte wähle einen Stamm</p>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import serviceMixin from '@/mixins/serviceMixin';
 import moment from 'moment'; // eslint-disable-line
+import BookingFilter from '@/components/common/BookingFilter.vue';
 
 export default {
   mixins: [serviceMixin],
+  components: {
+    BookingFilter,
+  },
   data: () => ({
     data: [],
     expanded: [],
@@ -107,13 +124,15 @@ export default {
       { text: 'Vorname', value: 'firstName' },
       { text: 'Fahrtenname', value: 'scoutName' },
       { text: 'Nachname', value: 'lastName' },
-      { text: 'Geburtsdatum', value: 'birthday' },
+      { text: 'Alter', value: 'birthday' },
       { text: '', value: 'data-table-expand' },
     ],
     API_URL: process.env.VUE_APP_API,
     showError: false,
     responseObj: null,
     itemsPerPage: 1000,
+    bookingOptionList: [],
+    selectedBookingOption: null,
   }),
   computed: {
     eventId() {
@@ -132,17 +151,9 @@ export default {
       return data;
     },
     getPersons() {
-      const data = this.data.filter(
-        (item) => item.scoutOrganisation.name === this.filter.stamm,
+      const personArray = this.data.filter(
+        (item) => item.registration.scoutOrganisation.name === this.filter.stamm,
       );
-      const personArray = [];
-      const personsObj = (data && data.length > 0 && data) || [];
-
-      personsObj.forEach((person) => {
-        person.registrationparticipantSet.forEach((item) => {
-          personArray.push(item);
-        });
-      });
       return personArray;
     },
     getTotalStamm() {
@@ -190,12 +201,30 @@ export default {
     getNumberParticipant(item) {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
-    getData(eventId) {
+    onFilterSelected(values) {
+      const params = new URLSearchParams();
+      if (values) {
+        values.forEach((value) => {
+          params.append('booking-option', value);
+        });
+      }
+      this.getData(this.eventId, params);
+    },
+    getData(eventId, param) {
       this.loading = true;
-      this.getRegistrationSummaryDetails(eventId).then((responseObj) => {
-        this.data = responseObj.data[0].registrationSet;
-        this.loading = false;
-      });
+
+      Promise.all([
+        this.getRegistrationSummaryDetails(eventId, param),
+        this.getBookingOptions(eventId),
+      ])
+        .then((values) => {
+          this.data = values[0].data; //eslint-disable-line
+          console.log(this.data);
+          this.bookingOptionList = values[1].data; //eslint-disable-line
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
   created() {

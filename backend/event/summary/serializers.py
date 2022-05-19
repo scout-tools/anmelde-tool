@@ -10,6 +10,7 @@ from event import serializers as event_serializer
 from event.registration import serializers as registration_serializers
 from event.cash import models as cash_models
 from event.cash import serializers as cash_serializers
+from event.summary import serializers as summary_serializers
 
 
 class WorkshopEventSummarySerializer(serializers.ModelSerializer):
@@ -73,6 +74,7 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
 
 class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSerializer):
     booking_option = registration_serializers.RegistrationSummaryBookingOptionSerializer(many=False, read_only=True)
+    registration = summary_serializers.RegistrationEventSummarySerializer(many=False, read_only=True)
     gender = serializers.CharField(source='get_gender_display')
     leader = serializers.CharField(source='get_leader_display')
     zip_code = basic_serializers.ZipCodeSerializer(many=False, read_only=True)
@@ -87,7 +89,8 @@ class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSer
 
     class Meta:
         model = event_models.RegistrationParticipant
-        exclude = ('deactivated', 'generated', 'registration')
+        exclude = ('deactivated', 'generated')
+
 
 
 class RegistrationEventDetailedSummarySerializer(RegistrationEventSummarySerializer):

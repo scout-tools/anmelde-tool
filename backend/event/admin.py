@@ -106,5 +106,6 @@ class RegistrationParticipantAdmin(admin.ModelAdmin):
         'deactivated',
         'needs_confirmation'
     )
-    list_filter = ('registration__event__name',)
+    list_filter = ('registration__event__name','registration__scout_organisation__name')
+    search_fields = ('scout_name', 'first_name', 'first_name')
     autocomplete_fields = ('zip_code',)

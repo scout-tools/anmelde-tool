@@ -6,7 +6,7 @@ from rest_framework import mixins, viewsets, status
 from django.utils import timezone
 from dateutil.relativedelta import relativedelta
 from copy import deepcopy
-
+import re
 from basic import models as basic_models
 from basic import serializers as basic_serializers
 from event import api_exceptions as event_api_exceptions
@@ -17,13 +17,19 @@ from event.registration import serializers as registration_serializers
 from event import permissions as event_permissions
 
 
-def create_missing_eat_habits(request) -> None:
+def create_missing_eat_habits(request) -> [str]:
     eat_habits = request.data.get('eat_habit', [])
+    result = []
     for habit in eat_habits:
         if len(habit) > 100:
             raise event_api_exceptions.EatHabitTooLong
-        if not basic_models.EatHabit.objects.filter(name__exact=habit).exists():
-            basic_models.EatHabit.objects.create(name=habit)
+        splitted = re.split(',|;', habit)
+        for split in splitted:
+            split = split.strip().title()
+            result.append(split)
+            if not basic_models.EatHabit.objects.filter(name__exact=split).exists():
+                basic_models.EatHabit.objects.create(name=split)
+    return result
 
 
 def add_event_attribute(attribute: basic_models.AbstractAttribute) -> basic_models.AbstractAttribute:
@@ -44,7 +50,11 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         return event_models.RegistrationParticipant.objects.filter(registration=registration_id)
 
     def create(self, request, *args, **kwargs) -> Response:
-        create_missing_eat_habits(request)
+        eat_habits_formatted = create_missing_eat_habits(request)
+
+        if eat_habits_formatted and len(eat_habits_formatted) > 0:
+            request.data['eat_habit'] = eat_habits_formatted
+
         registration: event_models.Registration = self.participant_initialization(request)
 
         if request.data.get('age'):
@@ -59,12 +69,19 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
             request.data['booking_option'] = registration.event.bookingoption_set.first().id
         if registration.event.registration_deadline < timezone.now():
             request.data['needs_confirmation'] = event_choices.ParticipantActionConfirmation.AddCompletyNew
+
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs) -> Response:
-        create_missing_eat_habits(request)
+        print(request.data)
+        eat_habits_formatted = create_missing_eat_habits(request)
+
+        if eat_habits_formatted and len(eat_habits_formatted) > 0:
+            request.data['eat_habit'] = eat_habits_formatted
+
         registration: event_models.Registration = self.participant_initialization(request)
         participant: event_models.RegistrationParticipant = self.get_object()
+
         if participant.deactivated:
             if request.data.get('activate') and registration.event.registration_deadline >= timezone.now():
                 request.data['deactivated'] = False
@@ -72,6 +89,8 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
             elif registration.event.last_possible_update >= timezone.now():
                 request.data['deactivated'] = False
                 request.data['needs_confirmation'] = event_choices.ParticipantActionConfirmation.AddFromExisting
+
+
 
         request.data['generated'] = False
         return super().update(request, *args, **kwargs)

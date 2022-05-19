@@ -41,10 +41,10 @@ export default {
   data: () => ({
     data: [],
     mapping: {
-      woelfling: 'Wölfling (bis 10)',
-      pfadfinder: 'Pfadfinder (11-16)',
-      rover: 'Rover (17-23)',
-      altRover: 'Altrover (24+)',
+      woelfling: 'Wölfling (bis 12)',
+      pfadfinder: 'Pfadfinder (13-17)',
+      rover: 'Rover (18-24)',
+      altRover: 'Altrover (25+)',
     },
     loading: false,
     bookingOptionList: [],

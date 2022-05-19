@@ -26,11 +26,14 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubEventSuperResponsiblePerson]
-    serializer_class = summary_serializers.EventDetailedSummarySerializer
+    serializer_class = summary_serializers.RegistrationParticipantEventDetailedSummarySerializer
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
-        return event_models.Event.objects.filter(id=event_id)
+        reg_ids = event_models.Registration.objects.filter(event=event_id).values('id')
+        booking_option_list = self.request.query_params.getlist('booking-option')
+
+        return event_models.RegistrationParticipant.objects.filter(booking_option__in=booking_option_list).filter(registration__in=reg_ids)
 
 
 class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
