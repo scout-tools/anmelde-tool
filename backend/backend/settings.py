@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'event.summary',
     'event.registration',
     'event.choices',
-    'event.cash'
+    'event.cash',
+    'event.file_generator'
 ]
 
 MIDDLEWARE = [
@@ -240,3 +241,6 @@ OIDC_CREATE_USER = True
 GRAPHENE = {
     "SCHEMA": "basic.schema.schema"
 }
+
+FILE_GENERATOR_DEQEUE_TIME = 60
+

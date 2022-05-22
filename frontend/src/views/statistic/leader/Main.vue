@@ -1,25 +1,47 @@
 <template>
   <v-tabs vertical icons-and-text class="pa-0">
     <v-tab>
-      <v-icon left> mdi-table </v-icon>
+      <v-icon left> mdi-table</v-icon>
       Tabelle
     </v-tab>
     <v-tab>
-      <v-icon left> mdi-currency-eur </v-icon>
+      <v-icon left> mdi-currency-eur</v-icon>
       Kasse
+    </v-tab>
+    <v-tab>
+      <v-icon left>mdi-download</v-icon>
+      Downloads
+    </v-tab>
+    <v-tab>
+      <v-icon left>mdi-email</v-icon>
+      Email
     </v-tab>
 
     <v-tab-item>
       <v-card flat>
         <v-card-text>
-          <List />
+          <List/>
         </v-card-text>
       </v-card>
     </v-tab-item>
     <v-tab-item>
       <v-card flat>
         <v-card-text>
-          <Cash />
+          <Cash/>
+        </v-card-text>
+      </v-card>
+    </v-tab-item>
+    <v-tab-item>
+      <v-card flat>
+        <v-card-text>
+          <Download/>
+        </v-card-text>
+      </v-card>
+    </v-tab-item>
+        <v-tab-item>
+      <v-card flat>
+        <v-card-text>
+          <Email/>
         </v-card-text>
       </v-card>
     </v-tab-item>
@@ -29,11 +51,15 @@
 <script>
 import List from './tabs/List.vue';
 import Cash from './tabs/Cash.vue';
+import Download from './tabs/Download.vue';
+import Email from './tabs/Email.vue';
 
 export default {
   components: {
     List,
     Cash,
+    Download,
+    Email,
   },
 };
 </script>

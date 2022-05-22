@@ -53,11 +53,11 @@ import { latLng } from 'leaflet';
 
 import { LMap, LTileLayer, LPopup, LCircle } from 'vue2-leaflet'; //eslint-disable-line
 
-import serviceMixin from '@/mixins/serviceMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 import BookingFilter from '@/components/common/BookingFilter.vue';
 
 export default {
-  mixins: [serviceMixin],
+  mixins: [apiCallsMixin],
   name: 'Example',
   components: {
     LMap,
