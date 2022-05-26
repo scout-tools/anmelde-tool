@@ -122,5 +122,9 @@ export default {
       const url = `${this.API_URL}/auth/personal-data/`;
       return axios.get(url);
     },
+    async updateMessageById(data) {
+      const path = `${process.env.VUE_APP_API}/basic/message/${data.id}/`;
+      return axios.put(path, data);
+    },
   },
 };

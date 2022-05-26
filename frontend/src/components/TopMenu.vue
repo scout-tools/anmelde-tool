@@ -77,7 +77,7 @@ export default {
       return require(`@/assets/${this.theme}/logo.png`); // eslint-disable-line
     },
     isTeam() {
-      if (this.userinfo && this.userinfo.role && this.userinfo.roles.length > 0) {
+      if (this.userinfo && this.userinfo.roles && this.userinfo.roles.length > 0) {
         return this.userinfo.roles.includes('anmelde_tool_team');
       }
       return 0;

@@ -140,6 +140,15 @@ class FrontendThemeViewSet(viewsets.ModelViewSet):
 class MessageViewSet(viewsets.ModelViewSet):
     queryset = basic_models.Message.objects.all().order_by('created_at')
     serializer_class = basic_serializers.MessageSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['message_type', 'is_processed']
+    search_fields = ['created_by_email', 'message_body', 'internal_comment']
+
+    def update(self, request, *args, **kwargs) -> Response:
+        request.data['supervisor'] = request.user.email
+
+        return super().update(request, *args, **kwargs)
+    
 
 class MessageTypeViewSet(viewsets.ModelViewSet):
     queryset = basic_models.MessageType.objects.all()

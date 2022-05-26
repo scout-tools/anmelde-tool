@@ -18,6 +18,9 @@ import FAQ from '@/views/footer/FAQ.vue';
 import EventPlaner from '@/views/eventPlaner/Main.vue';
 import PlanEvent from '@/views/eventPlaner/create/Main.vue';
 
+import MessageList from '@/views/masterData/message/MessageList.vue';
+import ThemeList from '@/views/masterData/theme/ThemeList.vue';
+
 import registrationNew from '@/views/registration/Main.vue';
 import registrationEdit from '@/views/registration/CreateUpdateContainer.vue';
 import registrationCompleted from '@/views/registration/Completed.vue';
@@ -60,12 +63,22 @@ const routes = [
     },
   },
   {
-    path: '/masterData/overview',
+    path: '/masterData',
     name: 'masterDataOverview',
     component: MasterDataOverview,
     meta: {
       requiresAuth: true,
     },
+    children: [
+      {
+        path: 'message-list',
+        component: MessageList,
+      },
+      {
+        path: 'theme-list',
+        component: ThemeList,
+      },
+    ],
   },
   {
     path: '/settings/overview',
