@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from basic import models as basic_models
 from .polymorphic_serializer import PolymorphicSerializer
+from django.contrib.auth.models import User
 
 """
 # noqa turn off pycharm warnings about missing abstract methods, which is a bug of pycharm
@@ -349,12 +350,28 @@ class ScoutHierarchyDetailedSerializer(serializers.ModelSerializer):
 
 
 class MessageTypeSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = basic_models.MessageType
         fields = '__all__'
 
 
 class MessageSerializer(serializers.ModelSerializer):
+
+    supervisor = serializers.SlugRelatedField(
+        many=False,
+        required=False,
+        read_only=False,
+        slug_field='email',
+        queryset=User.objects.all()
+    )
+    # supervisor_name = serializers.SerializerMethodField()
     class Meta:
         model = basic_models.Message
         fields = '__all__'
+
+    # def get_supervisor_name(self, obj: basic_models.Message) -> str:
+    #     print(obj.supervisor)
+    #     # user_obj = User.objects.filter(id=obj.supervisor)
+    #     print(self)
+    #     return '123'
