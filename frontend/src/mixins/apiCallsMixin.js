@@ -131,11 +131,15 @@ export default {
       return axios.get(path);
     },
     async addFileRequest(eventId, data) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/`;
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/generate/`;
       return axios.post(path, data);
     },
     async getDownloadSummary(eventId) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/`;
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/generate/`;
+      return axios.get(path);
+    },
+    async getAvailableFileTemplates(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/available-templates/`;
       return axios.get(path);
     },
     async getFoodSummary(eventId, params) {

@@ -101,7 +101,7 @@ export default {
       },
       {
         text: 'Typ',
-        value: 'type',
+        value: 'template.type',
       },
       {
         text: 'Format',
@@ -162,7 +162,7 @@ export default {
     formatDate(item) {
       return moment(item)
         .locale('de')
-        .format('LLL');
+        .format('lll');
     },
     getData(eventId) {
       this.loading = true;
@@ -201,6 +201,9 @@ export default {
   },
   created() {
     this.getData(this.eventId);
+    window.setInterval(() => {
+      this.getData(this.eventId);
+    }, 60000);
   },
 };
 </script>

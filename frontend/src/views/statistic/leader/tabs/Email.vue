@@ -177,7 +177,6 @@ export default {
       ])
         .then((values) => {
           this.data = values[0].data; //eslint-disable-line
-          console.log(this.data);
           this.bookingOptionList = values[1].data; //eslint-disable-line
         })
         .finally(() => {

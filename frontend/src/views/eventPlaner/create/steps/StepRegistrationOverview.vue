@@ -125,8 +125,7 @@ export default {
     updateData() {},
     removeModule(mapper) {
       this.deleteEventModule(mapper.id, mapper.event)
-        .then((success) => {
-          console.log(success);
+        .then(() => {
           this.gatherAvailableEventModules();
           this.gatherAssignedEventModules();
         })

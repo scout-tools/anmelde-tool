@@ -48,7 +48,6 @@ export default {
     valid: true,
     edit: false,
     data: {},
-    registrationId: '',
   }),
   methods: {
     validate() {
@@ -58,12 +57,6 @@ export default {
     open() {
       this.data = {};
       this.active = true;
-    },
-    openEdit(data) {
-      this.registrationId = data.registration;
-      this.data = data;
-      this.active = true;
-      this.edit = true;
     },
     close() {
       this.active = false;
@@ -79,7 +72,7 @@ export default {
   },
   validations: {
     data: {
-      type: {
+      template: {
         required,
       },
       extension: {
@@ -98,18 +91,17 @@ export default {
         minItems: 1,
         fields: [
           {
-            name: 'Model für Einzelanmeldungen auswählen',
-            techName: 'type',
+            name: 'Template für die Datei auswählen.',
+            techName: 'template',
             tooltip: 'Wähle den Datei Typ aus.',
             icon: 'mdi-account-circle',
-            lookupPath: '/event/choices/file-type/',
-            lookupListDisplay: ['name'],
+            lookupPath: '/event/files/available-templates/',
+            lookupListDisplay: ['type', 'version'],
             mandatory: true,
-            fieldType: 'enumCombo',
-            default: '',
+            fieldType: 'refComboSingle',
           },
           {
-            name: 'Model für Einzelanmeldungen auswählen',
+            name: 'Dateiformat auswählen.',
             techName: 'extension',
             tooltip: 'Wähle das Datei Format.',
             icon: 'mdi-account-circle',
@@ -117,7 +109,6 @@ export default {
             lookupListDisplay: ['name'],
             mandatory: true,
             fieldType: 'enumCombo',
-            default: '',
           },
         ],
       };
