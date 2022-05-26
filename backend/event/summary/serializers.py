@@ -14,7 +14,8 @@ from event.summary import serializers as summary_serializers
 
 
 class WorkshopEventSummarySerializer(serializers.ModelSerializer):
-    supervisor = registration_serializers.CurrentUserSerializer(many=False, read_only=True)
+    supervisor = registration_serializers.CurrentUserSerializer(
+        many=False, read_only=True)
 
     class Meta:
         model = event_models.Workshop
@@ -30,25 +31,29 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
     participant_count = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
     tags = serializers.SerializerMethodField()
-    scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)
+    scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(
+        many=False, read_only=True)
     booking_options = serializers.SerializerMethodField()
 
     class Meta:
         model = event_models.Registration
-        fields = ('is_confirmed',
-                  'is_accepted',
-                  'single',
-                  'scout_organisation',
-                  'responsible_persons',
-                  'tags',
-                  'participant_count',
-                  'price',
-                  'created_at',
-                  'updated_at',
-                  'booking_options',)
+        fields = (
+            'id',
+            'is_confirmed',
+            'is_accepted',
+            'single',
+            'scout_organisation',
+            'responsible_persons',
+            'tags',
+            'participant_count',
+            'price',
+            'created_at',
+            'updated_at',
+            'booking_options',)
 
     def get_participant_count(self, registration: event_models.Registration) -> int:
-        booking_option_list = self.context['request'].query_params.getlist('booking-option')
+        booking_option_list = self.context['request'].query_params.getlist(
+            'booking-option')
         queryset = registration.registrationparticipant_set
 
         if booking_option_list:
@@ -62,7 +67,8 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
 
     def get_tags(self, registration: event_models.Registration) -> []:
         queryset = registration.tags.filter(in_summary=True)
-        serializer = basic_serializers.AbstractAttributeGetPolymorphicSerializer(queryset, many=True)
+        serializer = basic_serializers.AbstractAttributeGetPolymorphicSerializer(
+            queryset, many=True)
         return serializer.data
 
     def get_booking_options(self, registration: event_models.Registration) -> dict:
@@ -73,8 +79,10 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
 
 
 class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSerializer):
-    booking_option = registration_serializers.RegistrationSummaryBookingOptionSerializer(many=False, read_only=True)
-    registration = summary_serializers.RegistrationEventSummarySerializer(many=False, read_only=True)
+    booking_option = registration_serializers.RegistrationSummaryBookingOptionSerializer(
+        many=False, read_only=True)
+    registration = summary_serializers.RegistrationEventSummarySerializer(
+        many=False, read_only=True)
     gender = serializers.CharField(source='get_gender_display')
     leader = serializers.CharField(source='get_leader_display')
     zip_code = basic_serializers.ZipCodeSerializer(many=False, read_only=True)
@@ -85,32 +93,37 @@ class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSer
         queryset=EatHabit.objects.all(),
         required=False
     )
-    needs_confirmation = serializers.CharField(source='get_needs_confirmation_display')
+    needs_confirmation = serializers.CharField(
+        source='get_needs_confirmation_display')
 
     class Meta:
         model = event_models.RegistrationParticipant
         exclude = ('deactivated', 'generated')
 
 
-
 class RegistrationEventDetailedSummarySerializer(RegistrationEventSummarySerializer):
-    registrationparticipant_set = RegistrationParticipantEventDetailedSummarySerializer(read_only=True, many=True)
+    registrationparticipant_set = RegistrationParticipantEventDetailedSummarySerializer(
+        read_only=True, many=True)
 
     class Meta:
         model = RegistrationEventSummarySerializer.Meta.model
-        fields = RegistrationEventSummarySerializer.Meta.fields + ('registrationparticipant_set',)
+        fields = RegistrationEventSummarySerializer.Meta.fields + \
+            ('registrationparticipant_set',)
 
 
 class EventSummarySerializer(serializers.ModelSerializer):
-    registration_set = RegistrationEventSummarySerializer(many=True, read_only=True)
+    registration_set = RegistrationEventSummarySerializer(
+        many=True, read_only=True)
     participant_count = serializers.SerializerMethodField()
     booking_options = serializers.SerializerMethodField()
     age_groups = serializers.SerializerMethodField()
-    location = event_serializer.EventLocationSummarySerializer(many=False, read_only=True)
+    location = event_serializer.EventLocationSummarySerializer(
+        many=False, read_only=True)
 
     class Meta:
         model = event_models.Event
         fields = (
+            'id',
             'participant_count',
             'registration_set',
             'booking_options',
@@ -135,12 +148,16 @@ class EventSummarySerializer(serializers.ModelSerializer):
             17-23 Rover
             23+ Altrover
         """
-        participant_ids = event.registration_set.filter(is_confirmed=True).values('registrationparticipant')
-        all_participants = event_models.RegistrationParticipant.objects.filter(id__in=participant_ids)
-        booking_option_list = self.context['request'].query_params.getlist('booking-option')
+        participant_ids = event.registration_set.filter(
+            is_confirmed=True).values('registrationparticipant')
+        all_participants = event_models.RegistrationParticipant.objects.filter(
+            id__in=participant_ids)
+        booking_option_list = self.context['request'].query_params.getlist(
+            'booking-option')
 
         if booking_option_list:
-            all_participants = all_participants.filter(booking_option__in=booking_option_list)
+            all_participants = all_participants.filter(
+                booking_option__in=booking_option_list)
 
         woelfling = self.age_range(0, 12, all_participants, event)
         pfadfinder = self.age_range(12, 17, all_participants, event)
@@ -165,20 +182,25 @@ class EventSummarySerializer(serializers.ModelSerializer):
 
 
 class EventDetailedSummarySerializer(EventSummarySerializer):
-    registration_set = RegistrationEventDetailedSummarySerializer(many=True, read_only=True)
+    registration_set = RegistrationEventDetailedSummarySerializer(
+        many=True, read_only=True)
 
 
 class RegistrationAttributeGetSerializer(serializers.ModelSerializer):
-    scout_organisation = basic_serializers.NamyOnlyScoutHierarchySerializer(many=False, read_only=True)
-    responsible_persons = registration_serializers.CurrentUserSerializer(many=True, read_only=True)
+    scout_organisation = basic_serializers.NamyOnlyScoutHierarchySerializer(
+        many=False, read_only=True)
+    responsible_persons = registration_serializers.CurrentUserSerializer(
+        many=True, read_only=True)
 
     class Meta:
         model = event_models.Registration
-        fields = ('scout_organisation', 'is_confirmed', 'is_accepted', 'responsible_persons')
+        fields = ('scout_organisation', 'is_confirmed',
+                  'is_accepted', 'responsible_persons')
 
 
 class EventAttributeSummarySerializer(serializers.ModelSerializer):
-    attribute = basic_serializers.AbstractAttributeGetPolymorphicSerializer(many=False, read_only=False)
+    attribute = basic_serializers.AbstractAttributeGetPolymorphicSerializer(
+        many=False, read_only=False)
     attributes = serializers.SerializerMethodField()
 
     class Meta:
@@ -187,21 +209,27 @@ class EventAttributeSummarySerializer(serializers.ModelSerializer):
 
     def get_attributes(self, mapper: event_models.AttributeEventModuleMapper) -> dict:
         event_id = self.context['view'].kwargs.get("event_pk", None)
-        registrations: QuerySet[event_models.Registration] = event_models.Registration.objects.filter(event=event_id)
+        registrations: QuerySet[event_models.Registration] = event_models.Registration.objects.filter(
+            event=event_id)
 
         registration_tags = []
         attribute_sum = 0
         for registration in registrations.all():
-            tags = registration.tags.filter(template=False, template_id=mapper.attribute.id)
+            tags = registration.tags.filter(
+                template=False, template_id=mapper.attribute.id)
 
             if mapper.attribute.polymorphic_ctype.app_labeled_name == 'basic | integer attribute':
-                attribute_sum += tags.aggregate(sum=Sum('integerattribute__integer_field'))['sum'] or 0
+                attribute_sum += tags.aggregate(
+                    sum=Sum('integerattribute__integer_field'))['sum'] or 0
             elif mapper.attribute.polymorphic_ctype.app_labeled_name == 'basic | float attribute':
-                attribute_sum += tags.aggregate(sum=Sum('floatattribute__integer_field'))['sum'] or 0
+                attribute_sum += tags.aggregate(
+                    sum=Sum('floatattribute__integer_field'))['sum'] or 0
 
-            serialized_registration = RegistrationAttributeGetSerializer(registration, many=False).data
+            serialized_registration = RegistrationAttributeGetSerializer(
+                registration, many=False).data
             for tag in tags.all():
-                serialized_tag = basic_serializers.AbstractAttributeGetPolymorphicSerializer(tag, many=False).data
+                serialized_tag = basic_serializers.AbstractAttributeGetPolymorphicSerializer(
+                    tag, many=False).data
                 result = {
                     'registration': serialized_registration,
                     'tag': serialized_tag,
@@ -222,9 +250,11 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
     )
     participant_count = serializers.SerializerMethodField()
     payement = serializers.SerializerMethodField()
-    scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)
+    scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(
+        many=False, read_only=True)
     booking_options = serializers.SerializerMethodField()
-    cashincome_set = cash_serializers.CashIncomeSerializer(many=True, read_only=True)
+    cashincome_set = cash_serializers.CashIncomeSerializer(
+        many=True, read_only=True)
 
     class Meta:
         model = event_models.Registration
@@ -247,7 +277,8 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
     def get_payement(self, registration: event_models.Registration) -> dict:
         total_price = registration.registrationparticipant_set.aggregate(
             sum=Sum('booking_option__price'))['sum'] or 0
-        paid = registration.cashincome_set.aggregate(sum=Sum('amount'))['sum'] or 0
+        paid = registration.cashincome_set.aggregate(sum=Sum('amount'))[
+            'sum'] or 0
         difference = total_price - paid
 
         return {
@@ -264,7 +295,8 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
 
 
 class CashSummarySerializer(serializers.ModelSerializer):
-    registration_set = RegistrationCashSummarySerializer(many=True, read_only=True)
+    registration_set = RegistrationCashSummarySerializer(
+        many=True, read_only=True)
     participant_count = serializers.SerializerMethodField()
     booking_options = serializers.SerializerMethodField()
 
