@@ -31,3 +31,17 @@ class EmailAttachmentMediaStorage(S3Boto3Storage):
     default_acl = 'private'
     file_overwrite = False
     custom_domain = False
+
+
+class GeneratedFilesStorage(S3Boto3Storage):
+    location = 'generate-files'
+    default_acl = 'private'
+    file_overwrite = False
+    custom_domain = False
+
+
+class FileTemplateMediaStorage(S3Boto3Storage):
+    location = 'files-templates'
+    default_acl = 'private'
+    file_overwrite = False
+    custom_domain = False

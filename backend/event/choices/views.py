@@ -31,3 +31,17 @@ class LeaderTypesViewSet(viewsets.ViewSet):
 
     def list(self, request) -> Response:
         return Response(event_choices.LeaderTypes.choices, status=status.HTTP_200_OK)
+
+
+class FileTypeViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request) -> Response:
+        return Response(event_choices.FileType.choices, status=status.HTTP_200_OK)
+
+
+class FileExtensionViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request) -> Response:
+        return Response(event_choices.FileExtension.choices, status=status.HTTP_200_OK)

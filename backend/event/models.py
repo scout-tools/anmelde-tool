@@ -136,6 +136,9 @@ class BookingOption(models.Model):
     bookable_from = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     bookable_till = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
+    max_participants = models.IntegerField(default=0)
+    start_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    end_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -159,7 +162,7 @@ class Registration(basic_models.TimeStampMixin):
 
     def save(self, *args, **kwargs):
         if self.created_at:
-            # If self.pk is not None then it's an update.
+            # If self.created_atis not None then it's an update.
             cls = self.__class__
             old = cls.objects.get(pk=self.pk)
             # This will get the current model state since super().save() isn't called yet.

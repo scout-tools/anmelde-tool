@@ -68,10 +68,10 @@
 </template>
 
 <script>
-import serviceMixin from '@/mixins/serviceMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
-  mixins: [serviceMixin],
+  mixins: [apiCallsMixin],
   data: () => ({
     data: [],
     headers: [

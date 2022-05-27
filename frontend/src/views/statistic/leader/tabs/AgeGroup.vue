@@ -10,9 +10,10 @@
 </template>
 
 <script>
-import axios from 'axios';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
+  mixins: [apiCallsMixin],
   data: () => ({
     data: [],
     mapping: {
@@ -27,13 +28,10 @@ export default {
       return this.mapping[key];
     },
     getData(eventId) {
-      this.getRegistrationSummary(eventId).then((responseObj) => {
-        this.data = responseObj.data;
-      });
-    },
-    async getRegistrationSummary(eventId) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
-      return axios.get(path);
+      this.getRegistrationSummary(eventId)
+        .then((responseObj) => {
+          this.data = responseObj.data;
+        });
     },
   },
   created() {
@@ -73,12 +71,13 @@ export default {
       return [
         {
           name: 'Personen',
-          data: Object.keys(this.mapping).map((item) => {
-            if (this.ageGroups && this.ageGroups.length === 0) {
-              return 0;
-            }
-            return this.ageGroups[item];
-          }),
+          data: Object.keys(this.mapping)
+            .map((item) => {
+              if (this.ageGroups && this.ageGroups.length === 0) {
+                return 0;
+              }
+              return this.ageGroups[item];
+            }),
         },
       ];
     },

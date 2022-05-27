@@ -1,5 +1,6 @@
 from django.db.models import QuerySet
 from rest_framework import mixins, viewsets, status
+
 from event import permissions as event_permissions
 from event.summary import serializers as summary_serializers
 from event import models as event_models
@@ -33,7 +34,8 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
         reg_ids = event_models.Registration.objects.filter(event=event_id).values('id')
         booking_option_list = self.request.query_params.getlist('booking-option')
 
-        return event_models.RegistrationParticipant.objects.filter(booking_option__in=booking_option_list).filter(registration__in=reg_ids)
+        return event_models.RegistrationParticipant.objects.filter(booking_option__in=booking_option_list).filter(
+            registration__in=reg_ids)
 
 
 class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -82,7 +84,6 @@ class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             .values_list('id', flat=True)
         queryset = event_models.RegistrationParticipant.objects.filter(registration__id__in=registration_ids)
 
-
         if booking_option_list:
             queryset = queryset.filter(booking_option__in=booking_option_list)
 
@@ -93,6 +94,6 @@ class CashSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubEventResponsiblePerson]
     serializer_class = summary_serializers.CashSummarySerializer
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet[event_models.Event]:
         event_id = self.kwargs.get("event_pk", None)
         return event_models.Event.objects.filter(id=event_id)

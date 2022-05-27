@@ -46,3 +46,21 @@ class LeaderTypes(models.TextChoices):
     SippenFuehrung = 'SiFue', _('Sippenführung')
     RoverrundenFuehrung = 'RoFue', _('Roverrundenführung'),
     Meutenfuehrung = 'MeuFue', _('Meutenführung')
+
+
+class FileGenerationStatus(models.TextChoices):
+    Queued = 'Q', _('In der Warteschlange.')
+    Processing = 'P', _('Dokument wird erstellt.')
+    FinishedSuccessfull = 'FS', _('Dokument erfolgreich erstellt.')
+    FinishedFailed = 'FF', _('Dokumenten Erstellung Fehlgeschlagen.')
+
+
+class FileType(models.TextChoices):
+    Kjp = 'K', _('KJP Liste')
+    Invoice = 'I', _('Rechnungserstellungsvorlage')
+    ParticipantList = 'P', _('Teilnehmerliste')
+
+
+class FileExtension(models.TextChoices):
+    Excel = 'E', _('Excel')
+    PDF = 'P', _('PDF')
