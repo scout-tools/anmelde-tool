@@ -39,7 +39,7 @@
       <v-tab
         :disabled="accountIncomplete"
         :to="{ name: 'masterDataOverview' }"
-        v-if="userinfo && isTeam"
+        v-if="isAuth && userinfo && isTeam"
       >
         Stammdaten
         <v-icon>mdi-tools</v-icon>
