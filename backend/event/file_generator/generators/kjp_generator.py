@@ -1,14 +1,13 @@
 from django.db.models import QuerySet
 from dateutil.relativedelta import relativedelta
 from openpyxl import load_workbook, Workbook
+
+from event.file_generator.generators.abstract_generator import AbstractGenerator
 from event.file_generator.models import FileTemplate, GeneratedFiles
 from event import models as event_models
 
 
-class KjpGenerator:
-    def __init__(self, generated_file: GeneratedFiles):
-        super().__init__()
-        self.generated_file = generated_file
+class KjpGenerator(AbstractGenerator):
 
     def generate(self) -> Workbook:
         event: event_models.Event = self.get_event()

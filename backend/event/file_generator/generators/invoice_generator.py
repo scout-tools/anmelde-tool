@@ -10,6 +10,7 @@ from django.core.files.base import File
 from tempfile import NamedTemporaryFile
 from backend import settings
 from event.choices.choices import FileGenerationStatus, FileType, FileExtension
+from event.file_generator.generators.abstract_generator import AbstractGenerator
 from event.file_generator.models import FileTemplate, GeneratedFiles
 from event import models as event_models
 from django.contrib.auth.models import User
@@ -18,10 +19,7 @@ from event.summary.serializers import RegistrationCashSummarySerializer
 from basic.models import StringAttribute
 
 
-class InvoiceGenerator:
-    def __init__(self, generated_file: GeneratedFiles):
-        super().__init__()
-        self.generated_file = generated_file
+class InvoiceGenerator(AbstractGenerator):
 
     def generate(self) -> Workbook:
         event: event_models.Event = self.get_event()

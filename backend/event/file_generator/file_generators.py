@@ -7,9 +7,11 @@ from django.core.files.base import File
 from tempfile import NamedTemporaryFile
 from backend import settings
 from event.choices.choices import FileGenerationStatus, FileType, FileExtension
+from event.file_generator.generators.abstract_generator import AbstractGenerator
 from event.file_generator.models import GeneratedFiles
 from event.file_generator.generators.kjp_generator import KjpGenerator
 from event.file_generator.generators.invoice_generator import InvoiceGenerator
+from event.file_generator.generators.participant_generator import ParticipantGenerator
 
 timer = getattr(settings, 'FILE_GENERATOR_DEQEUE_TIME', 60)
 
@@ -44,6 +46,7 @@ class FileGeneratorThread(threading.Thread):
         self.generated_file.status = FileGenerationStatus.Processing
         self.generated_file.save()
         try:
+            generator: AbstractGenerator = AbstractGenerator(self.generated_file)
             if self.generated_file.template.type == FileType.Kjp \
                     and self.generated_file.extension == FileExtension.Excel \
                     and self.generated_file.template.version == 1:
@@ -53,6 +56,11 @@ class FileGeneratorThread(threading.Thread):
                     and self.generated_file.extension == FileExtension.Excel \
                     and self.generated_file.template.version == 1:
                 generator = InvoiceGenerator(self.generated_file)
+
+            elif self.generated_file.template.type == FileType.ParticipantList \
+                    and self.generated_file.extension == FileExtension.Excel \
+                    and self.generated_file.template.version == 1:
+                generator = ParticipantGenerator(self.generated_file)
 
             wb = generator.generate()
             self.save_file_excel(wb)
