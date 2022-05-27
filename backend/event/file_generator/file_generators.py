@@ -1,6 +1,7 @@
 import os
 import threading
 import time
+import traceback
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.core.files.base import File
@@ -32,7 +33,9 @@ class FileGeneratorDeqeueThread(threading.Thread):
 
                 if unprocessed.exists() and not processing.exists():
                     file_to_be_generated = unprocessed.last()
-                    FileGeneratorThread(file_to_be_generated).start()
+                    generator_thread = FileGeneratorThread(file_to_be_generated)
+                    generator_thread.daemon = True
+                    generator_thread.start()
             except RuntimeError as e:
                 print(e)
 
@@ -46,7 +49,7 @@ class FileGeneratorThread(threading.Thread):
         self.generated_file.status = FileGenerationStatus.Processing
         self.generated_file.save()
         try:
-            generator: AbstractGenerator = AbstractGenerator(self.generated_file)
+            generator: AbstractGenerator = None
             if self.generated_file.template.type == FileType.Kjp \
                     and self.generated_file.extension == FileExtension.Excel \
                     and self.generated_file.template.version == 1:
@@ -62,11 +65,15 @@ class FileGeneratorThread(threading.Thread):
                     and self.generated_file.template.version == 1:
                 generator = ParticipantGenerator(self.generated_file)
 
-            wb = generator.generate()
-            self.save_file_excel(wb)
+            if generator is not None:
+                wb = generator.generate()
+                self.save_file_excel(wb)
+            else:
+                raise Exception('Kein geeignetes Template gefunden.')
         except Exception as e:
             print(e)
-            self.generated_file.error_msg = e
+            print(traceback.format_exc())
+            self.generated_file.error_msg = traceback.format_exc()
             self.generated_file.status = FileGenerationStatus.FinishedFailed
         else:
             self.generated_file.status = FileGenerationStatus.FinishedSuccessfull
