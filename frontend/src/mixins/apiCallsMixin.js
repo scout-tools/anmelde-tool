@@ -122,6 +122,46 @@ export default {
       const url = `${this.API_URL}/auth/personal-data/`;
       return axios.get(url);
     },
+    async getRegistrationSummary(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
+      return axios.get(path, { params });
+    },
+    async getCashSummary(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/cash/`;
+      return axios.get(path);
+    },
+    async addFileRequest(eventId, data) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/generate/`;
+      return axios.post(path, data);
+    },
+    async getDownloadSummary(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/generate/`;
+      return axios.get(path);
+    },
+    async getAvailableFileTemplates(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/available-templates/`;
+      return axios.get(path);
+    },
+    async getFoodSummary(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/food/`;
+      return axios.get(path, { params });
+    },
+    async getBookingOptions(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/booking-options/`;
+      return axios.get(path);
+    },
+    async getRegistrationSummaryDetails(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/detailed/`;
+      return axios.get(path, { params });
+    },
+    async getParticipants(eventId) {
+      const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/participants/`;
+      return axios.get(path);
+    },
+    async getWorkshopSummary(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/workshop/`;
+      return axios.get(path);
+    },
     async updateMessageById(data) {
       const path = `${process.env.VUE_APP_API}/basic/message/${data.id}/`;
       return axios.put(path, data);

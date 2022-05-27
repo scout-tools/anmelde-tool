@@ -104,12 +104,12 @@
 </template>
 
 <script>
-import serviceMixin from '@/mixins/serviceMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 import moment from 'moment'; // eslint-disable-line
 import BookingFilter from '@/components/common/BookingFilter.vue';
 
 export default {
-  mixins: [serviceMixin],
+  mixins: [apiCallsMixin],
   components: {
     BookingFilter,
   },

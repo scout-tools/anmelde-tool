@@ -146,12 +146,12 @@
 <script>
 import TranserCreationModal from '@/components/dialog/TranfserCreationModal.vue';
 import TransferDeleteModal from '@/components/dialog/TransferDeleteModal.vue';
-import serviceMixin from '@/mixins/serviceMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 import moment from 'moment'; // eslint-disable-line
 import axios from 'axios';
 
 export default {
-  mixins: [serviceMixin],
+  mixins: [apiCallsMixin],
   components: {
     TranserCreationModal,
     TransferDeleteModal,

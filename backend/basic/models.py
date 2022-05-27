@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from polymorphic.models import PolymorphicModel
 
-from basic.choices import TravelType, TravelSlots, DescriptionType
+from basic.choices import TravelType, TravelSlots, DescriptionType, StateChoices
 
 
 class TimeStampMixin(models.Model):
@@ -20,6 +20,7 @@ class ZipCode(TimeStampMixin):
     city = models.CharField(max_length=60, blank=True)
     lat = models.DecimalField(max_digits=20, decimal_places=15, default=0.000)
     lon = models.DecimalField(max_digits=20, decimal_places=15, default=0.000)
+    state = models.CharField(max_length=2, choices=StateChoices.choices, default=StateChoices.BY)
 
     def __str__(self):
         return f"{self.zip_code} {self.city}"
@@ -148,6 +149,7 @@ class FrontendTheme(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class MessageType(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)

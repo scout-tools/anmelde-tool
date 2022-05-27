@@ -60,11 +60,11 @@
 </template>
 
 <script>
-import serviceMixin from '@/mixins/serviceMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 import moment from 'moment'; // eslint-disable-line
 
 export default {
-  mixins: [serviceMixin],
+  mixins: [apiCallsMixin],
   data: () => ({
     data: [],
     expanded: [],

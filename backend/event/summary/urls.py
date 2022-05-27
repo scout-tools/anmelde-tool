@@ -12,7 +12,6 @@ event_summary_router.register(r'summary/attributes', views.EventAttributeSummary
 event_summary_router.register(r'summary/food', views.EventFoodSummaryViewSet, basename='food')
 event_summary_router.register(r'summary/cash', views.CashSummaryViewSet, basename='cash')
 
-
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [

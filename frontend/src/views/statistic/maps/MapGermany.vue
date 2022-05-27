@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import serviceMixin from '@/mixins/serviceMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 import { GChart } from 'vue-google-charts';
 
 export default {
-  mixins: [serviceMixin],
+  mixins: [apiCallsMixin],
   components: {
     GChart,
   },

@@ -38,12 +38,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import serviceMixin from '@/mixins/serviceMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 import kpiCardList from '@/components/kpi/CardList.vue';
 import kpiCard from '@/components/kpi/Card.vue';
 
 export default {
-  mixins: [serviceMixin],
+  mixins: [apiCallsMixin],
   components: {
     kpiCard,
     kpiCardList,
