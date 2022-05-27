@@ -1,29 +1,98 @@
 <template>
-  <v-container class="top-margin">
-    <v-row justify="center">
-      <v-flex ma-3 lg9>
-        <v-layout column>
-          <v-card v-if="!loading">
-            <v-card-title class="text-center justify-center py-6">
-              Zu diesen Fahrten kannst du deinen Stamm oder dich anmelden
-            </v-card-title>
-          </v-card>
-        </v-layout>
-      </v-flex>
+  <v-container fluid class="mt-12">
+    <v-row>
+      <v-col cols="3">
+        <v-list>
+          <v-list-group
+            :value="false"
+            :prepend-icon="link.icon"
+            v-for="(link, i) in links"
+            :key="i"
+          >
+            <template v-slot:activator>
+              <v-list-item-title>{{ link.name }}</v-list-item-title>
+            </template>
+
+            <v-list-item
+              v-for="(messageLink, i) in link.items"
+              :key="i"
+              link
+              :to="messageLink.link"
+            >
+              <v-list-item-title v-text="messageLink.name"> </v-list-item-title>
+
+              <v-list-item-icon>
+                <v-icon v-text="messageLink.icon"></v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
+      </v-col>
+      <v-col cols="9">
+        <router-view class="ma-3"></router-view>
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
+
+// import MessageMain from './message/Main.vue';
+
 export default {
-  data: () => ({
-    API_URL: process.env.VUE_APP_API,
-    active: false,
-    loading: false,
-    data: {},
-  }),
+  components: {
+    // MessageMain,
+  },
+  mixins: [apiCallsMixin],
+  computed: {
+    ...mapGetters([]),
+    eventId() {
+      return this.$route.params.id;
+    },
+  },
+  data() {
+    return {
+      tab: 1,
+      eventOverview: [],
+      hasParticipantsPersonal: false,
+      hasSubscribeWorkshop: false,
+      hasAttributes: false,
+      links: [
+        {
+          name: 'Nachrichten',
+          icon: 'mdi-message',
+          items: [
+            {
+              name: 'Liste',
+              icon: 'mdi-format-list-bulleted',
+              link: '/masterData/message-list',
+            },
+          ],
+        },
+        {
+          name: 'Themes',
+          icon: 'mdi-palette',
+          items: [
+            {
+              name: 'Liste',
+              icon: 'mdi-format-list-bulleted',
+              link: '/masterData/theme-list',
+            },
+          ],
+        },
+      ],
+    };
+  },
+  methods: {
+    getData() {},
+    loadData() {
+      this.getData();
+    },
+  },
+  created() {
+    this.loadData();
+  },
 };
 </script>
-
-<style>
-</style>

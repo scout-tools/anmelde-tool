@@ -12,36 +12,47 @@
       <v-icon left>mdi-download</v-icon>
       Downloads
     </v-tab>
-    <v-tab>
+    <!-- <v-tab>
       <v-icon left>mdi-email</v-icon>
       Email
+    </v-tab> -->
+    <v-tab>
+      <v-icon left> mdi-tools </v-icon>
+      Bearbeiten
     </v-tab>
 
     <v-tab-item>
       <v-card flat>
         <v-card-text>
-          <List/>
+          <List />
         </v-card-text>
       </v-card>
     </v-tab-item>
     <v-tab-item>
       <v-card flat>
         <v-card-text>
-          <Cash/>
+          <Cash />
         </v-card-text>
       </v-card>
     </v-tab-item>
     <v-tab-item>
       <v-card flat>
         <v-card-text>
-          <Download/>
+          <Download />
         </v-card-text>
       </v-card>
     </v-tab-item>
-        <v-tab-item>
+    <!-- <v-tab-item>
       <v-card flat>
         <v-card-text>
-          <Email/>
+          <Email />
+        </v-card-text>
+      </v-card>
+    </v-tab-item> -->
+    <v-tab-item>
+      <v-card flat>
+        <v-card-text>
+          <EditReg />
         </v-card-text>
       </v-card>
     </v-tab-item>
@@ -53,6 +64,7 @@ import List from './tabs/List.vue';
 import Cash from './tabs/Cash.vue';
 import Download from './tabs/Download.vue';
 import Email from './tabs/Email.vue';
+import EditReg from './tabs/EditReg.vue';
 
 export default {
   components: {
@@ -60,6 +72,7 @@ export default {
     Cash,
     Download,
     Email,
+    EditReg,
   },
 };
 </script>

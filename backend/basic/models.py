@@ -173,6 +173,7 @@ class Message(TimeStampMixin):
     message_type = models.ForeignKey(
         MessageType, on_delete=models.CASCADE)
     message_body = models.CharField(max_length=10000)
+    internal_comment = models.CharField(max_length=10000, blank=True, null=True)
     is_processed = models.BooleanField(default=False)
 
     def __str__(self):

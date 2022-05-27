@@ -21,9 +21,9 @@ export default {
     //   const path = `${process.env.VUE_APP_API}${modulePath}${this.id}/`;
     //   return axios.patch(path, { [field]: value });
     // },
-    getSimpleService(modulePath) {
+    getSimpleService(modulePath, params) {
       const path = `${process.env.VUE_APP_API}${modulePath}`;
-      return axios.get(path);
+      return axios.get(path, { params });
     },
     getDataService(id, modulePath) {
       this.loading = true;

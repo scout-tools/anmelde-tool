@@ -162,5 +162,9 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/workshop/`;
       return axios.get(path);
     },
+    async updateMessageById(data) {
+      const path = `${process.env.VUE_APP_API}/basic/message/${data.id}/`;
+      return axios.put(path, data);
+    },
   },
 };
