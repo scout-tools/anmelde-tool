@@ -11,6 +11,11 @@ event_summary_router.register(r'summary/workshop', views.WorkshopEventSummaryVie
 event_summary_router.register(r'summary/attributes', views.EventAttributeSummaryViewSet, basename='attributes')
 event_summary_router.register(r'summary/food', views.EventFoodSummaryViewSet, basename='food')
 event_summary_router.register(r'summary/cash', views.CashSummaryViewSet, basename='cash')
+event_summary_router.register(r'summary/emails/responsible-persons', views.EmailResponsiblePersonsViewSet,
+                              basename='emails-responsible-persons')
+event_summary_router.register(r'summary/emails/registration-responsible-persons',
+                              views.EmailRegistrationResponsiblePersonsViewSet,
+                              basename='emails-registration-responsible-persons')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

@@ -2,13 +2,13 @@ from django.db.models import QuerySet, Sum, Count, F
 from datetime import datetime
 import pytz
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
 from basic import serializers as basic_serializers
 from basic.models import EatHabit
 from event import models as event_models
 from event import serializers as event_serializer
 from event.registration import serializers as registration_serializers
-from event.cash import models as cash_models
 from event.cash import serializers as cash_serializers
 from event.summary import serializers as summary_serializers
 
@@ -108,7 +108,7 @@ class RegistrationEventDetailedSummarySerializer(RegistrationEventSummarySeriali
     class Meta:
         model = RegistrationEventSummarySerializer.Meta.model
         fields = RegistrationEventSummarySerializer.Meta.fields + \
-            ('registrationparticipant_set',)
+                 ('registrationparticipant_set',)
 
 
 class EventSummarySerializer(serializers.ModelSerializer):
@@ -278,7 +278,7 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
         total_price = registration.registrationparticipant_set.aggregate(
             sum=Sum('booking_option__price'))['sum'] or 0
         paid = registration.cashincome_set.aggregate(sum=Sum('amount'))[
-            'sum'] or 0
+                   'sum'] or 0
         difference = total_price - paid
 
         return {
@@ -317,3 +317,9 @@ class CashSummarySerializer(serializers.ModelSerializer):
             .values(booking_option=F('registrationparticipant__booking_option__name')) \
             .annotate(count=Count('registrationparticipant')) \
             .annotate(price=Sum('registrationparticipant__booking_option__price'))
+
+
+class UserEmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email',)
