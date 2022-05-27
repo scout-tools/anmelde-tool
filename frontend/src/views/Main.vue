@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <top-menu-main v-if="!isMobile" />
-    <router-view class="mb-12" v-if="!isMobile" />
+    <router-view v-if="!isMobile" />
     <v-container fluid v-else>
       <v-row align="center" justify="center" class="ma-10">
         Die Smartphone Version befindet sich noch in der Testphase.

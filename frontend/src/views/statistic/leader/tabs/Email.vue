@@ -4,25 +4,52 @@
       <v-card class="pa-0" flat>
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
-            <v-row class="center text-center justify-center pa-0">
-              <v-col cols="12">
-                <BookingFilter
-                  :bookingOptionList="bookingOptionList"
-                  :loading="loading"
-                  @onFilterSelected="onFilterSelected"
-                  v-model="selectedBookingOption"
-                />
+            <v-row class="center text-center justify-center  pa-0 mt-3">
+              <v-col cols="8">
+                <v-textarea
+                  v-on:focus="$event.target.select()"
+                  ref="responsiblePersonsInputField"
+                  label="Planungsteam Emails"
+                  outlined
+                  :value="getResponsiblePersonsText"
+                  readonly/>
+              </v-col>
+              <v-col cols="4">
+                <v-row>
+                  <v-btn @click="copy(getResponsiblePersonsText)">Kopieren</v-btn>
+                </v-row>
+                <v-row class="mt-6">
+                  <v-btn @click="mailto(getResponsiblePersonsText)">
+                    <v-icon>
+                      mdi-email
+                    </v-icon>
+                    Mail an Planungsteam
+                  </v-btn>
+                </v-row>
               </v-col>
             </v-row>
-            <v-row class="center text-center justify-center pa-0">
-              <v-col cols="12">
-                <v-autocomplete
-                  :loading="loading"
-                  :items="stammList"
-                  v-model="filter.stamm"
-                  label="Stamm"
-                  item-text="registration.scoutOrganisation.name"
-                ></v-autocomplete>
+            <v-row class="center text-center justify-center">
+              <v-col cols="8">
+                <v-textarea
+                  v-on:focus="$event.target.select()"
+                  ref="responsiblePersonsInputField"
+                  label="Teilnehmer Emails"
+                  outlined
+                  :value="getRegistrationResponsiblePersonsText"
+                  readonly/>
+              </v-col>
+              <v-col cols="4">
+                <v-row>
+                  <v-btn @click="copy(getRegistrationResponsiblePersonsText)">Kopieren</v-btn>
+                </v-row>
+                <v-row class="mt-6">
+                  <v-btn @click="mailto(getRegistrationResponsiblePersonsText)">
+                    <v-icon>
+                      mdi-email
+                    </v-icon>
+                    Mail an Teilnehmer
+                  </v-btn>
+                </v-row>
               </v-col>
             </v-row>
           </v-container>
@@ -30,135 +57,37 @@
       </v-card>
     </v-row>
     <v-row justify="center" class="overflow-y: auto">
-      <v-data-table
-        v-if="filter.stamm"
-        :headers="headers"
-        :items="getPersons"
-        :items-per-page="itemsPerPage"
-        :expanded.sync="expanded"
-        show-expand
-        single-expand
-        hide-default-footer
-        item-key="createdAt">
-      </v-data-table>
-    </v-row>
-    <v-row v-if="!loading && !filter.stamm" justify="center">
-      <p>Bitte wähle einen Stamm</p>
+
     </v-row>
   </v-container>
 </template>
 
 <script>
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import BookingFilter from '@/components/common/BookingFilter.vue';
 
 export default {
   mixins: [apiCallsMixin],
-  components: {
-    BookingFilter,
-  },
   data: () => ({
-    data: [],
-    expanded: [],
+    responsiblePersons: [],
+    registrationResponsiblePersons: [],
     loading: true,
-    filter: {
-      stamm: null,
-    },
-    headers: [
-      {
-        text: 'Vorname',
-        value: 'firstName',
-      },
-      {
-        text: 'Fahrtenname',
-        value: 'scoutName',
-      },
-      {
-        text: 'Nachname',
-        value: 'lastName',
-      },
-      {
-        text: 'Alter',
-        value: 'birthday',
-      },
-      {
-        text: '',
-        value: 'data-table-expand',
-      },
-    ],
-    API_URL: process.env.VUE_APP_API,
-    showError: false,
-    responseObj: null,
-    itemsPerPage: 1000,
-    bookingOptionList: [],
-    selectedBookingOption: null,
   }),
   computed: {
     eventId() {
       return this.$route.params.id;
     },
-    isAuthenticated() {
-      return this.$store.getters.isAuthenticated;
+    getResponsiblePersonsText() {
+      const text = this.responsiblePersons.map((x) => x.email)
+        .join(';');
+      console.log(text);
+      return text;
     },
-    stammList() {
-      return this.data;
-    },
-    getItems() {
-      const data = this.data.filter(
-        (item) => item.scoutOrganisation.name === this.filter.stamm,
-      );
-      return data;
-    },
-    getPersons() {
-      return this.data.filter(
-        (item) => item.registration.scoutOrganisation.name === this.filter.stamm,
-      );
-    },
-    getTotalStamm() {
-      const numberStammBdp = this.getItems.length;
-      return `Stämme ${numberStammBdp || 0}`;
+    getRegistrationResponsiblePersonsText() {
+      return this.registrationResponsiblePersons.map((x) => x.email)
+        .join(';');
     },
   },
-
   methods: {
-    filterNulls(items) {
-      return items.tags.filter((i) => !!this.getValueField(i));
-    },
-    getBody(item) {
-      return item.map((t) => `${t.name}: ${this.getValueField(t)}`);
-    },
-    getValueField(item) {
-      let value = '';
-      if (item.booleanField) {
-        value = item.booleanField;
-      }
-      if (item.integerField) {
-        value = item.integerField;
-      }
-      if (item.timeField) {
-        value = item.timeField;
-      }
-      if (item.stringField) {
-        value = item.stringField;
-      }
-      switch (value) {
-        case true:
-          return 'Ja';
-        case false:
-          return 'Nein';
-        default:
-          return value;
-      }
-    },
-    rowClasses(item) {
-      if (item.verbandName === 'DPV') {
-        return 'dpv-blue';
-      }
-      return 'bdp-yellow';
-    },
-    getNumberParticipant(item) {
-      return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
-    },
     onFilterSelected(values) {
       const params = new URLSearchParams();
       if (values) {
@@ -172,16 +101,29 @@ export default {
       this.loading = true;
 
       Promise.all([
-        this.getRegistrationSummaryDetails(eventId, param),
-        this.getBookingOptions(eventId),
+        this.getResponsiblePersons(eventId, param),
+        this.getRegistrationsResponsiblePersons(eventId),
       ])
         .then((values) => {
-          this.data = values[0].data; //eslint-disable-line
-          this.bookingOptionList = values[1].data; //eslint-disable-line
+          this.responsiblePersons = values[0].data; //eslint-disable-line
+          this.registrationResponsiblePersons = values[1].data; //eslint-disable-line
+          console.log(this.responsiblePersons);
         })
         .finally(() => {
           this.loading = false;
         });
+    },
+    copy(text) {
+      navigator.clipboard.writeText(text)
+        .then((success) => {
+          console.log(success);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    mailto(text) {
+      window.location = `mailto:${text}`;
     },
   },
   created() {
@@ -189,13 +131,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.dpv-blue {
-  background-color: rgba(56, 117, 238, 0.082);
-}
-
-.bdp-yellow {
-  background-color: #ffcc0227;
-}
-</style>

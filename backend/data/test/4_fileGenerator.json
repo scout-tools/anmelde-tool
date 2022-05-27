@@ -18,5 +18,15 @@
       "extension": "E",
       "version": 1
     }
+  },
+  {
+    "model": "file_generator.filetemplate",
+    "pk": "f9c456b7-e638-4166-8edd-80d58a16650d",
+    "fields": {
+      "file": "Teilnehmerliste_rahZvvK.xlsx",
+      "type": "P",
+      "extension": "E",
+      "version": 1
+    }
   }
 ]

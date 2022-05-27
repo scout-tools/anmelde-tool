@@ -1,5 +1,6 @@
 from django.db.models import QuerySet
 from rest_framework import mixins, viewsets, status
+from django.contrib.auth.models import User
 
 from event import permissions as event_permissions
 from event.summary import serializers as summary_serializers
@@ -97,3 +98,29 @@ class CashSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def get_queryset(self) -> QuerySet[event_models.Event]:
         event_id = self.kwargs.get("event_pk", None)
         return event_models.Event.objects.filter(id=event_id)
+
+
+class EmailResponsiblePersonsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    permission_classes = [event_permissions.IsSubEventResponsiblePerson]
+    serializer_class = summary_serializers.UserEmailSerializer
+
+    def get_queryset(self) -> QuerySet[User]:
+        event_id = self.kwargs.get("event_pk", None)
+        event: event_models.Event = event_models.Event.objects.filter(id=event_id).first()
+        admin_groups: QuerySet[User] = event.keycloak_admin_path.user_set.exclude(email__exact='')
+        normal_groups: QuerySet[User] = event.keycloak_path.user_set.exclude(email__exact='')
+        internal: QuerySet[User] = event.responsible_persons.exclude(email__exact='')
+        all_users = admin_groups.union(normal_groups).union(internal)
+        return all_users
+
+
+class EmailRegistrationResponsiblePersonsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    permission_classes = [event_permissions.IsSubEventResponsiblePerson]
+    serializer_class = summary_serializers.UserEmailSerializer
+
+    def get_queryset(self) -> QuerySet[User]:
+        event_id = self.kwargs.get("event_pk", None)
+        registrations: QuerySet[int] = event_models.Registration.objects.filter(event=event_id) \
+            .values_list('responsible_persons__id', flat=True)
+        all_users = User.objects.filter(id__in=registrations).exclude(email__exact='')
+        return all_users

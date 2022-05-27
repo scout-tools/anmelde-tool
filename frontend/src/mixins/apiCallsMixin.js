@@ -166,5 +166,13 @@ export default {
       const path = `${process.env.VUE_APP_API}/basic/message/${data.id}/`;
       return axios.put(path, data);
     },
+    async getResponsiblePersons(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/emails/responsible-persons/`;
+      return axios.get(path);
+    },
+    async getRegistrationsResponsiblePersons(eventId) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/emails/registration-responsible-persons/`;
+      return axios.get(path);
+    },
   },
 };
