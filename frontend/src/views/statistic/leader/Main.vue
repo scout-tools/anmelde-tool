@@ -63,7 +63,7 @@
 import List from './tabs/List.vue';
 import Cash from './tabs/Cash.vue';
 import Download from './tabs/Download.vue';
-import Email from './tabs/Email.vue';
+// import Email from './tabs/Email.vue';
 import EditReg from './tabs/EditReg.vue';
 
 export default {
@@ -71,7 +71,7 @@ export default {
     List,
     Cash,
     Download,
-    Email,
+    // Email,
     EditReg,
   },
 };
