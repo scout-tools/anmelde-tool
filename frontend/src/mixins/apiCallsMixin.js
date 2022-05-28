@@ -17,6 +17,10 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/registration/${registration}/${route}/`;
       return axios.get(path);
     },
+    async patchRegService(route, regId, field, value) {
+      const path = `${process.env.VUE_APP_API}/event/registration/${regId}/${route}/${regId}/`;
+      return axios.patch(path, { [field]: value });
+    },
     async getRegServiceById(route, registration, id) {
       const path = `${process.env.VUE_APP_API}/event/registration/${registration}/${route}/${id}/`;
       return axios.get(path);

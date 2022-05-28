@@ -135,7 +135,7 @@ export default {
         value: 'createdByEmail',
       },
       {
-        text: 'supervisor',
+        text: 'Bearbeiter',
         value: 'supervisor',
       },
       {

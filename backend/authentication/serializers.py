@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
 
 from basic.models import ScoutHierarchy
 from rest_framework import serializers
@@ -30,6 +31,29 @@ class UserExtendedShortSerializer(serializers.ModelSerializer):
             'mobile_number',
             'scout_name',
         )
+
+
+class ResponseablePersontSerializer(serializers.ModelSerializer):
+    email = serializers.SerializerMethodField()
+    stamm = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserExtended
+        fields = (
+            'scout_name',
+            'email',
+            'stamm',
+            'user'
+        )
+
+
+    def get_email(self, obj: UserExtended) -> str:
+        return User.objects.filter(id=obj.user.id).first().email
+
+    def get_stamm(self, obj: UserExtended) -> str:
+        if obj.scout_organisation:
+            return obj.scout_organisation.name
+        return ''
 
 
 class UserExtendedGetSerializer(serializers.ModelSerializer):

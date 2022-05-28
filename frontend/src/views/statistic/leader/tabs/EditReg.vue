@@ -45,15 +45,19 @@
           <td v-html="getNumberParticipant(item)" disabled></td>
         </template>
         <template v-slot:[`item.actions`]="{ item }">
-          <v-icon color="primary" class="mr-2" @click="editItem(item)">
+          <v-icon small color="primary" class="mr-2" @click="editItem(item)">
             mdi-pencil
           </v-icon>
-          <v-icon color="error" @click="deleteItem(item)"> mdi-delete </v-icon>
+          <v-icon small color="error" @click="deleteItem(item)"> mdi-delete </v-icon>
+          <v-icon small color="secondary" @click="onAddResponsablePerson(item)">
+            mdi-share-variant
+          </v-icon>
         </template>
       </v-data-table>
     </v-row>
     <confirm-registration-edit-modal ref="confirmRegistrationEditModal" />
     <DeleteModal ref="deleteModal" />
+    <DialogAddResponsablePerson ref="dialogAddResponsablePerson" />
   </v-container>
 </template>
 
@@ -62,6 +66,7 @@ import apiCallsMixin from '@/mixins/apiCallsMixin';
 import BookingFilter from '@/components/common/BookingFilter.vue';
 import ConfirmRegistrationEditModal from '@/views/registration/components/PreForm.vue';
 import DeleteModal from '@/views/registration/components/DeleteModal.vue';
+import DialogAddResponsablePerson from '@/components/dialog/DialogAddResponsablePerson.vue';
 
 export default {
   mixins: [apiCallsMixin],
@@ -69,6 +74,7 @@ export default {
     BookingFilter,
     ConfirmRegistrationEditModal,
     DeleteModal,
+    DialogAddResponsablePerson,
   },
   data: () => ({
     data: [],
@@ -139,6 +145,9 @@ export default {
     },
   },
   methods: {
+    onAddResponsablePerson(item) {
+      this.$refs.dialogAddResponsablePerson.open(item);
+    },
     editItem(item) {
       console.log(item);
       this.editRegistration(item);
