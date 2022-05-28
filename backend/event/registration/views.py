@@ -15,6 +15,7 @@ from event.choices import choices as event_choices
 from event import views as event_views
 from event.registration import serializers as registration_serializers
 from event import permissions as event_permissions
+from django.contrib.auth.models import User
 
 
 def create_missing_eat_habits(request) -> [str]:
@@ -277,6 +278,32 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
         registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
         return registration.tags
 
+
+class AddResponsablePersonRegistrationViewSet(
+                          mixins.UpdateModelMixin,
+                          viewsets.GenericViewSet):
+    permission_classes = [event_permissions.IsRegistrationResponsiblePerson]
+    queryset = event_models.Registration.objects.all()
+    serializer_class = registration_serializers.RegistrationPutSerializer
+
+    def update(self, request, *args, **kwargs):
+        new_responsable_person = request.data.get('responsable_person')
+
+        # get user-id
+        new_responsable_person_id = User.objects.filter(email=new_responsable_person).first().id
+
+        instance = self.get_object()
+       
+       # prepair the return list with new user
+        responseable_person_ids = [new_responsable_person_id]
+
+        # add all exsisting users-id to list
+        for x in instance.responsible_persons.all():
+            responseable_person_ids.append(x.id)
+
+        request.data['responsible_persons'] = responseable_person_ids
+
+        return super().update(request, *args, **kwargs)
 
 class RegistrationSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubRegistrationResponsiblePerson]

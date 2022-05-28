@@ -21,7 +21,7 @@ export default {
     },
     bookingOptionList: [],
     loading: {
-      default: true,
+      default: false,
     },
   },
   methods: {

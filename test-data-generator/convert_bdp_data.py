@@ -10,7 +10,6 @@ with open('output/0_zip_codes.json') as json_file:
 
 
 def findIdByCity(plz):
-    print(plz)
     for i, event in enumerate(zipCodes, start=0):
         if (zipCodes[i]['fields']['zip_code'] == plz):
             return zipCodes[i]['fields']['id']

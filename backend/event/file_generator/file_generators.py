@@ -24,7 +24,7 @@ class FileGeneratorDeqeueThread(threading.Thread):
         while True:
             try:
                 time.sleep(timer)
-                timed_out = datetime.now(tz=timezone.get_current_timezone()) - timedelta(seconds=5)
+                timed_out = datetime.now(tz=timezone.get_current_timezone()) - timedelta(minutes=5)
                 GeneratedFiles.objects.filter(status=FileGenerationStatus.Processing, updated_at__lt=timed_out) \
                     .update(status=FileGenerationStatus.FinishedFailed, error_msg='Timeout reached')
 

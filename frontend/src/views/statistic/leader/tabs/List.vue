@@ -5,24 +5,21 @@
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <v-row class="center text-center justify-center pa-0">
-              <v-col cols="12">
+              <v-col cols="6">
+                <v-autocomplete
+                  :loading="loading"
+                  :items="stammList"
+                  v-model="filter.stamm"
+                  label="Stamm"
+                  item-text="registration.scoutOrganisation.name"/>
+              </v-col>
+              <v-col cols="6">
                 <BookingFilter
                   :bookingOptionList="bookingOptionList"
                   :loading="loading"
                   @onFilterSelected="onFilterSelected"
                   v-model="selectedBookingOption"
                 />
-              </v-col>
-            </v-row>
-            <v-row class="center text-center justify-center pa-0">
-              <v-col cols="12">
-                <v-autocomplete
-                  :loading="loading"
-                  :items="stammList"
-                  v-model="filter.stamm"
-                  label="Stamm"
-                  item-text="registration.scoutOrganisation.name"
-                ></v-autocomplete>
               </v-col>
             </v-row>
           </v-container>
@@ -45,15 +42,17 @@
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
               item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
-            }}</v-icon
+            }}
+          </v-icon
           >
         </template>
         <template v-slot:[`item.birthday`]="{ item }">
           {{
-            `${moment().diff(
-              item.birthday,
-              'years',
-            )}`
+            `${moment()
+              .diff(
+                item.birthday,
+                'years',
+              )}`
           }}
         </template>
         <template v-slot:expanded-item="{ item }">
@@ -105,7 +104,6 @@
 
 <script>
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import moment from 'moment'; // eslint-disable-line
 import BookingFilter from '@/components/common/BookingFilter.vue';
 
 export default {
@@ -121,11 +119,26 @@ export default {
       stamm: null,
     },
     headers: [
-      { text: 'Vorname', value: 'firstName' },
-      { text: 'Fahrtenname', value: 'scoutName' },
-      { text: 'Nachname', value: 'lastName' },
-      { text: 'Alter', value: 'birthday' },
-      { text: '', value: 'data-table-expand' },
+      {
+        text: 'Vorname',
+        value: 'firstName',
+      },
+      {
+        text: 'Fahrtenname',
+        value: 'scoutName',
+      },
+      {
+        text: 'Nachname',
+        value: 'lastName',
+      },
+      {
+        text: 'Alter',
+        value: 'birthday',
+      },
+      {
+        text: '',
+        value: 'data-table-expand',
+      },
     ],
     API_URL: process.env.VUE_APP_API,
     showError: false,
@@ -145,23 +158,20 @@ export default {
       return this.data;
     },
     getItems() {
-      const data = this.data.filter(
+      return this.data.filter(
         (item) => item.scoutOrganisation.name === this.filter.stamm,
       );
-      return data;
     },
     getPersons() {
-      const personArray = this.data.filter(
+      return this.data.filter(
         (item) => item.registration.scoutOrganisation.name === this.filter.stamm,
       );
-      return personArray;
     },
     getTotalStamm() {
       const numberStammBdp = this.getItems.length;
       return `Stämme ${numberStammBdp || 0}`;
     },
   },
-
   methods: {
     filterNulls(items) {
       return items.tags.filter((i) => !!this.getValueField(i));
@@ -218,9 +228,11 @@ export default {
         this.getBookingOptions(eventId),
       ])
         .then((values) => {
-          this.data = values[0].data; //eslint-disable-line
-          console.log(this.data);
-          this.bookingOptionList = values[1].data; //eslint-disable-line
+          this.data = values[0].data;
+          this.bookingOptionList = values[1].data;
+          if (!this.filter.stamm) {
+            this.filter.stamm = this.stammList[0].registration.scoutOrganisation.name; //eslint-disable-line
+          }
         })
         .finally(() => {
           this.loading = false;
@@ -232,12 +244,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.dpv-blue {
-  background-color: rgba(56, 117, 238, 0.082);
-}
-.bdp-yellow {
-  background-color: #ffcc0227;
-}
-</style>

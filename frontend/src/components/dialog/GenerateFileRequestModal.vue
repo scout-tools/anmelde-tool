@@ -96,7 +96,7 @@ export default {
             tooltip: 'Wähle den Datei Typ aus.',
             icon: 'mdi-account-circle',
             lookupPath: '/event/files/available-templates/',
-            lookupListDisplay: ['type', 'version'],
+            lookupListDisplay: ['type', '$ (Version', 'version', '$)'],
             mandatory: true,
             fieldType: 'refComboSingle',
           },

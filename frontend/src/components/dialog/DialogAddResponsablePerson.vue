@@ -5,12 +5,12 @@
         <v-btn icon dark @click="active = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Nachricht bearbeiten</v-toolbar-title>
+        <v-toolbar-title>Neuen Verantwortlicheren hinzufügen</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-container>
         <v-row class="ma-4">
-          Bitte fülle diese Daten aus.
+          Diese Person hat zukünfigt vollen Zugriff auf deine Anmeldung.
         </v-row>
         <v-row>
           <template v-for="(field, i) in dialogMeta.fields">
@@ -22,10 +22,10 @@
             />
           </template>
         </v-row>
-        <v-divider class="my-2" />
+        <v-divider class="my-2"/>
         <v-row class="ma-1">
-                  <v-spacer></v-spacer>
-        <v-btn color="success" @click="onClickOkay">Speichern</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="success" @click="onClickOkay">Diese Person berechtigen</v-btn>
         </v-row>
       </v-container>
     </v-card>
@@ -34,12 +34,8 @@
 
 <script>
 import BaseField from '@/components/common/BaseField.vue';
-import { mapGetters } from 'vuex';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-
-import {
-  required,
-} from 'vuelidate/lib/validators';
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   components: {
@@ -50,6 +46,7 @@ export default {
     API_URL: process.env.VUE_APP_API,
     active: false,
     valid: true,
+    edit: false,
     data: {},
   }),
   methods: {
@@ -61,77 +58,41 @@ export default {
       this.data = item;
       this.active = true;
     },
+    close() {
+      this.active = false;
+      this.data = {};
+    },
     onClickOkay() {
       this.validate();
       if (!this.valid) {
         return;
       }
-      this.updateMessageById(this.data).then(() => {
-        this.$emit('refresh');
+      this.patchRegService('add-reponsable', this.data.id, 'responsable_person', this.data.responsablePerson).then((response) => {
+        console.log(response);
         this.active = false;
       });
     },
   },
   validations: {
     data: {
-      messageType: {
-        required,
-      },
-      isProcessed: {
+      responsablePerson: {
         required,
       },
     },
   },
-  created() {},
   computed: {
-    ...mapGetters(['userinfo']),
     dialogMeta() {
       return {
-        title: 'Hallo',
-        excelUpload: true,
-        listDisplay: ['firstName', 'lastName'],
-        orderBy: 'firstName',
-        maxItems: null,
-        minItems: 1,
         fields: [
           {
-            name: 'Typ',
-            techName: 'messageType',
-            tooltip: 'Welcher Typ?',
-            icon: 'mdi-shape',
-            lookupPath: '/basic/message-type/',
-            lookupListDisplay: ['name'],
-            mandatory: true,
-            fieldType: 'refDropdown',
-            default: '',
-          },
-          {
-            name: 'Personen',
-            techName: 'supervisor',
-            tooltip: 'Welcher Typ?',
+            name: 'Neue Verantwortlicherer',
+            techName: 'responsablePerson',
+            tooltip: 'Hier kannst du jede Person hinzufügen, welche sich bereits im Anmelde-Tool registriert hat.',
             icon: 'mdi-shape',
             lookupPath: '/auth/responsables/',
             lookupListDisplay: ['scoutName', '$ - ', 'stamm', '$ -', 'email', '$'],
             mandatory: true,
             fieldType: 'responsablesField',
-            default: '',
-          },
-          {
-            name: 'Bearbeitet?',
-            techName: 'isProcessed',
-            tooltip: 'Is der Fall erledigt?',
-            icon: 'mdi-account-circle',
-            mandatory: true,
-            fieldType: 'checkbox',
-            default: '',
-          },
-          {
-            name: 'Interner Vermerk',
-            techName: 'internalComment',
-            tooltip: 'Interner Vermerk?',
-            icon: 'mdi-account-circle',
-            mandatory: true,
-            fieldType: 'textarea',
             default: '',
           },
         ],
@@ -140,6 +101,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

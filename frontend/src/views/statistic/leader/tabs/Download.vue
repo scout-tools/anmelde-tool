@@ -6,10 +6,31 @@
           <v-container class="pa-0">
             <v-row class="center text-center justify-center pa-0">
               <v-col cols="6">
-                <v-checkbox
-                  v-model="filter.justConfirmed"
-                  label="Nur Bestätigt"
-                  hide-details/>
+                <v-autocomplete
+                  clearable
+                  :loading="loading"
+                  :items="availableFileTemplates"
+                  v-model="selectedFileTemplateFilter"
+                  label="Filter nach Typ"
+                  multiple
+                  item-text="type"
+                  item-value="id"
+                  @change="onFilterSelected"
+                  no-data-text="Keine Datei Typen gefunden."
+                />
+              </v-col>
+              <v-col cols="6">
+                <v-autocomplete
+                  clearable
+                  :loading="loading"
+                  :items="availableStatus"
+                  v-model="selectedStatusFilter"
+                  label="Filter nach Status"
+                  multiple
+                  item-text="name"
+                  item-value="value"
+                  @change="onFilterSelected"
+                />
               </v-col>
               <v-col cols="6">
                 <v-btn
@@ -33,7 +54,8 @@
                     single-expand
                     hide-default-footer
                     item-key="createdAt"
-                    :loading="loading">
+                    :loading="loading"
+                    no-data-text="Keine Downloads verfügbar.">
         <template v-slot:[`item.createdAt`]="{ item }">
           {{ formatDate(item.createdAt) }}
         </template>
@@ -86,10 +108,11 @@ export default {
   },
   data: () => ({
     data: [],
+    availableFileTemplates: [],
+    selectedFileTemplateFilter: [],
+    selectedStatusFilter: [],
+    currentSearchParams: null,
     expanded: [],
-    filter: {
-      justConfirmed: true,
-    },
     headers: [
       {
         text: 'Angefordert um',
@@ -128,8 +151,30 @@ export default {
     API_URL: process.env.VUE_APP_API,
     showError: false,
     responseObj: null,
-    itemsPerPage: 1000,
+    itemsPerPage: 10,
     loading: false,
+    availableStatus: [
+      {
+        name: 'In der Warteschlange',
+        value: 'Q',
+        color: 'grey',
+      },
+      {
+        name: 'Wird generiert',
+        value: 'P',
+        color: 'blue',
+      },
+      {
+        name: 'Erfolgreich',
+        value: 'FS',
+        color: 'green',
+      },
+      {
+        name: 'Fehlgeschlagen',
+        value: 'FF',
+        color: 'red',
+      },
+    ],
   }),
   computed: {
     eventId() {
@@ -142,18 +187,10 @@ export default {
   },
   methods: {
     getColor(status) {
-      if (status === 'Q') return 'grey';
-      if (status === 'P') return 'blue';
-      if (status === 'FS') return 'green';
-      if (status === 'FF') return 'red';
-      return 'green';
+      return this.availableStatus.find((x) => x.value === status).color;
     },
     getStatusText(status) {
-      if (status === 'Q') return 'In der Warteschlange';
-      if (status === 'P') return 'Wird generiert';
-      if (status === 'FS') return 'Erfolgreich';
-      if (status === 'FF') return 'Fehlgeschlagen';
-      return 'green';
+      return this.availableStatus.find((x) => x.value === status).name;
     },
     getUserText(user) {
       if (!user) return '';
@@ -164,11 +201,16 @@ export default {
         .locale('de')
         .format('lll');
     },
-    getData(eventId) {
+    getData(eventId, params) {
       this.loading = true;
-      this.getDownloadSummary(eventId)
-        .then((responseObj) => {
-          this.data = responseObj.data; // eslint-disable-line
+
+      Promise.all([
+        this.getDownloadSummary(eventId, params),
+        this.getAvailableFileTemplates(),
+      ])
+        .then((values) => {
+          this.data = values[0].data; //eslint-disable-line
+          this.availableFileTemplates = values[1].data; //eslint-disable-line
         })
         .finally(() => {
           this.loading = false;
@@ -198,12 +240,28 @@ export default {
     onDownloadClicked(url) {
       window.open(url);
     },
+    onFilterSelected() {
+      const params = new URLSearchParams();
+      if (this.selectedFileTemplateFilter) {
+        this.selectedFileTemplateFilter.forEach((value) => {
+          params.append('file-type', value);
+        });
+      }
+      if (this.selectedStatusFilter) {
+        this.selectedStatusFilter.forEach((value) => {
+          params.append('status', value);
+        });
+      }
+      this.getData(this.eventId, params);
+      this.currentSearchParams = params;
+    },
   },
   created() {
-    this.getData(this.eventId);
+    this.getData(this.eventId, null);
     window.setInterval(() => {
-      this.getData(this.eventId);
+      this.getData(this.eventId, this.currentSearchParams);
     }, 60000);
   },
 };
+
 </script>

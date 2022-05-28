@@ -16,8 +16,8 @@
                 <v-icon color="red darken-1" large class="ma-2">
                   mdi-alert mdi-spin
                 </v-icon>
-                Dies ist ein Test-Server. Die Anmeldung sind <b>nicht verbindlich</b> und
-                werden regelmäßig gelöscht.
+                Dies ist ein Test-Server. Die Anmeldung sind
+                <b>nicht verbindlich</b> und werden regelmäßig gelöscht.
                 <v-icon color="red darken-1" large class="ma-2">
                   mdi-alert mdi-flip-h mdi-spin
                 </v-icon>
@@ -79,7 +79,9 @@
                             @click="onSingleRegClicked(item)"
                             v-if="item.registrationOptions.allowNewSingleReg"
                           >
-                            <v-icon fab color="success"> mdi-account-plus </v-icon>
+                            <v-icon fab color="success">
+                              mdi-account-plus
+                            </v-icon>
                           </v-btn>
                         </template>
                         <span>Einzel Fahrtenanmeldung</span>
@@ -139,10 +141,30 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
                             v-if="
+                              item.registrationOptions.allowEditGroupReg || // eslint-disable-line
                               item.registrationOptions.allowEditSingleReg
                             "
                             class="ma-3"
-                            @click="deleteRegistration(getRegisteredId(item, true))"
+                            @click="onAddResponsablePerson(item)"
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            <v-icon fab color="success">
+                              mdi-share-variant
+                            </v-icon>
+                          </v-btn>
+                        </template>
+                        <span>Weitere Person Freigeben</span>
+                      </v-tooltip>
+
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            v-if="item.registrationOptions.allowEditSingleReg"
+                            class="ma-3"
+                            @click="
+                              deleteRegistration(getRegisteredId(item, true))
+                            "
                             v-bind="attrs"
                             v-on="on"
                           >
@@ -155,11 +177,11 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                            v-if="
-                              item.registrationOptions.allowEditGroupReg
-                            "
+                            v-if="item.registrationOptions.allowEditGroupReg"
                             class="ma-3"
-                            @click="deleteRegistration(getRegisteredId(item, false))"
+                            @click="
+                              deleteRegistration(getRegisteredId(item, false))
+                            "
                             v-bind="attrs"
                             v-on="on"
                           >
@@ -236,17 +258,19 @@
     <DeleteModal ref="deleteModal" />
     <SendMessageModal ref="sendMessageModal" />
     <EventCodeModal ref="eventCodeModal" />
+    <DialogAddResponsablePerson ref="dialogAddResponsablePerson" />
   </v-container>
 </template>
 
 <script>
 import moment from 'moment';
+import { mapGetters } from 'vuex';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import ConfirmRegistrationEditModal from '@/views/registration/components/PreForm.vue';
 import DeleteModal from '@/views/registration/components/DeleteModal.vue';
 import SendMessageModal from '@/views/registration/components/SendMessageModal.vue';
 import EventCodeModal from '@/views/event/components/EventCodeModal.vue';
-import { mapGetters } from 'vuex';
+import DialogAddResponsablePerson from '@/components/dialog/DialogAddResponsablePerson.vue';
 
 export default {
   name: 'Main',
@@ -261,6 +285,7 @@ export default {
     DeleteModal,
     SendMessageModal,
     EventCodeModal,
+    DialogAddResponsablePerson,
   },
   computed: {
     ...mapGetters(['theme']),
@@ -326,7 +351,9 @@ export default {
     },
     editRegistration(item, single) {
       this.setTheme(item.theme);
-      this.$refs.confirmRegistrationEditModal.show(this.getRegisteredId(item, single));
+      this.$refs.confirmRegistrationEditModal.show(
+        this.getRegisteredId(item, single),
+      );
     },
     onSingleRegClicked(item) {
       this.openEventCodeModal(item, true);
@@ -337,6 +364,9 @@ export default {
     openEventCodeModal(item, single) {
       this.setTheme(item.theme);
       this.$refs.eventCodeModal.show(item, single);
+    },
+    onAddResponsablePerson(item) {
+      this.$refs.dialogAddResponsablePerson.open(item);
     },
     deleteRegistration(item) {
       this.$refs.deleteModal.show(item);

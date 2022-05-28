@@ -34,9 +34,10 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
         event_id = self.kwargs.get("event_pk", None)
         reg_ids = event_models.Registration.objects.filter(event=event_id).values('id')
         booking_option_list = self.request.query_params.getlist('booking-option')
-
-        return event_models.RegistrationParticipant.objects.filter(booking_option__in=booking_option_list).filter(
-            registration__in=reg_ids)
+        participants = event_models.RegistrationParticipant.objects.filter(registration__in=reg_ids)
+        if booking_option_list:
+            participants = participants.filter(booking_option__in=booking_option_list)
+        return participants
 
 
 class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -106,11 +107,18 @@ class EmailResponsiblePersonsViewSet(mixins.ListModelMixin, viewsets.GenericView
 
     def get_queryset(self) -> QuerySet[User]:
         event_id = self.kwargs.get("event_pk", None)
+        only_admin = self.request.query_params.get('only-admins', False)
         event: event_models.Event = event_models.Event.objects.filter(id=event_id).first()
+
         admin_groups: QuerySet[User] = event.keycloak_admin_path.user_set.exclude(email__exact='')
-        normal_groups: QuerySet[User] = event.keycloak_path.user_set.exclude(email__exact='')
         internal: QuerySet[User] = event.responsible_persons.exclude(email__exact='')
-        all_users = admin_groups.union(normal_groups).union(internal)
+
+        all_users = admin_groups | internal
+
+        if not only_admin:
+            normal_groups: QuerySet[User] = event.keycloak_path.user_set.exclude(email__exact='')
+            all_users = all_users | normal_groups
+
         return all_users
 
 
@@ -120,7 +128,24 @@ class EmailRegistrationResponsiblePersonsViewSet(mixins.ListModelMixin, viewsets
 
     def get_queryset(self) -> QuerySet[User]:
         event_id = self.kwargs.get("event_pk", None)
-        registrations: QuerySet[int] = event_models.Registration.objects.filter(event=event_id) \
-            .values_list('responsible_persons__id', flat=True)
-        all_users = User.objects.filter(id__in=registrations).exclude(email__exact='')
+
+        confirmed: bool = self.request.query_params.get('confirmed', 'true') == 'true'
+        unconfirmed: bool = self.request.query_params.get('unconfirmed', 'true') == 'true'
+        # all_participants: bool = self.request.query_params.get('all-participants', False)
+
+        all_registrations: QuerySet[event_models.Registration] = event_models.Registration.objects. \
+            filter(event=event_id)
+        registrations: QuerySet[event_models.Registration] = event_models.Registration.objects.none()
+
+        if confirmed:
+            confirmed_registrations = all_registrations.filter(is_confirmed=True)
+            registrations = registrations | confirmed_registrations
+
+        if unconfirmed:
+            unconfirmed_registrations = all_registrations.filter(is_confirmed=False)
+            registrations = registrations | unconfirmed_registrations
+
+        registrations_ids: QuerySet[int] = registrations.all().values_list('responsible_persons__id', flat=True)
+        all_users = User.objects.filter(id__in=registrations_ids).exclude(email__exact='')
+
         return all_users

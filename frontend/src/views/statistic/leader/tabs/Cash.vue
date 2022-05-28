@@ -9,8 +9,7 @@
                 <v-checkbox
                   v-model="filter.justConfirmed"
                   label="Nur Bestätigt"
-                  hide-details
-                ></v-checkbox>
+                  hide-details/>
               </v-col>
             </v-row>
           </v-container>
