@@ -14,7 +14,7 @@
     </v-tab>
     <v-tab>
       <v-icon left>mdi-email</v-icon>
-      Email
+      Email Export
     </v-tab>
     <v-tab>
       <v-icon left> mdi-tools </v-icon>

@@ -134,12 +134,12 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/generate/`;
       return axios.post(path, data);
     },
-    async getDownloadSummary(eventId) {
+    async getDownloadSummary(eventId, params) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/generate/`;
-      return axios.get(path);
+      return axios.get(path, { params });
     },
-    async getAvailableFileTemplates(eventId) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/files/available-templates/`;
+    async getAvailableFileTemplates() {
+      const path = `${process.env.VUE_APP_API}/event/files/available-templates/`;
       return axios.get(path);
     },
     async getFoodSummary(eventId, params) {
@@ -166,13 +166,13 @@ export default {
       const path = `${process.env.VUE_APP_API}/basic/message/${data.id}/`;
       return axios.put(path, data);
     },
-    async getResponsiblePersons(eventId) {
+    async getResponsiblePersons(eventId, params) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/emails/responsible-persons/`;
-      return axios.get(path);
+      return axios.get(path, { params });
     },
-    async getRegistrationsResponsiblePersons(eventId) {
+    async getRegistrationsResponsiblePersons(eventId, params) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/emails/registration-responsible-persons/`;
-      return axios.get(path);
+      return axios.get(path, { params });
     },
   },
 };
