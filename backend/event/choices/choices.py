@@ -57,7 +57,7 @@ class FileGenerationStatus(models.TextChoices):
 
 class FileType(models.TextChoices):
     Kjp = 'K', _('KJP Liste')
-    Invoice = 'I', _('Rechnungserstellungsvorlage')
+    Invoice = 'I', _('Rechnungserstellung Felix')
     ParticipantList = 'P', _('Teilnehmerliste')
 
 

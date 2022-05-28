@@ -1,20 +1,10 @@
-import os
-import threading
-import time
-from datetime import datetime, timedelta
-from django.utils import timezone
+
 from django.db.models import QuerySet
-from dateutil.relativedelta import relativedelta
 from openpyxl import load_workbook, Workbook
-from django.core.files.base import File
-from tempfile import NamedTemporaryFile
-from backend import settings
-from event.choices.choices import FileGenerationStatus, FileType, FileExtension
 from event.file_generator.generators.abstract_generator import AbstractGenerator
 from event.file_generator.models import FileTemplate, GeneratedFiles
 from event import models as event_models
 from django.contrib.auth.models import User
-from django.db.models import Q
 from event.summary.serializers import RegistrationCashSummarySerializer
 from basic.models import StringAttribute
 
@@ -38,11 +28,8 @@ class InvoiceGenerator(AbstractGenerator):
             price = payement.get('price', 0) if payement else 0
 
             all_participants = self.get_participants(registration)
-            participant_list = []
-            participant: event_models.RegistrationParticipant
-            for participant in all_participants.all():
-                particpant_str = f'{participant.first_name} {participant.last_name}'
-                participant_list.append(particpant_str)
+            participant_list = [f'{participant.first_name} {participant.last_name}' for participant in
+                                all_participants.all()]
 
             original[f'A{index + 1}'] = registration.scout_organisation.name
             original[f'B{index + 1}'] = person.first_name
@@ -60,7 +47,7 @@ class InvoiceGenerator(AbstractGenerator):
                                         f'-{str(registration.created_at.timestamp())[:10]}'
             index += 1
 
-            return wb
+        return wb
 
     def get_formatted_booking_option(self, registration, booking_options_name):
         return registration.registrationparticipant_set.filter(booking_option__name=booking_options_name).count() or 0

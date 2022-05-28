@@ -17,7 +17,7 @@ class ParticipantGenerator(AbstractGenerator):
         file: FileTemplate = self.generated_file.template
         wb: Workbook = load_workbook(file.file)
         original = wb.active
-        original.sheet_format.defaultRowHeight = 37.0
+        original.sheet_format.defaultRowHeight = 25.0
         original.set_printer_settings(paper_size=original.PAPERSIZE_A4, orientation='landscape')
 
         table = original.tables['Teilnehmer']
@@ -25,7 +25,8 @@ class ParticipantGenerator(AbstractGenerator):
         location = f'{event.location.address}, {event.location.zip_code.zip_code} {event.location.zip_code.city}'
 
         original['C1'] = f'{event.name}\n{location}'
-        original['G1'] = f'{event.start_date.date()} - {event.end_date.date()}'
+        original['G1'] = f'{event.start_date.date().strftime("%d.%m.%Y")}' \
+                         f' - {event.end_date.date().strftime("%d.%m.%Y")}'
         original['J1'] = participants.count()
 
         alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
@@ -44,7 +45,7 @@ class ParticipantGenerator(AbstractGenerator):
             original[f'I{index + 4}'] = participant.street
             original[f'J{index + 4}'] = f'{participant.zip_code.zip_code} {participant.zip_code.city}'
 
-            original.row_dimensions[index + 4].height = 37
+            original.row_dimensions[index + 4].height = 25
             for letter in string.ascii_uppercase[:10]:
                 original[f'{letter}{index + 4}'].alignment = alignment
                 original[f'{letter}{index + 4}'].font = font_style
