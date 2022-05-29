@@ -21,16 +21,16 @@
           <b> {{ myStamm || '-' }}</b>
           aus dem Bund
           <b> {{ myBund }} </b> zu/r <b> {{ eventName }} </b> an.
-          <br />
-          <br />
+          <br/>
+          <br/>
           Bevor deine Anmeldung verbindlich wird, musst du sie im letzten
           Schritt ausdrücklich bestätigen. Du kannst deinen Anmeldevorgang zu
           jedem Zeitpunkt unterbrechen und später fortsetzen. Die Daten kannst
           du bis zum Anmeldeschluss ({{ registrationDeadlineFormat }}) jederzeit
-          anpassen und ergänzen. <br />
-          <br />
+          anpassen und ergänzen. <br/>
+          <br/>
           Die folgenden Daten sind nur für das Planungsteam und die
-          Administrator_innen sichtbar. <br />
+          Administrator_innen sichtbar. <br/>
           <span v-if="cloudLink">Alle Dokumente findest du hier: </span>
           <a target="_blank" :href="cloudLink" style="color: blue">
             Link zur Cloud
@@ -104,7 +104,9 @@ export default {
   computed: {
     ...mapGetters(['userinfo']),
     registrationDeadlineFormat() {
-      return moment(this.currentEvent.registrationDeadline, 'll', 'de');
+      const registrationDeadline = new Date(this.currentEvent.registrationDeadline);
+      return moment(registrationDeadline)
+        .format('lll', 'de');
     },
     moduleId() {
       return this.currentModule.id;
@@ -162,9 +164,10 @@ export default {
         }
       });
       if (promises.length > 0) {
-        Promise.all(promises).then(() => {
-          this.nextStep();
-        });
+        Promise.all(promises)
+          .then(() => {
+            this.nextStep();
+          });
       } else {
         this.nextStep();
       }
