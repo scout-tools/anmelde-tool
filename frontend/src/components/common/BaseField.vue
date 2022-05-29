@@ -5,6 +5,7 @@
       :label="field.name"
       :value="value"
       @input="onInputChanged"
+      @keydown.enter="$emit('keydownEnter')"
       :prepend-icon="field.icon"
       :error-messages="onErrorMessageChange(field.techName)"
       :disabled="field.disabled"
