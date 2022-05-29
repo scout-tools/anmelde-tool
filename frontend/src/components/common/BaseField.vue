@@ -5,11 +5,13 @@
       :label="field.name"
       :value="value"
       @input="onInputChanged"
+      @keydown.enter="$emit('keydownEnter')"
       :prepend-icon="field.icon"
       :error-messages="onErrorMessageChange(field.techName)"
       :disabled="field.disabled"
       :readonly="field.readonly"
-      :filled="field.filled">
+      :filled="field.filled"
+    >
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -266,6 +268,23 @@
       :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-autocomplete>
+
+    <v-autocomplete
+      v-if="field.fieldType === 'responsablesField'"
+      :label="field.name"
+      :value="value"
+      :items="lookupList"
+      :prepend-icon="field.icon"
+      required
+      @input="onInputChanged"
+      item-value="email"
+      :loading="isLoading"
+      :item-text="getItemText"
+      :search-input.sync="search"
+      :no-data-text="responseablePersonDataText"
+      :error-messages="onErrorMessageChange(field.techName)"
+    >
+    </v-autocomplete>
     <v-select
       v-if="field.fieldType === 'localRefDropdown'"
       :label="field.name"
@@ -358,8 +377,7 @@
             </span>
           </v-tooltip>
         </template>
-      </v-text-field
-      >
+      </v-text-field>
     </v-container>
     <v-container v-if="field.fieldType === 'datetime'">
       <v-row>
@@ -388,8 +406,7 @@
                 </span>
               </v-tooltip>
             </template>
-          </v-text-field
-          >
+          </v-text-field>
         </v-col>
         <v-col>
           <v-text-field
@@ -476,6 +493,7 @@ export default {
       isLoading: false,
       search: null,
       zipCodeNoDataText: 'Bitte PLZ oder Ort eingeben.',
+      responseablePersonDataText: 'E-Mail oder Pfadfindernamen eingebene.',
       ckeditor: {
         editor: ClassicEditor,
         editorData: '',
@@ -489,23 +507,44 @@ export default {
     search(searchString) {
       // still loading
       if (this.loading) return;
-      if (!searchString || searchString.indexOf(' ') >= 0 || searchString.length <= 1) {
+      if (
+        !searchString || // eslint-disable-line
+        searchString.indexOf(' ') >= 0 || // eslint-disable-line
+        searchString.length <= 2
+      ) {
         this.zipCodeNoDataText = 'Bitte PLZ oder Ort eingeben.';
+        this.responseablePersonDataText = 'E-Mail oder Pfadfindernamen eingebene.';
         return;
       }
       this.loading = true;
-      this.getZipCodeMapping(searchString)
-        .then((res) => {
-          this.lookupList = res;
-          this.zipCodeNoDataText = 'Kein Treffer';
-        })
-        .catch((err) => {
-          this.lookupList = null;
-          this.zipCodeNoDataText = err.response.data.detail;
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      if (this.field.fieldType === 'zipField') {
+        this.getZipCodeMapping(searchString)
+          .then((res) => {
+            this.lookupList = res;
+            this.zipCodeNoDataText = 'Kein Treffer';
+          })
+          .catch((err) => {
+            this.lookupList = null;
+            this.zipCodeNoDataText = err.response.data.detail;
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      }
+      if (this.field.fieldType === 'responsablesField') {
+        this.getResponsibles(searchString)
+          .then((res) => {
+            this.lookupList = res;
+            this.responseablePersonDataText = 'Kein Treffer';
+          })
+          .catch((err) => {
+            this.lookupList = null;
+            this.responseablePersonDataText = err.response.data.detail;
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      }
     },
     enumValue() {
       this.onInputChanged(this.enumValue);
@@ -513,12 +552,10 @@ export default {
   },
   computed: {
     valueDate() {
-      return this.$moment(this.value)
-        .format('DD.MM.YYYY', 'de');
+      return this.$moment(this.value).format('DD.MM.YYYY', 'de');
     },
     valueTime() {
-      return this.$moment(this.value)
-        .format('HH:mm', 'de');
+      return this.$moment(this.value).format('HH:mm', 'de');
     },
     enumValue() {
       if (!this.lookupList) return '';
@@ -551,6 +588,7 @@ export default {
     },
     onInputChanged(value) {
       this.$emit('input', value);
+      this.$forceUpdate();
     },
     onDateInputChanged(value) {
       const newDate = this.$moment(value, 'L', 'de');
@@ -622,7 +660,7 @@ export default {
         } else if (i === 0) {
           template += item[field];
         } else {
-          template = `${template} - ${item[field]}`;
+          template = `${template} ${item[field]}`;
         }
       });
       return template;
@@ -638,11 +676,16 @@ export default {
       this.getData();
     }
     if (this.field.fieldType === 'zipField') {
-      this.callSingleZipCode(this.value)
-        .then((result) => {
-          this.lookupList = result;
-          this.$forceUpdate();
-        });
+      this.callSingleZipCode(this.value).then((result) => {
+        this.lookupList = result;
+        this.$forceUpdate();
+      });
+    }
+    if (this.field.fieldType === 'responsablesField') {
+      this.callSingleResponsible(this.value).then((result) => {
+        this.lookupList = result;
+        this.$forceUpdate();
+      });
     }
   },
 };

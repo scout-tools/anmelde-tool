@@ -5,12 +5,12 @@
         <v-btn icon dark @click="active = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Datei anfodern</v-toolbar-title>
+        <v-toolbar-title>Neuen Verantwortlicheren hinzufügen</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-container>
         <v-row class="ma-4">
-          Was für eine Datei willst du anfordern?
+          Diese Person hat zukünfigt vollen Zugriff auf deine Anmeldung.
         </v-row>
         <v-row>
           <template v-for="(field, i) in dialogMeta.fields">
@@ -25,7 +25,7 @@
         <v-divider class="my-2"/>
         <v-row class="ma-1">
           <v-spacer></v-spacer>
-          <v-btn color="success" @click="onClickOkay"> Speichern und weiter</v-btn>
+          <v-btn color="success" @click="onClickOkay">Diese Person berechtigen</v-btn>
         </v-row>
       </v-container>
     </v-card>
@@ -54,28 +54,28 @@ export default {
       this.$v.$touch();
       this.valid = !this.$v.$anyError;
     },
-    open() {
-      this.data = {};
+    open(item) {
+      this.data = item;
       this.active = true;
     },
     close() {
       this.active = false;
+      this.data = {};
     },
     onClickOkay() {
       this.validate();
       if (!this.valid) {
         return;
       }
-      this.$emit('createFileRequest', this.data);
-      this.active = false;
+      this.patchRegService('add-reponsable', this.data.id, 'responsable_person', this.data.responsablePerson).then((response) => {
+        console.log(response);
+        this.active = false;
+      });
     },
   },
   validations: {
     data: {
-      template: {
-        required,
-      },
-      extension: {
+      responsablePerson: {
         required,
       },
     },
@@ -83,32 +83,17 @@ export default {
   computed: {
     dialogMeta() {
       return {
-        title: 'Hallo',
-        excelUpload: true,
-        listDisplay: ['firstName', 'lastName'],
-        orderBy: 'firstName',
-        maxItems: null,
-        minItems: 1,
         fields: [
           {
-            name: 'Template für die Datei auswählen.',
-            techName: 'template',
-            tooltip: 'Wähle den Datei Typ aus.',
-            icon: 'mdi-account-circle',
-            lookupPath: '/event/files/available-templates/',
-            lookupListDisplay: ['type', '$ (Version', 'version', '$)'],
+            name: 'Neue Verantwortlicherer',
+            techName: 'responsablePerson',
+            tooltip: 'Hier kannst du jede Person hinzufügen, welche sich bereits im Anmelde-Tool registriert hat.',
+            icon: 'mdi-shape',
+            lookupPath: '/auth/responsables/',
+            lookupListDisplay: ['scoutName', '$ - ', 'stamm'],
             mandatory: true,
-            fieldType: 'refComboSingle',
-          },
-          {
-            name: 'Dateiformat auswählen.',
-            techName: 'extension',
-            tooltip: 'Wähle das Datei Format.',
-            icon: 'mdi-account-circle',
-            lookupPath: '/event/choices/file-extension/',
-            lookupListDisplay: ['name'],
-            mandatory: true,
-            fieldType: 'enumCombo',
+            fieldType: 'responsablesField',
+            default: '',
           },
         ],
       };

@@ -365,13 +365,7 @@ class MessageSerializer(serializers.ModelSerializer):
         slug_field='email',
         queryset=User.objects.all()
     )
-    # supervisor_name = serializers.SerializerMethodField()
     class Meta:
         model = basic_models.Message
         fields = '__all__'
 
-    # def get_supervisor_name(self, obj: basic_models.Message) -> str:
-    #     print(obj.supervisor)
-    #     # user_obj = User.objects.filter(id=obj.supervisor)
-    #     print(self)
-    #     return '123'

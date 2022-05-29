@@ -144,11 +144,6 @@ class MessageViewSet(viewsets.ModelViewSet):
     filterset_fields = ['message_type', 'is_processed']
     search_fields = ['created_by_email', 'message_body', 'internal_comment']
 
-    def update(self, request, *args, **kwargs) -> Response:
-        request.data['supervisor'] = request.user.email
-
-        return super().update(request, *args, **kwargs)
-    
 
 class MessageTypeViewSet(viewsets.ModelViewSet):
     queryset = basic_models.MessageType.objects.all()

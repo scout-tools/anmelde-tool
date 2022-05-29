@@ -1,10 +1,16 @@
 from rest_framework import status, viewsets, mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.db.models import Q, QuerySet
+from django_filters import CharFilter
 
 from .models import UserExtended, EmailNotificationType
-from .serializers import UserExtendedGetSerializer, UserExtendedPostSerializer, GroupSerializer, EmailSettingsSerializer
+from .serializers import UserExtendedGetSerializer, UserExtendedPostSerializer, GroupSerializer, EmailSettingsSerializer, ResponseablePersontSerializer
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet
+from rest_framework.filters import SearchFilter
+from basic.api_exceptions import TooManySearchResults, NoSearchResults, NoSearchValue
 
+from basic.permissions import IsStaffOrReadOnly
 
 class PersonalData(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
@@ -39,6 +45,24 @@ class PersonalDataCheck(viewsets.ViewSet):
         else:
             return Response({'status': "user ok"}, status=status.HTTP_200_OK)
 
+
+class ResponseablePersonViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsStaffOrReadOnly]
+    serializer_class = ResponseablePersontSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    search_fields = ['user__email', 'scout_name',]
+
+    def list(self, request):
+        queryset = UserExtended.objects.all()
+        search_param = request.GET.get('search')
+        queryset = queryset.filter(Q(scout_name__contains=search_param) | Q(user__email__contains=search_param) | Q(scout_organisation__name__contains=search_param))
+        serializer = ResponseablePersontSerializer(queryset, many=True)
+        response_len = len(serializer.data)
+        if response_len > 10:
+            raise TooManySearchResults
+        elif response_len == 0:
+            raise NoSearchResults
+        return Response(serializer.data)
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]

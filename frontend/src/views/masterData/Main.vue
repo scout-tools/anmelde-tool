@@ -2,7 +2,7 @@
   <v-container fluid class="mt-12" style="min-height: 90vh;">
     <v-layout fill-height>
     <v-row>
-      <v-col cols="3" class="mt-3 pa-0 max-width" style="background:#f5f5f5;">
+      <v-col cols="2" class="mt-3 pa-0 max-width" style="background:#f5f5f5;">
         <v-list style="background:#f5f5f5;">
           <template v-for="(link, i) in links">
           <v-list-group
@@ -31,7 +31,7 @@
           </template>
         </v-list>
       </v-col>
-      <v-col cols="9">
+      <v-col>
         <router-view class="ma-3"></router-view>
       </v-col>
     </v-row>
@@ -103,6 +103,6 @@ export default {
 
 <style scoped>
 .max-width {
-  max-width: 300px !important;
+  max-width: 250px !important;
 }
 </style>

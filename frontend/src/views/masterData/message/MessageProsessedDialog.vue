@@ -106,6 +106,17 @@ export default {
             default: '',
           },
           {
+            name: 'Personen',
+            techName: 'supervisor',
+            tooltip: 'Welcher Typ?',
+            icon: 'mdi-shape',
+            lookupPath: '/auth/responsables/',
+            lookupListDisplay: ['scoutName', '$ - ', 'stamm', '$ -', 'email', '$'],
+            mandatory: true,
+            fieldType: 'responsablesField',
+            default: '',
+          },
+          {
             name: 'Bearbeitet?',
             techName: 'isProcessed',
             tooltip: 'Is der Fall erledigt?',
