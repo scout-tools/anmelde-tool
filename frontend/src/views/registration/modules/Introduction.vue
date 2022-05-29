@@ -14,7 +14,12 @@
     <template v-slot:header>
       <span class="text-left subtitle-1">
         <p>
-          Hiermit melde ich meinen <b> {{ myStamm }} </b> aus dem Bund
+          Das ist eine <b>{{ isSingle ? 'Einzelanmeldung' : 'Gruppenanmeldung'}}</b>.<br>
+          <br>
+          Hiermit melde ich
+          {{ isSingle ? 'mich von/vom ' : 'uns von/vom'}}
+          <b> {{ myStamm || '-' }}</b>
+          aus dem Bund
           <b> {{ myBund }} </b> zu/r <b> {{ eventName }} </b> an.
           <br />
           <br />
@@ -115,6 +120,9 @@ export default {
     },
     cloudLink() {
       return this.currentEvent.cloudLink;
+    },
+    isSingle() {
+      return this.currentRegistration.single;
     },
     path() {
       return `event/registration/${this.currentRegistration.id}/attribute/`;
