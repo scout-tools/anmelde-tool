@@ -15,6 +15,7 @@ from event.file_generator.generators.invoice_generator import InvoiceGenerator
 from event.file_generator.generators.participant_generator import ParticipantGenerator
 
 timer = getattr(settings, 'FILE_GENERATOR_DEQEUE_TIME', 60)
+debug = getattr(settings, 'DEBUG', False)
 
 
 class FileGeneratorDeqeueThread(threading.Thread):
@@ -28,14 +29,17 @@ class FileGeneratorDeqeueThread(threading.Thread):
                 GeneratedFiles.objects.filter(status=FileGenerationStatus.Processing, updated_at__lt=timed_out) \
                     .update(status=FileGenerationStatus.FinishedFailed, error_msg='Timeout reached')
 
-                unprocessed = GeneratedFiles.objects.filter(status=FileGenerationStatus.Queued)
+                unprocessed = GeneratedFiles.objects.filter(status=FileGenerationStatus.Queued).order_by('-created_at')
                 processing = GeneratedFiles.objects.filter(status=FileGenerationStatus.Processing)
 
                 if unprocessed.exists() and not processing.exists():
                     file_to_be_generated = unprocessed.last()
                     generator_thread = FileGeneratorThread(file_to_be_generated)
-                    generator_thread.daemon = True
-                    generator_thread.start()
+                    if debug:
+                        generator_thread.run()
+                    else:
+                        generator_thread.daemon = True
+                        generator_thread.start()
             except RuntimeError as e:
                 print(e)
 

@@ -15,6 +15,9 @@ class GenerateFilesViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, views
     def create(self, request, *args, **kwargs):
         request.data['event'] = kwargs.get("event_pk", None)
         request.data['user'] = request.user.id
+        queryset = self.get_queryset()
+        if queryset.count() > 10:
+            queryset.last().delete()
         return super().create(request, *args, **kwargs)
 
     def get_queryset(self) -> QuerySet[GeneratedFiles]:
@@ -26,7 +29,7 @@ class GenerateFilesViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, views
             generated = generated.filter(template__in=file_type)
         if status:
             generated = generated.filter(status__in=status)
-        return generated.order_by('-created_at', 'updated_at')
+        return generated.order_by('-created_at', '-updated_at')
 
     def get_serializer_class(self, *args, **kwargs):
         if self.request.method == 'POST':
