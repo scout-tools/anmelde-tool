@@ -29,6 +29,7 @@
                     :field="field"
                     v-model="data[field.techName]"
                     :valdiationObj="$v"
+                    @keydownEnter="onConfirmClicked"
                   />
                 </template>
               </v-row>
@@ -39,7 +40,7 @@
             <v-spacer></v-spacer>
 
             <v-btn color="grey darken-1" text @click="cancel()"> Zurück </v-btn>
-            <v-btn color="success" text @click="onDeleteClicked">
+            <v-btn color="success" text @click="onConfirmClicked">
               Anmeldung starten
             </v-btn>
           </v-card-actions>
@@ -72,7 +73,7 @@ export default {
   },
   mixins: [apiCallsMixin],
   methods: {
-    onDeleteClicked() {
+    onConfirmClicked() {
       this.onCreateRegistrationClicked();
     },
     show(item, single) {

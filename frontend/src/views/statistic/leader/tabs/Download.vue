@@ -85,7 +85,7 @@
         </template>
         <template v-slot:expanded-item="{ item }">
           <td :colspan="headers.length">
-            Fehlermeldung: {{ item.errorMsg }}
+            Fehlermeldung: <pre> {{ item.errorMsg }} </pre>
           </td>
         </template>
       </v-data-table>
@@ -260,7 +260,7 @@ export default {
     this.getData(this.eventId, null);
     window.setInterval(() => {
       this.getData(this.eventId, this.currentSearchParams);
-    }, 60000);
+    }, 30000);
   },
 };
 

@@ -119,7 +119,7 @@ class EmailResponsiblePersonsViewSet(mixins.ListModelMixin, viewsets.GenericView
             normal_groups: QuerySet[User] = event.keycloak_path.user_set.exclude(email__exact='')
             all_users = all_users | normal_groups
 
-        return all_users
+        return all_users.distinct()
 
 
 class EmailRegistrationResponsiblePersonsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -145,7 +145,8 @@ class EmailRegistrationResponsiblePersonsViewSet(mixins.ListModelMixin, viewsets
             unconfirmed_registrations = all_registrations.filter(is_confirmed=False)
             registrations = registrations | unconfirmed_registrations
 
-        registrations_ids: QuerySet[int] = registrations.all().values_list('responsible_persons__id', flat=True)
-        all_users = User.objects.filter(id__in=registrations_ids).exclude(email__exact='')
+        registrations_ids: QuerySet[int] = registrations.all().distinct() \
+            .values_list('responsible_persons__id', flat=True)
+        all_users = User.objects.filter(id__in=registrations_ids).distinct().exclude(email__exact='')
 
         return all_users

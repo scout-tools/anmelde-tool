@@ -90,7 +90,7 @@ export default {
             tooltip: 'Hier kannst du jede Person hinzufügen, welche sich bereits im Anmelde-Tool registriert hat.',
             icon: 'mdi-shape',
             lookupPath: '/auth/responsables/',
-            lookupListDisplay: ['scoutName', '$ - ', 'stamm', '$ -', 'email', '$'],
+            lookupListDisplay: ['scoutName', '$ - ', 'stamm'],
             mandatory: true,
             fieldType: 'responsablesField',
             default: '',

@@ -42,6 +42,7 @@ export default {
 <style>
 .top-margin {
   margin-top: 80px !important;
+  margin-bottom: 80px !important;
 }
 .default-max-width {
   width: 800px !important;

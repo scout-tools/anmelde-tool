@@ -13,7 +13,7 @@
   >
     <template v-slot:header>
       Sobald du die Anmeldung abgeschickt hast,
-       bekommst du eine E-Mail mit der Bestätigung. <br>
+      bekommst du eine E-Mail mit der Bestätigung. <br>
       <br>
     </template>
 
@@ -29,8 +29,9 @@
               <v-list-item-content>
                 <v-list-item-title>{{ attribute.name }}</v-list-item-title>
                 <v-list-item-subtitle>{{
-                  getValueField(attribute)
-                }}</v-list-item-subtitle>
+                    getValueField(attribute)
+                  }}
+                </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -41,12 +42,18 @@
         <v-row>
           <p>Gesamtpreis: {{ summary.price || 0 }} €</p>
         </v-row>
-        <v-row v-for="checkbox in moduleData" :key="checkbox.id">
+        <!--        <v-row v-for="checkbox in moduleData" :key="checkbox.id">-->
+        <!--          <v-checkbox-->
+        <!--            v-model="data.checkboxes[checkbox.id]"-->
+        <!--            :label="checkbox.text ? checkbox.text : ''"-->
+        <!--            :error-messages="errorMessage('checkboxes', $v)">-->
+        <!--          </v-checkbox>-->
+        <!--        </v-row>-->
+        <v-row>
           <v-checkbox
-            v-model="data.checkboxes[checkbox.id]"
-            :label="checkbox.text ? checkbox.text : ''"
-            :error-messages="errorMessage('checkboxes', $v)"
-          >
+            v-model="data.checkboxes[moduleData[0].id]"
+            :label="getConfirmedText"
+            :error-messages="errorMessage('checkboxes', $v)">
           </v-checkbox>
         </v-row>
       </v-container>
@@ -82,6 +89,7 @@ export default {
     saving: false,
     moduleData: [],
     summary: [],
+    confirmed: false,
     data: {
       checkboxes: [],
     },
@@ -114,7 +122,8 @@ export default {
       get() {
         return !!this.loading;
       },
-      set() {},
+      set() {
+      },
     },
     moduleId() {
       return this.currentModule.id;
@@ -130,6 +139,12 @@ export default {
     },
     cloudLink() {
       return this.currentEvent.cloudLink;
+    },
+    getConfirmedText() {
+      if (this.currentRegistration.single) {
+        return 'Ich habe meine Daten überprüft und melde mich verbindlich zur Fahrt an.';
+      }
+      return 'Ich habe meine Daten überprüft und melde meinen Stamm verbindlich zur Fahrt an.';
     },
   },
   mounted() {
