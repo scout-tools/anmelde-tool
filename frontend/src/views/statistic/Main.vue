@@ -19,7 +19,7 @@
                 <v-icon>mdi-clipboard-list</v-icon>
               </v-tab>
 
-              <v-tab v-if="hasParticipantsPersonal" href="#tab-2">
+              <v-tab v-if="hasParticipantsPersonal && isEventAdmin" href="#tab-2">
                 Leitung
                 <v-icon>mdi-counter</v-icon>
               </v-tab>
@@ -102,15 +102,23 @@ export default {
       hasParticipantsPersonal: false,
       hasSubscribeWorkshop: false,
       hasAttributes: false,
+      currentEventInfos: {},
+      isEventAdmin: false,
     };
   },
   methods: {
     getData() {
       const eventId = this.$route.params.id;
       this.loading = true;
-      Promise.all([this.getAssignedEventModules(eventId)])
+      Promise.all([
+        this.getAssignedEventModules(eventId),
+        this.getEventOverviewById(eventId),
+
+      ])
         .then((values) => {
           this.currentModules = values[0].data; // eslint-disable-line
+          this.currentEventInfos = values[1].data;
+          this.isEventAdmin = this.currentEventInfos.allowStatisticAdmin;
           this.hasParticipantsPersonal = this.hasModule(this.currentModules, [
             'ParticipantsPersonal',
             'ParticipantsPersonalGold',

@@ -65,6 +65,10 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event-overview/`;
       return axios.get(path);
     },
+    async getEventOverviewById(id) {
+      const path = `${process.env.VUE_APP_API}/event/event-overview/${id}/`;
+      return axios.get(path);
+    },
     async updateEvent(eventId, data) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/`;
       return axios.put(path, data);

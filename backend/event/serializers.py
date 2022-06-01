@@ -158,6 +158,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     registration_options = serializers.SerializerMethodField()
     location = EventLocationShortSerializer(read_only=True, many=False)
     allow_statistic = serializers.SerializerMethodField()
+    allow_statistic_admin = serializers.SerializerMethodField()
 
     class Meta:
         model = event_models.Event
@@ -175,12 +176,16 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'tags',
             'registration_options',
             'allow_statistic',
+            'allow_statistic_admin',
             'icon',
             'theme',
         )
 
     def get_allow_statistic(self, obj: event_models.Event) -> bool:
         return event_permissions.check_event_permission(obj, self.context['request'].user)
+
+    def get_allow_statistic_admin(self, obj: event_models.Event) -> bool:
+        return event_permissions.check_event_permission_admin(obj, self.context['request'].user)
 
     def get_can_register(self, obj: event_models.Event) -> bool:
         return obj.registration_deadline > timezone.now() >= obj.registration_start
