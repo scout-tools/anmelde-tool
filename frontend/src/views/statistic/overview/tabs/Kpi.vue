@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="pa-0">
     <v-row class="center text-center justify-center pa-0">
-      <v-card class="mx-auto pa-0" flat>
+      <v-card class="mx-auto pa-0" flat v-if="!loading">
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <v-row class="pa-0">
@@ -25,13 +25,22 @@
             </v-row>
             <v-row>
               <v-col
-                :cols="12 / bookingOptions.length" v-for="(item, i) in bookingOptions" :key="i">
-                <kpi-card :data="bookingOptionData(item)" color="orange darken-1" />
+                :cols="12 / bookingOptions.length"
+                v-for="(item, i) in bookingOptions"
+                :key="i"
+              >
+                <kpi-card
+                  :data="bookingOptionData(item)"
+                  color="orange darken-1"
+                />
               </v-col>
             </v-row>
           </v-container>
         </v-card-text>
       </v-card>
+      <div v-else>
+        <Circual />
+      </div>
     </v-row>
   </v-container>
 </template>
@@ -41,20 +50,27 @@ import { mapGetters } from 'vuex';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import kpiCardList from '@/components/kpi/CardList.vue';
 import kpiCard from '@/components/kpi/Card.vue';
+import Circual from '@/components/loading/Circual.vue';
 
 export default {
   mixins: [apiCallsMixin],
   components: {
     kpiCard,
     kpiCardList,
+    Circual,
   },
   data: () => ({
     data: [],
+    loading: true,
   }),
   computed: {
     ...mapGetters([]),
     bookingOptions() {
-      if (this.data && this.data.bookingOptions && this.data.bookingOptions.length) {
+      if (
+        this.data && // eslint-disable-line
+        this.data.bookingOptions && // eslint-disable-line
+        this.data.bookingOptions.length
+      ) {
         return this.data.bookingOptions.filter((item) => item.count);
       }
       return [];
@@ -119,8 +135,10 @@ export default {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
     getData(eventId) {
+      this.loading = true;
       this.getRegistrationSummary(eventId).then((responseObj) => {
         this.data = responseObj.data[0]; // eslint-disable-line
+        this.loading = false;
       });
     },
     sortByKey(array, key) {

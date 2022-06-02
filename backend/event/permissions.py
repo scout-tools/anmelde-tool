@@ -30,6 +30,15 @@ def check_event_permission(event_id: [str, Event], user: User) -> bool:
     event = get_event(event_id)
     if user.is_superuser: return True
     if get_keycloak_permission(user, event.keycloak_path): return True
+    if get_keycloak_permission(user, event.keycloak_admin_path): return True
+    if get_responsible_person_permission(user, event): return True
+    return False
+
+
+def check_event_permission_admin(event_id: [str, Event], user: User) -> bool:
+    event = get_event(event_id)
+    if user.is_superuser: return True
+    if get_keycloak_permission(user, event.keycloak_admin_path): return True
     if get_responsible_person_permission(user, event): return True
     return False
 
@@ -132,6 +141,8 @@ class IsRegistrationResponsiblePerson(permissions.BasePermission):
             return False
         if request.method == CREATE_METHOD:
             return True
+        if request.user.is_superuser:
+            return True
         registration_id: str = view.kwargs.get('pk', None)
         return check_registration_permission(registration_id, request.user)
 
@@ -142,5 +153,7 @@ class IsSubRegistrationResponsiblePerson(permissions.BasePermission):
     def has_permission(self, request: Request, view) -> bool:
         if not request.user or not request.user.is_authenticated:
             return False
+        if request.user.is_superuser:
+            return True
         registration_id: str = view.kwargs.get('registration_pk', None)
         return check_registration_permission(registration_id, request.user)
