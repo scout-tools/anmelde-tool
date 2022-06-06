@@ -167,6 +167,7 @@ if env.bool('USE_S3'):
     PRIVATE_MEDIA_LOCATION = 'private'
     PRIVATE_FILE_STORAGE = 'backend.storage_backends.PrivateMediaStorage'
     PRIVATE_MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PRIVATE_MEDIA_LOCATION}/'
+    AWS_S3_REGION_NAME = 'eu-central-1'
 else:
     STATIC_URL = '/staticfiles/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -243,4 +244,3 @@ GRAPHENE = {
 }
 
 FILE_GENERATOR_DEQEUE_TIME = 60
-
