@@ -1,11 +1,11 @@
+from django.contrib.auth.models import User
 from django.db.models import QuerySet
 from rest_framework import mixins, viewsets, status
-from django.contrib.auth.models import User
+from rest_framework.response import Response
 
+from event import models as event_models
 from event import permissions as event_permissions
 from event.summary import serializers as summary_serializers
-from event import models as event_models
-from rest_framework.response import Response
 
 
 class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -19,11 +19,35 @@ class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
 
 class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubEventResponsiblePerson]
-    serializer_class = summary_serializers.EventSummarySerializer
+    serializer_class = summary_serializers.RegistrationEventSummarySerializer
+
+    def get_queryset(self) -> QuerySet:
+        event_id = self.kwargs.get("event_pk", None)
+        registrations = event_models.Registration.objects.filter(event=event_id)
+
+        confirmed: bool = self.request.query_params.get('confirmed', 'true') == 'true'
+
+        if confirmed:
+            registrations = registrations.filter(is_confirmed=True)
+
+        return registrations
+
+
+class EventAgeGroupsSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    permission_classes = [event_permissions.IsSubEventResponsiblePerson]
+    serializer_class = summary_serializers.EventAgeGroupSerializer
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
         return event_models.Event.objects.filter(id=event_id)
+
+
+class EventKPIViewSet(EventAgeGroupsSummaryViewSet):
+    serializer_class = summary_serializers.EventKPISerializer
+
+
+class EventLocationSummaryViewSet(EventAgeGroupsSummaryViewSet):
+    serializer_class = summary_serializers.EventLocationSummarySerializer
 
 
 class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -32,11 +56,21 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
-        reg_ids = event_models.Registration.objects.filter(event=event_id).values('id')
-        booking_option_list = self.request.query_params.getlist('booking-option')
+
+        booking_option_list: list = self.request.query_params.getlist('booking-option')
+        confirmed: bool = self.request.query_params.get('confirmed', 'true') == 'true'
+
+        registrations: QuerySet = event_models.Registration.objects.filter(event=event_id)
+
+        if confirmed:
+            registrations.filter(is_confirmed=True)
+
+        reg_ids = registrations.values('id')
         participants = event_models.RegistrationParticipant.objects.filter(registration__in=reg_ids)
+
         if booking_option_list:
             participants = participants.filter(booking_option__in=booking_option_list)
+
         return participants
 
 

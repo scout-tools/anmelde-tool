@@ -134,7 +134,7 @@ export default {
       this.getHierarchyMapping().then((responseObj) => {
         this.data = responseObj; // eslint-disable-line
       });
-      this.getRegistrationSummary(this.eventId).then((responseObj) => {
+      this.getEventLocationSummary(this.eventId).then((responseObj) => {
         this.summary = responseObj.data[0]; // eslint-disable-line
       });
     },

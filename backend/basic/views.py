@@ -39,7 +39,7 @@ class ZipCodeSearchFilter(FilterSet):
         cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
         if cities.count() > 250:
             raise TooManySearchResults
-        elif cities.count() == 0:
+        if cities.count() == 0:
             raise NoSearchResults
         return cities
 

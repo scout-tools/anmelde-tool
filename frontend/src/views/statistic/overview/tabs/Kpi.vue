@@ -6,15 +6,15 @@
           <v-container class="pa-0" fluid>
             <v-row class="pa-0">
               <v-col cols="12" md="6">
-                <kpi-card :data="kpiCardOne" color="red lighten-1" />
+                <kpi-card :data="kpiCardOne" color="red lighten-1"/>
               </v-col>
               <v-col cols="12" md="6">
-                <kpi-card :data="kpiCardTwo" color="blue lighten-1" />
+                <kpi-card :data="kpiCardTwo" color="blue lighten-1"/>
               </v-col>
             </v-row>
             <v-row class="pa-0">
               <v-col cols="12" md="6">
-                <kpi-card-list :data="kpiCardThree" color="teal lighten-1" />
+                <kpi-card-list :data="kpiCardThree" color="teal lighten-1"/>
               </v-col>
               <v-col cols="12" md="6">
                 <kpi-card-list
@@ -39,7 +39,7 @@
         </v-card-text>
       </v-card>
       <div v-else>
-        <Circual />
+        <Circual/>
       </div>
     </v-row>
   </v-container>
@@ -136,10 +136,11 @@ export default {
     },
     getData(eventId) {
       this.loading = true;
-      this.getRegistrationSummary(eventId).then((responseObj) => {
-        this.data = responseObj.data[0]; // eslint-disable-line
-        this.loading = false;
-      });
+      this.getEventKPI(eventId)
+        .then((responseObj) => {
+          this.data = responseObj.data[0]; // eslint-disable-line
+          this.loading = false;
+        });
     },
     sortByKey(array, key) {
       return array.sort((a, b) => {

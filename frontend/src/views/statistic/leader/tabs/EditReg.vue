@@ -215,7 +215,7 @@ export default {
       this.loading = true;
 
       Promise.all([
-        this.getRegistrationSummary(eventId, param),
+        this.getEventSummary(eventId, param),
         this.getBookingOptions(eventId),
       ])
         .then((values) => {
