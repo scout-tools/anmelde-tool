@@ -5,14 +5,10 @@
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <v-row class="center text-center justify-center pa-0">
-              <v-col cols="12">
-                <BookingFilter
-                  :bookingOptionList="bookingOptionList"
-                  :loading="loading"
-                  @onFilterSelected="onFilterSelected"
-                  v-model="selectedBookingOption"
-                />
-              </v-col>
+               <RegistrationFilter
+                :bookingOptionList="bookingOptionList"
+                :loading="loading"
+                @onFilterSelected="onFilterSelected"/>
             </v-row>
           </v-container>
         </v-card-text>
@@ -31,12 +27,12 @@
 <script>
 
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import BookingFilter from '@/components/common/BookingFilter.vue';
+import RegistrationFilter from '@/components/common/RegistrationFilter.vue';
 
 export default {
   mixins: [apiCallsMixin],
   components: {
-    BookingFilter,
+    RegistrationFilter,
   },
   data: () => ({
     data: [],
@@ -54,12 +50,12 @@ export default {
     getString(key) {
       return this.mapping[key];
     },
-    getData(eventId, param) {
+    getData(params) {
       this.loading = true;
 
       Promise.all([
-        this.getEventAgeGroups(eventId, param),
-        this.getBookingOptions(eventId),
+        this.getEventAgeGroups(this.eventId, params),
+        this.getBookingOptions(this.eventId),
       ])
         .then((values) => {
           this.data = values[0].data; //eslint-disable-line
@@ -69,26 +65,20 @@ export default {
           this.loading = false;
         });
     },
-    onFilterSelected(values) {
-      const params = new URLSearchParams();
-      if (values) {
-        values.forEach((value) => {
-          params.append('booking-option', value);
-        });
-      }
-      this.getData(this.eventId, params);
+    onFilterSelected(params) {
+      this.getData(params);
     },
   },
   created() {
-    this.getData(this.eventId);
+    this.getData(null);
   },
   computed: {
     eventId() {
       return this.$route.params.id;
     },
     ageGroups() {
-      if (this.data && this.data[0]) {
-        return this.data[0].ageGroups;
+      if (this.data) {
+        return this.data;
       }
       return [];
     },
@@ -129,6 +119,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

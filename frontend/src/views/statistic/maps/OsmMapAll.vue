@@ -9,8 +9,7 @@
           :color="bundColorObj[bund.bund]"
           :label="bund.bund"
           :value="bund.bund"
-          v-if="bund.bund"
-        ></v-checkbox>
+          v-if="bund.bund"/>
       </template>
     </v-row>
     <v-row>
@@ -39,8 +38,7 @@
           <l-marker
             :lat-lng="getLonLatLocation()"
             color="green"
-            :radius="10000"
-          >
+            :radius="10000">
             <l-popup content="Ungefährer Lagerplatz"> </l-popup>
           </l-marker>
         </l-map>
@@ -51,14 +49,13 @@
 
 <script>
 import { latLng } from 'leaflet';
-import axios from 'axios';
 
 import { LMap, LTileLayer, LPopup, LCircle } from 'vue2-leaflet'; //eslint-disable-line
 
-import serviceMixin from '@/mixins/serviceMixin';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
-  mixins: [serviceMixin],
+  mixins: [apiCallsMixin],
   name: 'Example',
   components: {
     LMap,
@@ -124,19 +121,20 @@ export default {
         return [1, 1];
       }
     },
-    async getHierarchyMapping() {
-      const path = `${process.env.VUE_APP_API}/basic/scout-hierarchy-detail/`;
-      const response = await axios.get(path);
-
-      return response.data;
-    },
     getData() {
-      this.getHierarchyMapping().then((responseObj) => {
-        this.data = responseObj; // eslint-disable-line
-      });
-      this.getEventLocationSummary(this.eventId).then((responseObj) => {
-        this.summary = responseObj.data[0]; // eslint-disable-line
-      });
+      this.loading = true;
+
+      Promise.all([
+        this.getHierarchyMappingDetailed(),
+        this.getEventLocationSummary(this.eventId),
+      ])
+        .then((values) => {
+          this.data = values[0].data; //eslint-disable-line
+          this.summary = values[1].data[0]; //eslint-disable-line
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     getCoord(item) {
       try {
@@ -173,7 +171,7 @@ export default {
       this.currentCenter = center;
     },
   },
-  created() {
+  mounted() {
     this.selectedBunde = Object.keys(this.bundColorObj);
     this.getData();
   },

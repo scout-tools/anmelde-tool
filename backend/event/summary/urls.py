@@ -1,14 +1,16 @@
 from django.urls import include, path
 from rest_framework_nested import routers
 
-from . import views
 from event.urls import router
+from . import views
 
 event_summary_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
 event_summary_router.register(r'summary', views.EventSummaryViewSet, basename='summary')
 event_summary_router.register(r'summary/age-groups', views.EventAgeGroupsSummaryViewSet, basename='age-groups')
 event_summary_router.register(r'summary/kpi', views.EventKPIViewSet, basename='kpi')
-event_summary_router.register(r'summary/locations', views.EventLocationSummaryViewSet, basename='locations')
+event_summary_router.register(r'summary/participant-locations', views.RegistrationLocationViewSet,
+                              basename='participant-locations')
+event_summary_router.register(r'summary/event-location', views.EventLocationViewSet, basename='event-location')
 event_summary_router.register(r'summary/detailed', views.EventDetailedSummaryViewSet, basename='detailed')
 event_summary_router.register(r'summary/workshop', views.WorkshopEventSummaryViewSet, basename='workshop')
 event_summary_router.register(r'summary/attributes', views.EventAttributeSummaryViewSet, basename='attributes')

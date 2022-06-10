@@ -1,5 +1,9 @@
+from datetime import datetime
+
+import pytz
 from django.contrib.auth.models import User
 from django.db.models import QuerySet
+from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
@@ -28,26 +32,31 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         confirmed: bool = self.request.query_params.get('confirmed', 'true') == 'true'
 
         if confirmed:
-            registrations = registrations.filter(is_confirmed=True)
+            registrations = registrations.filter(is_confirmed=confirmed)
 
         return registrations
 
 
-class EventAgeGroupsSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class EventKPIViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubEventResponsiblePerson]
-    serializer_class = summary_serializers.EventAgeGroupSerializer
+    serializer_class = summary_serializers.EventKPISerializer
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
         return event_models.Event.objects.filter(id=event_id)
 
 
-class EventKPIViewSet(EventAgeGroupsSummaryViewSet):
-    serializer_class = summary_serializers.EventKPISerializer
+class RegistrationLocationViewSet(EventSummaryViewSet):
+    serializer_class = summary_serializers.RegistrationLocationSerializer
 
 
-class EventLocationSummaryViewSet(EventAgeGroupsSummaryViewSet):
+class EventLocationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    permission_classes = [event_permissions.IsSubEventResponsiblePerson]
     serializer_class = summary_serializers.EventLocationSummarySerializer
+
+    def get_queryset(self) -> QuerySet:
+        event_id = self.kwargs.get("event_pk", None)
+        return event_models.Event.objects.filter(id=event_id)
 
 
 class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -87,7 +96,7 @@ class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSe
 class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubEventResponsiblePerson]
 
-    def list(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs) -> Response:
         participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
 
         eat_habits_sum = {}
@@ -115,15 +124,59 @@ class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
     def get_queryset(self) -> QuerySet[event_models.RegistrationParticipant]:
         event_id = self.kwargs.get("event_pk", None)
+
         booking_option_list = self.request.query_params.getlist('booking-option')
-        registration_ids = event_models.Registration.objects.filter(event=event_id, is_confirmed=True) \
-            .values_list('id', flat=True)
+        confirmed: bool = self.request.query_params.get('confirmed', 'true') == 'true'
+
+        registrations = event_models.Registration.objects.filter(event=event_id)
+
+        if confirmed:
+            registrations = registrations.filter(is_confirmed=confirmed)
+
+        registration_ids = registrations.values_list('id', flat=True)
         queryset = event_models.RegistrationParticipant.objects.filter(registration__id__in=registration_ids)
 
         if booking_option_list:
             queryset = queryset.filter(booking_option__in=booking_option_list)
 
         return queryset
+
+
+class EventAgeGroupsSummaryViewSet(EventFoodSummaryViewSet):
+
+    def list(self, request, *args, **kwargs) -> Response:
+        """
+        0-10 Wölfling
+        11-16 Pfadfinder
+        17-23 Rover
+        23+ Altrover
+        """
+        event_id = self.kwargs.get("event_pk", None)
+        event = get_object_or_404(event_models.Event, pk=event_id)
+        all_participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
+
+        woelfling = self.age_range(0, 12, all_participants, event)
+        pfadfinder = self.age_range(12, 17, all_participants, event)
+        rover = self.age_range(17, 24, all_participants, event)
+        alt_rover = self.age_range(24, 999, all_participants, event)
+
+        result = {
+            'woelfling': woelfling,
+            'pfadfinder': pfadfinder,
+            'rover': rover,
+            'alt_rover': alt_rover
+        }
+
+        return Response(result, status=status.HTTP_200_OK)
+
+    def age_range(self, min_age, max_age, participants: QuerySet[event_models.RegistrationParticipant],
+                  event: event_models.Event) -> int:
+        min_date = datetime(event.start_date.year - min_age, event.start_date.month, event.start_date.day,
+                            tzinfo=pytz.timezone('Europe/Berlin'))
+        max_date = datetime(event.start_date.year - max_age, event.start_date.month, event.start_date.day,
+                            tzinfo=pytz.timezone('Europe/Berlin'))
+
+        return participants.filter(birthday__gte=max_date, birthday__lte=min_date).count()
 
 
 class CashSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

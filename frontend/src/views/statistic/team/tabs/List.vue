@@ -4,23 +4,11 @@
       <v-card class="mx-auto pa-0" flat>
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
-            <v-row class="center text-center justify-center pa-0">
-              <v-col cols="6">
-                <v-checkbox
-                    v-model="justConfirmed"
-                    label="Nur Bestätigt"
-                    @change="getData"
-                    hide-details/>
-              </v-col>
-              <v-col cols="6">
-                <BookingFilter
-                    :bookingOptionList="bookingOptionList"
-                    :loading="loading"
-                    @onFilterSelected="onFilterSelected"
-                    v-model="selectedBookingOption"
-                />
-              </v-col>
-            </v-row>
+            <RegistrationFilter
+                :bookingOptionList="bookingOptionList"
+                :loading="loading"
+                @onFilterSelected="onFilterSelected"
+                :justConfirmed="justConfirmed"/>
           </v-container>
         </v-card-text>
       </v-card>
@@ -95,12 +83,12 @@
 <script>
 import moment from 'moment';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import BookingFilter from '@/components/common/BookingFilter.vue';
+import RegistrationFilter from '@/components/common/RegistrationFilter.vue';
 
 export default {
   mixins: [apiCallsMixin],
   components: {
-    BookingFilter,
+    RegistrationFilter,
   },
   data: () => ({
     data: [],
@@ -159,7 +147,8 @@ export default {
       return this.data.length;
     },
     getTotalPariticipants() {
-      return this.data.map((x) => x.participantCount).reduce((pv, cv) => pv + cv, 0);
+      return this.data.map((x) => x.participantCount)
+        .reduce((pv, cv) => pv + cv, 0);
     },
   },
   methods: {
@@ -174,15 +163,8 @@ export default {
     getNumberParticipant(item) {
       return `${item.numberParticipant || 0}`;
     },
-    getData() {
+    getData(param) {
       this.loading = true;
-      const param = new URLSearchParams();
-      param.append('confirmed', this.justConfirmed);
-      if (this.selectedBookingOption) {
-        this.selectedBookingOption.forEach((value) => {
-          param.append('booking-option', value);
-        });
-      }
 
       Promise.all([
         this.getEventSummary(this.eventId, param),
@@ -196,13 +178,12 @@ export default {
           this.loading = false;
         });
     },
-    onFilterSelected(value) {
-      this.selectedBookingOption = value;
-      this.getData();
+    onFilterSelected(param) {
+      this.getData(param);
     },
   },
   created() {
-    this.getData();
+    this.getData(null);
   },
 };
 </script>

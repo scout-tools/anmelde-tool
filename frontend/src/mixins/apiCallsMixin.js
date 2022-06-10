@@ -135,7 +135,11 @@ export default {
       return axios.get(path, { params });
     },
     async getEventLocationSummary(eventId, params) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/locations/`;
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/event-location/`;
+      return axios.get(path, { params });
+    },
+    async getRegistrationLocationsSummary(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/participant-locations/`;
       return axios.get(path, { params });
     },
     async getEventKPI(eventId) {
@@ -193,6 +197,14 @@ export default {
     async getRegistrationsResponsiblePersons(eventId, params) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/emails/registration-responsible-persons/`;
       return axios.get(path, { params });
+    },
+    async getHierarchyMappingDetailed() {
+      const path = `${process.env.VUE_APP_API}/basic/scout-hierarchy-detail/`;
+      return axios.get(path);
+    },
+    async getHierarchyMapping() {
+      const path = `${process.env.VUE_APP_API}/basic/scout-hierarchy/`;
+      return axios.get(path);
     },
   },
 };

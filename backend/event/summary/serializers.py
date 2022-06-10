@@ -1,6 +1,3 @@
-from datetime import datetime
-
-import pytz
 from django.contrib.auth.models import User
 from django.db.models import QuerySet, Sum, Count, F
 from rest_framework import serializers
@@ -131,22 +128,17 @@ class RegistrationEventDetailedSummarySerializer(RegistrationEventSummarySeriali
         fields = RegistrationEventSummarySerializer.Meta.fields + ('registrationparticipant_set',)
 
 
-class RegistrationEventLocationSummarySerializer(serializers.ModelSerializer):
+class RegistrationLocationSerializer(serializers.ModelSerializer):
     participant_count = serializers.SerializerMethodField()
     scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)
 
     class Meta:
         model = event_models.Registration
         fields = (
-            'id',
-            'is_confirmed',
-            'is_accepted',
-            'single',
             'scout_organisation',
             'participant_count',
             'created_at',
-            'updated_at',
-            'booking_options',)
+            'updated_at',)
 
     def get_participant_count(self, registration: event_models.Registration) -> int:
         booking_option_list = self.context['request'].query_params.getlist('booking-option')
@@ -159,13 +151,11 @@ class RegistrationEventLocationSummarySerializer(serializers.ModelSerializer):
 
 
 class EventLocationSummarySerializer(serializers.ModelSerializer):
-    registration_set = RegistrationEventSummarySerializer(many=True, read_only=True)
     location = event_serializer.EventLocationSummarySerializer(many=False, read_only=True)
 
     class Meta:
         model = event_models.Event
         fields = (
-            'registration_set',
             'location',
         )
 
@@ -194,52 +184,6 @@ class EventKPISerializer(serializers.ModelSerializer):
             .values(booking_option=F('registrationparticipant__booking_option__name')) \
             .annotate(count=Count('registrationparticipant')) \
             .annotate(price=Sum('registrationparticipant__booking_option__price'))
-
-
-class EventAgeGroupSerializer(serializers.ModelSerializer):
-    age_groups = serializers.SerializerMethodField()
-
-    class Meta:
-        model = event_models.Event
-        fields = (
-            'id',
-            'age_groups',
-        )
-
-    def get_age_groups(self, event: event_models.Event) -> dict:
-        """
-            0-10 Wölfling
-            11-16 Pfadfinder
-            17-23 Rover
-            23+ Altrover
-        """
-        participant_ids = event.registration_set.filter(is_confirmed=True).values('registrationparticipant')
-        all_participants = event_models.RegistrationParticipant.objects.filter(id__in=participant_ids)
-        booking_option_list = self.context['request'].query_params.getlist('booking-option')
-
-        if booking_option_list:
-            all_participants = all_participants.filter(booking_option__in=booking_option_list)
-
-        woelfling = self.age_range(0, 12, all_participants, event)
-        pfadfinder = self.age_range(12, 17, all_participants, event)
-        rover = self.age_range(17, 24, all_participants, event)
-        alt_rover = self.age_range(24, 999, all_participants, event)
-
-        return {
-            'woelfling': woelfling,
-            'pfadfinder': pfadfinder,
-            'rover': rover,
-            'alt_rover': alt_rover
-        }
-
-    def age_range(self, min_age, max_age, participants: QuerySet[event_models.RegistrationParticipant],
-                  event: event_models.Event) -> int:
-        min_date = datetime(event.start_date.year - min_age, event.start_date.month, event.start_date.day,
-                            tzinfo=pytz.timezone('Europe/Berlin'))
-        max_date = datetime(event.start_date.year - max_age, event.start_date.month, event.start_date.day,
-                            tzinfo=pytz.timezone('Europe/Berlin'))
-
-        return participants.filter(birthday__gte=max_date, birthday__lte=min_date).count()
 
 
 class RegistrationAttributeGetSerializer(serializers.ModelSerializer):
