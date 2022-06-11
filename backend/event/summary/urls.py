@@ -3,11 +3,23 @@ from rest_framework_nested import routers
 
 from event.urls import router
 from . import views
+from .kpi import views as kpi_views
 
 event_summary_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
 event_summary_router.register(r'summary', views.EventSummaryViewSet, basename='summary')
 event_summary_router.register(r'summary/age-groups', views.EventAgeGroupsSummaryViewSet, basename='age-groups')
-event_summary_router.register(r'summary/kpi', views.EventKPIViewSet, basename='kpi')
+
+event_summary_router.register(r'summary/kpi/total-participants', kpi_views.TotalParticipantsViewSet,
+                              basename='total-participants')
+event_summary_router.register(r'summary/kpi/total-registrations', kpi_views.TotalRegistrationsViewSet,
+                              basename='total-participants')
+event_summary_router.register(r'summary/kpi/last-registrations', kpi_views.LastRegistrationsViewSet,
+                              basename='last-registrations')
+event_summary_router.register(r'summary/kpi/largest-registrations', kpi_views.LargestRegistrationsViewSet,
+                              basename='largest-registrations')
+event_summary_router.register(r'summary/kpi/booking-options', kpi_views.BookingOptionViewSet,
+                              basename='booking-options')
+
 event_summary_router.register(r'summary/participant-locations', views.RegistrationLocationViewSet,
                               basename='participant-locations')
 event_summary_router.register(r'summary/event-location', views.EventLocationViewSet, basename='event-location')

@@ -37,15 +37,6 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         return registrations
 
 
-class EventKPIViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    permission_classes = [event_permissions.IsSubEventResponsiblePerson]
-    serializer_class = summary_serializers.EventKPISerializer
-
-    def get_queryset(self) -> QuerySet:
-        event_id = self.kwargs.get("event_pk", None)
-        return event_models.Event.objects.filter(id=event_id)
-
-
 class RegistrationLocationViewSet(EventSummaryViewSet):
     serializer_class = summary_serializers.RegistrationLocationSerializer
 
