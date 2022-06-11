@@ -6,8 +6,7 @@
           <v-container class="pa-0" fluid>
             <v-row class="center text-center justify-center pa-0">
               <RegistrationFilter
-                  :bookingOptionList="bookingOptionList"
-                  :loading="loading"
+                  :eventId="eventId"
                   @onFilterSelected="onFilterSelected"/>
             </v-row>
           </v-container>
@@ -172,13 +171,9 @@ export default {
     getData(param) {
       this.loading = true;
 
-      Promise.all([
-        this.getEventSummary(this.eventId, param),
-        this.getBookingOptions(this.eventId),
-      ])
-        .then((values) => {
-            this.data = values[0].data; //eslint-disable-line
-            this.bookingOptionList = values[1].data; //eslint-disable-line
+      this.getEventSummary(this.eventId, param)
+        .then((result) => {
+            this.data = result.data; //eslint-disable-line
         })
         .finally(() => {
           this.loading = false;

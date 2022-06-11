@@ -5,10 +5,9 @@
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <v-row class="center text-center justify-center pa-0">
-               <RegistrationFilter
-                :bookingOptionList="bookingOptionList"
-                :loading="loading"
-                @onFilterSelected="onFilterSelected"/>
+              <RegistrationFilter
+                  :eventId="eventId"
+                  @onFilterSelected="onFilterSelected"/>
             </v-row>
           </v-container>
         </v-card-text>
@@ -16,10 +15,10 @@
     </v-row>
     <v-row justify="center" class="overflow-y: auto">
       <apexchart
-        width="500"
-        type="bar"
-        :options="options"
-        :series="series"/>
+          width="500"
+          type="bar"
+          :options="options"
+          :series="series"/>
     </v-row>
   </v-container>
 </template>
@@ -43,8 +42,6 @@ export default {
       altRover: 'Altrover (25+)',
     },
     loading: false,
-    bookingOptionList: [],
-    selectedBookingOption: null,
   }),
   methods: {
     getString(key) {
@@ -53,13 +50,9 @@ export default {
     getData(params) {
       this.loading = true;
 
-      Promise.all([
-        this.getEventAgeGroups(this.eventId, params),
-        this.getBookingOptions(this.eventId),
-      ])
-        .then((values) => {
-          this.data = values[0].data; //eslint-disable-line
-          this.bookingOptionList = values[1].data; //eslint-disable-line
+      this.getEventAgeGroups(this.eventId, params)
+        .then((result) => {
+            this.data = result.data; //eslint-disable-line
         })
         .finally(() => {
           this.loading = false;

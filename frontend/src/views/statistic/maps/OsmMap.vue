@@ -4,11 +4,9 @@
       <v-card class="mx-auto pa-0" flat>
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
-            <RegistrationFilter
-                :bookingOptionList="bookingOptionList"
-                :loading="loading"
-                @onFilterSelected="onFilterSelected"
-                :justConfirmed="justConfirmed"/>
+           <RegistrationFilter
+                :eventId="eventId"
+                @onFilterSelected="onFilterSelected"/>
           </v-container>
         </v-card-text>
       </v-card>
@@ -75,10 +73,7 @@ export default {
       showMap: true,
       data: [],
       loading: false,
-      bookingOptionList: [],
-      selectedBookingOption: null,
       eventLocation: null,
-      justConfirmed: true,
     };
   },
   computed: {
@@ -98,12 +93,10 @@ export default {
 
       Promise.all([
         this.getEventLocationSummary(this.eventId),
-        this.getBookingOptions(this.eventId),
         this.getRegistrationLocationsSummary(this.eventId, param),
       ])
         .then((values) => {
-            this.data = values[2].data; //eslint-disable-line
-            this.bookingOptionList = values[1].data; //eslint-disable-line
+            this.data = values[1].data; //eslint-disable-line
             this.eventLocation = values[0].data[0];  //eslint-disable-line
         })
         .finally(() => {

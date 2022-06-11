@@ -5,10 +5,8 @@
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <RegistrationFilter
-                :bookingOptionList="bookingOptionList"
-                :loading="loading"
-                @onFilterSelected="onFilterSelected"
-                :justConfirmed="justConfirmed"/>
+                :eventId="eventId"
+                @onFilterSelected="onFilterSelected"/>
           </v-container>
         </v-card-text>
       </v-card>
@@ -50,9 +48,6 @@ export default {
     data: [],
     itemsPerPage: 1000,
     loading: false,
-    bookingOptionList: [],
-    selectedBookingOption: null,
-    justConfirmed: true,
   }),
 
   computed: {
@@ -64,13 +59,9 @@ export default {
     getData(param) {
       this.loading = true;
 
-      Promise.all([
-        this.getFoodSummary(this.eventId, param),
-        this.getBookingOptions(this.eventId),
-      ])
-        .then((values) => {
-            this.data = values[0].data; //eslint-disable-line
-            this.bookingOptionList = values[1].data; //eslint-disable-line
+      this.getFoodSummary(this.eventId, param)
+        .then((result) => {
+            this.data = result.data; //eslint-disable-line
         })
         .finally(() => {
           this.loading = false;
