@@ -6,7 +6,7 @@
             label="Nur Bestätigt"
             @change="onFilterSelected"
             hide-details
-            v-model="confirmed"/>
+            v-model="justConfirmed"/>
       </v-col>
       <v-col cols="6">
         <v-autocomplete
@@ -27,29 +27,30 @@
 </template>
 
 <script>
+import apiCallsMixin from '@/mixins/apiCallsMixin';
+
 export default {
+  mixins: [apiCallsMixin],
   props: {
     value: {
       default: null,
     },
-    bookingOptionList: [],
-    loading: {
-      default: false,
-    },
-    justConfirmed: {
-      default: true,
+    eventId: {
+      required: true,
     },
   },
   data() {
     return {
       selectedBookingOption: [],
-      confirmed: this.justConfirmed,
+      bookingOptionList: [],
+      loading: false,
+      justConfirmed: true,
     };
   },
   methods: {
     onFilterSelected() {
       const param = new URLSearchParams();
-      param.append('confirmed', this.confirmed);
+      param.append('confirmed', this.justConfirmed);
       if (this.selectedBookingOption) {
         this.selectedBookingOption.forEach((value) => {
           param.append('booking-option', value);
@@ -57,6 +58,20 @@ export default {
       }
       this.$emit('onFilterSelected', param);
     },
+    getData() {
+      this.loading = true;
+
+      this.getBookingOptions(this.eventId)
+        .then((result) => {
+          this.bookingOptionList = result.data;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+  },
+  created() {
+    this.getData();
   },
 };
 </script>
