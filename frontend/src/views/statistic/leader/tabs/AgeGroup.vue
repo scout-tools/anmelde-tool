@@ -28,7 +28,7 @@ export default {
       return this.mapping[key];
     },
     getData(eventId) {
-      this.getRegistrationSummary(eventId)
+      this.getEventSummary(eventId)
         .then((responseObj) => {
           this.data = responseObj.data;
         });

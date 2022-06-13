@@ -162,12 +162,9 @@
                           <v-btn
                             v-if="item.registrationOptions.allowEditSingleReg"
                             class="ma-3"
-                            @click="
-                              deleteRegistration(getRegisteredId(item, true))
-                            "
+                            @click="deleteRegistration(getRegisteredId(item, true))"
                             v-bind="attrs"
-                            v-on="on"
-                          >
+                            v-on="on">
                             <v-icon fab color="red"> mdi-close </v-icon>
                           </v-btn>
                         </template>
@@ -179,12 +176,9 @@
                           <v-btn
                             v-if="item.registrationOptions.allowEditGroupReg"
                             class="ma-3"
-                            @click="
-                              deleteRegistration(getRegisteredId(item, false))
-                            "
+                            @click="deleteRegistration(getRegisteredId(item, false))"
                             v-bind="attrs"
-                            v-on="on"
-                          >
+                            v-on="on">
                             <v-icon fab color="red"> mdi-close </v-icon>
                           </v-btn>
                         </template>
@@ -213,15 +207,13 @@
                           params: { id: item.id },
                         }"
                         class="ma-3"
-                        style="text-decoration: none"
-                      >
+                        style="text-decoration: none">
                         <v-tooltip bottom>
                           <template v-slot:activator="{ on, attrs }">
                             <v-btn
                               v-bind="attrs"
                               v-on="on"
-                              v-if="item.allowStatistic"
-                            >
+                              v-if="item.allowStatistic || item.allowStatisticLeader">
                               <v-icon color="primary"> mdi-chart-bar </v-icon>
                             </v-btn>
                           </template>

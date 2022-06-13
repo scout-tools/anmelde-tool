@@ -10,9 +10,8 @@
               grow
               centered
               dark
-              icons-and-text
-            >
-              <v-tabs-slider></v-tabs-slider>
+              icons-and-text>
+              <v-tabs-slider/>
 
               <v-tab v-if="hasParticipantsPersonal" href="#tab-1">
                 Übersicht

@@ -1,0 +1,15 @@
+[MASTER]
+profile=no
+persistent=yes
+ignore=tests.py, urls.py, migrations, apps.py
+cache-size=500
+
+[FORMAT]
+max-line-length=120
+
+[MESSAGES CONTROL]
+# C0114 missing-module-docstring
+disable= C0114
+
+[DESIGN]
+max-parents=15

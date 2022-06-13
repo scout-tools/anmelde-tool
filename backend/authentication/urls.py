@@ -4,7 +4,7 @@ from rest_framework_nested import routers
 from . import views
 
 router = routers.SimpleRouter()
-router.register(r'responsables', views.ResponseablePersonViewSet, basename='responsables')
+router.register(r'responsables', views.ResponsablePersonViewSet, basename='responsables')
 router.register(r'personal-data', views.PersonalData, basename='personal-data')
 router.register(r'personal-data-check', views.PersonalDataCheck, basename='personal-data-check')
 router.register(r'groups', views.GroupViewSet, basename='groups')

@@ -5,14 +5,9 @@
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
             <v-row class="center text-center justify-center pa-0">
-              <v-col cols="12">
-                <BookingFilter
-                  :bookingOptionList="bookingOptionList"
-                  :loading="loading"
-                  @onFilterSelected="onFilterSelected"
-                  v-model="selectedBookingOption"
-                />
-              </v-col>
+              <RegistrationFilter
+                  :eventId="eventId"
+                  @onFilterSelected="onFilterSelected"/>
             </v-row>
           </v-container>
         </v-card-text>
@@ -20,10 +15,10 @@
     </v-row>
     <v-row justify="center" class="overflow-y: auto">
       <apexchart
-        width="500"
-        type="bar"
-        :options="options"
-        :series="series"/>
+          width="500"
+          type="bar"
+          :options="options"
+          :series="series"/>
     </v-row>
   </v-container>
 </template>
@@ -31,12 +26,12 @@
 <script>
 
 import apiCallsMixin from '@/mixins/apiCallsMixin';
-import BookingFilter from '@/components/common/BookingFilter.vue';
+import RegistrationFilter from '@/components/common/RegistrationFilter.vue';
 
 export default {
   mixins: [apiCallsMixin],
   components: {
-    BookingFilter,
+    RegistrationFilter,
   },
   data: () => ({
     data: [],
@@ -47,48 +42,36 @@ export default {
       altRover: 'Altrover (25+)',
     },
     loading: false,
-    bookingOptionList: [],
-    selectedBookingOption: null,
   }),
   methods: {
     getString(key) {
       return this.mapping[key];
     },
-    getData(eventId, param) {
+    getData(params) {
       this.loading = true;
 
-      Promise.all([
-        this.getRegistrationSummary(eventId, param),
-        this.getBookingOptions(eventId),
-      ])
-        .then((values) => {
-          this.data = values[0].data; //eslint-disable-line
-          this.bookingOptionList = values[1].data; //eslint-disable-line
+      this.getEventAgeGroups(this.eventId, params)
+        .then((result) => {
+            this.data = result.data; //eslint-disable-line
         })
         .finally(() => {
           this.loading = false;
         });
     },
-    onFilterSelected(values) {
-      const params = new URLSearchParams();
-      if (values) {
-        values.forEach((value) => {
-          params.append('booking-option', value);
-        });
-      }
-      this.getData(this.eventId, params);
+    onFilterSelected(params) {
+      this.getData(params);
     },
   },
   created() {
-    this.getData(this.eventId);
+    this.getData(null);
   },
   computed: {
     eventId() {
       return this.$route.params.id;
     },
     ageGroups() {
-      if (this.data && this.data[0]) {
-        return this.data[0].ageGroups;
+      if (this.data) {
+        return this.data;
       }
       return [];
     },
@@ -129,6 +112,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

@@ -57,36 +57,6 @@
             hide-details
             @change="onFilterSelected"/>
         </v-col>
-<!--        <v-col cols="3">-->
-<!--          <v-tooltip bottom>-->
-<!--            <template v-slot:activator="{ on, attrs }">-->
-<!--              <v-checkbox-->
-<!--                v-model="filterRegistrationResponiblePersons.allParticipants"-->
-<!--                label="Alle Teilnehmer"-->
-<!--                hide-details-->
-<!--                @change="onFilterSelected"-->
-<!--                v-bind="attrs"-->
-<!--                v-on="on"/>-->
-<!--            </template>-->
-<!--            <span>Füge alle Teilnehmer hinzu, deren Email Adresse angebeben wurde.</span>-->
-<!--          </v-tooltip>-->
-<!--        </v-col>-->
-<!--        <v-col cols="3">-->
-<!--          <v-tooltip bottom>-->
-<!--            <template v-slot:activator="{ on, attrs }">-->
-<!--              <BookingFilter-->
-<!--                :loading="loading"-->
-<!--                :bookingOptionList="bookingOptionList"-->
-<!--                @onFilterSelected="onFilterSelected"-->
-<!--                v-model="filterRegistrationResponiblePersons.selectedBookingOption"-->
-<!--                v-bind="attrs"-->
-<!--                v-on="on"-->
-<!--              />-->
-<!--            </template>-->
-<!--            <span>Filter die Verantwortlichen,-->
-<!--              wo mindestens ein Teilnehmer die selektierte Option gebucht hat.</span>-->
-<!--          </v-tooltip>-->
-<!--        </v-col>-->
       </v-row>
       <v-row class="center text-center justify-center pa-0">
         <v-col cols="12">

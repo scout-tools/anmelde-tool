@@ -74,7 +74,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs) -> Response:
-        print(request.data)
+
         eat_habits_formatted = create_missing_eat_habits(request)
 
         if eat_habits_formatted and len(eat_habits_formatted) > 0:
@@ -90,8 +90,6 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
             elif registration.event.last_possible_update >= timezone.now():
                 request.data['deactivated'] = False
                 request.data['needs_confirmation'] = event_choices.ParticipantActionConfirmation.AddFromExisting
-
-
 
         request.data['generated'] = False
         return super().update(request, *args, **kwargs)
@@ -280,8 +278,8 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
 
 
 class AddResponsablePersonRegistrationViewSet(
-                          mixins.UpdateModelMixin,
-                          viewsets.GenericViewSet):
+    mixins.UpdateModelMixin,
+    viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsRegistrationResponsiblePerson]
     queryset = event_models.Registration.objects.all()
     serializer_class = registration_serializers.RegistrationPutSerializer
@@ -293,8 +291,8 @@ class AddResponsablePersonRegistrationViewSet(
         new_responsable_person_id = User.objects.filter(email=new_responsable_person).first().id
 
         instance = self.get_object()
-       
-       # prepair the return list with new user
+
+        # prepair the return list with new user
         responseable_person_ids = [new_responsable_person_id]
 
         # add all exsisting users-id to list
@@ -304,6 +302,7 @@ class AddResponsablePersonRegistrationViewSet(
         request.data['responsible_persons'] = responseable_person_ids
 
         return super().update(request, *args, **kwargs)
+
 
 class RegistrationSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubRegistrationResponsiblePerson]
@@ -424,7 +423,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
         serializer.is_valid(raise_exception=True)
         tmp: event_models.Registration = serializer.save()
 
-        tmp.responsible_persons.add(request.user)
+        # tmp.responsible_persons.add(request.user)
 
         serializer = registration_serializers.RegistrationGetSerializer(tmp)
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -9,8 +9,7 @@
     item-text="name"
     item-value="id"
     @change="onFilterSelected"
-    no-data-text="Keine Buchoptionen gefunden."
-  />
+    no-data-text="Keine Buchoptionen gefunden."/>
 </template>
 
 <script>

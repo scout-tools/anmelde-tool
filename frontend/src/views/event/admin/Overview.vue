@@ -238,6 +238,7 @@ export default {
 
       return response.data;
     },
+
     async getHierarchyMapping() {
       const path = `${process.env.VUE_APP_API}basic/scout-hierarchy/`;
       const response = await axios.get(path);
