@@ -5,12 +5,12 @@
         <v-layout column>
           <v-card>
             <v-tabs
-              v-model="tab"
-              background-color="primary"
-              grow
-              centered
-              dark
-              icons-and-text>
+                v-model="tab"
+                background-color="primary"
+                grow
+                centered
+                dark
+                icons-and-text>
               <v-tabs-slider/>
 
               <v-tab v-if="hasParticipantsPersonal" href="#tab-1">
@@ -33,7 +33,7 @@
                 <v-icon>mdi-map</v-icon>
               </v-tab>
 
-              <v-tab v-if="hasAttributes" href="#tab-5">
+              <v-tab v-if="hasAttributes && isEventPlaner" href="#tab-5">
                 Attribute
                 <v-icon>mdi-ticket</v-icon>
               </v-tab>
@@ -102,7 +102,9 @@ export default {
       hasSubscribeWorkshop: false,
       hasAttributes: false,
       currentEventInfos: {},
+      isEventPlaner: false,
       isEventAdmin: false,
+      isLeader: false,
     };
   },
   methods: {
@@ -118,6 +120,8 @@ export default {
           this.currentModules = values[0].data; // eslint-disable-line
           this.currentEventInfos = values[1].data;
           this.isEventAdmin = this.currentEventInfos.allowStatisticAdmin;
+          this.isLeader = this.currentEventInfos.allowStatisticLeader;
+          this.isEventPlaner = this.currentEventInfos.allowStatistic;
           this.hasParticipantsPersonal = this.hasModule(this.currentModules, [
             'ParticipantsPersonal',
             'ParticipantsPersonalGold',
@@ -138,12 +142,12 @@ export default {
     },
     hasModule(currentModules, name) {
       return (
-        currentModules && // eslint-disable-line
-        currentModules.length && // eslint-disable-line
-        currentModules.some(
-          // eslint-disable-line
-          (module) => name.includes(module.module.name), // eslint-disable-line
-        )
+          currentModules && // eslint-disable-line
+          currentModules.length && // eslint-disable-line
+          currentModules.some(
+              // eslint-disable-line
+              (module) => name.includes(module.module.name), // eslint-disable-line
+          )
       );
     },
     loadData() {

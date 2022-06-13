@@ -1,17 +1,18 @@
 from django.contrib import admin
-from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
-from django.db.models.functions import Concat
 from django.db.models import F, Value, CharField
+from django.db.models.functions import Concat
+from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
 from .models import ScoutHierarchy, ZipCode, ScoutOrgaLevel, TagType, AbstractAttribute, Tag, \
     BooleanAttribute, TimeAttribute, IntegerAttribute, FloatAttribute, TravelAttribute, StringAttribute, Description, \
-    EatHabit, FrontendTheme, Message, MessageType
+    EatHabit, FrontendTheme, Message, MessageType, ScoutHierarchyChildModel
 
 admin.site.register(ScoutOrgaLevel)
 admin.site.register(Description)
 admin.site.register(FrontendTheme)
 admin.site.register(Message)
 admin.site.register(MessageType)
+admin.site.register(ScoutHierarchyChildModel)
 
 
 @admin.register(EatHabit)
@@ -28,7 +29,7 @@ class EatHabitAdmin(admin.ModelAdmin):
 
 
 @admin.register(Tag)
-class ScoutHierarchyAdmin(admin.ModelAdmin):
+class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'type')
     search_fields = ('name',)
     autocomplete_fields = ('type',)

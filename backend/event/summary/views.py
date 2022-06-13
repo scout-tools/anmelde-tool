@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import pytz
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets, status
@@ -9,20 +9,33 @@ from rest_framework.response import Response
 
 from event import models as event_models
 from event import permissions as event_permissions
+from event.helper import filter_registration_by_leadership, get_bund
 from event.summary import serializers as summary_serializers
+from basic.models import ScoutHierarchyChildModel
+User = get_user_model()
 
 
 class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    permission_classes = [event_permissions.IsSubEventResponsiblePerson]
+    permission_classes = [event_permissions.IsSubEventResponsiblePerson | event_permissions.IsLeaderPerson]
     serializer_class = summary_serializers.WorkshopEventSummarySerializer
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
-        return event_models.Workshop.objects.filter(registration__event__id=event_id)
+        event: event_models.Event = get_object_or_404(event_models.Event, id=event_id)
+
+        workshops = event_models.Workshop.objects.filter(registration__event__id=event_id)
+
+        if not event_permissions.check_event_permission(event, self.request.user) \
+                and event_permissions.check_leader_permission(event, self.request.user):
+            bund = get_bund(self.request.user.userextended.scout_organisation)
+            sub_hierachies = get_object_or_404(ScoutHierarchyChildModel, head=bund)
+            workshops = workshops.filter(registration__scout_organisation__in=sub_hierachies.childs.all())
+
+        return workshops
 
 
 class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    permission_classes = [event_permissions.IsSubEventResponsiblePerson]
+    permission_classes = [event_permissions.IsSubEventResponsiblePerson | event_permissions.IsLeaderPerson]
     serializer_class = summary_serializers.RegistrationEventSummarySerializer
 
     def get_queryset(self) -> QuerySet:
@@ -34,6 +47,8 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         if confirmed:
             registrations = registrations.filter(is_confirmed=confirmed)
 
+        registrations = filter_registration_by_leadership(self.request.user, event_id, registrations)
+
         return registrations
 
 
@@ -42,7 +57,7 @@ class RegistrationLocationViewSet(EventSummaryViewSet):
 
 
 class EventLocationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    permission_classes = [event_permissions.IsSubEventResponsiblePerson]
+    permission_classes = [event_permissions.IsSubEventResponsiblePerson | event_permissions.IsLeaderPerson]
     serializer_class = summary_serializers.EventLocationSummarySerializer
 
     def get_queryset(self) -> QuerySet:
@@ -85,7 +100,7 @@ class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSe
 
 
 class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    permission_classes = [event_permissions.IsSubEventResponsiblePerson]
+    permission_classes = [event_permissions.IsSubEventResponsiblePerson | event_permissions.IsLeaderPerson]
 
     def list(self, request, *args, **kwargs) -> Response:
         participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
@@ -123,6 +138,8 @@ class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
         if confirmed:
             registrations = registrations.filter(is_confirmed=confirmed)
+
+        registrations = filter_registration_by_leadership(self.request.user, event_id, registrations)
 
         registration_ids = registrations.values_list('id', flat=True)
         queryset = event_models.RegistrationParticipant.objects.filter(registration__id__in=registration_ids)

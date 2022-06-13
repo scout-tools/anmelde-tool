@@ -121,3 +121,9 @@ class RegistrationDeadlineBeforeRegistrationStart(APIException):
     status_code = 400
     default_detail = "Der Anmeldeschluss liegt vor dem Anmeldestart."
     default_code = 'wrong_order'
+
+
+class WrongQueryParams(APIException):
+    status_code = 400
+    default_detail = "Deine Anfrage ist nicht vollständig."
+    default_code = 'wrong_query_params'
