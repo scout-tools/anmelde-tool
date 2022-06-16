@@ -71,10 +71,8 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
 
 
 class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSerializer):
-    booking_option = registration_serializers.RegistrationSummaryBookingOptionSerializer(
-        many=False, read_only=True)
-    registration = RegistrationEventSummarySerializer(
-        many=False, read_only=True)
+    booking_option = registration_serializers.RegistrationSummaryBookingOptionSerializer(many=False, read_only=True)
+    registration = RegistrationEventSummarySerializer(many=False, read_only=True)
     gender = serializers.CharField(source='get_gender_display')
     leader = serializers.CharField(source='get_leader_display')
     zip_code = basic_serializers.ZipCodeSerializer(many=False, read_only=True)

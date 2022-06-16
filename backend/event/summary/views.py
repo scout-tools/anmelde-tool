@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pytz
 from django.contrib.auth import get_user_model
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
@@ -11,7 +11,7 @@ from event import models as event_models
 from event import permissions as event_permissions
 from event.helper import filter_registration_by_leadership, get_bund
 from event.summary import serializers as summary_serializers
-from basic.models import ScoutHierarchyChildModel
+
 User = get_user_model()
 
 
@@ -28,8 +28,10 @@ class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
         if not event_permissions.check_event_permission(event, self.request.user) \
                 and event_permissions.check_leader_permission(event, self.request.user):
             bund = get_bund(self.request.user.userextended.scout_organisation)
-            sub_hierachies = get_object_or_404(ScoutHierarchyChildModel, head=bund)
-            workshops = workshops.filter(registration__scout_organisation__in=sub_hierachies.childs.all())
+            workshops = workshops.filter(Q(registration__scout_organisation__parent=bund)
+                                         | Q(registration__scout_organisation__parent__parent=bund)
+                                         | Q(registration__scout_organisation__parent__parent__parent=bund)
+                                         | Q(registration__scout_organisation__parent__parent__parent__parent=bund))
 
         return workshops
 

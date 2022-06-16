@@ -7,18 +7,18 @@
             <v-row class="center text-center justify-center pa-0">
               <v-col cols="6">
                 <v-autocomplete
-                  :loading="loading"
-                  :items="stammList"
-                  v-model="filter.stamm"
-                  label="Stamm"
-                  item-text="registration.scoutOrganisation.name"/>
+                    :loading="loading"
+                    :items="stammList"
+                    v-model="filter.stamm"
+                    label="Stamm"
+                    item-text="registration.scoutOrganisation.name"/>
               </v-col>
               <v-col cols="6">
                 <BookingFilter
-                  :bookingOptionList="bookingOptionList"
-                  :loading="loading"
-                  @onFilterSelected="onFilterSelected"
-                  v-model="selectedBookingOption"
+                    :bookingOptionList="bookingOptionList"
+                    :loading="loading"
+                    @onFilterSelected="onFilterSelected"
+                    v-model="selectedBookingOption"
                 />
               </v-col>
             </v-row>
@@ -28,16 +28,15 @@
     </v-row>
     <v-row justify="center" class="overflow-y: auto">
       <v-data-table
-        v-if="filter.stamm"
-        :headers="headers"
-        :items="getPersons"
-        :items-per-page="itemsPerPage"
-        :expanded.sync="expanded"
-        show-expand
-        single-expand
-        hide-default-footer
-        item-key="createdAt"
-      >
+          v-if="filter.stamm"
+          :headers="headers"
+          :items="getPersons"
+          :items-per-page="itemsPerPage"
+          :expanded.sync="expanded"
+          show-expand
+          single-expand
+          hide-default-footer
+          item-key="createdAt">
         <template v-slot:[`item.isConfirmed`]="{ item }">
           <v-icon :color="item.isConfirmed ? 'green' : 'red'">
             {{
@@ -49,10 +48,10 @@
         <template v-slot:[`item.birthday`]="{ item }">
           {{
             `${moment()
-              .diff(
-                item.birthday,
-                'years',
-              )}`
+                .diff(
+                    item.birthday,
+                    'years',
+                )}`
           }}
         </template>
         <template v-slot:expanded-item="{ item }">
@@ -98,6 +97,18 @@
     </v-row>
     <v-row v-if="!loading && !filter.stamm" justify="center">
       <p>Bitte wähle einen Stamm</p>
+    </v-row>
+    <v-row v-if="loading" justify="center">
+      <div class="text-center ma-5">
+        <p>Lade Daten ...</p>
+        <v-progress-circular
+            :size="80"
+            :width="10"
+            class="ma-5"
+            color="primary"
+            indeterminate/>
+        <p>Bitte hab etwas Geduld.</p>
+      </div>
     </v-row>
   </v-container>
 </template>
@@ -231,7 +242,7 @@ export default {
           this.data = values[0].data;
           this.bookingOptionList = values[1].data;
           if (!this.filter.stamm) {
-            this.filter.stamm = this.stammList[0].registration.scoutOrganisation.name; //eslint-disable-line
+              this.filter.stamm = this.stammList[0].registration.scoutOrganisation.name; //eslint-disable-line
           }
         })
         .finally(() => {

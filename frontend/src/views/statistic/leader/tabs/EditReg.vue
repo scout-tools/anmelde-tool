@@ -14,49 +14,63 @@
       </v-card>
     </v-row>
     <v-row justify="center" class="overflow-y: auto">
-      <v-data-table
-          :headers="headers"
-          :items="data"
-          :items-per-page="itemsPerPage"
-          hide-default-footer
-          item-key="createdAt">
-        <template v-slot:[`item.isConfirmed`]="{ item }">
-          <v-icon :color="item.isConfirmed ? 'green' : 'red'">
+      <v-card flat v-if="!loading">
+        <v-data-table
+            :headers="headers"
+            :items="data"
+            :items-per-page="itemsPerPage"
+            hide-default-footer
+            item-key="createdAt">
+          <template v-slot:[`item.isConfirmed`]="{ item }">
+            <v-icon :color="item.isConfirmed ? 'green' : 'red'">
+              {{
+                item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
+              }}
+            </v-icon>
+          </template>
+          <template v-slot:[`item.single`]="{ item }">
+            <v-icon :color="item.single ? 'green' : 'red'">
+              {{
+                item.single ? 'mdi-check-circle' : 'mdi-close-circle'
+              }}
+            </v-icon>
+          </template>
+          <template v-slot:[`item.createdAt`]="{ item }">
             {{
-              item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
+              formatDate(item.createdAt)
             }}
-          </v-icon>
-        </template>
-        <template v-slot:[`item.single`]="{ item }">
-          <v-icon :color="item.single ? 'green' : 'red'">
+          </template>
+          <template v-slot:[`item.updatedAt`]="{ item }">
             {{
-              item.single ? 'mdi-check-circle' : 'mdi-close-circle'
+              formatDate(item.updatedAt)
             }}
-          </v-icon>
-        </template>
-        <template v-slot:[`item.createdAt`]="{ item }">
-          {{
-            formatDate(item.createdAt)
-          }}
-        </template>
-        <template v-slot:[`item.updatedAt`]="{ item }">
-          {{
-            formatDate(item.updatedAt)
-          }}
-        </template>
-        <template v-slot:[`item.numberParticipant`]="{ item }">
-          <td v-html="getNumberParticipant(item)" disabled></td>
-        </template>
-        <template v-slot:[`item.actions`]="{ item }">
-          <v-icon small color="primary" class="mr-2" @click="editItem(item)">
-            mdi-pencil
-          </v-icon>
-          <v-icon small color="error" @click="deleteItem(item)"> mdi-delete</v-icon>
-          <v-icon small color="secondary" @click="onAddResponsablePerson(item)">
-            mdi-share-variant
-          </v-icon>
-        </template>
-      </v-data-table>
+          </template>
+          <template v-slot:[`item.numberParticipant`]="{ item }">
+            <td v-html="getNumberParticipant(item)" disabled></td>
+          </template>
+          <template v-slot:[`item.actions`]="{ item }">
+            <v-icon small color="primary" class="mr-2" @click="editItem(item)">
+              mdi-pencil
+            </v-icon>
+            <v-icon small color="error" @click="deleteItem(item)"> mdi-delete</v-icon>
+            <v-icon small color="secondary" @click="onAddResponsablePerson(item)">
+              mdi-share-variant
+            </v-icon>
+          </template>
+        </v-data-table>
+      </v-card>
+      <v-card v-else flat>
+        <div class="text-center ma-5">
+          <p>Lade Daten ...</p>
+          <v-progress-circular
+              :size="80"
+              :width="10"
+              class="ma-5"
+              color="primary"
+              indeterminate/>
+          <p>Bitte hab etwas Geduld.</p>
+        </div>
+      </v-card>
     </v-row>
     <confirm-registration-edit-modal ref="confirmRegistrationEditModal"/>
     <DeleteModal ref="deleteModal"/>
@@ -150,7 +164,6 @@ export default {
       this.$refs.dialogAddResponsablePerson.open(item);
     },
     editItem(item) {
-      console.log(item);
       this.editRegistration(item);
     },
     deleteItem(item) {

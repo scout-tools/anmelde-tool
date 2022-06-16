@@ -5,20 +5,13 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import SAFE_METHODS
 from rest_framework.request import Request
 
-from event import models as event_models
+from event.helper import get_event
 from event.models import Registration, Event
 
 CREATE_METHOD = 'POST'
 UPDATE_METHODS = ('UPDATE', 'PATCH')
 
 User = get_user_model()
-
-
-def get_event(event_id: [str, Event]) -> Event:
-    if isinstance(event_id, str):
-        return get_object_or_404(event_models.Event, id=event_id)
-    else:
-        return event_id
 
 
 def get_keycloak_permission(user: User, keycloak_role: Group) -> bool:

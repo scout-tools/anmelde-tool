@@ -117,15 +117,6 @@ class ScoutHierarchy(TimeStampMixin):
         return f"{self.level} - {self.name}"
 
 
-class ScoutHierarchyChildModel(models.Model):
-    id = models.AutoField(auto_created=True, primary_key=True)
-    head = models.OneToOneField(ScoutHierarchy, on_delete=models.CASCADE, related_name='head')
-    childs = models.ManyToManyField(ScoutHierarchy, blank=True, related_name='childs')
-
-    def __str__(self):
-        return f'Head: {self.head}'
-
-
 class Description(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
     public = models.BooleanField(default=False)
