@@ -159,6 +159,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     location = EventLocationShortSerializer(read_only=True, many=False)
     allow_statistic = serializers.SerializerMethodField()
     allow_statistic_admin = serializers.SerializerMethodField()
+    allow_statistic_leader = serializers.SerializerMethodField()
 
     class Meta:
         model = event_models.Event
@@ -177,12 +178,16 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'registration_options',
             'allow_statistic',
             'allow_statistic_admin',
+            'allow_statistic_leader',
             'icon',
             'theme',
         )
 
     def get_allow_statistic(self, obj: event_models.Event) -> bool:
         return event_permissions.check_event_permission(obj, self.context['request'].user)
+
+    def get_allow_statistic_leader(self, obj: event_models.Event) -> bool:
+        return event_permissions.check_leader_permission(obj, self.context['request'].user)
 
     def get_allow_statistic_admin(self, obj: event_models.Event) -> bool:
         return event_permissions.check_event_permission_admin(obj, self.context['request'].user)

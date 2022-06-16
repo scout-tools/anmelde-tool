@@ -64,3 +64,17 @@ class FileType(models.TextChoices):
 class FileExtension(models.TextChoices):
     Excel = 'E', _('Excel')
     PDF = 'P', _('PDF')
+
+
+class WorkshopType(models.TextChoices):
+    Workshop = 'w', _('Workshop')
+    Exkursion = 'e', _('Exkursion')
+    Lecture = 'l', _('Vortrag')
+    Perforance = 'p', _('Aufführung')
+    Discussion = 'd', _('Diskussionsrunde')
+    Reading = 'r', _('Lesung')
+
+
+
+
+

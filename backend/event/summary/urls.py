@@ -24,6 +24,7 @@ event_summary_router.register(r'summary/participant-locations', views.Registrati
                               basename='participant-locations')
 event_summary_router.register(r'summary/event-location', views.EventLocationViewSet, basename='event-location')
 event_summary_router.register(r'summary/detailed', views.EventDetailedSummaryViewSet, basename='detailed')
+event_summary_router.register(r'summary/staemme', views.RegistrationStaemmeViewSet, basename='detailed')
 event_summary_router.register(r'summary/workshop', views.WorkshopEventSummaryViewSet, basename='workshop')
 event_summary_router.register(r'summary/attributes', views.EventAttributeSummaryViewSet, basename='attributes')
 event_summary_router.register(r'summary/food', views.EventFoodSummaryViewSet, basename='food')

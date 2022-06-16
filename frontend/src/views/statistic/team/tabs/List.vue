@@ -12,68 +12,96 @@
       </v-card>
     </v-row>
     <v-row justify="center" class="overflow-y: auto">
-      <v-data-table
-          :headers="headers"
-          :items="data"
-          :items-per-page="itemsPerPage"
-          :expanded.sync="expanded"
-          show-expand
-          single-expand
-          hide-default-footer
-          item-key="createdAt">
-        <template v-slot:[`item.isConfirmed`]="{ item }">
-          <v-icon :color="item.isConfirmed ? 'green' : 'red'">
+      <v-card flat v-if="!loading">
+        <v-data-table
+            :headers="headers"
+            :items="data"
+            :items-per-page="itemsPerPage"
+            :expanded.sync="expanded"
+            show-expand
+            single-expand
+            hide-default-footer
+            group-by="scoutOrganisation.bund"
+            item-key="createdAt">
+          <template v-slot:[`group.header`]="{group, isOpen, toggle, remove}">
+            <td :colspan="headers.length">
+              <v-icon @click="toggle">
+                {{ isOpen ? 'mdi-minus' : 'mdi-plus' }}
+              </v-icon>
+              <span>
+                <strong>{{ getGroupName(group) }}</strong>
+              </span>
+              <v-icon @click="remove">
+                mdi-close
+              </v-icon>
+            </td>
+          </template>
+          <template v-slot:[`item.isConfirmed`]="{ item }">
+            <v-icon :color="item.isConfirmed ? 'green' : 'red'">
+              {{
+                item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
+              }}
+            </v-icon>
+          </template>
+          <template v-slot:[`item.single`]="{ item }">
+            <v-icon :color="item.single ? 'green' : 'red'">
+              {{
+                item.single ? 'mdi-check-circle' : 'mdi-close-circle'
+              }}
+            </v-icon>
+          </template>
+          <template v-slot:[`item.createdAt`]="{ item }">
             {{
-              item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
+              formatDate(item.createdAt)
             }}
-          </v-icon>
-        </template>
-        <template v-slot:[`item.single`]="{ item }">
-          <v-icon :color="item.single ? 'green' : 'red'">
+          </template>
+          <template v-slot:[`item.updatedAt`]="{ item }">
             {{
-              item.single ? 'mdi-check-circle' : 'mdi-close-circle'
+              formatDate(item.updatedAt)
             }}
-          </v-icon>
-        </template>
-        <template v-slot:[`item.createdAt`]="{ item }">
-          {{
-            formatDate(item.createdAt)
-          }}
-        </template>
-        <template v-slot:[`item.updatedAt`]="{ item }">
-          {{
-            formatDate(item.updatedAt)
-          }}
-        </template>
-        <template v-slot:[`item.numberParticipant`]="{ item }">
-          <td v-html="getNumberParticipant(item)" disabled></td>
-        </template>
-        <template v-slot:expanded-item="{ item }">
-          <td :colspan="headers.length">
-            <v-list-item>
-              <v-list-item-content>
-                <b>Verantwortlich(e): </b>
-                {{ getResponsiblePersonsersons(item) }}
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <b>Buchungsoption: </b>
-                <p v-for="(item, i) in item.bookingOptions" :key="i">
-                  {{ item.bookingOptions }}: {{ item.sum }}
-                </p>
-              </v-list-item-content>
-            </v-list-item>
-          </td>
-        </template>
-        <template slot="body.append">
-          <tr>
-            <th colspan="4">Summe</th>
-            <th colspan="2">Registrierungen: {{ getTotalRegistrations }}</th>
-            <th colspan="2"> Teilnehmer: {{ getTotalPariticipants }}</th>
-          </tr>
-        </template>
-      </v-data-table>
+          </template>
+          <template v-slot:[`item.numberParticipant`]="{ item }">
+            <td v-html="getNumberParticipant(item)" disabled></td>
+          </template>
+          <template v-slot:expanded-item="{ item }">
+            <td :colspan="headers.length">
+              <v-list-item>
+                <v-list-item-content>
+                  <b>Verantwortlich(e): </b>
+                  {{ getResponsiblePersonsersons(item) }}
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
+                  <b>Buchungsoption: </b>
+                  <p v-for="(item, i) in item.bookingOptions" :key="i">
+                    {{ item.bookingOptions }}: {{ item.sum }}
+                  </p>
+                </v-list-item-content>
+              </v-list-item>
+            </td>
+          </template>
+          <template slot="body.append">
+            <tr>
+              <th colspan="4">Summe</th>
+              <th colspan="2">Registrierungen: {{ getTotalRegistrations }}</th>
+              <th colspan="2"> Teilnehmer: {{ getTotalPariticipants }}</th>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-card>
+      <v-card v-else flat>
+        <div class="text-center ma-5">
+          <p>Lade Daten ...</p>
+          <v-progress-circular
+              :size="80"
+              :width="10"
+              class="ma-5"
+              color="primary"
+              indeterminate/>
+          <p>Bitte hab etwas Geduld.</p>
+        </div>
+      </v-card>
     </v-row>
   </v-container>
 </template>
@@ -115,7 +143,7 @@ export default {
         value: 'scoutOrganisation.bund',
       },
       {
-        text: 'Name',
+        text: 'Stamm',
         value: 'scoutOrganisation.name',
       },
       {
@@ -133,6 +161,7 @@ export default {
     itemsPerPage: 1000,
     loading: false,
     bookingOptionList: [],
+    showGroupBy: false,
   }),
   computed: {
     eventId() {
@@ -166,7 +195,7 @@ export default {
 
       this.getEventSummary(this.eventId, param)
         .then((result) => {
-            this.data = result.data; //eslint-disable-line
+            this.data = result.data //eslint-disable-line
         })
         .finally(() => {
           this.loading = false;
@@ -174,6 +203,12 @@ export default {
     },
     onFilterSelected(param) {
       this.getData(param);
+    },
+    getGroupName(name) {
+      if (name) {
+        return name;
+      }
+      return 'DPV';
     },
   },
   created() {
