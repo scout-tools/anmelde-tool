@@ -1,10 +1,11 @@
-from django.core.management import call_command
+import json
+import ssl
+from urllib import request
+
 from django.core.management.base import BaseCommand
+
 from basic.choices import StateChoices
 from basic.models import ZipCode
-import ssl
-import json
-from urllib import request
 
 choices = dict(StateChoices.choices)
 get_abbr = lambda state: [abbrevation for abbrevation, name in choices.items() if name == state]

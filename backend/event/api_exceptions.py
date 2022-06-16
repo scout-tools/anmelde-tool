@@ -1,3 +1,4 @@
+from django.utils.encoding import force_str
 from rest_framework.exceptions import APIException
 
 
@@ -121,3 +122,72 @@ class RegistrationDeadlineBeforeRegistrationStart(APIException):
     status_code = 400
     default_detail = "Der Anmeldeschluss liegt vor dem Anmeldestart."
     default_code = 'wrong_order'
+
+
+class WrongQueryParams(APIException):
+    status_code = 400
+    default_detail = "Deine Anfrage ist nicht vollständig."
+    default_code = 'wrong_query_params'
+
+
+class EventNotFound(APIException):
+    status_code = 404
+    default_detail = "Das Event mit der ID {event_id} konnte nicht gefunden werden. " \
+                     "Bitte überprüfe ob der Link richtig kopiert wurde/eingetippt wurde, " \
+                     "andernfalls wende dich bitte(!) an die Administratoren und beschreibe das Problem."
+    default_code = 'not_found'
+
+    def __init__(self, event_id, detail=None, code=None):
+        if detail is None:
+            detail = force_str(self.default_detail).format(event_id=event_id)
+        super().__init__(detail, code)
+
+
+class ScoutHierarchyChildModelNotFound(APIException):
+    status_code = 404
+    default_detail = "Zu deinem Bund {bund} konnten wir leider keine Stämme berechnen," \
+                     " um die dazugehörigen Registrierungen zu filtern. " \
+                     "Bitte(!) wende dich an die Administratoren und beschreibe das Problem."
+    default_code = 'not_found'
+
+    def __init__(self, bund, detail=None, code=None):
+        if detail is None:
+            detail = force_str(self.default_detail).format(bund=bund)
+        super().__init__(detail, code)
+
+
+class SomethingNotFound(APIException):
+    status_code = 404
+    default_detail = "Das {sth} konnte leider nicht gefunden werden," \
+                     "Bitte(!) wende dich an die Administratoren und beschreibe das Problem."
+    default_code = 'not_found'
+
+    def __init__(self, sth, detail=None, code=None):
+        if detail is None:
+            detail = force_str(self.default_detail).format(sth=sth)
+        super().__init__(detail, code)
+
+
+class RequiredGroupNotFound(APIException):
+    status_code = 404
+    default_detail = "Die Berechtigung {permission} konnte leider nicht gefunden werden," \
+                     "Bitte(!) wende dich an die Administratoren und beschreibe das Problem."
+    default_code = 'not_found'
+
+    def __init__(self, permission, detail=None, code=None):
+        if detail is None:
+            detail = force_str(self.default_detail).format(permission=permission)
+        super().__init__(detail, code)
+
+
+class RegistrationNotFound(APIException):
+    status_code = 404
+    default_detail = "Die Registrierung {registration} konnte leider nicht gefunden werden. " \
+                     "Bitte überprüfe ob der Link richtig kopiert wurde/eingetippt wurde, " \
+                     "andernfalls wende bitte(!) dich an die Administratoren und beschreibe das Problem."
+    default_code = 'not_found'
+
+    def __init__(self, registration, detail=None, code=None):
+        if detail is None:
+            detail = force_str(self.default_detail).format(registration=registration)
+        super().__init__(detail, code)

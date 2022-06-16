@@ -213,11 +213,30 @@
                             <v-btn
                               v-bind="attrs"
                               v-on="on"
-                              v-if="item.allowStatistic || item.allowStatisticLeader">
+                              v-if="item.allowStatistic">
                               <v-icon color="primary"> mdi-chart-bar </v-icon>
                             </v-btn>
                           </template>
                           <span>Fahrtenstatistik</span>
+                        </v-tooltip>
+                      </router-link>
+                      <router-link
+                        :to="{
+                          name: 'statisticOverview',
+                          params: { id: item.id },
+                        }"
+                        class="ma-3"
+                        style="text-decoration: none">
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              v-bind="attrs"
+                              v-on="on"
+                              v-if="!item.allowStatistic && item.allowStatisticLeader">
+                              <v-icon color="primary"> mdi-chart-bar </v-icon>
+                            </v-btn>
+                          </template>
+                          <span>Fahrtenstatistik für Bundesführende</span>
                         </v-tooltip>
                       </router-link>
                     </v-row>

@@ -341,12 +341,16 @@ class ScoutHierarchyDetailedSerializer(serializers.ModelSerializer):
                 return iterator.name
             iterator = iterator.parent
 
+        return ''
+
     def get_bund(self, obj: basic_models.ScoutHierarchy) -> str:
         iterator: basic_models.ScoutHierarchy = obj
         while iterator is not None:
             if iterator.level.name == 'Bund':
                 return iterator.name
             iterator = iterator.parent
+
+        return ''
 
 
 class MessageTypeSerializer(serializers.ModelSerializer):

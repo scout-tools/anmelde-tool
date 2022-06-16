@@ -1,7 +1,7 @@
 from copy import deepcopy
 from datetime import datetime
+
 from django.db.models import Q, QuerySet
-from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status, mixins
@@ -11,10 +11,11 @@ from rest_framework.response import Response
 
 from basic import models as basic_models
 from basic import serializers as basic_serializers
-from event import serializers as event_serializers
 from event import api_exceptions as event_api_exceptions
+from event import helper as event_helper
 from event import models as event_models
 from event import permissions as event_permissions
+from event import serializers as event_serializers
 
 
 def add_event_module(module: event_models.EventModuleMapper,
@@ -113,7 +114,9 @@ class EventViewSet(viewsets.ModelViewSet):
 
         event: event_models.Event = serializer.save()
         event.responsible_persons.add(request.user)
-        standard_event = get_object_or_404(event_models.StandardEventTemplate, pk=1)
+        standard_event = event_helper.custom_get_or_404(event_api_exceptions.SomethingNotFound('Standard Event 1'),
+                                                        event_models.StandardEventTemplate,
+                                                        pk=1)
 
         add_event_module(standard_event.introduction, event)
 
@@ -161,7 +164,7 @@ class BookingOptionViewSet(viewsets.ModelViewSet):
         if event_id is None:
             raise NotFound()
 
-        event = get_object_or_404(event_models.Event.objects, pk=event_id)
+        event = event_helper.get_event(event_id)
 
         request.data['event'] = event_id
 
@@ -231,8 +234,10 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
         event_id = kwargs.get("event_pk", None)
         module_id = request.data.get("module")
 
-        event = get_object_or_404(event_models.Event, pk=event_id)
-        standard_event = get_object_or_404(event_models.StandardEventTemplate, pk=1)
+        event = event_helper.get_event(event_id)
+        standard_event = event_helper.custom_get_or_404(event_api_exceptions.StandardTemplateNotFound(1),
+                                                        event_models.StandardEventTemplate,
+                                                        pk=1)
 
         module_mapper_template = standard_event.other_optional_modules.filter(module__id=module_id).first()
         if module_mapper_template is None:
@@ -285,7 +290,9 @@ class EventModuleAttributeMapperViewSet(viewsets.ReadOnlyModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
-        mapper = get_object_or_404(event_models.EventModuleMapper, id=mapper_id)
+        mapper = event_helper.custom_get_or_404(event_api_exceptions.SomethingNotFound(f'Modul {mapper_id}'),
+                                                event_models.EventModuleMapper,
+                                                id=mapper_id)
 
         attribute = serializer.data.get('attribute')
         attribute['type'] = basic_models.TagType.objects.get(name=attribute['type']['name'])
@@ -301,7 +308,9 @@ class EventModuleAttributeMapperViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         mapper_id = self.kwargs.get("eventmodulemapper_pk", None)
-        mapper = get_object_or_404(event_models.EventModuleMapper, id=mapper_id)
+        mapper = event_helper.custom_get_or_404(event_api_exceptions.SomethingNotFound(f'Modul {mapper_id}'),
+                                                event_models.EventModuleMapper,
+                                                id=mapper_id)
         return mapper.attributes.all()
 
     def get_serializer_class(self):

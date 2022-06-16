@@ -178,6 +178,10 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/detailed/`;
       return axios.get(path, { params });
     },
+    async getRegistrationStaemme(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/staemme/`;
+      return axios.get(path, { params });
+    },
     async getParticipants(eventId) {
       const path = `${process.env.VUE_APP_API}/basic/event/${eventId}/participants/`;
       return axios.get(path);
