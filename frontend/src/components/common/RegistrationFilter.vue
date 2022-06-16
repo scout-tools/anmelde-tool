@@ -1,19 +1,18 @@
 <template>
   <v-container>
     <v-row class="center text-center justify-center pa-0">
-      <v-col cols="6">
+      <v-col cols="auto" md="3">
         <v-checkbox
             label="Nur Bestätigt"
             @change="onFilterSelected"
             hide-details
             v-model="justConfirmed"/>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="auto" md="4">
         <v-autocomplete
             clearable
             :loading="loading"
             :items="bookingOptionList"
-            :value="value"
             label="Filter nach Buchoptionen"
             multiple
             item-text="name"
@@ -21,6 +20,19 @@
             @change="onFilterSelected"
             no-data-text="Keine Buchoptionen gefunden."
             v-model="selectedBookingOption"/>
+      </v-col>
+      <v-col cols="auto" md="4">
+        <v-autocomplete
+            :loading="loading"
+            :items="stammList"
+            v-model="selectedStamm"
+            item-value="id"
+            item-text="name"
+            label="Filter nach Stämmen"
+            clearable
+            multiple
+            @change="onFilterSelected"
+            no-data-text="Keine Buchoptionen gefunden."/>
       </v-col>
     </v-row>
   </v-container>
@@ -32,11 +44,11 @@ import apiCallsMixin from '@/mixins/apiCallsMixin';
 export default {
   mixins: [apiCallsMixin],
   props: {
-    value: {
-      default: null,
-    },
     eventId: {
       required: true,
+    },
+    preSelectStamm: {
+      default: false,
     },
   },
   data() {
@@ -45,6 +57,8 @@ export default {
       bookingOptionList: [],
       loading: false,
       justConfirmed: true,
+      selectedStamm: [],
+      stammList: [],
     };
   },
   methods: {
@@ -56,14 +70,34 @@ export default {
           param.append('booking-option', value);
         });
       }
+
+      if (this.selectedStamm) {
+        this.selectedStamm.forEach((value) => {
+          param.append('stamm', value);
+        });
+      }
       this.$emit('onFilterSelected', param);
     },
     getData() {
       this.loading = true;
 
-      this.getBookingOptions(this.eventId)
-        .then((result) => {
-          this.bookingOptionList = result.data;
+      Promise.all([
+        this.getRegistrationStaemme(this.eventId),
+        this.getBookingOptions(this.eventId),
+      ])
+        .then((values) => {
+          this.bookingOptionList = values[1].data;
+          this.stammList = values[0].data;
+          if (this.preSelectStamm && this.selectedStamm.length === 0) {
+            this.selectedStamm = [this.stammList[0].id];
+            this.onFilterSelected();
+          }
+        })
+        .catch((err) => {
+          this.$root.globalSnackbar.show({
+            message: err.data,
+            color: 'error',
+          });
         })
         .finally(() => {
           this.loading = false;
@@ -75,6 +109,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

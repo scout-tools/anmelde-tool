@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from rest_framework import permissions
-from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import SAFE_METHODS
 from rest_framework.request import Request
 
+from event.api_exceptions import RequiredGroupNotFound
+from event.helper import custom_get_or_404, get_registration
 from event.helper import get_event
 from event.models import Registration, Event
 
@@ -38,7 +39,8 @@ def check_event_permission(event_id: [str, Event], user: User) -> bool:
 def check_leader_permission(event_id: [str, Event], user: User) -> bool:
     event = get_event(event_id)
     if event.limited_registration_hierarchy.id == 493:
-        bufu_group = get_object_or_404(Group, name='dpv_bundesfuehrungen')
+        perm_name = 'dpv_bundesfuehrungen'
+        bufu_group = custom_get_or_404(RequiredGroupNotFound(perm_name), Group, name=perm_name)
         return get_keycloak_permission(user, bufu_group)
     else:
         return False
@@ -65,7 +67,7 @@ def check_event_super_permission(event_id: [str, Event], user: User) -> bool:
 
 
 def check_registration_permission(registration_id: str, user: User) -> bool:
-    registration: Registration = get_object_or_404(Registration, id=registration_id)
+    registration: Registration = get_registration(registration_id)
     return registration.responsible_persons.contains(user) or check_event_super_permission(registration.event, user)
 
 

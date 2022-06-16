@@ -41,6 +41,14 @@ def get_event(event_id: [str, event_models.Event], ex=event_exceptions.EventNotF
         return event_id
 
 
+def get_registration(registration_id: [str, event_models.Registration], ex=event_exceptions.RegistrationNotFound) \
+        -> event_models.Registration:
+    if isinstance(registration_id, str):
+        return custom_get_or_404(ex, event_models.Registration, id=registration_id)
+    else:
+        return registration_id
+
+
 def custom_get_or_404(ex, model, *args, **kwargs):
     try:
         return model.objects.get(*args, **kwargs)

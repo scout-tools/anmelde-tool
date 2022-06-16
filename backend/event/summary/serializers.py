@@ -72,7 +72,7 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
 
 class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSerializer):
     booking_option = registration_serializers.RegistrationSummaryBookingOptionSerializer(many=False, read_only=True)
-    registration = RegistrationEventSummarySerializer(many=False, read_only=True)
+    scout_group = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)
     gender = serializers.CharField(source='get_gender_display')
     leader = serializers.CharField(source='get_leader_display')
     zip_code = basic_serializers.ZipCodeSerializer(many=False, read_only=True)
@@ -83,20 +83,46 @@ class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSer
         queryset=EatHabit.objects.all(),
         required=False
     )
-    needs_confirmation = serializers.CharField(
-        source='get_needs_confirmation_display')
 
     class Meta:
         model = event_models.RegistrationParticipant
-        exclude = ('deactivated', 'generated')
+        exclude = ('deactivated',
+                   'generated',
+                   'registration',
+                   'id',
+                   'tags')
 
 
-class RegistrationEventDetailedSummarySerializer(RegistrationEventSummarySerializer):
-    registrationparticipant_set = RegistrationParticipantEventDetailedSummarySerializer(read_only=True, many=True)
+class RegistrationEventDetailedSummarySerializer(serializers.ModelSerializer):
+    responsible_persons = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='email'
+    )
+    scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)
+    participants = serializers.SerializerMethodField()
 
     class Meta:
-        model = RegistrationEventSummarySerializer.Meta.model
-        fields = RegistrationEventSummarySerializer.Meta.fields + ('registrationparticipant_set',)
+        model = event_models.Registration
+        fields = ('id',
+                  'is_confirmed',
+                  'is_accepted',
+                  'single',
+                  'scout_organisation',
+                  'responsible_persons',
+                  'created_at',
+                  'updated_at',
+                  'participants')
+
+    def get_participants(self, registration: event_models.Registration):
+        booking_option_list = self.context['request'].query_params.getlist('booking-option')
+        queryset = registration.registrationparticipant_set
+
+        if booking_option_list:
+            queryset = queryset.filter(booking_option__in=booking_option_list)
+
+        serializer = RegistrationParticipantEventDetailedSummarySerializer(queryset, read_only=True, many=True)
+        return serializer.data
 
 
 class RegistrationLocationSerializer(serializers.ModelSerializer):

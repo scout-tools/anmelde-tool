@@ -21,7 +21,21 @@
             show-expand
             single-expand
             hide-default-footer
+            group-by="scoutOrganisation.bund"
             item-key="createdAt">
+          <template v-slot:[`group.header`]="{group, isOpen, toggle, remove}">
+            <td :colspan="headers.length">
+              <v-icon @click="toggle">
+                {{ isOpen ? 'mdi-minus' : 'mdi-plus' }}
+              </v-icon>
+              <span>
+                <strong>{{ getGroupName(group) }}</strong>
+              </span>
+              <v-icon @click="remove">
+                mdi-close
+              </v-icon>
+            </td>
+          </template>
           <template v-slot:[`item.isConfirmed`]="{ item }">
             <v-icon :color="item.isConfirmed ? 'green' : 'red'">
               {{
@@ -129,7 +143,7 @@ export default {
         value: 'scoutOrganisation.bund',
       },
       {
-        text: 'Name',
+        text: 'Stamm',
         value: 'scoutOrganisation.name',
       },
       {
@@ -147,6 +161,7 @@ export default {
     itemsPerPage: 1000,
     loading: false,
     bookingOptionList: [],
+    showGroupBy: false,
   }),
   computed: {
     eventId() {
@@ -180,7 +195,7 @@ export default {
 
       this.getEventSummary(this.eventId, param)
         .then((result) => {
-            this.data = result.data; //eslint-disable-line
+            this.data = result.data //eslint-disable-line
         })
         .finally(() => {
           this.loading = false;
@@ -188,6 +203,12 @@ export default {
     },
     onFilterSelected(param) {
       this.getData(param);
+    },
+    getGroupName(name) {
+      if (name) {
+        return name;
+      }
+      return 'DPV';
     },
   },
   created() {
