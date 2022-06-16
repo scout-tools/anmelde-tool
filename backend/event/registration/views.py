@@ -1,21 +1,23 @@
+import re
+from copy import deepcopy
 from datetime import timezone
+
+from dateutil.relativedelta import relativedelta
+from django.contrib.auth.models import User
 from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
-from rest_framework import mixins, viewsets, status
 from django.utils import timezone
-from dateutil.relativedelta import relativedelta
-from copy import deepcopy
-import re
+from rest_framework import mixins, viewsets, status
+from rest_framework.response import Response
+
 from basic import models as basic_models
 from basic import serializers as basic_serializers
 from event import api_exceptions as event_api_exceptions
 from event import models as event_models
-from event.choices import choices as event_choices
-from event import views as event_views
-from event.registration import serializers as registration_serializers
 from event import permissions as event_permissions
-from django.contrib.auth.models import User
+from event.choices import choices as event_choices
+from event.registration import serializers as registration_serializers
+from event.helper import get_registration
 
 
 def create_missing_eat_habits(request) -> [str]:
@@ -124,12 +126,13 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         input_serializer.is_valid(raise_exception=True)
 
         registration_id = self.kwargs.get("registration_pk", None)
-        registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
+        registration: event_models.Registration = get_registration(registration_id)
 
-        if registration.event.registration_start > timezone.now():
-            raise event_api_exceptions.TooEarly
-        elif self.action != 'destroy' and registration.event.last_possible_update < timezone.now():
-            raise event_api_exceptions.TooLate
+        if not event_permissions.IsEventSuperResponsiblePerson:
+            if registration.event.registration_start > timezone.now():
+                raise event_api_exceptions.TooEarly
+            elif self.action != 'destroy' and registration.event.last_possible_update < timezone.now():
+                raise event_api_exceptions.TooLate
 
         return registration
 

@@ -1,7 +1,6 @@
 <template>
   <GenericRegModul
     :key="`module-${moduleId}`"
-    :loading="loading"
     :saving="saving"
     :position="position"
     :maxPos="maxPos"
@@ -45,7 +44,6 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    loading: true,
     saving: false,
     selectedItem: 1,
     moduleData: [],
@@ -116,14 +114,6 @@ export default {
         this.$refs['dialog-main-fee-complex'].beforeTabShow();
       }, 100);
     },
-    setDefaults() {},
-    loadData() {
-      this.saving = false;
-      this.loading = false;
-    },
   },
-  // created() {
-  //   this.beforeTabShow();
-  // },
 };
 </script>

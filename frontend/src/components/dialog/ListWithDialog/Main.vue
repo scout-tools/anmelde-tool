@@ -155,6 +155,10 @@ export default {
           this.isLoading = false;
         })
         .catch((error) => {
+          this.$root.globalSnackbar.show({
+            message: error.response.data.message,
+            color: 'error',
+          });
           this.errormsg = error.response.data.message;
           this.isLoading = false;
         });
