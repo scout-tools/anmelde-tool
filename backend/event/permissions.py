@@ -16,7 +16,9 @@ User = get_user_model()
 
 
 def get_keycloak_permission(user: User, keycloak_role: Group) -> bool:
-    return user.groups.contains(keycloak_role) if keycloak_role else False
+    has_role = user.groups.filter(name=keycloak_role).exists()
+
+    return has_role
 
 
 def get_responsible_person_permission(user: User, event: Event) -> bool:

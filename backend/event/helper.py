@@ -1,3 +1,5 @@
+from __future__ import annotations # we use a python 3.10 Feature in line 14
+
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
 
