@@ -98,26 +98,6 @@
              {{ items.pageStart }} - {{ items.pageStop }} von {{ items.itemsLength }} Anmeldungen
           </template>
         </v-data-table>
-        <!--        <v-row class="text-center px-4 align-center">-->
-        <!--          <v-col class="text-no-wrap shrink">-->
-        <!--            Insgesamt {{ totalCount }} Anmeldungen-->
-        <!--          </v-col>-->
-        <!--          <v-col>-->
-        <!--            <v-pagination-->
-        <!--                v-model="options.page"-->
-        <!--                :length="pageCount"/>-->
-        <!--          </v-col>-->
-        <!--          <v-col>-->
-        <!--            <v-select-->
-        <!--                dense-->
-        <!--                outlined-->
-        <!--                hide-details-->
-        <!--                :value="options.itemsPerPage"-->
-        <!--                label="Anmeldungen pro Seite"-->
-        <!--                @change="options.itemsPerPage = parseInt($event, 10)"-->
-        <!--                :items="perPageChoices"/>-->
-        <!--          </v-col>-->
-        <!--        </v-row>-->
       </v-card>
     </v-row>
   </v-container>
@@ -177,24 +157,6 @@ export default {
     totalCount: 0,
     registrationFilterParams: null,
     paginationParams: null,
-    perPageChoices: [
-      {
-        text: '5',
-        value: 5,
-      },
-      {
-        text: '10',
-        value: 10,
-      },
-      {
-        text: '20',
-        value: 20,
-      },
-      {
-        text: 'Alle',
-        value: -1,
-      },
-    ],
     options: {},
     itemsPerPage: 10,
   }),
@@ -257,15 +219,6 @@ export default {
       return this.data.map((x) => x.participantCount)
         .reduce((pv, cv) => pv + cv, 0);
     },
-    pageCount() {
-      return Math.ceil(this.totalCount / this.options.itemsPerPage);
-    },
-    groupBy() {
-      if (this.options.itemsPerPage === -1) {
-        return 'scoutOrganisation.bund';
-      }
-      return '';
-    },
   },
   created() {
     this.paginationParams = new URLSearchParams();
@@ -291,9 +244,11 @@ export default {
         pageParams.append('page', page);
 
         if (sortBy) {
-          const ordering = (sortDesc[0] ? '-' : '') + sortBy[0];
-          pageParams.append('ordering', ordering);
+          pageParams.append('ordering', sortBy);
+        } else {
+          pageParams.append('ordering', 'lastName');
         }
+        pageParams.append('order-desc', sortDesc);
 
         this.paginationParams = pageParams;
         this.getData();

@@ -1,4 +1,4 @@
-from __future__ import annotations # we use a python 3.10 Feature in line 14
+from __future__ import annotations  # we use a python 3.10 Feature in line 14
 
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
@@ -56,3 +56,15 @@ def custom_get_or_404(ex, model, *args, **kwargs):
         return model.objects.get(*args, **kwargs)
     except model.DoesNotExist:
         raise ex
+
+
+def to_snake_case(ordering, order_desc, ordering_fields, default_case: str = 'created_at'):
+    camel_case = ''
+    if ordering:
+        ordering = ordering.replace('.', '__')
+        camel_case = ''.join(['_' + c.lower() if c.isupper() else c for c in ordering]).lstrip('_')
+    if not ordering or camel_case not in ordering_fields:
+        camel_case = default_case
+    if order_desc:
+        camel_case = '-'+camel_case
+    return camel_case

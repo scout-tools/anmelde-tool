@@ -19,13 +19,19 @@
           must-sort
           :expanded.sync="expanded"
           :headers="headers"
-          :footer-props="{itemsPerPageText: 'Personen pro Seite'}"
+          :footer-props="{
+            itemsPerPageText: 'Personen pro Seite',
+            'items-per-page-options': [10, 20, 30, 40, 50, -1]
+          }"
           show-expand
           single-expand
+          :options.sync="options"
+          :server-items-length="totalCount"
+          :items-per-page="itemsPerPage"
           sort-by="lastName"
           item-key="createdAt"
-          no-data-text="Keine Anmeldungen Gefunden."
-          loading-text="Lade Anmeldungen...">
+          no-data-text="Keine Teilnehmer Gefunden."
+          loading-text="Lade Teilnehmer...">
         <template v-slot:[`item.birthday`]="{ item }">
           {{
             getBirthday(item)
@@ -74,8 +80,8 @@
           </v-list-item>
         </template>
         <template v-slot:[`footer.page-text`]="items">
-             {{ items.pageStart }} - {{ items.pageStop }} von {{ items.itemsLength }} Personen
-          </template>
+          {{ items.pageStart }} - {{ items.pageStop }} von {{ items.itemsLength }} Personen
+        </template>
       </v-data-table>
     </v-row>
     <v-row v-else justify="center">
@@ -116,6 +122,10 @@ export default {
         value: 'birthday',
       },
       {
+        text: 'Stamm',
+        value: 'scoutOrganisation',
+      },
+      {
         text: '',
         value: 'data-table-expand',
       },
@@ -123,7 +133,7 @@ export default {
     API_URL: process.env.VUE_APP_API,
     showError: false,
     responseObj: null,
-    itemsPerPage: 25,
+    itemsPerPage: 5,
     options: {},
     totalCount: 0,
     registrationFilterParams: null,
@@ -134,14 +144,10 @@ export default {
       return this.$route.params.id;
     },
     getPersons() {
-      const result = [];
-      this.data.map((x) => x.participants)
-        .forEach((item) => {
-          item.forEach((person) => {
-            result.push(person);
-          });
-        });
-      return result;
+      if (this.data) {
+        return this.data;
+      }
+      return [];
     },
   },
   methods: {
@@ -157,16 +163,15 @@ export default {
       for (const [key, val] of this.registrationFilterParams.entries()) {
         combined.append(key, val);
       }
-      //
+
       // eslint-disable-next-line no-restricted-syntax
-      // for (const [key, val] of this.paginationParams.entries()) {
-      //   combined.append(key, val);
-      // }
-      console.log(combined.toString());
-      console.log(this.paginationParams.toString());
+      for (const [key, val] of this.paginationParams.entries()) {
+        combined.append(key, val);
+      }
+
       this.getRegistrationSummaryDetails(this.eventId, combined)
         .then((result) => {
-          this.data = result.data.results; //eslint-disable-line
+            this.data = result.data.results; //eslint-disable-line
           this.totalCount = result.data.count;
         })
         .catch((err) => {
@@ -197,7 +202,7 @@ export default {
     this.paginationParams = new URLSearchParams();
     this.paginationParams.append('page-size', this.itemsPerPage);
     this.paginationParams.append('page', '1');
-    this.paginationParams.append('ordering', 'created_at');
+    this.paginationParams.append('ordering', 'last_name');
     this.registrationFilterParams = new URLSearchParams();
   },
   watch: {
@@ -207,22 +212,19 @@ export default {
           sortBy,
           sortDesc,
           page,
+          itemsPerPage,
         } = this.options;
 
         const pageParams = new URLSearchParams();
-        // pageParams.append('page-size', itemsPerPage);
-        pageParams.append('page-size', '-1');
+        pageParams.append('page-size', itemsPerPage);
         pageParams.append('page', page);
 
-        console.log(sortBy);
         if (sortBy) {
-          const ordering = (sortDesc[0] ? '-' : '') + sortBy[0];
-          pageParams.append('ordering', ordering);
-          console.log(ordering);
+          pageParams.append('ordering', sortBy);
         } else {
           pageParams.append('ordering', 'lastName');
         }
-
+        pageParams.append('order-desc', sortDesc);
         this.paginationParams = pageParams;
         this.getData();
       },
