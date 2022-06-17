@@ -12,15 +12,20 @@
         </v-card-text>
       </v-card>
     </v-row>
-    <v-row v-if="!loading && data" justify="center" class="overflow-y: auto">
+    <v-row v-if="data" justify="center" class="overflow-y: auto">
       <v-data-table
+          :loading="loading"
           :items="getPersons"
-          :items-per-page="itemsPerPage"
+          must-sort
           :expanded.sync="expanded"
           :headers="headers"
+          :footer-props="{itemsPerPageText: 'Personen pro Seite'}"
           show-expand
           single-expand
-          item-key="createdAt">
+          sort-by="lastName"
+          item-key="createdAt"
+          no-data-text="Keine Anmeldungen Gefunden."
+          loading-text="Lade Anmeldungen...">
         <template v-slot:[`item.birthday`]="{ item }">
           {{
             getBirthday(item)
@@ -68,22 +73,13 @@
             </v-list-item-content>
           </v-list-item>
         </template>
+        <template v-slot:[`footer.page-text`]="items">
+             {{ items.pageStart }} - {{ items.pageStop }} von {{ items.itemsLength }} Personen
+          </template>
       </v-data-table>
     </v-row>
-    <v-row v-if="!loading && !data" justify="center">
+    <v-row v-else justify="center">
       <p>Bitte wähle einen Stamm</p>
-    </v-row>
-    <v-row v-if="loading" justify="center">
-      <div class="text-center ma-5">
-        <p>Lade Daten ...</p>
-        <v-progress-circular
-            :size="80"
-            :width="10"
-            class="ma-5"
-            color="primary"
-            indeterminate/>
-        <p>Bitte hab etwas Geduld.</p>
-      </div>
     </v-row>
   </v-container>
 </template>
@@ -128,6 +124,10 @@ export default {
     showError: false,
     responseObj: null,
     itemsPerPage: 25,
+    options: {},
+    totalCount: 0,
+    registrationFilterParams: null,
+    paginationParams: null,
   }),
   computed: {
     eventId() {
@@ -135,23 +135,39 @@ export default {
     },
     getPersons() {
       const result = [];
-      this.data.map((x) => x.participants).forEach((item) => {
-        item.forEach((person) => {
-          result.push(person);
+      this.data.map((x) => x.participants)
+        .forEach((item) => {
+          item.forEach((person) => {
+            result.push(person);
+          });
         });
-      });
       return result;
     },
   },
   methods: {
-    onFilterSelected(params) {
-      this.getData(params);
+    onFilterSelected(param) {
+      this.registrationFilterParams = param;
+      this.getData();
     },
-    getData(param) {
+    getData() {
       this.loading = true;
-      this.getRegistrationSummaryDetails(this.eventId, param)
+
+      const combined = new URLSearchParams();
+      // eslint-disable-next-line no-restricted-syntax
+      for (const [key, val] of this.registrationFilterParams.entries()) {
+        combined.append(key, val);
+      }
+      //
+      // eslint-disable-next-line no-restricted-syntax
+      // for (const [key, val] of this.paginationParams.entries()) {
+      //   combined.append(key, val);
+      // }
+      console.log(combined.toString());
+      console.log(this.paginationParams.toString());
+      this.getRegistrationSummaryDetails(this.eventId, combined)
         .then((result) => {
-          this.data = result.data;
+          this.data = result.data.results; //eslint-disable-line
+          this.totalCount = result.data.count;
         })
         .catch((err) => {
           this.$root.globalSnackbar.show({
@@ -178,7 +194,40 @@ export default {
     },
   },
   created() {
-    // this.getData();
+    this.paginationParams = new URLSearchParams();
+    this.paginationParams.append('page-size', this.itemsPerPage);
+    this.paginationParams.append('page', '1');
+    this.paginationParams.append('ordering', 'created_at');
+    this.registrationFilterParams = new URLSearchParams();
+  },
+  watch: {
+    options: {
+      handler() {
+        const {
+          sortBy,
+          sortDesc,
+          page,
+        } = this.options;
+
+        const pageParams = new URLSearchParams();
+        // pageParams.append('page-size', itemsPerPage);
+        pageParams.append('page-size', '-1');
+        pageParams.append('page', page);
+
+        console.log(sortBy);
+        if (sortBy) {
+          const ordering = (sortDesc[0] ? '-' : '') + sortBy[0];
+          pageParams.append('ordering', ordering);
+          console.log(ordering);
+        } else {
+          pageParams.append('ordering', 'lastName');
+        }
+
+        this.paginationParams = pageParams;
+        this.getData();
+      },
+      deep: true,
+    },
   },
 };
 </script>

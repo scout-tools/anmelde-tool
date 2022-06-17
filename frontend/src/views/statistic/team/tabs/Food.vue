@@ -85,8 +85,10 @@ export default {
       this.getData(param);
     },
   },
-  mounted() {
-    this.getData(this.eventId, null);
+  created() {
+    const param = new URLSearchParams();
+    param.append('confirmed', 'true');
+    this.getData(param);
   },
 };
 </script>

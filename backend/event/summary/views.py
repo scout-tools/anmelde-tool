@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets, status
+from rest_framework.filters import OrderingFilter
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from basic.models import ScoutHierarchy
@@ -38,9 +40,18 @@ class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
         return workshops
 
 
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size_query_param = 'page-size'
+    max_page_size = 250
+    page_size = 100
+
+
 class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubEventResponsiblePerson | event_permissions.IsLeaderPerson]
     serializer_class = summary_serializers.RegistrationEventSummarySerializer
+    filter_backends = (OrderingFilter,)
+    ordering_fields = ('scout_organisation__name', 'is_confirmed', 'single', 'created_at', 'updated_at')
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
@@ -56,7 +67,15 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
         registrations = filter_registration_by_leadership(self.request.user, event_id, registrations)
 
-        return registrations
+        ordering: str = self.request.query_params.get('ordering', None)
+        if ordering:
+            ordering = ordering.replace('.', '__')
+            camel_case = ''.join(['_' + c.lower() if c.isupper() else c for c in ordering]).lstrip('_')
+
+        if not ordering or camel_case not in self.ordering_fields:
+            camel_case = '-created_at'
+
+        return registrations.order_by(camel_case)
 
 
 class RegistrationLocationViewSet(EventSummaryViewSet):
