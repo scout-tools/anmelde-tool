@@ -120,7 +120,6 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
         if camel_case == check_case:
             camel_case = ('-' if order_desc else '') + 'registration__scout_organisation__name'
 
-        print(self.ordering_fields)
         return participants.order_by(camel_case)
 
 
