@@ -20,7 +20,7 @@
       <v-icon color="#008000" left> mdi-account-group</v-icon>
       Gruppe hinzufügen
     </v-btn>
-    <v-list v-if="!isLoading">
+    <v-list v-show="!isLoading">
       <v-subheader>Einträge ({{ items.length || 0 }})</v-subheader>
       <v-list-item-group color="primary" :value="value"
                          @change="onInputChanged">
@@ -44,15 +44,15 @@
             </v-btn>
           </v-list-item-action>
         </v-list-item>
-        <v-list-item v-if="!items.length">
+        <v-list-item v-show="!items.length">
           Kein Eintrag vorhanden.
         </v-list-item>
       </v-list-item-group>
     </v-list>
     <v-row align="center" justify="center" class="ma-2">
-      <p class="red-text" v-if="getValidationErrorMessage"> {{ getValidationErrorMessage }} </p>
+      <p class="red-text" v-show="getValidationErrorMessage"> {{ getValidationErrorMessage }} </p>
     </v-row>
-    <v-row v-if="isLoading">
+    <v-row v-show="isLoading">
       <Circual/>
       <v-btn color="success" @click="beforeTabShow">Daten laden</v-btn>
     </v-row>
@@ -118,7 +118,8 @@ export default {
       default: {},
     },
     currentRegistration: {
-      default: {},
+      type: Object,
+      default: () => ({}),
     },
     currentEvent: {
       type: Object,
@@ -196,7 +197,6 @@ export default {
       this.$refs.createModal.openDialog();
     },
     onRefresh() {
-      this.getItems();
       this.$emit('refresh');
     },
     openExcelDialog() {
@@ -209,8 +209,11 @@ export default {
       this.$refs.deleteModal.show(item);
     },
     beforeTabShow() {
-      this.onRefresh();
+      this.getItems();
     },
+  },
+  created() {
+    this.beforeTabShow();
   },
 };
 </script>
