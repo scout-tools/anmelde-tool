@@ -202,6 +202,7 @@ export default {
         });
     },
     onFilterSelected(param) {
+      this.paginationParams.set('page', 1);
       this.registrationFilterParams = param;
       this.getData();
     },

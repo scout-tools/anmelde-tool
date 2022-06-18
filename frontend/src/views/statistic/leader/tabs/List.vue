@@ -153,6 +153,7 @@ export default {
   methods: {
     onFilterSelected(param) {
       this.registrationFilterParams = param;
+      this.paginationParams.set('page', 1);
       this.getData();
     },
     getData() {

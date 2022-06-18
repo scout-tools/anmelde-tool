@@ -71,6 +71,7 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class RegistrationLocationViewSet(EventSummaryViewSet):
+    pagination_class = None
     serializer_class = summary_serializers.RegistrationLocationSerializer
 
 
