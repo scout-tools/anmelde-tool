@@ -16,8 +16,8 @@ from event import api_exceptions as event_api_exceptions
 from event import models as event_models
 from event import permissions as event_permissions
 from event.choices import choices as event_choices
-from event.registration import serializers as registration_serializers
 from event.helper import get_registration
+from event.registration import serializers as registration_serializers
 
 
 def create_missing_eat_habits(request) -> [str]:
@@ -280,9 +280,7 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
         return registration.tags
 
 
-class AddResponsablePersonRegistrationViewSet(
-    mixins.UpdateModelMixin,
-    viewsets.GenericViewSet):
+class AddResponsablePersonRegistrationViewSet(mixins.UpdateModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsRegistrationResponsiblePerson]
     queryset = event_models.Registration.objects.all()
     serializer_class = registration_serializers.RegistrationPutSerializer
