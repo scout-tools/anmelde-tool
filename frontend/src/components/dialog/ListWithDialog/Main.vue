@@ -7,9 +7,7 @@
     <v-btn
       v-if="dialogMeta.excelUpload"
       class="ma-2"
-      @click="openExcelDialog"
-
-    >
+      @click="openExcelDialog">
       <v-icon color="#008000" left> mdi-microsoft-excel</v-icon>
       Excel Datei hochladen
     </v-btn>
@@ -54,13 +52,11 @@
       :dialogMeta="dialogMeta"
       @refresh="onRefresh()"
       :valdiationObj="valdiationObj"
-      @validate="validate"
-    />
+      @validate="validate"/>
     <delete-modal
       ref="deleteModal"
       :dialogMeta="dialogMeta"
-      @refresh="onRefresh()"
-    />
+      @refresh="onRefresh()"/>
     <UploadExcelFile
       ref="uploadExcelFile"
       :dialogMeta="dialogMeta"
@@ -90,7 +86,7 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    isLoading: true,
+    isLoading: false,
     items: [],
   }),
   props: {
@@ -152,7 +148,6 @@ export default {
           if (this.dialogMeta.orderBy) {
             this.items.sort((a, b) => a[this.dialogMeta.orderBy].localeCompare(b[this.dialogMeta.orderBy])); // eslint-disable-line
           }
-          this.isLoading = false;
         })
         .catch((error) => {
           this.$root.globalSnackbar.show({
@@ -160,6 +155,8 @@ export default {
             color: 'error',
           });
           this.errormsg = error.response.data.message;
+        })
+        .finally(() => {
           this.isLoading = false;
         });
     },
