@@ -49,7 +49,9 @@ export default {
         return errors;
       }
       const valObj = valdiationObj.data[field];
+
       if (!valObj.$dirty) return errors;
+
       if (valObj.required === false) {
         errors.push('Dieses Feld ist erforderlich.');
       }
@@ -77,7 +79,13 @@ export default {
         errors.push('Es sind nur Kleinbuchstaben, Zahlen und Bindestriche erlaubt.');
       }
       if (valObj.alphaNum === false) {
-        errors.push('Es sind nur Buchstaben und Zahlen.');
+        errors.push('Es sind nur Buchstaben und Zahlen erlaubt.');
+      }
+      if (valObj.numeric === false) {
+        errors.push('Es sind nur Zahlen erlaubt.');
+      }
+      if (valObj.integer === false) {
+        errors.push('Es sind nur natürliche Zahlen erlaubt.');
       }
       if (valObj.url === false) {
         errors.push('Muss eine richtige URL sein.');
