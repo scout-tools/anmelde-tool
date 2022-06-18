@@ -18,7 +18,7 @@
                 <v-icon>mdi-clipboard-list</v-icon>
               </v-tab>
 
-              <v-tab v-if="hasParticipantsPersonal && isEventAdmin" href="#tab-2">
+              <v-tab v-if="isEventAdmin" href="#tab-2">
                 Leitung
                 <v-icon>mdi-counter</v-icon>
               </v-tab>
@@ -53,8 +53,9 @@
               <v-tab-item v-for="i in 8" :key="i" :value="'tab-' + i">
                 <v-card-text>
                   <OverviewMain v-if="hasParticipantsPersonal && i === 1"/>
-                  <LeaderMain v-if="hasParticipantsPersonal && i === 2"/>
-                  <BufueMain v-if="hasParticipantsPersonal && i === 3"/>
+                  <LeaderMain v-if="isEventAdmin && i === 2"/>
+                  <BufueMain v-if="hasParticipantsPersonal
+                                    && !isEventAdmin && isLeader && i === 3"/>
                   <TeamMain v-if="hasParticipantsPersonal && i === 4"/>
                   <MapsMain v-if="hasParticipantsPersonal && i === 5"/>
                   <AttributeMain v-if="hasAttributes && i === 6"/>

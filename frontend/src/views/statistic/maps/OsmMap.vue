@@ -4,7 +4,7 @@
       <v-card class="mx-auto pa-0" flat>
         <v-card-text class="pa-0">
           <v-container class="pa-0" fluid>
-           <RegistrationFilter
+            <RegistrationFilter
                 :eventId="eventId"
                 @onFilterSelected="onFilterSelected"/>
           </v-container>
@@ -107,17 +107,15 @@ export default {
       this.getData(params);
     },
     getCoord(item) {
-      try {
+      if (item.scoutOrganisation.zipCode) {
         return [
           item.scoutOrganisation.zipCode.lat,
           item.scoutOrganisation.zipCode.lon,
         ];
-      } catch (e) {
-        console.log('Fehler');
-        console.log(item);
-        console.log(e);
-        return [1, 1];
       }
+      const randomLat = Math.random() - 0.5;
+      const randomLong = Math.random() - 0.5;
+      return [54.181211 + randomLat, 7.899131 + randomLong];
     },
     getColor() {
       return 'blue';
@@ -126,17 +124,17 @@ export default {
       return 100000 / (this.currentZoom * 2);
     },
     createContent(item) {
-      try {
-        return `${item.scoutOrganisation.bund},
-        ${item.scoutOrganisation.name}
-         aus ${item.scoutOrganisation.zipCode.city},
-        Teilnehmer: ${item.participantCount}`;
-      } catch (e) {
-        console.log('Fehler');
-        console.log(item);
-        console.log(e);
-        return '';
+      let text = '';
+      if (item.scoutOrganisation.bund) {
+        text = `${item.scoutOrganisation.bund},`;
       }
+
+      text = `${text} ${item.scoutOrganisation.name}`;
+
+      if (item.scoutOrganisation.zipCode) {
+        text = `${text} aus ${item.scoutOrganisation.zipCode.city}`;
+      }
+      return `${text}, Teilnehmer: ${item.participantCount}`;
     },
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
