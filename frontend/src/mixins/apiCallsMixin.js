@@ -135,7 +135,7 @@ export default {
       return axios.get(url);
     },
     async getEventSummary(eventId, params) {
-      const path = `${process.env.VUE_APP_API}/event/registration/${eventId}/summary/`;
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
       return axios.get(path, { params });
     },
     async getEventLocationSummary(eventId, params) {

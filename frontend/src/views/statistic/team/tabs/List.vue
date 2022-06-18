@@ -95,7 +95,7 @@
             </tr>
           </template>
           <template v-slot:[`footer.page-text`]="items">
-             {{ items.pageStart }} - {{ items.pageStop }} von {{ items.itemsLength }} Anmeldungen
+            {{ items.pageStart }} - {{ items.pageStop }} von {{ items.itemsLength }} Anmeldungen
           </template>
         </v-data-table>
       </v-card>
@@ -187,8 +187,15 @@ export default {
 
       this.getEventSummary(this.eventId, combined)
         .then((result) => {
-          this.data = result.data.results; //eslint-disable-line
+            this.data = result.data.results; //eslint-disable-line
           this.totalCount = result.data.count;
+        })
+        .catch((error) => {
+          const msg = error.response.data.detail ? error.response.data.detail : error.response.data;
+          this.$root.globalSnackbar.show({
+            message: msg,
+            color: 'error',
+          });
         })
         .finally(() => {
           this.loading = false;

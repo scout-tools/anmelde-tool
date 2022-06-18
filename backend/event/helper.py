@@ -37,18 +37,18 @@ def filter_registration_by_leadership(user: User, event_id: str, registrations: 
 
 
 def get_event(event_id: [str, event_models.Event], ex=None) -> event_models.Event:
-    if not ex:
-        ex = event_exceptions.EventNotFound(event_id)
     if isinstance(event_id, str):
+        if not ex:
+            ex = event_exceptions.EventNotFound(event_id)
         return custom_get_or_404(ex, event_models.Event, id=event_id)
     else:
         return event_id
 
 
 def get_registration(registration_id: [str, event_models.Registration], ex=None) -> event_models.Registration:
-    if not ex:
-        ex = event_exceptions.RegistrationNotFound(registration_id)
     if isinstance(registration_id, str):
+        if not ex:
+            ex = event_exceptions.RegistrationNotFound(registration_id)
         return custom_get_or_404(ex, event_models.Registration, id=registration_id)
     else:
         return registration_id
