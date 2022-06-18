@@ -10,6 +10,7 @@ router.register(r'leader-types', views.LeaderTypesViewSet, basename='leader-type
 router.register(r'scout-level-types', views.ScoutLevelTypesViewSet, basename='scout-level-types')
 router.register(r'file-type', views.FileTypeViewSet, basename='file-type')
 router.register(r'file-extension', views.FileExtensionViewSet, basename='file-extension')
+router.register(r'workshop-type', views.WorkshopTypeViewSet, basename='workshop-type')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

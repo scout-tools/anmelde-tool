@@ -1,17 +1,16 @@
 <template>
   <v-col :cols="field.cols ? field.cols : 6">
     <v-text-field
-      v-if="field.fieldType === 'textfield'"
-      :label="field.name"
-      :value="value"
-      @input="onInputChanged"
-      @keydown.enter="$emit('keydownEnter')"
-      :prepend-icon="field.icon"
-      :error-messages="onErrorMessageChange(field.techName)"
-      :disabled="field.disabled"
-      :readonly="field.readonly"
-      :filled="field.filled"
-    >
+        v-if="field.fieldType === 'textfield'"
+        :label="field.name"
+        :value="value"
+        @input="onInputChanged"
+        @keydown.enter="$emit('keydownEnter')"
+        :prepend-icon="field.icon"
+        :error-messages="onErrorMessageChange(field.techName)"
+        :disabled="field.disabled"
+        :readonly="field.readonly"
+        :filled="field.filled">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -27,17 +26,16 @@
     </v-text-field>
 
     <v-text-field
-      v-if="field.fieldType === 'number'"
-      :label="field.name"
-      :value="value"
-      type="number"
-      @input="onInputChanged"
-      :prepend-icon="field.icon"
-      :error-messages="onErrorMessageChange(field.techName)"
-      :disabled="field.disabled"
-      :readonly="field.readonly"
-      :filled="field.filled"
-    >
+        v-if="field.fieldType === 'number'"
+        :label="field.name"
+        :value="value"
+        type="number"
+        @input="onInputChanged"
+        :prepend-icon="field.icon"
+        :error-messages="onErrorMessageChange(field.techName)"
+        :disabled="field.disabled"
+        :readonly="field.readonly"
+        :filled="field.filled">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -52,46 +50,45 @@
       </template>
     </v-text-field>
 
-    <v-textarea
-      v-if="field.fieldType === 'textarea'"
-      :label="field.name"
-      :value="value"
-      @input="onInputChanged"
-      solo
-      auto-grow
-      :prepend-icon="field.icon"
-      :error-messages="onErrorMessageChange(field.techName)"
-      :disabled="field.disabled"
-      :readonly="field.readonly"
-      :filled="field.filled"
-    >
-      <template slot="append">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon color="info" dark v-bind="attrs" v-on="on">
-              mdi-help-circle-outline
-            </v-icon>
-          </template>
-          <span>
+      <v-textarea
+          v-if="field.fieldType === 'textarea'"
+          :label="field.name"
+          :value="value"
+          @input="onInputChanged"
+          solo
+          auto-grow
+          :counter="field.counter"
+          :prepend-icon="field.icon"
+          :error-messages="onErrorMessageChange(field.techName)"
+          :disabled="field.disabled"
+          :readonly="field.readonly"
+          :filled="field.filled">
+        <template slot="append">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon color="info" dark v-bind="attrs" v-on="on">
+                mdi-help-circle-outline
+              </v-icon>
+            </template>
+            <span>
             {{ field.tooltip }}
           </span>
-        </v-tooltip>
-      </template>
-    </v-textarea>
+          </v-tooltip>
+        </template>
+      </v-textarea>
 
     <v-text-field
-      v-if="field.fieldType === 'currency'"
-      :label="field.name"
-      :value="value"
-      prefix="€"
-      type="number"
-      @input="onInputChanged"
-      :prepend-icon="field.icon"
-      :error-messages="onErrorMessageChange(field.techName)"
-      :disabled="field.disabled"
-      :readonly="field.readonly"
-      :filled="field.filled"
-    >
+        v-if="field.fieldType === 'currency'"
+        :label="field.name"
+        :value="value"
+        prefix="€"
+        type="number"
+        @input="onInputChanged"
+        :prepend-icon="field.icon"
+        :error-messages="onErrorMessageChange(field.techName)"
+        :disabled="field.disabled"
+        :readonly="field.readonly"
+        :filled="field.filled">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -107,33 +104,33 @@
     </v-text-field>
 
     <v-autocomplete
-      v-if="field.fieldType === 'refDropdown'"
-      :label="field.name"
-      :value="value"
-      :items="lookupList"
-      :prepend-icon="field.icon"
-      required
-      @input="onInputChanged"
-      item-value="id"
-      :item-text="getItemText"
-      :error-messages="onErrorMessageChange(field.techName)"
+        v-if="field.fieldType === 'refDropdown'"
+        :label="field.name"
+        :value="value"
+        :items="lookupList"
+        :prepend-icon="field.icon"
+        required
+        @input="onInputChanged"
+        item-value="id"
+        :item-text="getItemText"
+        :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-autocomplete>
 
     <v-combobox
-      v-if="field.fieldType === 'refCombo'"
-      :label="field.name"
-      :value="value"
-      :items="lookupList"
-      :prepend-icon="field.icon"
-      required
-      chips
-      multiple
-      deletable-chips
-      @input="onComboInputChanged"
-      item-value="name"
-      :item-text="getItemText"
-      :error-messages="onErrorMessageChange(field.techName)"
+        v-if="field.fieldType === 'refCombo'"
+        :label="field.name"
+        :value="value"
+        :items="lookupList"
+        :prepend-icon="field.icon"
+        required
+        chips
+        multiple
+        deletable-chips
+        @input="onComboInputChanged"
+        item-value="name"
+        :item-text="getItemText"
+        :error-messages="onErrorMessageChange(field.techName)"
     >
       <template slot="append">
         <v-tooltip bottom>
@@ -150,16 +147,16 @@
     </v-combobox>
 
     <v-combobox
-      v-if="field.fieldType === 'simpleCombo'"
-      :label="field.name"
-      :value="value"
-      :prepend-icon="field.icon"
-      required
-      chips
-      multiple
-      deletable-chips
-      @input="onComboInputChanged"
-      :error-messages="onErrorMessageChange(field.techName)"
+        v-if="field.fieldType === 'simpleCombo'"
+        :label="field.name"
+        :value="value"
+        :prepend-icon="field.icon"
+        required
+        chips
+        multiple
+        deletable-chips
+        @input="onComboInputChanged"
+        :error-messages="onErrorMessageChange(field.techName)"
     >
       <template slot="append">
         <v-tooltip bottom>
@@ -176,15 +173,15 @@
     </v-combobox>
 
     <v-combobox
-      v-if="field.fieldType === 'simpleComboSingle'"
-      :label="field.name"
-      :value="value"
-      :prepend-icon="field.icon"
-      required
-      chips
-      deletable-chips
-      @input="onSingleComboInputChanged"
-      :error-messages="onErrorMessageChange(field.techName)"
+        v-if="field.fieldType === 'simpleComboSingle'"
+        :label="field.name"
+        :value="value"
+        :prepend-icon="field.icon"
+        required
+        chips
+        deletable-chips
+        @input="onSingleComboInputChanged"
+        :error-messages="onErrorMessageChange(field.techName)"
     >
       <template slot="append">
         <v-tooltip bottom>
@@ -201,16 +198,16 @@
     </v-combobox>
 
     <v-select
-      v-if="field.fieldType === 'refComboSingle'"
-      :label="field.name"
-      :value="value"
-      :items="lookupList"
-      :prepend-icon="field.icon"
-      required
-      @input="onInputChanged"
-      item-value="id"
-      :item-text="getItemText"
-      :error-messages="onErrorMessageChange(field.techName)"
+        v-if="field.fieldType === 'refComboSingle'"
+        :label="field.name"
+        :value="value"
+        :items="lookupList"
+        :prepend-icon="field.icon"
+        required
+        @input="onInputChanged"
+        item-value="id"
+        :item-text="getItemText"
+        :error-messages="onErrorMessageChange(field.techName)"
     >
       <template slot="append">
         <v-tooltip bottom>
@@ -227,16 +224,16 @@
     </v-select>
 
     <v-autocomplete
-      v-if="field.fieldType === 'enumCombo'"
-      :label="field.name"
-      :value="enumValue"
-      item-value="value"
-      :items="convertEnum(this.lookupList)"
-      :prepend-icon="field.icon"
-      required
-      @input="onInputChanged"
-      :item-text="getItemText"
-      :error-messages="onErrorMessageChange(field.techName)"
+        v-if="field.fieldType === 'enumCombo'"
+        :label="field.name"
+        :value="enumValue"
+        item-value="value"
+        :items="convertEnum(this.lookupList)"
+        :prepend-icon="field.icon"
+        required
+        @input="onInputChanged"
+        :item-text="getItemText"
+        :error-messages="onErrorMessageChange(field.techName)"
     >
       <template slot="append">
         <v-tooltip bottom>
@@ -253,57 +250,57 @@
     </v-autocomplete>
 
     <v-autocomplete
-      v-if="field.fieldType === 'zipField'"
-      :label="field.name"
-      :value="value"
-      :items="lookupList"
-      :prepend-icon="field.icon"
-      required
-      @input="onInputChanged"
-      item-value="id"
-      :loading="isLoading"
-      :item-text="getItemText"
-      :search-input.sync="search"
-      :no-data-text="zipCodeNoDataText"
-      :error-messages="onErrorMessageChange(field.techName)"
+        v-if="field.fieldType === 'zipField'"
+        :label="field.name"
+        :value="value"
+        :items="lookupList"
+        :prepend-icon="field.icon"
+        required
+        @input="onInputChanged"
+        item-value="id"
+        :loading="isLoading"
+        :item-text="getItemText"
+        :search-input.sync="search"
+        :no-data-text="zipCodeNoDataText"
+        :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-autocomplete>
 
     <v-autocomplete
-      v-if="field.fieldType === 'responsablesField'"
-      :label="field.name"
-      :value="value"
-      :items="lookupList"
-      :prepend-icon="field.icon"
-      required
-      @input="onInputChanged"
-      item-value="email"
-      :loading="isLoading"
-      :item-text="getItemText"
-      :search-input.sync="search"
-      :no-data-text="responseablePersonDataText"
-      :error-messages="onErrorMessageChange(field.techName)"
+        v-if="field.fieldType === 'responsablesField'"
+        :label="field.name"
+        :value="value"
+        :items="lookupList"
+        :prepend-icon="field.icon"
+        required
+        @input="onInputChanged"
+        item-value="email"
+        :loading="isLoading"
+        :item-text="getItemText"
+        :search-input.sync="search"
+        :no-data-text="responseablePersonDataText"
+        :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-autocomplete>
     <v-select
-      v-if="field.fieldType === 'localRefDropdown'"
-      :label="field.name"
-      :value="value"
-      :prepend-icon="field.icon"
-      :items="field.referenceTable"
-      required
-      @input="onInputChanged"
-      item-value="value"
-      :item-text="field.referenceDisplay"
-      :error-messages="onErrorMessageChange(field.techName)"
+        v-if="field.fieldType === 'localRefDropdown'"
+        :label="field.name"
+        :value="value"
+        :prepend-icon="field.icon"
+        :items="field.referenceTable"
+        required
+        @input="onInputChanged"
+        item-value="value"
+        :item-text="field.referenceDisplay"
+        :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-select>
     <v-switch
-      v-if="field.fieldType === 'checkbox'"
-      :label="field.name"
-      :input-value="value"
-      @change="onInputChanged"
-      :error-messages="onErrorMessageChange(field.techName)"
+        v-if="field.fieldType === 'checkbox'"
+        :label="field.name"
+        :input-value="value"
+        @change="onInputChanged"
+        :error-messages="onErrorMessageChange(field.techName)"
     >
     </v-switch>
     <v-container v-if="field.fieldType === 'radio'">
@@ -322,10 +319,10 @@
       <v-row>
         <v-radio-group :value="value" @change="onRadioInputChanged">
           <v-radio
-            v-for="choise in field.referenceTable"
-            :key="choise.value"
-            :label="choise.name"
-            :value="choise.value"
+              v-for="choise in field.referenceTable"
+              :key="choise.value"
+              :label="choise.name"
+              :value="choise.value"
           ></v-radio>
         </v-radio-group>
       </v-row>
@@ -345,26 +342,24 @@
       </v-row>
       <v-row>
         <ckeditor
-          :editor="ckeditor.editor"
-          :value="value"
-          @input="onInputChanged"
-          :config="ckeditor.editorConfig"
-        ></ckeditor>
+            :editor="ckeditor.editor"
+            :value="value"
+            @input="onInputChanged"
+            :config="ckeditor.editorConfig"/>
       </v-row>
     </v-container>
     <v-container v-if="field.fieldType === 'date'">
       <v-text-field
-        :value="valueDate"
-        v-mask="'##.##.####'"
-        placeholder="DD.MM.YYYY"
-        @input="onDateInputChanged"
-        :label="`${field.name}`"
-        :prepend-icon="field.icon"
-        :error-messages="onErrorMessageChange(field.techName)"
-        :disabled="field.disabled"
-        :readonly="field.readonly"
-        :filled="field.filled"
-      >
+          :value="valueDate"
+          v-mask="'##.##.####'"
+          placeholder="DD.MM.YYYY"
+          @input="onDateInputChanged"
+          :label="`${field.name}`"
+          :prepend-icon="field.icon"
+          :error-messages="onErrorMessageChange(field.techName)"
+          :disabled="field.disabled"
+          :readonly="field.readonly"
+          :filled="field.filled">
         <template slot="append">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -383,17 +378,16 @@
       <v-row>
         <v-col>
           <v-text-field
-            :value="valueDate"
-            v-mask="'##.##.####'"
-            placeholder="DD.MM.YYYY"
-            @input="onDateTimeInputChangedDate"
-            :label="`${field.name}-Datum (DD.MM.YYYY)`"
-            :prepend-icon="field.icon"
-            :error-messages="onErrorMessageChange(field.techName)"
-            :disabled="field.disabled"
-            :readonly="field.readonly"
-            :filled="field.filled"
-          >
+              :value="valueDate"
+              v-mask="'##.##.####'"
+              placeholder="DD.MM.YYYY"
+              @input="onDateTimeInputChangedDate"
+              :label="`${field.name}-Datum (DD.MM.YYYY)`"
+              :prepend-icon="field.icon"
+              :error-messages="onErrorMessageChange(field.techName)"
+              :disabled="field.disabled"
+              :readonly="field.readonly"
+              :filled="field.filled">
             <template slot="append">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
@@ -410,16 +404,16 @@
         </v-col>
         <v-col>
           <v-text-field
-            :value="valueTime"
-            v-mask="'##:##'"
-            placeholder="HH:mm"
-            @input="onDateTimeInputChangedTime"
-            :label="`${field.name}-Uhrzeit (HH:mm)`"
-            :prepend-icon="field.icon"
-            :error-messages="onErrorMessageChange(field.techName)"
-            :disabled="field.disabled"
-            :readonly="field.readonly"
-            :filled="field.filled"
+              :value="valueTime"
+              v-mask="'##:##'"
+              placeholder="HH:mm"
+              @input="onDateTimeInputChangedTime"
+              :label="`${field.name}-Uhrzeit (HH:mm)`"
+              :prepend-icon="field.icon"
+              :error-messages="onErrorMessageChange(field.techName)"
+              :disabled="field.disabled"
+              :readonly="field.readonly"
+              :filled="field.filled"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -437,12 +431,12 @@
         </v-col>
         <v-col cols="1">
           <v-btn
-            small
-            fab
-            dark
-            color="darkgrey"
-            :disabled="!value"
-            @click="showPdf"
+              small
+              fab
+              dark
+              color="darkgrey"
+              :disabled="!value"
+              @click="showPdf"
           >
             <v-icon> mdi-eye</v-icon>
           </v-btn>
@@ -478,6 +472,7 @@ export default {
       icon: null,
       tooltip: null,
       cols: 6,
+      counter: false,
     },
     value: {
       default: null,
@@ -493,7 +488,7 @@ export default {
       isLoading: false,
       search: null,
       zipCodeNoDataText: 'Bitte PLZ oder Ort eingeben.',
-      responseablePersonDataText: 'E-Mail oder Pfadfindernamen eingebene.',
+      responseablePersonDataText: 'E-Mail oder Pfadfindernamen eingeben.',
       ckeditor: {
         editor: ClassicEditor,
         editorData: '',
@@ -508,14 +503,16 @@ export default {
       // still loading
       if (this.loading) return;
       if (
-        !searchString || // eslint-disable-line
-        searchString.indexOf(' ') >= 0 || // eslint-disable-line
-        searchString.length <= 2
+          !searchString || // eslint-disable-line
+          searchString.indexOf(' ') >= 0 || // eslint-disable-line
+          searchString.length <= 2
       ) {
         this.zipCodeNoDataText = 'Bitte PLZ oder Ort eingeben.';
-        this.responseablePersonDataText = 'E-Mail oder Pfadfindernamen eingebene.';
+        this.responseablePersonDataText = 'E-Mail oder Pfadfindernamen eingeben.';
+        if (!this.value) this.lookupList = null;
         return;
       }
+
       this.loading = true;
       if (this.field.fieldType === 'zipField') {
         this.getZipCodeMapping(searchString)
@@ -552,10 +549,12 @@ export default {
   },
   computed: {
     valueDate() {
-      return this.$moment(this.value).format('DD.MM.YYYY', 'de');
+      return this.$moment(this.value)
+        .format('DD.MM.YYYY', 'de');
     },
     valueTime() {
-      return this.$moment(this.value).format('HH:mm', 'de');
+      return this.$moment(this.value)
+        .format('HH:mm', 'de');
     },
     enumValue() {
       if (!this.lookupList) return '';
@@ -668,24 +667,28 @@ export default {
   },
   created() {
     if (
-      this.field.fieldType === 'refDropdown' || // eslint-disable-line
-      this.field.fieldType === 'enumCombo' || // eslint-disable-line
-      this.field.fieldType === 'refComboSingle' || // eslint-disable-line
-      this.field.fieldType === 'refCombo'
+        this.field.fieldType === 'refDropdown' || // eslint-disable-line
+        this.field.fieldType === 'enumCombo' || // eslint-disable-line
+        this.field.fieldType === 'refComboSingle' || // eslint-disable-line
+        this.field.fieldType === 'refCombo'
     ) {
       this.getData();
     }
+    if (!this.value) return;
+
     if (this.field.fieldType === 'zipField') {
-      this.callSingleZipCode(this.value).then((result) => {
-        this.lookupList = result;
-        this.$forceUpdate();
-      });
+      this.callSingleZipCode(this.value)
+        .then((result) => {
+          this.lookupList = result;
+          this.$forceUpdate();
+        });
     }
     if (this.field.fieldType === 'responsablesField') {
-      this.callSingleResponsible(this.value).then((result) => {
-        this.lookupList = result;
-        this.$forceUpdate();
-      });
+      this.callSingleResponsible(this.value)
+        .then((result) => {
+          this.lookupList = result;
+          this.$forceUpdate();
+        });
     }
   },
 };

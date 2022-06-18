@@ -31,7 +31,7 @@
     </v-container>
       <v-divider class="my-4"/>
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
-        {{ 'Fehler beim Erstellen des Ortes' }}
+        {{ 'Fehler beim Hochladen' }}
       </v-snackbar>
     </v-card>
   </v-dialog>

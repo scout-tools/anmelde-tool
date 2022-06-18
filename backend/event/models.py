@@ -219,6 +219,7 @@ class Workshop(basic_models.TimeStampMixin):
     title = models.CharField(max_length=100)
     free_text = models.CharField(max_length=10000, blank=True)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    price_per_person = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     min_person = models.IntegerField(blank=True, null=True)
     max_person = models.IntegerField(blank=True, null=True)
     supervisor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -226,7 +227,7 @@ class Workshop(basic_models.TimeStampMixin):
     type = models.CharField(max_length=1, choices=event_choices.WorkshopType.choices,
                             default=event_choices.WorkshopType.Workshop)
     duration = models.IntegerField(default=60)
-    can_be_repeated = models.BooleanField(default=False) 
+    can_be_repeated = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

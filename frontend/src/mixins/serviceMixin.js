@@ -3,24 +3,12 @@ import axios from 'axios';
 export default {
   // eslint-disable-line
   methods: {
-    async postExperimentItem(event, experiment, score) {
-      const path = `${process.env.VUE_APP_API}basic/experiment-item/`;
-      return axios.post(path, {
-        event,
-        experiment,
-        score,
-      });
-    },
     async getServiceById(id, modulePath) {
       const path = `${process.env.VUE_APP_API}${modulePath}${id}/`;
       const response = await axios.get(path);
 
       return response.data;
     },
-    // patchService(field, value, modulePath) {
-    //   const path = `${process.env.VUE_APP_API}${modulePath}${this.id}/`;
-    //   return axios.patch(path, { [field]: value });
-    // },
     getSimpleService(modulePath, params) {
       const path = `${process.env.VUE_APP_API}${modulePath}`;
       return axios.get(path, { params });

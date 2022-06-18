@@ -7,8 +7,7 @@
             <v-stepper-step
                 :key="`stepper-${index}`"
                 :complete="currentStep > index + 1"
-                :step="index + 1"
-            >
+                :step="index + 1">
               {{ `${step.module.header}` }}
             </v-stepper-step>
 
@@ -28,8 +27,7 @@
                     @ignore="nextStep()"
                     @prevStep="prevStep()"
                     @nextStep="nextStep()"
-                    @submit="onRegistrationConfirmed()"
-                />
+                    @submit="onRegistrationConfirmed()"/>
               </v-stepper-content>
             </v-stepper-items>
           </template>
@@ -39,8 +37,7 @@
           v-model="showSuccess"
           color="success"
           y="top"
-          :timeout="timeout"
-      >
+          :timeout="timeout">
         {{ 'Die Aktion wurde erfolgreich angelegt.' }}
       </v-snackbar>
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">

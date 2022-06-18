@@ -77,7 +77,9 @@ export default {
     },
   },
   created() {
-    this.getData(null);
+    const param = new URLSearchParams();
+    param.append('confirmed', 'true');
+    this.getData(param);
   },
   computed: {
     eventId() {
