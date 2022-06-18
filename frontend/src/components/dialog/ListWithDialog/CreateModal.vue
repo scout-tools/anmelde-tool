@@ -12,7 +12,7 @@
         <v-toolbar-title>Eintrag</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <v-container v-if="!isModalLoading">
+      <v-container v-if="!isLoading">
         <v-row>
           <template v-for="(field, i) in dialogMeta.fields">
             <BaseField
@@ -62,7 +62,7 @@ export default {
     showError: false,
     showSuccess: false,
     timeout: 7000,
-    isModalLoading: true,
+    isLoading: true,
   }),
   computed: {},
   methods: {
@@ -75,7 +75,7 @@ export default {
         this.setDefaults();
       }
       this.$forceUpdate();
-      this.isModalLoading = false;
+      this.isLoading = false;
     },
     openDialogEdit(item) {
       this.active = true;
@@ -117,7 +117,7 @@ export default {
       }
     },
     getData(id) {
-      this.isModalLoading = true;
+      this.isLoading = true;
       this.getServiceById(this.dialogMeta.path, id)
         .then((response) => {
           this.data = response.data;
@@ -129,11 +129,11 @@ export default {
           });
         })
         .finally(() => {
-          this.isModalLoading = false;
+          this.isLoading = false;
         });
     },
     async callCreateService() {
-      this.isModalLoading = true;
+      this.isLoading = true;
       if (!this.isEditWindow) {
         this.createServiceById(this.dialogMeta.path, this.data)
           .then(() => {
@@ -179,7 +179,7 @@ export default {
             });
           })
           .finally(() => {
-            this.isModalLoading = false;
+            this.isLoading = false;
           });
       }
     },

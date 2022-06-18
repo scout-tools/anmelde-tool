@@ -29,6 +29,12 @@ class LeaderTypesViewSet(RegistrationTypeGroupViewSet):
     def list(self, request) -> Response:
         return Response(event_choices.LeaderTypes.choices, status=status.HTTP_200_OK)
 
+class ScoutLevelTypesViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request) -> Response:
+        return Response(event_choices.ScoutLevelTypes.choices, status=status.HTTP_200_OK)
+
 
 class FileTypeViewSet(RegistrationTypeGroupViewSet):
 

@@ -10,6 +10,8 @@ registration_router.register(r'single-participant', views.RegistrationSinglePart
                              basename='single-participant')
 registration_router.register(r'group-participants', views.RegistrationGroupParticipantViewSet,
                              basename='group-participants')
+registration_router.register(r'add-group-participants', views.RegistrationAddGroupParticipantViewSet,
+                             basename='add-group-participants')
 registration_router.register(r'attribute', views.RegistrationAttributeViewSet, basename='attribute')
 registration_router.register(r'summary', views.RegistrationSummaryViewSet, basename='summary')
 registration_router.register(r'workshop', views.WorkshopViewSet, basename='workshop')

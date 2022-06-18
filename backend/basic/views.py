@@ -36,7 +36,7 @@ class ZipCodeSearchFilter(FilterSet):
     def get_zip_city(self, queryset, field_name, value) -> QuerySet[basic_models.ZipCode]:
         if value is None:
             raise NoSearchValue
-        cities = queryset.filter(Q(zip_code__contains=value) | Q(city__contains=value))
+        cities = queryset.filter(Q(zip_code__contains=value) | Q(city__icontains=value))
         if cities.count() > 250:
             raise TooManySearchResults
         if cities.count() == 0:
@@ -72,6 +72,8 @@ class TagTypeViewSet(viewsets.ModelViewSet):
 class AttributeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = basic_models.AbstractAttribute.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['type', 'type__name']
 
     def get_serializer_class(self):
         if self.action == 'create' or self.action == 'update':

@@ -45,6 +45,10 @@ export default {
       const path = `${process.env.VUE_APP_API}/${route}/${data.id}/`;
       return axios.put(path, data);
     },
+    async updateDataById(route, data) {
+      const path = `${process.env.VUE_APP_API}/${route}${data.id}/`;
+      return axios.put(path, data);
+    },
     async createServiceById(route, data) {
       const path = `${process.env.VUE_APP_API}/${route}/`;
       return axios.post(path, data);
@@ -131,7 +135,7 @@ export default {
       return axios.get(url);
     },
     async getEventSummary(eventId, params) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/`;
+      const path = `${process.env.VUE_APP_API}/event/registration/${eventId}/summary/`;
       return axios.get(path, { params });
     },
     async getEventLocationSummary(eventId, params) {

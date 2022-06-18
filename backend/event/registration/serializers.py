@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from rest_framework import serializers
 
 from authentication.serializers import UserExtendedGetSerializer
@@ -39,9 +39,17 @@ class RegistrationGetSerializer(serializers.ModelSerializer):
 
 
 class RegistrationParticipantShortSerializer(serializers.ModelSerializer):
+    scout_level = serializers.CharField(source='get_scout_level_display')
+    eat_habit = serializers.SlugRelatedField(
+        many=True,
+        read_only=False,
+        slug_field='name',
+        queryset=EatHabit.objects.all(),
+        required=False
+    )
     class Meta:
         model = event_models.RegistrationParticipant
-        fields = ('id', 'scout_name', 'first_name', 'last_name')
+        fields = ('id', 'scout_name', 'first_name', 'last_name', 'scout_level', 'eat_habit')
 
 
 class RegistrationParticipantSerializer(serializers.ModelSerializer):
@@ -90,7 +98,7 @@ class RegistrationSummaryParticipantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = event_models.RegistrationParticipant
-        fields = ('first_name', 'last_name', 'scout_name', 'deactivated', 'booking_option')
+        fields = ('first_name', 'last_name', 'scout_name', 'deactivated', 'booking_option', 'eat_habit', 'scout_level')
 
 
 class RegistrationSummarySerializer(serializers.ModelSerializer):
@@ -100,11 +108,17 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field='email'
     )
+    vegan_count = serializers.SerializerMethodField()
+    veggi_count = serializers.SerializerMethodField()
+    veggi_count = serializers.SerializerMethodField()
+    wolf_count = serializers.SerializerMethodField()
+    sippling_count = serializers.SerializerMethodField()
+    rover_count = serializers.SerializerMethodField()
     participant_count = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
     tags = serializers.SerializerMethodField()
 
-    class Meta:
+    class Meta: # here age
         model = event_models.Registration
         fields = ('is_confirmed',
                   'is_accepted',
@@ -112,11 +126,31 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
                   'participant_count',
                   'price',
                   'registrationparticipant_set',
-                  'tags'
+                  'tags',
+                  'vegan_count',
+                  'veggi_count',
+                  'wolf_count',
+                  'sippling_count',
+                  'rover_count',
                   )
 
     def get_participant_count(self, registration: event_models.Registration) -> int:
         return registration.registrationparticipant_set.count()
+
+    def get_vegan_count(self, registration: event_models.Registration) -> int:
+        return registration.registrationparticipant_set.filter(eat_habit__id__contains=2).count()
+
+    def get_veggi_count(self, registration: event_models.Registration) -> int:
+        return registration.registrationparticipant_set.filter(eat_habit__id__contains=1).count()
+
+    def get_wolf_count(self, registration: event_models.Registration) -> int:
+        return registration.registrationparticipant_set.filter(scout_level='W').count()
+
+    def get_sippling_count(self, registration: event_models.Registration) -> int:
+        return registration.registrationparticipant_set.filter(scout_level='S').count()
+
+    def get_rover_count(self, registration: event_models.Registration) -> float:
+        return registration.registrationparticipant_set.filter(scout_level='R').count()
 
     def get_price(self, registration: event_models.Registration) -> float:
         return registration.registrationparticipant_set.aggregate(

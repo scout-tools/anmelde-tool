@@ -45,7 +45,7 @@ export default {
     },
     errorMessage(field, valdiationObj) {
       const errors = [];
-      if (!valdiationObj.data[field]) {
+      if (!valdiationObj || !valdiationObj.data || !valdiationObj.data[field]) {
         return errors;
       }
       const valObj = valdiationObj.data[field];
