@@ -13,13 +13,22 @@
         </v-card-text>
       </v-card>
     </v-row>
-    <v-row justify="center" class="overflow-y: auto">
-      <v-card flat v-if="!loading">
+    <v-row justify="center" class="overflow-y: auto mb-3">
+      <v-card flat class="pa-3">
         <v-data-table
+            :loading="loading"
             :headers="headers"
             :items="data"
+            single-expand
+            item-key="createdAt"
+            :options.sync="options"
+            :server-items-length="totalCount"
             :items-per-page="itemsPerPage"
-            item-key="createdAt">
+            must-sort
+            sort-by="createdAt"
+            :footer-props="{itemsPerPageText: 'Anmeldungen pro Seite'}"
+            no-data-text="Keine Anmeldungen Gefunden."
+            loading-text="Lade Anmeldungen...">
           <template v-slot:[`item.isConfirmed`]="{ item }">
             <v-icon :color="item.isConfirmed ? 'green' : 'red'">
               {{
@@ -39,11 +48,6 @@
               formatDate(item.createdAt)
             }}
           </template>
-          <template v-slot:[`item.updatedAt`]="{ item }">
-            {{
-              formatDate(item.updatedAt)
-            }}
-          </template>
           <template v-slot:[`item.numberParticipant`]="{ item }">
             <td v-html="getNumberParticipant(item)" disabled></td>
           </template>
@@ -56,19 +60,10 @@
               mdi-share-variant
             </v-icon>
           </template>
+          <template v-slot:[`footer.page-text`]="items">
+            {{ items.pageStart }} - {{ items.pageStop }} von {{ items.itemsLength }} Anmeldungen
+          </template>
         </v-data-table>
-      </v-card>
-      <v-card v-else flat>
-        <div class="text-center ma-5">
-          <p>Lade Daten ...</p>
-          <v-progress-circular
-              :size="80"
-              :width="10"
-              class="ma-5"
-              color="primary"
-              indeterminate/>
-          <p>Bitte hab etwas Geduld.</p>
-        </div>
       </v-card>
     </v-row>
     <confirm-registration-edit-modal ref="confirmRegistrationEditModal"/>
@@ -109,10 +104,6 @@ export default {
         value: 'createdAt',
       },
       {
-        text: 'Zuletzt Bearbeitet',
-        value: 'updatedAt',
-      },
-      {
         text: 'Bund',
         value: 'scoutOrganisation.bund',
       },
@@ -133,10 +124,13 @@ export default {
     API_URL: process.env.VUE_APP_API,
     showError: false,
     responseObj: null,
-    itemsPerPage: 100,
     loading: false,
-    bookingOptionList: [],
-    selectedBookingOption: null,
+    totalCount: 0,
+    registrationFilterParams: null,
+    paginationParams: null,
+    options: {},
+    itemsPerPage: 10,
+    expanded: [],
   }),
   computed: {
     eventId() {
@@ -180,23 +174,76 @@ export default {
     getNumberParticipant(item) {
       return `${item.numberParticipant || 0}`;
     },
-    getData(param) {
+    getData() {
       this.loading = true;
 
-      this.getEventSummary(this.eventId, param)
+      const combined = new URLSearchParams();
+      // eslint-disable-next-line no-restricted-syntax
+      for (const [key, val] of this.registrationFilterParams.entries()) {
+        combined.append(key, val);
+      }
+      // eslint-disable-next-line no-restricted-syntax
+      for (const [key, val] of this.paginationParams.entries()) {
+        combined.append(key, val);
+      }
+
+      this.getEventSummary(this.eventId, combined)
         .then((result) => {
-            this.data = result.data; //eslint-disable-line
+          this.data = result.data.results; //eslint-disable-line
+          this.totalCount = result.data.count;
+        })
+        .catch((error) => {
+          const msg = error.response.data.detail ? error.response.data.detail : error.response.data;
+          this.$root.globalSnackbar.show({
+            message: msg,
+            color: 'error',
+          });
         })
         .finally(() => {
           this.loading = false;
         });
     },
-    onFilterSelected(params) {
-      this.getData(params);
+    onFilterSelected(param) {
+      this.registrationFilterParams = param;
+      this.paginationParams.set('page', 1);
+      this.getData();
     },
   },
   created() {
-    this.getData(null);
+    this.paginationParams = new URLSearchParams();
+    this.paginationParams.append('page-size', this.itemsPerPage);
+    this.paginationParams.append('page', '1');
+    this.paginationParams.append('ordering', 'created_at');
+    this.registrationFilterParams = new URLSearchParams();
+    this.registrationFilterParams.append('confirmed', 'true');
+    this.getData();
+  },
+  watch: {
+    options: {
+      handler() {
+        const {
+          sortBy,
+          sortDesc,
+          page,
+          itemsPerPage,
+        } = this.options;
+
+        const pageParams = new URLSearchParams();
+        pageParams.append('page-size', itemsPerPage);
+        pageParams.append('page', page);
+
+        if (sortBy) {
+          pageParams.append('ordering', sortBy);
+        } else {
+          pageParams.append('ordering', 'lastName');
+        }
+        pageParams.append('order-desc', sortDesc);
+
+        this.paginationParams = pageParams;
+        this.getData();
+      },
+      deep: true,
+    },
   },
 };
 </script>

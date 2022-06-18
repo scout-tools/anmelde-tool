@@ -29,19 +29,19 @@
             :footer-props="{itemsPerPageText: 'Anmeldungen pro Seite'}"
             no-data-text="Keine Anmeldungen Gefunden."
             loading-text="Lade Anmeldungen...">
-          <template v-slot:[`group.header`]="{group, isOpen, toggle, remove}">
-            <td :colspan="headers.length">
-              <v-icon @click="toggle">
-                {{ isOpen ? 'mdi-minus' : 'mdi-plus' }}
-              </v-icon>
-              <span>
-                <strong>{{ getGroupName(group) }}</strong>
-              </span>
-              <v-icon @click="remove">
-                mdi-close
-              </v-icon>
-            </td>
-          </template>
+<!--          <template v-slot:[`group.header`]="{group, isOpen, toggle, remove}">-->
+<!--            <td :colspan="headers.length">-->
+<!--              <v-icon @click="toggle">-->
+<!--                {{ isOpen ? 'mdi-minus' : 'mdi-plus' }}-->
+<!--              </v-icon>-->
+<!--              <span>-->
+<!--                <strong>{{ getGroupName(group) }}</strong>-->
+<!--              </span>-->
+<!--              <v-icon @click="remove">-->
+<!--                mdi-close-->
+<!--              </v-icon>-->
+<!--            </td>-->
+<!--          </template>-->
           <template v-slot:[`item.isConfirmed`]="{ item }">
             <v-icon :color="item.isConfirmed ? 'green' : 'red'">
               {{
