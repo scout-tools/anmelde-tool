@@ -41,6 +41,7 @@
         :dialogMeta="dialogMeta"
         :valdiationObj="$v"
         @validate="validate"
+        @refresh="refresh"
       />
     </template>
   </GenericRegModul>
@@ -182,7 +183,9 @@ export default {
     },
     beforeTabShow() {
       this.loadData();
-      this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+      if (this.$refs[`dialog-main-${this.moduleId}`]) {
+        this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+      }
     },
     onNextStep() {
       this.saving = true;

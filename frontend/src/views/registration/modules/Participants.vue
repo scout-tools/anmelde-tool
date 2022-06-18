@@ -211,8 +211,7 @@ export default {
       this.$v.$touch();
     },
     beforeTabShow() {
-      this.loadData();
-      this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+      this.refresh();
     },
     onNextStep() {
       this.saving = true;
@@ -221,6 +220,9 @@ export default {
     setDefaults() {},
     refresh() {
       this.loadData();
+      if (this.$refs[`dialog-main-${this.moduleId}`]) {
+        this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+      }
     },
     loadData() {
       this.saving = false;
