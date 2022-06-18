@@ -3,7 +3,6 @@ from datetime import datetime
 import pytz
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
-from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -12,7 +11,7 @@ from basic.models import ScoutHierarchy
 from basic.serializers import ScoutHierarchySerializer
 from event import models as event_models
 from event import permissions as event_permissions
-from event.helper import filter_registration_by_leadership, get_bund, to_snake_case
+from event.helper import filter_registration_by_leadership, get_bund, to_snake_case, get_event
 from event.summary import serializers as summary_serializers
 
 User = get_user_model()
@@ -24,7 +23,7 @@ class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
-        event: event_models.Event = get_object_or_404(event_models.Event, id=event_id)
+        event: event_models.Event = get_event(event_id)
 
         workshops = event_models.Workshop.objects.filter(registration__event__id=event_id)
 
@@ -35,7 +34,6 @@ class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
                                          | Q(registration__scout_organisation__parent__parent=bund)
                                          | Q(registration__scout_organisation__parent__parent__parent=bund)
                                          | Q(registration__scout_organisation__parent__parent__parent__parent=bund))
-
         return workshops
 
 
@@ -198,7 +196,7 @@ class EventAgeGroupsSummaryViewSet(EventFoodSummaryViewSet):
         23+ Altrover
         """
         event_id = self.kwargs.get("event_pk", None)
-        event = get_object_or_404(event_models.Event, pk=event_id)
+        event = get_event(event_id)
         all_participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
 
         woelfling = self.age_range(0, 12, all_participants, event)

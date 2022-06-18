@@ -326,7 +326,7 @@ class WorkshopViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs) -> Response:
-        request.data['registration'] = self.kwargs.get("registration_pk", None)
+        request.data['registration'] = self.get_object().registration.id
         return super().update(request, *args, **kwargs)
 
     def get_queryset(self) -> QuerySet:

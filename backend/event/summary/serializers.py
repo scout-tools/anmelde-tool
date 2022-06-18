@@ -11,8 +11,8 @@ from event.registration import serializers as registration_serializers
 
 
 class WorkshopEventSummarySerializer(serializers.ModelSerializer):
-    supervisor = registration_serializers.CurrentUserSerializer(
-        many=False, read_only=True)
+    supervisor = registration_serializers.CurrentUserSerializer(many=False, read_only=True)
+    type = serializers.CharField(source='get_type_display')
 
     class Meta:
         model = event_models.Workshop

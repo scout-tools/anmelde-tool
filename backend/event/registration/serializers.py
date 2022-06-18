@@ -13,7 +13,7 @@ class CurrentUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'userextended')
+        fields = ('id', 'email', 'userextended', 'first_name', 'last_name')
 
 
 class RegistrationPostSerializer(serializers.Serializer):  # noqa

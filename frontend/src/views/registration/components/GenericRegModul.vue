@@ -1,6 +1,6 @@
 <template>
   <v-form v-model="valid">
-    <v-container v-show="!loading" :disabled="loading">
+    <v-container v-if="!loading" :disabled="loading">
       <v-row v-if="currentMod &&  !!currentMod.overwriteDescription" class="mt-2">
         <td class="ma-2" v-html="currentMod && currentMod.overwriteDescription"></td>
       </v-row>
@@ -23,7 +23,7 @@
         @ignore="ignore"
       />
     </v-container>
-    <v-container v-show="loading">
+    <v-container v-else>
       <Circual/>
     </v-container>
   </v-form>
