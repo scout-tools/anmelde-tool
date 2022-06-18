@@ -16,13 +16,11 @@ User = get_user_model()
 
 
 def get_keycloak_permission(user: User, keycloak_role: Group) -> bool:
-    has_role = user.groups.filter(name=keycloak_role).exists()
-
-    return has_role
+    return user.groups.filter(name=keycloak_role).exists()
 
 
 def get_responsible_person_permission(user: User, event: Event) -> bool:
-    return event.responsible_persons.contains(user) if event.responsible_persons else False
+    return event.responsible_persons.filter(id=user.id).exists() if event.responsible_persons else False
 
 
 def check_event_permission(event_id: [str, Event], user: User) -> bool:
@@ -40,7 +38,7 @@ def check_event_permission(event_id: [str, Event], user: User) -> bool:
 
 def check_leader_permission(event_id: [str, Event], user: User) -> bool:
     event = get_event(event_id)
-    if event.limited_registration_hierarchy.id == 493:
+    if event.limited_registration_hierarchy.id == 493 and user.userextended.scout_organisation.id != 493:
         perm_name = 'dpv_bundesfuehrungen'
         bufu_group = custom_get_or_404(RequiredGroupNotFound(perm_name), Group, name=perm_name)
         return get_keycloak_permission(user, bufu_group)

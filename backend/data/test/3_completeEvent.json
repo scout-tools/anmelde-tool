@@ -107,7 +107,7 @@
     "fields": {
       "name": "ParticipantsPersonal",
       "type": 7,
-      "header": "Teilnehmende",
+      "header": "Teilnehmende (persönlich)",
       "internal": false,
       "custom": false
     }
@@ -118,7 +118,7 @@
     "fields": {
       "name": "Participants",
       "type": 7,
-      "header": "Teilnehmende",
+      "header": "Teilnehmende (Gruppen)",
       "internal": false,
       "custom": false
     }
@@ -185,6 +185,17 @@
       "name": "Travel",
       "type": 5,
       "header": "Anreise",
+      "internal": false,
+      "custom": false
+    }
+  },
+  {
+    "model": "event.eventmodule",
+    "pk": 21,
+    "fields": {
+      "name": "Travel-2",
+      "type": 5,
+      "header": "Anreise2",
       "internal": false,
       "custom": false
     }
@@ -261,7 +272,7 @@
     "fields": {
       "name": "TravelBundesfahrt",
       "type": 5,
-      "header": "Anreise",
+      "header": "Anreise Bundesfahrt",
       "internal": false,
       "custom": false
     }
@@ -271,17 +282,6 @@
     "pk": 16,
     "fields": {
       "name": "ParticipantsPersonalSmall",
-      "type": 7,
-      "header": "Deine Daten",
-      "internal": false,
-      "custom": false
-    }
-  },
-  {
-    "model": "event.eventmodule",
-    "pk": 17,
-    "fields": {
-      "name": "ParticipantsPersonal",
       "type": 7,
       "header": "Deine Daten",
       "internal": false,

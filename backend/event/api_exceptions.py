@@ -158,7 +158,7 @@ class ScoutHierarchyChildModelNotFound(APIException):
 
 class SomethingNotFound(APIException):
     status_code = 404
-    default_detail = "Das {sth} konnte leider nicht gefunden werden," \
+    default_detail = "Das {sth} konnte leider nicht gefunden werden. " \
                      "Bitte(!) wende dich an die Administratoren und beschreibe das Problem."
     default_code = 'not_found'
 
@@ -170,7 +170,7 @@ class SomethingNotFound(APIException):
 
 class RequiredGroupNotFound(APIException):
     status_code = 404
-    default_detail = "Die Berechtigung {permission} konnte leider nicht gefunden werden," \
+    default_detail = "Die Berechtigung {permission} konnte leider nicht gefunden werden." \
                      "Bitte(!) wende dich an die Administratoren und beschreibe das Problem."
     default_code = 'not_found'
 

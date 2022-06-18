@@ -11,8 +11,8 @@ from event.registration import serializers as registration_serializers
 
 
 class WorkshopEventSummarySerializer(serializers.ModelSerializer):
-    supervisor = registration_serializers.CurrentUserSerializer(
-        many=False, read_only=True)
+    supervisor = registration_serializers.CurrentUserSerializer(many=False, read_only=True)
+    type = serializers.CharField(source='get_type_display')
 
     class Meta:
         model = event_models.Workshop
@@ -83,46 +83,20 @@ class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSer
         queryset=EatHabit.objects.all(),
         required=False
     )
+    scout_organisation = serializers.SerializerMethodField()
 
     class Meta:
         model = event_models.RegistrationParticipant
-        exclude = ('deactivated',
-                   'generated',
-                   'registration',
-                   'id',
-                   'tags')
+        exclude = (
+            'deactivated',
+            'generated',
+            'registration',
+            'id',
+            'tags'
+        )
 
-
-class RegistrationEventDetailedSummarySerializer(serializers.ModelSerializer):
-    responsible_persons = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='email'
-    )
-    scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)
-    participants = serializers.SerializerMethodField()
-
-    class Meta:
-        model = event_models.Registration
-        fields = ('id',
-                  'is_confirmed',
-                  'is_accepted',
-                  'single',
-                  'scout_organisation',
-                  'responsible_persons',
-                  'created_at',
-                  'updated_at',
-                  'participants')
-
-    def get_participants(self, registration: event_models.Registration):
-        booking_option_list = self.context['request'].query_params.getlist('booking-option')
-        queryset = registration.registrationparticipant_set
-
-        if booking_option_list:
-            queryset = queryset.filter(booking_option__in=booking_option_list)
-
-        serializer = RegistrationParticipantEventDetailedSummarySerializer(queryset, read_only=True, many=True)
-        return serializer.data
+    def get_scout_organisation(self, participant: event_models.RegistrationParticipant) -> str:
+        return participant.registration.scout_organisation.name
 
 
 class RegistrationLocationSerializer(serializers.ModelSerializer):
@@ -165,8 +139,12 @@ class RegistrationAttributeGetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = event_models.Registration
-        fields = ('scout_organisation', 'is_confirmed',
-                  'is_accepted', 'responsible_persons')
+        fields = (
+            'scout_organisation',
+            'is_confirmed',
+            'is_accepted',
+            'responsible_persons'
+        )
 
 
 class EventAttributeSummarySerializer(serializers.ModelSerializer):

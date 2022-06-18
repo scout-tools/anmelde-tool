@@ -1,4 +1,4 @@
-from __future__ import annotations # we use a python 3.10 Feature in line 14
+from __future__ import annotations  # we use a python 3.10 Feature in line 14
 
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
@@ -36,16 +36,19 @@ def filter_registration_by_leadership(user: User, event_id: str, registrations: 
     return registrations
 
 
-def get_event(event_id: [str, event_models.Event], ex=event_exceptions.EventNotFound) -> event_models.Event:
+def get_event(event_id: [str, event_models.Event], ex=None) -> event_models.Event:
     if isinstance(event_id, str):
+        if not ex:
+            ex = event_exceptions.EventNotFound(event_id)
         return custom_get_or_404(ex, event_models.Event, id=event_id)
     else:
         return event_id
 
 
-def get_registration(registration_id: [str, event_models.Registration], ex=event_exceptions.RegistrationNotFound) \
-        -> event_models.Registration:
+def get_registration(registration_id: [str, event_models.Registration], ex=None) -> event_models.Registration:
     if isinstance(registration_id, str):
+        if not ex:
+            ex = event_exceptions.RegistrationNotFound(registration_id)
         return custom_get_or_404(ex, event_models.Registration, id=registration_id)
     else:
         return registration_id
@@ -56,3 +59,15 @@ def custom_get_or_404(ex, model, *args, **kwargs):
         return model.objects.get(*args, **kwargs)
     except model.DoesNotExist:
         raise ex
+
+
+def to_snake_case(ordering, order_desc, ordering_fields, default_case: str = 'created_at'):
+    camel_case = ''
+    if ordering:
+        ordering = ordering.replace('.', '__')
+        camel_case = ''.join(['_' + c.lower() if c.isupper() else c for c in ordering]).lstrip('_')
+    if not ordering or camel_case not in ordering_fields:
+        camel_case = default_case
+    if order_desc:
+        camel_case = '-' + camel_case
+    return camel_case

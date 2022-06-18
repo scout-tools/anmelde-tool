@@ -47,6 +47,12 @@ class LeaderTypes(models.TextChoices):
     RoverrundenFuehrung = 'RoFue', _('Roverrundenführung'),
     Meutenfuehrung = 'MeuFue', _('Meutenführung')
 
+class ScoutLevelTypes(models.TextChoices):
+    Unbekannt = 'N', _('Unbekannt')
+    Woelfling = 'W', _('Wölfling')
+    Sippling = 'S', _('Sippling')
+    Rover = 'R', _('Rover_Innen'),
+
 
 class FileGenerationStatus(models.TextChoices):
     Queued = 'Q', _('In der Warteschlange.')

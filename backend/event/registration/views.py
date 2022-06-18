@@ -1,21 +1,23 @@
+import re
+from copy import deepcopy
 from datetime import timezone
+
+from dateutil.relativedelta import relativedelta
+from django.contrib.auth.models import User
 from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
-from rest_framework import mixins, viewsets, status
 from django.utils import timezone
-from dateutil.relativedelta import relativedelta
-from copy import deepcopy
-import re
+from rest_framework import mixins, viewsets, status
+from rest_framework.response import Response
+
 from basic import models as basic_models
 from basic import serializers as basic_serializers
 from event import api_exceptions as event_api_exceptions
 from event import models as event_models
-from event.choices import choices as event_choices
-from event import views as event_views
-from event.registration import serializers as registration_serializers
 from event import permissions as event_permissions
-from django.contrib.auth.models import User
+from event.choices import choices as event_choices
+from event.helper import get_registration
+from event.registration import serializers as registration_serializers
 
 
 def create_missing_eat_habits(request) -> [str]:
@@ -124,6 +126,52 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         input_serializer.is_valid(raise_exception=True)
 
         registration_id = self.kwargs.get("registration_pk", None)
+        registration: event_models.Registration = get_registration(registration_id)
+
+        if not event_permissions.IsEventSuperResponsiblePerson:
+            if registration.event.registration_start > timezone.now():
+                raise event_api_exceptions.TooEarly
+            elif self.action != 'destroy' and registration.event.last_possible_update < timezone.now():
+                raise event_api_exceptions.TooLate
+
+        return registration
+
+class RegistrationAddGroupParticipantViewSet(viewsets.ViewSet):
+    permission_classes = [event_permissions.IsSubRegistrationResponsiblePerson]
+    serializer_class = registration_serializers.RegistrationParticipantShortSerializer
+
+    def create(self, request, *args, **kwargs) -> Response:
+        registration: event_models.Registration = self.participant_group_initialization(request)
+        number: int = request.data.get('number', 0)
+        scout_level: int = request.data.get('scout_level', 'N')
+        # eat_habit_id: int = request.data.get('eat_habit', None)
+
+        new_participants = []
+
+        confirm = event_choices.ParticipantActionConfirmation.Nothing
+
+        booking: event_models.BookingOption = registration.event.bookingoption_set.first()
+        # eat_habit: basic_models.EatHabit = get_object_or_404(basic_models.EatHabit, id=eat_habit_id)
+        for i in range(1, int(number) + 1):
+            participant = event_models.RegistrationParticipant(first_name='Pfadi',
+                                                                scout_name='Namenlos',
+                                                                last_name=i,
+                                                                scout_level=scout_level,
+                                                                # eat_habit=eat_habit,
+                                                                registration=registration,
+                                                                generated=True,
+                                                                needs_confirmation=confirm,
+                                                                booking_option=booking)
+            new_participants.append(participant)
+        event_models.RegistrationParticipant.objects.bulk_create(new_participants)
+
+        return Response({ 'created  persons' }, status=status.HTTP_201_CREATED)
+
+    def participant_group_initialization(self, request) -> event_models.Registration:
+        input_serializer = registration_serializers.RegistrationParticipantGroupSerializer(data=request.data)
+        input_serializer.is_valid(raise_exception=True)
+
+        registration_id = self.kwargs.get("registration_pk", None)
         registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
 
         if registration.event.registration_start > timezone.now():
@@ -132,7 +180,6 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
             raise event_api_exceptions.TooLate
 
         return registration
-
 
 class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
     permission_classes = [event_permissions.IsSubRegistrationResponsiblePerson]
@@ -174,7 +221,7 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
             booking: event_models.BookingOption = registration.event.bookingoption_set.first().id
 
             for i in range(total_participant_count + 1, number + 1):
-                participant = event_models.RegistrationParticipant(first_name='Teilnehmer',
+                participant = event_models.RegistrationParticipant(first_name='Pfadi',
                                                                    last_name=i,
                                                                    registration=registration,
                                                                    generated=True,
@@ -184,6 +231,20 @@ class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
             event_models.RegistrationParticipant.objects.bulk_create(new_participants)
 
         return Response({'activated': activate, 'created': create}, status=status.HTTP_201_CREATED)
+
+    def participant_group_initialization(self, request) -> event_models.Registration:
+        input_serializer = registration_serializers.RegistrationParticipantGroupSerializer(data=request.data)
+        input_serializer.is_valid(raise_exception=True)
+
+        registration_id = self.kwargs.get("registration_pk", None)
+        registration: event_models.Registration = get_object_or_404(event_models.Registration, id=registration_id)
+
+        if registration.event.registration_start > timezone.now():
+            raise event_api_exceptions.TooEarly
+        elif self.action != 'destroy' and registration.event.last_possible_update < timezone.now():
+            raise event_api_exceptions.TooLate
+
+        return registration
 
     def delete(self, request, *args, **kwargs) -> Response:
         registration: event_models.Registration = self.participant_group_initialization(request)
@@ -277,9 +338,7 @@ class RegistrationAttributeViewSet(viewsets.ModelViewSet):
         return registration.tags
 
 
-class AddResponsablePersonRegistrationViewSet(
-    mixins.UpdateModelMixin,
-    viewsets.GenericViewSet):
+class AddResponsablePersonRegistrationViewSet(mixins.UpdateModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsRegistrationResponsiblePerson]
     queryset = event_models.Registration.objects.all()
     serializer_class = registration_serializers.RegistrationPutSerializer
@@ -325,7 +384,7 @@ class WorkshopViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs) -> Response:
-        request.data['registration'] = self.kwargs.get("registration_pk", None)
+        request.data['registration'] = self.get_object().registration.id
         return super().update(request, *args, **kwargs)
 
     def get_queryset(self) -> QuerySet:

@@ -7,13 +7,20 @@
     <v-btn
       v-if="dialogMeta.excelUpload"
       class="ma-2"
-      @click="openExcelDialog"
-
-    >
+      @click="openExcelDialog">
       <v-icon color="#008000" left> mdi-microsoft-excel</v-icon>
       Excel Datei hochladen
     </v-btn>
-    <v-list v-if="!isLoading">
+    <v-btn
+      v-if="dialogMeta.groupAdd"
+      class="ma-2"
+      @click="openGroupDialog"
+
+    >
+      <v-icon color="#008000" left> mdi-account-group</v-icon>
+      Gruppe hinzufügen
+    </v-btn>
+    <v-list v-show="!isLoading">
       <v-subheader>Einträge ({{ items.length || 0 }})</v-subheader>
       <v-list-item-group color="primary" :value="value"
                          @change="onInputChanged">
@@ -37,15 +44,15 @@
             </v-btn>
           </v-list-item-action>
         </v-list-item>
-        <v-list-item v-if="!items.length">
+        <v-list-item v-show="!items.length">
           Kein Eintrag vorhanden.
         </v-list-item>
       </v-list-item-group>
     </v-list>
     <v-row align="center" justify="center" class="ma-2">
-      <p class="red-text" v-if="getValidationErrorMessage"> {{ getValidationErrorMessage }} </p>
+      <p class="red-text" v-show="getValidationErrorMessage"> {{ getValidationErrorMessage }} </p>
     </v-row>
-    <v-row v-if="isLoading">
+    <v-row v-show="isLoading">
       <Circual/>
       <v-btn color="success" @click="beforeTabShow">Daten laden</v-btn>
     </v-row>
@@ -56,11 +63,18 @@
       :valdiationObj="valdiationObj"
       @validate="validate"
     />
+    <create-group-modal
+      ref="groupDialog"
+      :dialogMeta="dialogMeta"
+      @refresh="onRefresh()"
+      :currentRegistration="currentRegistration"
+      :valdiationObj="valdiationObj"
+      @validate="validate"
+    />
     <delete-modal
       ref="deleteModal"
       :dialogMeta="dialogMeta"
-      @refresh="onRefresh()"
-    />
+      @refresh="onRefresh()"/>
     <UploadExcelFile
       ref="uploadExcelFile"
       :dialogMeta="dialogMeta"
@@ -73,16 +87,18 @@
 </template>
 
 <script>
-import CreateModal from '@/components/dialog/ListWithDialog/CreateModal.vue';
-import DeleteModal from '@/components/dialog/ListWithDialog/DeleteModal.vue';
-import Circual from '@/components/loading/Circual.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import Circual from '@/components/loading/Circual.vue';
+import CreateModal from '@/components/dialog/ListWithDialog/CreateModal.vue';
+import CreateGroupModal from '@/components/dialog/ListWithDialog/CreateGroupModal.vue';
+import DeleteModal from '@/components/dialog/ListWithDialog/DeleteModal.vue';
 import UploadExcelFile from './ExcelImport.vue';
 
 export default {
   mixins: [apiCallsMixin],
   components: {
     CreateModal,
+    CreateGroupModal,
     UploadExcelFile,
     DeleteModal,
     Circual,
@@ -90,7 +106,7 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    isLoading: true,
+    isLoading: false,
     items: [],
   }),
   props: {
@@ -100,6 +116,10 @@ export default {
     valdiationObj: {},
     dialogMeta: {
       default: {},
+    },
+    currentRegistration: {
+      type: Object,
+      default: () => ({}),
     },
     currentEvent: {
       type: Object,
@@ -152,10 +172,15 @@ export default {
           if (this.dialogMeta.orderBy) {
             this.items.sort((a, b) => a[this.dialogMeta.orderBy].localeCompare(b[this.dialogMeta.orderBy])); // eslint-disable-line
           }
-          this.isLoading = false;
         })
         .catch((error) => {
+          this.$root.globalSnackbar.show({
+            message: error.response.data.message,
+            color: 'error',
+          });
           this.errormsg = error.response.data.message;
+        })
+        .finally(() => {
           this.isLoading = false;
         });
     },
@@ -172,17 +197,23 @@ export default {
       this.$refs.createModal.openDialog();
     },
     onRefresh() {
-      this.getItems();
+      this.$emit('refresh');
     },
     openExcelDialog() {
       this.$refs.uploadExcelFile.openDialog();
+    },
+    openGroupDialog() {
+      this.$refs.groupDialog.openDialog();
     },
     deleteParticipant(item) {
       this.$refs.deleteModal.show(item);
     },
     beforeTabShow() {
-      this.onRefresh();
+      this.getItems();
     },
+  },
+  created() {
+    this.beforeTabShow();
   },
 };
 </script>

@@ -1,11 +1,10 @@
 <template>
   <v-dialog
-    ref="deadlineDateDialog"
-    v-model="active"
-    transition="dialog-top-transition"
-    fullscreen
-  >
-    <v-card v-if="!isLoading">
+      ref="deadlineDateDialog"
+      v-model="active"
+      transition="dialog-top-transition"
+      fullscreen>
+    <v-card>
       <v-toolbar dark color="primary">
         <v-btn icon dark @click="active = false">
           <v-icon>mdi-close</v-icon>
@@ -13,29 +12,28 @@
         <v-toolbar-title>Eintrag</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <v-container>
+      <v-container v-if="!isLoading">
         <v-row>
           <template v-for="(field, i) in dialogMeta.fields">
             <BaseField
-              :key="i"
-              :field="field"
-              v-model="data[field.techName]"
-              :valdiationObj="valdiationObj"
+                :key="i"
+                :field="field"
+                v-model="data[field.techName]"
+                :valdiationObj="valdiationObj"
             />
           </template>
         </v-row>
-        <v-divider class="my-3" />
+        <v-divider class="my-3"/>
         <v-btn color="success" @click="onClickOkay"> Speichern</v-btn>
       </v-container>
-      <v-divider class="my-4" />
-
+      <v-container v-else>
+      <Circual/>
+    </v-container>
+      <v-divider class="my-4"/>
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
-        {{ 'Fehler beim Erstellen des Ortes' }}
+        {{ 'Fehler beim Hochladen' }}
       </v-snackbar>
     </v-card>
-    <v-container v-show="isLoading">
-      <Circual />
-    </v-container>
   </v-dialog>
 </template>
 
@@ -95,9 +93,10 @@ export default {
     closeDialog() {
       this.active = false;
       this.valdiationObj.$reset();
-      Object.keys(this.data).forEach((key) => {
-        this.data[key] = '';
-      });
+      Object.keys(this.data)
+        .forEach((key) => {
+          this.data[key] = '';
+        });
       this.$emit('close');
     },
     validate() {
@@ -118,48 +117,72 @@ export default {
       }
     },
     getData(id) {
-      this.getServiceById(this.dialogMeta.path, id).then((response) => {
-        this.data = response.data;
-        this.isLoading = false;
-      });
-    },
-    async callCreateService() {
-      if (!this.isEditWindow) {
-        this.createServiceById(this.dialogMeta.path, this.data).then(() => {
-          this.closeDialog();
-          this.$emit('refresh');
+      this.isLoading = true;
+      this.getServiceById(this.dialogMeta.path, id)
+        .then((response) => {
+          this.data = response.data;
+        })
+        .catch((error) => {
           this.$root.globalSnackbar.show({
-            message:
-              'Neuer Eintrag angelegt',
-            color: 'success',
-          });
-        }).catch((error) => {
-          let errorMessage = 'Es ist ein Fehler beim speichern aufgetreten.';
-          const errorData = error.response.data;
-          try {
-            errorMessage = '';
-            const keys = Object.keys(errorData);
-            keys.forEach((key) => {
-              errorMessage += `Fehler bei ${key}: ${errorData[key]}  -  `;
-            });
-          } catch {
-            console.log('Fehler');
-          }
-          this.$root.globalSnackbar.show({
-            message: errorMessage,
+            message: error.response.data,
             color: 'error',
           });
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
+    },
+    async callCreateService() {
+      this.isLoading = true;
+      if (!this.isEditWindow) {
+        this.createServiceById(this.dialogMeta.path, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+            this.$root.globalSnackbar.show({
+              message: 'Neuer Eintrag angelegt',
+              color: 'success',
+            });
+          })
+          .catch((error) => {
+            let errorMessage = 'Es ist ein Fehler beim speichern aufgetreten.';
+            const errorData = error.response.data;
+            try {
+              const errorMessages = [];
+              const keys = Object.keys(errorData);
+              keys.forEach((key) => {
+                errorMessages.push(`Fehler bei ${key}: ${errorData[key]}`);
+              });
+              errorMessage = errorMessages.join(' - ');
+            } catch {
+              console.log('Fehler');
+            }
+            this.$root.globalSnackbar.show({
+              message: errorMessage,
+              color: 'error',
+            });
+          });
       } else {
-        this.updateServiceById(this.dialogMeta.path, this.data).then(() => {
-          this.closeDialog();
-          this.$emit('refresh');
-        });
+        this.updateServiceById(this.dialogMeta.path, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          })
+          .catch((error) => {
+            let errorData = error.response;
+            if (error.response.data.detail) {
+              errorData = error.response.data.detail;
+            }
+            this.$root.globalSnackbar.show({
+              message: errorData,
+              color: 'error',
+            });
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
       }
     },
-  },
-  created() {
-    this.isLoading = true;
   },
 };
 </script>

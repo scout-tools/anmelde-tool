@@ -106,7 +106,7 @@ class EventViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs) -> Response:
         if request.data.get('name', None) is None:
             request.data['name'] = 'Dummy'
-        if request.data.get('responsible_persons', []) is []:
+        if (request.data.get('responsible_persons') is None) | (request.data.get('responsible_persons', []) is []):
             request.data['responsible_persons'] = [request.user.email, ]
         serializer: event_serializers.EventCompleteSerializer = self.get_serializer(data=request.data)
         if not serializer.is_valid(raise_exception=True):
@@ -235,7 +235,7 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
         module_id = request.data.get("module")
 
         event = event_helper.get_event(event_id)
-        standard_event = event_helper.custom_get_or_404(event_api_exceptions.StandardTemplateNotFound(1),
+        standard_event = event_helper.custom_get_or_404(event_api_exceptions.SomethingNotFound('Standard Event 1'),
                                                         event_models.StandardEventTemplate,
                                                         pk=1)
 

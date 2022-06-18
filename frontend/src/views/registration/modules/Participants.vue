@@ -13,19 +13,19 @@
   >
     <template v-slot:header>
       <p>
-        Ich melde folgende Teilnehmende an <br/>
-        <br/>
-        Die Erfassung erfolgt pro Person. <br/>
-        <br/>
+        Ich melde folgende Teilnehmende an <br />
+        <br />
+        Die Erfassung erfolgt pro Person. <br />
+        <br />
         <v-icon color="red"> mdi-alert-circle</v-icon>
         Du musst dich selbst auch in die Liste eintragen.
       </p>
       <p v-if="!!dialogMeta.excelUpload">
         Alternativ kannst du hier die Excelliste hochladen, wenn du die Daten
         dort bereits erfasst hast.
-        <br/>
+        <br />
         <a
-          v-if="!!dialogMeta.excelUpload"
+          v-if="!!dialogMeta.excelUpload && currentRegistration.cloudLink"
           target="_blank"
           :href="currentRegistration.cloudLink"
           style="color: blue"
@@ -36,8 +36,25 @@
     </template>
 
     <template v-slot:main>
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">Name</th>
+              <th class="text-left">Anmeldezahl</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in summary" :key="item.name">
+              <td>{{ item.name }}</td>
+              <td>{{ item.value }}</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
       <ListWithDialogMain
         :ref="`dialog-main-${moduleId}`"
+        :currentRegistration="currentRegistration"
         :dialogMeta="dialogMeta"
         :valdiationObj="$v"
         @validate="validate"
@@ -48,11 +65,7 @@
 </template>
 
 <script>
-import {
-  required,
-  minLength,
-  maxLength,
-} from 'vuelidate/lib/validators';
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
@@ -80,26 +93,16 @@ export default {
     saving: false,
     moduleData: [],
     showError: false,
-    errorMessage: 'Fehler',
     data: {},
+    summaryData: {},
   }),
   validations: {
     data: {
-      firstName: {
-        required,
-        minLength: minLength(2),
-        maxLength: maxLength(20),
-      },
-      lastName: {
-        required,
-        minLength: minLength(2),
-        maxLength: maxLength(20),
-      },
       scoutName: {
         minLength: minLength(2),
         maxLength: maxLength(20),
       },
-      birthday: {
+      scoutLevel: {
         required,
       },
     },
@@ -110,8 +113,7 @@ export default {
       get() {
         return !!this.loading;
       },
-      set() {
-      },
+      set() {},
     },
     moduleId() {
       return this.currentModule.module.id;
@@ -132,28 +134,10 @@ export default {
       return {
         title: 'Hallo',
         excelUpload: false,
+        groupAdd: true,
         path: `event/registration/${this.currentRegistration.id}/single-participant`,
-        listDisplay: ['firstName', 'lastName'],
+        listDisplay: ['scoutName', 'scoutLevel', 'eatHabit'],
         fields: [
-          {
-            name: 'Vorname*',
-            techName: 'firstName',
-            tooltip:
-              'Vornamen eintragen. Zweitnamen müssen nicht mit angegeben werden.',
-            icon: 'mdi-card-account-details-outline',
-            mandatory: true,
-            fieldType: 'textfield',
-            default: '',
-          },
-          {
-            name: 'Nachname*',
-            techName: 'lastName',
-            tooltip: 'Trage bitte den vollständigen Nachnamen ein.',
-            icon: 'mdi-card-account-details-outline',
-            mandatory: true,
-            fieldType: 'textfield',
-            default: '',
-          },
           {
             name: 'Fahrtenname',
             techName: 'scoutName',
@@ -164,41 +148,92 @@ export default {
             default: '',
           },
           {
-            name: 'Geburtstag*',
-            techName: 'birthday',
-            tooltip: 'Trage bitte das Geburtsdatum des_der Teilnehmer_in ein.',
-            icon: 'mdi-calendar',
+            name: 'Stufe',
+            techName: 'scoutLevel',
+            tooltip:
+              'Wähle einen Registrierungsmodel für die Einzelanmeldungen aus.',
+            icon: 'mdi-account-circle',
+            lookupPath: '/event/choices/scout-level-types/',
+            lookupListDisplay: ['name'],
             mandatory: true,
-            fieldType: 'date',
+            fieldType: 'enumCombo',
+            default: '',
+          },
+          {
+            name: 'Essenbesonderheiten',
+            techName: 'eatHabit',
+            tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
+            icon: 'mdi-food',
+            mandatory: true,
+            lookupPath: '/basic/eat-habits/',
+            lookupListDisplay: ['name'],
+            fieldType: 'refCombo',
             default: '',
           },
         ],
       };
     },
+    summary() {
+      return [
+        {
+          name: 'Gesamtanzahl',
+          value: this.getSummaryDataByKey('participantCount'),
+        },
+        {
+          name: 'Wölflinge',
+          value: this.getSummaryDataByKey('wolfCount'),
+        },
+        {
+          name: 'Sipplinge',
+          value: this.getSummaryDataByKey('sipplingCount'),
+        },
+        {
+          name: 'Rover_Innen',
+          value: this.getSummaryDataByKey('roverCount'),
+        },
+        {
+          name: 'Vegetarisch',
+          value: this.getSummaryDataByKey('veggiCount'),
+        },
+        {
+          name: 'Vegan',
+          value: this.getSummaryDataByKey('veganCount'),
+        },
+      ];
+    },
   },
   methods: {
+    getSummaryDataByKey(key) {
+      return this.summaryData[key] ? this.summaryData[key] : 0;
+    },
     validate(data) {
       this.data = data;
       this.$v.$touch();
     },
     beforeTabShow() {
-      this.loadData();
-      if (this.$refs[`dialog-main-${this.moduleId}`]) {
-        this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
-      }
+      this.refresh();
     },
     onNextStep() {
       this.saving = true;
       this.nextStep();
     },
-    setDefaults() {
+    setDefaults() {},
+    refresh() {
+      this.loadData();
+      if (this.$refs[`dialog-main-${this.moduleId}`]) {
+        this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+      }
     },
     loadData() {
       this.saving = false;
       this.loading = true;
-      Promise.all([this.getModule(this.moduleId, this.currentEvent.id)])
+      Promise.all([
+        this.getModule(this.moduleId, this.currentEvent.id),
+        this.getRegService('summary', this.currentRegistration.id),
+      ])
         .then((values) => {
           this.moduleData = values[0].data; //eslint-disable-line
+          this.summaryData = values[1].data[0]; //eslint-disable-line
           this.loading = false;
           this.setDefaults();
         })

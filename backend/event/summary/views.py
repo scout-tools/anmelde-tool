@@ -3,15 +3,15 @@ from datetime import datetime
 import pytz
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
-from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets, status
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from basic.models import ScoutHierarchy
 from basic.serializers import ScoutHierarchySerializer
 from event import models as event_models
 from event import permissions as event_permissions
-from event.helper import filter_registration_by_leadership, get_bund
+from event.helper import filter_registration_by_leadership, get_bund, to_snake_case, get_event
 from event.summary import serializers as summary_serializers
 
 User = get_user_model()
@@ -23,7 +23,7 @@ class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
-        event: event_models.Event = get_object_or_404(event_models.Event, id=event_id)
+        event: event_models.Event = get_event(event_id)
 
         workshops = event_models.Workshop.objects.filter(registration__event__id=event_id)
 
@@ -34,13 +34,20 @@ class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
                                          | Q(registration__scout_organisation__parent__parent=bund)
                                          | Q(registration__scout_organisation__parent__parent__parent=bund)
                                          | Q(registration__scout_organisation__parent__parent__parent__parent=bund))
-
         return workshops
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size_query_param = 'page-size'
+    max_page_size = 1000
+    page_size = 1000
 
 
 class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubEventResponsiblePerson | event_permissions.IsLeaderPerson]
     serializer_class = summary_serializers.RegistrationEventSummarySerializer
+    ordering_fields = ('scout_organisation__name', 'is_confirmed', 'single', 'created_at', 'updated_at')
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
@@ -56,10 +63,15 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
         registrations = filter_registration_by_leadership(self.request.user, event_id, registrations)
 
-        return registrations
+        ordering: str = self.request.query_params.get('ordering', None)
+        order_desc: bool = self.request.query_params.get('order-desc', 'false') == 'true'
+        camel_case = to_snake_case(ordering, order_desc, self.ordering_fields)
+
+        return registrations.order_by(camel_case)
 
 
 class RegistrationLocationViewSet(EventSummaryViewSet):
+    pagination_class = None
     serializer_class = summary_serializers.RegistrationLocationSerializer
 
 
@@ -72,9 +84,42 @@ class EventLocationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         return event_models.Event.objects.filter(id=event_id)
 
 
-class EventDetailedSummaryViewSet(EventSummaryViewSet):
+class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubEventSuperResponsiblePerson | event_permissions.IsLeaderPerson]
-    serializer_class = summary_serializers.RegistrationEventDetailedSummarySerializer
+    serializer_class = summary_serializers.RegistrationParticipantEventDetailedSummarySerializer
+    ordering_fields = ('first_name', 'last_name', 'scout_name', 'birthday', 'scout_organisation')
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self) -> QuerySet:
+        event_id = self.kwargs.get("event_pk", None)
+        registrations = event_models.Registration.objects.filter(event=event_id)
+
+        confirmed: bool = self.request.query_params.get('confirmed', 'true') == 'true'
+        if confirmed:
+            registrations = registrations.filter(is_confirmed=confirmed)
+
+        stamm_list = self.request.query_params.getlist('stamm')
+        if stamm_list:
+            registrations = registrations.filter(scout_organisation__id__in=stamm_list)
+
+        registrations = filter_registration_by_leadership(self.request.user, event_id, registrations)
+        reg_ids = registrations.values_list('id', flat=True)
+
+        participants: QuerySet = event_models.RegistrationParticipant.objects.filter(registration__id__in=reg_ids)
+
+        booking_option_list = self.request.query_params.getlist('booking-option')
+        if booking_option_list:
+            participants = participants.filter(booking_option__in=booking_option_list)
+
+        ordering: str = self.request.query_params.get('ordering', None)
+        order_desc: bool = self.request.query_params.get('order-desc', 'false') == 'true'
+        camel_case = to_snake_case(ordering, order_desc, self.ordering_fields, 'last_name')
+
+        check_case = ('-' if order_desc else '') + 'scout_organisation'
+        if camel_case == check_case:
+            camel_case = ('-' if order_desc else '') + 'registration__scout_organisation__name'
+
+        return participants.order_by(camel_case)
 
 
 class EventAttributeSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -152,7 +197,7 @@ class EventAgeGroupsSummaryViewSet(EventFoodSummaryViewSet):
         23+ Altrover
         """
         event_id = self.kwargs.get("event_pk", None)
-        event = get_object_or_404(event_models.Event, pk=event_id)
+        event = get_event(event_id)
         all_participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
 
         woelfling = self.age_range(0, 12, all_participants, event)

@@ -7,8 +7,7 @@
             <v-stepper-step
                 :key="`stepper-${index}`"
                 :complete="currentStep > index + 1"
-                :step="index + 1"
-            >
+                :step="index + 1">
               {{ `${step.module.header}` }}
             </v-stepper-step>
 
@@ -17,7 +16,7 @@
             <v-stepper-items :key="`stepper-items-${index}`">
               <v-stepper-content :step="index + 1" class="default-width" style="width: 100%">
                 <component
-                    :is="step.module.name"
+                    :is="!step.module.custom ? step.module.name : 'Custom'"
                     :ref="step.module.name"
                     :position="index + 1"
                     :max-pos="currentModules.length"
@@ -28,8 +27,7 @@
                     @ignore="nextStep()"
                     @prevStep="prevStep()"
                     @nextStep="nextStep()"
-                    @submit="onRegistrationConfirmed()"
-                />
+                    @submit="onRegistrationConfirmed()"/>
               </v-stepper-content>
             </v-stepper-items>
           </template>
@@ -39,8 +37,7 @@
           v-model="showSuccess"
           color="success"
           y="top"
-          :timeout="timeout"
-      >
+          :timeout="timeout">
         {{ 'Die Aktion wurde erfolgreich angelegt.' }}
       </v-snackbar>
       <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
@@ -59,13 +56,16 @@ import axios from 'axios';
 import LoadingCircual from '@/components/loading/Circual.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 
+import Custom from './modules/Custom.vue';
 import Food from './modules/Food.vue';
 import Introduction from './modules/Introduction.vue';
 import Letter from './modules/Letter.vue';
 import ParticipantsPersonal from './modules/ParticipantsPersonal.vue';
+import Participants from './modules/Participants.vue';
 import Summary from './modules/Summary.vue';
 import Tent from './modules/Tent.vue';
 import Travel from './modules/Travel.vue';
+import Travel2 from './modules/Travel2.vue';
 import TravelBack from './modules/TravelBack.vue';
 import LunchMeals from './modules/LunchMeals.vue';
 import Tshirts from './modules/Tshirts.vue';
@@ -78,16 +78,19 @@ import TravelBundesfahrt from './modules/TravelBundesfahrt.vue';
 
 export default {
   components: {
+    Custom,
     LoadingCircual,
     Food,
     Introduction,
     Letter,
+    Participants,
     ParticipantsPersonal,
     ParticipantsPersonalGold,
     ParticipantsPersonalPfingsten,
     Summary,
     Tent,
     Travel,
+    Travel2,
     TravelBack,
     SubscribeWorkshop,
     LunchMeals,

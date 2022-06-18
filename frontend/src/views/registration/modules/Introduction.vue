@@ -9,8 +9,7 @@
     @prevStep="prevStep"
     @nextStep="onNextStep"
     @ignore="onIngoredClicked"
-    @saving="onSaving"
-  >
+    @saving="onSaving">
     <template v-slot:header>
       <span class="text-left subtitle-1">
         <p>
@@ -44,8 +43,7 @@
         <v-checkbox
           v-model="data.checkboxes[checkbox.id]"
           :label="checkbox.text ? checkbox.text : ''"
-          :error-messages="errorMessage('checkboxes', $v)"
-        >
+          :error-messages="errorMessage('checkboxes', $v)">
         </v-checkbox>
       </v-row>
     </template>

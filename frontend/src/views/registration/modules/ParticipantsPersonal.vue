@@ -8,8 +8,7 @@
     @prevStep="prevStep"
     @nextStep="onNextStep"
     @ignore="onIngoredClicked"
-    @saving="onSaving"
-  >
+    @saving="onSaving">
     <template v-slot:header>
       <p>
         Ich melde folgende Teilnehmende an <br/>
@@ -27,8 +26,7 @@
           v-if="dialogMeta.excelUpload"
           target="_blank"
           :href="cloudLink"
-          style="color: blue"
-        >
+          style="color: blue">
           Link zur Beispiel Excel Datei
         </a>
       </p>
@@ -41,6 +39,7 @@
         :valdiationObj="$v"
         :currentEvent="currentEvent"
         @validate="validate"
+        @refresh="refresh"
       />
     </template>
   </GenericRegModul>
@@ -309,25 +308,30 @@ export default {
     },
     beforeTabShow() {
       this.loadData();
-      this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+      if (this.$refs[`dialog-main-${this.moduleId}`]) {
+        this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+      }
     },
     onNextStep() {
       this.saving = true;
       this.nextStep();
     },
-    setDefaults() {
-    },
+    setDefaults() { },
     loadData() {
       this.saving = false;
       this.loading = true;
       Promise.all([this.getModule(this.moduleId, this.currentEvent.id)])
         .then((values) => {
           this.moduleData = values[0].data; //eslint-disable-line
-          this.loading = false;
           this.setDefaults();
         })
         .catch((error) => {
-          this.errormsg = error.response.data.message;
+          this.$root.globalSnackbar.show({
+            message: error.response.data,
+            color: 'error',
+          });
+        })
+        .finally(() => {
           this.loading = false;
         });
     },
