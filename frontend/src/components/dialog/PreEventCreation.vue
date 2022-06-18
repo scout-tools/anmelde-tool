@@ -139,10 +139,6 @@ export default {
                 name: 'BookingOptionComplex',
                 value: 'BookingOptionComplex',
               },
-              {
-                name: 'BookingOptionSimple',
-                value: 'BookingOptionSimple',
-              },
             ],
           },
           {

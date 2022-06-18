@@ -124,6 +124,14 @@ class TravelAttributeGetSerializer(serializers.ModelSerializer):  # noqa
         exclude = ('template', 'polymorphic_ctype', 'in_summary')
 
 
+class TravelAttributeV2GetSerializer(serializers.ModelSerializer):  # noqa
+    type = TagTypeShortSerializer(many=False)
+    type_field = serializers.CharField(source='get_type_field_display')
+    class Meta:
+        model = basic_models.TravelAttributeV2
+        exclude = ('template', 'polymorphic_ctype', 'in_summary')
+
+
 class StringAttributeGetSerializer(serializers.ModelSerializer):  # noqa
     type = TagTypeShortSerializer(many=False)
 
@@ -139,6 +147,7 @@ class AbstractAttributeGetPolymorphicSerializer(PolymorphicSerializer):
         basic_models.TimeAttribute: TimeAttributeGetSerializer,
         basic_models.BooleanAttribute: BooleanAttributeGetSerializer,
         basic_models.TravelAttribute: TravelAttributeGetSerializer,
+        basic_models.TravelAttributeV2: TravelAttributeV2GetSerializer,
         basic_models.StringAttribute: StringAttributeGetSerializer
     }
 
@@ -172,6 +181,11 @@ class TravelAttributePutSerializer(serializers.ModelSerializer):
         model = basic_models.TravelAttribute
         fields = ('type_field', 'time_field')
 
+class TravelAttributeV2PutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = basic_models.TravelAttributeV2
+        fields = ('type_field', 'date_time_field', 'number_persons', 'description')
+
 
 class StringAttributePutSerializer(serializers.ModelSerializer):
     class Meta:
@@ -186,6 +200,7 @@ class AbstractAttributePutPolymorphicSerializer(PolymorphicSerializer):
         basic_models.TimeAttribute: TimeAttributePutSerializer,
         basic_models.BooleanAttribute: BooleanAttributePutSerializer,
         basic_models.TravelAttribute: TravelAttributePutSerializer,
+        basic_models.TravelAttributeV2: TravelAttributeV2PutSerializer,
         basic_models.StringAttribute: StringAttributePutSerializer
     }
 
@@ -227,7 +242,15 @@ class TravelAttributeTemplatePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = basic_models.TravelAttribute
-        fields = ('type_field', 'time_field', 'resourcetype', 'template_id')
+        fields = ('type_field', 'time_field' , 'resourcetype', 'template_id')
+
+
+class TravelAttributeV2TemplatePostSerializer(serializers.ModelSerializer):
+    resourcetype = serializers.CharField()
+
+    class Meta:
+        model = basic_models.TravelAttributeV2
+        fields = ('type_field', 'date_time_field' ,'persons', 'description', 'resourcetype', 'template_id')
 
 
 class StringAttributeTemplatePostSerializer(serializers.ModelSerializer):
@@ -245,6 +268,7 @@ class AbstractAttributeTemplatePostPolymorphicSerializer(PolymorphicSerializer):
         basic_models.TimeAttribute: TimeAttributeTemplatePostSerializer,
         basic_models.BooleanAttribute: BooleanAttributeTemplatePostSerializer,
         basic_models.TravelAttribute: TravelAttributeTemplatePostSerializer,
+        basic_models.TravelAttributeV2: TravelAttributeV2TemplatePostSerializer,
         basic_models.StringAttribute: StringAttributeTemplatePostSerializer
     }
 
@@ -285,6 +309,12 @@ class TravelAttributePostSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TravelAttributeV2PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = basic_models.TravelAttributeV2
+        fields = '__all__'
+
+
 class StringAttributePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = basic_models.StringAttribute
@@ -298,6 +328,7 @@ class AbstractAttributePostPolymorphicSerializer(PolymorphicSerializer):
         basic_models.TimeAttribute: TimeAttributePostSerializer,
         basic_models.BooleanAttribute: BooleanAttributePostSerializer,
         basic_models.TravelAttribute: TravelAttributePostSerializer,
+        basic_models.TravelAttributeV2: TravelAttributeV2PostSerializer,
         basic_models.StringAttribute: StringAttributePostSerializer
     }
 

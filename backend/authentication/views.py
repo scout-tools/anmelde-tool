@@ -87,9 +87,9 @@ class ResponsablePersonViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs) -> Response:
         queryset = UserExtended.objects.all()
         search_param = request.GET.get('search')
-        queryset = queryset.filter(Q(scout_name__contains=search_param)
-                                   | Q(user__email__contains=search_param)
-                                   | Q(scout_organisation__name__contains=search_param))
+        queryset = queryset.filter(Q(scout_name__icontains=search_param)
+                                   | Q(user__email__icontains=search_param)
+                                   | Q(scout_organisation__name__icontains=search_param))
         serializer = ResponsablePersonSerializer(queryset, many=True)
         response_len = len(serializer.data)
         if response_len > 10:

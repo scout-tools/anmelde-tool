@@ -13,6 +13,15 @@
       <v-icon color="#008000" left> mdi-microsoft-excel</v-icon>
       Excel Datei hochladen
     </v-btn>
+    <v-btn
+      v-if="dialogMeta.groupAdd"
+      class="ma-2"
+      @click="openGroupDialog"
+
+    >
+      <v-icon color="#008000" left> mdi-account-group</v-icon>
+      Gruppe hinzufügen
+    </v-btn>
     <v-list v-if="!isLoading">
       <v-subheader>Einträge ({{ items.length || 0 }})</v-subheader>
       <v-list-item-group color="primary" :value="value"
@@ -56,6 +65,14 @@
       :valdiationObj="valdiationObj"
       @validate="validate"
     />
+    <create-group-modal
+      ref="groupDialog"
+      :dialogMeta="dialogMeta"
+      @refresh="onRefresh()"
+      :currentRegistration="currentRegistration"
+      :valdiationObj="valdiationObj"
+      @validate="validate"
+    />
     <delete-modal
       ref="deleteModal"
       :dialogMeta="dialogMeta"
@@ -73,16 +90,18 @@
 </template>
 
 <script>
-import CreateModal from '@/components/dialog/ListWithDialog/CreateModal.vue';
-import DeleteModal from '@/components/dialog/ListWithDialog/DeleteModal.vue';
-import Circual from '@/components/loading/Circual.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
+import Circual from '@/components/loading/Circual.vue';
+import CreateModal from '@/components/dialog/ListWithDialog/CreateModal.vue';
+import CreateGroupModal from '@/components/dialog/ListWithDialog/CreateGroupModal.vue';
+import DeleteModal from '@/components/dialog/ListWithDialog/DeleteModal.vue';
 import UploadExcelFile from './ExcelImport.vue';
 
 export default {
   mixins: [apiCallsMixin],
   components: {
     CreateModal,
+    CreateGroupModal,
     UploadExcelFile,
     DeleteModal,
     Circual,
@@ -99,6 +118,9 @@ export default {
     },
     valdiationObj: {},
     dialogMeta: {
+      default: {},
+    },
+    currentRegistration: {
       default: {},
     },
     currentEvent: {
@@ -177,9 +199,13 @@ export default {
     },
     onRefresh() {
       this.getItems();
+      this.$emit('refresh');
     },
     openExcelDialog() {
       this.$refs.uploadExcelFile.openDialog();
+    },
+    openGroupDialog() {
+      this.$refs.groupDialog.openDialog();
     },
     deleteParticipant(item) {
       this.$refs.deleteModal.show(item);

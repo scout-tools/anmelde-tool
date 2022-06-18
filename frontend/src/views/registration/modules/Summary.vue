@@ -51,6 +51,7 @@
         <!--        </v-row>-->
         <v-row>
           <v-checkbox
+            v-if="moduleData && moduleData.length && moduleData[0]"
             v-model="data.checkboxes[moduleData[0].id]"
             :label="getConfirmedText"
             :error-messages="errorMessage('checkboxes', $v)">

@@ -91,7 +91,7 @@ export default {
       name: {
         required,
         minLength: minLength(1),
-        maxLength: maxLength(20),
+        maxLength: maxLength(30),
       },
       shortDescription: {
         required,

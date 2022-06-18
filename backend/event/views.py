@@ -106,7 +106,7 @@ class EventViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs) -> Response:
         if request.data.get('name', None) is None:
             request.data['name'] = 'Dummy'
-        if request.data.get('responsible_persons', []) is []:
+        if (request.data.get('responsible_persons') is None) | (request.data.get('responsible_persons', []) is []):
             request.data['responsible_persons'] = [request.user.email, ]
         serializer: event_serializers.EventCompleteSerializer = self.get_serializer(data=request.data)
         if not serializer.is_valid(raise_exception=True):

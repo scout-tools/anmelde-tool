@@ -25,8 +25,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-// import CreateSinglePersonDialog from '../dialog/CreateSinglePersonDialogBundesfahrt.vue';
 import stepMixin from '@/mixins/stepMixin';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import GenericRegModul from '@/views/registration/components/GenericRegModul.vue';
@@ -54,7 +52,6 @@ export default {
     data: {},
   },
   computed: {
-    ...mapGetters(['userinfo']),
     dialogMeta() {
       return {
         title: 'Hallo',
