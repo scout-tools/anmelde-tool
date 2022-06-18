@@ -36,15 +36,18 @@ def filter_registration_by_leadership(user: User, event_id: str, registrations: 
     return registrations
 
 
-def get_event(event_id: [str, event_models.Event], ex=event_exceptions.EventNotFound) -> event_models.Event:
+def get_event(event_id: [str, event_models.Event], ex=None) -> event_models.Event:
+    if not ex:
+        ex = event_exceptions.EventNotFound(event_id)
     if isinstance(event_id, str):
         return custom_get_or_404(ex, event_models.Event, id=event_id)
     else:
         return event_id
 
 
-def get_registration(registration_id: [str, event_models.Registration], ex=event_exceptions.RegistrationNotFound) \
-        -> event_models.Registration:
+def get_registration(registration_id: [str, event_models.Registration], ex=None) -> event_models.Registration:
+    if not ex:
+        ex = event_exceptions.RegistrationNotFound(registration_id)
     if isinstance(registration_id, str):
         return custom_get_or_404(ex, event_models.Registration, id=registration_id)
     else:
@@ -66,5 +69,5 @@ def to_snake_case(ordering, order_desc, ordering_fields, default_case: str = 'cr
     if not ordering or camel_case not in ordering_fields:
         camel_case = default_case
     if order_desc:
-        camel_case = '-'+camel_case
+        camel_case = '-' + camel_case
     return camel_case
