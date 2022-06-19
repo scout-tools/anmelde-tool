@@ -28,6 +28,7 @@
               mandatory: true,
               fieldType: item.fieldType,
               default: item.defaultValue,
+              cols: 12,
             }"
             v-model="data[item.attribute.id]"
             :valdiationObj="$v"

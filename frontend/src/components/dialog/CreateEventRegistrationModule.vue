@@ -14,31 +14,7 @@
       </v-toolbar>
       <v-container>
         <v-form v-model="valid">
-          <v-container v-if="module && module.custom">
-            <v-row>
-              <v-text-field
-                v-model="module.header"
-                :counter="20"
-                label="Name der Schlafstätte"
-                required
-                prepend-icon="mdi-earth"
-                v-if="module && module.custom"
-              >
-                <template slot="append">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon color="success" dark v-bind="attrs" v-on="on">
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span> Gib hier den Namen der Schlafstätte ein. </span>
-                  </v-tooltip>
-                </template>
-              </v-text-field>
-            </v-row>
-            <v-row> </v-row>
-          </v-container>
-          <v-container v-else>
+          <v-container>
             <v-row>
               <v-card-title>
                 Module Name: {{ module && module.header }}
@@ -107,7 +83,7 @@ export default {
       {
         name: 'Modul-Beschreibung (Optional)',
         techName: 'overwriteDescription',
-        tooltip: '',
+        tooltip: 'Dieser Text überschreibt die Standard-Beschreibung.',
         mandatory: true,
         fieldType: 'html',
         default: '',

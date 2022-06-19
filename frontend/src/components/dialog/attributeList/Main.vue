@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-btn class="ma-2" color="success" @click="newItem">
+    <v-btn disabled class="ma-2" color="success" @click="newItem">
       <v-icon left> mdi-plus </v-icon>
       Eintrag hinzufügen
     </v-btn>
@@ -21,12 +21,12 @@
             ></v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn dense icon @click="editParticipant(item.id)">
+            <v-btn disabled dense icon @click="editParticipant(item.id)">
               <v-icon color="primary lighten-1">mdi-pencil</v-icon>
             </v-btn>
           </v-list-item-action>
           <v-list-item-action>
-            <v-btn dense icon @click="deleteParticipant(item.id)">
+            <v-btn disabled dense icon @click="deleteParticipant(item.id)">
               <v-icon color="red lighten-1">mdi-trash-can</v-icon>
             </v-btn>
           </v-list-item-action>
