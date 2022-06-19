@@ -50,7 +50,8 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         registration_id = self.kwargs.get("registration_pk", None)
-        return event_models.RegistrationParticipant.objects.filter(registration=registration_id)
+        return event_models.RegistrationParticipant.objects.filter(
+            registration=registration_id).order_by('age')
 
     def create(self, request, *args, **kwargs) -> Response:
         eat_habits_formatted = create_missing_eat_habits(request)

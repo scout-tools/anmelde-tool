@@ -47,9 +47,9 @@ class RegistrationParticipantShortSerializer(serializers.ModelSerializer):
         queryset=EatHabit.objects.all(),
         required=False
     )
-    class Meta:
+    class Meta: 
         model = event_models.RegistrationParticipant
-        fields = ('id', 'scout_name', 'first_name', 'last_name', 'scout_level', 'eat_habit')
+        fields = ('id', 'scout_name', 'first_name', 'last_name', 'scout_level', 'eat_habit', 'age')
 
 
 class RegistrationParticipantSerializer(serializers.ModelSerializer):
