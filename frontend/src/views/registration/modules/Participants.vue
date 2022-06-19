@@ -15,27 +15,30 @@
       <p>
         Ich melde folgende Teilnehmende an <br />
         <br />
-        Die Erfassung erfolgt pro Person. <br />
+        Die Erfassung erfolgt pro Person oder als ganze Gruppe.
+        Löschen und bearbeiten geht nur pro Person. <br />
         <br />
         <v-icon color="red"> mdi-alert-circle</v-icon>
         Du musst dich selbst auch in die Liste eintragen.
       </p>
-      <p v-if="!!dialogMeta.excelUpload">
-        Alternativ kannst du hier die Excelliste hochladen, wenn du die Daten
-        dort bereits erfasst hast.
-        <br />
-        <a
-          v-if="!!dialogMeta.excelUpload && currentRegistration.cloudLink"
-          target="_blank"
-          :href="currentRegistration.cloudLink"
-          style="color: blue"
-        >
-          Link zur Beispiel Excel Datei
-        </a>
-      </p>
     </template>
 
     <template v-slot:main>
+    <v-tabs
+      v-model="tab"
+      background-color="transparent"
+      grow
+    >
+      <v-tab>
+        Stufen
+      </v-tab>
+      <v-tab>
+        Essen
+      </v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-tab-item>
       <v-simple-table>
         <template v-slot:default>
           <thead>
@@ -50,8 +53,34 @@
               <td>{{ item.value }}</td>
             </tr>
           </tbody>
+          <tfoot>
+              <tr>
+                  <th scope="row"><b>Gesamtanmeldezahl</b></th>
+                  <td>{{ getSummaryDataByKey('participantCount') }}</td>
+              </tr>
+          </tfoot>
         </template>
       </v-simple-table>
+      </v-tab-item>
+      <v-tab-item>
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">Name</th>
+              <th class="text-left">Essenbesonderheiten</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in summaryEat" :key="item.name">
+              <td>{{ item.name }}</td>
+              <td>{{ item.value }}</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+      </v-tab-item>
+    </v-tabs-items>
       <ListWithDialogMain
         :ref="`dialog-main-${moduleId}`"
         :currentRegistration="currentRegistration"
@@ -95,6 +124,7 @@ export default {
     showError: false,
     data: {},
     summaryData: {},
+    tab: null,
   }),
   validations: {
     data: {
@@ -141,17 +171,17 @@ export default {
           {
             name: 'Fahrtenname',
             techName: 'scoutName',
-            tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
+            tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein. Das dient nur der Übersicht.',
             icon: 'mdi-campfire',
             mandatory: true,
             fieldType: 'textfield',
             default: '',
           },
           {
-            name: 'Stufe',
+            name: 'Stufe*',
             techName: 'scoutLevel',
             tooltip:
-              'Wähle einen Registrierungsmodel für die Einzelanmeldungen aus.',
+              'Wähle die Stufe der Person aus, die du anmeldest.',
             icon: 'mdi-account-circle',
             lookupPath: '/event/choices/scout-level-types/',
             lookupListDisplay: ['name'],
@@ -176,10 +206,6 @@ export default {
     summary() {
       return [
         {
-          name: 'Gesamtanzahl',
-          value: this.getSummaryDataByKey('participantCount'),
-        },
-        {
           name: 'Wölflinge',
           value: this.getSummaryDataByKey('wolfCount'),
         },
@@ -191,6 +217,10 @@ export default {
           name: 'Rover_Innen',
           value: this.getSummaryDataByKey('roverCount'),
         },
+      ];
+    },
+    summaryEat() {
+      return [
         {
           name: 'Vegetarisch',
           value: this.getSummaryDataByKey('veggiCount'),

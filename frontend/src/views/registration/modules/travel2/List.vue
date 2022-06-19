@@ -52,7 +52,6 @@ export default {
       return mapping[key];
     },
     getText(item) {
-      console.log(item.dateTimeField);
       return `${item.numberPersons} Personen mit ${
         item.typeField
       } am ${this.$moment(item.dateTimeField).format('DD.MM.YY HH:mm')}`;

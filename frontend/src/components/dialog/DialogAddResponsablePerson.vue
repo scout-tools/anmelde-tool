@@ -67,8 +67,7 @@ export default {
       if (!this.valid) {
         return;
       }
-      this.patchRegService('add-reponsable', this.data.id, 'responsable_person', this.data.responsablePerson).then((response) => {
-        console.log(response);
+      this.patchRegService('add-reponsable', this.data.id, 'responsable_person', this.data.responsablePerson).then(() => {
         this.active = false;
       });
     },

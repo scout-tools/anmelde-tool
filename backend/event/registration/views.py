@@ -61,7 +61,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         registration: event_models.Registration = self.participant_initialization(request)
 
         if request.data.get('age'):
-            request.data['birthday'] = timezone.now() - relativedelta(years=int(request.data.get('age')))
+            request.data['birthday'] = timezone.now() - relativedelta(years=int(request.data.get('age'))) 
 
         request.data['registration'] = registration.id
         if request.data.get('first_name') is None and request.data.get('last_name') is None:
@@ -144,26 +144,46 @@ class RegistrationAddGroupParticipantViewSet(viewsets.ViewSet):
         registration: event_models.Registration = self.participant_group_initialization(request)
         number: int = request.data.get('number', 0)
         scout_level: int = request.data.get('scout_level', 'N')
-        # eat_habit_id: int = request.data.get('eat_habit', None)
+        eat_habit_id: int = request.data.get('eat_habit', 1)
+        existing_participants: QuerySet = event_models.RegistrationParticipant.objects.filter(
+            registration=registration.id)
+        total_participant_count: int =existing_participants.count()
 
         new_participants = []
 
         confirm = event_choices.ParticipantActionConfirmation.Nothing
 
+        switcher = {
+            'N': 14,
+            'W': 9,
+            'S': 14,
+            'R': 18,
+        }
+        print(scout_level)
+        if scout_level:
+            age = switcher.get(scout_level, 14)
+            print(age)
+            birthday = timezone.now() - relativedelta(years=int(age))
+            print(birthday)
+
         booking: event_models.BookingOption = registration.event.bookingoption_set.first()
-        # eat_habit: basic_models.EatHabit = get_object_or_404(basic_models.EatHabit, id=eat_habit_id)
-        for i in range(1, int(number) + 1):
-            participant = event_models.RegistrationParticipant(first_name='Pfadi',
-                                                                scout_name='Namenlos',
+        if (eat_habit_id):
+            eat_habit: basic_models.EatHabit = get_object_or_404(basic_models.EatHabit, id=eat_habit_id)
+        for i in range(total_participant_count + 1, total_participant_count + int(number) + 1):
+            participant = event_models.RegistrationParticipant(first_name='Teilnehmender',
+                                                                scout_name=f'Teilnehmender',
                                                                 last_name=i,
+                                                                age=age,
+                                                                birthday=birthday,
                                                                 scout_level=scout_level,
-                                                                # eat_habit=eat_habit,
                                                                 registration=registration,
                                                                 generated=True,
                                                                 needs_confirmation=confirm,
                                                                 booking_option=booking)
+            participant.save()
+            if (eat_habit_id):
+                participant.eat_habit.add(eat_habit)
             new_participants.append(participant)
-        event_models.RegistrationParticipant.objects.bulk_create(new_participants)
 
         return Response({ 'created  persons' }, status=status.HTTP_201_CREATED)
 

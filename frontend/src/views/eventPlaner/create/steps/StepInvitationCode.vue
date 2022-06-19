@@ -94,15 +94,15 @@ export default {
       invitationCode: {
         required,
         minLength: minLength(4),
-        maxLength: maxLength(10),
+        maxLength: maxLength(12),
       },
       invitationCodeGroup: {
         minLength: minLength(4),
-        maxLength: maxLength(10),
+        maxLength: maxLength(12),
       },
       invitationCodeSingle: {
         minLength: minLength(4),
-        maxLength: maxLength(10),
+        maxLength: maxLength(12),
       },
     },
   },
