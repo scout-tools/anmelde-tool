@@ -307,7 +307,10 @@ export default {
       this.$v.$touch();
     },
     beforeTabShow() {
-      this.loadData();
+      this.refresh();
+    },
+    refresh() {
+      setTimeout(() => this.loadData(), 100);
       if (this.$refs[`dialog-main-${this.moduleId}`]) {
         this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
       }

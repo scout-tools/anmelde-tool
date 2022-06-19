@@ -2,6 +2,7 @@
   <GenericRegModul
     :key="`module-${moduleId}`"
     :saving="saving"
+    :loading="loading"
     :position="position"
     :maxPos="maxPos"
     @submit="submit"
@@ -19,6 +20,8 @@
         :ref="'dialog-main-fee-complex'"
         :dialogMeta="dialogMeta"
         :valdiationObj="$v"
+        :currentEvent="currentEvent"
+        @validate="validate"
       />
     </template>
   </GenericRegModul>
@@ -33,7 +36,15 @@ import ListWithDialogMain from '@/components/dialog/ListWithDialog/Main.vue';
 export default {
   name: 'StepParticipationFeeComplex',
   header: 'Teilnehmer_innen Beitrag',
-  props: ['position', 'maxPos', 'event'],
+  props: [
+    'position',
+    'maxPos',
+    'currentEvent',
+    'event',
+    'currentRegistration',
+    'currentModule',
+    'personalData',
+  ],
   mixins: [stepMixin, apiCallsMixin],
   components: {
     GenericRegModul,
@@ -43,6 +54,7 @@ export default {
     API_URL: process.env.VUE_APP_API,
     valid: true,
     saving: false,
+    loading: true,
     selectedItem: 1,
     moduleData: [],
     data: {},
@@ -106,10 +118,15 @@ export default {
   },
   methods: {
     beforeTabShow() {
+      const me = this;
       this.loadData();
       setTimeout(() => {
-        this.$refs['dialog-main-fee-complex'].beforeTabShow();
-      }, 100);
+        me.$refs['dialog-main-fee-complex'].beforeTabShow();
+      }, 500);
+    },
+    loadData() {
+      this.saving = false;
+      this.loading = false;
     },
   },
 };

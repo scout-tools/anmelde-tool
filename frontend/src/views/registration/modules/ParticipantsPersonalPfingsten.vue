@@ -208,14 +208,17 @@ export default {
       this.$v.$touch();
     },
     beforeTabShow() {
-      this.loadData();
-      if (this.$refs[`dialog-main-${this.moduleId}`]) {
-        this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
-      }
+      this.refresh();
     },
     onNextStep() {
       this.saving = true;
       this.nextStep();
+    },
+    refresh() {
+      setTimeout(() => this.loadData(), 100);
+      if (this.$refs[`dialog-main-${this.moduleId}`]) {
+        this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+      }
     },
     setDefaults() {
     },
