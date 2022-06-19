@@ -168,7 +168,7 @@ export default {
             default: '',
           },
           {
-            name: 'Alter*',
+            name: 'Alter am Ende der Fahrt*',
             techName: 'age',
             tooltip: 'Trage bitte das Alter des_der Teilnehmer_in ein.',
             icon: 'mdi-calendar',
