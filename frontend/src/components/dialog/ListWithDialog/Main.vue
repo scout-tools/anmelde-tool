@@ -46,10 +46,10 @@
         <v-list-item v-show="!items.length">
           Kein Eintrag vorhanden.
         </v-list-item>
-        <v-list-item v-show="itemPreview && items.length" >
+        <v-list-item v-show="itemPreview && items.length && items.length >= 7" >
           <v-btn color="primary" @click="itemPreview= false">
             <v-icon>mdi-chevron-down</v-icon>
-            Mehr Teilnehmende anzeigen
+            Mehr anzeigen
           </v-btn>
         </v-list-item>
       </v-list-item-group>

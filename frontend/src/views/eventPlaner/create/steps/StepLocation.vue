@@ -165,24 +165,25 @@ export default {
   },
   methods: {
     nextStep() {
-      this.patchService('location', this.locations[this.selectedItem].id, '/event/event/', this.event.id).then(
+      this.patchService('location', this.locations[this.selectedItem - 2].id, '/event/event/', this.event.id).then(
         () => {
           this.$emit('nextStep');
         },
       );
     },
     submit() {
-      this.patchService('location', this.locations[this.selectedItem].id, '/event/event/', this.event.id).then(
+      this.patchService('location', this.locations[this.selectedItem - 2].id, '/event/event/', this.event.id).then(
         () => {
           this.$emit('submit');
         },
       );
     },
     beforeTabShow() {
+      const me = this;
       this.loadData();
       setTimeout(() => {
-        this.$refs['dialog-main-location'].beforeTabShow();
-      }, 100);
+        me.$refs['dialog-main-location'].beforeTabShow();
+      }, 200);
     },
     validate(data) {
       this.data = data;
@@ -195,21 +196,16 @@ export default {
         this.getEventLocation(),
       ]).then((responses) => {
         this.locations = responses[1].data;
-        const location = this.locations.filter(
-          (item) => item.id === responses[0].data.location,
-        )[0];
-        this.selectedItem = this.locations.indexOf(location);
+        if (responses[0].data && responses[0].data.location) {
+          const location = this.locations.filter(
+            (item) => item.id === responses[0].data.location,
+          )[0];
+          this.selectedItem = this.locations.indexOf(location) + 2;
+        }
         this.$forceUpdate();
         this.saving = false;
         this.loading = false;
       });
-    },
-  },
-  // created() {
-  //   this.beforeTabShow();
-  // },
-  watch: {
-    selectedItem() {
     },
   },
 };

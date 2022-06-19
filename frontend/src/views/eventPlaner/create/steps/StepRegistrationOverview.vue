@@ -3,11 +3,7 @@
     <v-container>
       <v-row class="mb-6">
         <span class="subtitle-1">
-          Jetzt geht es ans Eingemachte. Hier bestimmst du den Ablauf und die
-          Inhalte einer Registrierung. Es gibt eine Liste an Standard Modulen
-          die du hinzufügen kannst, du kannst aber auch selber Module
-          definieren. Anhand deiner vorherigen Antworten wurden ein paar Module
-          vorselektiert und sind verpflichtend.
+          Wähle deine Module aus.
         </span>
       </v-row>
 
