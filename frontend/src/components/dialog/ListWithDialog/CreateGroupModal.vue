@@ -72,7 +72,7 @@ export default {
     mapping2: ['Amount', 'Veggi', 'Vegan'],
     fields: [
       {
-        name: 'Anzahl Wölflinge',
+        name: 'Allesesser Wölflinge',
         techName: 'wolfAmount',
         tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
         icon: 'mdi-human-child',
@@ -82,7 +82,7 @@ export default {
         cols: 4,
       },
       {
-        name: 'davon Vegetarich',
+        name: 'Vegetariche Wölflinge ',
         techName: 'wolfVeggi',
         tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
         icon: 'mdi-cow-off',
@@ -92,7 +92,7 @@ export default {
         cols: 4,
       },
       {
-        name: 'davon Vegan',
+        name: 'Vegane Wölflinge',
         techName: 'wolfVegan',
         tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
         icon: 'mdi-sprout',
@@ -102,7 +102,7 @@ export default {
         cols: 4,
       },
       {
-        name: 'Anzahl Sipplinge',
+        name: 'Allesesser Sipplinge',
         techName: 'sipplingAmount',
         tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
         icon: 'mdi-human-greeting',
@@ -112,7 +112,7 @@ export default {
         cols: 4,
       },
       {
-        name: 'davon Vegetarich',
+        name: 'Vegetariche Sipplinge',
         techName: 'sipplingVeggi',
         tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
         icon: 'mdi-cow-off',
@@ -122,7 +122,7 @@ export default {
         cols: 4,
       },
       {
-        name: 'davon Vegan',
+        name: 'Vegane Sipplinge',
         techName: 'sipplingVegan',
         tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
         icon: 'mdi-sprout',
@@ -132,7 +132,7 @@ export default {
         cols: 4,
       },
       {
-        name: 'Anzahl Rover_Innen',
+        name: 'Allesesser Rover_Innen',
         techName: 'roverAmount',
         tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
         icon: 'mdi-account-cowboy-hat',
@@ -142,7 +142,7 @@ export default {
         cols: 4,
       },
       {
-        name: 'davon Vegetarich',
+        name: 'Vegetariche Rover_Innen',
         techName: 'roverVeggi',
         tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
         icon: 'mdi-cow-off',
@@ -152,7 +152,7 @@ export default {
         cols: 4,
       },
       {
-        name: 'davon Vegan',
+        name: 'Vegane Rover_Innen',
         techName: 'roverVegan',
         tooltip: 'Trage bitte den Fahrtennamen des_der Teilnehmer_in ein.',
         icon: 'mdi-sprout',
@@ -205,7 +205,6 @@ export default {
       });
     },
     async callCreateService() {
-      console.log(this.data);
       const promises = this.collectRequests();
       Promise.all(promises).then(() => {
         this.closeDialog();
@@ -218,24 +217,64 @@ export default {
     },
     collectRequests() {
       const promises = [];
-      if (this.data.wolfAmount) {
-        promises.push(this.createServiceById(this.path, {
-          number: this.data.wolfAmount,
+      const mapping = [
+        {
+          type: 'wolfAmount',
           scoutLevel: 'W',
-        }));
-      }
-      if (this.data.sipplingAmount) {
-        promises.push(this.createServiceById(this.path, {
-          number: this.data.sipplingAmount,
+          eatHabit: null,
+        },
+        {
+          type: 'wolfVeggi',
+          scoutLevel: 'W',
+          eatHabit: 1,
+        },
+        {
+          type: 'wolfVegan',
+          scoutLevel: 'W',
+          eatHabit: 2,
+        },
+        {
+          type: 'sipplingAmount',
           scoutLevel: 'S',
-        }));
-      }
-      if (this.data.roverAmount) {
-        promises.push(this.createServiceById(this.path, {
-          number: this.data.roverAmount,
+          eatHabit: null,
+        },
+        {
+          type: 'sipplingVeggi',
+          scoutLevel: 'S',
+          eatHabit: 1,
+        },
+        {
+          type: 'sipplingVegan',
+          scoutLevel: 'S',
+          eatHabit: 2,
+        },
+        {
+          type: 'roverAmount',
           scoutLevel: 'R',
-        }));
-      }
+          eatHabit: null,
+        },
+        {
+          type: 'roverVeggi',
+          scoutLevel: 'R',
+          eatHabit: 1,
+        },
+        {
+          type: 'roverVegan',
+          scoutLevel: 'R',
+          eatHabit: 2,
+        },
+      ];
+      mapping.forEach((map) => {
+        if (this.data[map.type] > 0) {
+          promises.push(
+            this.createServiceById(this.path, {
+              number: this.data[map.type],
+              scoutLevel: map.scoutLevel,
+              eatHabit: map.eatHabit,
+            }),
+          );
+        }
+      });
       return promises;
     },
   },

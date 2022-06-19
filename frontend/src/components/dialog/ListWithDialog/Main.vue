@@ -21,10 +21,9 @@
       Gruppe hinzufügen
     </v-btn>
     <v-list v-show="!isLoading">
-      <v-subheader>Einträge ({{ items.length || 0 }})</v-subheader>
       <v-list-item-group color="primary" :value="value"
                          @change="onInputChanged">
-        <v-list-item v-for="(item, i) in items" :key="i">
+        <v-list-item v-for="(item, i) in listItems" :key="i">
           <v-list-item-avatar>
             <v-icon color="black" dark>mdi-account</v-icon>
           </v-list-item-avatar>
@@ -46,6 +45,12 @@
         </v-list-item>
         <v-list-item v-show="!items.length">
           Kein Eintrag vorhanden.
+        </v-list-item>
+        <v-list-item v-show="itemPreview && items.length" >
+          <v-btn color="primary" @click="itemPreview= false">
+            <v-icon>mdi-chevron-down</v-icon>
+            Mehr Teilnehmende anzeigen
+          </v-btn>
         </v-list-item>
       </v-list-item-group>
     </v-list>
@@ -108,6 +113,7 @@ export default {
     valid: true,
     isLoading: false,
     items: [],
+    itemPreview: true,
   }),
   props: {
     value: {
@@ -127,6 +133,12 @@ export default {
     },
   },
   computed: {
+    listItems() {
+      if (this.itemPreview) {
+        return this.items.slice(0, 5);
+      }
+      return this.items;
+    },
     isDev() {
       return process.env.VUE_APP_ENV === 'DEV';
     },
@@ -155,7 +167,7 @@ export default {
       this.dialogMeta.listDisplay.forEach((field, i) => {
         if (i === 0) {
           template += ` ${item[field]}`;
-        } else {
+        } else if ((item[field] !== '' && typeof item[field] === 'string') || item[field].length) {
           template += ` - ${item[field]}`;
         }
       });

@@ -12,7 +12,7 @@
     @saving="onSaving"
   >
     <template v-slot:header>
-      <p>Bitte trage den Modultest ein.</p>
+      <p>Bitte trage den Modultext ein.</p>
     </template>
 
     <template v-slot:main>

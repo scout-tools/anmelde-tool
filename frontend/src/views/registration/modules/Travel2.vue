@@ -12,7 +12,9 @@
     @saving="onSaving"
   >
     <template v-slot:header>
-      <p>Wann und wie werdet ihr voraussichtlich an ankommen?</p>
+      <p>Bitte trage hier ein wann und wie deine Gruppe zur Veranstaltung anreisen werdet.
+        Du kannst dazu alle Personen auf einmal eintragen oder deine Teilnehmenden aufteilen.
+        Bitte achte darauf, dass am Ende alle deine Teilnehmeden aufteilt sind.</p>
     </template>
 
     <template v-slot:main>
@@ -222,52 +224,14 @@ export default {
       this.data = data;
       this.$v.$touch();
     },
-    onNextStep(force) {
+    onNextStep() {
       this.saving = true;
-      const promises = [];
       this.validate();
       if (!this.valid) {
         this.saving = false;
         return;
       }
-      this.moduleData.forEach((moduleItem) => {
-        const getAtt = this.attributes.filter(
-          (att) => att.templateId === moduleItem.attribute.id,
-        );
-        if (getAtt.length > 0) {
-          if (
-            moduleItem && moduleItem.attribute.resourcetype === 'TravelAttribute'
-          ) {
-            promises.push(
-              axios.put(
-                `${process.env.VUE_APP_API}/${this.path}${getAtt[0].id}/`,
-                {
-                  timeField: this.data.time,
-                  typeField: this.data.vehicle,
-                },
-              ),
-            );
-          }
-        } else {
-          if (moduleItem && moduleItem.attribute.resourcetype === 'TravelAttribute') { //eslint-disable-line
-            promises.push(
-              axios.post(`${process.env.VUE_APP_API}/${this.path}`, {
-                templateId: moduleItem.attribute.id,
-                timeField: this.data.time,
-                typeField: this.data.vehicle,
-                resourcetype: moduleItem.attribute.resourcetype,
-              }),
-            );
-          }
-        }
-      });
-      if (promises.length > 0 || force) {
-        Promise.all(promises).then(() => {
-          this.$emit('nextStep');
-        });
-      } else {
-        this.$emit('nextStep');
-      }
+      this.$emit('nextStep');
     },
     editParticipant(item) {
       this.$refs.createModal.openDialogEdit(item);
@@ -276,7 +240,8 @@ export default {
       this.$refs.createModal.openDialog();
     },
     onRefresh() {
-      this.loadData();
+      this.isLoading = true;
+      setTimeout(() => this.loadData(), 100);
     },
     deleteParticipant(item) {
       this.$refs.deleteModal.show(item);
