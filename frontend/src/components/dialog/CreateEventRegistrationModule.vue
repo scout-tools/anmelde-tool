@@ -53,6 +53,7 @@
 
 <script>
 import axios from 'axios';
+import { maxLength } from 'vuelidate/lib/validators';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import AttributeList from '@/components/dialog/attributeList/Main.vue';
 import BaseField from '@/components/common/BaseField.vue';
@@ -90,7 +91,13 @@ export default {
       },
     ],
   }),
-  validations: {},
+  validations: {
+    data: {
+      overwriteDescription: {
+        maxLength: maxLength(10000),
+      },
+    },
+  },
 
   computed: {},
   methods: {
@@ -164,8 +171,12 @@ export default {
           this.onDescriptionSave();
         } catch (e) {
           console.log(e);
+          this.errorText = 'Fehler beim Erstellen des Modules';
           this.showError = true;
         }
+      } else {
+        this.errorText = 'Feld ist zu lang.';
+        this.showError = true;
       }
     },
   },
