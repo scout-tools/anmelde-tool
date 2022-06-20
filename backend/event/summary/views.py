@@ -242,12 +242,13 @@ class EmailResponsiblePersonsViewSet(mixins.ListModelMixin, viewsets.GenericView
         only_admin = self.request.query_params.get('only-admins', False)
         event: event_models.Event = event_models.Event.objects.filter(id=event_id).first()
 
-        admin_groups: QuerySet[User] = event.keycloak_admin_path.user_set.exclude(email__exact='')
-        internal: QuerySet[User] = event.responsible_persons.exclude(email__exact='')
+        all_users: QuerySet[User] = event.responsible_persons.exclude(email__exact='')
 
-        all_users = admin_groups | internal
+        if event.keycloak_admin_path:
+            admin_groups: QuerySet[User] = event.keycloak_admin_path.user_set.exclude(email__exact='')
+            all_users = admin_groups | all_users
 
-        if not only_admin:
+        if not only_admin and event.keycloak_path:
             normal_groups: QuerySet[User] = event.keycloak_path.user_set.exclude(email__exact='')
             all_users = all_users | normal_groups
 
