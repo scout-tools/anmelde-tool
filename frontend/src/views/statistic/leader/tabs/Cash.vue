@@ -52,6 +52,11 @@
         <template v-slot:expanded-item="{ item }">
           <td :colspan="headers.length">
             <v-list-item>
+              <v-list-item-title class="justify-center text-center">
+                Referenz Id: <span><strong> {{ item.refId }} </strong></span>
+              </v-list-item-title>
+            </v-list-item>
+            <v-list-item>
               <v-list-item-content>
                 <v-data-table
                   :headers="headersBookingOptions"
@@ -169,6 +174,10 @@ export default {
       {
         text: 'Datum',
         value: 'createdAt',
+      },
+      {
+        text: 'Referenz Id',
+        value: 'refId',
       },
       {
         text: 'Bund',
