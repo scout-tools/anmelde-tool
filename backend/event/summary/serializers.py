@@ -202,6 +202,7 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
     scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)
     booking_options = serializers.SerializerMethodField()
     cashincome_set = cash_serializers.CashIncomeSerializer(many=True, read_only=True)
+    ref_id = serializers.SerializerMethodField()
 
     class Meta:
         model = event_models.Registration
@@ -216,7 +217,8 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
                   'created_at',
                   'updated_at',
                   'booking_options',
-                  'cashincome_set')
+                  'cashincome_set',
+                  'ref_id')
 
     def get_participant_count(self, registration: event_models.Registration) -> int:
         return registration.registrationparticipant_set.count()
@@ -239,6 +241,11 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
             .values(booking_options=F('booking_option__name')) \
             .annotate(sum=Count('booking_option__name')) \
             .annotate(price=Sum('booking_option__price'))
+
+    def get_ref_id(self, registration: event_models.Registration) -> str:
+        return f'{registration.event.name.replace(" ", "")[:10]}' \
+               f'-{registration.scout_organisation.name.replace(" ", "")[:10]}' \
+               f'-{str(registration.created_at.timestamp())[:10]}'
 
 
 class CashSummarySerializer(serializers.ModelSerializer):
