@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.utils import timezone
 from rest_framework import serializers
 
@@ -160,6 +160,8 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     allow_statistic = serializers.SerializerMethodField()
     allow_statistic_admin = serializers.SerializerMethodField()
     allow_statistic_leader = serializers.SerializerMethodField()
+    single_registration_level = basic_serializers.ScoutOrgaLevelSerializer(many=False, read_only=True)
+    group_registration_level = basic_serializers.ScoutOrgaLevelSerializer(many=False, read_only=True)
 
     class Meta:
         model = event_models.Event
@@ -181,6 +183,8 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'allow_statistic_leader',
             'icon',
             'theme',
+            'single_registration_level',
+            'group_registration_level'
         )
 
     def get_allow_statistic(self, obj: event_models.Event) -> bool:
@@ -206,8 +210,16 @@ class EventOverviewSerializer(serializers.ModelSerializer):
         allow_edit_group_reg = False
         allow_edit_single_reg = False
 
+        user_orga = user.userextended.scout_organisation
+        orga_filter = Q(scout_organisation=user_orga)
+
+        if user_orga.parent:
+            orga_filter |= Q(scout_organisation=user_orga.parent)
+            if user_orga.parent.parent:
+                orga_filter |= Q(scout_organisation=user_orga.parent.parent)
+
         existing_group: QuerySet = obj.registration_set. \
-            filter(single=False, scout_organisation=user.userextended.scout_organisation)
+            filter(orga_filter, single=False)
         group: QuerySet[event_models.Registration] = existing_group. \
             filter(responsible_persons__in=[user.id])
         single: QuerySet[event_models.Registration] = obj.registration_set. \
