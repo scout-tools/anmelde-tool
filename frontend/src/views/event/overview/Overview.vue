@@ -367,14 +367,14 @@ export default {
       );
     },
     onSingleRegClicked(item) {
-      this.openEventCodeModal(item, true);
+      this.openEventCodeModal(item, true, item.singleRegistrationLevel);
     },
     onGroupRegClicked(item) {
-      this.openEventCodeModal(item, false);
+      this.openEventCodeModal(item, false, item.groupRegistrationLevel);
     },
-    openEventCodeModal(item, single) {
+    openEventCodeModal(item, single, registrationLevel) {
       this.setTheme(item.theme);
-      this.$refs.eventCodeModal.show(item, single);
+      this.$refs.eventCodeModal.show(item, single, registrationLevel);
     },
     onAddResponsablePerson(item) {
       this.$refs.dialogAddResponsablePerson.open(item);
