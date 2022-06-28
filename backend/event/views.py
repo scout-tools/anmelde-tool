@@ -350,28 +350,13 @@ class ScoutHierarchyViewSet(mixins.CreateModelMixin,
                             mixins.ListModelMixin,
                             mixins.RetrieveModelMixin,
                             viewsets.GenericViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [event_permissions.IsStaffOrReadOnly]
     serializer_class = basic_serializers.ScoutHierarchySerializer
 
     def create(self, request, *args, **kwargs):
-        if self.request.user.userextended.scout_organisation.level.id < 5:
-            raise event_api_exceptions.ScoutHierarchyAtThisLevelNotPossible
-
-        if self.request.user.userextended.scout_organisation.level == 6:
-            scout_organisation = self.request.user.userextended.scout_organisation.parent
-        else:
-            scout_organisation = self.request.user.userextended.scout_organisation
-
-        name = request.data.get('name', None)
-        if name:
-            exists = basic_models.ScoutHierarchy \
-                .objects.filter(level=6, parent_id=scout_organisation.id, name__iexact=name).exists()
-            if exists:
-                raise event_api_exceptions.ScoutHierarchyAlreadyExist
-
         request.data['level'] = 6
-        request.data['zip_code'] = scout_organisation.zip_code.id
-        request.data['parent'] = scout_organisation.id
+        request.data['zip_code'] = self.request.user.userextended.scout_organisation.zip_code.id
+        request.data['parent'] = self.request.user.userextended.scout_organisation.id
 
         return super().create(request, *args, **kwargs)
 
@@ -379,21 +364,14 @@ class ScoutHierarchyViewSet(mixins.CreateModelMixin,
         level = int(self.request.query_params.get('level', 5))
         if level == 5:
             return basic_models.ScoutHierarchy.objects.filter(
-                id=self.request.user.userextended.scout_organisation.id,
-                level=5)
+                id=self.request.user.userextended.scout_organisation.id)
         elif level in {2, 3, 4}:
-            user_orga = self.request.user.userextended.scout_organisation
-            orga_filter = Q(id=user_orga.id)
-
-            if user_orga.parent:
-                orga_filter |= Q(id=user_orga.parent.id)
-                if user_orga.parent.parent:
-                    orga_filter |= Q(id=user_orga.parent.parent.id)
-
-            return basic_models.ScoutHierarchy.objects.filter(orga_filter, level=level)
+            return basic_models.ScoutHierarchy.objects.filter(
+                (Q(id=self.request.user.userextended.scout_organisation.id)
+                 | Q(id=self.request.user.userextended.scout_organisation.parent.id)
+                 | Q(id=self.request.user.userextended.scout_organisation.parent.parent.id)),
+                level=level)
         elif level == 6:
             return basic_models.ScoutHierarchy.objects.filter(
                 level=6,
                 parent_id=self.request.user.userextended.scout_organisation.id)
-        else:
-            return []

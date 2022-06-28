@@ -29,8 +29,7 @@
                       :field="field"
                       v-model="data[field.techName]"
                       :valdiationObj="$v"
-                      @keydownEnter="onConfirmClicked"
-                      :ref="`baseField_${i}`"/>
+                      @keydownEnter="onConfirmClicked"/>
                 </template>
                 <v-tooltip bottom v-if="registrationLevelId === 6">
                   <template v-slot:activator="{ on, attrs }">
@@ -45,7 +44,7 @@
                       </v-icon>
                     </v-btn>
                   </template>
-                  <span>neue Gruppe hinzufügen</span>
+                  <span>Sippe/Gruppe Hinzufügen</span>
                 </v-tooltip>
               </v-row>
             </v-container>
@@ -105,10 +104,9 @@ export default {
       this.single = single;
       this.item = item;
       this.dialog = true;
-      this.refreshBaseFields();
     },
     cancel() {
-      this.$v.$reset();
+      console.log('test');
       this.registrationLevel = null;
       this.item = null;
       this.showError = false;
@@ -147,17 +145,8 @@ export default {
     onCreateScoutHierarchyClicked() {
       this.$refs.createScoutHierarchyModal.show();
     },
-    onCreateScoutHierarchyCreated(value) {
-      this.data.scoutOrganisation = value.id;
-      this.refreshBaseFields();
-    },
-    refreshBaseFields() {
-      this.$nextTick(() => {
-        for (let i = 0; i < this.fields.length; i += 1) {
-          const ref = this.$refs[`baseField_${i}`];
-          ref[0]?.refresh();
-        }
-      });
+    onCreateScoutHierarchyCreated() {
+      // refresh basefield
     },
   },
   validations: {
@@ -208,10 +197,8 @@ export default {
           lookupListDisplay: ['name'],
           mandatory: true,
           fieldType: 'refDropdown',
-          noDataText: 'Es sind keine Gruppen verfügbar, bitte lege diese an.',
           default: '',
           cols: this.registrationLevelId === 6 ? 10 : 12,
-          value: this.data.scoutOrganisation,
         },
       ];
     },
