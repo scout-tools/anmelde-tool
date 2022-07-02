@@ -30,23 +30,6 @@ export default {
           this.loading = false;
         });
     },
-    getLookup(lookupPath) {
-      this.loading = true;
-      this.getSimpleService(lookupPath)
-        .then((res) => {
-          this.lookupList = res.data;
-        })
-        .catch(() => {
-          this.$root.globalSnackbar.show({
-            message:
-              'Leider ist ein Problem beim runterladen des Events aufgetreten, bitte probiere es später nocheinmal.',
-            color: 'error',
-          });
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
     async getZipCodeMapping(searchString) {
       const path = `${process.env.VUE_APP_API}/basic/zip-code/?zip_city=${searchString}`;
       const response = await axios.get(path);

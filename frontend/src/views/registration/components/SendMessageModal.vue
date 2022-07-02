@@ -6,8 +6,7 @@
           <v-card-title class="headline">Nachricht senden</v-card-title>
           <v-card-text>
             Nachricht an die Lagerleitung senden.
-            <v-textarea       solo
-      auto-grow>
+            <v-textarea solo auto-grow>
             </v-textarea>
           </v-card-text>
 

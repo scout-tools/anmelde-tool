@@ -44,7 +44,7 @@
 import axios from 'axios';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import BaseField from '@/components/common/BaseField.vue';
-import { required } from 'vuelidate/lib/validators';
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 
 export default {
   data: () => ({
@@ -67,7 +67,6 @@ export default {
       this.dialog = true;
     },
     cancel() {
-      console.log('test');
       this.showError = false;
       this.errorMessage = '';
       this.dialog = false;
@@ -100,6 +99,13 @@ export default {
     data: {
       name: {
         required,
+        requiredPrefix(val) {
+          return val.startsWith('Meute')
+              || val.startsWith('Sippe')
+              || val.startsWith('Roverrunde');
+        },
+        minLength: minLength(1),
+        maxLength: maxLength(50),
       },
     },
   },
