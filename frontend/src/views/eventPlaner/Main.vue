@@ -18,11 +18,16 @@
                 <v-expansion-panel-header>
                   <v-list-item :key="item.name">
                     <v-list-item-avatar>
-                      <v-icon :class="'primary'" dark v-text="'mdi-tent'" />
+                      <v-icon :class="'primary'" dark>
+                        mdi-tent
+                      </v-icon>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                      <v-list-item-title v-text="item.name"></v-list-item-title>
-                      <v-list-item-subtitle v-text="item.description">
+                      <v-list-item-title>
+                        {{ item.name }}
+                      </v-list-item-title>
+                      <v-list-item-subtitle>
+                        {{ item.description }}
                       </v-list-item-subtitle>
 
                       <v-list-item-subtitle>
@@ -115,7 +120,7 @@ import PreEventCreation from '@/components/dialog/PreEventCreation.vue';
 import EventDeleteModal from '@/components/dialog/EventDeleteModal.vue';
 
 export default {
-  name: 'Main',
+  name: 'EventPlanerMain',
   mixins: [apiCallsMixin],
   components: {
     PreEventCreation,

@@ -11,7 +11,9 @@
           <v-icon color="black" dark>{{ getTypeIcon(item.typeField) }}</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title v-text="getText(item)"></v-list-item-title>
+          <v-list-item-title>
+            {{ getText(item) }}
+          </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item v-if="!items.length">
