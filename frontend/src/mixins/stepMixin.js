@@ -108,6 +108,9 @@ export default {
       if (valObj.minYearAge === false) {
         errors.push('Bisschen alt, nich?');
       }
+      if (valObj.requiredPrefix === false) {
+        errors.push('Der Name muss mit Meute, Sippe, Roverrunde oder Horst beginnen!');
+      }
       if (valObj.between === false) {
         const {
           min,

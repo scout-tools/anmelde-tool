@@ -44,7 +44,7 @@
                       </v-icon>
                     </v-btn>
                   </template>
-                  <span>Sippe/Gruppe Hinzufügen</span>
+                  <span>Gruppe Hinzufügen</span>
                 </v-tooltip>
               </v-row>
             </v-container>
@@ -106,7 +106,7 @@ export default {
       this.dialog = true;
     },
     cancel() {
-      console.log('test');
+      this.$v.$reset();
       this.registrationLevel = null;
       this.item = null;
       this.showError = false;
@@ -199,6 +199,7 @@ export default {
           fieldType: 'refDropdown',
           default: '',
           cols: this.registrationLevelId === 6 ? 10 : 12,
+          disabled: this.registrationLevel === 6,
         },
       ];
     },

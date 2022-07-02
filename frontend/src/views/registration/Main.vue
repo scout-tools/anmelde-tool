@@ -15,9 +15,9 @@
                       Hast du keinen Code bekommen? Schaue nochmal in der
                       Einladung. Falls du nichts findest, melde dich beim
                       Veranstalter, deiner Bundesführung oder bei:
-                      <a href="mailto:support@anmelde-tool.de"
-                        >support@anmelde-tool.de</a
-                      >
+                      <a href="mailto:support@anmelde-tool.de">
+                        support@anmelde-tool.de
+                      </a>
                     </p>
                     <p class="mt-4">
                       Bevor deine Anmeldung verbindlich ist, musst du sie im
@@ -28,8 +28,8 @@
                     </p>
                   </div>
                   <v-subheader class="ma-0">
-                    <v-icon class="ma-2" color="error"
-                      >mdi-alert-circle
+                    <v-icon class="ma-2" color="error">
+                      mdi-alert-circle
                     </v-icon>
                     Für diese Fahrt ist die Handynummer Pflicht. Bitte im Profil hinzufügen.
                   </v-subheader>
@@ -39,8 +39,7 @@
                         :key="i"
                         :field="field"
                         v-model="data[field.techName]"
-                        :valdiationObj="$v"
-                      />
+                        :valdiationObj="$v"/>
                     </template>
                   </v-row>
                 </v-container>
@@ -195,14 +194,12 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      this.createRegestration();
+      this.createRegistration();
     },
     setData() {
       this.data.name = this.userinfo.name;
-
       this.loadData();
     },
-
     loadData() {
       this.loading = true;
       Promise.all([this.getPersonalData(), this.getEvent(this.eventId)])
@@ -217,7 +214,7 @@ export default {
           this.loading = false;
         });
     },
-    createRegestration() {
+    createRegistration() {
       axios
         .post(`${this.API_URL}/event/registration/`, {
           eventCode: this.data.invitationCode,
