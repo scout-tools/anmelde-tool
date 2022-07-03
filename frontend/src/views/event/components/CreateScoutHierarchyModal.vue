@@ -84,14 +84,12 @@ export default {
           name: this.data.name,
         })
         .then((response) => {
-          console.log(response);
-          this.$emit('created');
+          this.$emit('created', response.data);
           this.cancel();
         })
         .catch((error) => {
-          console.log(error);
           this.showError = true;
-          this.errorMessage = error.response.data;
+          this.errorMessage = error.response.data.detail;
         });
     },
   },
