@@ -45,7 +45,7 @@
                       </v-icon>
                     </v-btn>
                   </template>
-                  <span>Gruppe Hinzufügen</span>
+                  <span>neue Gruppe hinzufügen</span>
                 </v-tooltip>
               </v-row>
             </v-container>

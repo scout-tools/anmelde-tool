@@ -582,7 +582,7 @@ export default {
         .then((res) => {
           this.lookupList = res.data;
           if (!this.localValue && this.lookupList && this.lookupList.length > 0) {
-            this.localValue = this.lookupList[0];
+            this.localValue = this.lookupList[0]; // eslint-disable-line
           }
         })
         .catch((err) => {
