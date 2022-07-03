@@ -131,8 +131,7 @@
         @input="onComboInputChanged"
         item-value="name"
         :item-text="getItemText"
-        :error-messages="onErrorMessageChange(field.techName)"
-    >
+        :error-messages="onErrorMessageChange(field.techName)">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -465,6 +464,7 @@ export default {
       tooltip: null,
       cols: 6,
       counter: false,
+      disabled: false,
     },
     value: {
       default: null,
@@ -580,11 +580,11 @@ export default {
         .then((res) => {
           this.lookupList = res.data;
           if (!this.localValue && this.lookupList && this.lookupList.length > 0) {
-            this.localValue = this.lookupList.first();
+            this.localValue = this.lookupList[0];
           }
         })
         .catch((err) => {
-          console.log(err.response);
+          console.log(err);
           this.$root.globalSnackbar.show({
             message: 'Leider ist ein Problem beim runterladen der Daten aufgetreten, '
                   + 'bitte probiere es später nocheinmal.',
@@ -674,36 +674,36 @@ export default {
       });
       return template;
     },
-  },
-  created() {
-    this.localValue = this.value;
-    if (
+    refresh() {
+      this.localValue = this.value;
+      if (
         this.field.fieldType === 'refDropdown' || // eslint-disable-line
         this.field.fieldType === 'enumCombo' || // eslint-disable-line
         this.field.fieldType === 'refComboSingle' || // eslint-disable-line
         this.field.fieldType === 'refCombo'
-    ) {
-      this.getData();
-    }
-    if (!this.localValue) return;
+      ) {
+        this.getData();
+      }
+      if (!this.localValue) return;
 
-    if (this.field.fieldType === 'zipField') {
-      this.callSingleZipCode(this.localValue)
-        .then((result) => {
-          this.lookupList = result;
-          this.$forceUpdate();
-        });
-    }
-    if (this.field.fieldType === 'responsablesField') {
-      this.callSingleResponsible(this.localValue)
-        .then((result) => {
-          this.lookupList = result;
-          this.$forceUpdate();
-        });
-    }
+      if (this.field.fieldType === 'zipField') {
+        this.callSingleZipCode(this.localValue)
+          .then((result) => {
+            this.lookupList = result;
+            this.$forceUpdate();
+          });
+      }
+      if (this.field.fieldType === 'responsablesField') {
+        this.callSingleResponsible(this.localValue)
+          .then((result) => {
+            this.lookupList = result;
+            this.$forceUpdate();
+          });
+      }
+    },
+  },
+  created() {
+    this.refresh();
   },
 };
 </script>
-
-<style scoped>
-</style>

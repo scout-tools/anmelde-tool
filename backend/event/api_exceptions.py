@@ -191,3 +191,9 @@ class RegistrationNotFound(APIException):
         if detail is None:
             detail = force_str(self.default_detail).format(registration=registration)
         super().__init__(detail, code)
+
+
+class ScoutHierarchyAlreadyExist(APIException):
+    status_code = 409
+    default_detail = 'Diese Gruppe exestiert bereits.'
+    default_code = 'already_exits'

@@ -29,7 +29,8 @@
                       :field="field"
                       v-model="data[field.techName]"
                       :valdiationObj="$v"
-                      @keydownEnter="onConfirmClicked"/>
+                      @keydownEnter="onConfirmClicked"
+                      :ref="`baseField_${i}`"/>
                 </template>
                 <v-tooltip bottom v-if="registrationLevelId === 6">
                   <template v-slot:activator="{ on, attrs }">
@@ -104,6 +105,7 @@ export default {
       this.single = single;
       this.item = item;
       this.dialog = true;
+      this.refreshBaseFields();
     },
     cancel() {
       this.$v.$reset();
@@ -145,8 +147,17 @@ export default {
     onCreateScoutHierarchyClicked() {
       this.$refs.createScoutHierarchyModal.show();
     },
-    onCreateScoutHierarchyCreated() {
-      // refresh basefield
+    onCreateScoutHierarchyCreated(value) {
+      this.data.scoutOrganisation = value.id;
+      this.refreshBaseFields();
+    },
+    refreshBaseFields() {
+      this.$nextTick(() => {
+        for (let i = 0; i < this.fields.length; i += 1) {
+          const ref = this.$refs[`baseField_${i}`];
+          ref[0]?.refresh();
+        }
+      });
     },
   },
   validations: {
@@ -199,7 +210,7 @@ export default {
           fieldType: 'refDropdown',
           default: '',
           cols: this.registrationLevelId === 6 ? 10 : 12,
-          disabled: this.registrationLevel === 6,
+          value: this.data.scoutOrganisation,
         },
       ];
     },

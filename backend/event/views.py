@@ -350,10 +350,19 @@ class ScoutHierarchyViewSet(mixins.CreateModelMixin,
                             mixins.ListModelMixin,
                             mixins.RetrieveModelMixin,
                             viewsets.GenericViewSet):
-    # permission_classes = [event_permissions.IsStaffOrReadOnly]
+    permission_classes = [IsAuthenticated]
     serializer_class = basic_serializers.ScoutHierarchySerializer
 
     def create(self, request, *args, **kwargs):
+        name = request.data.get('name', None)
+        if name:
+            exists = basic_models.ScoutHierarchy \
+                .objects.filter(level=6,
+                                parent_id=self.request.user.userextended.scout_organisation.id,
+                                name__iexact=name).exists()
+            if exists:
+                raise event_api_exceptions.ScoutHierarchyAlreadyExist
+
         request.data['level'] = 6
         request.data['zip_code'] = self.request.user.userextended.scout_organisation.zip_code.id
         request.data['parent'] = self.request.user.userextended.scout_organisation.id
@@ -375,3 +384,5 @@ class ScoutHierarchyViewSet(mixins.CreateModelMixin,
             return basic_models.ScoutHierarchy.objects.filter(
                 level=6,
                 parent_id=self.request.user.userextended.scout_organisation.id)
+        else:
+            return []
