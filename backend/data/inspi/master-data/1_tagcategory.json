@@ -1,0 +1,107 @@
+[
+  {
+    "model": "inspi.tagcategory",
+    "pk": 1,
+    "fields": {
+      "id": 1,
+      "name": "(Jahres-)Zeiten",
+      "description": "Beinhaltet die 4 Jahreszeiten",
+      "is_public": true,
+      "is_header": true,
+      "sorting": 4,
+      "is_event_overview": 0,
+      "icon": "mdi-weather-pouring",
+      "is_mandatory": 1
+    }
+  },
+  {
+    "model": "inspi.tagcategory",
+    "pk": 2,
+    "fields": {
+      "id": 2,
+      "name": "Ort",
+      "description": "",
+      "is_public": true,
+      "is_header": true,
+      "sorting": 3,
+      "is_event_overview": 1,
+      "icon": "mdi-home",
+      "is_mandatory": 1
+    }
+  },
+  {
+    "model": "inspi.tagcategory",
+    "pk": 3,
+    "fields": {
+      "id": 3,
+      "name": "Stufe",
+      "description": "",
+      "is_public": true,
+      "is_header": true,
+      "sorting": 2,
+      "is_event_overview": 0,
+      "icon": "mdi-account-group",
+      "is_mandatory": 1
+    }
+  },
+  {
+    "model": "inspi.tagcategory",
+    "pk": 4,
+    "fields": {
+      "id": 4,
+      "name": "Art",
+      "description": "",
+      "is_public": true,
+      "is_header": true,
+      "sorting": 1,
+      "is_event_overview": 0,
+      "icon": "mdi-format-list-text",
+      "is_mandatory": 1
+    }
+  },
+  {
+    "model": "inspi.tagcategory",
+    "pk": 5,
+    "fields": {
+      "id": 5,
+      "name": "Aktuelles",
+      "description": "",
+      "is_public": true,
+      "is_header": true,
+      "sorting": 5,
+      "is_event_overview": 1,
+      "icon": "mdi-newspaper",
+      "is_mandatory": 0
+    }
+  },
+  {
+    "model": "inspi.tagcategory",
+    "pk": 6,
+    "fields": {
+      "id": 9,
+      "name": "Themen",
+      "description": "",
+      "is_public": true,
+      "is_header": false,
+      "sorting": 6,
+      "is_event_overview": 1,
+      "icon": "mdi-soccer",
+      "is_mandatory": 0
+    }
+  },
+  {
+    "model": "inspi.tagcategory",
+    "pk": 7,
+    "fields": {
+      "id": 7,
+      "name": "Admin",
+      "description": "",
+      "is_public": false,
+      "is_header": true,
+      "sorting": 7,
+      "is_event_overview": 0,
+      "icon": "mdi-key-variant",
+      "is_mandatory": 0
+    }
+  }
+]

@@ -1,0 +1,90 @@
+[
+    {
+      "model": "inspi.messagetype",
+      "pk": 1,
+      "fields": {
+        "id": 1,
+        "name": "Heimabend Idee",
+        "is_public": true,
+        "is_comment": false,
+        "description": ""
+      }
+    },
+    {
+      "model": "inspi.messagetype",
+      "pk": 2,
+      "fields": {
+        "id": 2,
+        "name": "Verbesserungsvorschlag",
+        "is_public": true,
+        "is_comment": true,
+        "description": ""
+      }
+    },
+    {
+      "model": "inspi.messagetype",
+      "pk": 3,
+      "fields": {
+        "id": 3,
+        "name": "Fehlermeldung",
+        "is_public": true,
+        "is_comment": false,
+        "description": ""
+      }
+    },
+    {
+      "model": "inspi.messagetype",
+      "pk": 4,
+      "fields": {
+        "id": 4,
+        "name": "Ich möchte mitmachen",
+        "is_public": true,
+        "is_comment": false,
+        "description": ""
+      }
+    },
+    {
+      "model": "inspi.messagetype",
+      "pk": 5,
+      "fields": {
+        "id": 5,
+        "name": "Kontakt",
+        "is_public": true,
+        "is_comment": false,
+        "description": ""
+      }
+    },
+    {
+      "model": "inspi.messagetype",
+      "pk": 6,
+      "fields": {
+        "id": 6,
+        "name": "Kommentar",
+        "is_public": true,
+        "is_comment": true,
+        "description": ""
+      }
+    },
+    {
+      "model": "inspi.messagetype",
+      "pk": 7,
+      "fields": {
+        "id": 7,
+        "name": "Rechtsschreibfehler",
+        "is_public": true,
+        "is_comment": true,
+        "description": ""
+      }
+    },
+    {
+        "model": "inspi.messagetype",
+        "pk": 8,
+        "fields": {
+          "id": 8,
+          "name": "Sonstiges",
+          "is_public": true,
+          "is_comment": true,
+          "description": ""
+        }
+      }
+  ]

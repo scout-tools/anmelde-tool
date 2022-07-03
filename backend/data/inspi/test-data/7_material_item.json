@@ -1,0 +1,6746 @@
+[
+    {
+      "pk": 1,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 32,
+        "material_name_id": 42,
+        "material_unit_id": 1,
+        "id": 42,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 2,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 32,
+        "material_name_id": 43,
+        "material_unit_id": 1,
+        "id": 43,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 3,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 32,
+        "material_name_id": 44,
+        "material_unit_id": 1,
+        "id": 44,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 4,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 32,
+        "material_name_id": 45,
+        "material_unit_id": 1,
+        "id": 45,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 5,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 12,
+        "material_name_id": 37,
+        "material_unit_id": 1,
+        "id": 37,
+        "quantity": 10
+      }
+    },
+    {
+      "pk": 6,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 64,
+        "material_name_id": 108,
+        "material_unit_id": 1,
+        "id": 108,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 7,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 5,
+        "material_name_id": 19,
+        "material_unit_id": 1,
+        "id": 19,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 8,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 5,
+        "material_name_id": 20,
+        "material_unit_id": 1,
+        "id": 20,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 9,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 5,
+        "material_name_id": 21,
+        "material_unit_id": 1,
+        "id": 21,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 10,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 56,
+        "material_name_id": 78,
+        "material_unit_id": 1,
+        "id": 78,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 11,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 5,
+        "material_name_id": 22,
+        "material_unit_id": 1,
+        "id": 22,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 12,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 32,
+        "material_name_id": 41,
+        "material_unit_id": 1,
+        "id": 41,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 13,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 59,
+        "material_name_id": 84,
+        "material_unit_id": 1,
+        "id": 84,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 14,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 59,
+        "material_name_id": 86,
+        "material_unit_id": 1,
+        "id": 86,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 15,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 59,
+        "material_name_id": 87,
+        "material_unit_id": 1,
+        "id": 87,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 16,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 45,
+        "material_name_id": 56,
+        "material_unit_id": 1,
+        "id": 56,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 17,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 61,
+        "material_name_id": 88,
+        "material_unit_id": 1,
+        "id": 88,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 18,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 61,
+        "material_name_id": 89,
+        "material_unit_id": 1,
+        "id": 89,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 19,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 61,
+        "material_name_id": 90,
+        "material_unit_id": 1,
+        "id": 90,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 20,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 61,
+        "material_name_id": 91,
+        "material_unit_id": 1,
+        "id": 91,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 21,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 61,
+        "material_name_id": 92,
+        "material_unit_id": 1,
+        "id": 92,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 22,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 61,
+        "material_name_id": 93,
+        "material_unit_id": 1,
+        "id": 93,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 23,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 61,
+        "material_name_id": 94,
+        "material_unit_id": 1,
+        "id": 94,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 24,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 61,
+        "material_name_id": 95,
+        "material_unit_id": 1,
+        "id": 95,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 25,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 63,
+        "material_name_id": 104,
+        "material_unit_id": 1,
+        "id": 104,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 26,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 64,
+        "material_name_id": 109,
+        "material_unit_id": 1,
+        "id": 109,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 27,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 63,
+        "material_name_id": 102,
+        "material_unit_id": 1,
+        "id": 102,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 28,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 11,
+        "material_name_id": 34,
+        "material_unit_id": 1,
+        "id": 34,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 29,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 11,
+        "material_name_id": 32,
+        "material_unit_id": 1,
+        "id": 35,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 30,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 11,
+        "material_name_id": 36,
+        "material_unit_id": 1,
+        "id": 36,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 31,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 62,
+        "material_name_id": 96,
+        "material_unit_id": 1,
+        "id": 96,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 32,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 8,
+        "material_name_id": 26,
+        "material_unit_id": 1,
+        "id": 26,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 33,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 64,
+        "material_name_id": 106,
+        "material_unit_id": 1,
+        "id": 106,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 34,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 64,
+        "material_name_id": 107,
+        "material_unit_id": 1,
+        "id": 107,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 35,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 51,
+        "material_name_id": 68,
+        "material_unit_id": 1,
+        "id": 68,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 36,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 51,
+        "material_name_id": 69,
+        "material_unit_id": 1,
+        "id": 69,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 37,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 51,
+        "material_name_id": 70,
+        "material_unit_id": 1,
+        "id": 70,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 38,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 51,
+        "material_name_id": 71,
+        "material_unit_id": 1,
+        "id": 71,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 39,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 51,
+        "material_name_id": 72,
+        "material_unit_id": 1,
+        "id": 72,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 40,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 51,
+        "material_name_id": 73,
+        "material_unit_id": 1,
+        "id": 73,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 41,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 51,
+        "material_name_id": 74,
+        "material_unit_id": 1,
+        "id": 74,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 42,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 4,
+        "material_name_id": 17,
+        "material_unit_id": 1,
+        "id": 17,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 43,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 4,
+        "material_name_id": 18,
+        "material_unit_id": 1,
+        "id": 18,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 44,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 37,
+        "material_name_id": 48,
+        "material_unit_id": 1,
+        "id": 48,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 45,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 37,
+        "material_name_id": 49,
+        "material_unit_id": 1,
+        "id": 49,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 46,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 37,
+        "material_name_id": 50,
+        "material_unit_id": 1,
+        "id": 50,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 47,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 37,
+        "material_name_id": 51,
+        "material_unit_id": 1,
+        "id": 51,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 48,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 37,
+        "material_name_id": 52,
+        "material_unit_id": 1,
+        "id": 52,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 49,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 37,
+        "material_name_id": 53,
+        "material_unit_id": 1,
+        "id": 53,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 50,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 3,
+        "material_name_id": 14,
+        "material_unit_id": 1,
+        "id": 14,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 51,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 3,
+        "material_name_id": 16,
+        "material_unit_id": 1,
+        "id": 16,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 52,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 3,
+        "material_name_id": 8,
+        "material_unit_id": 1,
+        "id": 15,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 53,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 2,
+        "material_name_id": 11,
+        "material_unit_id": 1,
+        "id": 11,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 54,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 52,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 76,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 55,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 55,
+        "material_name_id": 572,
+        "material_unit_id": 1,
+        "id": 77,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 56,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 8,
+        "material_name_id": 27,
+        "material_unit_id": 1,
+        "id": 27,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 57,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 8,
+        "material_name_id": 21,
+        "material_unit_id": 1,
+        "id": 28,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 58,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 6,
+        "material_name_id": 24,
+        "material_unit_id": 1,
+        "id": 24,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 59,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 34,
+        "material_name_id": 47,
+        "material_unit_id": 1,
+        "id": 47,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 60,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 3,
+        "material_name_id": 13,
+        "material_unit_id": 1,
+        "id": 13,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 61,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 46,
+        "material_name_id": 59,
+        "material_unit_id": 1,
+        "id": 59,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 62,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 46,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 61,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 63,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 46,
+        "material_name_id": 495,
+        "material_unit_id": 1,
+        "id": 57,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 64,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 1,
+        "material_name_id": 2,
+        "material_unit_id": 1,
+        "id": 2,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 65,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 1,
+        "material_name_id": 3,
+        "material_unit_id": 1,
+        "id": 3,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 66,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 1,
+        "material_name_id": 4,
+        "material_unit_id": 1,
+        "id": 4,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 67,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 1,
+        "material_name_id": 5,
+        "material_unit_id": 1,
+        "id": 5,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 68,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 1,
+        "material_name_id": 6,
+        "material_unit_id": 1,
+        "id": 6,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 69,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 63,
+        "material_name_id": 103,
+        "material_unit_id": 1,
+        "id": 103,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 70,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 1,
+        "material_name_id": 7,
+        "material_unit_id": 1,
+        "id": 7,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 71,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 1,
+        "material_name_id": 8,
+        "material_unit_id": 1,
+        "id": 8,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 72,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 1,
+        "material_name_id": 9,
+        "material_unit_id": 1,
+        "id": 9,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 73,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 1,
+        "material_name_id": 10,
+        "material_unit_id": 1,
+        "id": 10,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 74,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 8,
+        "material_name_id": 25,
+        "material_unit_id": 1,
+        "id": 25,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 75,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 3,
+        "material_name_id": 12,
+        "material_unit_id": 1,
+        "id": 12,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 76,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 6,
+        "material_name_id": 23,
+        "material_unit_id": 1,
+        "id": 23,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 77,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 59,
+        "material_name_id": 83,
+        "material_unit_id": 1,
+        "id": 83,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 78,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 32,
+        "material_name_id": 40,
+        "material_unit_id": 1,
+        "id": 40,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 79,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 12,
+        "material_name_id": 38,
+        "material_unit_id": 1,
+        "id": 38,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 80,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 12,
+        "material_name_id": 39,
+        "material_unit_id": 1,
+        "id": 39,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 81,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 10,
+        "material_name_id": 33,
+        "material_unit_id": 1,
+        "id": 33,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 82,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 46,
+        "material_name_id": 58,
+        "material_unit_id": 1,
+        "id": 58,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 83,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 46,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 60,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 84,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 39,
+        "material_name_id": 494,
+        "material_unit_id": 1,
+        "id": 55,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 85,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 38,
+        "material_name_id": 54,
+        "material_unit_id": 1,
+        "id": 54,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 86,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 52,
+        "material_name_id": 75,
+        "material_unit_id": 1,
+        "id": 75,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 87,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 50,
+        "material_name_id": 63,
+        "material_unit_id": 1,
+        "id": 63,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 88,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 50,
+        "material_name_id": 65,
+        "material_unit_id": 1,
+        "id": 65,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 89,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 50,
+        "material_name_id": 66,
+        "material_unit_id": 1,
+        "id": 66,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 90,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 50,
+        "material_name_id": 67,
+        "material_unit_id": 1,
+        "id": 67,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 91,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 47,
+        "material_name_id": 62,
+        "material_unit_id": 1,
+        "id": 62,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 92,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 65,
+        "material_name_id": 110,
+        "material_unit_id": 1,
+        "id": 110,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 93,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 65,
+        "material_name_id": 111,
+        "material_unit_id": 1,
+        "id": 111,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 94,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 65,
+        "material_name_id": 112,
+        "material_unit_id": 1,
+        "id": 112,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 95,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 65,
+        "material_name_id": 113,
+        "material_unit_id": 1,
+        "id": 113,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 96,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 65,
+        "material_name_id": 114,
+        "material_unit_id": 1,
+        "id": 114,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 97,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 64,
+        "material_name_id": 105,
+        "material_unit_id": 1,
+        "id": 105,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 98,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 62,
+        "material_name_id": 97,
+        "material_unit_id": 1,
+        "id": 97,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 99,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 62,
+        "material_name_id": 8,
+        "material_unit_id": 1,
+        "id": 98,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 100,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 62,
+        "material_name_id": 99,
+        "material_unit_id": 1,
+        "id": 99,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 101,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 62,
+        "material_name_id": 100,
+        "material_unit_id": 1,
+        "id": 100,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 102,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 62,
+        "material_name_id": 101,
+        "material_unit_id": 1,
+        "id": 101,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 103,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 58,
+        "material_name_id": 79,
+        "material_unit_id": 1,
+        "id": 79,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 104,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 58,
+        "material_name_id": 81,
+        "material_unit_id": 1,
+        "id": 81,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 105,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 67,
+        "material_name_id": 119,
+        "material_unit_id": 1,
+        "id": 119,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 106,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 67,
+        "material_name_id": 120,
+        "material_unit_id": 1,
+        "id": 120,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 107,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 67,
+        "material_name_id": 121,
+        "material_unit_id": 1,
+        "id": 121,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 108,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 66,
+        "material_name_id": 573,
+        "material_unit_id": 1,
+        "id": 115,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 109,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 66,
+        "material_name_id": 116,
+        "material_unit_id": 1,
+        "id": 116,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 110,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 66,
+        "material_name_id": 117,
+        "material_unit_id": 1,
+        "id": 117,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 111,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 66,
+        "material_name_id": 84,
+        "material_unit_id": 1,
+        "id": 118,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 112,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 34,
+        "material_name_id": 46,
+        "material_unit_id": 1,
+        "id": 46,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 113,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 110,
+        "material_name_id": 199,
+        "material_unit_id": 1,
+        "id": 199,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 114,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 110,
+        "material_name_id": 200,
+        "material_unit_id": 1,
+        "id": 200,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 115,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 73,
+        "material_name_id": 137,
+        "material_unit_id": 1,
+        "id": 137,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 116,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 110,
+        "material_name_id": 197,
+        "material_unit_id": 1,
+        "id": 197,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 117,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 120,
+        "material_name_id": 141,
+        "material_unit_id": 1,
+        "id": 228,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 118,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 110,
+        "material_name_id": 198,
+        "material_unit_id": 1,
+        "id": 198,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 119,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 73,
+        "material_name_id": 138,
+        "material_unit_id": 1,
+        "id": 138,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 120,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 156,
+        "material_name_id": 362,
+        "material_unit_id": 1,
+        "id": 362,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 121,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 113,
+        "material_name_id": 206,
+        "material_unit_id": 1,
+        "id": 206,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 122,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 73,
+        "material_name_id": 139,
+        "material_unit_id": 1,
+        "id": 139,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 123,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 72,
+        "material_name_id": 79,
+        "material_unit_id": 1,
+        "id": 135,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 124,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 72,
+        "material_name_id": 136,
+        "material_unit_id": 1,
+        "id": 136,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 125,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 71,
+        "material_name_id": 492,
+        "material_unit_id": 1,
+        "id": 131,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 126,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 71,
+        "material_name_id": 92,
+        "material_unit_id": 1,
+        "id": 132,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 127,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 71,
+        "material_name_id": 21,
+        "material_unit_id": 1,
+        "id": 133,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 128,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 71,
+        "material_name_id": 362,
+        "material_unit_id": 1,
+        "id": 134,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 129,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 67,
+        "material_name_id": 107,
+        "material_unit_id": 1,
+        "id": 122,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 130,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 67,
+        "material_name_id": 123,
+        "material_unit_id": 1,
+        "id": 123,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 131,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 81,
+        "material_name_id": 154,
+        "material_unit_id": 1,
+        "id": 154,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 132,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 81,
+        "material_name_id": 155,
+        "material_unit_id": 1,
+        "id": 155,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 133,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 81,
+        "material_name_id": 156,
+        "material_unit_id": 1,
+        "id": 156,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 134,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 122,
+        "material_name_id": 237,
+        "material_unit_id": 1,
+        "id": 237,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 135,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 122,
+        "material_name_id": 123,
+        "material_unit_id": 1,
+        "id": 238,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 136,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 122,
+        "material_name_id": 240,
+        "material_unit_id": 1,
+        "id": 240,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 137,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 105,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 193,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 138,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 105,
+        "material_name_id": 60,
+        "material_unit_id": 1,
+        "id": 194,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 139,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 105,
+        "material_name_id": 195,
+        "material_unit_id": 1,
+        "id": 195,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 140,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 70,
+        "material_name_id": 128,
+        "material_unit_id": 1,
+        "id": 128,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 141,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 70,
+        "material_name_id": 129,
+        "material_unit_id": 1,
+        "id": 129,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 142,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 70,
+        "material_name_id": 123,
+        "material_unit_id": 1,
+        "id": 130,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 143,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 78,
+        "material_name_id": 153,
+        "material_unit_id": 1,
+        "id": 153,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 144,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 69,
+        "material_name_id": 124,
+        "material_unit_id": 1,
+        "id": 124,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 145,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 69,
+        "material_name_id": 125,
+        "material_unit_id": 1,
+        "id": 125,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 146,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 69,
+        "material_name_id": 126,
+        "material_unit_id": 1,
+        "id": 126,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 147,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 100,
+        "material_name_id": 175,
+        "material_unit_id": 1,
+        "id": 175,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 148,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 100,
+        "material_name_id": 176,
+        "material_unit_id": 1,
+        "id": 176,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 149,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 100,
+        "material_name_id": 177,
+        "material_unit_id": 1,
+        "id": 177,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 150,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 100,
+        "material_name_id": 178,
+        "material_unit_id": 1,
+        "id": 178,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 151,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 77,
+        "material_name_id": 152,
+        "material_unit_id": 1,
+        "id": 152,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 152,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 76,
+        "material_name_id": 148,
+        "material_unit_id": 1,
+        "id": 148,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 153,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 76,
+        "material_name_id": 149,
+        "material_unit_id": 1,
+        "id": 149,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 154,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 76,
+        "material_name_id": 150,
+        "material_unit_id": 1,
+        "id": 150,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 155,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 226,
+        "material_unit_id": 1,
+        "id": 226,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 156,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 227,
+        "material_unit_id": 1,
+        "id": 227,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 157,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 503,
+        "material_unit_id": 1,
+        "id": 217,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 158,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 111,
+        "material_name_id": 202,
+        "material_unit_id": 1,
+        "id": 202,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 159,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 182,
+        "material_unit_id": 1,
+        "id": 182,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 160,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 76,
+        "material_name_id": 151,
+        "material_unit_id": 1,
+        "id": 151,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 161,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 75,
+        "material_name_id": 142,
+        "material_unit_id": 1,
+        "id": 142,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 162,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 75,
+        "material_name_id": 143,
+        "material_unit_id": 1,
+        "id": 143,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 163,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 75,
+        "material_name_id": 144,
+        "material_unit_id": 1,
+        "id": 144,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 164,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 75,
+        "material_name_id": 145,
+        "material_unit_id": 1,
+        "id": 145,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 165,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 75,
+        "material_name_id": 146,
+        "material_unit_id": 1,
+        "id": 146,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 166,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 75,
+        "material_name_id": 147,
+        "material_unit_id": 1,
+        "id": 147,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 167,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 74,
+        "material_name_id": 140,
+        "material_unit_id": 1,
+        "id": 140,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 168,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 74,
+        "material_name_id": 141,
+        "material_unit_id": 1,
+        "id": 141,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 169,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 92,
+        "material_name_id": 168,
+        "material_unit_id": 1,
+        "id": 168,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 170,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 85,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 164,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 171,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 85,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 165,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 172,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 85,
+        "material_name_id": 166,
+        "material_unit_id": 1,
+        "id": 166,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 173,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 84,
+        "material_name_id": 162,
+        "material_unit_id": 1,
+        "id": 162,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 174,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 84,
+        "material_name_id": 163,
+        "material_unit_id": 1,
+        "id": 163,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 175,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 83,
+        "material_name_id": 160,
+        "material_unit_id": 1,
+        "id": 160,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 176,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 83,
+        "material_name_id": 161,
+        "material_unit_id": 1,
+        "id": 161,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 177,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 82,
+        "material_name_id": 157,
+        "material_unit_id": 1,
+        "id": 157,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 178,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 82,
+        "material_name_id": 574,
+        "material_unit_id": 1,
+        "id": 158,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 179,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 82,
+        "material_name_id": 575,
+        "material_unit_id": 1,
+        "id": 159,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 180,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 102,
+        "material_name_id": 180,
+        "material_unit_id": 1,
+        "id": 180,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 181,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 102,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 181,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 182,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 97,
+        "material_name_id": 174,
+        "material_unit_id": 1,
+        "id": 174,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 183,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 96,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 172,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 184,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 96,
+        "material_name_id": 173,
+        "material_unit_id": 1,
+        "id": 173,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 185,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 95,
+        "material_name_id": 171,
+        "material_unit_id": 1,
+        "id": 171,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 186,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 93,
+        "material_name_id": 576,
+        "material_unit_id": 1,
+        "id": 169,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 187,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 115,
+        "material_name_id": 209,
+        "material_unit_id": 1,
+        "id": 209,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 188,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 115,
+        "material_name_id": 207,
+        "material_unit_id": 1,
+        "id": 207,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 189,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 115,
+        "material_name_id": 208,
+        "material_unit_id": 1,
+        "id": 208,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 190,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 115,
+        "material_name_id": 210,
+        "material_unit_id": 1,
+        "id": 210,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 191,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 115,
+        "material_name_id": 211,
+        "material_unit_id": 1,
+        "id": 211,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 192,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 115,
+        "material_name_id": 212,
+        "material_unit_id": 1,
+        "id": 212,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 193,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 115,
+        "material_name_id": 213,
+        "material_unit_id": 1,
+        "id": 213,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 194,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 113,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 204,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 195,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 113,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 205,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 196,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 112,
+        "material_name_id": 161,
+        "material_unit_id": 1,
+        "id": 203,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 197,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 111,
+        "material_name_id": 201,
+        "material_unit_id": 1,
+        "id": 201,
+        "quantity": 10
+      }
+    },
+    {
+      "pk": 198,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 183,
+        "material_unit_id": 1,
+        "id": 183,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 199,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 184,
+        "material_unit_id": 1,
+        "id": 184,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 200,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 185,
+        "material_unit_id": 1,
+        "id": 185,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 201,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 186,
+        "material_unit_id": 1,
+        "id": 186,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 202,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 187,
+        "material_unit_id": 1,
+        "id": 187,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 203,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 113,
+        "material_unit_id": 1,
+        "id": 189,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 204,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 59,
+        "material_unit_id": 1,
+        "id": 190,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 205,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 191,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 206,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 192,
+        "material_unit_id": 1,
+        "id": 192,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 207,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 123,
+        "material_name_id": 241,
+        "material_unit_id": 1,
+        "id": 241,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 208,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 121,
+        "material_name_id": 229,
+        "material_unit_id": 1,
+        "id": 229,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 209,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 121,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 230,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 210,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 121,
+        "material_name_id": 231,
+        "material_unit_id": 1,
+        "id": 231,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 211,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 121,
+        "material_name_id": 232,
+        "material_unit_id": 1,
+        "id": 232,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 212,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 121,
+        "material_name_id": 233,
+        "material_unit_id": 1,
+        "id": 233,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 213,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 121,
+        "material_name_id": 234,
+        "material_unit_id": 1,
+        "id": 234,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 214,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 121,
+        "material_name_id": 235,
+        "material_unit_id": 1,
+        "id": 235,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 215,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 225,
+        "material_unit_id": 1,
+        "id": 225,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 216,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 504,
+        "material_unit_id": 1,
+        "id": 218,
+        "quantity": 5
+      }
+    },
+    {
+      "pk": 217,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 505,
+        "material_unit_id": 4,
+        "id": 219,
+        "quantity": 40
+      }
+    },
+    {
+      "pk": 218,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 506,
+        "material_unit_id": 2,
+        "id": 220,
+        "quantity": 5
+      }
+    },
+    {
+      "pk": 219,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 508,
+        "material_unit_id": 5,
+        "id": 222,
+        "quantity": 250
+      }
+    },
+    {
+      "pk": 220,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 509,
+        "material_unit_id": 1,
+        "id": 223,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 221,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 117,
+        "material_name_id": 214,
+        "material_unit_id": 1,
+        "id": 214,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 222,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 117,
+        "material_name_id": 215,
+        "material_unit_id": 1,
+        "id": 215,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 223,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 117,
+        "material_name_id": 216,
+        "material_unit_id": 1,
+        "id": 216,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 224,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 70,
+        "material_name_id": 127,
+        "material_unit_id": 1,
+        "id": 127,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 225,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 151,
+        "material_name_id": 354,
+        "material_unit_id": 1,
+        "id": 354,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 226,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 151,
+        "material_name_id": 356,
+        "material_unit_id": 1,
+        "id": 356,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 227,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 150,
+        "material_name_id": 350,
+        "material_unit_id": 1,
+        "id": 350,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 228,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 307,
+        "material_unit_id": 1,
+        "id": 307,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 229,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 2,
+        "material_unit_id": 5,
+        "id": 295,
+        "quantity": 500
+      }
+    },
+    {
+      "pk": 230,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 4,
+        "material_unit_id": 5,
+        "id": 296,
+        "quantity": 10
+      }
+    },
+    {
+      "pk": 231,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 514,
+        "material_unit_id": 5,
+        "id": 297,
+        "quantity": 200
+      }
+    },
+    {
+      "pk": 232,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 515,
+        "material_unit_id": 1,
+        "id": 298,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 233,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 516,
+        "material_unit_id": 1,
+        "id": 299,
+        "quantity": 5
+      }
+    },
+    {
+      "pk": 234,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 354,
+        "material_unit_id": 1,
+        "id": 300,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 235,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 517,
+        "material_unit_id": 5,
+        "id": 301,
+        "quantity": 250
+      }
+    },
+    {
+      "pk": 236,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 518,
+        "material_unit_id": 1,
+        "id": 302,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 237,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 266,
+        "material_unit_id": 1,
+        "id": 304,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 238,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 3,
+        "material_unit_id": 1,
+        "id": 306,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 239,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 124,
+        "material_name_id": 246,
+        "material_unit_id": 1,
+        "id": 246,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 240,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 146,
+        "material_name_id": 341,
+        "material_unit_id": 1,
+        "id": 341,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 241,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 303,
+        "material_unit_id": 1,
+        "id": 303,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 242,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 282,
+        "material_unit_id": 1,
+        "id": 282,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 243,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 283,
+        "material_unit_id": 1,
+        "id": 283,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 244,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 285,
+        "material_unit_id": 1,
+        "id": 285,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 245,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 286,
+        "material_unit_id": 1,
+        "id": 286,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 246,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 287,
+        "material_unit_id": 1,
+        "id": 287,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 247,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 288,
+        "material_unit_id": 1,
+        "id": 288,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 248,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 289,
+        "material_unit_id": 1,
+        "id": 289,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 249,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 4,
+        "material_unit_id": 1,
+        "id": 290,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 250,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 291,
+        "material_unit_id": 1,
+        "id": 291,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 251,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 292,
+        "material_unit_id": 1,
+        "id": 292,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 252,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 293,
+        "material_unit_id": 1,
+        "id": 293,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 253,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 143,
+        "material_name_id": 329,
+        "material_unit_id": 1,
+        "id": 329,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 254,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 143,
+        "material_name_id": 330,
+        "material_unit_id": 1,
+        "id": 330,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 255,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 143,
+        "material_name_id": 331,
+        "material_unit_id": 1,
+        "id": 331,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 256,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 143,
+        "material_name_id": 332,
+        "material_unit_id": 1,
+        "id": 332,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 257,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 143,
+        "material_name_id": 333,
+        "material_unit_id": 1,
+        "id": 333,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 258,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 143,
+        "material_name_id": 334,
+        "material_unit_id": 1,
+        "id": 334,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 259,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 148,
+        "material_name_id": 343,
+        "material_unit_id": 1,
+        "id": 343,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 260,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 148,
+        "material_name_id": 345,
+        "material_unit_id": 1,
+        "id": 345,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 261,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 148,
+        "material_name_id": 346,
+        "material_unit_id": 1,
+        "id": 346,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 262,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 144,
+        "material_name_id": 335,
+        "material_unit_id": 1,
+        "id": 335,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 263,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 144,
+        "material_name_id": 336,
+        "material_unit_id": 1,
+        "id": 336,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 264,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 152,
+        "material_name_id": 357,
+        "material_unit_id": 1,
+        "id": 357,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 265,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 154,
+        "material_name_id": 358,
+        "material_unit_id": 1,
+        "id": 358,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 266,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 147,
+        "material_name_id": 342,
+        "material_unit_id": 1,
+        "id": 342,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 267,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 138,
+        "material_name_id": 316,
+        "material_unit_id": 1,
+        "id": 316,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 268,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 138,
+        "material_name_id": 317,
+        "material_unit_id": 1,
+        "id": 317,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 269,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 138,
+        "material_name_id": 318,
+        "material_unit_id": 1,
+        "id": 318,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 270,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 138,
+        "material_name_id": 90,
+        "material_unit_id": 1,
+        "id": 314,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 271,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 150,
+        "material_name_id": 351,
+        "material_unit_id": 1,
+        "id": 351,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 272,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 150,
+        "material_name_id": 352,
+        "material_unit_id": 1,
+        "id": 352,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 273,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 149,
+        "material_name_id": 347,
+        "material_unit_id": 1,
+        "id": 347,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 274,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 137,
+        "material_name_id": 141,
+        "material_unit_id": 1,
+        "id": 312,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 275,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 140,
+        "material_name_id": 322,
+        "material_unit_id": 1,
+        "id": 322,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 276,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 155,
+        "material_name_id": 359,
+        "material_unit_id": 1,
+        "id": 359,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 277,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 149,
+        "material_name_id": 348,
+        "material_unit_id": 1,
+        "id": 348,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 278,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 149,
+        "material_name_id": 349,
+        "material_unit_id": 1,
+        "id": 349,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 279,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 129,
+        "material_name_id": 254,
+        "material_unit_id": 1,
+        "id": 254,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 280,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 124,
+        "material_name_id": 247,
+        "material_unit_id": 1,
+        "id": 247,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 281,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 124,
+        "material_name_id": 248,
+        "material_unit_id": 1,
+        "id": 248,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 282,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 123,
+        "material_name_id": 242,
+        "material_unit_id": 1,
+        "id": 242,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 283,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 123,
+        "material_name_id": 123,
+        "material_unit_id": 1,
+        "id": 243,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 284,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 123,
+        "material_name_id": 244,
+        "material_unit_id": 1,
+        "id": 244,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 285,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 123,
+        "material_name_id": 113,
+        "material_unit_id": 1,
+        "id": 245,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 286,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 131,
+        "material_name_id": 270,
+        "material_unit_id": 1,
+        "id": 270,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 287,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 131,
+        "material_name_id": 271,
+        "material_unit_id": 1,
+        "id": 271,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 288,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 131,
+        "material_name_id": 272,
+        "material_unit_id": 1,
+        "id": 272,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 289,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 131,
+        "material_name_id": 273,
+        "material_unit_id": 1,
+        "id": 273,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 290,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 131,
+        "material_name_id": 123,
+        "material_unit_id": 1,
+        "id": 274,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 291,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 131,
+        "material_name_id": 275,
+        "material_unit_id": 1,
+        "id": 275,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 292,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 131,
+        "material_name_id": 276,
+        "material_unit_id": 1,
+        "id": 276,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 293,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 131,
+        "material_name_id": 277,
+        "material_unit_id": 1,
+        "id": 277,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 294,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 259,
+        "material_unit_id": 1,
+        "id": 259,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 295,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 260,
+        "material_unit_id": 1,
+        "id": 260,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 296,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 262,
+        "material_unit_id": 1,
+        "id": 262,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 297,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 263,
+        "material_unit_id": 1,
+        "id": 263,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 298,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 126,
+        "material_unit_id": 1,
+        "id": 264,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 299,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 21,
+        "material_unit_id": 1,
+        "id": 265,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 300,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 266,
+        "material_unit_id": 1,
+        "id": 266,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 301,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 267,
+        "material_unit_id": 1,
+        "id": 267,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 302,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 268,
+        "material_unit_id": 1,
+        "id": 268,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 303,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 269,
+        "material_unit_id": 1,
+        "id": 269,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 304,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 129,
+        "material_name_id": 255,
+        "material_unit_id": 1,
+        "id": 255,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 305,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 129,
+        "material_name_id": 256,
+        "material_unit_id": 1,
+        "id": 256,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 306,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 129,
+        "material_name_id": 257,
+        "material_unit_id": 1,
+        "id": 257,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 307,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 129,
+        "material_name_id": 258,
+        "material_unit_id": 1,
+        "id": 258,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 308,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 136,
+        "material_name_id": 308,
+        "material_unit_id": 1,
+        "id": 308,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 309,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 127,
+        "material_name_id": 253,
+        "material_unit_id": 1,
+        "id": 253,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 310,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 125,
+        "material_name_id": 252,
+        "material_unit_id": 1,
+        "id": 252,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 311,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 125,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 250,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 312,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 138,
+        "material_name_id": 315,
+        "material_unit_id": 1,
+        "id": 315,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 313,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 139,
+        "material_name_id": 319,
+        "material_unit_id": 1,
+        "id": 319,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 314,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 137,
+        "material_name_id": 313,
+        "material_unit_id": 1,
+        "id": 313,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 315,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 136,
+        "material_name_id": 309,
+        "material_unit_id": 1,
+        "id": 309,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 316,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 136,
+        "material_name_id": 310,
+        "material_unit_id": 1,
+        "id": 310,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 317,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 136,
+        "material_name_id": 123,
+        "material_unit_id": 1,
+        "id": 311,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 318,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 134,
+        "material_name_id": 294,
+        "material_unit_id": 1,
+        "id": 294,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 319,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 132,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 278,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 320,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 132,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 279,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 321,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 132,
+        "material_name_id": 280,
+        "material_unit_id": 1,
+        "id": 280,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 322,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 146,
+        "material_name_id": 339,
+        "material_unit_id": 1,
+        "id": 339,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 323,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 146,
+        "material_name_id": 20,
+        "material_unit_id": 1,
+        "id": 340,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 324,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 145,
+        "material_name_id": 337,
+        "material_unit_id": 1,
+        "id": 337,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 325,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 145,
+        "material_name_id": 578,
+        "material_unit_id": 1,
+        "id": 338,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 326,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 141,
+        "material_name_id": 76,
+        "material_unit_id": 1,
+        "id": 323,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 327,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 141,
+        "material_name_id": 324,
+        "material_unit_id": 1,
+        "id": 324,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 328,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 141,
+        "material_name_id": 32,
+        "material_unit_id": 1,
+        "id": 325,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 329,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 141,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 326,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 330,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 141,
+        "material_name_id": 327,
+        "material_unit_id": 1,
+        "id": 327,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 331,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 140,
+        "material_name_id": 321,
+        "material_unit_id": 1,
+        "id": 321,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 332,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 155,
+        "material_name_id": 360,
+        "material_unit_id": 1,
+        "id": 360,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 333,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 155,
+        "material_name_id": 361,
+        "material_unit_id": 1,
+        "id": 361,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 334,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 151,
+        "material_name_id": 197,
+        "material_unit_id": 1,
+        "id": 355,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 335,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 151,
+        "material_name_id": 353,
+        "material_unit_id": 1,
+        "id": 353,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 336,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 125,
+        "material_name_id": 249,
+        "material_unit_id": 1,
+        "id": 249,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 337,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 156,
+        "material_name_id": 365,
+        "material_unit_id": 1,
+        "id": 365,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 338,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 205,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 469,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 339,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 205,
+        "material_name_id": 60,
+        "material_unit_id": 1,
+        "id": 470,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 340,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 205,
+        "material_name_id": 471,
+        "material_unit_id": 1,
+        "id": 471,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 341,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 205,
+        "material_name_id": 280,
+        "material_unit_id": 1,
+        "id": 472,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 342,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 205,
+        "material_name_id": 473,
+        "material_unit_id": 1,
+        "id": 473,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 343,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 205,
+        "material_name_id": 474,
+        "material_unit_id": 1,
+        "id": 474,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 344,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 202,
+        "material_name_id": 463,
+        "material_unit_id": 1,
+        "id": 463,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 345,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 202,
+        "material_name_id": 32,
+        "material_unit_id": 1,
+        "id": 464,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 346,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 202,
+        "material_name_id": 465,
+        "material_unit_id": 1,
+        "id": 465,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 347,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 202,
+        "material_name_id": 466,
+        "material_unit_id": 1,
+        "id": 466,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 348,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 202,
+        "material_name_id": 467,
+        "material_unit_id": 1,
+        "id": 467,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 349,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 206,
+        "material_name_id": 468,
+        "material_unit_id": 1,
+        "id": 475,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 350,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 184,
+        "material_name_id": 433,
+        "material_unit_id": 1,
+        "id": 433,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 351,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 184,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 434,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 352,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 184,
+        "material_name_id": 435,
+        "material_unit_id": 1,
+        "id": 435,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 353,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 188,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 445,
+        "quantity": 30
+      }
+    },
+    {
+      "pk": 354,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 194,
+        "material_name_id": 450,
+        "material_unit_id": 1,
+        "id": 450,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 355,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 198,
+        "material_name_id": 451,
+        "material_unit_id": 1,
+        "id": 451,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 356,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 198,
+        "material_name_id": 452,
+        "material_unit_id": 1,
+        "id": 452,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 357,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 198,
+        "material_name_id": 453,
+        "material_unit_id": 1,
+        "id": 453,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 358,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 198,
+        "material_name_id": 454,
+        "material_unit_id": 1,
+        "id": 454,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 359,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 175,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 406,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 360,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 175,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 407,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 361,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 178,
+        "material_name_id": 412,
+        "material_unit_id": 1,
+        "id": 412,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 362,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 203,
+        "material_name_id": 468,
+        "material_unit_id": 1,
+        "id": 468,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 363,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 207,
+        "material_name_id": 476,
+        "material_unit_id": 1,
+        "id": 476,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 364,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 178,
+        "material_name_id": 60,
+        "material_unit_id": 1,
+        "id": 413,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 365,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 178,
+        "material_name_id": 414,
+        "material_unit_id": 1,
+        "id": 414,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 366,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 180,
+        "material_name_id": 444,
+        "material_unit_id": 1,
+        "id": 418,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 367,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 156,
+        "material_name_id": 363,
+        "material_unit_id": 1,
+        "id": 363,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 368,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 156,
+        "material_name_id": 364,
+        "material_unit_id": 1,
+        "id": 364,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 369,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 201,
+        "material_name_id": 462,
+        "material_unit_id": 1,
+        "id": 462,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 370,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 186,
+        "material_name_id": 436,
+        "material_unit_id": 1,
+        "id": 436,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 371,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 186,
+        "material_name_id": 437,
+        "material_unit_id": 1,
+        "id": 437,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 372,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 186,
+        "material_name_id": 438,
+        "material_unit_id": 1,
+        "id": 438,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 373,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 186,
+        "material_name_id": 439,
+        "material_unit_id": 1,
+        "id": 439,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 374,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 186,
+        "material_name_id": 440,
+        "material_unit_id": 1,
+        "id": 440,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 375,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 186,
+        "material_name_id": 225,
+        "material_unit_id": 1,
+        "id": 441,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 376,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 186,
+        "material_name_id": 92,
+        "material_unit_id": 1,
+        "id": 442,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 377,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 186,
+        "material_name_id": 443,
+        "material_unit_id": 1,
+        "id": 443,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 378,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 181,
+        "material_name_id": 422,
+        "material_unit_id": 1,
+        "id": 422,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 379,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 181,
+        "material_name_id": 423,
+        "material_unit_id": 1,
+        "id": 423,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 380,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 181,
+        "material_name_id": 424,
+        "material_unit_id": 1,
+        "id": 424,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 381,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 181,
+        "material_name_id": 425,
+        "material_unit_id": 1,
+        "id": 425,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 382,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 181,
+        "material_name_id": 92,
+        "material_unit_id": 1,
+        "id": 419,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 383,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 173,
+        "material_name_id": 401,
+        "material_unit_id": 1,
+        "id": 401,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 384,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 173,
+        "material_name_id": 402,
+        "material_unit_id": 1,
+        "id": 402,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 385,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 173,
+        "material_name_id": 403,
+        "material_unit_id": 1,
+        "id": 403,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 386,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 173,
+        "material_name_id": 404,
+        "material_unit_id": 1,
+        "id": 404,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 387,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 173,
+        "material_name_id": 405,
+        "material_unit_id": 1,
+        "id": 405,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 388,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 157,
+        "material_name_id": 366,
+        "material_unit_id": 1,
+        "id": 366,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 389,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 157,
+        "material_name_id": 12,
+        "material_unit_id": 1,
+        "id": 367,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 390,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 157,
+        "material_name_id": 368,
+        "material_unit_id": 1,
+        "id": 368,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 391,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 157,
+        "material_name_id": 8,
+        "material_unit_id": 1,
+        "id": 369,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 392,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 157,
+        "material_name_id": 370,
+        "material_unit_id": 1,
+        "id": 370,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 393,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 219,
+        "material_name_id": 481,
+        "material_unit_id": 1,
+        "id": 481,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 394,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 216,
+        "material_name_id": 60,
+        "material_unit_id": 1,
+        "id": 477,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 395,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 216,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 478,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 396,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 182,
+        "material_name_id": 428,
+        "material_unit_id": 1,
+        "id": 428,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 397,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 200,
+        "material_name_id": 460,
+        "material_unit_id": 1,
+        "id": 460,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 398,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 182,
+        "material_name_id": 430,
+        "material_unit_id": 1,
+        "id": 430,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 399,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 182,
+        "material_name_id": 431,
+        "material_unit_id": 1,
+        "id": 431,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 400,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 182,
+        "material_name_id": 420,
+        "material_unit_id": 1,
+        "id": 427,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 401,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 179,
+        "material_name_id": 415,
+        "material_unit_id": 1,
+        "id": 415,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 402,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 179,
+        "material_name_id": 416,
+        "material_unit_id": 1,
+        "id": 416,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 403,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 179,
+        "material_name_id": 417,
+        "material_unit_id": 1,
+        "id": 417,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 404,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 176,
+        "material_name_id": 408,
+        "material_unit_id": 1,
+        "id": 408,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 405,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 176,
+        "material_name_id": 409,
+        "material_unit_id": 1,
+        "id": 409,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 406,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 176,
+        "material_name_id": 79,
+        "material_unit_id": 1,
+        "id": 410,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 407,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 165,
+        "material_name_id": 397,
+        "material_unit_id": 1,
+        "id": 397,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 408,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 165,
+        "material_name_id": 398,
+        "material_unit_id": 1,
+        "id": 398,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 409,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 165,
+        "material_name_id": 79,
+        "material_unit_id": 1,
+        "id": 399,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 410,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 165,
+        "material_name_id": 400,
+        "material_unit_id": 1,
+        "id": 400,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 411,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 164,
+        "material_name_id": 394,
+        "material_unit_id": 1,
+        "id": 394,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 412,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 164,
+        "material_name_id": 395,
+        "material_unit_id": 1,
+        "id": 395,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 413,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 164,
+        "material_name_id": 396,
+        "material_unit_id": 1,
+        "id": 396,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 414,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 161,
+        "material_name_id": 380,
+        "material_unit_id": 1,
+        "id": 380,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 415,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 161,
+        "material_name_id": 381,
+        "material_unit_id": 1,
+        "id": 381,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 416,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 158,
+        "material_name_id": 371,
+        "material_unit_id": 1,
+        "id": 371,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 417,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 158,
+        "material_name_id": 107,
+        "material_unit_id": 1,
+        "id": 372,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 418,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 158,
+        "material_name_id": 373,
+        "material_unit_id": 1,
+        "id": 373,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 419,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 199,
+        "material_name_id": 455,
+        "material_unit_id": 1,
+        "id": 455,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 420,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 199,
+        "material_name_id": 456,
+        "material_unit_id": 1,
+        "id": 456,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 421,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 199,
+        "material_name_id": 107,
+        "material_unit_id": 1,
+        "id": 457,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 422,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 199,
+        "material_name_id": 59,
+        "material_unit_id": 1,
+        "id": 458,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 423,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 199,
+        "material_name_id": 459,
+        "material_unit_id": 1,
+        "id": 459,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 424,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 183,
+        "material_name_id": 491,
+        "material_unit_id": 1,
+        "id": 432,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 425,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 219,
+        "material_name_id": 479,
+        "material_unit_id": 1,
+        "id": 479,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 426,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 163,
+        "material_name_id": 390,
+        "material_unit_id": 1,
+        "id": 390,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 427,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 163,
+        "material_name_id": 391,
+        "material_unit_id": 1,
+        "id": 391,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 428,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 163,
+        "material_name_id": 392,
+        "material_unit_id": 1,
+        "id": 392,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 429,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 163,
+        "material_name_id": 498,
+        "material_unit_id": 5,
+        "id": 385,
+        "quantity": 50
+      }
+    },
+    {
+      "pk": 430,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 181,
+        "material_name_id": 420,
+        "material_unit_id": 1,
+        "id": 420,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 431,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 181,
+        "material_name_id": 266,
+        "material_unit_id": 1,
+        "id": 421,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 432,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 182,
+        "material_name_id": 283,
+        "material_unit_id": 1,
+        "id": 429,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 433,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 163,
+        "material_name_id": 388,
+        "material_unit_id": 1,
+        "id": 388,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 434,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 163,
+        "material_name_id": 499,
+        "material_unit_id": 5,
+        "id": 386,
+        "quantity": 40
+      }
+    },
+    {
+      "pk": 435,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 163,
+        "material_name_id": 500,
+        "material_unit_id": 5,
+        "id": 387,
+        "quantity": 10
+      }
+    },
+    {
+      "pk": 436,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 163,
+        "material_name_id": 501,
+        "material_unit_id": 1,
+        "id": 389,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 437,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 163,
+        "material_name_id": 502,
+        "material_unit_id": 1,
+        "id": 393,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 438,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 162,
+        "material_name_id": 107,
+        "material_unit_id": 1,
+        "id": 382,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 439,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 162,
+        "material_name_id": 383,
+        "material_unit_id": 1,
+        "id": 383,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 440,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 162,
+        "material_name_id": 384,
+        "material_unit_id": 1,
+        "id": 384,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 441,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 159,
+        "material_name_id": 374,
+        "material_unit_id": 1,
+        "id": 374,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 442,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 159,
+        "material_name_id": 375,
+        "material_unit_id": 1,
+        "id": 375,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 443,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 159,
+        "material_name_id": 376,
+        "material_unit_id": 1,
+        "id": 376,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 444,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 159,
+        "material_name_id": 377,
+        "material_unit_id": 1,
+        "id": 377,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 445,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 159,
+        "material_name_id": 378,
+        "material_unit_id": 1,
+        "id": 378,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 446,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 159,
+        "material_name_id": 379,
+        "material_unit_id": 1,
+        "id": 379,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 447,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 177,
+        "material_name_id": 411,
+        "material_unit_id": 1,
+        "id": 411,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 448,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 281,
+        "material_unit_id": 1,
+        "id": 281,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 449,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 133,
+        "material_name_id": 3,
+        "material_unit_id": 1,
+        "id": 284,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 450,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 208,
+        "material_name_id": 524,
+        "material_unit_id": 1,
+        "id": 658,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 451,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 208,
+        "material_name_id": 520,
+        "material_unit_id": 1,
+        "id": 665,
+        "quantity": 6
+      }
+    },
+    {
+      "pk": 452,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 208,
+        "material_name_id": 521,
+        "material_unit_id": 1,
+        "id": 666,
+        "quantity": 12
+      }
+    },
+    {
+      "pk": 453,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 208,
+        "material_name_id": 123,
+        "material_unit_id": 1,
+        "id": 667,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 454,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 220,
+        "material_name_id": 483,
+        "material_unit_id": 1,
+        "id": 483,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 455,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 106,
+        "material_name_id": 196,
+        "material_unit_id": 1,
+        "id": 196,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 456,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 100,
+        "material_name_id": 179,
+        "material_unit_id": 1,
+        "id": 179,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 457,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 220,
+        "material_name_id": 211,
+        "material_unit_id": 1,
+        "id": 484,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 458,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 220,
+        "material_name_id": 485,
+        "material_unit_id": 1,
+        "id": 485,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 459,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 109,
+        "material_unit_id": 1,
+        "id": 749,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 460,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 302,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 764,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 461,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 52,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 635,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 462,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 50,
+        "material_name_id": 64,
+        "material_unit_id": 1,
+        "id": 64,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 463,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 208,
+        "material_name_id": 522,
+        "material_unit_id": 1,
+        "id": 668,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 464,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 556,
+        "material_unit_id": 1,
+        "id": 750,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 465,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 105,
+        "material_unit_id": 1,
+        "id": 751,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 466,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 557,
+        "material_unit_id": 1,
+        "id": 752,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 467,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 558,
+        "material_unit_id": 1,
+        "id": 753,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 468,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 330,
+        "material_unit_id": 1,
+        "id": 754,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 469,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 559,
+        "material_unit_id": 1,
+        "id": 755,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 470,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 294,
+        "material_name_id": 547,
+        "material_unit_id": 1,
+        "id": 731,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 471,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 294,
+        "material_name_id": 548,
+        "material_unit_id": 1,
+        "id": 730,
+        "quantity": 10
+      }
+    },
+    {
+      "pk": 472,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 197,
+        "material_name_id": 519,
+        "material_unit_id": 1,
+        "id": 647,
+        "quantity": 30
+      }
+    },
+    {
+      "pk": 473,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 287,
+        "material_name_id": 537,
+        "material_unit_id": 1,
+        "id": 717,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 474,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 181,
+        "material_name_id": 426,
+        "material_unit_id": 1,
+        "id": 426,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 475,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 287,
+        "material_name_id": 538,
+        "material_unit_id": 1,
+        "id": 718,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 476,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 287,
+        "material_name_id": 539,
+        "material_unit_id": 1,
+        "id": 719,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 477,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 287,
+        "material_name_id": 273,
+        "material_unit_id": 1,
+        "id": 720,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 478,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 288,
+        "material_name_id": 530,
+        "material_unit_id": 1,
+        "id": 687,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 479,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 302,
+        "material_name_id": 244,
+        "material_unit_id": 1,
+        "id": 765,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 480,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 560,
+        "material_unit_id": 1,
+        "id": 756,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 481,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 297,
+        "material_name_id": 552,
+        "material_unit_id": 1,
+        "id": 743,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 482,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 285,
+        "material_name_id": 528,
+        "material_unit_id": 1,
+        "id": 680,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 483,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 285,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 681,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 484,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 285,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 682,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 485,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 292,
+        "material_name_id": 542,
+        "material_unit_id": 1,
+        "id": 723,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 486,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 292,
+        "material_name_id": 532,
+        "material_unit_id": 1,
+        "id": 724,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 487,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 223,
+        "material_name_id": 489,
+        "material_unit_id": 1,
+        "id": 489,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 488,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 226,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 640,
+        "quantity": 6
+      }
+    },
+    {
+      "pk": 489,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 226,
+        "material_name_id": 229,
+        "material_unit_id": 1,
+        "id": 641,
+        "quantity": 6
+      }
+    },
+    {
+      "pk": 490,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 221,
+        "material_name_id": 487,
+        "material_unit_id": 1,
+        "id": 487,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 491,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 221,
+        "material_name_id": 488,
+        "material_unit_id": 1,
+        "id": 488,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 492,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 221,
+        "material_name_id": 40,
+        "material_unit_id": 1,
+        "id": 486,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 493,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 221,
+        "material_name_id": 490,
+        "material_unit_id": 1,
+        "id": 490,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 494,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 220,
+        "material_name_id": 482,
+        "material_unit_id": 1,
+        "id": 482,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 495,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 561,
+        "material_unit_id": 1,
+        "id": 757,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 496,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 214,
+        "material_name_id": 511,
+        "material_unit_id": 1,
+        "id": 642,
+        "quantity": 12
+      }
+    },
+    {
+      "pk": 497,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 214,
+        "material_name_id": 512,
+        "material_unit_id": 1,
+        "id": 643,
+        "quantity": 6
+      }
+    },
+    {
+      "pk": 498,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 214,
+        "material_name_id": 123,
+        "material_unit_id": 1,
+        "id": 644,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 499,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 214,
+        "material_name_id": 270,
+        "material_unit_id": 1,
+        "id": 645,
+        "quantity": 6
+      }
+    },
+    {
+      "pk": 500,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 214,
+        "material_name_id": 513,
+        "material_unit_id": 1,
+        "id": 646,
+        "quantity": 6
+      }
+    },
+    {
+      "pk": 501,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 188,
+        "material_name_id": 496,
+        "material_unit_id": 1,
+        "id": 638,
+        "quantity": 6
+      }
+    },
+    {
+      "pk": 502,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 120,
+        "material_name_id": 569,
+        "material_unit_id": 1,
+        "id": 772,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 503,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 297,
+        "material_name_id": 12,
+        "material_unit_id": 1,
+        "id": 744,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 504,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 327,
+        "material_name_id": 583,
+        "material_unit_id": 1,
+        "id": 786,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 505,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 324,
+        "material_name_id": 585,
+        "material_unit_id": 1,
+        "id": 783,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 506,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 59,
+        "material_name_id": 82,
+        "material_unit_id": 1,
+        "id": 82,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 507,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 59,
+        "material_name_id": 85,
+        "material_unit_id": 1,
+        "id": 85,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 508,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 120,
+        "material_name_id": 570,
+        "material_unit_id": 1,
+        "id": 773,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 509,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 45,
+        "material_name_id": 571,
+        "material_unit_id": 1,
+        "id": 775,
+        "quantity": 6
+      }
+    },
+    {
+      "pk": 510,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 92,
+        "material_name_id": 167,
+        "material_unit_id": 1,
+        "id": 167,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 511,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 562,
+        "material_unit_id": 1,
+        "id": 758,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 512,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 476,
+        "material_unit_id": 1,
+        "id": 746,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 513,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 300,
+        "material_name_id": 467,
+        "material_unit_id": 1,
+        "id": 769,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 514,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 300,
+        "material_name_id": 282,
+        "material_unit_id": 1,
+        "id": 770,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 515,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 39,
+        "material_name_id": 468,
+        "material_unit_id": 1,
+        "id": 637,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 516,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 554,
+        "material_unit_id": 1,
+        "id": 747,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 517,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 298,
+        "material_name_id": 555,
+        "material_unit_id": 1,
+        "id": 748,
+        "quantity": 3
+      }
+    },
+    {
+      "pk": 518,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 104,
+        "material_name_id": 188,
+        "material_unit_id": 1,
+        "id": 188,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 519,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 130,
+        "material_name_id": 261,
+        "material_unit_id": 1,
+        "id": 261,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 520,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 139,
+        "material_name_id": 395,
+        "material_unit_id": 1,
+        "id": 777,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 521,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 145,
+        "material_name_id": 18,
+        "material_unit_id": 1,
+        "id": 779,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 522,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 302,
+        "material_name_id": 433,
+        "material_unit_id": 1,
+        "id": 763,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 523,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 332,
+        "material_name_id": 447,
+        "material_unit_id": 1,
+        "id": 798,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 524,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 332,
+        "material_name_id": 116,
+        "material_unit_id": 1,
+        "id": 799,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 525,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 332,
+        "material_name_id": 592,
+        "material_unit_id": 6,
+        "id": 800,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 526,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 332,
+        "material_name_id": 593,
+        "material_unit_id": 1,
+        "id": 801,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 527,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 332,
+        "material_name_id": 594,
+        "material_unit_id": 1,
+        "id": 802,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 528,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 332,
+        "material_name_id": 595,
+        "material_unit_id": 1,
+        "id": 803,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 529,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 201,
+        "material_name_id": 461,
+        "material_unit_id": 1,
+        "id": 461,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 530,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 122,
+        "material_name_id": 236,
+        "material_unit_id": 1,
+        "id": 236,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 531,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 122,
+        "material_name_id": 239,
+        "material_unit_id": 1,
+        "id": 239,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 532,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 148,
+        "material_name_id": 344,
+        "material_unit_id": 1,
+        "id": 344,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 533,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 219,
+        "material_name_id": 480,
+        "material_unit_id": 1,
+        "id": 480,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 534,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 328,
+        "material_name_id": 579,
+        "material_unit_id": 1,
+        "id": 789,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 535,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 326,
+        "material_name_id": 582,
+        "material_unit_id": 1,
+        "id": 784,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 536,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 280,
+        "material_name_id": 8,
+        "material_unit_id": 1,
+        "id": 650,
+        "quantity": 7
+      }
+    },
+    {
+      "pk": 537,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 276,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 632,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 538,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 276,
+        "material_name_id": 433,
+        "material_unit_id": 1,
+        "id": 633,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 539,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 38,
+        "material_name_id": 490,
+        "material_unit_id": 1,
+        "id": 776,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 540,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 58,
+        "material_name_id": 80,
+        "material_unit_id": 1,
+        "id": 80,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 541,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 71,
+        "material_name_id": 493,
+        "material_unit_id": 1,
+        "id": 636,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 542,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 326,
+        "material_name_id": 579,
+        "material_unit_id": 1,
+        "id": 785,
+        "quantity": 5
+      }
+    },
+    {
+      "pk": 543,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 301,
+        "material_name_id": 564,
+        "material_unit_id": 1,
+        "id": 760,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 544,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 301,
+        "material_name_id": 565,
+        "material_unit_id": 1,
+        "id": 761,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 545,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 301,
+        "material_name_id": 566,
+        "material_unit_id": 1,
+        "id": 762,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 546,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 301,
+        "material_name_id": 567,
+        "material_unit_id": 1,
+        "id": 767,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 547,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 93,
+        "material_name_id": 170,
+        "material_unit_id": 1,
+        "id": 170,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 548,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 295,
+        "material_name_id": 416,
+        "material_unit_id": 1,
+        "id": 732,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 549,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 301,
+        "material_name_id": 568,
+        "material_unit_id": 1,
+        "id": 768,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 550,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 507,
+        "material_unit_id": 1,
+        "id": 221,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 551,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 119,
+        "material_name_id": 92,
+        "material_unit_id": 1,
+        "id": 224,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 552,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 197,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 733,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 553,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 197,
+        "material_name_id": 116,
+        "material_unit_id": 1,
+        "id": 734,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 554,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 139,
+        "material_name_id": 320,
+        "material_unit_id": 1,
+        "id": 320,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 555,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 281,
+        "material_name_id": 161,
+        "material_unit_id": 1,
+        "id": 736,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 556,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 197,
+        "material_name_id": 433,
+        "material_unit_id": 1,
+        "id": 735,
+        "quantity": 4
+      }
+    },
+    {
+      "pk": 557,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 287,
+        "material_name_id": 31,
+        "material_unit_id": 1,
+        "id": 684,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 558,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 287,
+        "material_name_id": 529,
+        "material_unit_id": 1,
+        "id": 685,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 559,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 287,
+        "material_name_id": 283,
+        "material_unit_id": 1,
+        "id": 686,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 560,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 134,
+        "material_name_id": 577,
+        "material_unit_id": 1,
+        "id": 778,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 561,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 191,
+        "material_name_id": 563,
+        "material_unit_id": 1,
+        "id": 639,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 562,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 286,
+        "material_name_id": 76,
+        "material_unit_id": 1,
+        "id": 721,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 563,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 286,
+        "material_name_id": 540,
+        "material_unit_id": 1,
+        "id": 722,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 564,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 284,
+        "material_name_id": 90,
+        "material_unit_id": 1,
+        "id": 671,
+        "quantity": 100
+      }
+    },
+    {
+      "pk": 565,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 284,
+        "material_name_id": 200,
+        "material_unit_id": 1,
+        "id": 672,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 566,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 284,
+        "material_name_id": 123,
+        "material_unit_id": 1,
+        "id": 673,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 567,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 284,
+        "material_name_id": 21,
+        "material_unit_id": 1,
+        "id": 674,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 568,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 284,
+        "material_name_id": 525,
+        "material_unit_id": 1,
+        "id": 675,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 569,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 284,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 676,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 570,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 284,
+        "material_name_id": 61,
+        "material_unit_id": 1,
+        "id": 677,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 571,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 284,
+        "material_name_id": 526,
+        "material_unit_id": 1,
+        "id": 678,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 572,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 284,
+        "material_name_id": 527,
+        "material_unit_id": 1,
+        "id": 679,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 573,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 290,
+        "material_name_id": 8,
+        "material_unit_id": 1,
+        "id": 688,
+        "quantity": 6
+      }
+    },
+    {
+      "pk": 574,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 290,
+        "material_name_id": 420,
+        "material_unit_id": 1,
+        "id": 689,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 575,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 290,
+        "material_name_id": 530,
+        "material_unit_id": 1,
+        "id": 690,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 576,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 287,
+        "material_name_id": 536,
+        "material_unit_id": 1,
+        "id": 683,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 577,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 288,
+        "material_name_id": 535,
+        "material_unit_id": 1,
+        "id": 716,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 578,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 293,
+        "material_name_id": 545,
+        "material_unit_id": 1,
+        "id": 727,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 579,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 293,
+        "material_name_id": 433,
+        "material_unit_id": 1,
+        "id": 728,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 580,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 293,
+        "material_name_id": 164,
+        "material_unit_id": 1,
+        "id": 729,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 581,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 191,
+        "material_name_id": 543,
+        "material_unit_id": 1,
+        "id": 725,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 582,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 191,
+        "material_name_id": 544,
+        "material_unit_id": 1,
+        "id": 726,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 583,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 142,
+        "material_name_id": 510,
+        "material_unit_id": 1,
+        "id": 328,
+        "quantity": 10
+      }
+    },
+    {
+      "pk": 584,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 302,
+        "material_name_id": 414,
+        "material_unit_id": 1,
+        "id": 766,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 585,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 125,
+        "material_name_id": 123,
+        "material_unit_id": 1,
+        "id": 251,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 586,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 135,
+        "material_name_id": 305,
+        "material_unit_id": 1,
+        "id": 305,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 587,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 331,
+        "material_name_id": 588,
+        "material_unit_id": 1,
+        "id": 793,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 588,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 276,
+        "material_name_id": 468,
+        "material_unit_id": 1,
+        "id": 634,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 589,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 299,
+        "material_name_id": 416,
+        "material_unit_id": 1,
+        "id": 759,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 590,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 296,
+        "material_name_id": 476,
+        "material_unit_id": 1,
+        "id": 737,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 591,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 296,
+        "material_name_id": 549,
+        "material_unit_id": 1,
+        "id": 738,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 592,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 296,
+        "material_name_id": 330,
+        "material_unit_id": 1,
+        "id": 739,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 593,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 296,
+        "material_name_id": 332,
+        "material_unit_id": 1,
+        "id": 740,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 594,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 331,
+        "material_name_id": 597,
+        "material_unit_id": 1,
+        "id": 794,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 595,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 296,
+        "material_name_id": 550,
+        "material_unit_id": 1,
+        "id": 741,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 596,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 296,
+        "material_name_id": 551,
+        "material_unit_id": 1,
+        "id": 742,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 597,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 296,
+        "material_name_id": 553,
+        "material_unit_id": 1,
+        "id": 745,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 598,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 198,
+        "material_name_id": 438,
+        "material_unit_id": 1,
+        "id": 771,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 599,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 331,
+        "material_name_id": 514,
+        "material_unit_id": 5,
+        "id": 795,
+        "quantity": 100
+      }
+    },
+    {
+      "pk": 600,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 331,
+        "material_name_id": 590,
+        "material_unit_id": 1,
+        "id": 796,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 601,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 331,
+        "material_name_id": 586,
+        "material_unit_id": 1,
+        "id": 791,
+        "quantity": 6
+      }
+    },
+    {
+      "pk": 602,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 33,
+        "material_name_id": 11,
+        "material_unit_id": 1,
+        "id": 774,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 603,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 328,
+        "material_name_id": 152,
+        "material_unit_id": 1,
+        "id": 787,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 604,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 328,
+        "material_name_id": 584,
+        "material_unit_id": 1,
+        "id": 788,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 605,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 333,
+        "material_name_id": 116,
+        "material_unit_id": 1,
+        "id": 809,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 606,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 331,
+        "material_name_id": 282,
+        "material_unit_id": 1,
+        "id": 790,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 607,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 333,
+        "material_name_id": 549,
+        "material_unit_id": 1,
+        "id": 804,
+        "quantity": 9
+      }
+    },
+    {
+      "pk": 608,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 333,
+        "material_name_id": 90,
+        "material_unit_id": 1,
+        "id": 805,
+        "quantity": 10
+      }
+    },
+    {
+      "pk": 609,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 333,
+        "material_name_id": 596,
+        "material_unit_id": 1,
+        "id": 806,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 610,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 331,
+        "material_name_id": 587,
+        "material_unit_id": 1,
+        "id": 792,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 611,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 333,
+        "material_name_id": 154,
+        "material_unit_id": 1,
+        "id": 808,
+        "quantity": 2
+      }
+    },
+    {
+      "pk": 612,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 331,
+        "material_name_id": 591,
+        "material_unit_id": 2,
+        "id": 797,
+        "quantity": 1
+      }
+    },
+    {
+      "pk": 613,
+      "model": "inspi.materialitem",
+      "fields": {
+        "event_id": 333,
+        "material_name_id": 433,
+        "material_unit_id": 1,
+        "id": 807,
+        "quantity": 2
+      }
+    }
+  ]
+  

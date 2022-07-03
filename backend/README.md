@@ -23,6 +23,10 @@ Mac, Linux:
 `python manage.py loaddata data/main/*.json`
 `python manage.py loaddata data/test/*.json`
 
+Inspi Mac, Linux:
+`python manage.py loaddata data/inspi/master-data/*.json`
+`python manage.py loaddata data/inspi/test-data/*.json`
+
 Windows: `python manage.py add_fixtures test-data`
 
 `python manage.py runserver`

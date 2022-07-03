@@ -1,0 +1,673 @@
+[
+  {
+    "pk": 1,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#FFCFA4",
+      "description": "",
+      "category_id": 9,
+      "id": 9,
+      "name": "1. Hilfe"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#FFBBBB",
+      "description": "",
+      "category_id": 9,
+      "id": 2,
+      "name": "Backen"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#7FA8D1",
+      "description": "",
+      "category_id": 9,
+      "id": 34,
+      "name": "Basteln"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#D5AAFF",
+      "description": "",
+      "category_id": 9,
+      "id": 24,
+      "name": "Baum"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#F7DF4C",
+      "description": "",
+      "category_id": 9,
+      "id": 40,
+      "name": "Bewegung"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#F1F1B1",
+      "description": "",
+      "category_id": 9,
+      "id": 10,
+      "name": "Feuer machen"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#E7AE56",
+      "description": "",
+      "category_id": 9,
+      "id": 35,
+      "name": "Geschichten"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#E994AB",
+      "description": "",
+      "category_id": 9,
+      "id": 23,
+      "name": "Haik"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#64C0CF",
+      "description": "Alles was mit den H\u00e4nden und Werkzeug herstellt wird.",
+      "category_id": 9,
+      "id": 30,
+      "name": "Handwerkliches"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#F4CAD6",
+      "description": "",
+      "category_id": 9,
+      "id": 12,
+      "name": "Karte Kompass"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#C6C6FF",
+      "description": "",
+      "category_id": 9,
+      "id": 13,
+      "name": "Kim-Spiel"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#B4D1B6",
+      "description": "",
+      "category_id": 9,
+      "id": 16,
+      "name": "Knoten"
+    }
+  },
+  {
+    "pk": 13,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#B5FFFC",
+      "description": "",
+      "category_id": 9,
+      "id": 17,
+      "name": "K\u00fcche"
+    }
+  },
+  {
+    "pk": 14,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#FFC895",
+      "description": "",
+      "category_id": 9,
+      "id": 20,
+      "name": "Musisches"
+    }
+  },
+  {
+    "pk": 15,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#9DCF90",
+      "description": "",
+      "category_id": 9,
+      "id": 32,
+      "name": "Nachhaltigkeit"
+    }
+  },
+  {
+    "pk": 16,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#A3FEBA",
+      "description": "",
+      "category_id": 9,
+      "id": 7,
+      "name": "Pfa. Geschichte"
+    }
+  },
+  {
+    "pk": 17,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#5ECE65",
+      "description": "",
+      "category_id": 9,
+      "id": 37,
+      "name": "Pflanzen"
+    }
+  },
+  {
+    "pk": 18,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#C0FF97",
+      "description": "",
+      "category_id": 9,
+      "id": 1,
+      "name": "Schnitzen"
+    }
+  },
+  {
+    "pk": 19,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#DDCEFF",
+      "description": "",
+      "category_id": 9,
+      "id": 19,
+      "name": "Schwarzzelte"
+    }
+  },
+  {
+    "pk": 20,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#EED071",
+      "description": "Alles was mit Planeten und Sternen zu tun hat.",
+      "category_id": 9,
+      "id": 29,
+      "name": "Sternenkunde"
+    }
+  },
+  {
+    "pk": 21,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#DCEDEA",
+      "description": "",
+      "category_id": 9,
+      "id": 15,
+      "name": "Symbolik"
+    }
+  },
+  {
+    "pk": 22,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#FFFFB5",
+      "description": "",
+      "category_id": 9,
+      "id": 8,
+      "name": "Unser Bund"
+    }
+  },
+  {
+    "pk": 23,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#BBEBFF",
+      "description": "",
+      "category_id": 9,
+      "id": 4,
+      "name": "Unsere Erde"
+    }
+  },
+  {
+    "pk": 24,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#F0E275",
+      "description": "",
+      "category_id": 9,
+      "id": 36,
+      "name": "Unsere Sippe"
+    }
+  },
+  {
+    "pk": 25,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#DEB19E",
+      "description": "",
+      "category_id": 9,
+      "id": 11,
+      "name": "Versprechen"
+    }
+  },
+  {
+    "pk": 26,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#98A6FF",
+      "description": "",
+      "category_id": 9,
+      "id": 33,
+      "name": "Wasser"
+    }
+  },
+  {
+    "pk": 27,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#FFAF14",
+      "description": "",
+      "category_id": 5,
+      "id": 83,
+      "name": "Kaperfahrt"
+    }
+  },
+  {
+    "pk": 28,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#F2A70C",
+      "description": "Meutenf\u00fchrerschulung 2022",
+      "category_id": 5,
+      "id": 81,
+      "name": "MeuF\u00fc '22"
+    }
+  },
+  {
+    "pk": 29,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#89BDD2",
+      "description": "",
+      "category_id": 9,
+      "id": 64,
+      "name": "Gesellschaftliches"
+    }
+  },
+  {
+    "pk": 30,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#4BACE8",
+      "description": "",
+      "category_id": 9,
+      "id": 66,
+      "name": "Tier"
+    }
+  },
+  {
+    "pk": 31,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#9FF7DB",
+      "description": "",
+      "category_id": 7,
+      "id": 70,
+      "name": "Unklar (automatisch)"
+    }
+  },
+  {
+    "pk": 32,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#9FF7DB",
+      "description": "",
+      "category_id": 7,
+      "id": 71,
+      "name": "WIP"
+    }
+  },
+  {
+    "pk": 33,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#E27D79",
+      "description": "",
+      "category_id": 7,
+      "id": 72,
+      "name": "Ok von Sheldon"
+    }
+  },
+  {
+    "pk": 34,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#DE80A9",
+      "description": "",
+      "category_id": 7,
+      "id": 73,
+      "name": "Ok von Robert"
+    }
+  },
+  {
+    "pk": 35,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#F0E275",
+      "description": "",
+      "category_id": 7,
+      "id": 74,
+      "name": "Bitte \u00dcberpr\u00fcfen"
+    }
+  },
+  {
+    "pk": 36,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#56C777",
+      "description": "",
+      "category_id": 2,
+      "id": 76,
+      "name": "Garten"
+    }
+  },
+  {
+    "pk": 37,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#FF0000",
+      "description": "",
+      "category_id": 7,
+      "id": 77,
+      "name": "Ok von Leonie"
+    }
+  },
+  {
+    "pk": 38,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#FF0000",
+      "description": "",
+      "category_id": 7,
+      "id": 78,
+      "name": "Ok von Mats"
+    }
+  },
+  {
+    "pk": 39,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#F1F790",
+      "description": "",
+      "category_id": 3,
+      "id": 50,
+      "name": "W\u00f6lflinge"
+    }
+  },
+  {
+    "pk": 40,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#88ADE0",
+      "description": "",
+      "category_id": 3,
+      "id": 51,
+      "name": "Pfadfinder"
+    }
+  },
+  {
+    "pk": 41,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#DC8484",
+      "description": "",
+      "category_id": 3,
+      "id": 52,
+      "name": "Rover"
+    }
+  },
+  {
+    "pk": 42,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#B0E462",
+      "description": "Alles zum Thema Spielen",
+      "category_id": 4,
+      "id": 31,
+      "name": "Spiel"
+    }
+  },
+  {
+    "pk": 43,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#9FF7DB",
+      "description": "",
+      "category_id": 4,
+      "id": 53,
+      "name": "Lernen"
+    }
+  },
+  {
+    "pk": 44,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#E27D79",
+      "description": "",
+      "category_id": 4,
+      "id": 38,
+      "name": "Forschen"
+    }
+  },
+  {
+    "pk": 45,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#9AF3B9",
+      "description": "",
+      "category_id": 4,
+      "id": 41,
+      "name": "Kreatives"
+    }
+  },
+  {
+    "pk": 46,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#1174DE",
+      "description": "",
+      "category_id": 4,
+      "id": 75,
+      "name": "Rezept"
+    }
+  },
+  {
+    "pk": 47,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#B7DA7E",
+      "description": "",
+      "category_id": 2,
+      "id": 46,
+      "name": "Drinnen"
+    }
+  },
+  {
+    "pk": 48,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#7EA7C9",
+      "description": "",
+      "category_id": 2,
+      "id": 47,
+      "name": "Drau\u00dfen"
+    }
+  },
+  {
+    "pk": 49,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#788EC3",
+      "description": "",
+      "category_id": 2,
+      "id": 59,
+      "name": "Wald"
+    }
+  },
+  {
+    "pk": 50,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#DE80A9",
+      "description": "",
+      "category_id": 2,
+      "id": 63,
+      "name": "Ausflug"
+    }
+  },
+  {
+    "pk": 51,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#65B65F",
+      "description": "Dieser Heimabend ist nur im Fr\u00fchling durchf\u00fchrbar",
+      "category_id": 1,
+      "id": 44,
+      "name": "Fr\u00fchling"
+    }
+  },
+  {
+    "pk": 52,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#FFC100",
+      "description": "Dieser Heimabend ist im Sommer durchf\u00fchrbar.",
+      "category_id": 1,
+      "id": 42,
+      "name": "Sommer"
+    }
+  },
+  {
+    "pk": 53,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#DF9252",
+      "description": "Dieser Heimabend ist nur im Herbst durchf\u00fchrbar.",
+      "category_id": 1,
+      "id": 43,
+      "name": "Herbst"
+    }
+  },
+  {
+    "pk": 54,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#5374DB",
+      "description": "Dieser Heimabend ist nur Winter durchf\u00fchrbar",
+      "category_id": 1,
+      "id": 45,
+      "name": "Winter"
+    }
+  },
+  {
+    "pk": 55,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#80BBE0",
+      "description": "",
+      "category_id": 1,
+      "id": 55,
+      "name": "Ostern"
+    }
+  },
+  {
+    "pk": 56,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#E58383",
+      "description": "",
+      "category_id": 1,
+      "id": 56,
+      "name": "Advent"
+    }
+  },
+  {
+    "pk": 57,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#DE80A9",
+      "description": "",
+      "category_id": 1,
+      "id": 58,
+      "name": "Karneval"
+    }
+  },
+  {
+    "pk": 58,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#F2A70C",
+      "description": "Meutenf\u00fchrerschulung 2021",
+      "category_id": 5,
+      "id": 80,
+      "name": "MeuF\u00fc '21"
+    }
+  },
+  {
+    "pk": 59,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#946FDE",
+      "description": "",
+      "category_id": 5,
+      "id": 54,
+      "name": "Mit Abstand"
+    }
+  },
+  {
+    "pk": 60,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#F1CE8D",
+      "description": "",
+      "category_id": 5,
+      "id": 49,
+      "name": "Alleine"
+    }
+  },
+  {
+    "pk": 61,
+    "model": "inspi.tag",
+    "fields": {
+      "color": "#87C879",
+      "description": "",
+      "category_id": 5,
+      "id": 48,
+      "name": "Videokonferenz"
+    }
+  }
+]
