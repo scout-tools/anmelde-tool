@@ -1,0 +1,72 @@
+[
+    {
+      "model": "inspi.materialunit",
+      "pk": 1,
+      "fields": {
+        "id": 1,
+        "name": "Stück",
+        "is_public": true,
+        "description": "Stück"
+      }
+    },
+    {
+      "model": "inspi.materialunit",
+      "pk": 2,
+      "fields": {
+        "id": 2,
+        "name": "l",
+        "is_public": true,
+        "description": "Liter"
+      }
+    },
+    {
+      "model": "inspi.materialunit",
+      "pk": 3,
+      "fields": {
+        "id": 3,
+        "name": "Kg",
+        "is_public": true,
+        "description": "Kilogramm"
+      }
+    },
+    {
+      "model": "inspi.materialunit",
+      "pk": 4,
+      "fields": {
+        "id": 4,
+        "name": "ml",
+        "is_public": true,
+        "description": "Milliliter"
+      }
+    },
+    {
+      "model": "inspi.materialunit",
+      "pk": 5,
+      "fields": {
+        "id": 5,
+        "name": "g",
+        "is_public": true,
+        "description": "Gramm"
+      }
+    },
+    {
+      "model": "inspi.materialunit",
+      "pk": 6,
+      "fields": {
+        "id": 6,
+        "name": "m",
+        "is_public": true,
+        "description": "Meter"
+      }
+    },
+    {
+      "model": "inspi.materialunit",
+      "pk": 7,
+      "fields": {
+        "id": 7,
+        "name": "cm",
+        "is_public": true,
+        "description": "Centimeter"
+      }
+    }
+  ]

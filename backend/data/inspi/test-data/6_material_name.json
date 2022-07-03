@@ -1,0 +1,7764 @@
+[
+    {
+      "pk": 1,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 2,
+        "name": "Mehl"
+      }
+    },
+    {
+      "pk": 2,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 3,
+        "name": "Wasser"
+      }
+    },
+    {
+      "pk": 3,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 4,
+        "name": "Backpulver"
+      }
+    },
+    {
+      "pk": 4,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 5,
+        "name": "Alufolie"
+      }
+    },
+    {
+      "pk": 5,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 6,
+        "name": "Hordentopf"
+      }
+    },
+    {
+      "pk": 6,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 7,
+        "name": "Steine"
+      }
+    },
+    {
+      "pk": 7,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 8,
+        "name": "St\u00f6cke"
+      }
+    },
+    {
+      "pk": 8,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 9,
+        "name": "Brennholz"
+      }
+    },
+    {
+      "pk": 9,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 10,
+        "name": "Streichh\u00f6lzer"
+      }
+    },
+    {
+      "pk": 10,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 11,
+        "name": "Kritische Fragen"
+      }
+    },
+    {
+      "pk": 11,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 12,
+        "name": "Seile"
+      }
+    },
+    {
+      "pk": 12,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 13,
+        "name": "Dreickst\u00fccher"
+      }
+    },
+    {
+      "pk": 13,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 14,
+        "name": "Poncho"
+      }
+    },
+    {
+      "pk": 14,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 15,
+        "name": "St\u00f6cke"
+      }
+    },
+    {
+      "pk": 15,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 16,
+        "name": "Isomatte"
+      }
+    },
+    {
+      "pk": 16,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 17,
+        "name": "Gepackte Rucks\u00e4cke"
+      }
+    },
+    {
+      "pk": 17,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 18,
+        "name": "Waage"
+      }
+    },
+    {
+      "pk": 18,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 19,
+        "name": "Holzbrettchen"
+      }
+    },
+    {
+      "pk": 19,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 20,
+        "name": "L\u00f6tkolben"
+      }
+    },
+    {
+      "pk": 20,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 21,
+        "name": "Messer"
+      }
+    },
+    {
+      "pk": 21,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 22,
+        "name": "Schnitzwerkzeuge"
+      }
+    },
+    {
+      "pk": 22,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 23,
+        "name": "leere A6-Hefte"
+      }
+    },
+    {
+      "pk": 23,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 24,
+        "name": "Baumerkennungs Buch"
+      }
+    },
+    {
+      "pk": 24,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 25,
+        "name": "Wildpflanzenbuch"
+      }
+    },
+    {
+      "pk": 25,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 26,
+        "name": "Wildpflanzen-App"
+      }
+    },
+    {
+      "pk": 26,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 27,
+        "name": "Plastikbeh\u00e4lter"
+      }
+    },
+    {
+      "pk": 27,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 28,
+        "name": "Messer"
+      }
+    },
+    {
+      "pk": 28,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 29,
+        "name": "Nadel"
+      }
+    },
+    {
+      "pk": 29,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 30,
+        "name": "Magnet"
+      }
+    },
+    {
+      "pk": 30,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 31,
+        "name": "Schale mit Wasser"
+      }
+    },
+    {
+      "pk": 31,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 32,
+        "name": "Kompass"
+      }
+    },
+    {
+      "pk": 32,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 33,
+        "name": "Erste Hilfe Rucksack/Tasche"
+      }
+    },
+    {
+      "pk": 33,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 34,
+        "name": "Stock"
+      }
+    },
+    {
+      "pk": 34,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 35,
+        "name": "Kompass"
+      }
+    },
+    {
+      "pk": 35,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 36,
+        "name": "B\u00fccher zum Thema"
+      }
+    },
+    {
+      "pk": 36,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 37,
+        "name": "Gew\u00fcrze"
+      }
+    },
+    {
+      "pk": 37,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 38,
+        "name": "K\u00fcchenkiste"
+      }
+    },
+    {
+      "pk": 38,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 39,
+        "name": "Gew\u00fcrzstreuer"
+      }
+    },
+    {
+      "pk": 39,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 40,
+        "name": "Lupe"
+      }
+    },
+    {
+      "pk": 40,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 41,
+        "name": "Feuersteine"
+      }
+    },
+    {
+      "pk": 41,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 42,
+        "name": "Tampon"
+      }
+    },
+    {
+      "pk": 42,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 43,
+        "name": "Zunder"
+      }
+    },
+    {
+      "pk": 43,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 44,
+        "name": "trockene Rinde"
+      }
+    },
+    {
+      "pk": 44,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 45,
+        "name": "Zitrone"
+      }
+    },
+    {
+      "pk": 45,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 46,
+        "name": "Steichh\u00f6lzer"
+      }
+    },
+    {
+      "pk": 46,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 47,
+        "name": "Holzbearbeitungswerkzeige"
+      }
+    },
+    {
+      "pk": 47,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 48,
+        "name": "Teures Mineralwasser"
+      }
+    },
+    {
+      "pk": 48,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 49,
+        "name": "mittleres Mineralwasser"
+      }
+    },
+    {
+      "pk": 49,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 50,
+        "name": "g\u00fcnstiges Mineralwasser"
+      }
+    },
+    {
+      "pk": 50,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 51,
+        "name": "Wasser ohne Kohlens\u00e4ure"
+      }
+    },
+    {
+      "pk": 51,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 52,
+        "name": "Quellwasser"
+      }
+    },
+    {
+      "pk": 52,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 53,
+        "name": "Wasser aus einer Plastikflasc"
+      }
+    },
+    {
+      "pk": 53,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 54,
+        "name": "K\u00fcchensieb oder Kescher"
+      }
+    },
+    {
+      "pk": 54,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 55,
+        "name": "Material \u00fcber andere Pfadfind"
+      }
+    },
+    {
+      "pk": 55,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 56,
+        "name": "Kohte"
+      }
+    },
+    {
+      "pk": 56,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 57,
+        "name": "Karten legende"
+      }
+    },
+    {
+      "pk": 57,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 58,
+        "name": "Wanderkarten"
+      }
+    },
+    {
+      "pk": 58,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 59,
+        "name": "Lineal"
+      }
+    },
+    {
+      "pk": 59,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 60,
+        "name": "Stifte"
+      }
+    },
+    {
+      "pk": 60,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 61,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 61,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 62,
+        "name": "Kohtenplanen"
+      }
+    },
+    {
+      "pk": 62,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 63,
+        "name": "Alte K\u00fcchenteller (in den ver"
+      }
+    },
+    {
+      "pk": 63,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 64,
+        "name": "eine Holzplatte"
+      }
+    },
+    {
+      "pk": 64,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 65,
+        "name": "eine Hei\u00dfklebepistole"
+      }
+    },
+    {
+      "pk": 65,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 66,
+        "name": "Schreibsachen"
+      }
+    },
+    {
+      "pk": 66,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 67,
+        "name": "eine S\u00e4ge"
+      }
+    },
+    {
+      "pk": 67,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 68,
+        "name": "1/2 Kokosnuss pro Person"
+      }
+    },
+    {
+      "pk": 68,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 69,
+        "name": "Schleipapier"
+      }
+    },
+    {
+      "pk": 69,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 70,
+        "name": "eine Hands\u00e4ge"
+      }
+    },
+    {
+      "pk": 70,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 71,
+        "name": "einen Stift"
+      }
+    },
+    {
+      "pk": 71,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 72,
+        "name": "ein Messer"
+      }
+    },
+    {
+      "pk": 72,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 73,
+        "name": "eine Sch\u00fcssel"
+      }
+    },
+    {
+      "pk": 73,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 74,
+        "name": "ggf. Speise\u00f6l und Farbe"
+      }
+    },
+    {
+      "pk": 74,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 75,
+        "name": "Eine Morsetabelle"
+      }
+    },
+    {
+      "pk": 75,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 76,
+        "name": "Stift und Papier"
+      }
+    },
+    {
+      "pk": 76,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 77,
+        "name": "eventuell die \"Pfadi-storys\" "
+      }
+    },
+    {
+      "pk": 77,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 78,
+        "name": "kein Material notwendig"
+      }
+    },
+    {
+      "pk": 78,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 79,
+        "name": "Smartphone"
+      }
+    },
+    {
+      "pk": 79,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 80,
+        "name": "Trickfilmapp"
+      }
+    },
+    {
+      "pk": 80,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 81,
+        "name": "Requisiten"
+      }
+    },
+    {
+      "pk": 81,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 82,
+        "name": "Schuhkarton (Milchkarton)"
+      }
+    },
+    {
+      "pk": 82,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 83,
+        "name": "Plastikt\u00fcte"
+      }
+    },
+    {
+      "pk": 83,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 84,
+        "name": "Tacker"
+      }
+    },
+    {
+      "pk": 84,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 85,
+        "name": "Blumenerde"
+      }
+    },
+    {
+      "pk": 85,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 86,
+        "name": "Pflanzensamen"
+      }
+    },
+    {
+      "pk": 86,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 87,
+        "name": "Setzlinge"
+      }
+    },
+    {
+      "pk": 87,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 88,
+        "name": "Glas"
+      }
+    },
+    {
+      "pk": 88,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 89,
+        "name": "Schnappsglas"
+      }
+    },
+    {
+      "pk": 89,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 90,
+        "name": "Zahnstocher"
+      }
+    },
+    {
+      "pk": 90,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 91,
+        "name": "Leitungswasser"
+      }
+    },
+    {
+      "pk": 91,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 92,
+        "name": "Salz"
+      }
+    },
+    {
+      "pk": 92,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 93,
+        "name": "Sp\u00fclmittel"
+      }
+    },
+    {
+      "pk": 93,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 94,
+        "name": "eisgek\u00fchlter Spiritus"
+      }
+    },
+    {
+      "pk": 94,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 95,
+        "name": "evtl. Tinte oder Lebensmittel"
+      }
+    },
+    {
+      "pk": 95,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 96,
+        "name": "Pappe oder Karton"
+      }
+    },
+    {
+      "pk": 96,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 97,
+        "name": "Klebeband"
+      }
+    },
+    {
+      "pk": 97,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 98,
+        "name": "St\u00f6cke"
+      }
+    },
+    {
+      "pk": 98,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 99,
+        "name": "Bettlaken oder \u00c4hnliches"
+      }
+    },
+    {
+      "pk": 99,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 100,
+        "name": "Befestigungsmaterial"
+      }
+    },
+    {
+      "pk": 100,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 101,
+        "name": "Dia-Projektor oder \u00c4hnliches"
+      }
+    },
+    {
+      "pk": 101,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 102,
+        "name": "Alte Pappe"
+      }
+    },
+    {
+      "pk": 102,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 103,
+        "name": "Bunte Stifte"
+      }
+    },
+    {
+      "pk": 103,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 104,
+        "name": "Waldl\u00e4uferzeichen"
+      }
+    },
+    {
+      "pk": 104,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 105,
+        "name": "Hammer"
+      }
+    },
+    {
+      "pk": 105,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 106,
+        "name": "Holzs\u00e4ge"
+      }
+    },
+    {
+      "pk": 106,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 107,
+        "name": "Schnur"
+      }
+    },
+    {
+      "pk": 107,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 108,
+        "name": "Holzbohrer"
+      }
+    },
+    {
+      "pk": 108,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 109,
+        "name": "leere Dose"
+      }
+    },
+    {
+      "pk": 109,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 110,
+        "name": "alte Zeitung"
+      }
+    },
+    {
+      "pk": 110,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 111,
+        "name": "Luftballon"
+      }
+    },
+    {
+      "pk": 111,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 112,
+        "name": "Kleister oder Bastelkleber"
+      }
+    },
+    {
+      "pk": 112,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 113,
+        "name": "Pinsel"
+      }
+    },
+    {
+      "pk": 113,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 114,
+        "name": "Tesafilm"
+      }
+    },
+    {
+      "pk": 114,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 115,
+        "name": "ausgesp\u00fclter Milch- oder Saft"
+      }
+    },
+    {
+      "pk": 115,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 116,
+        "name": "Bastelschere"
+      }
+    },
+    {
+      "pk": 116,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 117,
+        "name": "Nagelschere"
+      }
+    },
+    {
+      "pk": 117,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 118,
+        "name": "Tacker"
+      }
+    },
+    {
+      "pk": 118,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 119,
+        "name": "Alte Socken"
+      }
+    },
+    {
+      "pk": 119,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 120,
+        "name": "Ballon"
+      }
+    },
+    {
+      "pk": 120,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 121,
+        "name": "Reis oder Sand"
+      }
+    },
+    {
+      "pk": 121,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 122,
+        "name": "Schnur"
+      }
+    },
+    {
+      "pk": 122,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 123,
+        "name": "Schere"
+      }
+    },
+    {
+      "pk": 123,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 124,
+        "name": "Stoffreste"
+      }
+    },
+    {
+      "pk": 124,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 125,
+        "name": "Bienenwachs (z.B. Kerzenreste"
+      }
+    },
+    {
+      "pk": 125,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 126,
+        "name": "Backpapier"
+      }
+    },
+    {
+      "pk": 126,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 127,
+        "name": "2 Luftballons pro Ball"
+      }
+    },
+    {
+      "pk": 127,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 128,
+        "name": "Trichter"
+      }
+    },
+    {
+      "pk": 128,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 129,
+        "name": "Gries oder feiner Sand"
+      }
+    },
+    {
+      "pk": 129,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 130,
+        "name": "Schere"
+      }
+    },
+    {
+      "pk": 130,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 131,
+        "name": "Gem\u00fcsereste nach Belieben"
+      }
+    },
+    {
+      "pk": 131,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 132,
+        "name": "Salz"
+      }
+    },
+    {
+      "pk": 132,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 133,
+        "name": "Messer"
+      }
+    },
+    {
+      "pk": 133,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 134,
+        "name": "Ofen mit Backblech"
+      }
+    },
+    {
+      "pk": 134,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 135,
+        "name": "Smartphone"
+      }
+    },
+    {
+      "pk": 135,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 136,
+        "name": "Fotoapparat"
+      }
+    },
+    {
+      "pk": 136,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 137,
+        "name": "M\u00fcllt\u00fcten"
+      }
+    },
+    {
+      "pk": 137,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 138,
+        "name": "Handschuhe"
+      }
+    },
+    {
+      "pk": 138,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 139,
+        "name": "falls vorhanden: M\u00fcllzange"
+      }
+    },
+    {
+      "pk": 139,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 140,
+        "name": "Gitarre"
+      }
+    },
+    {
+      "pk": 140,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 141,
+        "name": "Computer/ Endger\u00e4t"
+      }
+    },
+    {
+      "pk": 141,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 142,
+        "name": "Kartoffeln"
+      }
+    },
+    {
+      "pk": 142,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 143,
+        "name": "Dr\u00e4hte"
+      }
+    },
+    {
+      "pk": 143,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 144,
+        "name": "Zinkschrauben"
+      }
+    },
+    {
+      "pk": 144,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 145,
+        "name": "Cent-M\u00fcnzen / dicker Kupferdr"
+      }
+    },
+    {
+      "pk": 145,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 146,
+        "name": "LEDs"
+      }
+    },
+    {
+      "pk": 146,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 147,
+        "name": "optional: Gegenst\u00e4nde/Fl\u00fcssig"
+      }
+    },
+    {
+      "pk": 147,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 148,
+        "name": "alte Dose"
+      }
+    },
+    {
+      "pk": 148,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 149,
+        "name": "Handbohrer"
+      }
+    },
+    {
+      "pk": 149,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 150,
+        "name": "evtl. Klebestreifen"
+      }
+    },
+    {
+      "pk": 150,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 151,
+        "name": "evtl. Vorlage oder Zeichnung"
+      }
+    },
+    {
+      "pk": 151,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 152,
+        "name": "eine andere Pfadfindergruppe"
+      }
+    },
+    {
+      "pk": 152,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 153,
+        "name": "Die Zutaten f\u00fcr euer exquisit"
+      }
+    },
+    {
+      "pk": 153,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 154,
+        "name": "Buntstifte"
+      }
+    },
+    {
+      "pk": 154,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 155,
+        "name": "Bl\u00e4tter"
+      }
+    },
+    {
+      "pk": 155,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 156,
+        "name": "ggf. einen Foto-Apperat"
+      }
+    },
+    {
+      "pk": 156,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 157,
+        "name": "mind. einen Computer"
+      }
+    },
+    {
+      "pk": 157,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 158,
+        "name": "die ausgedruckte Entsch\u00e4rfung"
+      }
+    },
+    {
+      "pk": 158,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 159,
+        "name": "Telefone oder Handys um mitei"
+      }
+    },
+    {
+      "pk": 159,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 160,
+        "name": "Vereinbarte Gegenst\u00e4nde"
+      }
+    },
+    {
+      "pk": 160,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 161,
+        "name": "Computer/ Endger\u00e4t mit Intern"
+      }
+    },
+    {
+      "pk": 161,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 162,
+        "name": "Handy"
+      }
+    },
+    {
+      "pk": 162,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 163,
+        "name": "ggf. Liederb\u00fccher"
+      }
+    },
+    {
+      "pk": 163,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 164,
+        "name": "Stift"
+      }
+    },
+    {
+      "pk": 164,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 165,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 165,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 166,
+        "name": "ggf. Crepeband"
+      }
+    },
+    {
+      "pk": 166,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 167,
+        "name": "evtl. Kreide und Tafel"
+      }
+    },
+    {
+      "pk": 167,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 168,
+        "name": "evtl. Zettel mit Orten in der"
+      }
+    },
+    {
+      "pk": 168,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 169,
+        "name": "evtl. Wasserkanister/ -flasch"
+      }
+    },
+    {
+      "pk": 169,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 170,
+        "name": "evtl. Messbecher"
+      }
+    },
+    {
+      "pk": 170,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 171,
+        "name": "lautstarker Kleinkram"
+      }
+    },
+    {
+      "pk": 171,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 172,
+        "name": "Stift"
+      }
+    },
+    {
+      "pk": 172,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 173,
+        "name": "Notizblock"
+      }
+    },
+    {
+      "pk": 173,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 174,
+        "name": "evtl. Schreib-/Malutensilien"
+      }
+    },
+    {
+      "pk": 174,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 175,
+        "name": "Zeitungspapier oder Folie"
+      }
+    },
+    {
+      "pk": 175,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 176,
+        "name": "alte Klamotten"
+      }
+    },
+    {
+      "pk": 176,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 177,
+        "name": "Pinsel; Schw\u00e4mme; Zahnb\u00fcrsten"
+      }
+    },
+    {
+      "pk": 177,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 178,
+        "name": "Farben aller Art (am besten A"
+      }
+    },
+    {
+      "pk": 178,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 179,
+        "name": "Leinwand; Tapete oder Plakate"
+      }
+    },
+    {
+      "pk": 179,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 180,
+        "name": "wei\u00dfes Blatt"
+      }
+    },
+    {
+      "pk": 180,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 181,
+        "name": "Stift"
+      }
+    },
+    {
+      "pk": 181,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 182,
+        "name": "z.B. 250 DIN A4 Bl\u00e4tter"
+      }
+    },
+    {
+      "pk": 182,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 183,
+        "name": "Bastelkleber (am besten einer"
+      }
+    },
+    {
+      "pk": 183,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 184,
+        "name": "der beim Trocknen durchsichti"
+      }
+    },
+    {
+      "pk": 184,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 185,
+        "name": "Stoffreste f\u00fcr den Einband"
+      }
+    },
+    {
+      "pk": 185,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 186,
+        "name": "Wachsfaden"
+      }
+    },
+    {
+      "pk": 186,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 187,
+        "name": "Nadeln"
+      }
+    },
+    {
+      "pk": 187,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 188,
+        "name": "feste Pappe"
+      }
+    },
+    {
+      "pk": 188,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 189,
+        "name": "Pinsel"
+      }
+    },
+    {
+      "pk": 189,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 190,
+        "name": "Lineal"
+      }
+    },
+    {
+      "pk": 190,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 191,
+        "name": "Stift"
+      }
+    },
+    {
+      "pk": 191,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 192,
+        "name": "Sachen zum Verzieren"
+      }
+    },
+    {
+      "pk": 192,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 193,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 193,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 194,
+        "name": "Stifte"
+      }
+    },
+    {
+      "pk": 194,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 195,
+        "name": "was euch sonst so einf\u00e4llt"
+      }
+    },
+    {
+      "pk": 195,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 196,
+        "name": "Material f\u00fcr eure gew\u00fcnschte "
+      }
+    },
+    {
+      "pk": 196,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 197,
+        "name": "Naturmaterialien"
+      }
+    },
+    {
+      "pk": 197,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 198,
+        "name": "Pappe/Holz"
+      }
+    },
+    {
+      "pk": 198,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 199,
+        "name": "Scharniere/Stoff"
+      }
+    },
+    {
+      "pk": 199,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 200,
+        "name": "Leim"
+      }
+    },
+    {
+      "pk": 200,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 201,
+        "name": "Murmeln"
+      }
+    },
+    {
+      "pk": 201,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 202,
+        "name": "Kram (Pappe; Holzreste; etc.)"
+      }
+    },
+    {
+      "pk": 202,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 203,
+        "name": "Computer/ Endger\u00e4t mit Intern"
+      }
+    },
+    {
+      "pk": 203,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 204,
+        "name": "Stift"
+      }
+    },
+    {
+      "pk": 204,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 205,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 205,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 206,
+        "name": "Computer/ Endger\u00e4t"
+      }
+    },
+    {
+      "pk": 206,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 207,
+        "name": "alter Stoff"
+      }
+    },
+    {
+      "pk": 207,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 208,
+        "name": "Kordel oder Schleifband"
+      }
+    },
+    {
+      "pk": 208,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 209,
+        "name": "Nadel und Faden (oder N\u00e4hmasc"
+      }
+    },
+    {
+      "pk": 209,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 210,
+        "name": "B\u00fcroklammer oder Sicherheitsn"
+      }
+    },
+    {
+      "pk": 210,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 211,
+        "name": "Edding"
+      }
+    },
+    {
+      "pk": 211,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 212,
+        "name": "Steine oder Haselnussrute"
+      }
+    },
+    {
+      "pk": 212,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 213,
+        "name": "Farbe zum F\u00e4rben der Spielste"
+      }
+    },
+    {
+      "pk": 213,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 214,
+        "name": "alte Stoffreste (z.B. altes B"
+      }
+    },
+    {
+      "pk": 214,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 215,
+        "name": "Nadel und Faden oder N\u00e4hmasch"
+      }
+    },
+    {
+      "pk": 215,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 216,
+        "name": "Sachen zum Linoldruck oder St"
+      }
+    },
+    {
+      "pk": 216,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 217,
+        "name": "2 Zwiebel"
+      }
+    },
+    {
+      "pk": 217,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 218,
+        "name": "5 Knoblauchzehen"
+      }
+    },
+    {
+      "pk": 218,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 219,
+        "name": "4 EL Tomatenmark"
+      }
+    },
+    {
+      "pk": 219,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 220,
+        "name": "5l Gem\u00fcsebr\u00fche"
+      }
+    },
+    {
+      "pk": 220,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 221,
+        "name": "2 Dose Tomaten"
+      }
+    },
+    {
+      "pk": 221,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 222,
+        "name": "250 rote Linsen"
+      }
+    },
+    {
+      "pk": 222,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 223,
+        "name": "2 gro\u00dfe M\u00f6hren"
+      }
+    },
+    {
+      "pk": 223,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 224,
+        "name": "Salz"
+      }
+    },
+    {
+      "pk": 224,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 225,
+        "name": "Pfeffer"
+      }
+    },
+    {
+      "pk": 225,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 226,
+        "name": "z.B. Majoran Oregano"
+      }
+    },
+    {
+      "pk": 226,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 227,
+        "name": "optional Balsamico Essig"
+      }
+    },
+    {
+      "pk": 227,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 228,
+        "name": "Computer/ Endger\u00e4t"
+      }
+    },
+    {
+      "pk": 228,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 229,
+        "name": "Zettel"
+      }
+    },
+    {
+      "pk": 229,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 230,
+        "name": "Stift"
+      }
+    },
+    {
+      "pk": 230,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 231,
+        "name": "Thermometer"
+      }
+    },
+    {
+      "pk": 231,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 232,
+        "name": "Barometer"
+      }
+    },
+    {
+      "pk": 232,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 233,
+        "name": "Wolkenbuch"
+      }
+    },
+    {
+      "pk": 233,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 234,
+        "name": "Wetterberichte"
+      }
+    },
+    {
+      "pk": 234,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 235,
+        "name": "Wetter-App"
+      }
+    },
+    {
+      "pk": 235,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 236,
+        "name": "1 Wasserflasche"
+      }
+    },
+    {
+      "pk": 236,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 237,
+        "name": "ein Glas voll Wasser"
+      }
+    },
+    {
+      "pk": 237,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 238,
+        "name": "Schere"
+      }
+    },
+    {
+      "pk": 238,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 239,
+        "name": "ggf. einen Nagel mit Kerze"
+      }
+    },
+    {
+      "pk": 239,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 240,
+        "name": "ggf. Sekundenkleber"
+      }
+    },
+    {
+      "pk": 240,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 241,
+        "name": "Styroporkugeln oder Papier"
+      }
+    },
+    {
+      "pk": 241,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 242,
+        "name": "Karton"
+      }
+    },
+    {
+      "pk": 242,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 243,
+        "name": "Schere"
+      }
+    },
+    {
+      "pk": 243,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 244,
+        "name": "Farben"
+      }
+    },
+    {
+      "pk": 244,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 245,
+        "name": "Pinsel"
+      }
+    },
+    {
+      "pk": 245,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 246,
+        "name": "Verschiedene Planzen oder Erd"
+      }
+    },
+    {
+      "pk": 246,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 247,
+        "name": "Mixer oder P\u00fcrierstab"
+      }
+    },
+    {
+      "pk": 247,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 248,
+        "name": "Speisest\u00e4rke"
+      }
+    },
+    {
+      "pk": 248,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 249,
+        "name": "Spaydosen"
+      }
+    },
+    {
+      "pk": 249,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 250,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 250,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 251,
+        "name": "Schere"
+      }
+    },
+    {
+      "pk": 251,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 252,
+        "name": "Leinw\u00e4nde"
+      }
+    },
+    {
+      "pk": 252,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 253,
+        "name": "Laptop/ Endger\u00e4t mit Internet"
+      }
+    },
+    {
+      "pk": 253,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 254,
+        "name": "Bilderrahmen mit Glas"
+      }
+    },
+    {
+      "pk": 254,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 255,
+        "name": "Folienstift"
+      }
+    },
+    {
+      "pk": 255,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 256,
+        "name": "saugf\u00e4higes Papier"
+      }
+    },
+    {
+      "pk": 256,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 257,
+        "name": "Nagel und Hammer"
+      }
+    },
+    {
+      "pk": 257,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 258,
+        "name": "Glasplatte"
+      }
+    },
+    {
+      "pk": 258,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 259,
+        "name": "Ein verschlie\u00dfbares Glas (Inh"
+      }
+    },
+    {
+      "pk": 259,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 260,
+        "name": "Sandkastenf\u00f6rmchen (Inhalt: c"
+      }
+    },
+    {
+      "pk": 260,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 261,
+        "name": "Feines Sieb"
+      }
+    },
+    {
+      "pk": 261,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 262,
+        "name": "R\u00fchrsch\u00fcssel"
+      }
+    },
+    {
+      "pk": 262,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 263,
+        "name": "Handmixer/ besser P\u00fcrierstab"
+      }
+    },
+    {
+      "pk": 263,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 264,
+        "name": "Backpapier"
+      }
+    },
+    {
+      "pk": 264,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 265,
+        "name": "Messer"
+      }
+    },
+    {
+      "pk": 265,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 266,
+        "name": "L\u00f6ffel"
+      }
+    },
+    {
+      "pk": 266,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 267,
+        "name": "Teigschaber (zum Auskratzen d"
+      }
+    },
+    {
+      "pk": 267,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 268,
+        "name": "2 P\u00e4ckchen H-Sahne/frische Sa"
+      }
+    },
+    {
+      "pk": 268,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 269,
+        "name": "1x TK-Fr\u00fcchte (bspw. 500g Wal"
+      }
+    },
+    {
+      "pk": 269,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 270,
+        "name": "N\u00e4hgarn"
+      }
+    },
+    {
+      "pk": 270,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 271,
+        "name": "Stoff"
+      }
+    },
+    {
+      "pk": 271,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 272,
+        "name": "N\u00e4hmaschine"
+      }
+    },
+    {
+      "pk": 272,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 273,
+        "name": "B\u00fcgeleisen"
+      }
+    },
+    {
+      "pk": 273,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 274,
+        "name": "Schere"
+      }
+    },
+    {
+      "pk": 274,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 275,
+        "name": "Draht (Blumendraht)"
+      }
+    },
+    {
+      "pk": 275,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 276,
+        "name": "Hosengummi/Kordel"
+      }
+    },
+    {
+      "pk": 276,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 277,
+        "name": "Stecknadeln"
+      }
+    },
+    {
+      "pk": 277,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 278,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 278,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 279,
+        "name": "Stift"
+      }
+    },
+    {
+      "pk": 279,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 280,
+        "name": "Kleber"
+      }
+    },
+    {
+      "pk": 280,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 281,
+        "name": "Rotkohl (unbearbeitet)"
+      }
+    },
+    {
+      "pk": 281,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 282,
+        "name": "Topf"
+      }
+    },
+    {
+      "pk": 282,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 283,
+        "name": "Sieb"
+      }
+    },
+    {
+      "pk": 283,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 284,
+        "name": "Wasser"
+      }
+    },
+    {
+      "pk": 284,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 285,
+        "name": "ein paar Gl\u00e4ser"
+      }
+    },
+    {
+      "pk": 285,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 286,
+        "name": "Essig"
+      }
+    },
+    {
+      "pk": 286,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 287,
+        "name": "Zitronensaft"
+      }
+    },
+    {
+      "pk": 287,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 288,
+        "name": "Seife"
+      }
+    },
+    {
+      "pk": 288,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 289,
+        "name": "Natron"
+      }
+    },
+    {
+      "pk": 289,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 290,
+        "name": "Backpulver"
+      }
+    },
+    {
+      "pk": 290,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 291,
+        "name": "Waschmittel"
+      }
+    },
+    {
+      "pk": 291,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 292,
+        "name": "Cola"
+      }
+    },
+    {
+      "pk": 292,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 293,
+        "name": "andere Haushaltschemikalien"
+      }
+    },
+    {
+      "pk": 293,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 294,
+        "name": "Einen Schatz?"
+      }
+    },
+    {
+      "pk": 294,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 295,
+        "name": "500g Mehl"
+      }
+    },
+    {
+      "pk": 295,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 296,
+        "name": "1Tl Backpulver"
+      }
+    },
+    {
+      "pk": 296,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 297,
+        "name": "200g Zucker"
+      }
+    },
+    {
+      "pk": 297,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 298,
+        "name": "1 Prise Salz"
+      }
+    },
+    {
+      "pk": 298,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 299,
+        "name": "5 Tropfen Rum-Aroma"
+      }
+    },
+    {
+      "pk": 299,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 300,
+        "name": "2 Eier"
+      }
+    },
+    {
+      "pk": 300,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 301,
+        "name": "250g Butter"
+      }
+    },
+    {
+      "pk": 301,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 302,
+        "name": "2 Eigelb"
+      }
+    },
+    {
+      "pk": 302,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 303,
+        "name": "Teller"
+      }
+    },
+    {
+      "pk": 303,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 304,
+        "name": "L\u00f6ffel"
+      }
+    },
+    {
+      "pk": 304,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 305,
+        "name": "Puderzucker"
+      }
+    },
+    {
+      "pk": 305,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 306,
+        "name": "Wasser"
+      }
+    },
+    {
+      "pk": 306,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 307,
+        "name": "Keksdeko"
+      }
+    },
+    {
+      "pk": 307,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 308,
+        "name": "Rechteckh\u00f6lzer aus dem Baumar"
+      }
+    },
+    {
+      "pk": 308,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 309,
+        "name": "15 m leichte Schn\u00fcre"
+      }
+    },
+    {
+      "pk": 309,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 310,
+        "name": "Blauer Sack"
+      }
+    },
+    {
+      "pk": 310,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 311,
+        "name": "Schere"
+      }
+    },
+    {
+      "pk": 311,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 312,
+        "name": "Computer/ Endger\u00e4t"
+      }
+    },
+    {
+      "pk": 312,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 313,
+        "name": "Stift & Papier"
+      }
+    },
+    {
+      "pk": 313,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 314,
+        "name": "Zahnstocher"
+      }
+    },
+    {
+      "pk": 314,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 315,
+        "name": "\u00c4ste"
+      }
+    },
+    {
+      "pk": 315,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 316,
+        "name": "Stangen"
+      }
+    },
+    {
+      "pk": 316,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 317,
+        "name": "Zeltstangen"
+      }
+    },
+    {
+      "pk": 317,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 318,
+        "name": "Baumst\u00e4mme"
+      }
+    },
+    {
+      "pk": 318,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 319,
+        "name": "Material f\u00fcr Parcour"
+      }
+    },
+    {
+      "pk": 319,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 320,
+        "name": "Improvisierte Mini-Golfb\u00e4lle"
+      }
+    },
+    {
+      "pk": 320,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 321,
+        "name": "Fahrradschl\u00e4uche"
+      }
+    },
+    {
+      "pk": 321,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 322,
+        "name": "Flickzeug"
+      }
+    },
+    {
+      "pk": 322,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 323,
+        "name": "Stift und Papier"
+      }
+    },
+    {
+      "pk": 323,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 324,
+        "name": "Karte"
+      }
+    },
+    {
+      "pk": 324,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 325,
+        "name": "Kompass"
+      }
+    },
+    {
+      "pk": 325,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 326,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 326,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 327,
+        "name": "Ein Schatz!"
+      }
+    },
+    {
+      "pk": 327,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 328,
+        "name": "Seile"
+      }
+    },
+    {
+      "pk": 328,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 329,
+        "name": "S\u00e4ge"
+      }
+    },
+    {
+      "pk": 329,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 330,
+        "name": "Bohrer"
+      }
+    },
+    {
+      "pk": 330,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 331,
+        "name": "Holzleim"
+      }
+    },
+    {
+      "pk": 331,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 332,
+        "name": "Farbe"
+      }
+    },
+    {
+      "pk": 332,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 333,
+        "name": "Zollstock"
+      }
+    },
+    {
+      "pk": 333,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 334,
+        "name": "Bleistift"
+      }
+    },
+    {
+      "pk": 334,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 335,
+        "name": "\u00c4pfel"
+      }
+    },
+    {
+      "pk": 335,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 336,
+        "name": "Startgegenst\u00e4nde"
+      }
+    },
+    {
+      "pk": 336,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 337,
+        "name": "Rucksack"
+      }
+    },
+    {
+      "pk": 337,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 338,
+        "name": "Hajkgep\u00e4ck"
+      }
+    },
+    {
+      "pk": 338,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 339,
+        "name": "Holzplatte"
+      }
+    },
+    {
+      "pk": 339,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 340,
+        "name": "L\u00f6tkolben"
+      }
+    },
+    {
+      "pk": 340,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 341,
+        "name": "Ideen"
+      }
+    },
+    {
+      "pk": 341,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 342,
+        "name": "Computer"
+      }
+    },
+    {
+      "pk": 342,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 343,
+        "name": "Aufnahmeger\u00e4t (Handy oder Lap"
+      }
+    },
+    {
+      "pk": 343,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 344,
+        "name": "passende Software"
+      }
+    },
+    {
+      "pk": 344,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 345,
+        "name": "eventuell Hintergrundger\u00e4usch"
+      }
+    },
+    {
+      "pk": 345,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 346,
+        "name": "Eine Geschichte eurer Wahl"
+      }
+    },
+    {
+      "pk": 346,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 347,
+        "name": "Soja Granulat"
+      }
+    },
+    {
+      "pk": 347,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 348,
+        "name": "Gem\u00fc\u00dfebr\u00fche"
+      }
+    },
+    {
+      "pk": 348,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 349,
+        "name": "Pfanne oder Kocher"
+      }
+    },
+    {
+      "pk": 349,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 350,
+        "name": "Knotenbuch oder Internet"
+      }
+    },
+    {
+      "pk": 350,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 351,
+        "name": "Lakritz-Schnecken"
+      }
+    },
+    {
+      "pk": 351,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 352,
+        "name": "Bunte Schn\u00fcre (S\u00fc\u00dfigkeiten)"
+      }
+    },
+    {
+      "pk": 352,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 353,
+        "name": "Polstermaterial"
+      }
+    },
+    {
+      "pk": 353,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 354,
+        "name": "Eier"
+      }
+    },
+    {
+      "pk": 354,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 355,
+        "name": "Naturmaterialien"
+      }
+    },
+    {
+      "pk": 355,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 356,
+        "name": "Reinigungszeug"
+      }
+    },
+    {
+      "pk": 356,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 357,
+        "name": "B\u00fccher"
+      }
+    },
+    {
+      "pk": 357,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 358,
+        "name": "Sternenkarte"
+      }
+    },
+    {
+      "pk": 358,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 359,
+        "name": "Liedtexte"
+      }
+    },
+    {
+      "pk": 359,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 360,
+        "name": "Liederb\u00fccher"
+      }
+    },
+    {
+      "pk": 360,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 361,
+        "name": "Musikinstrumente"
+      }
+    },
+    {
+      "pk": 361,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 362,
+        "name": "Backofen"
+      }
+    },
+    {
+      "pk": 362,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 363,
+        "name": "Haferflocken"
+      }
+    },
+    {
+      "pk": 363,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 364,
+        "name": "Bananen"
+      }
+    },
+    {
+      "pk": 364,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 365,
+        "name": "Was-euch-sonst-so-einf\u00e4llt"
+      }
+    },
+    {
+      "pk": 365,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 366,
+        "name": "Kothenbahnen"
+      }
+    },
+    {
+      "pk": 366,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 367,
+        "name": "Seile"
+      }
+    },
+    {
+      "pk": 367,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 368,
+        "name": "Heringe"
+      }
+    },
+    {
+      "pk": 368,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 369,
+        "name": "St\u00f6cke"
+      }
+    },
+    {
+      "pk": 369,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 370,
+        "name": "Hammer/Beil"
+      }
+    },
+    {
+      "pk": 370,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 371,
+        "name": "Holz (selbst gesucht)"
+      }
+    },
+    {
+      "pk": 371,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 372,
+        "name": "Schnur"
+      }
+    },
+    {
+      "pk": 372,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 373,
+        "name": "Taschenmesser"
+      }
+    },
+    {
+      "pk": 373,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 374,
+        "name": "Feuerzeug"
+      }
+    },
+    {
+      "pk": 374,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 375,
+        "name": "Kohtenstoff"
+      }
+    },
+    {
+      "pk": 375,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 376,
+        "name": "Jeans"
+      }
+    },
+    {
+      "pk": 376,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 377,
+        "name": "L\u00f6scheimer"
+      }
+    },
+    {
+      "pk": 377,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 378,
+        "name": "Feuerl\u00f6scher"
+      }
+    },
+    {
+      "pk": 378,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 379,
+        "name": "Alter Schlafsack"
+      }
+    },
+    {
+      "pk": 379,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 380,
+        "name": "Alte Kerzen"
+      }
+    },
+    {
+      "pk": 380,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 381,
+        "name": "Docht"
+      }
+    },
+    {
+      "pk": 381,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 382,
+        "name": "Schnur"
+      }
+    },
+    {
+      "pk": 382,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 383,
+        "name": "Plastikbecher"
+      }
+    },
+    {
+      "pk": 383,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 384,
+        "name": "Luftballons"
+      }
+    },
+    {
+      "pk": 384,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 385,
+        "name": "50g Kakaobutter"
+      }
+    },
+    {
+      "pk": 385,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 386,
+        "name": "40g Kokos\u00f6l"
+      }
+    },
+    {
+      "pk": 386,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 387,
+        "name": "1 EL (ca. 10g) pflegendes \u00d6l "
+      }
+    },
+    {
+      "pk": 387,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 388,
+        "name": "Mandel\u00f6l"
+      }
+    },
+    {
+      "pk": 388,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 389,
+        "name": "Traubenkern\u00f6l)"
+      }
+    },
+    {
+      "pk": 389,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 390,
+        "name": "Wenige Tropfen \u00e4therisches \u00d6l"
+      }
+    },
+    {
+      "pk": 390,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 391,
+        "name": "Ecco Verde"
+      }
+    },
+    {
+      "pk": 391,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 392,
+        "name": "Avocadostore)"
+      }
+    },
+    {
+      "pk": 392,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 393,
+        "name": "Ein kleines Schraubglas (f\u00fcr "
+      }
+    },
+    {
+      "pk": 393,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 394,
+        "name": "Wandersocken"
+      }
+    },
+    {
+      "pk": 394,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 395,
+        "name": "Improvisierte Schl\u00e4ger"
+      }
+    },
+    {
+      "pk": 395,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 396,
+        "name": "Material f\u00fcr den Papour"
+      }
+    },
+    {
+      "pk": 396,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 397,
+        "name": "Wanderkarte"
+      }
+    },
+    {
+      "pk": 397,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 398,
+        "name": "Gedruckte Karten"
+      }
+    },
+    {
+      "pk": 398,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 399,
+        "name": "Smartphone"
+      }
+    },
+    {
+      "pk": 399,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 400,
+        "name": "Tablet"
+      }
+    },
+    {
+      "pk": 400,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 401,
+        "name": "Durchgef\u00e4rbte Stabkerzen"
+      }
+    },
+    {
+      "pk": 401,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 402,
+        "name": "Hei\u00dfes Wasser"
+      }
+    },
+    {
+      "pk": 402,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 403,
+        "name": "Kaltes Wasser"
+      }
+    },
+    {
+      "pk": 403,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 404,
+        "name": "Zwei Sch\u00fcsseln"
+      }
+    },
+    {
+      "pk": 404,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 405,
+        "name": "Ein Glas/Nudelholz"
+      }
+    },
+    {
+      "pk": 405,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 406,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 406,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 407,
+        "name": "Stift"
+      }
+    },
+    {
+      "pk": 407,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 408,
+        "name": "Digitaler Zugang"
+      }
+    },
+    {
+      "pk": 408,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 409,
+        "name": "Stoppuhr"
+      }
+    },
+    {
+      "pk": 409,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 410,
+        "name": "Smartphone"
+      }
+    },
+    {
+      "pk": 410,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 411,
+        "name": "Enger\u00e4t und Internetzugang"
+      }
+    },
+    {
+      "pk": 411,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 412,
+        "name": "Briefpapier oder Postkarte"
+      }
+    },
+    {
+      "pk": 412,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 413,
+        "name": "Stifte"
+      }
+    },
+    {
+      "pk": 413,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 414,
+        "name": "Briefmarke"
+      }
+    },
+    {
+      "pk": 414,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 415,
+        "name": "Kamera/Smartphone"
+      }
+    },
+    {
+      "pk": 415,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 416,
+        "name": "Papier und Stift"
+      }
+    },
+    {
+      "pk": 416,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 417,
+        "name": "ein Schatz"
+      }
+    },
+    {
+      "pk": 417,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 418,
+        "name": "Internetzugang auf einem Endg"
+      }
+    },
+    {
+      "pk": 418,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 419,
+        "name": "Salz"
+      }
+    },
+    {
+      "pk": 419,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 420,
+        "name": "Sch\u00fcssel"
+      }
+    },
+    {
+      "pk": 420,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 421,
+        "name": "L\u00f6ffel"
+      }
+    },
+    {
+      "pk": 421,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 422,
+        "name": "Kakao"
+      }
+    },
+    {
+      "pk": 422,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 423,
+        "name": "Kokosfett"
+      }
+    },
+    {
+      "pk": 423,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 424,
+        "name": "Datteln"
+      }
+    },
+    {
+      "pk": 424,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 425,
+        "name": "N\u00fcsse"
+      }
+    },
+    {
+      "pk": 425,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 426,
+        "name": "Fertigkakao"
+      }
+    },
+    {
+      "pk": 426,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 427,
+        "name": "Sch\u00fcssel"
+      }
+    },
+    {
+      "pk": 427,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 428,
+        "name": "P\u00fcrierstab oder Mixer"
+      }
+    },
+    {
+      "pk": 428,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 429,
+        "name": "Sieb"
+      }
+    },
+    {
+      "pk": 429,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 430,
+        "name": "Auffangschale"
+      }
+    },
+    {
+      "pk": 430,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 431,
+        "name": "leere Marmeladengl\u00e4ser"
+      }
+    },
+    {
+      "pk": 431,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 432,
+        "name": "Liste mit unterschiedlichen Z"
+      }
+    },
+    {
+      "pk": 432,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 433,
+        "name": "Blatt Papier"
+      }
+    },
+    {
+      "pk": 433,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 434,
+        "name": "Stift"
+      }
+    },
+    {
+      "pk": 434,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 435,
+        "name": "Ausgedruckten Pfadfinderregel"
+      }
+    },
+    {
+      "pk": 435,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 436,
+        "name": "Beh\u00e4lter f\u00fcr die Creme"
+      }
+    },
+    {
+      "pk": 436,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 437,
+        "name": "Getrocknete Tomaten"
+      }
+    },
+    {
+      "pk": 437,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 438,
+        "name": "Oliven\u00f6l"
+      }
+    },
+    {
+      "pk": 438,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 439,
+        "name": "Basilikum"
+      }
+    },
+    {
+      "pk": 439,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 440,
+        "name": "gehackte Mandeln"
+      }
+    },
+    {
+      "pk": 440,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 441,
+        "name": "Pfeffer"
+      }
+    },
+    {
+      "pk": 441,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 442,
+        "name": "Salz"
+      }
+    },
+    {
+      "pk": 442,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 443,
+        "name": "Etwas zum P\u00fcrieren"
+      }
+    },
+    {
+      "pk": 443,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 444,
+        "name": "Endger\u00e4t mit Internetzugang"
+      }
+    },
+    {
+      "pk": 444,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 445,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 445,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 446,
+        "name": "Zahnstocher"
+      }
+    },
+    {
+      "pk": 446,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 447,
+        "name": "schwarze Pappe"
+      }
+    },
+    {
+      "pk": 447,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 448,
+        "name": "Salz"
+      }
+    },
+    {
+      "pk": 448,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 449,
+        "name": "Mehl"
+      }
+    },
+    {
+      "pk": 449,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 450,
+        "name": "Fahrr\u00e4nder"
+      }
+    },
+    {
+      "pk": 450,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 451,
+        "name": "Fahrtenmesser"
+      }
+    },
+    {
+      "pk": 451,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 452,
+        "name": "Schnitzholz"
+      }
+    },
+    {
+      "pk": 452,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 453,
+        "name": "Beil"
+      }
+    },
+    {
+      "pk": 453,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 454,
+        "name": "Sch\u00e4lmesser"
+      }
+    },
+    {
+      "pk": 454,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 455,
+        "name": "Transparenzpapier"
+      }
+    },
+    {
+      "pk": 455,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 456,
+        "name": "Fineliner"
+      }
+    },
+    {
+      "pk": 456,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 457,
+        "name": "Schnur"
+      }
+    },
+    {
+      "pk": 457,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 458,
+        "name": "Lineal"
+      }
+    },
+    {
+      "pk": 458,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 459,
+        "name": "Gedruckte Vorlagen"
+      }
+    },
+    {
+      "pk": 459,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 460,
+        "name": "Kein Plastik!"
+      }
+    },
+    {
+      "pk": 460,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 461,
+        "name": "Kamera"
+      }
+    },
+    {
+      "pk": 461,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 462,
+        "name": "Taschenlampe"
+      }
+    },
+    {
+      "pk": 462,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 463,
+        "name": "Karte der Region"
+      }
+    },
+    {
+      "pk": 463,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 464,
+        "name": "Kompass"
+      }
+    },
+    {
+      "pk": 464,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 465,
+        "name": "Planzeiger"
+      }
+    },
+    {
+      "pk": 465,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 466,
+        "name": "GPS-Ger\u00e4t"
+      }
+    },
+    {
+      "pk": 466,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 467,
+        "name": "Zettel und Stift"
+      }
+    },
+    {
+      "pk": 467,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 468,
+        "name": "Internet"
+      }
+    },
+    {
+      "pk": 468,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 469,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 469,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 470,
+        "name": "Stifte"
+      }
+    },
+    {
+      "pk": 470,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 471,
+        "name": "Glasflasche oder anderes Gef\u00e4"
+      }
+    },
+    {
+      "pk": 471,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 472,
+        "name": "Kleber"
+      }
+    },
+    {
+      "pk": 472,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 473,
+        "name": "Sand"
+      }
+    },
+    {
+      "pk": 473,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 474,
+        "name": "Wachs zum Versiegeln"
+      }
+    },
+    {
+      "pk": 474,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 475,
+        "name": "Internet"
+      }
+    },
+    {
+      "pk": 475,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 476,
+        "name": "Holz"
+      }
+    },
+    {
+      "pk": 476,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 477,
+        "name": "Stifte"
+      }
+    },
+    {
+      "pk": 477,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 478,
+        "name": "Papier"
+      }
+    },
+    {
+      "pk": 478,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 479,
+        "name": "Bingo-Karten"
+      }
+    },
+    {
+      "pk": 479,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 480,
+        "name": "Beh\u00e4lter"
+      }
+    },
+    {
+      "pk": 480,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 481,
+        "name": "Belohnung"
+      }
+    },
+    {
+      "pk": 481,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 482,
+        "name": "Schraubverschl\u00fcsse"
+      }
+    },
+    {
+      "pk": 482,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 483,
+        "name": "Stoffbeutel"
+      }
+    },
+    {
+      "pk": 483,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 484,
+        "name": "Edding"
+      }
+    },
+    {
+      "pk": 484,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 485,
+        "name": "Acrylfarbe"
+      }
+    },
+    {
+      "pk": 485,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 486,
+        "name": "Lupe"
+      }
+    },
+    {
+      "pk": 486,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 487,
+        "name": "Marmeladenglas"
+      }
+    },
+    {
+      "pk": 487,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 488,
+        "name": "Becherlupe"
+      }
+    },
+    {
+      "pk": 488,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": null,
+        "updated_at": null,
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 489,
+        "name": "Pappteller"
+      }
+    },
+    {
+      "pk": 489,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-05-18T09:08:04.577Z",
+        "updated_at": "2021-05-18T09:08:04.589Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 490,
+        "name": "Bestimmungsbuch"
+      }
+    },
+    {
+      "pk": 490,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-05T14:40:32.076Z",
+        "updated_at": "2021-06-05T14:40:32.081Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 491,
+        "name": "Liste mit Zitaten"
+      }
+    },
+    {
+      "pk": 491,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T17:46:54.016Z",
+        "updated_at": "2021-06-06T17:46:54.021Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 492,
+        "name": "Gem\u00fcsereste"
+      }
+    },
+    {
+      "pk": 492,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T17:46:54.053Z",
+        "updated_at": "2021-06-06T17:46:54.055Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 493,
+        "name": "Backblech"
+      }
+    },
+    {
+      "pk": 493,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T17:52:30.211Z",
+        "updated_at": "2021-06-06T17:52:30.214Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 494,
+        "name": "Pfadfindersymbole"
+      }
+    },
+    {
+      "pk": 494,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T18:12:14.103Z",
+        "updated_at": "2021-06-06T18:12:14.105Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 495,
+        "name": "Karten Legende"
+      }
+    },
+    {
+      "pk": 495,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T18:32:09.491Z",
+        "updated_at": "2021-06-06T18:32:09.494Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 496,
+        "name": "Papierfliegeranleitungen"
+      }
+    },
+    {
+      "pk": 496,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T18:38:20.098Z",
+        "updated_at": "2021-06-06T18:38:20.101Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 497,
+        "name": "Reste"
+      }
+    },
+    {
+      "pk": 497,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T18:59:25.491Z",
+        "updated_at": "2021-06-06T18:59:25.493Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 498,
+        "name": "Kakaobutter"
+      }
+    },
+    {
+      "pk": 498,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T18:59:25.503Z",
+        "updated_at": "2021-06-06T18:59:25.505Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 499,
+        "name": "Kokos\u00f6l"
+      }
+    },
+    {
+      "pk": 499,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T18:59:25.514Z",
+        "updated_at": "2021-06-06T18:59:25.516Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 500,
+        "name": "pflegendes \u00d6l "
+      }
+    },
+    {
+      "pk": 500,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T18:59:25.530Z",
+        "updated_at": "2021-06-06T18:59:25.532Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 501,
+        "name": "Traubenkern\u00f6l"
+      }
+    },
+    {
+      "pk": 501,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T18:59:25.561Z",
+        "updated_at": "2021-06-06T18:59:25.563Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 502,
+        "name": "kleines Schraubglas"
+      }
+    },
+    {
+      "pk": 502,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T20:49:28.160Z",
+        "updated_at": "2021-06-06T20:49:28.162Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 503,
+        "name": "Zwiebel"
+      }
+    },
+    {
+      "pk": 503,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T20:49:28.171Z",
+        "updated_at": "2021-06-06T20:49:28.173Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 504,
+        "name": "Knoblauchzehen"
+      }
+    },
+    {
+      "pk": 504,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T20:49:28.180Z",
+        "updated_at": "2021-06-06T20:49:28.182Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 505,
+        "name": "Tomatenmark"
+      }
+    },
+    {
+      "pk": 505,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T20:49:28.190Z",
+        "updated_at": "2021-06-06T20:49:28.191Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 506,
+        "name": "Gem\u00fcsebr\u00fche"
+      }
+    },
+    {
+      "pk": 506,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T20:49:28.199Z",
+        "updated_at": "2021-06-06T20:49:28.201Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 507,
+        "name": "Dose Tomaten"
+      }
+    },
+    {
+      "pk": 507,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T20:49:28.208Z",
+        "updated_at": "2021-06-06T20:49:28.209Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 508,
+        "name": "rote Linsen"
+      }
+    },
+    {
+      "pk": 508,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T20:49:28.217Z",
+        "updated_at": "2021-06-06T20:49:28.219Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 509,
+        "name": "gro\u00dfe M\u00f6hren"
+      }
+    },
+    {
+      "pk": 509,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-06T20:58:04.565Z",
+        "updated_at": "2021-06-06T20:58:04.567Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 510,
+        "name": "Seil"
+      }
+    },
+    {
+      "pk": 510,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-07T07:40:06.513Z",
+        "updated_at": "2021-06-07T07:40:06.517Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 511,
+        "name": "Stoffe"
+      }
+    },
+    {
+      "pk": 511,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-07T07:40:06.530Z",
+        "updated_at": "2021-06-07T07:40:06.532Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 512,
+        "name": "F\u00fcllwatte"
+      }
+    },
+    {
+      "pk": 512,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-07T07:40:06.567Z",
+        "updated_at": "2021-06-07T07:40:06.570Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 513,
+        "name": "N\u00e4hnadel"
+      }
+    },
+    {
+      "pk": 513,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-07T07:47:40.519Z",
+        "updated_at": "2021-06-07T07:47:40.521Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 514,
+        "name": "Zucker"
+      }
+    },
+    {
+      "pk": 514,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-07T07:47:40.528Z",
+        "updated_at": "2021-06-07T07:47:40.529Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 515,
+        "name": "Prise Salz"
+      }
+    },
+    {
+      "pk": 515,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-07T07:47:40.536Z",
+        "updated_at": "2021-06-07T07:47:40.538Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 516,
+        "name": "Tropfen Rum-Aroma"
+      }
+    },
+    {
+      "pk": 516,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-07T07:47:40.550Z",
+        "updated_at": "2021-06-07T07:47:40.551Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 517,
+        "name": "Butter"
+      }
+    },
+    {
+      "pk": 517,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-07T07:47:40.557Z",
+        "updated_at": "2021-06-07T07:47:40.559Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 518,
+        "name": "Eigelb"
+      }
+    },
+    {
+      "pk": 518,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-07T14:29:30.502Z",
+        "updated_at": "2021-06-07T14:29:30.506Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 519,
+        "name": "Schnipels mit Anweisungen"
+      }
+    },
+    {
+      "pk": 519,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-17T13:35:22.783Z",
+        "updated_at": "2021-06-17T13:35:22.789Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 520,
+        "name": "Altglas"
+      }
+    },
+    {
+      "pk": 520,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-17T13:36:17.488Z",
+        "updated_at": "2021-06-17T13:36:17.490Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 521,
+        "name": "Knicklichter"
+      }
+    },
+    {
+      "pk": 521,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-17T13:36:17.508Z",
+        "updated_at": "2021-06-17T13:36:17.510Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 522,
+        "name": "Chemikalienhandschuhe"
+      }
+    },
+    {
+      "pk": 522,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-17T13:36:17.519Z",
+        "updated_at": "2021-06-17T13:36:17.521Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 523,
+        "name": "Netz"
+      }
+    },
+    {
+      "pk": 523,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-06-17T13:36:17.538Z",
+        "updated_at": "2021-06-17T13:36:17.539Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 524,
+        "name": "Leuchtfarbe"
+      }
+    },
+    {
+      "pk": 524,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-11T16:33:31.280Z",
+        "updated_at": "2021-07-11T16:33:31.285Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 525,
+        "name": "nat\u00fcrliche Materialien"
+      }
+    },
+    {
+      "pk": 525,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-11T16:33:31.308Z",
+        "updated_at": "2021-07-11T16:33:31.311Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 526,
+        "name": "Pappe"
+      }
+    },
+    {
+      "pk": 526,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-11T16:33:31.319Z",
+        "updated_at": "2021-07-11T16:33:31.320Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 527,
+        "name": "Wasserfarbe"
+      }
+    },
+    {
+      "pk": 527,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-11T16:37:25.145Z",
+        "updated_at": "2021-07-11T16:37:25.150Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 528,
+        "name": "Ma\u00dfband"
+      }
+    },
+    {
+      "pk": 528,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-11T16:45:53.080Z",
+        "updated_at": "2021-07-11T16:45:53.085Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 529,
+        "name": "Lappen"
+      }
+    },
+    {
+      "pk": 529,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-11T16:51:05.731Z",
+        "updated_at": "2021-07-11T16:51:05.736Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 530,
+        "name": "Zutaten"
+      }
+    },
+    {
+      "pk": 530,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T08:12:08.769Z",
+        "updated_at": "2021-07-13T08:12:08.775Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 531,
+        "name": "Tasche/ P\u00e4ckchen"
+      }
+    },
+    {
+      "pk": 531,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T08:12:08.793Z",
+        "updated_at": "2021-07-13T08:12:08.795Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 532,
+        "name": "AB-Gegenst\u00e4nde (vgl. Liste)"
+      }
+    },
+    {
+      "pk": 532,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T08:13:39.930Z",
+        "updated_at": "2021-07-13T08:13:39.932Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 533,
+        "name": "Gegenst\u00e4nde f\u00fcrs P\u00e4ckchen"
+      }
+    },
+    {
+      "pk": 533,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T08:15:03.246Z",
+        "updated_at": "2021-07-13T08:15:03.249Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 534,
+        "name": "P\u00e4ckchen"
+      }
+    },
+    {
+      "pk": 534,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T08:20:04.279Z",
+        "updated_at": "2021-07-13T08:20:04.281Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 535,
+        "name": "Beh\u00e4ltnis"
+      }
+    },
+    {
+      "pk": 535,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T08:31:32.883Z",
+        "updated_at": "2021-07-13T08:31:32.886Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 536,
+        "name": "Altpapier (bspw. Zeitungen)"
+      }
+    },
+    {
+      "pk": 536,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T08:31:32.907Z",
+        "updated_at": "2021-07-13T08:31:32.909Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 537,
+        "name": "Stabmixer"
+      }
+    },
+    {
+      "pk": 537,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T08:31:32.921Z",
+        "updated_at": "2021-07-13T08:31:32.923Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 538,
+        "name": "Sch\u00f6pfrahmen oder Ersatz"
+      }
+    },
+    {
+      "pk": 538,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T08:31:32.939Z",
+        "updated_at": "2021-07-13T08:31:32.941Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 539,
+        "name": "Nudelholz"
+      }
+    },
+    {
+      "pk": 539,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T08:51:41.449Z",
+        "updated_at": "2021-07-13T08:51:41.451Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 540,
+        "name": "ggf. Kamera"
+      }
+    },
+    {
+      "pk": 540,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T09:03:24.732Z",
+        "updated_at": "2021-07-13T09:03:24.736Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 541,
+        "name": "Inhalt"
+      }
+    },
+    {
+      "pk": 541,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-13T09:08:32.770Z",
+        "updated_at": "2021-07-13T09:08:32.772Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 542,
+        "name": "Tasche"
+      }
+    },
+    {
+      "pk": 542,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-27T16:29:46.637Z",
+        "updated_at": "2021-07-27T16:29:46.643Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 543,
+        "name": "Rezept"
+      }
+    },
+    {
+      "pk": 543,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-07-27T16:29:46.662Z",
+        "updated_at": "2021-07-27T16:29:46.664Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 544,
+        "name": "Zutaten eurer Wahl"
+      }
+    },
+    {
+      "pk": 544,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-08-31T19:03:07.828Z",
+        "updated_at": "2021-08-31T19:03:07.835Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 545,
+        "name": "Liederbuch"
+      }
+    },
+    {
+      "pk": 545,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-08-31T19:16:33.097Z",
+        "updated_at": "2021-08-31T19:16:33.100Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 546,
+        "name": "Pfadfinder Gegenstand"
+      }
+    },
+    {
+      "pk": 546,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-08-31T19:16:33.116Z",
+        "updated_at": "2021-08-31T19:16:33.118Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 547,
+        "name": "Tuch"
+      }
+    },
+    {
+      "pk": 547,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-09-01T09:50:29.711Z",
+        "updated_at": "2021-09-01T09:50:29.718Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 548,
+        "name": "pfadfinderische Gegenst\u00e4nde"
+      }
+    },
+    {
+      "pk": 548,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T17:58:18.796Z",
+        "updated_at": "2021-11-03T17:58:18.806Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 549,
+        "name": "Korken"
+      }
+    },
+    {
+      "pk": 549,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T17:58:18.834Z",
+        "updated_at": "2021-11-03T17:58:18.836Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 550,
+        "name": "Schrauben"
+      }
+    },
+    {
+      "pk": 550,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T17:58:18.845Z",
+        "updated_at": "2021-11-03T17:58:18.847Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 551,
+        "name": "Aufh\u00e4nger"
+      }
+    },
+    {
+      "pk": 551,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:05:11.139Z",
+        "updated_at": "2021-11-03T18:05:11.141Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 552,
+        "name": "Pflanze"
+      }
+    },
+    {
+      "pk": 552,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:13:51.830Z",
+        "updated_at": "2021-11-03T18:13:51.832Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 553,
+        "name": "Ast"
+      }
+    },
+    {
+      "pk": 553,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:46:06.301Z",
+        "updated_at": "2021-11-03T18:46:06.303Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 554,
+        "name": "Stricknadel"
+      }
+    },
+    {
+      "pk": 554,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:46:06.314Z",
+        "updated_at": "2021-11-03T18:46:06.316Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 555,
+        "name": "Teelichter"
+      }
+    },
+    {
+      "pk": 555,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:46:06.335Z",
+        "updated_at": "2021-11-03T18:46:06.338Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 556,
+        "name": "Dosen\u00f6ffner"
+      }
+    },
+    {
+      "pk": 556,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:46:06.356Z",
+        "updated_at": "2021-11-03T18:46:06.358Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 557,
+        "name": "Cutter"
+      }
+    },
+    {
+      "pk": 557,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:46:06.369Z",
+        "updated_at": "2021-11-03T18:46:06.371Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 558,
+        "name": "Zirker"
+      }
+    },
+    {
+      "pk": 558,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:46:06.390Z",
+        "updated_at": "2021-11-03T18:46:06.392Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 559,
+        "name": "Forstnerbohrer"
+      }
+    },
+    {
+      "pk": 559,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:46:06.403Z",
+        "updated_at": "2021-11-03T18:46:06.405Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 560,
+        "name": "Nagel"
+      }
+    },
+    {
+      "pk": 560,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:46:06.417Z",
+        "updated_at": "2021-11-03T18:46:06.419Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 561,
+        "name": "Bohrmaschine"
+      }
+    },
+    {
+      "pk": 561,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-03T18:46:06.429Z",
+        "updated_at": "2021-11-03T18:46:06.431Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 562,
+        "name": "Stichs\u00e4ge"
+      }
+    },
+    {
+      "pk": 562,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-10T10:19:32.797Z",
+        "updated_at": "2021-11-10T10:19:32.810Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 563,
+        "name": "Restzutaten"
+      }
+    },
+    {
+      "pk": 563,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-11T21:38:10.982Z",
+        "updated_at": "2021-11-11T21:38:10.996Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 564,
+        "name": "Pokerkoffer"
+      }
+    },
+    {
+      "pk": 564,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-11T21:38:11.027Z",
+        "updated_at": "2021-11-11T21:38:11.029Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 565,
+        "name": "Roulette"
+      }
+    },
+    {
+      "pk": 565,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-11-11T21:38:11.040Z",
+        "updated_at": "2021-11-11T21:38:11.044Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 566,
+        "name": "W\u00e4hrung"
+      }
+    },
+    {
+      "pk": 566,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-11T16:09:58.199Z",
+        "updated_at": "2021-12-11T16:09:58.211Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 567,
+        "name": "Gewinn"
+      }
+    },
+    {
+      "pk": 567,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-11T16:09:58.238Z",
+        "updated_at": "2021-12-11T16:09:58.239Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 568,
+        "name": "Gesellschaftsspiel"
+      }
+    },
+    {
+      "pk": 568,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-28T15:13:04.560Z",
+        "updated_at": "2021-12-28T15:13:04.575Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 569,
+        "name": "Fragenzettel"
+      }
+    },
+    {
+      "pk": 569,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-28T15:13:04.584Z",
+        "updated_at": "2021-12-28T15:13:04.586Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 570,
+        "name": "Aufgabenliste"
+      }
+    },
+    {
+      "pk": 570,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-28T16:09:12.199Z",
+        "updated_at": "2021-12-28T16:09:12.202Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 571,
+        "name": "Augenbinde"
+      }
+    },
+    {
+      "pk": 571,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-28T16:25:25.479Z",
+        "updated_at": "2021-12-28T16:25:25.482Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 572,
+        "name": "Pfadi-stories "
+      }
+    },
+    {
+      "pk": 572,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-28T16:54:30.722Z",
+        "updated_at": "2021-12-28T16:54:30.725Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 573,
+        "name": "Milchkarton"
+      }
+    },
+    {
+      "pk": 573,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-28T17:19:34.839Z",
+        "updated_at": "2021-12-28T17:19:34.842Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 574,
+        "name": "ausgedruckte Anleitung"
+      }
+    },
+    {
+      "pk": 574,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-28T17:19:34.851Z",
+        "updated_at": "2021-12-28T17:19:34.853Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 575,
+        "name": "Telefon"
+      }
+    },
+    {
+      "pk": 575,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-28T17:27:42.446Z",
+        "updated_at": "2021-12-28T17:27:42.449Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 576,
+        "name": "evtl. Wasserkanister/ -flasche"
+      }
+    },
+    {
+      "pk": 576,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-28T18:22:38.661Z",
+        "updated_at": "2021-12-28T18:22:38.663Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 577,
+        "name": "ggf. Kreide"
+      }
+    },
+    {
+      "pk": 577,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2021-12-28T18:31:01.268Z",
+        "updated_at": "2021-12-28T18:31:01.270Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 578,
+        "name": "Haikgep\u00e4ck"
+      }
+    },
+    {
+      "pk": 578,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-01-19T21:37:48.658Z",
+        "updated_at": "2022-01-19T21:37:48.669Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 579,
+        "name": "St\u00fchle"
+      }
+    },
+    {
+      "pk": 579,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-01-19T21:37:48.699Z",
+        "updated_at": "2022-01-19T21:37:48.702Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 580,
+        "name": "Platz"
+      }
+    },
+    {
+      "pk": 580,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-03-12T17:31:34.054Z",
+        "updated_at": "2022-03-12T17:31:34.069Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 581,
+        "name": "Stuhlkrei"
+      }
+    },
+    {
+      "pk": 581,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-03-12T17:35:07.300Z",
+        "updated_at": "2022-03-12T17:35:07.303Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 582,
+        "name": "Tisch"
+      }
+    },
+    {
+      "pk": 582,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-03-12T17:37:16.567Z",
+        "updated_at": "2022-03-12T17:37:16.570Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 583,
+        "name": "versteckbarer Gegenstand"
+      }
+    },
+    {
+      "pk": 583,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-03-12T17:51:43.862Z",
+        "updated_at": "2022-03-12T17:51:43.864Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 584,
+        "name": "Decke"
+      }
+    },
+    {
+      "pk": 584,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-03-14T15:48:50.431Z",
+        "updated_at": "2022-03-14T15:48:50.448Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 585,
+        "name": "Stuhlkreis"
+      }
+    },
+    {
+      "pk": 585,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:03:47.159Z",
+        "updated_at": "2022-04-23T10:03:47.172Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 586,
+        "name": "Becher"
+      }
+    },
+    {
+      "pk": 586,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:03:47.186Z",
+        "updated_at": "2022-04-23T10:03:47.188Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 587,
+        "name": "Apfeltee"
+      }
+    },
+    {
+      "pk": 587,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:03:47.198Z",
+        "updated_at": "2022-04-23T10:03:47.200Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 588,
+        "name": "Apfel"
+      }
+    },
+    {
+      "pk": 588,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:03:47.212Z",
+        "updated_at": "2022-04-23T10:03:47.214Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 589,
+        "name": "Zimtstrangen"
+      }
+    },
+    {
+      "pk": 589,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:03:47.233Z",
+        "updated_at": "2022-04-23T10:03:47.236Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 590,
+        "name": "gemahlene Nelken"
+      }
+    },
+    {
+      "pk": 590,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:03:47.246Z",
+        "updated_at": "2022-04-23T10:03:47.248Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 591,
+        "name": "Apfelsaft"
+      }
+    },
+    {
+      "pk": 591,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:22:35.790Z",
+        "updated_at": "2022-04-23T10:22:35.795Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 592,
+        "name": "Gummiband"
+      }
+    },
+    {
+      "pk": 592,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:22:35.803Z",
+        "updated_at": "2022-04-23T10:22:35.805Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 593,
+        "name": "Wei\u00dfe Acrylfarbe"
+      }
+    },
+    {
+      "pk": 593,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:22:35.818Z",
+        "updated_at": "2022-04-23T10:22:35.819Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 594,
+        "name": "Totenkopf Vorlage"
+      }
+    },
+    {
+      "pk": 594,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:22:35.832Z",
+        "updated_at": "2022-04-23T10:22:35.834Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 595,
+        "name": "Locher"
+      }
+    },
+    {
+      "pk": 595,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-23T10:42:03.466Z",
+        "updated_at": "2022-04-23T10:42:03.475Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 596,
+        "name": "Packetband"
+      }
+    },
+    {
+      "pk": 596,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-26T19:41:12.191Z",
+        "updated_at": "2022-04-26T19:41:12.203Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 597,
+        "name": "Zimtstangen"
+      }
+    },
+    {
+      "pk": 597,
+      "model": "inspi.materialname",
+      "fields": {
+        "description": "",
+        "created_at": "2022-04-28T14:52:18.098Z",
+        "updated_at": "2022-04-28T14:52:18.109Z",
+        "unit_detaults_id": 1,
+        "is_public": false,
+        "id": 598,
+        "name": "Paketband"
+      }
+    }
+  ]
+  

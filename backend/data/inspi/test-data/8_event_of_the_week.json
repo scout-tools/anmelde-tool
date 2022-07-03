@@ -1,0 +1,513 @@
+[
+    {
+      "pk": 1,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 138,
+        "release_date": "2021-06-21",
+        "id": 1
+      }
+    },
+    {
+      "pk": 2,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 186,
+        "release_date": "2021-06-28",
+        "id": 2
+      }
+    },
+    {
+      "pk": 3,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 291,
+        "release_date": "2021-07-26",
+        "id": 6
+      }
+    },
+    {
+      "pk": 4,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 45,
+        "release_date": "2021-08-02",
+        "id": 7
+      }
+    },
+    {
+      "pk": 5,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 219,
+        "release_date": "2021-08-09",
+        "id": 8
+      }
+    },
+    {
+      "pk": 6,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 182,
+        "release_date": "2021-08-16",
+        "id": 9
+      }
+    },
+    {
+      "pk": 7,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 286,
+        "release_date": "2021-08-23",
+        "id": 10
+      }
+    },
+    {
+      "pk": 8,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 151,
+        "release_date": "2021-08-30",
+        "id": 11
+      }
+    },
+    {
+      "pk": 9,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 157,
+        "release_date": "2021-07-05",
+        "id": 3
+      }
+    },
+    {
+      "pk": 10,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 161,
+        "release_date": "2021-07-12",
+        "id": 4
+      }
+    },
+    {
+      "pk": 11,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": "Sheldons idee",
+        "event_id": 294,
+        "release_date": "2021-09-06",
+        "id": 12
+      }
+    },
+    {
+      "pk": 12,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 181,
+        "release_date": "2021-09-13",
+        "id": 13
+      }
+    },
+    {
+      "pk": 13,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 197,
+        "release_date": "2021-09-20",
+        "id": 14
+      }
+    },
+    {
+      "pk": 14,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 37,
+        "release_date": "2021-10-04",
+        "id": 15
+      }
+    },
+    {
+      "pk": 15,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 223,
+        "release_date": "2021-09-27",
+        "id": 17
+      }
+    },
+    {
+      "pk": 16,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 293,
+        "release_date": "2021-11-01",
+        "id": 20
+      }
+    },
+    {
+      "pk": 17,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 284,
+        "release_date": "2021-11-08",
+        "id": 21
+      }
+    },
+    {
+      "pk": 18,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 32,
+        "release_date": "2021-10-11",
+        "id": 16
+      }
+    },
+    {
+      "pk": 19,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 288,
+        "release_date": "2021-10-18",
+        "id": 18
+      }
+    },
+    {
+      "pk": 20,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 5,
+        "release_date": "2021-10-25",
+        "id": 19
+      }
+    },
+    {
+      "pk": 21,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 135,
+        "release_date": "2021-12-13",
+        "id": 23
+      }
+    },
+    {
+      "pk": 22,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 191,
+        "release_date": "2021-11-15",
+        "id": 24
+      }
+    },
+    {
+      "pk": 23,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 201,
+        "release_date": "2021-11-22",
+        "id": 25
+      }
+    },
+    {
+      "pk": 24,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 173,
+        "release_date": "2021-11-29",
+        "id": 26
+      }
+    },
+    {
+      "pk": 25,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 148,
+        "release_date": "2021-12-06",
+        "id": 27
+      }
+    },
+    {
+      "pk": 26,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 205,
+        "release_date": "2021-12-27",
+        "id": 28
+      }
+    },
+    {
+      "pk": 27,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 296,
+        "release_date": "2021-12-20",
+        "id": 29
+      }
+    },
+    {
+      "pk": 28,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 301,
+        "release_date": "2022-01-03",
+        "id": 30
+      }
+    },
+    {
+      "pk": 29,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 149,
+        "release_date": "2022-01-10",
+        "id": 31
+      }
+    },
+    {
+      "pk": 30,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 95,
+        "release_date": "2022-01-17",
+        "id": 32
+      }
+    },
+    {
+      "pk": 31,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 302,
+        "release_date": "2022-01-24",
+        "id": 33
+      }
+    },
+    {
+      "pk": 32,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 81,
+        "release_date": "2022-01-31",
+        "id": 34
+      }
+    },
+    {
+      "pk": 33,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 298,
+        "release_date": "2022-02-07",
+        "id": 35
+      }
+    },
+    {
+      "pk": 34,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 287,
+        "release_date": "2022-02-14",
+        "id": 36
+      }
+    },
+    {
+      "pk": 35,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 220,
+        "release_date": "2022-02-21",
+        "id": 37
+      }
+    },
+    {
+      "pk": 36,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 206,
+        "release_date": "2022-02-28",
+        "id": 38
+      }
+    },
+    {
+      "pk": 37,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 163,
+        "release_date": "2022-03-07",
+        "id": 39
+      }
+    },
+    {
+      "pk": 38,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 129,
+        "release_date": "2022-03-14",
+        "id": 42
+      }
+    },
+    {
+      "pk": 39,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 136,
+        "release_date": "2022-03-21",
+        "id": 43
+      }
+    },
+    {
+      "pk": 40,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 125,
+        "release_date": "2022-03-28",
+        "id": 44
+      }
+    },
+    {
+      "pk": 41,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 59,
+        "release_date": "2022-04-04",
+        "id": 45
+      }
+    },
+    {
+      "pk": 42,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 70,
+        "release_date": "2022-04-11",
+        "id": 46
+      }
+    },
+    {
+      "pk": 43,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": "Test",
+        "event_id": 322,
+        "release_date": "2022-06-13",
+        "id": 47
+      }
+    },
+    {
+      "pk": 44,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 222,
+        "release_date": "2022-04-18",
+        "id": 48
+      }
+    },
+    {
+      "pk": 45,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 123,
+        "release_date": "2022-04-25",
+        "id": 49
+      }
+    },
+    {
+      "pk": 46,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 333,
+        "release_date": "2022-05-16",
+        "id": 50
+      }
+    },
+    {
+      "pk": 47,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 100,
+        "release_date": "2022-05-23",
+        "id": 51
+      }
+    },
+    {
+      "pk": 48,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 331,
+        "release_date": "2022-05-30",
+        "id": 52
+      }
+    },
+    {
+      "pk": 49,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 292,
+        "release_date": "2022-06-06",
+        "id": 53
+      }
+    },
+    {
+      "pk": 50,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 332,
+        "release_date": "2022-06-27",
+        "id": 54
+      }
+    },
+    {
+      "pk": 51,
+      "model": "inspi.eventoftheweek",
+      "fields": {
+        "comment": null,
+        "event_id": 105,
+        "release_date": "2022-06-20",
+        "id": 55
+      }
+    }
+  ]
+  
