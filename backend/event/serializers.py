@@ -202,6 +202,14 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     def get_can_edit(self, obj: event_models.Event) -> bool:
         return obj.last_possible_update >= timezone.now()
 
+    @staticmethod
+    def match_registration_allowed_level(user: User, registration_level: int) -> bool:
+        if registration_level == 6:
+            return user.userextended.scout_organisation.level.id in {5, 6}
+        elif registration_level in {2, 3, 4, 5}:
+            return user.userextended.scout_organisation.level.id >= registration_level
+        return False
+
     def get_registration_options(self, obj: event_models.Event) -> dict:
         user: User = self.context['request'].user
 
@@ -235,11 +243,12 @@ class EventOverviewSerializer(serializers.ModelSerializer):
 
         allow_new_group_reg = not group_id \
                               and not single_id \
-                              and user.userextended.scout_organisation.level.id == 5 \
+                              and self.match_registration_allowed_level(user, obj.group_registration_level.id) \
                               and self.get_can_register(obj) \
                               and obj.group_registration != event_choices.RegistrationTypeGroup.No
         allow_new_single_reg = not single_id \
                                and not allow_edit_group_reg \
+                               and self.match_registration_allowed_level(user, obj.single_registration_level.id) \
                                and self.get_can_register(obj) \
                                and obj.single_registration != event_choices.RegistrationTypeGroup.No
 

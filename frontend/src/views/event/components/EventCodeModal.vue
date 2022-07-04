@@ -208,6 +208,7 @@ export default {
           lookupListDisplay: ['name'],
           mandatory: true,
           fieldType: 'refDropdown',
+          noDataText: 'Es sind keine Gruppen verfügbar, bitte lege diese an.',
           default: '',
           cols: this.registrationLevelId === 6 ? 10 : 12,
           value: this.data.scoutOrganisation,
