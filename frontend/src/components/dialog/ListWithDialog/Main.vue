@@ -14,9 +14,7 @@
     <v-btn
       v-if="dialogMeta.groupAdd"
       class="ma-2"
-      @click="openGroupDialog"
-
-    >
+      @click="openGroupDialog">
       <v-icon color="#008000" left> mdi-account-group</v-icon>
       Gruppe hinzufügen
     </v-btn>

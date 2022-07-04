@@ -285,7 +285,7 @@
         :items="field.referenceTable"
         required
         @input="onInputChanged"
-        item-value="localValue"
+        item-value="value"
         :item-text="field.referenceDisplay"
         :error-messages="onErrorMessageChange(field.techName)">
     </v-select>
@@ -581,8 +581,12 @@ export default {
       this.getSimpleService(this.field.lookupPath)
         .then((res) => {
           this.lookupList = res.data;
-          if (!this.localValue && this.lookupList && this.lookupList.length > 0) {
-            this.localValue = this.lookupList[0]; // eslint-disable-line
+          if (this.field.fieldType === 'refDropdown'
+                && !this.localValue
+                && this.lookupList
+                && this.lookupList.length > 0) {
+            this.localValue = this.lookupList[0].id; // eslint-disable-line
+            this.onInputChanged(this.localValue);
           }
         })
         .catch((err) => {
@@ -679,10 +683,10 @@ export default {
     refresh() {
       this.localValue = this.value;
       if (
-        this.field.fieldType === 'refDropdown' || // eslint-disable-line
-        this.field.fieldType === 'enumCombo' || // eslint-disable-line
-        this.field.fieldType === 'refComboSingle' || // eslint-disable-line
-        this.field.fieldType === 'refCombo'
+          this.field.fieldType === 'refDropdown' || // eslint-disable-line
+          this.field.fieldType === 'enumCombo' || // eslint-disable-line
+          this.field.fieldType === 'refComboSingle' || // eslint-disable-line
+          this.field.fieldType === 'refCombo'
       ) {
         this.getData();
       }
