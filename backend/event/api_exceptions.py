@@ -197,3 +197,9 @@ class ScoutHierarchyAlreadyExist(APIException):
     status_code = 409
     default_detail = 'Diese Gruppe exestiert bereits.'
     default_code = 'already_exits'
+
+
+class ScoutHierarchyAtThisLevelNotPossible(APIException):
+    status_code = 403
+    default_detail = 'Gruppen können nur auf Stammesebene angelegt werden.'
+    default_code = 'wrong_level'

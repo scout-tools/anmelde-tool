@@ -115,7 +115,8 @@
         @input="onInputChanged"
         item-value="id"
         :item-text="getItemText"
-        :error-messages="onErrorMessageChange(field.techName)">
+        :error-messages="onErrorMessageChange(field.techName)"
+        :no-data-text="field.noDataText">
     </v-autocomplete>
 
     <v-combobox
@@ -465,6 +466,7 @@ export default {
       cols: 6,
       counter: false,
       disabled: false,
+      noDataText: 'Keine Daten zur Auswahl.',
     },
     value: {
       default: null,
