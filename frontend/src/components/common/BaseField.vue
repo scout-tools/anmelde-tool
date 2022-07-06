@@ -541,6 +541,9 @@ export default {
     enumValue() {
       this.onInputChanged(this.enumValue);
     },
+    value(newVal) {
+      this.localValue = newVal;
+    },
   },
   computed: {
     valueDate() {
