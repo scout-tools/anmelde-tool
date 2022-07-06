@@ -21,7 +21,6 @@ import PlanEvent from '@/views/eventPlaner/create/Main.vue';
 import MessageList from '@/views/masterData/message/MessageList.vue';
 import ThemeList from '@/views/masterData/theme/ThemeList.vue';
 
-import registrationNew from '@/views/registration/Main.vue';
 import registrationEdit from '@/views/registration/CreateUpdateContainer.vue';
 import registrationCompleted from '@/views/registration/Completed.vue';
 
@@ -89,15 +88,6 @@ const routes = [
     path: '/settings/user',
     name: 'settingsUser',
     component: SettingsUser,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/registration/:id',
-    name: 'registrationNew',
-    component: registrationNew,
-    props: true,
     meta: {
       requiresAuth: true,
     },
