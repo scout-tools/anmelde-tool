@@ -71,7 +71,7 @@ export default {
     kpiCardTwo() {
       return {
         header: 'Anmeldungen',
-        subheader: 'Anzahl Stämme',
+        subheader: 'Anzahl Anmeldungen',
         lookUpPath: `/event/event/${this.eventId}/summary/kpi/total-registrations/`,
         dataOneName: '',
         fieldType: 'card',

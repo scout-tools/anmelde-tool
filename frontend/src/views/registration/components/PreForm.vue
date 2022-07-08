@@ -8,21 +8,22 @@
           <v-card-text>
             Wollen Sie die Registrierung wirklich ändern?<br />
             Dies bedeutet, dass sie automatisch <b>abgemeldet</b> werden und
-            sich wieder selber anmelden müssen.</v-card-text
-          >
+            sich wieder selber anmelden müssen.
+          </v-card-text>
 
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer/>
 
-            <v-btn color="grey darken-1" text @click="cancel()"> Zurück </v-btn>
+            <v-btn color="grey darken-1" text @click="cancel()">
+              Zurück
+            </v-btn>
             <v-btn
               color="grey darken-1"
               text
               :to="{
                 name: 'registrationEdit',
                 params: { id: id },
-              }"
-            >
+              }">
               Ändern
             </v-btn>
           </v-card-actions>

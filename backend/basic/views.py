@@ -25,6 +25,11 @@ class ScoutHierarchyDetailedViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = basic_models.ScoutHierarchy.objects.all().exclude(level=6)
     serializer_class = basic_serializers.ScoutHierarchyDetailedSerializer
 
+class ScoutOrgaLevelViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsStaffOrReadOnly]
+    queryset = basic_models.ScoutOrgaLevel.objects.all()
+    serializer_class = basic_serializers.ScoutOrgaLevelSerializer
+
 
 class ZipCodeSearchFilter(FilterSet):
     zip_city = CharFilter(field_name='zip_city', method='get_zip_city')

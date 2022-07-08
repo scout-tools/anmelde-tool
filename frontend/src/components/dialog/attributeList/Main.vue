@@ -16,9 +16,9 @@
             <v-icon color="black" dark>mdi-account</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title
-              v-text="getDisplayName(item)"
-            ></v-list-item-title>
+            <v-list-item-title>
+              {{ getDisplayName(item) }}
+            </v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn disabled dense icon @click="editParticipant(item.id)">

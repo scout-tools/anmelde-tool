@@ -26,7 +26,7 @@ import FooterMain from '@/components/Footer.vue';
 import GobalSnackbar from '@/components/modals/GlobalSnackbar.vue';
 
 export default {
-  name: 'Main',
+  name: 'MainView',
   components: {
     TopMenuMain,
     FooterMain,
