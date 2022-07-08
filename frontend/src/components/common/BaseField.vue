@@ -3,7 +3,7 @@
     <v-text-field
         v-if="field.fieldType === 'textfield'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         @input="onInputChanged"
         @keydown.enter="$emit('keydownEnter')"
         :prepend-icon="field.icon"
@@ -28,7 +28,7 @@
     <v-text-field
         v-if="field.fieldType === 'number'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         type="number"
         @input="onInputChanged"
         :prepend-icon="field.icon"
@@ -50,37 +50,37 @@
       </template>
     </v-text-field>
 
-      <v-textarea
-          v-if="field.fieldType === 'textarea'"
-          :label="field.name"
-          :value="value"
-          @input="onInputChanged"
-          solo
-          auto-grow
-          :counter="field.counter"
-          :prepend-icon="field.icon"
-          :error-messages="onErrorMessageChange(field.techName)"
-          :disabled="field.disabled"
-          :readonly="field.readonly"
-          :filled="field.filled">
-        <template slot="append">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon color="info" dark v-bind="attrs" v-on="on">
-                mdi-help-circle-outline
-              </v-icon>
-            </template>
-            <span>
+    <v-textarea
+        v-if="field.fieldType === 'textarea'"
+        :label="field.name"
+        :value="localValue"
+        @input="onInputChanged"
+        solo
+        auto-grow
+        :counter="field.counter"
+        :prepend-icon="field.icon"
+        :error-messages="onErrorMessageChange(field.techName)"
+        :disabled="field.disabled"
+        :readonly="field.readonly"
+        :filled="field.filled">
+      <template slot="append">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="info" dark v-bind="attrs" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          <span>
             {{ field.tooltip }}
           </span>
-          </v-tooltip>
-        </template>
-      </v-textarea>
+        </v-tooltip>
+      </template>
+    </v-textarea>
 
     <v-text-field
         v-if="field.fieldType === 'currency'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         prefix="€"
         type="number"
         @input="onInputChanged"
@@ -106,21 +106,23 @@
     <v-autocomplete
         v-if="field.fieldType === 'refDropdown'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         :items="lookupList"
         :prepend-icon="field.icon"
+        :disabled="field.disabled"
         required
+        auto-select-first
         @input="onInputChanged"
         item-value="id"
         :item-text="getItemText"
         :error-messages="onErrorMessageChange(field.techName)"
-    >
+        :no-data-text="field.noDataText">
     </v-autocomplete>
 
     <v-combobox
         v-if="field.fieldType === 'refCombo'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         :items="lookupList"
         :prepend-icon="field.icon"
         required
@@ -130,8 +132,7 @@
         @input="onComboInputChanged"
         item-value="name"
         :item-text="getItemText"
-        :error-messages="onErrorMessageChange(field.techName)"
-    >
+        :error-messages="onErrorMessageChange(field.techName)">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -149,15 +150,14 @@
     <v-combobox
         v-if="field.fieldType === 'simpleCombo'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         :prepend-icon="field.icon"
         required
         chips
         multiple
         deletable-chips
         @input="onComboInputChanged"
-        :error-messages="onErrorMessageChange(field.techName)"
-    >
+        :error-messages="onErrorMessageChange(field.techName)">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -175,14 +175,13 @@
     <v-combobox
         v-if="field.fieldType === 'simpleComboSingle'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         :prepend-icon="field.icon"
         required
         chips
         deletable-chips
         @input="onSingleComboInputChanged"
-        :error-messages="onErrorMessageChange(field.techName)"
-    >
+        :error-messages="onErrorMessageChange(field.techName)">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -200,15 +199,14 @@
     <v-select
         v-if="field.fieldType === 'refComboSingle'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         :items="lookupList"
         :prepend-icon="field.icon"
         required
         @input="onInputChanged"
         item-value="id"
         :item-text="getItemText"
-        :error-messages="onErrorMessageChange(field.techName)"
-    >
+        :error-messages="onErrorMessageChange(field.techName)">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -252,7 +250,7 @@
     <v-autocomplete
         v-if="field.fieldType === 'zipField'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         :items="lookupList"
         :prepend-icon="field.icon"
         required
@@ -262,14 +260,12 @@
         :item-text="getItemText"
         :search-input.sync="search"
         :no-data-text="zipCodeNoDataText"
-        :error-messages="onErrorMessageChange(field.techName)"
-    >
-    </v-autocomplete>
+        :error-messages="onErrorMessageChange(field.techName)"/>
 
     <v-autocomplete
         v-if="field.fieldType === 'responsablesField'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         :items="lookupList"
         :prepend-icon="field.icon"
         required
@@ -279,29 +275,26 @@
         :item-text="getItemText"
         :search-input.sync="search"
         :no-data-text="responseablePersonDataText"
-        :error-messages="onErrorMessageChange(field.techName)"
-    >
-    </v-autocomplete>
+        :error-messages="onErrorMessageChange(field.techName)"/>
+
     <v-select
         v-if="field.fieldType === 'localRefDropdown'"
         :label="field.name"
-        :value="value"
+        :value="localValue"
         :prepend-icon="field.icon"
         :items="field.referenceTable"
         required
         @input="onInputChanged"
         item-value="value"
         :item-text="field.referenceDisplay"
-        :error-messages="onErrorMessageChange(field.techName)"
-    >
+        :error-messages="onErrorMessageChange(field.techName)">
     </v-select>
     <v-switch
         v-if="field.fieldType === 'checkbox'"
         :label="field.name"
-        :input-value="value"
+        :input-value="localValue"
         @change="onInputChanged"
-        :error-messages="onErrorMessageChange(field.techName)"
-    >
+        :error-messages="onErrorMessageChange(field.techName)">
     </v-switch>
     <v-container v-if="field.fieldType === 'radio'">
       <v-row class="mb-1">
@@ -317,7 +310,7 @@
         </v-tooltip>
       </v-row>
       <v-row>
-        <v-radio-group :value="value" @change="onRadioInputChanged">
+        <v-radio-group :value="localValue" @change="onRadioInputChanged">
           <v-radio
               v-for="choise in field.referenceTable"
               :key="choise.value"
@@ -343,7 +336,7 @@
       <v-row>
         <ckeditor
             :editor="ckeditor.editor"
-            :value="value"
+            :value="localValue"
             @input="onInputChanged"
             :config="ckeditor.editorConfig"/>
       </v-row>
@@ -421,7 +414,7 @@
     <v-container v-if="field.fieldType === 'file'">
       <v-row>
         <v-col cols="6">
-          <v-text-field :value="value" label="Datei"></v-text-field>
+          <v-text-field :value="localValue" label="Datei"></v-text-field>
         </v-col>
         <v-col cols="1">
           <!-- 1. Create the button that will be clicked to select a file -->
@@ -435,9 +428,8 @@
               fab
               dark
               color="darkgrey"
-              :disabled="!value"
-              @click="showPdf"
-          >
+              :disabled="!localValue"
+              @click="showPdf">
             <v-icon> mdi-eye</v-icon>
           </v-btn>
         </v-col>
@@ -473,6 +465,8 @@ export default {
       tooltip: null,
       cols: 6,
       counter: false,
+      disabled: false,
+      noDataText: 'Keine Daten zur Auswahl.',
     },
     value: {
       default: null,
@@ -496,12 +490,13 @@ export default {
           language: 'de',
         },
       },
+      localValue: null,
     };
   },
   watch: {
     search(searchString) {
       // still loading
-      if (this.loading) return;
+      if (this.isLoading) return;
       if (
           !searchString || // eslint-disable-line
           searchString.indexOf(' ') >= 0 || // eslint-disable-line
@@ -509,11 +504,11 @@ export default {
       ) {
         this.zipCodeNoDataText = 'Bitte PLZ oder Ort eingeben.';
         this.responseablePersonDataText = 'E-Mail oder Pfadfindernamen eingeben.';
-        if (!this.value) this.lookupList = null;
+        if (!this.localValue) this.lookupList = null;
         return;
       }
 
-      this.loading = true;
+      this.isLoading = true;
       if (this.field.fieldType === 'zipField') {
         this.getZipCodeMapping(searchString)
           .then((res) => {
@@ -539,32 +534,34 @@ export default {
             this.responseablePersonDataText = err.response.data.detail;
           })
           .finally(() => {
-            this.loading = false;
+            this.isLoading = false;
           });
       }
     },
     enumValue() {
       this.onInputChanged(this.enumValue);
     },
+    value(newVal) {
+      this.localValue = newVal;
+    },
   },
   computed: {
     valueDate() {
-      return this.$moment(this.value)
+      return this.$moment(this.localValue)
         .format('DD.MM.YYYY', 'de');
     },
     valueTime() {
-      return this.$moment(this.value)
+      return this.$moment(this.localValue)
         .format('HH:mm', 'de');
     },
     enumValue() {
       if (!this.lookupList) return '';
-      const value = this.value; // eslint-disable-line
       const list = this.convertEnum(this.lookupList);
-      if (list.filter((item) => item.value === value).length) {
-        return value;
+      if (list.filter((item) => item.value === this.localValue).length) {
+        return this.localValue;
       }
       try {
-        return list.filter((item) => item.name === value)[0].value;
+        return list.filter((item) => item.name === this.localValue)[0].value;
       } catch (e) {
         return '';
       }
@@ -582,8 +579,30 @@ export default {
     onErrorMessageChange(field) {
       return this.errorMessage(field, this.valdiationObj);
     },
-    async getData() {
-      this.getLookup(this.field.lookupPath);
+    getData() {
+      this.isLoading = true;
+      this.getSimpleService(this.field.lookupPath)
+        .then((res) => {
+          this.lookupList = res.data;
+          if (this.field.fieldType === 'refDropdown'
+                && !this.localValue
+                && this.lookupList
+                && this.lookupList.length > 0) {
+            this.localValue = this.lookupList[0].id; // eslint-disable-line
+            this.onInputChanged(this.localValue);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$root.globalSnackbar.show({
+            message: 'Leider ist ein Problem beim runterladen der Daten aufgetreten, '
+                  + 'bitte probiere es später nocheinmal.',
+            color: 'error',
+          });
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     onInputChanged(value) {
       this.$emit('input', value);
@@ -664,35 +683,36 @@ export default {
       });
       return template;
     },
+    refresh() {
+      this.localValue = this.value;
+      if (
+          this.field.fieldType === 'refDropdown' || // eslint-disable-line
+          this.field.fieldType === 'enumCombo' || // eslint-disable-line
+          this.field.fieldType === 'refComboSingle' || // eslint-disable-line
+          this.field.fieldType === 'refCombo'
+      ) {
+        this.getData();
+      }
+      if (!this.localValue) return;
+
+      if (this.field.fieldType === 'zipField') {
+        this.callSingleZipCode(this.localValue)
+          .then((result) => {
+            this.lookupList = result;
+            this.$forceUpdate();
+          });
+      }
+      if (this.field.fieldType === 'responsablesField') {
+        this.callSingleResponsible(this.localValue)
+          .then((result) => {
+            this.lookupList = result;
+            this.$forceUpdate();
+          });
+      }
+    },
   },
   created() {
-    if (
-        this.field.fieldType === 'refDropdown' || // eslint-disable-line
-        this.field.fieldType === 'enumCombo' || // eslint-disable-line
-        this.field.fieldType === 'refComboSingle' || // eslint-disable-line
-        this.field.fieldType === 'refCombo'
-    ) {
-      this.getData();
-    }
-    if (!this.value) return;
-
-    if (this.field.fieldType === 'zipField') {
-      this.callSingleZipCode(this.value)
-        .then((result) => {
-          this.lookupList = result;
-          this.$forceUpdate();
-        });
-    }
-    if (this.field.fieldType === 'responsablesField') {
-      this.callSingleResponsible(this.value)
-        .then((result) => {
-          this.lookupList = result;
-          this.$forceUpdate();
-        });
-    }
+    this.refresh();
   },
 };
 </script>
-
-<style scoped>
-</style>

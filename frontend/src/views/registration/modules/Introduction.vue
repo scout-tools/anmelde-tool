@@ -25,7 +25,7 @@
           Bevor deine Anmeldung verbindlich wird, musst du sie im letzten
           Schritt ausdrücklich bestätigen. Du kannst deinen Anmeldevorgang zu
           jedem Zeitpunkt unterbrechen und später fortsetzen. Die Daten kannst
-          du bis zum Anmeldeschluss ({{ registrationDeadlineFormat }}) jederzeit
+          du bis zum Anmeldeschluss ({{ registrationDeadlineFormat }} Uhr) jederzeit
           anpassen und ergänzen. <br/>
           <br/>
           Die folgenden Daten sind nur für das Planungsteam und die
@@ -110,10 +110,10 @@ export default {
       return this.currentModule.id;
     },
     myStamm() {
-      return this.personalData.scoutOrganisation.name;
+      return this.currentRegistration.scoutOrganisation.name;
     },
     myBund() {
-      return this.userinfo.bund;
+      return this.currentRegistration.scoutOrganisation.bund;
     },
     eventName() {
       return this.currentEvent.name;

@@ -35,23 +35,22 @@
                 v-for="(item, index) in items"
                 :key="item.name"
                 :prepend-icon="item.action"
-                no-action
-              >
+                no-action>
                 <template v-slot:activator>
                   <v-list-item-avatar>
                     <v-icon
                       large
                       color="primary"
-                      dark
-                      v-text="`mdi-${item.icon || 'tent'}`"
-                    ></v-icon>
+                      dark>
+                      {{ `mdi-${item.icon || 'tent'}` }}
+                    </v-icon>
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title>
                       {{ getHeaderText(item) }}
                     </v-list-item-title>
 
-                    <v-list-item-subtitle v-text="item.shortDescription">
+                    <v-list-item-subtitle>
                       {{ item.shortDescription }}
                     </v-list-item-subtitle>
 
@@ -284,7 +283,7 @@ import EventCodeModal from '@/views/event/components/EventCodeModal.vue';
 import DialogAddResponsablePerson from '@/components/dialog/DialogAddResponsablePerson.vue';
 
 export default {
-  name: 'Main',
+  name: 'OverviewMain',
   mixins: [apiCallsMixin],
   data: () => ({
     API_URL: process.env.VUE_APP_API,
@@ -367,14 +366,14 @@ export default {
       );
     },
     onSingleRegClicked(item) {
-      this.openEventCodeModal(item, true);
+      this.openEventCodeModal(item, true, item.singleRegistrationLevel);
     },
     onGroupRegClicked(item) {
-      this.openEventCodeModal(item, false);
+      this.openEventCodeModal(item, false, item.groupRegistrationLevel);
     },
-    openEventCodeModal(item, single) {
+    openEventCodeModal(item, single, registrationLevel) {
       this.setTheme(item.theme);
-      this.$refs.eventCodeModal.show(item, single);
+      this.$refs.eventCodeModal.show(item, single, registrationLevel);
     },
     onAddResponsablePerson(item) {
       this.$refs.dialogAddResponsablePerson.open(item);

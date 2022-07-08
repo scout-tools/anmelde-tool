@@ -8,8 +8,7 @@
           <v-list-group
             :value="false"
             :prepend-icon="link.icon"
-             :key="i"
-          >
+             :key="i">
             <template v-slot:activator>
               <v-list-item-title>{{ link.name }}</v-list-item-title>
             </template>
@@ -18,12 +17,15 @@
               v-for="(messageLink, i) in link.items"
               :key="i"
               link
-              :to="messageLink.link"
-            >
-              <v-list-item-title v-text="messageLink.name"> </v-list-item-title>
+              :to="messageLink.link">
+              <v-list-item-title>
+                {{ messageLink.name }}
+              </v-list-item-title>
 
               <v-list-item-icon>
-                <v-icon v-text="messageLink.icon"></v-icon>
+                <v-icon>
+                    messageLink.icon
+                </v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>

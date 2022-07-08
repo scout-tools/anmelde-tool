@@ -34,12 +34,14 @@
             <v-list-item-content>
               <v-list-item-subtitle
                   class="font-weight-bold"
-                  v-if="data.rankField === 'updatedAt'"
-                  v-text="formatData(item)"/>
+                  v-if="data.rankField === 'updatedAt'">
+                {{ formatData(item) }}
+              </v-list-item-subtitle>
               <v-list-item-subtitle
                   class="font-weight-bold"
-                  v-if="data.rankField === 'participantCount'"
-                  v-text="item.count"/>
+                  v-if="data.rankField === 'participantCount'">
+                {{ item.count }}
+              </v-list-item-subtitle>
               <v-list-item-subtitle>
                 {{
                   `${item.scoutOrganisation.name} (${item.scoutOrganisation.bund})`

@@ -89,22 +89,47 @@ class Event(basic_models.TimeStampMixin):
     invitation_code_group = models.CharField(max_length=20, blank=True)
     is_public = models.BooleanField(default=False)
     responsible_persons = models.ManyToManyField(User)
-    keycloak_path = models.ForeignKey(Group, blank=True, on_delete=models.SET_NULL, null=True,
+    keycloak_path = models.ForeignKey(Group,
+                                      blank=True,
+                                      on_delete=models.SET_NULL,
+                                      null=True,
                                       related_name='keycloak_group')
-    keycloak_admin_path = models.ForeignKey(Group, blank=True, on_delete=models.SET_NULL, null=True,
+    keycloak_admin_path = models.ForeignKey(Group,
+                                            blank=True,
+                                            on_delete=models.SET_NULL,
+                                            null=True,
                                             related_name='keycloak_admin_group')
     tags = models.ManyToManyField(basic_models.Tag, blank=True)
     event_planer_modules = models.ManyToManyField(EventPlanerModule, blank=True)
-    limited_registration_hierarchy = models.ForeignKey(basic_models.ScoutHierarchy, default=493,
-                                                       on_delete=models.SET_DEFAULT)
-    single_registration = models.CharField(max_length=1, choices=event_choices.RegistrationTypeSingle.choices,
-                                           default=event_choices.RegistrationTypeSingle.No)
-    group_registration = models.CharField(max_length=1, choices=event_choices.RegistrationTypeGroup.choices,
-                                          default=event_choices.RegistrationTypeGroup.No)
+    limited_registration_hierarchy = models.ForeignKey(
+        basic_models.ScoutHierarchy,
+        default=493,
+        on_delete=models.SET_DEFAULT)
+    single_registration = models.CharField(
+        max_length=1,
+        choices=event_choices.RegistrationTypeSingle.choices,
+        default=event_choices.RegistrationTypeSingle.No)
+    single_registration_level = models.ForeignKey(
+        basic_models.ScoutOrgaLevel,
+        on_delete=models.SET_DEFAULT,
+        default=5,
+        related_name='single_registration_level')
+    group_registration = models.CharField(
+        max_length=1,
+        choices=event_choices.RegistrationTypeGroup.choices,
+        default=event_choices.RegistrationTypeGroup.No)
+    group_registration_level = models.ForeignKey(
+        basic_models.ScoutOrgaLevel,
+        on_delete=models.SET_DEFAULT,
+        default=5,
+        related_name='group_registration_level')
     personal_data_required = models.BooleanField(default=False)
     theme = models.ForeignKey(basic_models.FrontendTheme, on_delete=models.SET_NULL, default=1, null=True, blank=True)
-    email_set = models.ForeignKey(email_services_model.StandardEmailRegistrationSet, on_delete=models.PROTECT,
-                                  null=True, blank=True)
+    email_set = models.ForeignKey(
+        email_services_model.StandardEmailRegistrationSet,
+        on_delete=models.PROTECT,
+        null=True, blank=True
+    )
 
     def __str__(self):
         return f"{self.name}: {self.start_date} - {self.end_date}, {self.location}"
@@ -207,8 +232,7 @@ class RegistrationParticipant(basic_models.TimeStampMixin):
     leader = models.CharField(max_length=6, choices=event_choices.LeaderTypes.choices,
                               default=event_choices.LeaderTypes.KeineFuehrung)
     scout_level = models.CharField(max_length=6, choices=event_choices.ScoutLevelTypes.choices,
-                              default=event_choices.ScoutLevelTypes.Unbekannt)
-    
+                                   default=event_choices.ScoutLevelTypes.Unbekannt)
 
     def __str__(self):
         return f"{self.registration}: {self.last_name}, {self.first_name}"
