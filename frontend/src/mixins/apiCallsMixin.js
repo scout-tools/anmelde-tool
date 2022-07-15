@@ -154,6 +154,10 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/age-groups/`;
       return axios.get(path, { params });
     },
+    async getEventLeaderTypes(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/leader-types/`;
+      return axios.get(path, { params });
+    },
     async getCashSummary(eventId) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/cash/`;
       return axios.get(path);
