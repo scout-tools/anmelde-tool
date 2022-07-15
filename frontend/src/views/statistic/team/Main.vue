@@ -12,6 +12,10 @@
       <v-icon left> mdi-food </v-icon>
       Essen
     </v-tab>
+    <v-tab>
+      <v-icon left> mdi-chevron-triple-up </v-icon>
+      Amt
+    </v-tab>
 
     <v-tab-item>
       <v-card flat>
@@ -34,10 +38,19 @@
         </v-card-text>
       </v-card>
     </v-tab-item>
+     <v-tab-item>
+      <v-card flat>
+        <v-card-text>
+          <LeaderTypes />
+        </v-card-text>
+      </v-card>
+    </v-tab-item>
   </v-tabs>
 </template>
 
 <script>
+import LeaderTypes from '@/views/statistic/team/tabs/LeaderTypes.vue';
+
 import List from './tabs/List.vue';
 import AgeGroup from './tabs/AgeGroup.vue';
 import Food from './tabs/Food.vue';
@@ -47,6 +60,7 @@ export default {
     List,
     AgeGroup,
     Food,
+    LeaderTypes,
   },
 };
 </script>
