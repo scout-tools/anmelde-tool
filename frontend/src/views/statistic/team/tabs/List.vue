@@ -79,6 +79,12 @@
               </v-list-item>
               <v-list-item>
                 <v-list-item-content>
+                  <b>Kontakt(e): </b>
+                  {{ item.responsiblePersonsExtended }}
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
                   <b>Buchungsoption: </b>
                   <p v-for="(item, i) in item.bookingOptions" :key="i">
                     {{ item.bookingOptions }}: {{ item.sum }}

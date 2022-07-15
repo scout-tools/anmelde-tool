@@ -29,6 +29,7 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
     scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)
     booking_options = serializers.SerializerMethodField()
+    responsible_persons_extended = serializers.SerializerMethodField()
 
     class Meta:
         model = event_models.Registration
@@ -39,6 +40,7 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
             'single',
             'scout_organisation',
             'responsible_persons',
+            'responsible_persons_extended',
             'participant_count',
             'price',
             'created_at',
@@ -68,6 +70,12 @@ class RegistrationEventSummarySerializer(serializers.ModelSerializer):
             .values(booking_options=F('booking_option__name')) \
             .annotate(sum=Count('booking_option__name')) \
             .annotate(price=Sum('booking_option__price'))
+
+    def get_responsible_persons_extended(self, registration: event_models.Registration) -> str:
+        return_string = ''
+        for person in registration.responsible_persons.all():
+            return_string = return_string + f'{person.userextended.scout_name} (Tel:{person.userextended.mobile_number}) '
+        return return_string
 
 
 class RegistrationParticipantEventDetailedSummarySerializer(serializers.ModelSerializer):
