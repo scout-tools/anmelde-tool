@@ -187,6 +187,31 @@ class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         return queryset
 
 
+class EventLeaderTypesSummaryViewSet(EventFoodSummaryViewSet):
+
+    def list(self, request, *args, **kwargs) -> Response:
+        all_participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
+
+        n = self.get_leder_type_count('N',all_participants)
+        staFue = self.get_leder_type_count('StaFue',all_participants)
+        siFue = self.get_leder_type_count('SiFue',all_participants)
+        roFue = self.get_leder_type_count('RoFue',all_participants)
+        meuFue = self.get_leder_type_count('MeuFue',all_participants)
+
+        result = {
+            'n': n,
+            'staFue': staFue,
+            'siFue': siFue,
+            'roFue': roFue,
+            'meuFue': meuFue,
+        }
+
+        return Response(result, status=status.HTTP_200_OK)
+
+    def get_leder_type_count(self, leader_type, participants: QuerySet[event_models.RegistrationParticipant]):
+        return participants.filter(leader=leader_type).count()
+
+
 class EventAgeGroupsSummaryViewSet(EventFoodSummaryViewSet):
 
     def list(self, request, *args, **kwargs) -> Response:
