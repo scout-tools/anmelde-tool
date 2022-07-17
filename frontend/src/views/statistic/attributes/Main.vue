@@ -12,6 +12,8 @@
                                 v-if="item.attribute.resourcetype === 'IntegerAttribute'"/>
               <TravelAttribute :attribute="item"
                                v-else-if="item.attribute.resourcetype === 'TravelAttribute'"/>
+              <TravelAttributeV2 :attribute="item"
+                               v-else-if="item.attribute.resourcetype === 'TravelAttributeV2'"/>
               <BooleanAttribute :attribute="item"
                                 v-else-if="item.attribute.resourcetype === 'BooleanAttribute'"/>
               <StringAttribute :attribute="item"
@@ -42,6 +44,7 @@ import axios from 'axios';
 import BooleanAttribute from './tabs/BooleanAttribute.vue';
 import StringAttribute from './tabs/StringAttribute.vue';
 import TravelAttribute from './tabs/TravelAttribute.vue';
+import TravelAttributeV2 from './tabs/TravelAttributeV2.vue';
 import IntegerAttribute from './tabs/IntegerAttribute.vue';
 
 export default {
@@ -49,6 +52,7 @@ export default {
     StringAttribute,
     BooleanAttribute,
     TravelAttribute,
+    TravelAttributeV2,
     IntegerAttribute,
   },
   data: () => ({
