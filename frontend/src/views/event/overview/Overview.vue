@@ -48,6 +48,12 @@
                   <v-list-item-content>
                     <v-list-item-title>
                       {{ getHeaderText(item) }}
+                      <v-icon v-if="item.isConfirmed === false" color="red">
+                        mdi-close-octagon
+                      </v-icon>
+                      <v-icon v-if="item.isConfirmed === true" color="green">
+                        mdi-check
+                      </v-icon>
                     </v-list-item-title>
 
                     <v-list-item-subtitle>
@@ -339,11 +345,17 @@ export default {
       )}`;
     },
     getHeaderText(item) {
-      if (item && item.registrationOptions.groupId) {
+      if (item && item.registrationOptions.groupId && item.isConfirmed) {
         return `${item.name} (Dein Stamm ist bereits Angemeldet)`;
       }
-      if (item && item.registrationOptions.singleId) {
+      if (item && item.registrationOptions.groupId && !item.isConfirmed) {
+        return `${item.name} (Deine Stammesanmeldung ist nicht abgeschlossen)`;
+      }
+      if (item && item.registrationOptions.singleId && item.isConfirmed) {
         return `${item.name} (Du bist bereits Angemeldet)`;
+      }
+      if (item && item.registrationOptions.singleId && !item.isConfirmed) {
+        return `${item.name} (Deine Anmeldung ist nicht angeschlossen)`;
       }
       return item.name;
     },
