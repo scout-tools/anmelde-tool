@@ -158,6 +158,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     registration_options = serializers.SerializerMethodField()
     location = EventLocationShortSerializer(read_only=True, many=False)
     allow_statistic = serializers.SerializerMethodField()
+    is_confirmed = serializers.SerializerMethodField()
     allow_statistic_admin = serializers.SerializerMethodField()
     allow_statistic_leader = serializers.SerializerMethodField()
     single_registration_level = basic_serializers.ScoutOrgaLevelSerializer(many=False, read_only=True)
@@ -181,6 +182,7 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'allow_statistic',
             'allow_statistic_admin',
             'allow_statistic_leader',
+            'is_confirmed',
             'icon',
             'theme',
             'single_registration_level',
@@ -201,6 +203,14 @@ class EventOverviewSerializer(serializers.ModelSerializer):
 
     def get_can_edit(self, obj: event_models.Event) -> bool:
         return obj.last_possible_update >= timezone.now()
+
+    def get_is_confirmed(self, obj: event_models.Event) -> bool:
+        user: User = self.context['request'].user
+        reg: QuerySet[event_models.Registration] = obj.registration_set. \
+            filter(responsible_persons__in=[user.id])
+        if reg.first():
+            return reg.first().is_confirmed
+        return None
 
     @staticmethod
     def match_registration_allowed_level(user: User, registration_level: int) -> bool:
