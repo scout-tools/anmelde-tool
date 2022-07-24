@@ -56,24 +56,14 @@
                 Referenz Id: <span><strong> {{ item.refId }} </strong></span>
               </v-list-item-title>
             </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-data-table
-                  :headers="headersBookingOptions"
-                  :items="getItemsBookingOptions(item)"
-                  :items-per-page="itemsPerPage"
-                  hide-default-footer
-                  item-key="createdAt">
-                  <template v-slot:top>
-                    <v-toolbar flat>
-                      <v-toolbar-title>Gebuchte Optionen</v-toolbar-title>
-                      <v-spacer/>
-                    </v-toolbar>
-                  </template>
-                </v-data-table>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
+              <v-btn
+                @click="onNewClicked(item)"
+                color="success"
+                class="mb-2">
+                <v-icon>mdi-plus</v-icon>
+                Buchung hinzufügen
+              </v-btn>
+              <v-list-item>
               <v-list-item-content>
                 <v-data-table
                   :headers="headersCash"
@@ -84,22 +74,7 @@
                   no-data-text="Keine Buchung vorhanden">
                   <template v-slot:top>
                     <v-toolbar flat>
-                      <v-toolbar-title>Überweisungen</v-toolbar-title>
-                      <v-spacer/>
-                      <v-spacer/>
-                      <v-dialog v-model="dialog" max-width="500px">
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                            @click="onNewClicked(item)"
-                            color="primary"
-                            dark
-                            class="mb-2"
-                            v-bind="attrs"
-                            v-on="on">
-                            Neue Überweisung
-                          </v-btn>
-                        </template>
-                      </v-dialog>
+                      <v-toolbar-title>Buchungen</v-toolbar-title>
                     </v-toolbar>
                   </template>
                   <template v-slot:[`item.transferDate`]="{ item }">
@@ -112,7 +87,7 @@
                     <v-icon
                       small
                       class="mr-2"
-                      @click="onEditClicked(item)">
+                      @click="onNewClicked(item)">
                       mdi-pencil
                     </v-icon>
                     <v-icon
@@ -120,6 +95,23 @@
                       @click="onDeleteClicked(item)">
                       mdi-delete
                     </v-icon>
+                  </template>
+                </v-data-table>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-data-table
+                  :headers="headersBookingOptions"
+                  :items="getItemsBookingOptions(item)"
+                  :items-per-page="itemsPerPage"
+                  hide-default-footer
+                  item-key="createdAt">
+                  <template v-slot:top>
+                    <v-toolbar flat>
+                      <v-toolbar-title>Kostenpunkte</v-toolbar-title>
+                      <v-spacer/>
+                    </v-toolbar>
                   </template>
                 </v-data-table>
               </v-list-item-content>
@@ -138,7 +130,7 @@
       </v-data-table>
     </v-row>
     <TranserCreationModal
-      ref="preEventCreationRef"
+      ref="transerCreationModalRef"
       @createTransfer="createTransfer"
       @editTransfer="editTransfer"/>
     <TransferDeleteModal
@@ -320,10 +312,10 @@ export default {
       this.getData(this.eventId);
     },
     onEditClicked(data) {
-      this.$refs.preEventCreationRef.openEdit(data);
+      this.$refs.transerCreationModalRef.openEdit(data);
     },
-    onNewClicked(item) {
-      this.$refs.preEventCreationRef.open(item.id);
+    onNewClicked(data) {
+      this.$refs.transerCreationModalRef.open(data, data.id);
     },
     onDeleteClicked(data) { //eslint-disable-line
       this.$refs.transferDeleteModalRef.open(data);
