@@ -355,7 +355,7 @@ export default {
         return `${item.name} (Du bist bereits Angemeldet)`;
       }
       if (item && item.registrationOptions.singleId && !item.isConfirmed) {
-        return `${item.name} (Deine Anmeldung ist nicht angeschlossen)`;
+        return `${item.name} (Deine Anmeldung ist nicht abgeschlossen.)`;
       }
       return item.name;
     },
