@@ -6,7 +6,8 @@
           :headers="headers"
           :items="getItems()"
           show-expand
-          hide-default-footer>
+          hide-default-footer
+          disable-pagination>
         <template v-slot:[`item.createdAt`]="{ item }">
           {{
             formatDate(item.createdAt)
@@ -119,6 +120,7 @@ export default {
   },
   methods: {
     getItems() {
+      console.log(this.data);
       if (this.data) {
         return this.data;
       }
