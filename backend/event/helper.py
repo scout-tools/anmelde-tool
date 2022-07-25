@@ -1,5 +1,7 @@
 from __future__ import annotations  # we use a python 3.10 Feature in line 14
 
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
 
@@ -7,6 +9,7 @@ from basic import models as basic_models
 from event import api_exceptions as event_exceptions
 from event import models as event_models
 from event import permissions as event_permissions
+import pytz
 
 User = get_user_model()
 
@@ -71,3 +74,16 @@ def to_snake_case(ordering, order_desc, ordering_fields, default_case: str = 'cr
     if order_desc:
         camel_case = '-' + camel_case
     return camel_case
+
+
+def age_range(min_age, max_age, participants: QuerySet[event_models.RegistrationParticipant],
+              event: event_models.Event) -> int:
+    time = event.start_date
+    max_date = datetime(time.year - min_age, time.month, time.day,
+                        tzinfo=pytz.timezone('Europe/Berlin'))
+    min_date = datetime(time.year - max_age, time.month, time.day,
+                        tzinfo=pytz.timezone('Europe/Berlin'))
+
+    print(f'min age {min_age}, date: {max_date} max age {max_age}, date: {min_date}')
+
+    return participants.filter(birthday__date__range=[min_date, max_date]).count()
