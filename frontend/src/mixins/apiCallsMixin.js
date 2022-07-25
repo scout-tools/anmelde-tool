@@ -154,6 +154,10 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/age-groups/`;
       return axios.get(path, { params });
     },
+    async getAlcoholEventAgeGroups(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/alcohol-groups/`;
+      return axios.get(path, { params });
+    },
     async getEventLeaderTypes(eventId, params) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/leader-types/`;
       return axios.get(path, { params });

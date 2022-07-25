@@ -1,6 +1,4 @@
 from datetime import datetime
-
-import pytz
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
 from rest_framework import mixins, viewsets, status
@@ -11,7 +9,7 @@ from basic.models import ScoutHierarchy
 from basic.serializers import ScoutHierarchySerializer
 from event import models as event_models
 from event import permissions as event_permissions
-from event.helper import filter_registration_by_leadership, get_bund, to_snake_case, get_event
+from event.helper import filter_registration_by_leadership, get_bund, to_snake_case, get_event, age_range
 from event.summary import serializers as summary_serializers
 
 User = get_user_model()
@@ -34,6 +32,8 @@ class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
                                          | Q(registration__scout_organisation__parent__parent=bund)
                                          | Q(registration__scout_organisation__parent__parent__parent=bund)
                                          | Q(registration__scout_organisation__parent__parent__parent__parent=bund))
+
+        print(workshops)
         return workshops
 
 
@@ -192,11 +192,11 @@ class EventLeaderTypesSummaryViewSet(EventFoodSummaryViewSet):
     def list(self, request, *args, **kwargs) -> Response:
         all_participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
 
-        n = self.get_leder_type_count('N',all_participants)
-        staFue = self.get_leder_type_count('StaFue',all_participants)
-        siFue = self.get_leder_type_count('SiFue',all_participants)
-        roFue = self.get_leder_type_count('RoFue',all_participants)
-        meuFue = self.get_leder_type_count('MeuFue',all_participants)
+        n = self.get_leder_type_count('N', all_participants)
+        staFue = self.get_leder_type_count('StaFue', all_participants)
+        siFue = self.get_leder_type_count('SiFue', all_participants)
+        roFue = self.get_leder_type_count('RoFue', all_participants)
+        meuFue = self.get_leder_type_count('MeuFue', all_participants)
 
         result = {
             'n': n,
@@ -225,10 +225,10 @@ class EventAgeGroupsSummaryViewSet(EventFoodSummaryViewSet):
         event = get_event(event_id)
         all_participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
 
-        woelfling = self.age_range(0, 12, all_participants, event)
-        pfadfinder = self.age_range(12, 17, all_participants, event)
-        rover = self.age_range(17, 24, all_participants, event)
-        alt_rover = self.age_range(24, 999, all_participants, event)
+        woelfling = age_range(0, 13, all_participants, event)
+        pfadfinder = age_range(13, 18, all_participants, event)
+        rover = age_range(18, 25, all_participants, event)
+        alt_rover = age_range(25, 999, all_participants, event)
 
         result = {
             'woelfling': woelfling,
@@ -239,14 +239,25 @@ class EventAgeGroupsSummaryViewSet(EventFoodSummaryViewSet):
 
         return Response(result, status=status.HTTP_200_OK)
 
-    def age_range(self, min_age, max_age, participants: QuerySet[event_models.RegistrationParticipant],
-                  event: event_models.Event) -> int:
-        min_date = datetime(event.start_date.year - min_age, event.start_date.month, event.start_date.day,
-                            tzinfo=pytz.timezone('Europe/Berlin'))
-        max_date = datetime(event.start_date.year - max_age, event.start_date.month, event.start_date.day,
-                            tzinfo=pytz.timezone('Europe/Berlin'))
 
-        return participants.filter(birthday__gte=max_date, birthday__lte=min_date).count()
+class EventAlcoholAgeGroupsSummaryViewSet(EventFoodSummaryViewSet):
+
+    def list(self, request, *args, **kwargs) -> Response:
+        event_id = self.kwargs.get("event_pk", None)
+        event = get_event(event_id)
+        all_participants: QuerySet[event_models.RegistrationParticipant] = self.get_queryset()
+
+        young = age_range(0, 16, all_participants, event)
+        teen = age_range(16, 18, all_participants, event)
+        adult = age_range(18, 999, all_participants, event)
+
+        result = {
+            'child': young,
+            'teen': teen,
+            'adult': adult
+        }
+
+        return Response(result, status=status.HTTP_200_OK)
 
 
 class CashSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
