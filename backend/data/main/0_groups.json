@@ -1,0 +1,10 @@
+[
+  {
+    "model": "auth.group",
+    "pk": 7,
+    "fields": {
+      "name": "dpv_bundesfuehrungen",
+      "permissions": []
+    }
+  }
+]
