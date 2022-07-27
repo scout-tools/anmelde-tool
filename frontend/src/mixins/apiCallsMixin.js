@@ -186,12 +186,12 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/booking-options/`;
       return axios.get(path);
     },
-    async getRegistrationSummaryDetails(eventId, params) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/detailed/`;
+    async getParentOrganistations(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/parents/`;
       return axios.get(path, { params });
     },
-    async getRegistrationStaemme(eventId, params) {
-      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/staemme/`;
+    async getRegistrationSummaryDetails(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/detailed/`;
       return axios.get(path, { params });
     },
     async getParticipants(eventId) {
