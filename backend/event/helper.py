@@ -2,6 +2,7 @@ from __future__ import annotations  # we use a python 3.10 Feature in line 14
 
 from datetime import datetime
 
+import pytz
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
 
@@ -9,7 +10,6 @@ from basic import models as basic_models
 from event import api_exceptions as event_exceptions
 from event import models as event_models
 from event import permissions as event_permissions
-import pytz
 
 User = get_user_model()
 
@@ -84,6 +84,36 @@ def age_range(min_age, max_age, participants: QuerySet[event_models.Registration
     min_date = datetime(time.year - max_age, time.month, time.day,
                         tzinfo=pytz.timezone('Europe/Berlin'))
 
-    print(f'min age {min_age}, date: {max_date} max age {max_age}, date: {min_date}')
-
     return participants.filter(birthday__date__range=[min_date, max_date]).count()
+
+
+def filter_registrations_by_query_params(request,
+                                         event_id: str,
+                                         registrations: QuerySet[event_models.Registration]) \
+        -> QuerySet[event_models.Registration]:
+    confirmed: bool = request.query_params.get('confirmed', 'true') == 'true'
+    if confirmed:
+        registrations = registrations.filter(is_confirmed=confirmed)
+    stamm_list = request.query_params.getlist('stamm')
+    ring_list = request.query_params.getlist('ring')
+    bund_list = request.query_params.getlist('bund')
+    if stamm_list:
+        registrations = registrations.filter(
+            Q(scout_organisation__id__in=stamm_list, scout_organisation__level__id=5) |
+            Q(scout_organisation__parent__id__in=stamm_list, scout_organisation__parent__level__id=5))
+    if ring_list:
+        registrations = registrations.filter(
+            Q(scout_organisation__id__in=ring_list, scout_organisation__level__id=4) |
+            Q(scout_organisation__parent__id__in=ring_list, scout_organisation__parent__level__id=4) |
+            Q(scout_organisation__parent__parent__id__in=ring_list,
+              scout_organisation__parent__parent__level__id=4))
+    if bund_list:
+        registrations = registrations.filter(
+            Q(scout_organisation__id__in=bund_list, scout_organisation__level__id=3) |
+            Q(scout_organisation__parent__id__in=bund_list, scout_organisation__parent__level__id=3) |
+            Q(scout_organisation__parent__parent__id__in=bund_list,
+              scout_organisation__parent__parent__level__id=3) |
+            Q(scout_organisation__parent__parent__parent__id__in=bund_list,
+              scout_organisation__parent__parent__parent__level__id=3))
+    registrations = filter_registration_by_leadership(request.user, event_id, registrations)
+    return registrations
