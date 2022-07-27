@@ -38,7 +38,7 @@ Contenttypes: `python -Xutf8 manage.py dumpdata contenttypes.contenttype -o data
 
 Descriptions: `python -Xutf8 manage.py dumpdata basic.description -o data\main\0_contenTypes.json`
 
-Basic: `python -Xutf8 manage.py dumpdata basic --exclude=basic.ZipCode --exclude=basic.description --exclude=basic.ScoutOrgaLevel --exclude=basic.ScoutHierarchy -o data\test\1_completeBasic.json`
+Basic: `python -Xutf8 manage.py dumpdata basic --exclude=basic.MessageType --exclude=basic.ZipCode --exclude=basic.description --exclude=basic.ScoutOrgaLevel --exclude=basic.ScoutHierarchy -o data\test\1_completeBasic.json`
 
 Email: `python -Xutf8 manage.py dumpdata email_services -o data\test\2_completeEmail.json`
 

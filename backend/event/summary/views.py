@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
 from rest_framework import mixins, viewsets, status
@@ -9,7 +8,8 @@ from basic.models import ScoutHierarchy
 from basic.serializers import ScoutHierarchySerializer
 from event import models as event_models
 from event import permissions as event_permissions
-from event.helper import filter_registration_by_leadership, get_bund, to_snake_case, get_event, age_range
+from event.helper import filter_registration_by_leadership, get_bund, to_snake_case, get_event, age_range, \
+    filter_registrations_by_query_params
 from event.summary import serializers as summary_serializers
 
 User = get_user_model()
@@ -32,8 +32,6 @@ class WorkshopEventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
                                          | Q(registration__scout_organisation__parent__parent=bund)
                                          | Q(registration__scout_organisation__parent__parent__parent=bund)
                                          | Q(registration__scout_organisation__parent__parent__parent__parent=bund))
-
-        print(workshops)
         return workshops
 
 
@@ -53,15 +51,7 @@ class EventSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         event_id = self.kwargs.get("event_pk", None)
         registrations = event_models.Registration.objects.filter(event=event_id)
 
-        confirmed: bool = self.request.query_params.get('confirmed', 'true') == 'true'
-        if confirmed:
-            registrations = registrations.filter(is_confirmed=confirmed)
-
-        stamm_list = self.request.query_params.getlist('stamm')
-        if stamm_list:
-            registrations = registrations.filter(scout_organisation__id__in=stamm_list)
-
-        registrations = filter_registration_by_leadership(self.request.user, event_id, registrations)
+        registrations = filter_registrations_by_query_params(self.request, event_id, registrations)
 
         ordering: str = self.request.query_params.get('ordering', None)
         order_desc: bool = self.request.query_params.get('order-desc', 'false') == 'true'
@@ -93,16 +83,8 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
         registrations = event_models.Registration.objects.filter(event=event_id)
+        registrations = filter_registrations_by_query_params(self.request, event_id, registrations)
 
-        confirmed: bool = self.request.query_params.get('confirmed', 'true') == 'true'
-        if confirmed:
-            registrations = registrations.filter(is_confirmed=confirmed)
-
-        stamm_list = self.request.query_params.getlist('stamm')
-        if stamm_list:
-            registrations = registrations.filter(scout_organisation__id__in=stamm_list)
-
-        registrations = filter_registration_by_leadership(self.request.user, event_id, registrations)
         reg_ids = registrations.values_list('id', flat=True)
 
         participants: QuerySet = event_models.RegistrationParticipant.objects.filter(registration__id__in=reg_ids)
@@ -164,23 +146,14 @@ class EventFoodSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def get_queryset(self) -> QuerySet[event_models.RegistrationParticipant]:
         event_id = self.kwargs.get("event_pk", None)
 
-        booking_option_list = self.request.query_params.getlist('booking-option')
-        confirmed: bool = self.request.query_params.get('confirmed', 'true') == 'true'
-
         registrations = event_models.Registration.objects.filter(event=event_id)
-
-        if confirmed:
-            registrations = registrations.filter(is_confirmed=confirmed)
-
-        stamm_list = self.request.query_params.getlist('stamm')
-        if stamm_list:
-            registrations = registrations.filter(scout_organisation__id__in=stamm_list)
-
-        registrations = filter_registration_by_leadership(self.request.user, event_id, registrations)
+        registrations = filter_registrations_by_query_params(self.request, event_id, registrations)
 
         registration_ids = registrations.values_list('id', flat=True)
+
         queryset = event_models.RegistrationParticipant.objects.filter(registration__id__in=registration_ids)
 
+        booking_option_list = self.request.query_params.getlist('booking-option')
         if booking_option_list:
             queryset = queryset.filter(booking_option__in=booking_option_list)
 
@@ -321,14 +294,20 @@ class EmailRegistrationResponsiblePersonsViewSet(mixins.ListModelMixin, viewsets
         return all_users
 
 
-class RegistrationStaemmeViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class RegistrationParentViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [event_permissions.IsSubEventResponsiblePerson | event_permissions.IsLeaderPerson]
     serializer_class = ScoutHierarchySerializer
 
     def get_queryset(self):
         event_id = self.kwargs.get("event_pk", None)
+        level_id = self.request.query_params.get('level', 5)
 
         registrations = event_models.Registration.objects.filter(event=event_id)
         registrations = filter_registration_by_leadership(self.request.user, event_id, registrations)
         ids = registrations.values_list('scout_organisation__id', flat=True)
-        return ScoutHierarchy.objects.filter(id__in=ids).distinct().order_by('name')
+
+        return ScoutHierarchy.objects.filter(Q(id__in=ids) |
+                                             Q(parent__id__in=ids) |
+                                             Q(parent__parent__id__in=ids) |
+                                             Q(parent__parent__parent__id__in=ids),
+                                             level__id=level_id).distinct().order_by('name')
