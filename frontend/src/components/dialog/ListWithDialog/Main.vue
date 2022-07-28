@@ -14,9 +14,7 @@
     <v-btn
       v-if="dialogMeta.groupAdd"
       class="ma-2"
-      @click="openGroupDialog"
-
-    >
+      @click="openGroupDialog">
       <v-icon color="#008000" left> mdi-account-group</v-icon>
       Gruppe hinzufügen
     </v-btn>
@@ -28,9 +26,9 @@
             <v-icon color="black" dark>mdi-account</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title
-              v-text="getDisplayName(item)"
-            ></v-list-item-title>
+            <v-list-item-title>
+              {{ getDisplayName(item) }}
+            </v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn dense icon @click="editParticipant(item)">

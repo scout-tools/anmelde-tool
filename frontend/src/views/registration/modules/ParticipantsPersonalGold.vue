@@ -1,16 +1,15 @@
 <template>
   <GenericRegModul
-    :key="`module-${moduleId}`"
-    :loading="loading"
-    :saving="saving"
-    :position="position"
-    :maxPos="maxPos"
-    :currentMod="currentModule"
-    @prevStep="prevStep"
-    @nextStep="onNextStep"
-    @ignore="onIngoredClicked"
-    @saving="onSaving"
-  >
+      :key="`module-${moduleId}`"
+      :loading="loading"
+      :saving="saving"
+      :position="position"
+      :maxPos="maxPos"
+      :currentMod="currentModule"
+      @prevStep="prevStep"
+      @nextStep="onNextStep"
+      @ignore="onIngoredClicked"
+      @saving="onSaving">
     <template v-slot:header>
       <p>
         Ich melde folgende Teilnehmende an <br/>
@@ -25,10 +24,10 @@
         dort bereits erfasst hast.
         <br/>
         <a
-          v-if="!!dialogMeta.excelUpload"
-          target="_blank"
-          :href="currentRegistration.cloudLink"
-          style="color: blue"
+            v-if="!!dialogMeta.excelUpload"
+            target="_blank"
+            :href="currentRegistration.cloudLink"
+            style="color: blue"
         >
           Link zur Beispiel Excel Datei
         </a>
@@ -37,11 +36,11 @@
 
     <template v-slot:main>
       <ListWithDialogMain
-        :ref="`dialog-main-${moduleId}`"
-        :dialogMeta="dialogMeta"
-        :valdiationObj="$v"
-        @validate="validate"
-        @refresh="refresh"
+          :ref="`dialog-main-${moduleId}`"
+          :dialogMeta="dialogMeta"
+          :valdiationObj="$v"
+          @validate="validate"
+          @refresh="refresh"
       />
     </template>
   </GenericRegModul>
@@ -161,7 +160,7 @@ export default {
             name: 'Vorname*',
             techName: 'firstName',
             tooltip:
-              'Vornamen eintragen. Zweitnamen müssen nicht mit angegeben werden.',
+                'Vornamen eintragen. Zweitnamen müssen nicht mit angegeben werden.',
             icon: 'mdi-card-account-details-outline',
             mandatory: true,
             fieldType: 'textfield',
@@ -198,7 +197,7 @@ export default {
             name: 'E-Mail Adresse*',
             techName: 'email',
             tooltip:
-              'Trage bitte die E-Mail Adresse des_der Teilnehmer_in ein.',
+                'Trage bitte die E-Mail Adresse des_der Teilnehmer_in ein.',
             icon: 'mdi-email',
             mandatory: true,
             fieldType: 'textfield',
@@ -244,7 +243,7 @@ export default {
             name: 'Postleitzahl/Ort*',
             techName: 'zipCode',
             tooltip:
-              'Trage bitte den Wohnort oder die Postleitzahl des Wohnortes aus.',
+                'Trage bitte den Wohnort oder die Postleitzahl des Wohnortes aus.',
             icon: 'mdi-city',
             mandatory: true,
             fieldType: 'zipField',
@@ -299,7 +298,7 @@ export default {
       this.loading = true;
       Promise.all([this.getModule(this.moduleId, this.currentEvent.id)])
         .then((values) => {
-          this.moduleData = values[0].data; //eslint-disable-line
+            this.moduleData = values[0].data; //eslint-disable-line
           this.loading = false;
           this.setDefaults();
         })
@@ -307,6 +306,12 @@ export default {
           this.errormsg = error.response.data.message;
           this.loading = false;
         });
+    },
+    refresh() {
+      setTimeout(() => this.loadData(), 100);
+      if (this.$refs[`dialog-main-${this.moduleId}`]) {
+        this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+      }
     },
   },
 };

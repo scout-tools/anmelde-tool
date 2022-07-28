@@ -335,7 +335,7 @@ class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         if self.request.user.is_superuser:
-            return event_models.Event.objects.filter(is_public=True)
+            return event_models.Event.objects.filter(is_public=True, end_date__gte=timezone.now())
         else:
             list_parent_organistations = []
             iterator: basic_models.ScoutHierarchy = self.request.user.userextended.scout_organisation
@@ -344,3 +344,56 @@ class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
                 iterator = iterator.parent
             return event_models.Event.objects.filter(is_public=True, end_date__gte=timezone.now(),
                                                      limited_registration_hierarchy__in=list_parent_organistations)
+
+
+class ScoutHierarchyViewSet(mixins.CreateModelMixin,
+                            mixins.ListModelMixin,
+                            mixins.RetrieveModelMixin,
+                            viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = basic_serializers.ScoutHierarchySerializer
+
+    def create(self, request, *args, **kwargs):
+        if self.request.user.userextended.scout_organisation.level.id < 5:
+            raise event_api_exceptions.ScoutHierarchyAtThisLevelNotPossible
+
+        if self.request.user.userextended.scout_organisation.level == 6:
+            scout_organisation = self.request.user.userextended.scout_organisation.parent
+        else:
+            scout_organisation = self.request.user.userextended.scout_organisation
+
+        name = request.data.get('name', None)
+        if name:
+            exists = basic_models.ScoutHierarchy \
+                .objects.filter(level=6, parent_id=scout_organisation.id, name__iexact=name).exists()
+            if exists:
+                raise event_api_exceptions.ScoutHierarchyAlreadyExist
+
+        request.data['level'] = 6
+        request.data['zip_code'] = scout_organisation.zip_code.id
+        request.data['parent'] = scout_organisation.id
+
+        return super().create(request, *args, **kwargs)
+
+    def get_queryset(self):
+        level = int(self.request.query_params.get('level', 5))
+        if level == 5:
+            return basic_models.ScoutHierarchy.objects.filter(
+                id=self.request.user.userextended.scout_organisation.id,
+                level=5)
+        elif level in {2, 3, 4}:
+            user_orga = self.request.user.userextended.scout_organisation
+            orga_filter = Q(id=user_orga.id)
+
+            if user_orga.parent:
+                orga_filter |= Q(id=user_orga.parent.id)
+                if user_orga.parent.parent:
+                    orga_filter |= Q(id=user_orga.parent.parent.id)
+
+            return basic_models.ScoutHierarchy.objects.filter(orga_filter, level=level)
+        elif level == 6:
+            return basic_models.ScoutHierarchy.objects.filter(
+                level=6,
+                parent_id=self.request.user.userextended.scout_organisation.id)
+        else:
+            return []

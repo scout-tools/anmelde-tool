@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.utils import timezone
 from rest_framework import serializers
 
@@ -158,8 +158,11 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     registration_options = serializers.SerializerMethodField()
     location = EventLocationShortSerializer(read_only=True, many=False)
     allow_statistic = serializers.SerializerMethodField()
+    is_confirmed = serializers.SerializerMethodField()
     allow_statistic_admin = serializers.SerializerMethodField()
     allow_statistic_leader = serializers.SerializerMethodField()
+    single_registration_level = basic_serializers.ScoutOrgaLevelSerializer(many=False, read_only=True)
+    group_registration_level = basic_serializers.ScoutOrgaLevelSerializer(many=False, read_only=True)
 
     class Meta:
         model = event_models.Event
@@ -179,8 +182,11 @@ class EventOverviewSerializer(serializers.ModelSerializer):
             'allow_statistic',
             'allow_statistic_admin',
             'allow_statistic_leader',
+            'is_confirmed',
             'icon',
             'theme',
+            'single_registration_level',
+            'group_registration_level'
         )
 
     def get_allow_statistic(self, obj: event_models.Event) -> bool:
@@ -198,6 +204,22 @@ class EventOverviewSerializer(serializers.ModelSerializer):
     def get_can_edit(self, obj: event_models.Event) -> bool:
         return obj.last_possible_update >= timezone.now()
 
+    def get_is_confirmed(self, obj: event_models.Event) -> bool:
+        user: User = self.context['request'].user
+        reg: QuerySet[event_models.Registration] = obj.registration_set. \
+            filter(responsible_persons__in=[user.id])
+        if reg.first():
+            return reg.first().is_confirmed
+        return None
+
+    @staticmethod
+    def match_registration_allowed_level(user: User, registration_level: int) -> bool:
+        if registration_level == 6:
+            return user.userextended.scout_organisation.level.id in {5, 6}
+        elif registration_level in {2, 3, 4, 5}:
+            return user.userextended.scout_organisation.level.id >= registration_level
+        return False
+
     def get_registration_options(self, obj: event_models.Event) -> dict:
         user: User = self.context['request'].user
 
@@ -206,8 +228,16 @@ class EventOverviewSerializer(serializers.ModelSerializer):
         allow_edit_group_reg = False
         allow_edit_single_reg = False
 
+        user_orga = user.userextended.scout_organisation
+        orga_filter = Q(scout_organisation=user_orga)
+
+        if user_orga.parent:
+            orga_filter |= Q(scout_organisation=user_orga.parent)
+            if user_orga.parent.parent:
+                orga_filter |= Q(scout_organisation=user_orga.parent.parent)
+
         existing_group: QuerySet = obj.registration_set. \
-            filter(single=False, scout_organisation=user.userextended.scout_organisation)
+            filter(orga_filter, single=False)
         group: QuerySet[event_models.Registration] = existing_group. \
             filter(responsible_persons__in=[user.id])
         single: QuerySet[event_models.Registration] = obj.registration_set. \
@@ -223,11 +253,12 @@ class EventOverviewSerializer(serializers.ModelSerializer):
 
         allow_new_group_reg = not group_id \
                               and not single_id \
-                              and user.userextended.scout_organisation.level.id == 5 \
+                              and self.match_registration_allowed_level(user, obj.group_registration_level.id) \
                               and self.get_can_register(obj) \
                               and obj.group_registration != event_choices.RegistrationTypeGroup.No
         allow_new_single_reg = not single_id \
                                and not allow_edit_group_reg \
+                               and self.match_registration_allowed_level(user, obj.single_registration_level.id) \
                                and self.get_can_register(obj) \
                                and obj.single_registration != event_choices.RegistrationTypeGroup.No
 

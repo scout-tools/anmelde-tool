@@ -20,12 +20,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'api.anmelde-tool.dev.scout-tools.de',
-    'api.anmelde-tool.de',
-]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -61,14 +56,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'mozilla_django_oidc.middleware.SessionRefresh',
     'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware',
 ]
@@ -98,7 +93,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 if env.bool('USE_RDS_DB'):
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': env('RDS_DB_NAME'),
             'USER': env('RDS_USERNAME'),
             'PASSWORD': env('RDS_PASSWORD'),
@@ -141,15 +136,15 @@ USE_L10N = True
 
 USE_TZ = True
 
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-
 DRF_API_LOGGER_DATABASE = True
 
 # https://testdriven.io/blog/storing-django-static-and-media-files-on-amazon-s3/#private-media-files
 # Continue tutorial for uploading images
 if env.bool('USE_S3'):
     # aws settings
+    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+
     AWS_S3_SIGNATURE_VERSION = 's3v4'
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
     AWS_DEFAULT_ACL = 'public-read'
@@ -176,17 +171,15 @@ else:
 
 # STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-CORS_ORIGIN_WHITELIST = [
-    "https://localhost:8000",
-    "https://localhost:8080",
-    "http://localhost:8000",
-    "http://localhost:8080",
-]
+CORS_ORIGIN_WHITELIST = env.list("CORS_ORIGIN_WHITELIST")
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
 SECURE_SSL_REDIRECT = False
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 SITE_ID = 1
 

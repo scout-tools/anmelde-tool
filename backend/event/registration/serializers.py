@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum, Count
 from rest_framework import serializers
 
-from authentication.serializers import UserExtendedGetSerializer
+from authentication.serializers import UserExtendedGetSerializer, UserExtendedScoutHierarchySerializer
 from basic import serializers as basic_serializers
 from basic.models import EatHabit
 from event import models as event_models
@@ -16,10 +16,18 @@ class CurrentUserSerializer(serializers.ModelSerializer):
         fields = ('id', 'email', 'userextended', 'first_name', 'last_name')
 
 
-class RegistrationPostSerializer(serializers.Serializer):  # noqa
-    event_code = serializers.CharField(required=True)
-    single = serializers.BooleanField(required=True)
-    event = serializers.UUIDField(required=True)
+class RegistrationPostSerializer(serializers.ModelSerializer):
+    event_code = serializers.CharField()
+
+    class Meta:
+        model = event_models.Registration
+        fields = ('single', 'event', 'event_code', 'scout_organisation')
+        extra_kwargs = {
+            "event_code": {"required": True},
+            "single": {"required": True},
+            "event": {"required": True},
+            "scout_organisation": {"required": True}
+        }
 
 
 class RegistrationPutSerializer(serializers.ModelSerializer):
@@ -32,6 +40,8 @@ class RegistrationPutSerializer(serializers.ModelSerializer):
 class RegistrationGetSerializer(serializers.ModelSerializer):
     responsible_persons = CurrentUserSerializer(many=True, read_only=True)
     tags = basic_serializers.TagShortSerializer(many=True, read_only=True)
+    scout_organisation =  UserExtendedScoutHierarchySerializer()
+
 
     class Meta:
         model = event_models.Registration
@@ -47,7 +57,8 @@ class RegistrationParticipantShortSerializer(serializers.ModelSerializer):
         queryset=EatHabit.objects.all(),
         required=False
     )
-    class Meta: 
+
+    class Meta:
         model = event_models.RegistrationParticipant
         fields = ('id', 'scout_name', 'first_name', 'last_name', 'scout_level', 'eat_habit', 'age')
 
@@ -118,7 +129,7 @@ class RegistrationSummarySerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
     tags = serializers.SerializerMethodField()
 
-    class Meta: # here age
+    class Meta:  # here age
         model = event_models.Registration
         fields = ('is_confirmed',
                   'is_accepted',

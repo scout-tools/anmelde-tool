@@ -1,9 +1,9 @@
 [
   {
     "model": "auth.group",
-    "pk": 1,
+    "pk": 7,
     "fields": {
-      "name": "Test",
+      "name": "dpv_bundesfuehrungen",
       "permissions": []
     }
   }
