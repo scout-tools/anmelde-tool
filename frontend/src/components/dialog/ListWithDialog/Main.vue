@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <v-btn
+      v-if="dialogMeta.groupAdd"
+      class="ma-2"
+      @click="openGroupDialog">
+      <v-icon color="#008000" left> mdi-account-group</v-icon>
+      Mehere Einträge hinzufügen
+    </v-btn>
     <v-btn class="ma-2" color="success" @click="newItem">
       <v-icon left> mdi-plus</v-icon>
       Eintrag hinzufügen
@@ -11,13 +18,7 @@
       <v-icon color="#008000" left> mdi-microsoft-excel</v-icon>
       Excel Datei hochladen
     </v-btn>
-    <v-btn
-      v-if="dialogMeta.groupAdd"
-      class="ma-2"
-      @click="openGroupDialog">
-      <v-icon color="#008000" left> mdi-account-group</v-icon>
-      Gruppe hinzufügen
-    </v-btn>
+
     <v-list v-show="!isLoading">
       <v-list-item-group color="primary" :value="value"
                          @change="onInputChanged">
