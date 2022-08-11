@@ -33,7 +33,9 @@ export default {
   data: () => ({
     API_URL: process.env.VUE_APP_API,
     valid: true,
-    data: {},
+    data: {
+      regType: 'group',
+    },
     fields: [
       {
         name: 'Organisation',

@@ -168,6 +168,9 @@ export default {
           template += ` ${item[field]}`;
         } else if ((item[field] !== '' && typeof item[field] === 'string') || item[field].length) {
           template += ` - ${item[field]}`;
+        } else if (field === 'bookingOption') {
+          template += ` - ${item[field]['name']}`; // eslint-disable-line
+          template += ` - ${item[field]['price']} €`; // eslint-disable-line
         }
       });
       return template;
