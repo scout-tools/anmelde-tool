@@ -166,7 +166,7 @@ export default {
         excelUpload: false,
         groupAdd: true,
         path: `event/registration/${this.currentRegistration.id}/single-participant`,
-        listDisplay: ['scoutName', 'scoutLevel', 'eatHabit'],
+        listDisplay: ['scoutName', 'scoutLevel', 'eatHabit', 'bookingOption'],
         fields: [
           {
             name: 'Fahrtenname',
@@ -198,6 +198,17 @@ export default {
             lookupPath: '/basic/eat-habits/',
             lookupListDisplay: ['name'],
             fieldType: 'refCombo',
+            default: '',
+          },
+          {
+            name: 'Buchungsoption',
+            techName: 'bookingOption',
+            tooltip: 'Wie möchte diese Person an der Veranstaltung teilnehmen?',
+            icon: 'mdi-tent',
+            mandatory: true,
+            lookupPath: `/event/event/${this.currentEvent.id}/booking-options/`,
+            lookupListDisplay: ['name', 'price', '$ €'],
+            fieldType: 'refDropdown',
             default: '',
           },
         ],
