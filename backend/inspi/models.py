@@ -1,21 +1,18 @@
 import uuid
-from datetime import datetime
-from django.core.exceptions import ValidationError
 
-# models.py
-from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, \
     MinValueValidator, MinLengthValidator, MaxLengthValidator
-from django.utils.translation import gettext_lazy as _
+
+from django.db import models
 from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
 from stdimage import JPEGField
 
 
 class TimeStampMixin(models.Model):
-    created_at = models.DateTimeField(
-        auto_now_add=True, editable=False, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     created_by = models.CharField(max_length=20, blank=True, null=True)
     updated_by = models.CharField(max_length=20, blank=True, null=True)
@@ -26,11 +23,7 @@ class TimeStampMixin(models.Model):
 
 
 class TagCategory(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=100, blank=True)
     sorting = models.IntegerField(blank=False, unique=True)
@@ -47,11 +40,7 @@ class TagCategory(TimeStampMixin):
 
 
 class MaterialUnit(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=100, blank=True)
 
@@ -63,15 +52,10 @@ class MaterialUnit(TimeStampMixin):
 
 
 class MaterialName(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=100, blank=True)
-    unit_detaults = models.ForeignKey(
-        MaterialUnit, on_delete=models.CASCADE, default=1)
+    unit_detaults = models.ForeignKey(MaterialUnit, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name
@@ -81,11 +65,7 @@ class MaterialName(TimeStampMixin):
 
 
 class Tag(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=100, blank=True)
     color = models.CharField(max_length=7)
@@ -106,11 +86,7 @@ def nameFile(instance, filename):
 
 
 class Image(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     image = JPEGField(upload_to=nameFile, blank=True, variations={
         'big': (800, 600),
         'default': (400, 266),
@@ -125,34 +101,20 @@ class Image(TimeStampMixin):
 
 
 class Event(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
-    title = models.CharField(
-        max_length=40,
-        validators=[
-            MinLengthValidator(5),
-            MaxLengthValidator(40)])
+    id = models.AutoField(auto_created=True, primary_key=True)
+    title = models.CharField(max_length=40, validators=[
+        MinLengthValidator(5),
+        MaxLengthValidator(40)])
     description = models.CharField(
         max_length=8000,
         default='',
-        validators=[
-            MaxLengthValidator(8000)])
-    description_detail = models.CharField(
-        max_length=1,
-        default='')
+        validators=[MaxLengthValidator(8000)])
+    description_detail = models.CharField(max_length=1, default='')
     tags = models.ManyToManyField(Tag, default='')
-    costs_rating = models.SmallIntegerField(
-        default=1, validators=[
-            MinValueValidator(0), MaxValueValidator(5)])
-    execution_time = models.SmallIntegerField(
-        default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
-    prepairation_time = models.SmallIntegerField(
-        default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
-    difficulty = models.SmallIntegerField(
-        default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    costs_rating = models.SmallIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    execution_time = models.SmallIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    prepairation_time = models.SmallIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    difficulty = models.SmallIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
     created_by_email = models.CharField(max_length=60, blank=True)
     like_score = models.IntegerField(default=0)
     view_count = models.IntegerField(default=0)
@@ -165,21 +127,13 @@ class Event(TimeStampMixin):
 
 
 class ImageMeta(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     description = models.CharField(max_length=255)
     is_open_source = models.BooleanField(default=False)
     privacy_consent = models.BooleanField(default=False)
-    photographer_name = models.CharField(
-        max_length=100, default='', blank=True)
+    photographer_name = models.CharField(max_length=100, default='', blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    image = models.ForeignKey(
-        Image, on_delete=models.CASCADE, blank=True, null=True)
-
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, blank=True, null=True)
     event = models.ForeignKey(
         Event,
         related_name='event_id',
@@ -189,17 +143,12 @@ class ImageMeta(TimeStampMixin):
 
 
 class MaterialItem(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     quantity = models.IntegerField(default=0)
     number_of_participants = models.IntegerField(default=0, blank=True)
     material_name = models.ForeignKey(MaterialName, on_delete=models.PROTECT)
     material_unit = models.ForeignKey(MaterialUnit, on_delete=models.PROTECT)
-    event = models.ForeignKey(Event, related_name='material_list',
-                              on_delete=models.CASCADE, blank=True, null=True)
+    event = models.ForeignKey(Event, related_name='material_list', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.material_name
@@ -209,16 +158,11 @@ class MaterialItem(TimeStampMixin):
 
 
 class MessageType(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     name = models.CharField(max_length=30)
     is_comment = models.BooleanField(default=False)
     description = models.CharField(max_length=100, blank=True)
-    sorting = models.IntegerField(
-        blank=False, auto_created=True, unique=True, null=True)
+    sorting = models.IntegerField(blank=False, auto_created=True, unique=True, null=True)
 
     def __str__(self):
         return self.name
@@ -228,11 +172,7 @@ class MessageType(TimeStampMixin):
 
 
 class Message(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     created_by_email = models.CharField(max_length=60, blank=True, null=True)
     message_type = models.ForeignKey(
         MessageType, on_delete=models.CASCADE, blank=True, null=True)
@@ -253,21 +193,15 @@ class Like(TimeStampMixin):
         LIKE = 1, _('Like'),
         DISLIKE = -1, _('Dislike'),
 
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    opinion_type_id = models.IntegerField(
-        choices=OptionType.choices, default=OptionType.LIKE)
+    opinion_type_id = models.IntegerField(choices=OptionType.choices, default=OptionType.LIKE)
     like_created = models.DateTimeField(auto_now_add=True, editable=False)
 
     def save(self, *args, **kwargs):
         super(Like, self).save(*args, **kwargs)
         if self.id:
-            query = Like.objects.filter(event=self.event).all(
-            ).aggregate(sum=Sum('opinion_type_id'))
+            query = Like.objects.filter(event=self.event).all().aggregate(sum=Sum('opinion_type_id'))
             likes = query['sum']
 
             if likes is None:
@@ -290,56 +224,36 @@ class Like(TimeStampMixin):
 
 
 class Experiment(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     age_level = models.IntegerField(blank=False, unique=False, null=True)
     group_type = models.IntegerField(blank=False, unique=False, null=True)
     group_leader = models.IntegerField(blank=False, unique=False, null=True)
 
     def __str__(self):
-        return '{} {} {} {}'.format(
-            self.id,
-            self.age_level,
-            self.group_type,
-            self.group_leader)
+        return f'{self.id} {self.age_level} {self.group_type} {self.group_leader}'
 
     def __repr__(self):
         return self.__str__()
 
 
 class ExperimentItem(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
     score = models.IntegerField(blank=False, unique=False, null=True)
 
     def __str__(self):
-        return '{} {} {}'.format(
-            self.event,
-            self.experiment,
-            self.score)
+        return f'{self.event} {self.experiment} {self.score}'
 
     def __repr__(self):
         return self.__str__()
 
 
 class Faq(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     question = models.CharField(max_length=1000, blank=True, null=True)
     answer = models.CharField(max_length=2000, blank=True, null=True)
-    sorting = models.IntegerField(
-        blank=False, auto_created=True, unique=True, null=True)
+    sorting = models.IntegerField(blank=False, auto_created=True, unique=True, null=True)
 
     def __str__(self):
         return self.question
@@ -349,15 +263,9 @@ class Faq(TimeStampMixin):
 
 
 class FaqRating(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     faq = models.ForeignKey(Faq, on_delete=models.CASCADE)
-    useful_score = models.SmallIntegerField(
-        default=1, validators=[
-            MinValueValidator(0), MaxValueValidator(5)])
+    useful_score = models.SmallIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
 
     def __str__(self):
         return self.faq
@@ -367,17 +275,10 @@ class FaqRating(TimeStampMixin):
 
 
 class NextBestHeimabend(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
-    event = models.ForeignKey(
-        Event, related_name='ref', on_delete=models.CASCADE)
-    event_score = models.ForeignKey(
-        Event, related_name='score', on_delete=models.CASCADE)
-    score = models.DecimalField(
-        max_digits=10, decimal_places=8, blank=True, null=True)
+    id = models.AutoField(auto_created=True, primary_key=True)
+    event = models.ForeignKey(Event, related_name='ref', on_delete=models.CASCADE)
+    event_score = models.ForeignKey(Event, related_name='score', on_delete=models.CASCADE)
+    score = models.DecimalField(max_digits=10, decimal_places=8, blank=True, null=True)
 
     def __str__(self):
         return '{} - {}'.format(self.event, self.event_score)
@@ -387,29 +288,17 @@ class NextBestHeimabend(TimeStampMixin):
 
 
 class EventOfTheWeek(TimeStampMixin):
-    id = models.AutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name='ID')
+    id = models.AutoField(auto_created=True, primary_key=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     release_date = models.DateField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, default='')
     comment = models.CharField(max_length=2000, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if EventOfTheWeek.objects.exclude(pk=self.pk).filter(
-            release_date=self.release_date
-        ).exists():
-            raise ValidationError(
-                'An dem Montag existier bereits ein Heimabend der Woche.'
-            )
-        if EventOfTheWeek.objects.exclude(pk=self.pk).filter(
-            event_id=self.event_id
-        ).exists():
-            raise ValidationError(
-                'Dieser Heimabend wurde bereits ausgewählt.'
-            )
+        if EventOfTheWeek.objects.exclude(pk=self.pk).filter(release_date=self.release_date).exists():
+            raise ValidationError('An dem Montag existier bereits ein Heimabend der Woche.')
+        if EventOfTheWeek.objects.exclude(pk=self.pk).filter(event_id=self.event_id).exists():
+            raise ValidationError('Dieser Heimabend wurde bereits ausgewählt.')
 
         super(EventOfTheWeek, self).save(*args, **kwargs)
 

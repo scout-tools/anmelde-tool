@@ -1,19 +1,14 @@
-# views.py
-import json
+from datetime import date
 
 from django.db.models.functions import ExtractMonth, ExtractYear
-from django.http import HttpResponse
-from django_filters import FilterSet, BooleanFilter, OrderingFilter, \
-    ModelMultipleChoiceFilter, NumberFilter, BaseInFilter
+from django_filters import FilterSet, BooleanFilter, ModelMultipleChoiceFilter, NumberFilter, BaseInFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import pagination, viewsets, mixins, generics, \
     filters, status
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from datetime import date
 
 from .models import Tag, Event, Message, Like, TagCategory, Image, \
     MaterialItem, ExperimentItem, Experiment, MaterialUnit, \
@@ -31,7 +26,7 @@ from .serializers import TagSerializer, EventSerializer, MessageSerializer, \
 
 
 class TagViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = [IsAuthenticatedOrReadOnly, ]
     queryset = Tag.objects.all().order_by('sorting', 'name')
     serializer_class = TagSerializer
 
@@ -77,41 +72,28 @@ class _NumberInFilter(BaseInFilter, NumberFilter):
 
 
 class EventFilter(FilterSet):
-    prepairationTime__gt = NumberFilter(
-        field_name='prepairation_time', lookup_expr='gt')
-    prepairationTime__lt = NumberFilter(
-        field_name='prepairation_time', lookup_expr='lt')
+    prepairationTime__gt = NumberFilter(field_name='prepairation_time', lookup_expr='gt')
+    prepairationTime__lt = NumberFilter(field_name='prepairation_time', lookup_expr='lt')
     prepairationTime = NumberFilter(field_name='prepairation_time')
-    prepairationTime__in = _NumberInFilter(
-        field_name='prepairation_time', lookup_expr='in')
+    prepairationTime__in = _NumberInFilter(field_name='prepairation_time', lookup_expr='in')
 
-    costsRating__gt = NumberFilter(
-        field_name='costs_rating', lookup_expr='gt')
-    costsRating__lt = NumberFilter(
-        field_name='costs_rating', lookup_expr='lt')
+    costsRating__gt = NumberFilter(field_name='costs_rating', lookup_expr='gt')
+    costsRating__lt = NumberFilter(field_name='costs_rating', lookup_expr='lt')
     costsRating = NumberFilter(field_name='costs_rating')
-    costsRating__in = _NumberInFilter(
-        field_name='costs_rating', lookup_expr='in')
+    costsRating__in = _NumberInFilter(field_name='costs_rating', lookup_expr='in')
 
-    executionTime__gt = NumberFilter(
-        field_name='execution_time', lookup_expr='gt')
-    executionTime__lt = NumberFilter(
-        field_name='execution_time', lookup_expr='lt')
+    executionTime__gt = NumberFilter(field_name='execution_time', lookup_expr='gt')
+    executionTime__lt = NumberFilter(field_name='execution_time', lookup_expr='lt')
     executionTime = NumberFilter(field_name='execution_time')
-    executionTime__in = _NumberInFilter(
-        field_name='execution_time', lookup_expr='in')
+    executionTime__in = _NumberInFilter(field_name='execution_time', lookup_expr='in')
 
-    difficulty__gt = NumberFilter(
-        field_name='difficulty', lookup_expr='gt')
-    difficulty__lt = NumberFilter(
-        field_name='difficulty', lookup_expr='lt')
+    difficulty__gt = NumberFilter(field_name='difficulty', lookup_expr='gt')
+    difficulty__lt = NumberFilter(field_name='difficulty', lookup_expr='lt')
     difficulty = NumberFilter(field_name='difficulty')
-    difficulty__in = _NumberInFilter(
-        field_name='difficulty', lookup_expr='in')
+    difficulty__in = _NumberInFilter(field_name='difficulty', lookup_expr='in')
 
     is_public = BooleanFilter(field_name='is_public', method='get_is_public')
-    withoutCosts = BooleanFilter(
-        method='get_cost_rating', field_name='costs_rating')
+    withoutCosts = BooleanFilter(method='get_cost_rating', field_name='costs_rating')
 
     filterTags = ModelMultipleChoiceFilter(field_name='tags__id',
                                            to_field_name='id',
@@ -186,8 +168,7 @@ class EventViewSet(viewsets.ModelViewSet):
                        filters.SearchFilter, filters.OrderingFilter)
     filterset_class = EventFilter
     ordering = ['-created_at']
-    ordering_fields = ['-created_at',
-                       'created_at', 'title', '-like_score', '?']
+    ordering_fields = ['-created_at', 'created_at', 'title', '-like_score', '?']
     search_fields = ['title', 'description', 'tags__name', 'created_by']
     pagination_class = EventPagination
 
@@ -214,25 +195,22 @@ class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
 
 
-class LikeViewSet(mixins.CreateModelMixin, viewsets.ViewSetMixin,
-                  generics.GenericAPIView):
+class LikeViewSet(mixins.CreateModelMixin, viewsets.ViewSetMixin, generics.GenericAPIView):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer
 
 
-class HighscoreView(mixins.ListModelMixin, viewsets.ViewSetMixin,
-                    generics.GenericAPIView):
+class HighscoreView(mixins.ListModelMixin, viewsets.ViewSetMixin, generics.GenericAPIView):
     queryset = Event.objects.values('created_by').distinct()
     serializer_class = HighscoreSerializer
 
 
-class StatisticView(mixins.ListModelMixin, viewsets.ViewSetMixin,
-                    generics.GenericAPIView):
+class StatisticView(mixins.ListModelMixin, viewsets.ViewSetMixin, generics.GenericAPIView):
     queryset = Event.objects.values(
         month=ExtractMonth('created_at')).annotate(
-            year=ExtractYear('created_at')).values(
-                'month', 'year').distinct().order_by(
-                    'year', 'month')
+        year=ExtractYear('created_at')).values(
+        'month', 'year').distinct().order_by(
+        'year', 'month')
     serializer_class = StatisticSerializer
 
 
@@ -241,14 +219,12 @@ class TopViewsView(viewsets.ViewSet):
 
     def list(self, data):
         serializer = TopViewsSerializer(self.queryset, many=True)
-        serializer_data = sorted(
-            serializer.data, key=lambda k: k['view_count'], reverse=True)[:10]
+        serializer_data = sorted(serializer.data, key=lambda k: k['view_count'], reverse=True)[:10]
 
         return Response(serializer_data)
 
 
-class ImageMetaView(viewsets.ModelViewSet,
-                    generics.GenericAPIView):
+class ImageMetaView(viewsets.ModelViewSet, generics.GenericAPIView):
     queryset = ImageMeta.objects.all()
     serializer_class = ImageMetaSerializer
     filter_backends = [DjangoFilterBackend]
@@ -265,11 +241,9 @@ class ImageView(viewsets.ModelViewSet, generics.GenericAPIView):
         file_serializer = ImageSerializer(data=request.data)
         if file_serializer.is_valid():
             file_serializer.save()
-            return Response(file_serializer.data,
-                            status=status.HTTP_201_CREATED)
+            return Response(file_serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(file_serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class MaterialItemViewSet(viewsets.ModelViewSet):
@@ -324,19 +298,15 @@ class ExperimentItemViewSet(viewsets.ModelViewSet):
             data = serializer.data
             event = data['event']
             score = data['score']
-            if (score == 0):
-                total_ratings = ExperimentItem.objects.filter(
-                    event=event).count()
-                unclear_ratings = ExperimentItem.objects.filter(
-                    event=event).filter(
-                        score=0).count()
-                if (total_ratings >= 1):
+            if score == 0:
+                total_ratings = ExperimentItem.objects.filter(event=event).count()
+                unclear_ratings = ExperimentItem.objects.filter(event=event).filter(score=0).count()
+                if total_ratings >= 1:
                     unclear_rate = unclear_ratings / total_ratings
-                    if (unclear_rate >= 0.3):
+                    if unclear_rate >= 0.3:
                         event = Event.objects.filter(id=event)
                         event.update(is_public=False)
-                        Event.objects.get(id=event).tags.add(
-                            Tag.objects.get(id=70))
+                        Event.objects.get(id=event).tags.add(Tag.objects.get(id=70))
 
         return super().create(request, *args, **kwargs)
 
@@ -387,11 +357,9 @@ class EventOfTheWeekViewSet(viewsets.ModelViewSet):
     queryset = EventOfTheWeek.objects.order_by("release_date").all()
     serializer_class = EventOfTheWeekSerializer
     filterset_class = EventOfTheWeekFilter
-    filter_backends = (DjangoFilterBackend,
-                       filters.SearchFilter, filters.OrderingFilter)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     ordering = ['release_date']
-    ordering_fields = ['-release_date',
-                       'release_date']
+    ordering_fields = ['-release_date', 'release_date']
 
 
 class MaterialItems(APIView):
@@ -399,26 +367,16 @@ class MaterialItems(APIView):
         posted_data = self.request.data
         return_array = []
         for item in posted_data:
+            material_name_count = MaterialName.objects.filter(name=item['name']).count()
 
-            material_name_count = MaterialName.objects.filter(
-                name=item['name']
-            ).count()
-
-            if (material_name_count == 0):
-                material_name_new = MaterialName.objects.create(
-                    name=item['name']
-                )
+            if material_name_count == 0:
+                material_name_new = MaterialName.objects.create(name=item['name'])
                 material_name_new.save()
 
-            material_name_obj = MaterialName.objects.filter(
-                name=item['name']
-            ).first()
+            material_name_obj = MaterialName.objects.filter(name=item['name']).first()
 
-            if (item['id'] > 0):
-                material_item = MaterialItem.objects.filter(
-                    id=item['id']
-                )
-
+            if item['id'] > 0:
+                material_item = MaterialItem.objects.filter(id=item['id'])
                 material_item.update(
                     quantity=item['quantity'],
                     material_name_id=material_name_obj.id,
@@ -434,7 +392,6 @@ class MaterialItems(APIView):
                     event_id=item['event_id']
                 )
                 new_obj.save()
-
                 return_array.append(new_obj.id)
 
         return_data = [

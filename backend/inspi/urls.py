@@ -1,8 +1,7 @@
 # myapi/urls.py
-from django.conf import settings
 from django.urls import include, re_path, path
-
 from rest_framework import routers
+
 from . import views
 
 router = routers.DefaultRouter()
@@ -35,13 +34,8 @@ router.register(r'admin-sitemap', views.EventSitemapViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('basic/', include(router.urls)),
-    re_path(r'^upload/$', views.ImageView.as_view({'get': 'list'}),
-        name='file-upload'),
-    re_path(r'^event-publish/$', views.ChangePublishStatus.as_view(),
-        name='event-publish'),
-    re_path(r'^material-items/$', views.MaterialItems.as_view(),
-        name='material-items'),
-    re_path(r'^event-item/(?P<event_id>\w+)$',
-        views.EventItem.as_view({'get': 'list'}),
-        name='event-item')
+    re_path(r'^upload/$', views.ImageView.as_view({'get': 'list'}), name='file-upload'),
+    re_path(r'^event-publish/$', views.ChangePublishStatus.as_view(), name='event-publish'),
+    re_path(r'^material-items/$', views.MaterialItems.as_view(), name='material-items'),
+    re_path(r'^event-item/(?P<event_id>\w+)$', views.EventItem.as_view({'get': 'list'}), name='event-item')
 ]
