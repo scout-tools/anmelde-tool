@@ -12,7 +12,6 @@ from django.utils import timezone
 
 
 class TagSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Tag
         fields = (
@@ -28,7 +27,6 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class TagCategorySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = TagCategory
         fields = (
@@ -264,14 +262,12 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class ExperimentSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Experiment
         fields = '__all__'
 
 
 class ExperimentItemSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ExperimentItem
         fields = '__all__'
@@ -303,7 +299,6 @@ class ExperimentOverviewSerializer(serializers.ModelSerializer):
 
 
 class TopViewsSerializer(serializers.ModelSerializer):
-
     view_count = serializers.SerializerMethodField()
     header_image = serializers.SerializerMethodField(read_only=True)
 
@@ -327,13 +322,12 @@ class TopViewsSerializer(serializers.ModelSerializer):
 
     def get_view_count(self, obj):
         ## some_day_last_week = timezone.now().date() - timedelta(days=90)
-        view_count = 6 # TODO: Implement
+        view_count = 6  # TODO: Implement
 
         return view_count
 
 
 class EventAdminSerializer(serializers.ModelSerializer):
-
     view_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -353,13 +347,12 @@ class EventAdminSerializer(serializers.ModelSerializer):
 
     def get_view_count(self, obj):
         ## some_day_last_week = timezone.now().date() - timedelta(days=90)
-        view_count = 5 # ToDO: Implement
+        view_count = 5  # ToDO: Implement
 
         return view_count
 
 
 class EventSitemapSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Event
         fields = (
@@ -368,7 +361,6 @@ class EventSitemapSerializer(serializers.ModelSerializer):
 
 
 class EventTimestampSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Event
         fields = (
@@ -377,42 +369,36 @@ class EventTimestampSerializer(serializers.ModelSerializer):
 
 
 class MaterialUnitSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = MaterialUnit
         fields = '__all__'
 
 
 class MaterialNameSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = MaterialName
         fields = '__all__'
 
 
 class MessageTypeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = MessageType
         fields = '__all__'
 
 
 class FaqSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Faq
         fields = '__all__'
 
 
 class FaqRatingSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = FaqRating
         fields = '__all__'
 
 
 class NextBestHeimabendSerializer(serializers.ModelSerializer):
-
     header_image = serializers.SerializerMethodField(read_only=True)
     title = serializers.SerializerMethodField()
     tags = serializers.SerializerMethodField()
