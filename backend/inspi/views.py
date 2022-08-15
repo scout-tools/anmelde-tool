@@ -3,11 +3,11 @@ from datetime import date
 from django.db.models.functions import ExtractMonth, ExtractYear
 from django_filters import FilterSet, BooleanFilter, ModelMultipleChoiceFilter, NumberFilter, BaseInFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import pagination, viewsets, mixins, generics, filters, status
+from rest_framework import pagination, viewsets, mixins, filters, status
+from rest_framework.generics import get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from inspi import models as inspi_models
 from inspi import serializers as inspi_serializers
@@ -89,7 +89,7 @@ class EventFilter(FilterSet):
                                            method='get_tags')
 
     class Meta:
-        model = inspi_models.Event
+        model = inspi_models.Activity
         fields = [
             'is_public',
             'withoutCosts',
@@ -149,7 +149,7 @@ class EventOfTheWeekFilter(FilterSet):
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    queryset = inspi_models.Event.objects.all()
+    queryset = inspi_models.Activity.objects.all()
     serializer_class = inspi_serializers.EventItemSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filterset_class = EventFilter
@@ -165,25 +165,25 @@ class EventViewSet(viewsets.ModelViewSet):
             return self.queryset
 
 
-class LikeViewSet(mixins.CreateModelMixin, viewsets.ViewSetMixin, generics.GenericAPIView):
+class LikeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = inspi_models.Like.objects.all()
     serializer_class = inspi_serializers.LikeSerializer
 
 
-class HighscoreView(mixins.ListModelMixin, viewsets.ViewSetMixin, generics.GenericAPIView):
-    queryset = inspi_models.Event.objects.values('created_by').distinct()
+class HighscoreViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = inspi_models.Activity.objects.values('created_by').distinct()
     serializer_class = inspi_serializers.HighscoreSerializer
 
 
-class StatisticView(mixins.ListModelMixin, viewsets.ViewSetMixin, generics.GenericAPIView):
-    queryset = inspi_models.Event.objects.values(
+class StatisticViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = inspi_models.Activity.objects.values(
         month=ExtractMonth('created_at')).annotate(
         year=ExtractYear('created_at')).values('month', 'year').distinct().order_by('year', 'month')
     serializer_class = inspi_serializers.StatisticSerializer
 
 
-class TopViewsView(viewsets.ViewSet):
-    queryset = inspi_models.Event.objects.all()
+class TopViewsViewSet(viewsets.ViewSet):
+    queryset = inspi_models.Activity.objects.all()
 
     def list(self, data):
         serializer = inspi_serializers.TopViewsSerializer(self.queryset, many=True)
@@ -192,14 +192,14 @@ class TopViewsView(viewsets.ViewSet):
         return Response(serializer_data)
 
 
-class ImageMetaView(viewsets.ModelViewSet, generics.GenericAPIView):
+class ImageMetaViewSet(viewsets.ModelViewSet):
     queryset = inspi_models.ImageMeta.objects.all()
     serializer_class = inspi_serializers.ImageMetaSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('event',)
 
 
-class ImageView(viewsets.ModelViewSet, generics.GenericAPIView):
+class ImageViewSet(viewsets.ModelViewSet):
     queryset = inspi_models.Image.objects.all()
     serializer_class = inspi_serializers.ImageSerializer
     parser_classes = (MultiPartParser, FormParser)
@@ -256,46 +256,47 @@ class ExperimentItemViewSet(viewsets.ModelViewSet):
                 if total_ratings >= 1:
                     unclear_rate = unclear_ratings / total_ratings
                     if unclear_rate >= 0.3:
-                        event = inspi_models.Event.objects.filter(id=event)
+                        event = inspi_models.Activity.objects.filter(id=event)
                         event.update(is_public=False)
-                        inspi_models.Event.objects.get(id=event).tags.add(inspi_models.Tag.objects.get(id=70))
+                        inspi_models.Activity.objects.get(id=event).tags.add(inspi_models.Tag.objects.get(id=70))
 
         return super().create(request, *args, **kwargs)
 
 
 class RandomEventViewSet(viewsets.ModelViewSet):
-    queryset = inspi_models.Event.objects.filter(is_public=True).order_by("?")[:10]
+    queryset = inspi_models.Activity.objects.filter(is_public=True).order_by("?")[:10]
     serializer_class = inspi_serializers.EventSerializer
 
 
 class AdminEventViewSet(viewsets.ModelViewSet):
-    queryset = inspi_models.Event.objects.order_by('-created_at').all()
+    queryset = inspi_models.Activity.objects.order_by('-created_at').all()
     serializer_class = inspi_serializers.EventAdminSerializer
 
 
 class EventSitemapViewSet(viewsets.ModelViewSet):
-    queryset = inspi_models.Event.objects.all()
+    queryset = inspi_models.Activity.objects.all()
     serializer_class = inspi_serializers.EventSitemapSerializer
 
 
 class EventTimestampViewSet(viewsets.ModelViewSet):
-    queryset = inspi_models.Event.objects.filter(is_public=True).order_by('created_at')
+    queryset = inspi_models.Activity.objects.filter(is_public=True).order_by('created_at')
     serializer_class = inspi_serializers.EventTimestampSerializer
 
 
-class ChangePublishStatus(APIView):
-    def post(self, request, *args, **kwargs):
-        posted_data = self.request.data
-        set_active = posted_data['set_active']
-        event_id = posted_data['event']
+class ChangePublishStatusViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
-        event = inspi_models.Event.objects.filter(id=event_id)
-        event.update(is_public=set_active)
+    def create(self, request, *args, **kwargs):
+        worked = False
+        set_active = self.request.data.get('set_active', False)
+        event_id = self.request.data.get('event', None)
 
-        return_data = [
-            {"worked": True}
-        ]
-        return Response(status=200, data=return_data)
+        if event_id:
+            event: inspi_models.Activity = get_object_or_404(inspi_models.Activity, id=event_id)
+            event.is_public = set_active
+            event.save()
+            worked = True
+
+        return Response({"worked": worked}, status=status.HTTP_200_OK)
 
 
 class NextBestHeimabendViewSet(viewsets.ModelViewSet):
@@ -314,8 +315,9 @@ class EventOfTheWeekViewSet(viewsets.ModelViewSet):
     ordering_fields = ['-release_date', 'release_date']
 
 
-class MaterialItems(APIView):
-    def post(self, request, *args, **kwargs):
+class MaterialItemsViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+
+    def create(self, request, *args, **kwargs):
         posted_data = self.request.data
         return_array = []
         for item in posted_data:
@@ -346,7 +348,4 @@ class MaterialItems(APIView):
                 new_obj.save()
                 return_array.append(new_obj.id)
 
-        return_data = [
-            {"material_event_ids": return_array}
-        ]
-        return Response(status=200, data=return_data)
+        return Response({"material_event_ids": return_array}, status=status.HTTP_200_OK)
