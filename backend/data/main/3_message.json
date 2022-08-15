@@ -1,11 +1,21 @@
 [
   {
     "model": "basic.messagetype",
+    "pk": 1,
+    "fields": {
+      "id": 1,
+      "name": "Verbesserungsvorschlag",
+      "is_comment": true,
+      "description": ""
+    }
+  },
+  {
+    "model": "basic.messagetype",
     "pk": 2,
     "fields": {
       "id": 2,
-      "name": "Verbesserungsvorschlag",
-      "is_comment": true,
+      "name": "Fehlermeldung",
+      "is_comment": false,
       "description": ""
     }
   },
@@ -14,16 +24,6 @@
     "pk": 3,
     "fields": {
       "id": 3,
-      "name": "Fehlermeldung",
-      "is_comment": false,
-      "description": ""
-    }
-  },
-  {
-    "model": "basic.messagetype",
-    "pk": 7,
-    "fields": {
-      "id": 7,
       "name": "Rechtsschreibfehler",
       "is_comment": true,
       "description": ""
@@ -31,22 +31,45 @@
   },
   {
     "model": "basic.messagetype",
-    "pk": 8,
+    "pk": 4,
     "fields": {
-      "id": 8,
+      "id": 4,
       "name": "Sonstiges",
       "is_comment": true,
       "description": ""
     }
   },
   {
-    "model": "basic.message",
-    "pk": 9,
+    "model": "basic.messagetype",
+    "pk": 5,
     "fields": {
-      "id": 1,
-      "message_body": "Alles ist doof.",
-      "message_type": 2
-
+      "id": 5,
+      "name": "Heimabend Idee",
+      "is_public": true,
+      "is_comment": false,
+      "description": ""
     }
-  }
+  },
+  {
+    "model": "inspi.messagetype",
+    "pk": 6,
+    "fields": {
+      "id": 6,
+      "name": "Kommentar",
+      "is_public": true,
+      "is_comment": true,
+      "description": ""
+    }
+  },
+      {
+      "model": "inspi.messagetype",
+      "pk": 7,
+      "fields": {
+        "id": 7,
+        "name": "Ich möchte mitmachen",
+        "is_public": true,
+        "is_comment": false,
+        "description": ""
+      }
+    }
 ]

@@ -178,5 +178,95 @@
       "answer": "Durch Magie.",
       "type": "FAQ"
     }
+  },
+  {
+    "model": "basic.description",
+    "pk": 16,
+    "fields": {
+      "public": true,
+      "question": "Wie läuft die Veröffentlichung einer Heimabend-Idee ab?",
+      "answer": "Über das grüne Plus rechts unten auf deinem Bildschirm hast du die Möglichkeit, wenn du auf das blaue auftauchende Icon klickst, deine Heimabend-Idee hinzuzufügen. Es öffnet sich ein Fenster mit 4 verschiedenen Schritten, die einzeln erläutert werden und in denen du die einzelnen Fragen zu deiner Idee beantworten bzw. Textfelder ausfüllen kannst. <br> <br> Nachdem du die einzelnen Fenster ausgefüllt hast wird die fertige Heimabend-Idee dem Team hinter dem Inspirator zur Verfügung gestellt, das die einzelnen Felder kurz sprachlich, aber auch grob inhaltlich korrektur liest (sich bei Rückfragen ggf. noch einmal bei dir meldet) und in der Regel direkt die Heimabend-Idee freischaltet, sodass sie für alle Besucher der Website sichtbar ist.",
+      "type": "FAQ"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 17,
+    "fields": {
+      "public": true,
+      "question": "Wie kann ich das Team unterstützen?",
+      "answer": "Wir freuen uns besonders über wunderbare Heimabend-Ideen von vielen verschiedenen Menschen und über Werbung für das Projekt. Wenn du eigene Ideen oder Verbesserungsvorschläge hast oder sogar selbst Teil des Teams werden möchtest, wende dich gerne über das Kontaktformular ans Team, das sich direkt mit dir in Verbindung setzt. <br><br>Die größte Freude haben wir, wenn du selbst das Beste aus den verschiedenen Ideen für deinen Heimabend nutzt und ihr als Gruppe eine schöne Zeit dabei erlebt.",
+      "type": "FAQ"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 18,
+    "fields": {
+      "public": true,
+      "question": "Kann ich Tags selbst hinzufügen oder ändern?",
+      "answer": "Du kannst uns gerne über das Nachrichtenformular (indem du auf das grüne Plus klickst und danach auf das orangene Symbol) eine kurze Nachricht mit deinem Vorschlag oder deiner Änderungsbitte schicken und wir setzen uns mit dir in Verbindung.",
+      "type": "FAQ"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 19,
+    "fields": {
+      "public": true,
+      "question": "An wen kann ich mich bei Nachfragen oder Ergänzungs-/Änderungs- vorschlägen zu einer Heimabend-Idee wenden?",
+      "answer": "Schicke uns gerne über das Nachrichtenformular mit deinem detaillierten Anliegen zu einer Heimabend-Idee eine Nachricht und wir setzen uns mit der Person in Verbindung, die die entsprechende Idee hinzugefügt habt. Kleine Änderungen oder Ergänzungen können wir aber auch direkt berücksichtigen.",
+      "type": "FAQ"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 20,
+    "fields": {
+      "public": true,
+      "question": "Wie kann ich meine Heimabend-Idee nach dem Abschicken noch einmal ergänzen oder nachträglich verändern (auch wenn sie bereits veröffentlicht wurde)?",
+      "answer": "Schick uns gerne über das Kontaktformular (indem du auf das grüne Plus klickst und danach auf das orangene Symbol) eine kurze Nachricht mit deinem genauen Anliegen und wir können deine Änderungsvorschläge direkt einbringen.",
+      "type": "FAQ"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 21,
+    "fields": {
+      "public": true,
+      "question": "Was kann ich machen, wenn ich einen Verbesserungsvorschlag für eure Seite oder einen Fehler gefunden habe?",
+      "answer": "Wir freuen uns besonders über konstruktive Kritik! Schick uns gerne über das Kontaktformular (indem du auf das grüne Plus klickst und danach auf das orangene Symbol) eine kurze Nachricht mit deinem Vorschlag/gefundenen Fehler und wir befassen uns damit - schließlich befindet sich diese Seite im stetigen Wandel und wird immer wieder (technisch und inhaltlich) verbessert und aktualisiert.",
+      "type": "FAQ"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 22,
+    "fields": {
+      "public": true,
+      "question": "Ich habe eine nicht ganz ausgearbeitete Heimabend-Idee. Kann ich sie trotzdem einreichen?",
+      "answer": "Wir freuen uns über neue Ideen! Schick uns gerne über das Nachrichtenformular einen kurzen Hinweis darauf, dass du gerne eine noch nicht vollständig ausgearbeitete Idee hochladen möchtest. Im Anschluss daran kannst du direkt deine Heimabend-Idee auf dem normalen Weg hinzufügen und wir ergänzen in unserem Team die restlichen Stellen. Bei Rückfragen dazu setzen wir uns mit dir in Verbindung.",
+      "type": "FAQ"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 23,
+    "fields": {
+      "public": true,
+      "question": "Wer steckt hinter dem Projekt?",
+      "answer": "Hinter dem Heimabend-Inspirator steckt ein kleines Team von Pfadfinderinnen und Pfadfindern aus dem DPBM (Deutscher Pfadfinderbund Mosaik), das sich zum Ziel gesetzt hat den Erfahrungsschatz aus dem Bund zu sammeln und öffentlich zur Verfügung zu stellen, damit viele Gruppenführungen davon in ihren Heimabenden profitieren können.",
+      "type": "FAQ"
+    }
+  },
+  {
+    "model": "basic.description",
+    "pk": 24,
+    "fields": {
+      "public": true,
+      "question": "Wer entscheidet, ob eine Heimabend-Idee veröffentlicht wird und anhand welcher Kriterien?",
+      "answer": "Das Team hinter dem Heimabend-Inspirator liest die einzeln eingebrachten Heimabend-Ideen sprachlich und inhaltlich Korrektur und veröffentlicht sie letztendlich. <br> <br> Dabei werden keine Heimabend-Ideen veröffentlicht, die bereits auf der Website veröffentlicht wurden, deren Durchführung gefährlich ist oder sich in rechtlichen Grauzonen bis hin zur Illegalität verhält. Außerdem veröffentlichen wir nur Beiträge mit sachlichem Bezug zum Inspirator, die in Art und Umfang der Konzeption des Projekts nicht widersprechen. Es werden nur Fotos und Beiträge veröffentlicht, an denen der Beitragende auch die Urheberrechte besitzt.",
+      "type": "FAQ"
+    }
   }
 ]
