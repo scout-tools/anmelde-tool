@@ -22,6 +22,6 @@ def post_save_like(sender: inspi_models.Like, instance: inspi_models.Like, updat
         else:
             like_score = 0
 
-        event = inspi_models.Event.objects.filter(id=instance.event.id).first()
+        event = inspi_models.Activity.objects.filter(id=instance.event.id).first()
         event.like_score = like_score
         event.save()

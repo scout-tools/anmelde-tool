@@ -97,7 +97,7 @@ class Image(TimeStampMixin):
         return self.__str__()
 
 
-class Event(TimeStampMixin):
+class Activity(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
     title = models.CharField(max_length=40, validators=[MinLengthValidator(5), MaxLengthValidator(40)])
     description = models.CharField(max_length=8000, default='', validators=[MaxLengthValidator(8000)])
@@ -126,7 +126,7 @@ class ImageMeta(TimeStampMixin):
     photographer_name = models.CharField(max_length=100, default='', blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     image = models.ForeignKey(Image, on_delete=models.CASCADE, blank=True, null=True)
-    event = models.ForeignKey(Event, related_name='event_id', on_delete=models.CASCADE, blank=True, null=True)
+    event = models.ForeignKey(Activity, related_name='event_id', on_delete=models.CASCADE, blank=True, null=True)
 
 
 class MaterialItem(TimeStampMixin):
@@ -135,7 +135,7 @@ class MaterialItem(TimeStampMixin):
     number_of_participants = models.IntegerField(default=0, blank=True)
     material_name = models.ForeignKey(MaterialName, on_delete=models.PROTECT)
     material_unit = models.ForeignKey(MaterialUnit, on_delete=models.PROTECT)
-    event = models.ForeignKey(Event, related_name='material_list', on_delete=models.CASCADE, blank=True, null=True)
+    event = models.ForeignKey(Activity, related_name='material_list', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.material_name
@@ -146,7 +146,7 @@ class MaterialItem(TimeStampMixin):
 
 class Like(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Activity, on_delete=models.CASCADE)
     opinion_type_id = models.IntegerField(choices=OptionType.choices, default=OptionType.LIKE)
     like_created = models.DateTimeField(auto_now_add=True, editable=False)
 
@@ -166,7 +166,7 @@ class Experiment(TimeStampMixin):
 
 class ExperimentItem(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Activity, on_delete=models.CASCADE)
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
     score = models.IntegerField(blank=False, unique=False, null=True)
 
@@ -179,8 +179,8 @@ class ExperimentItem(TimeStampMixin):
 
 class NextBestHeimabend(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
-    event = models.ForeignKey(Event, related_name='ref', on_delete=models.CASCADE)
-    event_score = models.ForeignKey(Event, related_name='score', on_delete=models.CASCADE)
+    event = models.ForeignKey(Activity, related_name='ref', on_delete=models.CASCADE)
+    event_score = models.ForeignKey(Activity, related_name='score', on_delete=models.CASCADE)
     score = models.DecimalField(max_digits=10, decimal_places=8, blank=True, null=True)
 
     def __str__(self):
@@ -192,7 +192,7 @@ class NextBestHeimabend(TimeStampMixin):
 
 class EventOfTheWeek(TimeStampMixin):
     id = models.AutoField(auto_created=True, primary_key=True)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Activity, on_delete=models.CASCADE)
     release_date = models.DateField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, default='')
     comment = models.CharField(max_length=2000, blank=True, null=True)

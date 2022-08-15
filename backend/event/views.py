@@ -114,7 +114,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
         event: event_models.Event = serializer.save()
         event.responsible_persons.add(request.user)
-        standard_event = event_helper.custom_get_or_404(event_api_exceptions.SomethingNotFound('Standard Event 1'),
+        standard_event = event_helper.custom_get_or_404(event_api_exceptions.SomethingNotFound('Standard Activity 1'),
                                                         event_models.StandardEventTemplate,
                                                         pk=1)
 
@@ -235,7 +235,7 @@ class EventModulesMapperViewSet(mixins.CreateModelMixin,
         module_id = request.data.get("module")
 
         event = event_helper.get_event(event_id)
-        standard_event = event_helper.custom_get_or_404(event_api_exceptions.SomethingNotFound('Standard Event 1'),
+        standard_event = event_helper.custom_get_or_404(event_api_exceptions.SomethingNotFound('Standard Activity 1'),
                                                         event_models.StandardEventTemplate,
                                                         pk=1)
 
