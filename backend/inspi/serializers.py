@@ -1,14 +1,12 @@
 # serializers.py
-from rest_framework import serializers
-from .models import Tag, Event, Message, Like, TagCategory, \
-    Image, MaterialItem, \
-    ExperimentItem, Experiment, MaterialUnit, MaterialName, MessageType, \
-    Faq, FaqRating, NextBestHeimabend, ImageMeta, EventOfTheWeek
-from rest_framework.serializers import Serializer, FileField
+from datetime import date
+
 from django.core.cache import cache
 from django.db.models import Sum
-from datetime import date, timedelta
-from django.utils import timezone
+from rest_framework import serializers
+
+from .models import Tag, Event, Like, TagCategory, Image, MaterialItem, ExperimentItem, Experiment, MaterialUnit, \
+    MaterialName, NextBestHeimabend, ImageMeta, EventOfTheWeek
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -99,7 +97,7 @@ class EventSerializer(serializers.ModelSerializer):
             'header_image',
             'costs_rating',
             'execution_time',
-            'prepairation_time',
+            'preparation_time',
             'created_by',
             'created_at',
             'is_public')
@@ -166,7 +164,7 @@ class EventItemSerializer(serializers.ModelSerializer):
             'header_image',
             'costs_rating',
             'execution_time',
-            'prepairation_time',
+            'preparation_time',
             'difficulty',
             'created_by',
             'created_by_email',
@@ -179,7 +177,7 @@ class EventItemSerializer(serializers.ModelSerializer):
     def get_header_image(self, obj):
         qs = ImageMeta.objects.filter(event_id=obj.id).first()
         serializer = ImageMetaSerializer(instance=qs)
-        if ('id' in serializer.data):
+        if 'id' in serializer.data:
             return serializer.data
         return None
 
@@ -187,12 +185,6 @@ class EventItemSerializer(serializers.ModelSerializer):
         qs = MaterialItem.objects.filter(event_id=obj.id)
         serializer = MaterialItemSerializer(instance=qs, many=True)
         return serializer.data
-
-
-class MessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Message
-        fields = '__all__'
 
 
 class HighscoreSerializer(serializers.ModelSerializer):
@@ -377,24 +369,6 @@ class MaterialUnitSerializer(serializers.ModelSerializer):
 class MaterialNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = MaterialName
-        fields = '__all__'
-
-
-class MessageTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MessageType
-        fields = '__all__'
-
-
-class FaqSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Faq
-        fields = '__all__'
-
-
-class FaqRatingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FaqRating
         fields = '__all__'
 
 

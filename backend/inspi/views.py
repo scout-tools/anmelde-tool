@@ -3,32 +3,20 @@ from datetime import date
 from django.db.models.functions import ExtractMonth, ExtractYear
 from django_filters import FilterSet, BooleanFilter, ModelMultipleChoiceFilter, NumberFilter, BaseInFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import pagination, viewsets, mixins, generics, \
-    filters, status
+from rest_framework import pagination, viewsets, mixins, generics, filters, status
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Tag, Event, Message, Like, TagCategory, Image, \
-    MaterialItem, ExperimentItem, Experiment, MaterialUnit, \
-    MaterialName, MessageType, Faq, FaqRating, NextBestHeimabend, \
-    ImageMeta, EventOfTheWeek
-from .serializers import TagSerializer, EventSerializer, MessageSerializer, \
-    LikeSerializer, HighscoreSerializer, EventItemSerializer, \
-    TagCategorySerializer, StatisticSerializer, ImageSerializer, \
-    MaterialItemSerializer, ExperimentItemSerializer, ExperimentSerializer, \
-    TopViewsSerializer, EventAdminSerializer, EventTimestampSerializer, \
-    MaterialUnitSerializer, MaterialNameSerializer, MessageTypeSerializer, \
-    FaqSerializer, FaqRatingSerializer, ExperimentOverviewSerializer, \
-    NextBestHeimabendSerializer, ImageMetaSerializer, EventOfTheWeekSerializer, \
-    EventSitemapSerializer
+from inspi import models as inspi_models
+from inspi import serializers as inspi_serializers
 
 
 class TagViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, ]
-    queryset = Tag.objects.all().order_by('sorting', 'name')
-    serializer_class = TagSerializer
+    queryset = inspi_models.Tag.objects.all().order_by('sorting', 'name')
+    serializer_class = inspi_serializers.TagSerializer
 
     def get_queryset(self):
         if not self.request.user.is_authenticated:
@@ -45,8 +33,8 @@ class TagViewSet(viewsets.ModelViewSet):
 
 class TagCategoryViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
-    queryset = TagCategory.objects.all().order_by('sorting', 'name')
-    serializer_class = TagCategorySerializer
+    queryset = inspi_models.TagCategory.objects.all().order_by('sorting', 'name')
+    serializer_class = inspi_serializers.TagCategorySerializer
 
     def get_queryset(self):
         if not self.request.user.is_authenticated:
@@ -72,10 +60,10 @@ class _NumberInFilter(BaseInFilter, NumberFilter):
 
 
 class EventFilter(FilterSet):
-    prepairationTime__gt = NumberFilter(field_name='prepairation_time', lookup_expr='gt')
-    prepairationTime__lt = NumberFilter(field_name='prepairation_time', lookup_expr='lt')
-    prepairationTime = NumberFilter(field_name='prepairation_time')
-    prepairationTime__in = _NumberInFilter(field_name='prepairation_time', lookup_expr='in')
+    preparationTime__gt = NumberFilter(field_name='preparation_time', lookup_expr='gt')
+    preparationTime__lt = NumberFilter(field_name='preparation_time', lookup_expr='lt')
+    preparationTime = NumberFilter(field_name='preparation_time')
+    preparationTime__in = _NumberInFilter(field_name='preparation_time', lookup_expr='in')
 
     costsRating__gt = NumberFilter(field_name='costs_rating', lookup_expr='gt')
     costsRating__lt = NumberFilter(field_name='costs_rating', lookup_expr='lt')
@@ -97,11 +85,11 @@ class EventFilter(FilterSet):
 
     filterTags = ModelMultipleChoiceFilter(field_name='tags__id',
                                            to_field_name='id',
-                                           queryset=Tag.objects.all(),
+                                           queryset=inspi_models.Tag.objects.all(),
                                            method='get_tags')
 
     class Meta:
-        model = Event
+        model = inspi_models.Event
         fields = [
             'is_public',
             'withoutCosts',
@@ -110,10 +98,10 @@ class EventFilter(FilterSet):
             'executionTime__lt',
             'executionTime',
             'executionTime__in',
-            'prepairationTime__gt',
-            'prepairationTime__lt',
-            'prepairationTime',
-            'prepairationTime__in',
+            'preparationTime__gt',
+            'preparationTime__lt',
+            'preparationTime',
+            'preparationTime__in',
             'costsRating__gt',
             'costsRating__lt',
             'costsRating',
@@ -142,8 +130,7 @@ class EventFilter(FilterSet):
             tags_category.setdefault(str(val.category.id), []).append(val.id)
 
         for filter_elements in tags_category:
-            queryset = queryset.filter(
-                tags__id__in=tags_category[filter_elements]).distinct()
+            queryset = queryset.filter(tags__id__in=tags_category[filter_elements]).distinct()
 
         return queryset
 
@@ -152,7 +139,7 @@ class EventOfTheWeekFilter(FilterSet):
     past = BooleanFilter(field_name='release_date', method='get_past')
 
     class Meta:
-        model = EventOfTheWeek
+        model = inspi_models.EventOfTheWeek
         fields = ['release_date']
 
     def get_past(self, queryset, field_name, value):
@@ -162,10 +149,9 @@ class EventOfTheWeekFilter(FilterSet):
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
-    serializer_class = EventItemSerializer
-    filter_backends = (DjangoFilterBackend,
-                       filters.SearchFilter, filters.OrderingFilter)
+    queryset = inspi_models.Event.objects.all()
+    serializer_class = inspi_serializers.EventItemSerializer
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filterset_class = EventFilter
     ordering = ['-created_at']
     ordering_fields = ['-created_at', 'created_at', 'title', '-like_score', '?']
@@ -179,66 +165,47 @@ class EventViewSet(viewsets.ModelViewSet):
             return self.queryset
 
 
-class EventItem(viewsets.ModelViewSet):
-    serializer_class = EventItemSerializer
-
-    def get_queryset(self):
-        queryset = Event.objects.filter(pk=self.kwargs['event_id'])
-        if not self.request.user.is_authenticated:
-            return queryset.filter(is_public=True)
-        else:
-            return queryset
-
-
-class MessageViewSet(viewsets.ModelViewSet):
-    queryset = Message.objects.all().order_by('created_at')
-    serializer_class = MessageSerializer
-
-
 class LikeViewSet(mixins.CreateModelMixin, viewsets.ViewSetMixin, generics.GenericAPIView):
-    queryset = Like.objects.all()
-    serializer_class = LikeSerializer
+    queryset = inspi_models.Like.objects.all()
+    serializer_class = inspi_serializers.LikeSerializer
 
 
 class HighscoreView(mixins.ListModelMixin, viewsets.ViewSetMixin, generics.GenericAPIView):
-    queryset = Event.objects.values('created_by').distinct()
-    serializer_class = HighscoreSerializer
+    queryset = inspi_models.Event.objects.values('created_by').distinct()
+    serializer_class = inspi_serializers.HighscoreSerializer
 
 
 class StatisticView(mixins.ListModelMixin, viewsets.ViewSetMixin, generics.GenericAPIView):
-    queryset = Event.objects.values(
+    queryset = inspi_models.Event.objects.values(
         month=ExtractMonth('created_at')).annotate(
-        year=ExtractYear('created_at')).values(
-        'month', 'year').distinct().order_by(
-        'year', 'month')
-    serializer_class = StatisticSerializer
+        year=ExtractYear('created_at')).values('month', 'year').distinct().order_by('year', 'month')
+    serializer_class = inspi_serializers.StatisticSerializer
 
 
 class TopViewsView(viewsets.ViewSet):
-    queryset = Event.objects.all()
+    queryset = inspi_models.Event.objects.all()
 
     def list(self, data):
-        serializer = TopViewsSerializer(self.queryset, many=True)
+        serializer = inspi_serializers.TopViewsSerializer(self.queryset, many=True)
         serializer_data = sorted(serializer.data, key=lambda k: k['view_count'], reverse=True)[:10]
 
         return Response(serializer_data)
 
 
 class ImageMetaView(viewsets.ModelViewSet, generics.GenericAPIView):
-    queryset = ImageMeta.objects.all()
-    serializer_class = ImageMetaSerializer
+    queryset = inspi_models.ImageMeta.objects.all()
+    serializer_class = inspi_serializers.ImageMetaSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('event',)
 
 
 class ImageView(viewsets.ModelViewSet, generics.GenericAPIView):
-    queryset = Image.objects.all()
-    serializer_class = ImageSerializer
-
+    queryset = inspi_models.Image.objects.all()
+    serializer_class = inspi_serializers.ImageSerializer
     parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request, *args, **kwargs):
-        file_serializer = ImageSerializer(data=request.data)
+        file_serializer = inspi_serializers.ImageSerializer(data=request.data)
         if file_serializer.is_valid():
             file_serializer.save()
             return Response(file_serializer.data, status=status.HTTP_201_CREATED)
@@ -247,88 +214,73 @@ class ImageView(viewsets.ModelViewSet, generics.GenericAPIView):
 
 
 class MaterialItemViewSet(viewsets.ModelViewSet):
-    queryset = MaterialItem.objects.all()
-    serializer_class = MaterialItemSerializer
+    queryset = inspi_models.MaterialItem.objects.all()
+    serializer_class = inspi_serializers.MaterialItemSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('event',)
 
 
 class MaterialUnitViewSet(viewsets.ModelViewSet):
-    queryset = MaterialUnit.objects.all()
-    serializer_class = MaterialUnitSerializer
+    queryset = inspi_models.MaterialUnit.objects.all()
+    serializer_class = inspi_serializers.MaterialUnitSerializer
 
 
 class MaterialNameViewSet(viewsets.ModelViewSet):
-    queryset = MaterialName.objects.order_by('name').all()
-    serializer_class = MaterialNameSerializer
-
-
-class MessageTypeViewSet(viewsets.ModelViewSet):
-    queryset = MessageType.objects.all()
-    serializer_class = MessageTypeSerializer
+    queryset = inspi_models.MaterialName.objects.order_by('name').all()
+    serializer_class = inspi_serializers.MaterialNameSerializer
 
 
 class ExperimentViewSet(viewsets.ModelViewSet):
-    queryset = Experiment.objects.all()
-    serializer_class = ExperimentSerializer
+    queryset = inspi_models.Experiment.objects.all()
+    serializer_class = inspi_serializers.ExperimentSerializer
 
 
 class ExperimentOverviewViewSet(viewsets.ModelViewSet):
-    queryset = Experiment.objects.all()
-    serializer_class = ExperimentOverviewSerializer
-
-
-class FaqViewSet(viewsets.ModelViewSet):
-    queryset = Faq.objects.all()
-    serializer_class = FaqSerializer
-
-
-class FaqRatingViewSet(viewsets.ModelViewSet):
-    queryset = FaqRating.objects.all()
-    serializer_class = FaqRatingSerializer
+    queryset = inspi_models.Experiment.objects.all()
+    serializer_class = inspi_serializers.ExperimentOverviewSerializer
 
 
 class ExperimentItemViewSet(viewsets.ModelViewSet):
-    queryset = ExperimentItem.objects.all()
-    serializer_class = ExperimentItemSerializer
+    queryset = inspi_models.ExperimentItem.objects.all()
+    serializer_class = inspi_serializers.ExperimentItemSerializer
 
     def create(self, request, *args, **kwargs):
-        serializer = ExperimentItemSerializer(data=request.data)
+        serializer = inspi_serializers.ExperimentItemSerializer(data=request.data)
         if serializer.is_valid():
             data = serializer.data
             event = data['event']
             score = data['score']
             if score == 0:
-                total_ratings = ExperimentItem.objects.filter(event=event).count()
-                unclear_ratings = ExperimentItem.objects.filter(event=event).filter(score=0).count()
+                total_ratings = inspi_models.ExperimentItem.objects.filter(event=event).count()
+                unclear_ratings = inspi_models.ExperimentItem.objects.filter(event=event).filter(score=0).count()
                 if total_ratings >= 1:
                     unclear_rate = unclear_ratings / total_ratings
                     if unclear_rate >= 0.3:
-                        event = Event.objects.filter(id=event)
+                        event = inspi_models.Event.objects.filter(id=event)
                         event.update(is_public=False)
-                        Event.objects.get(id=event).tags.add(Tag.objects.get(id=70))
+                        inspi_models.Event.objects.get(id=event).tags.add(inspi_models.Tag.objects.get(id=70))
 
         return super().create(request, *args, **kwargs)
 
 
 class RandomEventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.filter(is_public=True).order_by("?")[:10]
-    serializer_class = EventSerializer
+    queryset = inspi_models.Event.objects.filter(is_public=True).order_by("?")[:10]
+    serializer_class = inspi_serializers.EventSerializer
 
 
 class AdminEventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.order_by('-created_at').all()
-    serializer_class = EventAdminSerializer
+    queryset = inspi_models.Event.objects.order_by('-created_at').all()
+    serializer_class = inspi_serializers.EventAdminSerializer
 
 
 class EventSitemapViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
-    serializer_class = EventSitemapSerializer
+    queryset = inspi_models.Event.objects.all()
+    serializer_class = inspi_serializers.EventSitemapSerializer
 
 
 class EventTimestampViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.filter(is_public=True).order_by('created_at')
-    serializer_class = EventTimestampSerializer
+    queryset = inspi_models.Event.objects.filter(is_public=True).order_by('created_at')
+    serializer_class = inspi_serializers.EventTimestampSerializer
 
 
 class ChangePublishStatus(APIView):
@@ -337,7 +289,7 @@ class ChangePublishStatus(APIView):
         set_active = posted_data['set_active']
         event_id = posted_data['event']
 
-        event = Event.objects.filter(id=event_id)
+        event = inspi_models.Event.objects.filter(id=event_id)
         event.update(is_public=set_active)
 
         return_data = [
@@ -347,15 +299,15 @@ class ChangePublishStatus(APIView):
 
 
 class NextBestHeimabendViewSet(viewsets.ModelViewSet):
-    queryset = NextBestHeimabend.objects.order_by("score").all()
-    serializer_class = NextBestHeimabendSerializer
+    queryset = inspi_models.NextBestHeimabend.objects.order_by("score").all()
+    serializer_class = inspi_serializers.NextBestHeimabendSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('event',)
 
 
 class EventOfTheWeekViewSet(viewsets.ModelViewSet):
-    queryset = EventOfTheWeek.objects.order_by("release_date").all()
-    serializer_class = EventOfTheWeekSerializer
+    queryset = inspi_models.EventOfTheWeek.objects.order_by("release_date").all()
+    serializer_class = inspi_serializers.EventOfTheWeekSerializer
     filterset_class = EventOfTheWeekFilter
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     ordering = ['release_date']
@@ -367,16 +319,16 @@ class MaterialItems(APIView):
         posted_data = self.request.data
         return_array = []
         for item in posted_data:
-            material_name_count = MaterialName.objects.filter(name=item['name']).count()
+            material_name_count = inspi_models.MaterialName.objects.filter(name=item['name']).count()
 
             if material_name_count == 0:
-                material_name_new = MaterialName.objects.create(name=item['name'])
+                material_name_new = inspi_models.MaterialName.objects.create(name=item['name'])
                 material_name_new.save()
 
-            material_name_obj = MaterialName.objects.filter(name=item['name']).first()
+            material_name_obj = inspi_models.MaterialName.objects.filter(name=item['name']).first()
 
             if item['id'] > 0:
-                material_item = MaterialItem.objects.filter(id=item['id'])
+                material_item = inspi_models.MaterialItem.objects.filter(id=item['id'])
                 material_item.update(
                     quantity=item['quantity'],
                     material_name_id=material_name_obj.id,
@@ -385,7 +337,7 @@ class MaterialItems(APIView):
                 )
                 return_array.append(item['id'])
             else:
-                new_obj = MaterialItem.objects.create(
+                new_obj = inspi_models.MaterialItem.objects.create(
                     quantity=item['quantity'],
                     material_name_id=material_name_obj.id,
                     material_unit_id=item['unit_id'],
