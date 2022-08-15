@@ -11,5 +11,5 @@ class EventConfig(AppConfig):
         from event import models as event_models
         pre_delete.connect(event_signals.pre_delete_registration, sender=event_models.Registration,
                            dispatch_uid="pre_delete_registration")
-        post_save.connect(event_signals.post_save_registation, sender=event_models.Registration,
+        post_save.connect(event_signals.post_save_registration, sender=event_models.Registration,
                           dispatch_uid="post_save_registration")
