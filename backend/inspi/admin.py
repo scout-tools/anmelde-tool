@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import Tag, TagCategory, Event, Image, MaterialItem, ExperimentItem, Experiment, MaterialName, MaterialUnit
+from .models import Tag, TagCategory, Activity, Image, MaterialItem, ExperimentItem, Experiment, MaterialName, MaterialUnit
 
-admin.site.register(Event)
+admin.site.register(Activity)
 admin.site.register(TagCategory)
 admin.site.register(Tag)
 admin.site.register(Image)
