@@ -1,17 +1,15 @@
-# serializers.py
 from datetime import date
 
 from django.core.cache import cache
 from django.db.models import Sum
 from rest_framework import serializers
 
-from .models import Tag, Event, Like, TagCategory, Image, MaterialItem, ExperimentItem, Experiment, MaterialUnit, \
-    MaterialName, NextBestHeimabend, ImageMeta, EventOfTheWeek
+from inspi import models as inspi_models
 
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tag
+        model = inspi_models.Tag
         fields = (
             'id',
             'name',
@@ -26,7 +24,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 class TagCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = TagCategory
+        model = inspi_models.TagCategory
         fields = (
             'id',
             'name',
@@ -45,7 +43,7 @@ class MaterialItemSerializer(serializers.ModelSerializer):
     material_name_str = serializers.ReadOnlyField(source='material_name.name')
 
     class Meta:
-        model = MaterialItem
+        model = inspi_models.MaterialItem
         fields = (
             'id',
             'quantity',
@@ -61,7 +59,7 @@ class LikeSerializer(serializers.ModelSerializer):
     current_median = serializers.SerializerMethodField()
 
     class Meta:
-        model = Like
+        model = inspi_models.Like
         fields = (
             'event',
             'opinion_type_id',
@@ -77,7 +75,7 @@ class LikeSerializer(serializers.ModelSerializer):
 def getmedian():
     median = cache.get('median')
     if median is None:
-        query = Like.objects.values("event__id").annotate(
+        query = inspi_models.Like.objects.values("event__id").annotate(
             sum=Sum('opinion_type_id')).order_by('sum')
         median = query[int(query.count() / 2)]['sum']
         cache.set('median', median, timeout=12 * 60 * 60)
@@ -88,7 +86,7 @@ class EventSerializer(serializers.ModelSerializer):
     header_image = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = Event
+        model = inspi_models.Activity
         fields = (
             'id',
             'title',
@@ -103,9 +101,9 @@ class EventSerializer(serializers.ModelSerializer):
             'is_public')
 
     def get_header_image(self, obj):
-        qs = ImageMeta.objects.filter(event_id=obj.id).first()
+        qs = inspi_models.ImageMeta.objects.filter(event_id=obj.id).first()
         serializer = ImageMetaSerializer(instance=qs)
-        if ('id' in serializer.data):
+        if 'id' in serializer.data:
             return serializer.data
         return None
 
@@ -116,7 +114,7 @@ class ImageMetaSerializer(serializers.ModelSerializer):
     event_id = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = ImageMeta
+        model = inspi_models.ImageMeta
         fields = (
             'image_uuid',
             'id',
@@ -132,20 +130,18 @@ class ImageMetaSerializer(serializers.ModelSerializer):
         )
 
     def get_image_uuid(self, obj):
-        qs = Image.objects.filter(id=obj.image_id).first()
+        qs = inspi_models.Image.objects.filter(id=obj.image_id).first()
         serializer = ImageSerializer(instance=qs)
         return serializer.data
 
     def get_event_id(self, obj):
-        if (obj.event):
-            if (obj.event.id):
-                return obj.event.id
+        if obj.event and obj.event.id:
+            return obj.event.id
         return None
 
     def get_image_id(self, obj):
-        if (obj.image):
-            if (obj.image.id):
-                return obj.image.id
+        if obj.image and obj.image.id:
+            return obj.image.id
         return None
 
 
@@ -154,7 +150,7 @@ class EventItemSerializer(serializers.ModelSerializer):
     material_list = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = Event
+        model = inspi_models.Activity
         fields = (
             'id',
             'title',
@@ -175,14 +171,14 @@ class EventItemSerializer(serializers.ModelSerializer):
             'like_score')
 
     def get_header_image(self, obj):
-        qs = ImageMeta.objects.filter(event_id=obj.id).first()
+        qs = inspi_models.ImageMeta.objects.filter(event_id=obj.id).first()
         serializer = ImageMetaSerializer(instance=qs)
         if 'id' in serializer.data:
             return serializer.data
         return None
 
     def get_material_list(self, obj):
-        qs = MaterialItem.objects.filter(event_id=obj.id)
+        qs = inspi_models.MaterialItem.objects.filter(event_id=obj.id)
         serializer = MaterialItemSerializer(instance=qs, many=True)
         return serializer.data
 
@@ -191,14 +187,14 @@ class HighscoreSerializer(serializers.ModelSerializer):
     highscore = serializers.SerializerMethodField()
 
     class Meta:
-        model = Event
+        model = inspi_models.Activity
         fields = (
             'created_by',
             'highscore',
         )
 
     def get_highscore(self, obj):
-        score = Event.objects.filter(created_by=obj['created_by']).count()
+        score = inspi_models.Activity.objects.filter(created_by=obj['created_by']).count()
         return score
 
 
@@ -209,7 +205,7 @@ class StatisticSerializer(serializers.ModelSerializer):
     year = serializers.SerializerMethodField()
 
     class Meta:
-        model = Event
+        model = inspi_models.Activity
         fields = (
             'score',
             'score_cumulative',
@@ -218,13 +214,13 @@ class StatisticSerializer(serializers.ModelSerializer):
         )
 
     def get_score(self, obj):
-        score = Event.objects.filter(
+        score = inspi_models.Activity.objects.filter(
             created_at__year__exact=obj['year'],
             created_at__month__exact=obj['month']).count()
         return score
 
     def get_score_cumulative(self, obj):
-        score = Event.objects.filter(
+        score = inspi_models.Activity.objects.filter(
             created_at__year__lte=obj['year'],
             created_at__month__lte=obj['month']).count()
         return score
@@ -240,7 +236,7 @@ class ImageSerializer(serializers.ModelSerializer):
     image_uuid = serializers.SerializerMethodField()
 
     class Meta:
-        model = Image
+        model = inspi_models.Image
         fields = (
             'id',
             'image_uuid',
@@ -255,13 +251,13 @@ class ImageSerializer(serializers.ModelSerializer):
 
 class ExperimentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Experiment
+        model = inspi_models.Experiment
         fields = '__all__'
 
 
 class ExperimentItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ExperimentItem
+        model = inspi_models.ExperimentItem
         fields = '__all__'
 
 
@@ -270,7 +266,7 @@ class ExperimentOverviewSerializer(serializers.ModelSerializer):
     experiment_item = serializers.SerializerMethodField()
 
     class Meta:
-        model = Experiment
+        model = inspi_models.Experiment
         fields = (
             'id',
             'created_at',
@@ -282,12 +278,10 @@ class ExperimentOverviewSerializer(serializers.ModelSerializer):
         )
 
     def get_event_counter(self, obj):
-        return ExperimentItem.objects.filter(experiment__id=obj.id).count()
+        return inspi_models.ExperimentItem.objects.filter(experiment__id=obj.id).count()
 
     def get_experiment_item(self, obj):
-        return ExperimentItem.objects.filter(
-            experiment__id=obj.id
-        ).values('score', 'event__title')
+        return inspi_models.ExperimentItem.objects.filter(experiment__id=obj.id).values('score', 'event__title')
 
 
 class TopViewsSerializer(serializers.ModelSerializer):
@@ -295,7 +289,7 @@ class TopViewsSerializer(serializers.ModelSerializer):
     header_image = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = Event
+        model = inspi_models.Activity
         fields = (
             'id',
             'view_count',
@@ -306,9 +300,9 @@ class TopViewsSerializer(serializers.ModelSerializer):
             'description')
 
     def get_header_image(self, obj):
-        qs = ImageMeta.objects.filter(event_id=obj.id).first()
+        qs = inspi_models.ImageMeta.objects.filter(event_id=obj.id).first()
         serializer = ImageMetaSerializer(instance=qs)
-        if ('id' in serializer.data):
+        if 'id' in serializer.data:
             return serializer.data
         return None
 
@@ -323,7 +317,7 @@ class EventAdminSerializer(serializers.ModelSerializer):
     view_count = serializers.SerializerMethodField()
 
     class Meta:
-        model = Event
+        model = inspi_models.Activity
         fields = (
             'id',
             'title',
@@ -346,7 +340,7 @@ class EventAdminSerializer(serializers.ModelSerializer):
 
 class EventSitemapSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Event
+        model = inspi_models.Activity
         fields = (
             'id',
             'title')
@@ -354,7 +348,7 @@ class EventSitemapSerializer(serializers.ModelSerializer):
 
 class EventTimestampSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Event
+        model = inspi_models.Activity
         fields = (
             'id',
             'created_at')
@@ -362,13 +356,13 @@ class EventTimestampSerializer(serializers.ModelSerializer):
 
 class MaterialUnitSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MaterialUnit
+        model = inspi_models.MaterialUnit
         fields = '__all__'
 
 
 class MaterialNameSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MaterialName
+        model = inspi_models.MaterialName
         fields = '__all__'
 
 
@@ -380,7 +374,7 @@ class NextBestHeimabendSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField()
 
     class Meta:
-        model = NextBestHeimabend
+        model = inspi_models.NextBestHeimabend
         fields = (
             'event',
             'event_score',
@@ -393,29 +387,27 @@ class NextBestHeimabendSerializer(serializers.ModelSerializer):
         )
 
     def get_id(self, obj):
-        id = Event.objects.filter(id=obj.event_score.id).values('id').first()
+        id = inspi_models.Activity.objects.filter(id=obj.event_score.id).values('id').first()
         return id['id']
 
     def get_title(self, obj):
-        title = Event.objects.filter(
-            id=obj.event_score.id).values('title').first()
+        title = inspi_models.Activity.objects.filter(id=obj.event_score.id).values('title').first()
         return title['title']
 
     def get_description(self, obj):
-        title = Event.objects.filter(
-            id=obj.event_score.id).values('description').first()
+        title = inspi_models.Activity.objects.filter(id=obj.event_score.id).values('description').first()
         return title['description']
 
     def get_header_image(self, obj):
-        qs = ImageMeta.objects.filter(event_id=obj.event_score.id).first()
+        qs = inspi_models.ImageMeta.objects.filter(event_id=obj.event_score.id).first()
         serializer = ImageMetaSerializer(instance=qs)
-        if ('id' in serializer.data):
+        if 'id' in serializer.data:
             return serializer.data
         return None
 
     def get_tags(self, obj):
         return_tags = []
-        tags = Event.objects.filter(id=obj.event_score.id).values('tags')
+        tags = inspi_models.Activity.objects.filter(id=obj.event_score.id).values('tags')
         for tag in tags:
             return_tags.append(tag['tags'])
         return return_tags
@@ -430,7 +422,7 @@ class EventOfTheWeekSerializer(serializers.ModelSerializer):
     description = serializers.SerializerMethodField()
 
     class Meta:
-        model = EventOfTheWeek
+        model = inspi_models.EventOfTheWeek
         fields = (
             'id',
             'release_date',
@@ -447,7 +439,7 @@ class EventOfTheWeekSerializer(serializers.ModelSerializer):
     def get_event_obj(self, obj):
         event = []
         if obj.event.id:
-            event = Event.objects.filter(id=obj.event.id).values(
+            event = inspi_models.Activity.objects.filter(id=obj.event.id).values(
                 'title',
                 'created_by',
             )
@@ -457,25 +449,23 @@ class EventOfTheWeekSerializer(serializers.ModelSerializer):
         return date.today() >= obj.release_date
 
     def get_title(self, obj):
-        title = Event.objects.filter(
-            id=obj.event.id).values('title').first()
+        title = inspi_models.Activity.objects.filter(id=obj.event.id).values('title').first()
         return title['title']
 
     def get_description(self, obj):
-        title = Event.objects.filter(
-            id=obj.event.id).values('description').first()
+        title = inspi_models.Activity.objects.filter(id=obj.event.id).values('description').first()
         return title['description']
 
     def get_header_image(self, obj):
-        qs = ImageMeta.objects.filter(event_id=obj.event.id).first()
+        qs = inspi_models.ImageMeta.objects.filter(event_id=obj.event.id).first()
         serializer = ImageMetaSerializer(instance=qs)
-        if ('id' in serializer.data):
+        if 'id' in serializer.data:
             return serializer.data
         return None
 
     def get_tags(self, obj):
         return_tags = []
-        tags = Event.objects.filter(id=obj.event.id).values('tags')
+        tags = inspi_models.Activity.objects.filter(id=obj.event.id).values('tags')
         for tag in tags:
             return_tags.append(tag['tags'])
         return return_tags
