@@ -7,10 +7,10 @@ def pre_delete_registration(sender, instance: event_models.Registration, **kwarg
         tag.delete()
 
 
-def post_save_registation(sender: event_models.Registration,
-                          instance: event_models.Registration,
-                          update_fields,
-                          raw,
-                          **kwargs):
+def post_save_registration(sender: event_models.Registration,
+                           instance: event_models.Registration,
+                           update_fields,
+                           raw,
+                           **kwargs):
     if update_fields and 'is_confirmed' in update_fields and instance.is_confirmed:
         services.send_registration_created_mail(instance_id=str(instance.id))
