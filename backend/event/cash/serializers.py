@@ -15,3 +15,7 @@ class CashIncomeSerializer(serializers.ModelSerializer):
     class Meta:
         model = cash_models.CashIncome
         fields = '__all__'
+
+
+class MailReminderSerializer(serializers.Serializer): # noqa
+    event_id = serializers.UUIDField()
