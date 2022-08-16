@@ -28,6 +28,7 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         add them to the user. Note that any role not passed via keycloak
         will be removed from the user.
         """
+
         with transaction.atomic():
             user.groups.clear()
             for role in claims.get('roles', []):
@@ -64,6 +65,13 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         if user.last_name is not claims.get('family_name', ''):
             user.last_name = claims.get('family_name', '')
             edited = True
+
+        if 'anmelde_tool_team' in claims.get('roles', []):
+            edited = not user.is_staff  # if user is already staff, edited is false
+            user.is_staff = True
+        else:
+            edited = not user.is_staff  # if user is already no staff, edited is false
+            user.is_staff = False
 
         stamm = claims.get('stamm', '')
         bund = claims.get('bund', '')
