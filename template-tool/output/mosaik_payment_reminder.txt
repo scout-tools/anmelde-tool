@@ -1,0 +1,45 @@
+[https://www.hratuga.de/pfadfinderwissen/images/0/0f/Dpbm.gif]
+
+{{ event_name }}
+
+Liebe_r {{ responsible_persons }}
+
+wir freuen uns, dass ihr euch als Stamm {{ scout_organisation }} für das {{ event_name }} angemeldet habt!
+
+Eine Sache fehlt aber noch: Ihr müsstet bitte noch euren Teilnehmendenbeitrag bezahlen.
+
+Ihr habt {{ participant_count }} Personen angemeldet, euer Beitrag beläuft sich also ingesamt auf {{ sum }}€. Bisher haben wir von euch {{ received_sum }}€ erhalten, womit noch {{ open_sum }}€ offen
+sind.
+
+Bitte überweist den bis zum {{ payment_deadline }} Tage auf das folgende Konto und verwendet bitte den angegebenen Verwendungszweck:
+
+Betrag: {{ open_sum }}€
+Pfadfinderbundesamt Köln e.V.
+KD-Bank eG
+DE16 3506 0190 1013 6880 32
+Verwendungszweck: {{ payment_id }}
+
+
+Ihr habt schon bezahlt oder sonst Anmerkungen oder Fragen? Wendet euch gern an unsere Info Emailadresse: busife@dpbm.de.
+
+Vielen Dank, liebe Grüße und herzlich gut Pfad,
+
+
+Eure Lagerleitung
+
+
+Bei technischen Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.
+
+
+
+BuSiFe, das Singefest des Deutschen Pfadfinderbund Mosaik.
+
+Deutscher Pfadfinderbund Mosaik
+
+Robert-Perthel-Str. 79
+
+50739 Köln
+
+busife@dpbm.de
+
+www.dpbm.de

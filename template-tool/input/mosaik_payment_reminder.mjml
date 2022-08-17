@@ -16,25 +16,26 @@
             angemeldet habt! </p>
           <p>Eine Sache fehlt aber noch: Ihr müsstet bitte noch euren Teilnehmendenbeitrag bezahlen. </p>
 
-          <p>Ihr habt {{ participant_count }} Personen angemeldet, euer Beitrag beläuft sich also ingesamt auf {{ sum }}.
+          <p>Ihr habt {{ participant_count }} Personen angemeldet, euer Beitrag beläuft sich also ingesamt auf {{ sum }}€.  Bisher haben wir von euch {{ received_sum }}€ erhalten, womit noch {{ open_sum }}€ offen sind.
 
-            <p>
-              Bitte überweist den bis zum {{ regestration_deadline + 3 days }} Tage auf das folgende Konto und verwendet bitte den angegebenen Verwendungszweck: </p>
-            <p>
-              <b>
-                Pfadfinderbundesamt Köln e.V.<br />
-                KD-Bank eG.<br />
-                DE16 3506 0190 1013 6880 32.<br />
-                Betreff: {{ event_name }}-{{ scout_organisation }}-{{ payment_id }}.<br />
-              </b>
-            </p>
+          <p>
+            Bitte überweist den bis zum {{ payment_deadline }} Tage auf das folgende Konto und verwendet bitte den angegebenen Verwendungszweck: </p>
+          <p>
+            <b>
+              Betrag: {{ open_sum }}€<br />
+              Pfadfinderbundesamt Köln e.V.<br />
+              KD-Bank eG<br />
+              DE16 3506 0190 1013 6880 32<br />
+              Verwendungszweck: {{ payment_id }}<br />
+            </b>
+          </p>
 
-            Ihr habt schon bezahlt oder sonst Anmerkungen oder Fragen? Wendet euch gern an unsere Info Emailadresse: busife (at) dpbm.de. </br>
-            </br>
-            Vielen Dank, liebe Grüße und herzlich gut Pfad,</br>
-            </br>
-            </br>
-            Eure Lagerleitung</br>
+          Ihr habt schon bezahlt oder sonst Anmerkungen oder Fragen? Wendet euch gern an unsere Info Emailadresse: busife@dpbm.de. </br>
+          </br>
+          Vielen Dank, liebe Grüße und herzlich gut Pfad,</br>
+          </br>
+          </br>
+          Eure Lagerleitung</br>
         </mj-text>
       </mj-column>
     </mj-section>
