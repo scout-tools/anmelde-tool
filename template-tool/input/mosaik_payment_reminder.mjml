@@ -1,13 +1,6 @@
 <mjml>
   <mj-body background-color="#ccd3e0">
-    <mj-section background-color="#084B8A" padding-bottom="20px" padding-top="20px">
-      <mj-column width="20%" background-color="#084B8A">
-        <mj-image src="https://www.hratuga.de/pfadfinderwissen/images/0/0f/Dpbm.gif" alt="" align="left" border="none" width="100px" padding-left="10px" padding-right="10px" padding-bottom="10px" padding-top="10px"></mj-image>
-      </mj-column>
-      <mj-column padding-left="30px" width="80%" background-color="#084B8A">
-        <mj-text align="left" font-size="36px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="28px">{{ event_name }}</mj-text>
-      </mj-column>
-    </mj-section>
+    <mj-include path="./input/components/header/mosaik.mjml" />
     <mj-section background-color="#FFF" padding-bottom="0px" padding-top="0">
       <mj-column width="100%">
         <mj-text align="left" font-size="14px" color="#333333" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">
@@ -39,33 +32,7 @@
         </mj-text>
       </mj-column>
     </mj-section>
-    <mj-section background-color="#FFF" padding-bottom="15px">
-      <mj-column>
-        <mj-text align="center" color="#333333" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
-          <p>Bei technischen Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.</p>
-          <br></br>
-          <p><strong>BuSiFe, das Singefest des Deutschen Pfadfinderbund Mosaik.</strong></p>
-          <p>
-            Deutscher Pfadfinderbund Mosaik</p>
-          <p>
-            Robert-Perthel-Str. 79</p>
-          <p>
-            50739 Köln</p>
-          <p>
-            busife@dpbm.de</p>
-          <p>
-            www.dpbm.de</p>
-        </mj-text>
-      </mj-column>
-    </mj-section>
-    <mj-section>
-      <mj-column background-color="#a8c0d5" padding-bottom="20px" padding-top="20px">
-        <mj-text align="center">
-          Du möchtest diese E-Mails nicht mehr erhalten? <br />
-          Klicke <a href="https://anmelde-tool.de/unsubscribe/{{unsubscribe}}"><strong>hier</strong></a> um dich
-          abzumelden.
-        </mj-text>mj-text>
-      </mj-column>
-    </mj-section>
+    <mj-include path="./input/components/footer/mosaik.mjml" />
+    <mj-include path="./input/components/unsubscribe/default.mjml" />
   </mj-body>
 </mjml>
