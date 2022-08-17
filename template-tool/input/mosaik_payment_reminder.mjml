@@ -16,7 +16,7 @@
             angemeldet habt! </p>
           <p>Eine Sache fehlt aber noch: Ihr müsstet bitte noch euren Teilnehmendenbeitrag bezahlen. </p>
 
-          <p>Ihr habt {{ participant_count }} Personen angemeldet, euer Beitrag beläuft sich also ingesamt auf {{ sum }}€.  Bisher haben wir von euch {{ received_sum }}€ erhalten, womit noch {{ open_sum }}€ offen sind.
+          <p>Ihr habt {{ participant_count }} Personen angemeldet, euer Beitrag beläuft sich also ingesamt auf {{ sum }}€. Bisher haben wir von euch {{ received_sum }}€ erhalten, womit noch {{ open_sum }}€ offen sind.
 
           <p>
             Bitte überweist den bis zum {{ payment_deadline }} Tage auf das folgende Konto und verwendet bitte den angegebenen Verwendungszweck: </p>
@@ -56,6 +56,15 @@
           <p>
             www.dpbm.de</p>
         </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column background-color="#a8c0d5" padding-bottom="20px" padding-top="20px">
+        <mj-text align="center">
+          Du möchtest diese E-Mails nicht mehr erhalten? <br />
+          Klicke <a href="https://anmelde-tool.de/unsubscribe/{{unsubscribe}}"><strong>hier</strong></a> um dich
+          abzumelden.
+        </mj-text>mj-text>
       </mj-column>
     </mj-section>
   </mj-body>
