@@ -55,16 +55,19 @@ export default {
     edit: false,
     data: {},
     registrationId: '',
+    paymentData: {},
   }),
   methods: {
     validate() {
       this.$v.$touch();
       this.valid = !this.$v.$anyError;
     },
-    open(itemId) {
+    open(data, itemId) {
+      this.paymentData = data;
       this.data = {};
       this.registrationId = itemId;
       this.active = true;
+      this.setDefaults();
     },
     openEdit(data) {
       this.registrationId = data.registration;
@@ -83,6 +86,12 @@ export default {
       const emit = this.edit ? 'editTransfer' : 'createTransfer';
       this.$emit(emit, this.data, this.registrationId);
       this.active = false;
+    },
+    setDefaults() {
+      this.data.amount = this.openAmount;
+      this.data.transferSubject = this.paymentData.refId;
+      this.data.transferDate = new Date();
+      this.data.transferPerson = this.paymentData.responsiblePersons[0];
     },
   },
   validations: {
@@ -106,6 +115,12 @@ export default {
   created() {
   },
   computed: {
+    openAmount() {
+      if (this.paymentData && this.paymentData.payement && this.paymentData.payement.open) {
+        return this.paymentData.payement.open;
+      }
+      return '';
+    },
     dialogMeta() {
       return {
         title: 'Hallo',
@@ -122,7 +137,6 @@ export default {
             icon: 'mdi-cash',
             mandatory: true,
             fieldType: 'currency',
-            default: '',
             cols: 4,
           },
           {
@@ -143,8 +157,8 @@ export default {
               'Wann wurde die Überweisung getätigt?',
             icon: 'mdi-calendar-range',
             mandatory: true,
-            fieldType: 'datetime',
-            cols: 12,
+            fieldType: 'date',
+            cols: 6,
           },
           {
             name: 'Überweisende Person (Email-Adresse)',
@@ -155,7 +169,7 @@ export default {
             mandatory: true,
             fieldType: 'responsablesField',
             default: '',
-            cols: 12,
+            cols: 6,
           },
           {
             name: 'Referenz Id',

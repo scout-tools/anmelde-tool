@@ -15,7 +15,7 @@
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="scoutName"
-              label="Fahrtenname*"
+              label="Mein (Fahrten)-Name*"
               prepend-icon="mdi-account-circle"
               @change="updateData"
               :error-messages="scoutNameErrors"
@@ -40,7 +40,7 @@
               disabled
               filled
               v-model="email"
-              label="E-Mail Adresse*"
+              label="Meine E-Mail Adresse*"
               prepend-icon="mdi-email"
             >
               <template slot="append">
@@ -87,7 +87,7 @@
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="mobileNumber"
-              label="Handynummer*"
+              label="Meine Handynummer*"
               prepend-icon="mdi-cellphone"
               @change="updateData"
               :error-messages="mobileNumberErrors"

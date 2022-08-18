@@ -8,6 +8,10 @@ from .kpi import views as kpi_views
 event_summary_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
 event_summary_router.register(r'summary', views.EventSummaryViewSet, basename='summary')
 event_summary_router.register(r'summary/age-groups', views.EventAgeGroupsSummaryViewSet, basename='age-groups')
+event_summary_router.register(r'summary/leader-types', views.EventLeaderTypesSummaryViewSet,
+                              basename='leader-types')
+event_summary_router.register(r'summary/alcohol-groups', views.EventAlcoholAgeGroupsSummaryViewSet,
+                              basename='alcohol-groups')
 
 event_summary_router.register(r'summary/kpi/total-participants', kpi_views.TotalParticipantsViewSet,
                               basename='total-participants')
@@ -24,7 +28,7 @@ event_summary_router.register(r'summary/participant-locations', views.Registrati
                               basename='participant-locations')
 event_summary_router.register(r'summary/event-location', views.EventLocationViewSet, basename='event-location')
 event_summary_router.register(r'summary/detailed', views.EventDetailedSummaryViewSet, basename='detailed')
-event_summary_router.register(r'summary/staemme', views.RegistrationStaemmeViewSet, basename='detailed')
+event_summary_router.register(r'summary/parents', views.RegistrationParentViewSet, basename='detailed')
 event_summary_router.register(r'summary/workshop', views.WorkshopEventSummaryViewSet, basename='workshop')
 event_summary_router.register(r'summary/attributes', views.EventAttributeSummaryViewSet, basename='attributes')
 event_summary_router.register(r'summary/food', views.EventFoodSummaryViewSet, basename='food')

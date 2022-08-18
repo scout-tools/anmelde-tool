@@ -7,9 +7,11 @@
       <v-card-title class="text-h5 grey lighten-2">
         {{ title }}
       </v-card-title>
-      <v-card-text class="mt-5"
-                   v-show="!!message"
-                   v-html="message"/>
+      <v-card-text
+          class="mt-5"
+          v-show="!!message">
+        {{ message }}
+      </v-card-text>
       <v-card-actions class="pt-3">
         <v-spacer/>
         <v-btn

@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <v-btn
+      v-if="dialogMeta.groupAdd"
+      class="ma-2"
+      @click="openGroupDialog">
+      <v-icon color="#008000" left> mdi-account-group</v-icon>
+      Mehere Einträge hinzufügen
+    </v-btn>
     <v-btn class="ma-2" color="success" @click="newItem">
       <v-icon left> mdi-plus</v-icon>
       Eintrag hinzufügen
@@ -11,15 +18,7 @@
       <v-icon color="#008000" left> mdi-microsoft-excel</v-icon>
       Excel Datei hochladen
     </v-btn>
-    <v-btn
-      v-if="dialogMeta.groupAdd"
-      class="ma-2"
-      @click="openGroupDialog"
 
-    >
-      <v-icon color="#008000" left> mdi-account-group</v-icon>
-      Gruppe hinzufügen
-    </v-btn>
     <v-list v-show="!isLoading">
       <v-list-item-group color="primary" :value="value"
                          @change="onInputChanged">
@@ -28,9 +27,9 @@
             <v-icon color="black" dark>mdi-account</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title
-              v-text="getDisplayName(item)"
-            ></v-list-item-title>
+            <v-list-item-title>
+              {{ getDisplayName(item) }}
+            </v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn dense icon @click="editParticipant(item)">
@@ -169,6 +168,9 @@ export default {
           template += ` ${item[field]}`;
         } else if ((item[field] !== '' && typeof item[field] === 'string') || item[field].length) {
           template += ` - ${item[field]}`;
+        } else if (field === 'bookingOption') {
+          template += ` - ${item[field]['name']}`; // eslint-disable-line
+          template += ` - ${item[field]['price']} €`; // eslint-disable-line
         }
       });
       return template;

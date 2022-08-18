@@ -1,0 +1,8 @@
+<mj-section background-color="#084B8A" padding-bottom="20px" padding-top="20px">
+    <mj-column width="20%" background-color="#084B8A">
+    <mj-image src="https://www.hratuga.de/pfadfinderwissen/images/0/0f/Dpbm.gif" alt="" align="left" border="none" width="100px" padding-left="10px" padding-right="10px" padding-bottom="10px" padding-top="10px"></mj-image>
+    </mj-column>
+    <mj-column padding-left="30px" width="80%" background-color="#084B8A">
+    <mj-text align="left" font-size="36px" color="#FFFFFF" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="28px">{{ event_name }}</mj-text>
+    </mj-column>
+</mj-section>

@@ -87,7 +87,7 @@ export default {
     ParticipantsPersonal,
     ParticipantsPersonalGold,
     ParticipantsPersonalPfingsten,
-    Summary,
+    Summary, // eslint-disable-line
     Tent,
     Travel,
     Travel2,

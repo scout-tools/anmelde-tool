@@ -149,11 +149,11 @@ export default {
         if (!parent) {
           nested.push(item);
         } else {
-          inputArray.forEach((item_2) => { // eslint-disable-line
-            if (item_2.id === parent) {
-              item_2.children = item_2.children || []; // eslint-disable-line
-              if (!(item_2.children.filter((x) => x.id === item.id).length)) {
-                item_2.children.push(item);
+          inputArray.forEach((item2) => { // eslint-disable-line
+            if (item2.id === parent) {
+              item2.children = item2.children || []; // eslint-disable-line
+              if (!(item2.children.filter((x) => x.id === item.id).length)) {
+                item2.children.push(item);
               }
             }
           });

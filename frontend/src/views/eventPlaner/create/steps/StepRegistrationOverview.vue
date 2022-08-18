@@ -20,10 +20,9 @@
               </template>
               <v-list>
                 <v-list-item
-                  v-for="(item, index) in availableModules"
-                  :key="index"
-                  @click="addModule(item.id)"
-                >
+                    v-for="(item, index) in availableModules"
+                    :key="index"
+                    @click="addModule(item.id)">
                   <v-list-item-title>{{ item.header }}</v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -34,19 +33,20 @@
               Die Reihenfolge kann per Drag and Drop geändert werden.
             </v-subheader>
             <draggable
-              v-model="items"
-              @change="onChanged"
-            >
+                v-model="items"
+                @change="onChanged">
               <template v-for="(moduleMapper, index) in items">
                 <v-list-item :key="moduleMapper.id">
                   <v-list-item-avatar color="grey">
                     <span>{{ index + 1 }}</span>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title v-html="moduleMapper.module.header" />
-                    <v-list-item-subtitle
-                      v-html="moduleMapper.module.description"
-                    />
+                    <v-list-item-title>
+                      {{ moduleMapper.module.header }}
+                    </v-list-item-title>
+                    <v-list-item-subtitle>
+                      {{ moduleMapper.module.description }}
+                    </v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-action v-if="editing && !moduleMapper.required">
                     <v-btn @click="removeModule(moduleMapper)" icon>
@@ -66,21 +66,21 @@
       </v-container>
 
       <create-event-registration-module
-        ref="newEventDialog"
-        @close="onDialogClosed"
+          ref="newEventDialog"
+          @close="onDialogClosed"
       />
 
-      <v-divider class="my-3" />
+      <v-divider class="my-3"/>
 
       <prev-next-button
-        :position="position"
-        :max-pos="maxPos"
-        :valid="valid"
-        @nextStep="nextStep"
-        @prevStep="prevStep"
-        @submit="submitStep"
-        @ignore="onIngoredClicked"
-        @update="updateData"
+          :position="position"
+          :max-pos="maxPos"
+          :valid="valid"
+          @nextStep="nextStep"
+          @prevStep="prevStep"
+          @submit="submitStep"
+          @ignore="onIngoredClicked"
+          @update="updateData"
       />
     </v-container>
   </v-form>
@@ -118,7 +118,8 @@ export default {
     items: [],
   }),
   methods: {
-    updateData() {},
+    updateData() {
+    },
     removeModule(mapper) {
       this.deleteEventModule(mapper.id, mapper.event)
         .then(() => {
@@ -149,7 +150,8 @@ export default {
         );
       });
     },
-    onDialogClosed() {},
+    onDialogClosed() {
+    },
     editModule(moduleMapper) {
       this.$refs.newEventDialog.openDialogEdit(moduleMapper);
     },
@@ -189,12 +191,13 @@ export default {
       this.loadData();
     },
     loadData() {
-      this.getServiceById(this.modulePath, this.id).then((response) => {
-        this.event = response.data;
-        this.gatherAvailableEventModules();
-        this.gatherAssignedEventModules();
-        this.$forceUpdate();
-      });
+      this.getServiceById(this.modulePath, this.id)
+        .then((response) => {
+          this.event = response.data;
+          this.gatherAvailableEventModules();
+          this.gatherAssignedEventModules();
+          this.$forceUpdate();
+        });
     },
   },
   // created() {

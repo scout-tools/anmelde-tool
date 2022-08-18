@@ -1,0 +1,19 @@
+    <mj-section background-color="#FFF" padding-bottom="15px">
+      <mj-column>
+        <mj-text align="center" color="#333333" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
+          <p>Bei technischen Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.</p>
+          <br></br>
+          <p><strong>BuSiFe, das Singefest des Deutschen Pfadfinderbund Mosaik.</strong></p>
+          <p>
+            Deutscher Pfadfinderbund Mosaik</p>
+          <p>
+            Robert-Perthel-Str. 79</p>
+          <p>
+            50739 Köln</p>
+          <p>
+            busife@dpbm.de</p>
+          <p>
+            www.dpbm.de</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>

@@ -16,7 +16,7 @@ from event import api_exceptions as event_api_exceptions
 from event import models as event_models
 from event import permissions as event_permissions
 from event.choices import choices as event_choices
-from event.helper import get_registration
+from event.helper import get_registration, custom_get_or_404
 from event.registration import serializers as registration_serializers
 
 
@@ -62,7 +62,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         registration: event_models.Registration = self.participant_initialization(request)
 
         if request.data.get('age'):
-            request.data['birthday'] = timezone.now() - relativedelta(years=int(request.data.get('age'))) 
+            request.data['birthday'] = timezone.now() - relativedelta(years=int(request.data.get('age')))
 
         request.data['registration'] = registration.id
         if request.data.get('first_name') is None and request.data.get('last_name') is None:
@@ -137,6 +137,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
 
         return registration
 
+
 class RegistrationAddGroupParticipantViewSet(viewsets.ViewSet):
     permission_classes = [event_permissions.IsSubRegistrationResponsiblePerson]
     serializer_class = registration_serializers.RegistrationParticipantShortSerializer
@@ -148,7 +149,7 @@ class RegistrationAddGroupParticipantViewSet(viewsets.ViewSet):
         eat_habit_id: int = request.data.get('eat_habit', 1)
         existing_participants: QuerySet = event_models.RegistrationParticipant.objects.filter(
             registration=registration.id)
-        total_participant_count: int =existing_participants.count()
+        total_participant_count: int = existing_participants.count()
 
         new_participants = []
 
@@ -172,21 +173,21 @@ class RegistrationAddGroupParticipantViewSet(viewsets.ViewSet):
             eat_habit: basic_models.EatHabit = get_object_or_404(basic_models.EatHabit, id=eat_habit_id)
         for i in range(total_participant_count + 1, total_participant_count + int(number) + 1):
             participant = event_models.RegistrationParticipant(first_name='Teilnehmender',
-                                                                scout_name=f'Teilnehmender',
-                                                                last_name=i,
-                                                                age=age,
-                                                                birthday=birthday,
-                                                                scout_level=scout_level,
-                                                                registration=registration,
-                                                                generated=True,
-                                                                needs_confirmation=confirm,
-                                                                booking_option=booking)
+                                                               scout_name=f'Teilnehmender',
+                                                               last_name=i,
+                                                               age=age,
+                                                               birthday=birthday,
+                                                               scout_level=scout_level,
+                                                               registration=registration,
+                                                               generated=True,
+                                                               needs_confirmation=confirm,
+                                                               booking_option=booking)
             participant.save()
             if (eat_habit_id):
                 participant.eat_habit.add(eat_habit)
             new_participants.append(participant)
 
-        return Response({ 'created  persons' }, status=status.HTTP_201_CREATED)
+        return Response({'created  persons'}, status=status.HTTP_201_CREATED)
 
     def participant_group_initialization(self, request) -> event_models.Registration:
         input_serializer = registration_serializers.RegistrationParticipantGroupSerializer(data=request.data)
@@ -201,6 +202,7 @@ class RegistrationAddGroupParticipantViewSet(viewsets.ViewSet):
             raise event_api_exceptions.TooLate
 
         return registration
+
 
 class RegistrationGroupParticipantViewSet(viewsets.ViewSet):
     permission_classes = [event_permissions.IsSubRegistrationResponsiblePerson]
@@ -424,13 +426,13 @@ class RegistrationViewSet(mixins.CreateModelMixin,
     def create(self, request, *args, **kwargs) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
+        print(serializer.data)
         event: event_models.Event = get_object_or_404(event_models.Event, pk=serializer.data['event'])
 
         general_code_check = False
         single_code_check = False
         group_code_check = False
-        if serializer.data['event_code'] == event.invitation_code:
+        if ((serializer.data['event_code'] == event.invitation_code) | event_permissions.IsEventSuperResponsiblePerson):
             general_code_check = True
         elif event.invitation_code_single and serializer.data['event_code'] == event.invitation_code_single:
             single_code_check = True
@@ -463,22 +465,27 @@ class RegistrationViewSet(mixins.CreateModelMixin,
                 filter(scout_organisation=request.user.userextended.scout_organisation, single=False)
             group_registration = existing_group_registration.filter(responsible_persons__in=[request.user.id])
 
-            if single_registration.exists() and serializer.data['single']:
+            if ((single_registration.exists() and serializer.data['single']) and not event_permissions.IsEventSuperResponsiblePerson):
                 raise event_api_exceptions.SingleAlreadyRegistered()
             elif existing_group_registration.exists() and not group_registration.exists() \
                     and not serializer.data['single']:
                 raise event_api_exceptions.NotResponsible()
             elif existing_group_registration.exists() and not serializer.data['single']:
                 raise event_api_exceptions.GroupAlreadyRegistered
-            elif group_registration.exists() and serializer.data['single']:
+            elif ((group_registration.exists() and serializer.data['single']) and not event_permissions.IsEventSuperResponsiblePerson):
                 raise event_api_exceptions.SingleGroupNotAllowed
             elif event.group_registration == event_choices.RegistrationTypeGroup.Required and \
                     not group_registration.exists() and serializer.data['single']:
                 raise event_api_exceptions.WrongRegistrationFormat
 
         single = serializer.data['single'] if general_code_check else single_code_check
+        scout_organisation_id = serializer.data['scout_organisation']
+        err_msg = f'Element (Bund, Ring, Stamm) mit der Id {scout_organisation_id}'
+        scout_organisation = custom_get_or_404(event_api_exceptions.SomethingNotFound(err_msg),
+                                               basic_models.ScoutHierarchy,
+                                               id=scout_organisation_id)
         registration: event_models.Registration = event_models.Registration(
-            scout_organisation=request.user.userextended.scout_organisation,
+            scout_organisation=scout_organisation,
             event=event,
             single=single
         )

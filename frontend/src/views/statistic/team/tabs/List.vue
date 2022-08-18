@@ -26,22 +26,25 @@
             :items-per-page="itemsPerPage"
             must-sort
             sort-by="createdAt"
-            :footer-props="{itemsPerPageText: 'Anmeldungen pro Seite'}"
+            :footer-props="{
+            itemsPerPageText: 'Personen pro Seite',
+            'items-per-page-options': [10, 20, 30, 40, 50, -1]
+          }"
             no-data-text="Keine Anmeldungen Gefunden."
             loading-text="Lade Anmeldungen...">
-<!--          <template v-slot:[`group.header`]="{group, isOpen, toggle, remove}">-->
-<!--            <td :colspan="headers.length">-->
-<!--              <v-icon @click="toggle">-->
-<!--                {{ isOpen ? 'mdi-minus' : 'mdi-plus' }}-->
-<!--              </v-icon>-->
-<!--              <span>-->
-<!--                <strong>{{ getGroupName(group) }}</strong>-->
-<!--              </span>-->
-<!--              <v-icon @click="remove">-->
-<!--                mdi-close-->
-<!--              </v-icon>-->
-<!--            </td>-->
-<!--          </template>-->
+          <!--          <template v-slot:[`group.header`]="{group, isOpen, toggle, remove}">-->
+          <!--            <td :colspan="headers.length">-->
+          <!--              <v-icon @click="toggle">-->
+          <!--                {{ isOpen ? 'mdi-minus' : 'mdi-plus' }}-->
+          <!--              </v-icon>-->
+          <!--              <span>-->
+          <!--                <strong>{{ getGroupName(group) }}</strong>-->
+          <!--              </span>-->
+          <!--              <v-icon @click="remove">-->
+          <!--                mdi-close-->
+          <!--              </v-icon>-->
+          <!--            </td>-->
+          <!--          </template>-->
           <template v-slot:[`item.isConfirmed`]="{ item }">
             <v-icon :color="item.isConfirmed ? 'green' : 'red'">
               {{
@@ -75,6 +78,12 @@
                 <v-list-item-content>
                   <b>Verantwortlich(e): </b>
                   {{ getResponsiblePersonsersons(item) }}
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
+                  <b>Kontakt(e): </b>
+                  {{ item.responsiblePersonsExtended }}
                 </v-list-item-content>
               </v-list-item>
               <v-list-item>

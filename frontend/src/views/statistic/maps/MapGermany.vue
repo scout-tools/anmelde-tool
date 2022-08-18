@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     getData() {
-      this.getRegistrationLocationsSummary(this.eventId).then((responseObj) => {
+      this.getRegistrationLocationsRegistrationSummary(this.eventId).then((responseObj) => {
         this.data = responseObj.data;
       });
     },

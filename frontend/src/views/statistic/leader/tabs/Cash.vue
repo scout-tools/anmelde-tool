@@ -7,9 +7,9 @@
             <v-row class="center text-center justify-center pa-0">
               <v-col cols="12">
                 <v-checkbox
-                  v-model="filter.justConfirmed"
-                  label="Nur Bestätigt"
-                  hide-details/>
+                    v-model="filter.justConfirmed"
+                    label="Nur Bestätigt"
+                    hide-details/>
               </v-col>
             </v-row>
           </v-container>
@@ -52,49 +52,29 @@
         <template v-slot:expanded-item="{ item }">
           <td :colspan="headers.length">
             <v-list-item>
-              <v-list-item-content>
-                <v-data-table
-                  :headers="headersBookingOptions"
-                  :items="getItemsBookingOptions(item)"
-                  :items-per-page="itemsPerPage"
-                  hide-default-footer
-                  item-key="createdAt">
-                  <template v-slot:top>
-                    <v-toolbar flat>
-                      <v-toolbar-title>Gebuchte Optionen</v-toolbar-title>
-                      <v-spacer/>
-                    </v-toolbar>
-                  </template>
-                </v-data-table>
-              </v-list-item-content>
+              <v-list-item-title class="justify-center text-center">
+                Referenz Id: <span><strong> {{ item.refId }} </strong></span>
+              </v-list-item-title>
             </v-list-item>
+            <v-btn
+                @click="onNewClicked(item)"
+                color="success"
+                class="mb-2">
+              <v-icon>mdi-plus</v-icon>
+              Buchung hinzufügen
+            </v-btn>
             <v-list-item>
               <v-list-item-content>
                 <v-data-table
-                  :headers="headersCash"
-                  :items="getItemsCash(item)"
-                  :items-per-page="itemsPerPage"
-                  hide-default-footer
-                  item-key="createdAt"
-                  no-data-text="Keine Buchung vorhanden">
+                    :headers="headersCash"
+                    :items="getItemsCash(item)"
+                    :items-per-page="itemsPerPage"
+                    hide-default-footer
+                    item-key="createdAt"
+                    no-data-text="Keine Buchung vorhanden">
                   <template v-slot:top>
                     <v-toolbar flat>
-                      <v-toolbar-title>Überweisungen</v-toolbar-title>
-                      <v-spacer/>
-                      <v-spacer/>
-                      <v-dialog v-model="dialog" max-width="500px">
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                            @click="onNewClicked(item)"
-                            color="primary"
-                            dark
-                            class="mb-2"
-                            v-bind="attrs"
-                            v-on="on">
-                            Neue Überweisung
-                          </v-btn>
-                        </template>
-                      </v-dialog>
+                      <v-toolbar-title>Buchungen</v-toolbar-title>
                     </v-toolbar>
                   </template>
                   <template v-slot:[`item.transferDate`]="{ item }">
@@ -105,16 +85,33 @@
                   </template>
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-icon
-                      small
-                      class="mr-2"
-                      @click="onEditClicked(item)">
+                        small
+                        class="mr-2"
+                        @click="onNewClicked(item)">
                       mdi-pencil
                     </v-icon>
                     <v-icon
-                      small
-                      @click="onDeleteClicked(item)">
+                        small
+                        @click="onDeleteClicked(item)">
                       mdi-delete
                     </v-icon>
+                  </template>
+                </v-data-table>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-data-table
+                    :headers="headersBookingOptions"
+                    :items="getItemsBookingOptions(item)"
+                    :items-per-page="itemsPerPage"
+                    hide-default-footer
+                    item-key="createdAt">
+                  <template v-slot:top>
+                    <v-toolbar flat>
+                      <v-toolbar-title>Kostenpunkte</v-toolbar-title>
+                      <v-spacer/>
+                    </v-toolbar>
                   </template>
                 </v-data-table>
               </v-list-item-content>
@@ -132,28 +129,42 @@
         </template>
       </v-data-table>
     </v-row>
+    <v-row class="overflow-y: auto ma-3">
+      <v-btn
+          v-if="isTeam"
+          class="ma-2"
+          @click="openReminderDialog">
+        <v-icon color="#008000" left> mdi-reminder</v-icon>
+        Erinnerungsmail verschicken
+      </v-btn>
+    </v-row>
     <TranserCreationModal
-      ref="preEventCreationRef"
-      @createTransfer="createTransfer"
-      @editTransfer="editTransfer"/>
+        ref="transerCreationModalRef"
+        @createTransfer="createTransfer"
+        @editTransfer="editTransfer"/>
     <TransferDeleteModal
-      ref="transferDeleteModalRef"
-      @refresh="onRefresh"/>
+        ref="transferDeleteModalRef"
+        @refresh="onRefresh"/>
+    <SendPaymentReminderModal
+        ref="sendPaymentReminderModalRef"/>
   </v-container>
 </template>
 
 <script>
 import TranserCreationModal from '@/components/dialog/TranfserCreationModal.vue';
 import TransferDeleteModal from '@/components/dialog/TransferDeleteModal.vue';
+import SendPaymentReminderModal from '@/components/dialog/SendPaymentReminderModal.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 import moment from 'moment'; // eslint-disable-line
 import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 export default {
   mixins: [apiCallsMixin],
   components: {
     TranserCreationModal,
     TransferDeleteModal,
+    SendPaymentReminderModal,
   },
   data: () => ({
     data: [],
@@ -169,6 +180,10 @@ export default {
       {
         text: 'Datum',
         value: 'createdAt',
+      },
+      {
+        text: 'Referenz Id',
+        value: 'refId',
       },
       {
         text: 'Bund',
@@ -244,6 +259,7 @@ export default {
     loading: false,
   }),
   computed: {
+    ...mapGetters(['userinfo']),
     eventId() {
       return this.$route.params.id;
     },
@@ -270,6 +286,12 @@ export default {
       const numberStamm = this.getItems.length;
       return `Stämme ${numberStamm || 0}`;
     },
+    isTeam() {
+      if (this.userinfo && this.userinfo.roles && this.userinfo.roles.length > 0) {
+        return this.userinfo.roles.includes('anmelde_tool_team');
+      }
+      return 0;
+    },
   },
   methods: {
     formatDate(item) {
@@ -295,7 +317,7 @@ export default {
       this.loading = true;
       this.getCashSummary(eventId)
         .then((responseObj) => {
-          this.data = responseObj.data[0]; // eslint-disable-line
+            this.data = responseObj.data[0]; // eslint-disable-line
         })
         .finally(() => {
           this.loading = false;
@@ -311,10 +333,13 @@ export default {
       this.getData(this.eventId);
     },
     onEditClicked(data) {
-      this.$refs.preEventCreationRef.openEdit(data);
+      this.$refs.transerCreationModalRef.openEdit(data);
     },
-    onNewClicked(item) {
-      this.$refs.preEventCreationRef.open(item.id);
+    onNewClicked(data) {
+      this.$refs.transerCreationModalRef.open(data, data.id);
+    },
+    openReminderDialog() {
+      this.$refs.sendPaymentReminderModalRef.open(this.eventId);
     },
     onDeleteClicked(data) { //eslint-disable-line
       this.$refs.transferDeleteModalRef.open(data);
@@ -336,8 +361,8 @@ export default {
         .catch(() => {
           this.$root.globalSnackbar.show({
             message:
-              'Leider ist ein Problem beim erstellen des Überweisungseintrags aufgetreten,'
-              + ' bitte probiere es später nocheinmal.',
+                  'Leider ist ein Problem beim erstellen des Überweisungseintrags aufgetreten,'
+                  + ' bitte probiere es später nocheinmal.',
             color: 'error',
             timer: 5000,
           });
@@ -360,8 +385,8 @@ export default {
         .catch(() => {
           this.$root.globalSnackbar.show({
             message:
-              'Leider ist ein Problem beim erstellen des Überweisungseintrags aufgetreten,'
-              + ' bitte probiere es später nocheinmal.',
+                  'Leider ist ein Problem beim erstellen des Überweisungseintrags aufgetreten,'
+                  + ' bitte probiere es später nocheinmal.',
             color: 'error',
             timer: 5000,
           });

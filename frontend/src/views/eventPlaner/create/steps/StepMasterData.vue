@@ -83,7 +83,7 @@ export default {
         default: '',
       },
       {
-        name: 'Einladene Organisaion',
+        name: 'Einladene Organisation',
         techName: 'limitedRegistrationHierarchy',
         tooltip: 'Welche Pfadfinder Organisation lädt ein? Nur die Stämme unterhalb der Organisation können das Event sehen.',
         icon: 'mdi-account-circle',
