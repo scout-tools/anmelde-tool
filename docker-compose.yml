@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  web:
+    container_name: backend
+    restart: unless-stopped
+    build: ./backend
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./backend/:/usr/src/app/
+    expose:
+      - "8000"
+    env_file:
+      - .env
+
+  nginx-proxy:
+    container_name: nginx-proxy
+    image: jwilder/nginx-proxy:latest
+    restart: always
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    depends_on:
+      - web
+
+  nginx-proxy-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    environment:
+      - DEFAULT_EMAIL=${DEFAULT_EMAIL}
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
+      - acme:/etc/acme.sh
+    depends_on:
+      - nginx-proxy
+
+volumes:
+  certs:
+  html:
+  vhost:
+  acme:
