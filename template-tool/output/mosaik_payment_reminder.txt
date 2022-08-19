@@ -1,17 +1,13 @@
-[https://www.hratuga.de/pfadfinderwissen/images/0/0f/Dpbm.gif]
+Liebe_r {{ responsible_persons }},
 
-{{ event_name }}
-
-Liebe_r {{ responsible_persons }}
-
-wir freuen uns, dass ihr euch als Stamm {{ scout_organisation }} für das {{ event_name }} angemeldet habt!
+wir freuen uns, dass ihr euch als {{ scout_organisation }} für {{ event_pronoun }} {{ event_name }} angemeldet habt!
 
 Eine Sache fehlt aber noch: Ihr müsstet bitte noch euren Teilnehmendenbeitrag bezahlen.
 
 Ihr habt {{ participant_count }} Personen angemeldet, euer Beitrag beläuft sich also ingesamt auf {{ sum }}€. Bisher haben wir von euch {{ received_sum }}€ erhalten, womit noch {{ open_sum }}€ offen
 sind.
 
-Bitte überweist den bis zum {{ payment_deadline }} Tage auf das folgende Konto und verwendet bitte den angegebenen Verwendungszweck:
+Bitte überweist den bis zum {{ payment_deadline }} auf das folgende Konto und verwendet bitte den angegebenen Verwendungszweck:
 
 Betrag: {{ open_sum }}€
 Pfadfinderbundesamt Köln e.V.

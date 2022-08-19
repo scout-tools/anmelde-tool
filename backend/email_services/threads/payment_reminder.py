@@ -1,5 +1,6 @@
 import html
 import threading
+from datetime import timedelta
 
 from django.core.mail import EmailMultiAlternatives
 from django.template.context import make_context
@@ -7,7 +8,8 @@ from rest_framework.generics import get_object_or_404
 
 from backend import settings
 from email_services.choices import EmailType
-from email_services.threads.helper import get_email, get_headers, get_booking_options
+from email_services.threads.helper import get_email, get_headers, get_booking_options, get_scout_organisation_text, \
+    get_event_pronoun
 from event import models as event_models
 from event.summary.serializers import RegistrationCashSummarySerializer
 
@@ -29,8 +31,15 @@ class EmailThreadPaymentReminder(threading.Thread):
 
         template_html, template_plain = get_email(self.email_type, event)
 
+        event_name = html.escape(event.name)
+        event_pronoun = get_event_pronoun(event_name)
+        payment_deadline = event.registration_deadline.date() + timedelta(days=3)
+
+
         for registration in event.registration_set.all():
             serializer = RegistrationCashSummarySerializer(registration)
+            booking_options = get_booking_options(serializer.data['booking_options'])
+            scout_organisation = get_scout_organisation_text(registration)
 
             if serializer.data['payement']['open'] <= 0:
                 continue
@@ -40,7 +49,7 @@ class EmailThreadPaymentReminder(threading.Thread):
                     continue
 
                 receiver = [person.email, ]
-                booking_options = get_booking_options(serializer.data['booking_options'])
+
                 data = {
                     'responsible_persons': html.escape(person.userextended.scout_name) or '',
                     'unsubscribe': person.userextended.id,
@@ -49,7 +58,11 @@ class EmailThreadPaymentReminder(threading.Thread):
                     'sum': serializer.data['payement']['price'],
                     'received_sum': serializer.data['payement']['paid'],
                     'open_sum': serializer.data['payement']['open'],
-                    'payment_id': serializer.data['ref_id']
+                    'payment_id': serializer.data['ref_id'],
+                    'scout_organisation': scout_organisation,
+                    'event_name': event_name,
+                    'event_pronoun': event_pronoun,
+                    'payment_deadline': payment_deadline
                 }
 
                 headers = get_headers(person, sender)
