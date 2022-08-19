@@ -3,6 +3,8 @@ from datetime import timedelta
 from pathlib import Path
 
 import environ
+from celery.schedules import crontab
+from event import sample_task
 
 env = environ.Env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -237,3 +239,13 @@ GRAPHENE = {
 }
 
 FILE_GENERATOR_DEQEUE_TIME = 60
+
+CELERY_BROKER_URL = env('CELERY_BROKER')
+CELERY_RESULT_BACKEND = env('CELERY_BROKER')
+
+CELERY_BEAT_SCHEDULE = {
+    "sample_task": {
+        "task": "event.sample_task.sample_task",
+        "schedule": crontab(minute="*/1"),
+    },
+}

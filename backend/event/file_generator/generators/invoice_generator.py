@@ -20,7 +20,6 @@ class InvoiceGenerator(AbstractGenerator):
         wb = load_workbook(file.file)
         original = wb.active
         booking_options: list[str] = self.get_booking_options_name(event)[:3]
-        print(booking_options)
 
         if len(booking_options) > 0:
             original['K1'] = booking_options[0]

@@ -13,8 +13,3 @@ class FileGeneratorConfig(AppConfig):
         pre_delete.connect(pre_delete_generate_files, sender=GeneratedFiles, dispatch_uid="pre_delete_generate_files")
         pre_delete.connect(pre_delete_file_template, sender=FileTemplate, dispatch_uid="pre_delete_file_template")
         pre_save.connect(pre_save_file_template, sender=FileTemplate, dispatch_uid="pre_save_file_template")
-
-        # from event.file_generator.file_generators import FileGeneratorDeqeueThread
-        # generator_deqeue_thread = FileGeneratorDeqeueThread()
-        # generator_deqeue_thread.daemon = True
-        # generator_deqeue_thread.start()
