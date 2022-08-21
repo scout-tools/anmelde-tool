@@ -53,6 +53,19 @@ services:
     depends_on:
       - redis
 
+  flower:
+    build: ./backend
+    command: celery -A backend flower
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./backend/:/usr/src/app/
+    env_file:
+      - ./backend/backend/.env
+    depends_on:
+      - redis
+      - celery
+      - celery-beat
   redis:
     image: redis:latest
 
