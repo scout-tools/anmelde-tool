@@ -9,10 +9,12 @@ from tempfile import NamedTemporaryFile
 from backend import settings
 from event.choices.choices import FileGenerationStatus, FileType, FileExtension
 from event.file_generator.generators.abstract_generator import AbstractGenerator
+from event.file_generator.generators.travel_matrix_generator import TravelMatrixGenerator
 from event.file_generator.models import GeneratedFiles
 from event.file_generator.generators.kjp_generator import KjpGenerator
 from event.file_generator.generators.invoice_generator import InvoiceGenerator
 from event.file_generator.generators.participant_generator import ParticipantGenerator
+from event.file_generator.generators.attribute_generator import AttributeGenerator
 
 timer = getattr(settings, 'FILE_GENERATOR_DEQEUE_TIME', 60)
 debug = getattr(settings, 'DEBUG', False)
@@ -69,6 +71,16 @@ class FileGeneratorThread(threading.Thread):
                     and self.generated_file.template.version == 1:
                 generator = ParticipantGenerator(self.generated_file)
 
+            elif self.generated_file.template.type == FileType.AttributeList \
+                    and self.generated_file.extension == FileExtension.Excel \
+                    and self.generated_file.template.version == 1:
+                generator = AttributeGenerator(self.generated_file)
+
+            elif self.generated_file.template.type == FileType.TravelMatrix \
+                    and self.generated_file.extension == FileExtension.Excel \
+                    and self.generated_file.template.version == 1:
+                generator = TravelMatrixGenerator(self.generated_file)
+
             if generator is not None:
                 wb = generator.generate()
                 self.save_file_excel(wb)
@@ -80,7 +92,7 @@ class FileGeneratorThread(threading.Thread):
             self.generated_file.error_msg = traceback.format_exc()
             self.generated_file.status = FileGenerationStatus.FinishedFailed
         else:
-            self.generated_file.status = FileGenerationStatus.FinishedSuccessfull
+            self.generated_file.status = FileGenerationStatus.FinishedSuccessfully
         self.generated_file.save()
 
     def save_file_excel(self, wb):

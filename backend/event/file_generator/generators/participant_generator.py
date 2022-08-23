@@ -1,20 +1,20 @@
-from django.db.models import QuerySet
-from dateutil.relativedelta import relativedelta
-from openpyxl import load_workbook, Workbook
-from openpyxl.styles import Alignment, Font
 import string
 
+from openpyxl import load_workbook, Workbook
+from openpyxl.styles import Alignment, Font
+
+from event import models as event_models
 from event.file_generator.generators import helper
 from event.file_generator.generators.abstract_generator import AbstractGenerator
+from event.file_generator.generators.helper import get_participants_by_registration
 from event.file_generator.models import FileTemplate
-from event import models as event_models
 
 
 class ParticipantGenerator(AbstractGenerator):
 
     def generate(self) -> Workbook:
         event: event_models.Event = self.generated_file.event
-        participants = self.get_participants(event)
+        participants = get_participants_by_registration(event)
         file: FileTemplate = self.generated_file.template
         wb: Workbook = load_workbook(file.file)
 
@@ -51,8 +51,3 @@ class ParticipantGenerator(AbstractGenerator):
                 original[f'{letter}{index + 4}'].font = font_style
 
         return wb
-
-    def get_participants(self, event: event_models.Event) -> QuerySet[event_models.RegistrationParticipant]:
-        registrations = helper.get_registrations(event).values_list('id', flat=True)
-        return event_models.RegistrationParticipant.objects.filter(registration__in=registrations) \
-            .order_by('registration__scout_organisation__name', 'last_name')

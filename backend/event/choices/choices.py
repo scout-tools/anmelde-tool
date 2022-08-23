@@ -47,6 +47,7 @@ class LeaderTypes(models.TextChoices):
     RoverrundenFuehrung = 'RoFue', _('Roverrundenführung'),
     Meutenfuehrung = 'MeuFue', _('Meutenführung')
 
+
 class ScoutLevelTypes(models.TextChoices):
     Unbekannt = 'N', _('Unbekannt')
     Woelfling = 'W', _('Wölfling')
@@ -57,7 +58,7 @@ class ScoutLevelTypes(models.TextChoices):
 class FileGenerationStatus(models.TextChoices):
     Queued = 'Q', _('In der Warteschlange.')
     Processing = 'P', _('Dokument wird erstellt.')
-    FinishedSuccessfull = 'FS', _('Dokument erfolgreich erstellt.')
+    FinishedSuccessfully = 'FS', _('Dokument erfolgreich erstellt.')
     FinishedFailed = 'FF', _('Dokumenten Erstellung Fehlgeschlagen.')
 
 
@@ -65,6 +66,8 @@ class FileType(models.TextChoices):
     Kjp = 'K', _('KJP Liste')
     Invoice = 'I', _('Rechnungserstellung Felix')
     ParticipantList = 'P', _('Teilnehmerliste')
+    AttributeList = 'A', _('Attributliste')
+    TravelMatrix = 'T', _('Anreise Matrix')
 
 
 class FileExtension(models.TextChoices):
@@ -74,13 +77,8 @@ class FileExtension(models.TextChoices):
 
 class WorkshopType(models.TextChoices):
     Workshop = 'w', _('Workshop')
-    Exkursion = 'e', _('Exkursion')
+    Excursion = 'e', _('Excursion')
     Lecture = 'l', _('Vortrag')
-    Perforance = 'p', _('Aufführung')
+    Performance = 'p', _('Aufführung')
     Discussion = 'd', _('Diskussionsrunde')
     Reading = 'r', _('Lesung')
-
-
-
-
-
