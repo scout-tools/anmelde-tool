@@ -7,36 +7,36 @@
             <v-row class="center text-center justify-center pa-0">
               <v-col cols="6">
                 <v-autocomplete
-                  clearable
-                  :loading="loading"
-                  :items="availableFileTemplates"
-                  v-model="selectedFileTemplateFilter"
-                  label="Filter nach Typ"
-                  multiple
-                  item-text="type"
-                  item-value="id"
-                  @change="onFilterSelected"
-                  no-data-text="Keine Datei Typen gefunden."
+                    clearable
+                    :loading="loading"
+                    :items="availableFileTemplates"
+                    v-model="selectedFileTemplateFilter"
+                    label="Filter nach Typ"
+                    multiple
+                    item-text="type"
+                    item-value="id"
+                    @change="onFilterSelected"
+                    no-data-text="Keine Datei Typen gefunden."
                 />
               </v-col>
               <v-col cols="6">
                 <v-autocomplete
-                  clearable
-                  :loading="loading"
-                  :items="availableStatus"
-                  v-model="selectedStatusFilter"
-                  label="Filter nach Status"
-                  multiple
-                  item-text="name"
-                  item-value="value"
-                  @change="onFilterSelected"
+                    clearable
+                    :loading="loading"
+                    :items="availableStatus"
+                    v-model="selectedStatusFilter"
+                    label="Filter nach Status"
+                    multiple
+                    item-text="name"
+                    item-value="value"
+                    @change="onFilterSelected"
                 />
               </v-col>
               <v-col cols="6">
                 <v-btn
-                  @click="onNewClicked()"
-                  color="primary"
-                  dark>
+                    @click="onNewClicked()"
+                    color="primary"
+                    dark>
                   Neue Datei anfordern
                 </v-btn>
               </v-col>
@@ -72,12 +72,12 @@
         </template>
         <template v-slot:[`item.file`]="{ item }">
           <v-btn
-            :disabled="!item.file"
-            @click="onDownloadClicked(item.file)"
-            color="primary"
-            small
-            icon
-            dark>
+              :disabled="!item.file"
+              @click="onDownloadClicked(item.file)"
+              color="primary"
+              small
+              icon
+              dark>
             <v-icon dark>
               mdi-download
             </v-icon>
@@ -85,14 +85,15 @@
         </template>
         <template v-slot:expanded-item="{ item }">
           <td :colspan="headers.length">
-            Fehlermeldung: <pre> {{ item.errorMsg }} </pre>
+            Fehlermeldung:
+            <pre> {{ item.errorMsg }} </pre>
           </td>
         </template>
       </v-data-table>
     </v-row>
     <GenerateFileRequestModal
-      ref="requestFileModal"
-      @createFileRequest="createFileRequest"/>
+        ref="requestFileModal"
+        @createFileRequest="createFileRequest"/>
   </v-container>
 </template>
 
@@ -175,6 +176,7 @@ export default {
         color: 'red',
       },
     ],
+    interval: null,
   }),
   computed: {
     eventId() {
@@ -201,23 +203,23 @@ export default {
         .locale('de')
         .format('lll');
     },
-    getData(eventId, params) {
+    getData(params) {
       this.loading = true;
 
       Promise.all([
-        this.getDownloadSummary(eventId, params),
+        this.getDownloadSummary(this.eventId, params),
         this.getAvailableFileTemplates(),
       ])
         .then((values) => {
-          this.data = values[0].data; //eslint-disable-line
-          this.availableFileTemplates = values[1].data; //eslint-disable-line
+            this.data = values[0].data; //eslint-disable-line
+            this.availableFileTemplates = values[1].data; //eslint-disable-line
         })
         .finally(() => {
           this.loading = false;
         });
     },
     onRefresh() {
-      this.getData(this.eventId);
+      this.getData();
     },
     onNewClicked() {
       this.$refs.requestFileModal.open();
@@ -230,8 +232,8 @@ export default {
         .catch(() => {
           this.$root.globalSnackbar.show({
             message:
-              'Leider ist ein Problem beim erstellen der Datei Anforderung aufgetreten,'
-              + ' bitte probiere es später nocheinmal.',
+                  'Leider ist ein Problem beim erstellen der Datei Anforderung aufgetreten,'
+                  + ' bitte probiere es später nocheinmal.',
             color: 'error',
             timer: 5000,
           });
@@ -252,15 +254,18 @@ export default {
           params.append('status', value);
         });
       }
-      this.getData(this.eventId, params);
+      this.getData(params);
       this.currentSearchParams = params;
     },
   },
   created() {
-    this.getData(this.eventId, null);
-    window.setInterval(() => {
-      this.getData(this.eventId, this.currentSearchParams);
+    this.getData(this.currentSearchParams);
+    this.interval = window.setInterval(() => {
+      this.getData(this.currentSearchParams);
     }, 30000);
+  },
+  destroyed() {
+    clearInterval(this.interval);
   },
 };
 
