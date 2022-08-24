@@ -1,0 +1,9 @@
+    <mj-section>
+      <mj-column background-color="#a8c0d5" padding-bottom="20px" padding-top="20px">
+        <mj-text align="center">
+          Du möchtest diese E-Mails nicht mehr erhalten? <br />
+          Klicke <a href="https://anmelde-tool.de/unsubscribe/{{unsubscribe}}"><strong>hier</strong></a> um dich
+          abzumelden.
+        </mj-text>mj-text>
+      </mj-column>
+    </mj-section>

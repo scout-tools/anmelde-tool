@@ -1,0 +1,38 @@
+<mjml>
+  <mj-body background-color="#ccd3e0">
+    <mj-include path="./input/components/header/mosaik.mjml" />
+    <mj-section background-color="#FFF" padding-bottom="0px" padding-top="0">
+      <mj-column width="100%">
+        <mj-text align="left" font-size="14px" color="#333333" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">
+          <p style="font-size:16px"><strong>Liebe_r {{ responsible_persons }},</strong></p>
+          <p>wir freuen uns, dass ihr euch als {{ scout_organisation }} für {{ event_pronoun }} {{ event_name }}
+            angemeldet habt! </p>
+          <p>Eine Sache fehlt aber noch: Ihr müsstet bitte noch euren Teilnehmendenbeitrag bezahlen. </p>
+
+          <p>Ihr habt {{ participant_count }} Personen angemeldet, euer Beitrag beläuft sich also ingesamt auf {{ sum }}€. Bisher haben wir von euch {{ received_sum }}€ erhalten, womit noch {{ open_sum }}€ offen sind.
+
+          <p>
+            Bitte überweist den bis zum {{ payment_deadline }} auf das folgende Konto und verwendet bitte den angegebenen Verwendungszweck: </p>
+          <p>
+            <b>
+              Betrag: {{ open_sum }}€<br />
+              Pfadfinderbundesamt Köln e.V.<br />
+              KD-Bank eG<br />
+              DE16 3506 0190 1013 6880 32<br />
+              Verwendungszweck: {{ payment_id }}<br />
+            </b>
+          </p>
+
+          Ihr habt schon bezahlt oder sonst Anmerkungen oder Fragen? Wendet euch gern an unsere Info Emailadresse: busife@dpbm.de. </br>
+          </br>
+          Vielen Dank, liebe Grüße und herzlich gut Pfad,</br>
+          </br>
+          </br>
+          Eure Lagerleitung</br>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-include path="./input/components/footer/mosaik.mjml" />
+    <mj-include path="./input/components/unsubscribe/default.mjml" />
+  </mj-body>
+</mjml>
