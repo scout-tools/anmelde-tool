@@ -13,11 +13,14 @@ Mac, Linux: ( `pipenv install` )
 # install
 `pip install -r requirements.txt`
 
+`set -a ; source backend/env_example ; set +a`
+
 `python manage.py makemigrations`
 
 `python manage.py migrate`
 
 `python manage.py add_users`
+Adds robert_admin:robert1234 and hagi_admin:hagi1234
 
 Mac, Linux:
 `python manage.py loaddata data/main/*.json`
