@@ -1,4 +1,5 @@
 import string
+from typing import Iterable
 
 from django.db.models import QuerySet, Count, Sum
 from openpyxl import load_workbook, Workbook
@@ -21,13 +22,15 @@ class AttributeGenerator(AbstractGenerator):
         file: FileTemplate = self.generated_file.template
         wb: Workbook = load_workbook(file.file)
 
+        booking_options: Iterable[event_models.BookingOption] = event_models.BookingOption.objects.filter(event=event).all()
+
         original: Worksheet = wb.active
         original.sheet_format.defaultRowHeight = 25.0
         original.set_printer_settings(paper_size=original.PAPERSIZE_A4, orientation='landscape')
 
         participant_count = registrations.aggregate(count=Count('registrationparticipant'))['count'] or 0
         table = original.tables['Teilnehmer']
-        table.ref = f'A2:G{registrations.count() + 2}'
+        table.ref = f'A2:{string.ascii_uppercase[6+len(booking_options)]}{registrations.count() + 2}'
 
         original['C1'] = f'{event.name} \n{helper.get_event_location(event)}'
         original['E1'] = helper.get_event_date(event)
@@ -49,6 +52,10 @@ class AttributeGenerator(AbstractGenerator):
             original[f'B{index}'] = helper.get_registration_scout_organistation_name(registration)
             original[f'C{index}'] = all_participants.count()
 
+            for idx, option in enumerate(booking_options):
+                option_count = all_participants.filter(booking_option=option).count()
+                original[f'{string.ascii_uppercase[7+idx]}{index}'] = option_count
+
             if travel_tag:
                 original[f'D{index}'] = travel_tag.get_type_field_display()
                 original[f'E{index}'] = travel_tag.get_time_field_display()
@@ -60,7 +67,7 @@ class AttributeGenerator(AbstractGenerator):
                 original[f'G{index}'] = tent_large_tag.integer_field
 
             original.row_dimensions[index].height = 25
-            for letter in string.ascii_uppercase[:7]:
+            for letter in string.ascii_uppercase[:7+len(booking_options)]:
                 original[f'{letter}{index}'].alignment = alignment
                 original[f'{letter}{index}'].font = font_style
 
@@ -79,7 +86,7 @@ class AttributeGenerator(AbstractGenerator):
         original[f'G{index}'] = count_tent_large
 
         original.row_dimensions[index].height = 25
-        for letter in string.ascii_uppercase[:7]:
+        for letter in string.ascii_uppercase[:7+len(booking_options)]:
             original[f'{letter}{index}'].alignment = alignment
             original[f'{letter}{index}'].font = font_style
 
