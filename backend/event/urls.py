@@ -5,6 +5,7 @@ from . import views
 
 router = routers.SimpleRouter()
 router.register(r'event-location', views.EventLocationViewSet)
+router.register(r'test', views.TestViewSet, basename='test')
 router.register(r'event', views.EventViewSet)
 router.register(r'event-planer-overview', views.EventPlanerViewSet, basename='event-planer-overview')
 router.register(r'event-statistics-overview', views.EventStatisticsViewSet, basename='event-statistics-overview')

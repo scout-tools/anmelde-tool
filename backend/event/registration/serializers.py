@@ -47,8 +47,13 @@ class RegistrationGetSerializer(serializers.ModelSerializer):
         model = event_models.Registration
         fields = '__all__'
 
+class RegistrationSummaryBookingOptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = event_models.BookingOption
+        fields = ('name', 'price')
 
 class RegistrationParticipantShortSerializer(serializers.ModelSerializer):
+    booking_option = RegistrationSummaryBookingOptionSerializer(many=False, read_only=True)
     scout_level = serializers.CharField(source='get_scout_level_display')
     eat_habit = serializers.SlugRelatedField(
         many=True,
@@ -60,7 +65,7 @@ class RegistrationParticipantShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = event_models.RegistrationParticipant
-        fields = ('id', 'scout_name', 'first_name', 'last_name', 'scout_level', 'eat_habit', 'age')
+        fields = ('id', 'scout_name', 'first_name', 'last_name', 'scout_level', 'eat_habit', 'age', 'booking_option')
 
 
 class RegistrationParticipantSerializer(serializers.ModelSerializer):
@@ -98,10 +103,6 @@ class RegistrationParticipantGroupSerializer(serializers.Serializer):
     avoid_manual_check = serializers.BooleanField(required=False, default=False)
 
 
-class RegistrationSummaryBookingOptionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = event_models.BookingOption
-        fields = ('name', 'price')
 
 
 class RegistrationSummaryParticipantSerializer(serializers.ModelSerializer):

@@ -432,7 +432,7 @@ class RegistrationViewSet(mixins.CreateModelMixin,
         general_code_check = False
         single_code_check = False
         group_code_check = False
-        if serializer.data['event_code'] == event.invitation_code:
+        if ((serializer.data['event_code'] == event.invitation_code) | event_permissions.IsEventSuperResponsiblePerson):
             general_code_check = True
         elif event.invitation_code_single and serializer.data['event_code'] == event.invitation_code_single:
             single_code_check = True
@@ -465,14 +465,14 @@ class RegistrationViewSet(mixins.CreateModelMixin,
                 filter(scout_organisation=request.user.userextended.scout_organisation, single=False)
             group_registration = existing_group_registration.filter(responsible_persons__in=[request.user.id])
 
-            if single_registration.exists() and serializer.data['single']:
+            if ((single_registration.exists() and serializer.data['single']) and not event_permissions.IsEventSuperResponsiblePerson):
                 raise event_api_exceptions.SingleAlreadyRegistered()
             elif existing_group_registration.exists() and not group_registration.exists() \
                     and not serializer.data['single']:
                 raise event_api_exceptions.NotResponsible()
             elif existing_group_registration.exists() and not serializer.data['single']:
                 raise event_api_exceptions.GroupAlreadyRegistered
-            elif group_registration.exists() and serializer.data['single']:
+            elif ((group_registration.exists() and serializer.data['single']) and not event_permissions.IsEventSuperResponsiblePerson):
                 raise event_api_exceptions.SingleGroupNotAllowed
             elif event.group_registration == event_choices.RegistrationTypeGroup.Required and \
                     not group_registration.exists() and serializer.data['single']:

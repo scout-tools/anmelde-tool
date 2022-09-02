@@ -1,6 +1,7 @@
 from copy import deepcopy
 from datetime import datetime
 
+from celery.result import AsyncResult
 from django.db.models import Q, QuerySet
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
@@ -16,6 +17,8 @@ from event import helper as event_helper
 from event import models as event_models
 from event import permissions as event_permissions
 from event import serializers as event_serializers
+
+from .sample_task import create_task
 
 
 def add_event_module(module: event_models.EventModuleMapper,
@@ -397,3 +400,22 @@ class ScoutHierarchyViewSet(mixins.CreateModelMixin,
                 parent_id=self.request.user.userextended.scout_organisation.id)
         else:
             return []
+
+
+class TestViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+
+    def create(self, request, *args, **kwargs):
+        task_type = request.data.get("type", 1)
+        task = create_task.delay(int(task_type))
+        return Response({"task_id": task.id}, status=202)
+
+    def retrieve(self, request, *args, **kwargs):
+        task_id = kwargs.get("pk", None)
+        print(task_id)
+        task_result = AsyncResult(task_id)
+        result = {
+            "task_id": task_id,
+            "task_status": task_result.status,
+            "task_result": task_result.result
+        }
+        return Response(result, status=200)

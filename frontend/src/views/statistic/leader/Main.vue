@@ -20,6 +20,10 @@
       <v-icon left> mdi-tools </v-icon>
       Bearbeiten
     </v-tab>
+    <v-tab>
+      <v-icon left> mdi-plus </v-icon>
+      Hinzufügen
+    </v-tab>
 
     <v-tab-item>
       <v-card flat>
@@ -56,6 +60,13 @@
         </v-card-text>
       </v-card>
     </v-tab-item>
+    <v-tab-item>
+      <v-card flat>
+        <v-card-text>
+          <NewReg />
+        </v-card-text>
+      </v-card>
+    </v-tab-item>
   </v-tabs>
 </template>
 
@@ -65,6 +76,7 @@ import Cash from './tabs/Cash.vue';
 import Download from './tabs/Download.vue';
 import Email from './tabs/Email.vue';
 import EditReg from './tabs/EditReg.vue';
+import NewReg from './tabs/NewReg.vue';
 
 export default {
   components: {
@@ -73,6 +85,7 @@ export default {
     Download,
     Email,
     EditReg,
+    NewReg,
   },
 };
 </script>
