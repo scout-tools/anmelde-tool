@@ -274,7 +274,7 @@ export default {
         subject: this.sendMail.subject,
         header: this.sendMail.header,
         sendConfirmed: this.sendMail.sendConfirmed,
-        sendUncofirmed: this.sendMail.sendUnconfirmed,
+        sendUnconfirmed: this.sendMail.sendUnconfirmed,
       })
         .then(() => {
           this.$root.globalSnackbar.show({

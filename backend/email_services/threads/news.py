@@ -44,9 +44,11 @@ class CustomEmail(threading.Thread):
         event_name = html.escape(event.name)
         event_pronoun = get_event_pronoun(event_name)
 
-        confirmed: bool = self.data.get('confirmed', True)
-        unconfirmed: bool = self.data.get('unconfirmed', True)
+        confirmed: bool = self.data.get('send_confirmed', True)
+        unconfirmed: bool = self.data.get('send_unconfirmed', True)
 
+        print(confirmed)
+        print(unconfirmed)
         registrations: QuerySet[event_models.Registration] = event_models.Registration.objects.none()
         all_registrations = event.registration_set.all()
 
