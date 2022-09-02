@@ -27,7 +27,6 @@ class CustomEmail(threading.Thread):
             return
 
         event: event_models.Event = get_object_or_404(event_models.Event, id=self.evend_id)
-        print(event)
         technical_name = event.technical_name or 'info'
         sender = f'{event.name} <{technical_name}@{getattr(settings, "EMAIL_HOST_USER")}>'
         if self.data['subject']:
