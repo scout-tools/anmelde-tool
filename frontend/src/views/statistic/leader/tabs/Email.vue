@@ -104,20 +104,25 @@
       <v-row class="center text-center justify-center pa-0">
         <v-col cols="6">
           <v-text-field
-              ref="sendMailSubjectInputField"
               label="Betreff"
               outlined
               v-model="sendMail.subject"/>
         </v-col>
       </v-row>
       <v-row class="center text-center justify-center pa-0">
-        <v-col cols="12">
-          <v-textarea
-              ref="sendMailBodyInputField"
-              label="Inhalt"
+        <v-col cols="6">
+          <v-text-field
+              label="Kopfzeile"
               outlined
-              auto-grow
-              v-model="sendMail.body"/>
+              v-model="sendMail.header"/>
+        </v-col>
+      </v-row>
+      <v-row class="center text-center justify-center pa-0">
+        <v-col cols="12">
+          <ckeditor
+              :editor="ckeditor.editor"
+              v-model="sendMail.body"
+              :config="ckeditor.editorConfig"/>
         </v-col>
       </v-row>
       <v-row class="center text-center justify-center pa-0">
@@ -149,6 +154,8 @@ import apiCallsMixin from '@/mixins/apiCallsMixin';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 // import BookingFilter from '@/components/common/BookingFilter.vue';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import '@ckeditor/ckeditor5-build-classic/build/translations/de';
 
 export default {
   mixins: [apiCallsMixin],
@@ -176,8 +183,16 @@ export default {
       body: 'Hallo,\n',
       sendConfirmed: true,
       sendUnconfirmed: true,
+      header: 'Es gibt Neuigkeiten',
     },
     sendMailDisabled: false,
+    ckeditor: {
+      editor: ClassicEditor,
+      editorData: '',
+      editorConfig: {
+        language: 'de',
+      },
+    },
   }),
   computed: {
     ...mapGetters(['userinfo']),
@@ -257,6 +272,7 @@ export default {
       axios.post(path, {
         body: this.sendMail.body,
         subject: this.sendMail.subject,
+        header: this.sendMail.header,
         sendConfirmed: this.sendMail.sendConfirmed,
         sendUncofirmed: this.sendMail.sendUnconfirmed,
       })
@@ -275,7 +291,7 @@ export default {
         })
         .finally(() => {
           this.sendMailLoading = false;
-          setTimeout(() => this.sendMailDisabled = false, 1000);// eslint-disable-line
+            setTimeout(() => this.sendMailDisabled = false, 1000);// eslint-disable-line
         });
     },
   },

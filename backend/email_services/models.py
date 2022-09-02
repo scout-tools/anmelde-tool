@@ -1,9 +1,10 @@
-from django.db import models
 import uuid
+
+from django.db import models
+
+from backend.storage_backends import PublicMediaStorage, EmailAttachmentMediaStorage
 from basic import models as basic_models
 from email_services import choices as email_choices
-from backend.storage_backends import PrivateMediaStorage, PublicMediaStorage, EmailMediaStorage, \
-    EmailAttachmentMediaStorage
 
 
 class EmailAttachment(basic_models.TimeStampMixin):
@@ -69,6 +70,10 @@ class StandardEmailRegistrationSet(models.Model):
                                          limit_choices_to={'type': email_choices.EmailType.PaymentReminder},
                                          related_name='payment_reminder',
                                          null=True, blank=True)
+    custom_mail = models.ForeignKey(Email, on_delete=models.PROTECT,
+                                    limit_choices_to={'type': email_choices.EmailType.StandardEmail},
+                                    related_name='custom_mail',
+                                    null=True, blank=True)
 
     def __str__(self):
         return self.name
