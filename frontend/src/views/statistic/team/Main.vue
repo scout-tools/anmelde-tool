@@ -13,6 +13,10 @@
       Alter
     </v-tab>
     <v-tab>
+      <v-icon left> mdi-crowd</v-icon>
+      Alter Details
+    </v-tab>
+    <v-tab>
       <v-icon left> mdi-beer</v-icon>
       Alkohol
     </v-tab>
@@ -45,6 +49,13 @@
     <v-tab-item>
       <v-card flat>
         <v-card-text>
+          <AgeGroupDetail/>
+        </v-card-text>
+      </v-card>
+    </v-tab-item>
+    <v-tab-item>
+      <v-card flat>
+        <v-card-text>
           <AlcoholAgeGroup/>
         </v-card-text>
       </v-card>
@@ -65,12 +76,14 @@ import LeaderTypes from '@/views/statistic/team/tabs/LeaderTypes.vue';
 import AlcoholAgeGroup from '@/views/statistic/team/tabs/AlcoholAgeGroup.vue';
 import List from './tabs/List.vue';
 import AgeGroup from './tabs/AgeGroup.vue';
+import AgeGroupDetail from './tabs/AgeGroupDetail.vue';
 import Food from './tabs/Food.vue';
 
 export default {
   components: {
     List,
     AgeGroup,
+    AgeGroupDetail,
     Food,
     LeaderTypes,
     AlcoholAgeGroup,
