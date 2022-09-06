@@ -8,6 +8,7 @@ from .kpi import views as kpi_views
 event_summary_router = routers.NestedSimpleRouter(router, r'event', lookup='event')
 event_summary_router.register(r'summary', views.EventSummaryViewSet, basename='summary')
 event_summary_router.register(r'summary/age-groups', views.EventAgeGroupsSummaryViewSet, basename='age-groups')
+event_summary_router.register(r'summary/age-groups-detail', views.EventAgeGroupsSummaryDetailViewSet, basename='age-groups-detail')
 event_summary_router.register(r'summary/leader-types', views.EventLeaderTypesSummaryViewSet,
                               basename='leader-types')
 event_summary_router.register(r'summary/alcohol-groups', views.EventAlcoholAgeGroupsSummaryViewSet,
