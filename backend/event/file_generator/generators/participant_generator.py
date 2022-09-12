@@ -6,7 +6,7 @@ from openpyxl.styles import Alignment, Font
 from event import models as event_models
 from event.file_generator.generators import helper
 from event.file_generator.generators.abstract_generator import AbstractGenerator
-from event.file_generator.generators.helper import get_participants_by_registration
+from event.file_generator.generators.helper import get_participants_by_event
 from event.file_generator.models import FileTemplate
 
 
@@ -14,7 +14,7 @@ class ParticipantGenerator(AbstractGenerator):
 
     def generate(self) -> Workbook:
         event: event_models.Event = self.generated_file.event
-        participants = get_participants_by_registration(event)
+        participants = get_participants_by_event(event)
         file: FileTemplate = self.generated_file.template
         wb: Workbook = load_workbook(file.file)
 
