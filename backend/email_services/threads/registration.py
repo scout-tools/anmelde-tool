@@ -30,6 +30,9 @@ class EmailThreadRegistration(threading.Thread):
 
         template_html, template_plain = get_email(self.email_type, event)
 
+        if template_html is None or template_plain is None:
+            return
+
         count, participant_sum = get_participant_count(registration)
 
         if count > 0:
