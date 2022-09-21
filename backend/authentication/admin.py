@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import UserExtended
+from .models import UserExtended, Person
 
 
 # Register your models here.
@@ -11,3 +11,7 @@ class UserExtendedAdmin(admin.ModelAdmin):
     """
     list_display = ('user', 'scout_organisation')
     autocomplete_fields = ('scout_organisation',)
+
+@admin.register(Person)
+class PersonAdmin(admin.ModelAdmin):
+    autocomplete_fields = ('created_by',)
