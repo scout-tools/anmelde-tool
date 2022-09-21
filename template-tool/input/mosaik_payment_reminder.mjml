@@ -16,7 +16,7 @@
           <p>
             <b>
               Betrag: {{ open_sum }}€<br />
-              Pfadfinderbundesamt Köln e.V.<br />
+              Pfadfinder-Bundesamt Köln e.V.<br />
               KD-Bank eG<br />
               DE16 3506 0190 1013 6880 32<br />
               Verwendungszweck: {{ payment_id }}<br />
