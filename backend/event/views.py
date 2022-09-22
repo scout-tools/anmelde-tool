@@ -330,7 +330,7 @@ class AssignedEventModulesViewSet(viewsets.ModelViewSet):
 
 
 class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = event_serializers.EventOverviewSerializer
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("pk", None)
