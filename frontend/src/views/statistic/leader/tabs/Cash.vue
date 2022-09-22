@@ -5,11 +5,20 @@
         <v-card-text class="pa-0">
           <v-container class="pa-0">
             <v-row class="center text-center justify-center pa-0">
-              <v-col cols="12">
+              <v-col cols="6">
                 <v-checkbox
                     v-model="filter.justConfirmed"
                     label="Nur Bestätigt"
                     hide-details/>
+              </v-col>
+              <v-col cols="6">
+                <v-btn
+                    v-if="isTeam"
+                    class="ma-2"
+                    @click="openReminderDialog">
+                  <v-icon color="#008000" left> mdi-email-arrow-right</v-icon>
+                  Erinnerungsmail
+                </v-btn>
               </v-col>
             </v-row>
           </v-container>
@@ -32,6 +41,19 @@
               item.isConfirmed ? 'mdi-check-circle' : 'mdi-close-circle'
             }}
           </v-icon>
+        </template>
+        <template v-slot:[`item.mailButton`]="{ item }">
+          <v-btn
+            color="success"
+            dark
+            icon
+            @click="onNewClicked(item)"
+          >
+            <v-icon
+            >
+              mdi-cash-100
+            </v-icon>
+          </v-btn>
         </template>
         <template v-slot:[`item.createdAt`]="{ item }">
           {{ formatDate(item.createdAt) }}
@@ -129,15 +151,6 @@
         </template>
       </v-data-table>
     </v-row>
-    <v-row class="overflow-y: auto ma-3">
-      <v-btn
-          v-if="isTeam"
-          class="ma-2"
-          @click="openReminderDialog">
-        <v-icon color="#008000" left> mdi-reminder</v-icon>
-        Erinnerungsmail verschicken
-      </v-btn>
-    </v-row>
     <TranserCreationModal
         ref="transerCreationModalRef"
         @createTransfer="createTransfer"
@@ -174,16 +187,12 @@ export default {
     },
     headers: [
       {
-        text: 'Bestätigt',
+        text: '',
         value: 'isConfirmed',
       },
       {
         text: 'Datum',
         value: 'createdAt',
-      },
-      {
-        text: 'Referenz Id',
-        value: 'refId',
       },
       {
         text: 'Bund',
@@ -204,6 +213,10 @@ export default {
       {
         text: 'Offen',
         value: 'payement.open',
+      },
+      {
+        text: '',
+        value: 'mailButton',
       },
       {
         text: '',
@@ -232,10 +245,6 @@ export default {
       {
         text: 'Datum',
         value: 'transferDate',
-      },
-      {
-        text: 'Referenz Id',
-        value: 'transferReferenceId',
       },
       {
         text: 'Person',
@@ -272,15 +281,15 @@ export default {
     },
     getTotalPrice() {
       const price = this.getItems.reduce((accum, item) => accum + item.payement.price, 0);
-      return `${price || 0} €`;
+      return `${this.financial(price) || 0} €`;
     },
     getTotalPaid() {
       const price = this.getItems.reduce((accum, item) => accum + item.payement.paid, 0);
-      return `${price || 0} €`;
+      return `${this.financial(price) || 0} €`;
     },
     getTotalOpen() {
       const price = this.getItems.reduce((accum, item) => accum + item.payement.open, 0);
-      return `${price || 0} €`;
+      return `${this.financial(price) || 0} €`;
     },
     getTotalStamm() {
       const numberStamm = this.getItems.length;
@@ -294,6 +303,9 @@ export default {
     },
   },
   methods: {
+    financial(x) {
+      return Number.parseFloat(x).toFixed(2);
+    },
     formatDate(item) {
       return moment(item)
         .format('DD.MM.YYYY');
@@ -302,7 +314,7 @@ export default {
       return item;
     },
     getPrice(item) {
-      return item ? `${item} €` : '0 €';
+      return this.financial(item) ? `${this.financial(item)} €` : '0.00 €';
     },
     rowClasses(item) {
       if (item.verbandName === 'DPV') {

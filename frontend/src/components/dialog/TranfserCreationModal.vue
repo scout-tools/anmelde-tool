@@ -38,7 +38,7 @@ import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 import {
   required,
-  numeric,
+  decimal,
   minLength,
   email,
 } from 'vuelidate/lib/validators';
@@ -98,7 +98,7 @@ export default {
     data: {
       amount: {
         required,
-        numeric,
+        decimal,
       },
       transferSubject: {
         required,

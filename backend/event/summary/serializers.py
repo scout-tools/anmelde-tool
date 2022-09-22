@@ -235,8 +235,8 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
         total_price = registration.registrationparticipant_set.aggregate(
             sum=Sum('booking_option__price'))['sum'] or 0
         paid = registration.cashincome_set.aggregate(sum=Sum('amount'))[
-                   'sum'] or 0
-        difference = total_price - paid
+                   'sum'] or 0.0
+        difference = float(total_price) - paid
 
         return {
             'price': total_price,
