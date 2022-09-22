@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-10">
     <v-row justify="center" class="mt-5" v-if="!error">
-      <v-flex ma-3 lg9>
+      <v-flex ma-2 lg12>
         <v-layout column>
           <v-card>
             <v-tabs

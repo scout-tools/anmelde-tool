@@ -233,6 +233,7 @@ class RegistrationParticipant(basic_models.TimeStampMixin):
                               default=event_choices.LeaderTypes.KeineFuehrung)
     scout_level = models.CharField(max_length=6, choices=event_choices.ScoutLevelTypes.choices,
                                    default=event_choices.ScoutLevelTypes.Unbekannt)
+    allow_permanently = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.registration}: {self.last_name}, {self.first_name}"

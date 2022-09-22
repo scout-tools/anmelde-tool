@@ -9,7 +9,7 @@ from event import models as event_models
 
 class CashIncome(models.Model):
     id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
-    amount = models.IntegerField(default=0)
+    amount = models.FloatField(default=0)
     transfer_subject = models.CharField(max_length=250, blank=True)
     transfer_date = models.DateTimeField(null=True, blank=True)
     transfer_person = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)

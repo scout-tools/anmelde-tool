@@ -14,7 +14,7 @@ sind.
 Bitte überweist den bis zum {{ payment_deadline }} auf das folgende Konto und verwendet bitte den angegebenen Verwendungszweck:
 
 Betrag: {{ open_sum }}€
-Pfadfinderbundesamt Köln e.V.
+Pfadfinder-Bundesamt Köln e.V.
 KD-Bank eG
 DE16 3506 0190 1013 6880 32
 Verwendungszweck: {{ payment_id }}
