@@ -200,11 +200,7 @@ class EventAttributeSummarySerializer(serializers.ModelSerializer):
 
 
 class RegistrationCashSummarySerializer(serializers.ModelSerializer):
-    responsible_persons = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='email'
-    )
+    responsible_persons = registration_serializers.CurrentUserSerializer(many=True, read_only=True)
     participant_count = serializers.SerializerMethodField()
     payement = serializers.SerializerMethodField()
     scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)

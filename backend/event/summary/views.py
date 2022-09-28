@@ -92,32 +92,25 @@ class EventDetailedSummaryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet
 
     def get_queryset(self) -> QuerySet:
         event_id = self.kwargs.get("event_pk", None)
-        registrations = event_models.Registration.objects.filter(
-            event=event_id)
-        registrations = filter_registrations_by_query_params(
-            self.request, event_id, registrations)
+        registrations = event_models.Registration.objects.filter(event=event_id)
+        registrations = filter_registrations_by_query_params(self.request, event_id, registrations)
 
         reg_ids = registrations.values_list('id', flat=True)
 
-        participants: QuerySet = event_models.RegistrationParticipant.objects.filter(
-            registration__id__in=reg_ids)
+        participants: QuerySet = event_models.RegistrationParticipant.objects.filter(registration__id__in=reg_ids)
 
         booking_option_list = self.request.query_params.getlist(
             'booking-option')
         if booking_option_list:
-            participants = participants.filter(
-                booking_option__in=booking_option_list)
+            participants = participants.filter(booking_option__in=booking_option_list)
 
         ordering: str = self.request.query_params.get('ordering', None)
-        order_desc: bool = self.request.query_params.get(
-            'order-desc', 'false') == 'true'
-        camel_case = to_snake_case(
-            ordering, order_desc, self.ordering_fields, 'last_name')
+        order_desc: bool = self.request.query_params.get('order-desc', 'false') == 'true'
+        camel_case = to_snake_case(ordering, order_desc, self.ordering_fields, 'last_name')
 
         check_case = ('-' if order_desc else '') + 'scout_organisation'
         if camel_case == check_case:
-            camel_case = ('-' if order_desc else '') + \
-                'registration__scout_organisation__name'
+            camel_case = ('-' if order_desc else '') + 'registration__scout_organisation__name'
 
         return participants.order_by(camel_case)
 

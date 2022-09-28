@@ -47,10 +47,8 @@
             color="success"
             dark
             icon
-            @click="onNewClicked(item)"
-          >
-            <v-icon
-            >
+            @click="onNewClicked(item)">
+            <v-icon>
               mdi-cash-100
             </v-icon>
           </v-btn>
@@ -77,6 +75,30 @@
               <v-list-item-title class="justify-center text-center">
                 Referenz Id: <span><strong> {{ item.refId }} </strong></span>
               </v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>
+                  Verantwortliche Personen(en)
+                </v-list-item-title>
+                <v-list dense flat>
+                  <v-list-item dense
+                               v-for="(pers, i) in item.responsiblePersons"
+                               :key="i">
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        {{ i+1 }}. Person:
+                      </v-list-item-title>
+                      <v-list-item-subtitle>
+                        Fahrten Name: {{ pers.userextended.scoutName }}
+                      </v-list-item-subtitle>
+                      <v-list-item-subtitle>
+                        Name: {{ pers.firstName }} {{ pers.lastName }}
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-list-item-content>
             </v-list-item>
             <v-btn
                 @click="onNewClicked(item)"
@@ -185,44 +207,6 @@ export default {
     filter: {
       justConfirmed: true,
     },
-    headers: [
-      {
-        text: '',
-        value: 'isConfirmed',
-      },
-      {
-        text: 'Datum',
-        value: 'createdAt',
-      },
-      {
-        text: 'Bund',
-        value: 'scoutOrganisation.bund',
-      },
-      {
-        text: 'Name',
-        value: 'scoutOrganisation.name',
-      },
-      {
-        text: 'Gesamtpreis',
-        value: 'payement.price',
-      },
-      {
-        text: 'Bezahlt',
-        value: 'payement.paid',
-      },
-      {
-        text: 'Offen',
-        value: 'payement.open',
-      },
-      {
-        text: '',
-        value: 'mailButton',
-      },
-      {
-        text: '',
-        value: 'data-table-expand',
-      },
-    ],
     headersBookingOptions: [
       {
         text: 'Buchoption',
@@ -266,6 +250,7 @@ export default {
     responseObj: null,
     itemsPerPage: 1000,
     loading: false,
+    eventData: null,
   }),
   computed: {
     ...mapGetters(['userinfo']),
@@ -301,10 +286,66 @@ export default {
       }
       return 0;
     },
+    headers() {
+      const heads = [
+        {
+          text: '',
+          value: 'isConfirmed',
+        },
+        {
+          text: 'Datum',
+          value: 'createdAt',
+        },
+        {
+          text: 'Bund',
+          value: 'scoutOrganisation.bund',
+        },
+        {
+          text: 'Name',
+          value: 'scoutOrganisation.name',
+        },
+        {
+          text: 'Gesamtpreis',
+          value: 'payement.price',
+        },
+        {
+          text: 'Bezahlt',
+          value: 'payement.paid',
+        },
+        {
+          text: 'Offen',
+          value: 'payement.open',
+        },
+        {
+          text: '',
+          value: 'mailButton',
+        },
+        {
+          text: '',
+          value: 'data-table-expand',
+        },
+      ];
+
+      if (this.eventData
+          && (this.eventData.singleRegistrationLevel.id === 6
+              || this.eventData.groupRegistrationLevel.id === 6)) {
+        heads.splice(
+          3,
+          0,
+          {
+            text: 'Stamm',
+            value: 'scoutOrganisation.stamm',
+          },
+        );
+      }
+
+      return heads;
+    },
   },
   methods: {
     financial(x) {
-      return Number.parseFloat(x).toFixed(2);
+      return Number.parseFloat(x)
+        .toFixed(2);
     },
     formatDate(item) {
       return moment(item)
@@ -327,9 +368,13 @@ export default {
     },
     getData(eventId) {
       this.loading = true;
-      this.getCashSummary(eventId)
+      Promise.all([
+        this.getCashSummary(eventId),
+        this.getEventOverviewById(eventId),
+      ])
         .then((responseObj) => {
-            this.data = responseObj.data[0]; // eslint-disable-line
+            this.data = responseObj[0].data[0]; // eslint-disable-line
+            this.eventData = responseObj[1].data; // eslint-disable-line
         })
         .finally(() => {
           this.loading = false;

@@ -144,7 +144,7 @@ export default {
 
       ])
         .then((values) => {
-            this.currentModules = values[0].data; // eslint-disable-line
+          this.currentModules = values[0].data; // eslint-disable-line
           this.currentEventInfos = values[1].data;
           this.isEventAdmin = this.currentEventInfos.allowStatisticAdmin;
           this.isLeader = this.currentEventInfos.allowStatisticLeader;

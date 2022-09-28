@@ -127,6 +127,7 @@ class TravelAttributeGetSerializer(serializers.ModelSerializer):  # noqa
 class TravelAttributeV2GetSerializer(serializers.ModelSerializer):  # noqa
     type = TagTypeShortSerializer(many=False)
     type_field = serializers.CharField(source='get_type_field_display')
+
     class Meta:
         model = basic_models.TravelAttributeV2
         exclude = ('template', 'polymorphic_ctype', 'in_summary')
@@ -180,6 +181,7 @@ class TravelAttributePutSerializer(serializers.ModelSerializer):
     class Meta:
         model = basic_models.TravelAttribute
         fields = ('type_field', 'time_field')
+
 
 class TravelAttributeV2PutSerializer(serializers.ModelSerializer):
     class Meta:
@@ -242,7 +244,7 @@ class TravelAttributeTemplatePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = basic_models.TravelAttribute
-        fields = ('type_field', 'time_field' , 'resourcetype', 'template_id')
+        fields = ('type_field', 'time_field', 'resourcetype', 'template_id')
 
 
 class TravelAttributeV2TemplatePostSerializer(serializers.ModelSerializer):
@@ -250,7 +252,7 @@ class TravelAttributeV2TemplatePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = basic_models.TravelAttributeV2
-        fields = ('type_field', 'date_time_field' ,'persons', 'description', 'resourcetype', 'template_id')
+        fields = ('type_field', 'date_time_field', 'persons', 'description', 'resourcetype', 'template_id')
 
 
 class StringAttributeTemplatePostSerializer(serializers.ModelSerializer):
@@ -360,10 +362,11 @@ class ScoutHierarchyDetailedSerializer(serializers.ModelSerializer):
     zip_code = ZipCodeDetailedSerializer(many=False, read_only=True)
     ring = serializers.SerializerMethodField()
     bund = serializers.SerializerMethodField()
+    stamm = serializers.SerializerMethodField()
 
     class Meta:
         model = basic_models.ScoutHierarchy
-        fields = ('name', 'abbreviation', 'level', 'zip_code', 'ring', 'bund')
+        fields = ('name', 'abbreviation', 'level', 'zip_code', 'ring', 'bund', 'stamm')
 
     def get_ring(self, obj: basic_models.ScoutHierarchy) -> str:
         iterator: basic_models.ScoutHierarchy = obj
@@ -383,16 +386,23 @@ class ScoutHierarchyDetailedSerializer(serializers.ModelSerializer):
 
         return ''
 
+    def get_stamm(self, obj: basic_models.ScoutHierarchy) -> str:
+        iterator: basic_models.ScoutHierarchy = obj
+        while iterator is not None:
+            if iterator.level.name == 'Stamm':
+                return iterator.name
+            iterator = iterator.parent
+
+        return ''
+
 
 class MessageTypeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = basic_models.MessageType
         fields = '__all__'
 
 
 class MessageSerializer(serializers.ModelSerializer):
-
     supervisor = serializers.SlugRelatedField(
         many=False,
         required=False,
@@ -400,7 +410,7 @@ class MessageSerializer(serializers.ModelSerializer):
         slug_field='email',
         queryset=User.objects.all()
     )
+
     class Meta:
         model = basic_models.Message
         fields = '__all__'
-
