@@ -1,54 +1,58 @@
-from django.db.models import QuerySet
-from openpyxl import load_workbook, Workbook
+import string
 
+from openpyxl import load_workbook, Workbook
+from openpyxl.styles import Alignment, Font
+from openpyxl.styles.borders import Border, Side
+
+from event import models as event_models
 from event.file_generator.generators import helper
 from event.file_generator.generators.abstract_generator import AbstractGenerator
+from event.file_generator.generators.helper import get_participants_by_event
 from event.file_generator.models import FileTemplate
-from event import models as event_models
 
 
 class KjrGenerator(AbstractGenerator):
 
     def generate(self) -> Workbook:
         event: event_models.Event = self.generated_file.event
-        registrations: QuerySet[event_models.Registration] = helper.get_registrations(event)
 
         file: FileTemplate = self.generated_file.template
         wb: Workbook = load_workbook(file.file)
-        original = wb.get_sheet_by_name('L_1_DPBM')
 
-        sheets_count = 0
-        participants_count = 0
-        registration: event_models.Registration
-        for registration in registrations:
-            participants = registration.registrationparticipant_set.all().order_by('last_name')
-            participant_count = participants.count()
-            registration_index: int
-            chunked_registration_indices: int
-            for registration_index, chunked_registration_indices in enumerate(range(0, participant_count, 10)):
-                registration_chunk = participants[chunked_registration_indices:chunked_registration_indices + 10]
-                sheet = wb.copy_worksheet(original)
-                sheets_count += 1
-                sheet.title = f'{registration.scout_organisation.name}_{registration_index + 1}'
+        original = wb.active
 
-                sheet['A9'] = event.name
-                sheet['T9'] = helper.get_event_short_description(event)
-                sheet['AH9'] = helper.get_event_location(event)
-                sheet['AP9'] = helper.get_event_date(event)
-                sheet['AW9'] = helper.get_event_days(event)
-                sheet['AZ1'] = sheets_count
+        original['G1'] = event.name
+        original['U1'] = helper.get_event_date(event)
+        participants = get_participants_by_event(event)
 
-                participant: event_models.RegistrationParticipant
-                for participant_index, participant in enumerate(registration_chunk):
-                    cell = participant_index * 3 + 17
-                    participants_count += 1
-                    sheet[f'A{cell}'] = participants_count
-                    sheet[f'C{cell}'] = f'{helper.get_participant_full_name(participant)}' \
-                                        f'\n{helper.get_participant_adress(participant)}'
-                    sheet[f'T{cell}'] = helper.get_participant_gender(participant)
-                    sheet[f'V{cell}'] = helper.get_participant_state(participant)
-                    sheet[f'Z{cell}'] = helper.get_particpant_below_27(event, participant)
-                    sheet[f'AQ{cell}'] = helper.get_participant_days(event, participant)
+        thin_border = Border(left=Side(style='thin'),
+                             right=Side(style='thin'),
+                             top=Side(style='thin'),
+                             bottom=Side(style='thin'))
+        alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+        font_style = Font(size="11", name='Calibri')
+        font_style_index = Font(size="11", name='Calibri', bold=True)
 
-        wb.remove(original)
+        participant: event_models.RegistrationParticipant
+
+        for index, participant in enumerate(participants.all()):
+            original[f'C{index + 5}'] = index
+            original[f'C{index + 5}'].font = font_style_index
+            original[f'C{index + 5}'].border = thin_border
+            original[f'C{index + 5}'].alignment = alignment
+
+            original[f'D{index + 5}'] = helper.get_participant_full_name(participant)
+            original[f'E{index + 5}'] = helper.get_participant_age(event, participant)
+            original[f'F{index + 5}'] = helper.get_participant_adress(participant)
+
+            days: int = int(helper.get_participant_days(event, participant))
+            for letter in string.ascii_uppercase[6: 6 + days]:
+                original[f'{letter}{index + 5}'] = '/'
+
+            for letter in string.ascii_uppercase[3: 21]:
+                original[f'{letter}{index + 5}'].border = thin_border
+                original[f'{letter}{index + 5}'].alignment = alignment
+                original[f'{letter}{index + 5}'].font = font_style
+
+        print(wb)
         return wb
