@@ -66,7 +66,7 @@ def generate_file(instance_id):
         file_wrapper.error_msg = f'{e}\n{traceback.format_exc()}'
         file_wrapper.status = FileGenerationStatus.FinishedFailed
     else:
-        file_wrapper.status = FileGenerationStatus.FinishedSuccessfull
+        file_wrapper.status = FileGenerationStatus.FinishedSuccessfully
     file_wrapper.save()
     return True
 

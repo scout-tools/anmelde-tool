@@ -66,6 +66,7 @@ services:
       - redis
       - celery
       - celery-beat
+
   redis:
     image: redis:latest
 

@@ -7,6 +7,7 @@ from basic.models import StringAttribute
 from event import models as event_models
 from event.file_generator.generators import helper
 from event.file_generator.generators.abstract_generator import AbstractGenerator
+from event.file_generator.generators.helper import get_participants_by_registration
 from event.file_generator.models import FileTemplate
 from event.summary.serializers import RegistrationCashSummarySerializer
 
