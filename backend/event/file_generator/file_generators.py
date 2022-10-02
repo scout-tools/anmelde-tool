@@ -9,6 +9,7 @@ from tempfile import NamedTemporaryFile
 from backend import settings
 from event.choices.choices import FileGenerationStatus, FileType, FileExtension
 from event.file_generator.generators.abstract_generator import AbstractGenerator
+from event.file_generator.generators.kjr_generator import KjrGenerator
 from event.file_generator.generators.travel_matrix_generator import TravelMatrixGenerator
 from event.file_generator.models import GeneratedFiles
 from event.file_generator.generators.kjp_generator import KjpGenerator
@@ -80,6 +81,11 @@ class FileGeneratorThread(threading.Thread):
                     and self.generated_file.extension == FileExtension.Excel \
                     and self.generated_file.template.version == 1:
                 generator = TravelMatrixGenerator(self.generated_file)
+
+            elif self.generated_file.template.type == FileType.KJR \
+                    and self.generated_file.extension == FileExtension.Excel \
+                    and self.generated_file.template.version == 1:
+                generator = KjrGenerator(self.generated_file)
 
             if generator is not None:
                 wb = generator.generate()
