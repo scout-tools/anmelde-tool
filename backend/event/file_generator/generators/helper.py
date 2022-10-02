@@ -1,5 +1,5 @@
-from django.db.models import QuerySet
 from dateutil.relativedelta import relativedelta
+from django.db.models import QuerySet
 
 from event import models as event_models
 
@@ -113,7 +113,9 @@ def get_participant_gender(participant: event_models.RegistrationParticipant) ->
 
 def get_participant_days(event: event_models.Event, participant: event_models.RegistrationParticipant) -> str:
     if participant.booking_option and participant.booking_option.start_date and participant.booking_option.end_date:
-        return str((participant.booking_option.end_date.date() - participant.booking_option.start_date.date()).days)
+        return str((participant.booking_option.end_date.date() - participant.booking_option.start_date.date()).days + 1)
+    elif event.start_date and event.end_date:
+        return str((event.end_date.date() - event.start_date.date()).days + 1)
     else:
         return ''
 
@@ -151,3 +153,26 @@ def get_participant_registration_scout_organisation_name(participant: event_mode
         return get_registration_scout_organistation_name(participant.registration)
     else:
         return ''
+
+
+def get_participants_by_event(event: event_models.Event) -> QuerySet[event_models.RegistrationParticipant]:
+    registrations = get_registrations(event).values_list('id', flat=True)
+    return event_models.RegistrationParticipant.objects.filter(registration__in=registrations) \
+        .order_by('registration__scout_organisation__name', 'last_name')
+
+
+def get_booking_options_name(event: event_models.Event):
+    return list(event.bookingoption_set.exclude(name__contains='Tagesgast').values_list('name', flat=True))
+
+
+def get_formatted_booking_option(registration: event_models.Registration, booking_options_name: str):
+    if booking_options_name != 'Tagesgast':
+        result = registration.registrationparticipant_set.filter(booking_option__name=booking_options_name).count()
+    else:
+        result = registration.registrationparticipant_set \
+            .filter(booking_option__name__contains=booking_options_name).count()
+    return result or 0
+
+
+def get_participants_by_registration(registration=None) -> QuerySet[event_models.RegistrationParticipant]:
+    return event_models.RegistrationParticipant.objects.filter(registration=registration).order_by('last_name')

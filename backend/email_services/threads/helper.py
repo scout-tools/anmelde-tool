@@ -1,6 +1,6 @@
 from django.db.models import Sum, F, Count, QuerySet
 from django.template import Template
-
+import html
 from backend import settings
 from email_services import models as email_services_models
 from email_services.choices import EmailType
@@ -17,7 +17,8 @@ def get_email(email_type: EmailType, event: event_models.Event) -> [Template, Te
         EmailType.RegistrationUpdated: event.email_set.registration_updated,
         EmailType.RegistrationAccepted: event.email_set.registration_accepted,
         EmailType.RegistrationReminder: event.email_set.registration_reminder,
-        EmailType.PaymentReminder: event.email_set.payment_reminder
+        EmailType.PaymentReminder: event.email_set.payment_reminder,
+        EmailType.StandardEmail: event.email_set.custom_mail
     }
     files: email_services_models.Email = email_type_mapping.get(email_type, event.email_set.registration_created)
 
@@ -73,3 +74,12 @@ def get_booking_options(booking_options: QuerySet) -> str:
             result += ', '
         result += f'{option["sum"]} {option["booking_options"]}'
     return result
+
+
+def get_scout_organisation_text(registration):
+    scout_orga_unit_name = 'Stamm' if registration.scout_organisation.level.id == 5 else ''
+    if not registration.single:
+        scout_organisation = f'{scout_orga_unit_name} {html.escape(registration.scout_organisation.name)}'
+    else:
+        scout_organisation = f'Einzelpersonen aus dem {scout_orga_unit_name} {html.escape(registration.scout_organisation.name)}'
+    return scout_organisation

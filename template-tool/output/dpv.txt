@@ -1,0 +1,20 @@
+[https://anmelde-tool-frontend.s3.eu-central-1.amazonaws.com/img/logo.b2f0132e.png]
+
+{{ event_name }}
+
+Liebe_r {{ responsible_persons }},
+
+{{ custom_text }}
+
+Bei technischen Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.
+
+Deutscher Pfadfinderverband
+
+Robert-Perthel-Str. 79
+
+50739 Köln
+
+www.dpvonline.de
+
+Du möchtest diese E-Mails nicht mehr erhalten?
+Klicke hier [https://anmelde-tool.de/unsubscribe/{{unsubscribe}}] um dich abzumelden.

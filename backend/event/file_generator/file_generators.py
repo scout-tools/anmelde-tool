@@ -6,6 +6,9 @@ from tempfile import NamedTemporaryFile
 from celery import shared_task
 from celery.utils.log import get_task_logger
 from django.core.files.base import File
+from event.file_generator.generators.attribute_generator import AttributeGenerator
+from event.file_generator.generators.kjr_generator import KjrGenerator
+from event.file_generator.generators.travel_matrix_generator import TravelMatrixGenerator
 
 from event.choices.choices import FileGenerationStatus, FileType, FileExtension
 from event.file_generator.generators.abstract_generator import AbstractGenerator
@@ -38,6 +41,21 @@ def generate_file(instance_id):
                 and file_wrapper.extension == FileExtension.Excel \
                 and file_wrapper.template.version == 1:
             generator = ParticipantGenerator(file_wrapper)
+
+        elif file_wrapper.template.type == FileType.AttributeList \
+                and file_wrapper.extension == FileExtension.Excel \
+                and file_wrapper.template.version == 1:
+            generator = AttributeGenerator(file_wrapper)
+
+        elif file_wrapper.template.type == FileType.TravelMatrix \
+                and file_wrapper.extension == FileExtension.Excel \
+                and file_wrapper.template.version == 1:
+            generator = TravelMatrixGenerator(file_wrapper)
+
+        elif file_wrapper.template.type == FileType.KJR \
+                and file_wrapper.extension == FileExtension.Excel \
+                and file_wrapper.template.version == 1:
+            generator = KjrGenerator(file_wrapper)
 
         if generator is not None:
             wb = generator.generate()

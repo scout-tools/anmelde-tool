@@ -335,8 +335,11 @@ class AssignedEventModulesViewSet(viewsets.ModelViewSet):
 class EventOverviewViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = event_serializers.EventOverviewSerializer
-
     def get_queryset(self) -> QuerySet:
+        event_id = self.kwargs.get("pk", None)
+        if (event_id):
+            return event_models.Event.objects.filter(id=event_id).all()
+
         if self.request.user.is_superuser:
             return event_models.Event.objects.filter(is_public=True, end_date__gte=timezone.now())
         else:

@@ -8,7 +8,7 @@ from rest_framework.generics import get_object_or_404
 from backend import settings
 from email_services.choices import EmailType
 from email_services.threads.helper import get_email, get_headers, get_event_pronoun, get_html_participant_list, \
-    get_participant_count
+    get_participant_count, get_scout_organisation_text
 from event import models as event_models
 
 url = getattr(settings, 'FRONT_URL', '')
@@ -25,6 +25,9 @@ def registration_confirmed_mail(registration_id: str, email_type: EmailType):
 
     template_html, template_plain = get_email(email_type, event)
 
+    if template_html is None or template_plain is None:
+        return
+
     count, participant_sum = get_participant_count(registration)
 
     if count > 0:
@@ -35,11 +38,7 @@ def registration_confirmed_mail(registration_id: str, email_type: EmailType):
     event_name = html.escape(event.name)
     event_pronoun = get_event_pronoun(event_name)
 
-    scout_orga_unit_name = 'Stamm' if registration.scout_organisation.level.id == 5 else ''
-    if not registration.single:
-        scout_organisation = f'{scout_orga_unit_name} {html.escape(registration.scout_organisation.name)}'
-    else:
-        scout_organisation = f'Einzelpersonen aus dem {scout_orga_unit_name} {html.escape(registration.scout_organisation.name)}'
+    scout_organisation = get_scout_organisation_text(registration)
 
     for person in registration.responsible_persons.all():
         receiver = [person.email, ]

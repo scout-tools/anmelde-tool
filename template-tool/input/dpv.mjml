@@ -1,0 +1,15 @@
+<mjml>
+  <mj-body background-color="#ccd3e0">
+    <mj-include path="./input/components/header/dpv.mjml" />
+        <mj-section background-color="#FFF" padding-bottom="0px" padding-top="0">
+      <mj-column width="100%">
+        <mj-text align="left" font-size="14px" color="#333333" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">
+          <p style="font-size:16px"><strong>Liebe_r {{ responsible_persons }},</strong></p>
+          {{ custom_text }}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-include path="./input/components/footer/dpv.mjml" />
+    <mj-include path="./input/components/unsubscribe/default.mjml" />
+  </mj-body>
+</mjml>

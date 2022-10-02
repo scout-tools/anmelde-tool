@@ -1,0 +1,20 @@
+[https://raw.githubusercontent.com/scout-tools/anmelde-tool/main/frontend/src/assets/dpvgold/logo/dpv-gold-logo-white.png]
+
+{{ header }}
+
+Liebe_r {{ responsible_persons }},
+
+{{ custom_text }}
+
+DPV goLd
+
+Deutscher Pfadfinderverband
+
+Robert-Perthel-Str. 79
+
+50739 Köln
+
+www.dpvonline.de
+
+Du möchtest diese E-Mails nicht mehr erhalten?
+Klicke hier [https://anmelde-tool.de/unsubscribe/{{unsubscribe}}] um dich abzumelden.

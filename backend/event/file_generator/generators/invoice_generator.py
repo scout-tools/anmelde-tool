@@ -1,14 +1,14 @@
+from django.contrib.auth.models import User
 from django.db.models import QuerySet
 from django.utils.formats import date_format
 from openpyxl import load_workbook, Workbook
 
+from basic.models import StringAttribute
+from event import models as event_models
 from event.file_generator.generators import helper
 from event.file_generator.generators.abstract_generator import AbstractGenerator
-from event.file_generator.models import FileTemplate, GeneratedFiles
-from event import models as event_models
-from django.contrib.auth.models import User
+from event.file_generator.models import FileTemplate
 from event.summary.serializers import RegistrationCashSummarySerializer
-from basic.models import StringAttribute
 
 
 class InvoiceGenerator(AbstractGenerator):
@@ -19,7 +19,7 @@ class InvoiceGenerator(AbstractGenerator):
         file: FileTemplate = self.generated_file.template
         wb = load_workbook(file.file)
         original = wb.active
-        booking_options: list[str] = self.get_booking_options_name(event)[:3]
+        booking_options: list[str] = get_booking_options_name(event)[:3]
 
         if len(booking_options) > 0:
             original['K1'] = booking_options[0]
@@ -45,10 +45,10 @@ class InvoiceGenerator(AbstractGenerator):
             if registration.responsible_persons.count() > 1:
                 person_2 = registration.responsible_persons.all()[1]
             letter: StringAttribute = registration.tags.instance_of(StringAttribute).first()
-            payement = serialized.get('payement', None)
-            price = payement.get('price', 0) if payement else 0
+            payment = serialized.get('payement', None)
+            price = payment.get('price', 0) if payment else 0
 
-            all_participants = self.get_participants(registration)
+            all_participants = get_participants_by_registration(registration)
             participant_list = [helper.get_participant_full_name(participant) for participant in all_participants.all()]
 
             original[f'A{index + 1}'] = index
@@ -65,12 +65,12 @@ class InvoiceGenerator(AbstractGenerator):
                 original[f'J{index + 1}'] = person_2.email
 
             if len(booking_options) > 0:
-                original[f'K{index + 1}'] = self.get_formatted_booking_option(registration, booking_options[0])
+                original[f'K{index + 1}'] = get_formatted_booking_option(registration, booking_options[0])
             if len(booking_options) > 1:
-                original[f'L{index + 1}'] = self.get_formatted_booking_option(registration, booking_options[1])
+                original[f'L{index + 1}'] = get_formatted_booking_option(registration, booking_options[1])
             if len(booking_options) > 2:
-                original[f'M{index + 1}'] = self.get_formatted_booking_option(registration, booking_options[2])
-            original[f'N{index + 1}'] = self.get_formatted_booking_option(registration, 'Tagesgast')
+                original[f'M{index + 1}'] = get_formatted_booking_option(registration, booking_options[2])
+            original[f'N{index + 1}'] = get_formatted_booking_option(registration, 'Tagesgast')
 
             original[f'O{index + 1}'] = serialized.get('participant_count', 0)
             original[f'P{index + 1}'] = price
@@ -82,18 +82,3 @@ class InvoiceGenerator(AbstractGenerator):
             index += 1
 
         return wb
-
-    def get_booking_options_name(self, event: event_models.Event):
-        return list(event.bookingoption_set.exclude(name__contains='Tagesgast').values_list('name', flat=True))
-
-    def get_formatted_booking_option(self, registration: event_models.Registration, booking_options_name: str):
-        if booking_options_name != 'Tagesgast':
-            result = registration.registrationparticipant_set.filter(booking_option__name=booking_options_name).count()
-        else:
-            result = registration.registrationparticipant_set \
-                .filter(booking_option__name__contains=booking_options_name).count()
-        return result or 0
-
-    def get_participants(self, registration=None) -> QuerySet[event_models.RegistrationParticipant]:
-        return event_models.RegistrationParticipant.objects.filter(registration=registration) \
-            .order_by('last_name')

@@ -5,11 +5,20 @@
         <v-card-text class="pa-0">
           <v-container class="pa-0">
             <v-row class="center text-center justify-center pa-0">
-              <v-col cols="12">
+              <v-col cols="6">
                 <v-checkbox
                     v-model="filter.justConfirmed"
                     label="Nur Bestätigt"
                     hide-details/>
+              </v-col>
+              <v-col cols="6">
+                <v-btn
+                    v-if="isTeam"
+                    class="ma-2"
+                    @click="openReminderDialog">
+                  <v-icon color="#008000" left> mdi-email-arrow-right</v-icon>
+                  Erinnerungsmail
+                </v-btn>
               </v-col>
             </v-row>
           </v-container>
@@ -33,6 +42,17 @@
             }}
           </v-icon>
         </template>
+        <template v-slot:[`item.mailButton`]="{ item }">
+          <v-btn
+            color="success"
+            dark
+            icon
+            @click="onNewClicked(item)">
+            <v-icon>
+              mdi-cash-100
+            </v-icon>
+          </v-btn>
+        </template>
         <template v-slot:[`item.createdAt`]="{ item }">
           {{ formatDate(item.createdAt) }}
         </template>
@@ -55,6 +75,30 @@
               <v-list-item-title class="justify-center text-center">
                 Referenz Id: <span><strong> {{ item.refId }} </strong></span>
               </v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>
+                  Verantwortliche Personen(en)
+                </v-list-item-title>
+                <v-list dense flat>
+                  <v-list-item dense
+                               v-for="(pers, i) in item.responsiblePersons"
+                               :key="i">
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        {{ i+1 }}. Person:
+                      </v-list-item-title>
+                      <v-list-item-subtitle>
+                        Fahrten Name: {{ pers.userextended.scoutName }}
+                      </v-list-item-subtitle>
+                      <v-list-item-subtitle>
+                        Name: {{ pers.firstName }} {{ pers.lastName }}
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-list-item-content>
             </v-list-item>
             <v-btn
                 @click="onNewClicked(item)"
@@ -129,15 +173,6 @@
         </template>
       </v-data-table>
     </v-row>
-    <v-row class="overflow-y: auto ma-3">
-      <v-btn
-          v-if="isTeam"
-          class="ma-2"
-          @click="openReminderDialog">
-        <v-icon color="#008000" left> mdi-reminder</v-icon>
-        Erinnerungsmail verschicken
-      </v-btn>
-    </v-row>
     <TranserCreationModal
         ref="transerCreationModalRef"
         @createTransfer="createTransfer"
@@ -172,44 +207,6 @@ export default {
     filter: {
       justConfirmed: true,
     },
-    headers: [
-      {
-        text: 'Bestätigt',
-        value: 'isConfirmed',
-      },
-      {
-        text: 'Datum',
-        value: 'createdAt',
-      },
-      {
-        text: 'Referenz Id',
-        value: 'refId',
-      },
-      {
-        text: 'Bund',
-        value: 'scoutOrganisation.bund',
-      },
-      {
-        text: 'Name',
-        value: 'scoutOrganisation.name',
-      },
-      {
-        text: 'Gesamtpreis',
-        value: 'payement.price',
-      },
-      {
-        text: 'Bezahlt',
-        value: 'payement.paid',
-      },
-      {
-        text: 'Offen',
-        value: 'payement.open',
-      },
-      {
-        text: '',
-        value: 'data-table-expand',
-      },
-    ],
     headersBookingOptions: [
       {
         text: 'Buchoption',
@@ -234,10 +231,6 @@ export default {
         value: 'transferDate',
       },
       {
-        text: 'Referenz Id',
-        value: 'transferReferenceId',
-      },
-      {
         text: 'Person',
         value: 'transferPerson',
       },
@@ -257,6 +250,7 @@ export default {
     responseObj: null,
     itemsPerPage: 1000,
     loading: false,
+    eventData: null,
   }),
   computed: {
     ...mapGetters(['userinfo']),
@@ -272,15 +266,15 @@ export default {
     },
     getTotalPrice() {
       const price = this.getItems.reduce((accum, item) => accum + item.payement.price, 0);
-      return `${price || 0} €`;
+      return `${this.financial(price) || 0} €`;
     },
     getTotalPaid() {
       const price = this.getItems.reduce((accum, item) => accum + item.payement.paid, 0);
-      return `${price || 0} €`;
+      return `${this.financial(price) || 0} €`;
     },
     getTotalOpen() {
       const price = this.getItems.reduce((accum, item) => accum + item.payement.open, 0);
-      return `${price || 0} €`;
+      return `${this.financial(price) || 0} €`;
     },
     getTotalStamm() {
       const numberStamm = this.getItems.length;
@@ -292,8 +286,67 @@ export default {
       }
       return 0;
     },
+    headers() {
+      const heads = [
+        {
+          text: '',
+          value: 'isConfirmed',
+        },
+        {
+          text: 'Datum',
+          value: 'createdAt',
+        },
+        {
+          text: 'Bund',
+          value: 'scoutOrganisation.bund',
+        },
+        {
+          text: 'Name',
+          value: 'scoutOrganisation.name',
+        },
+        {
+          text: 'Gesamtpreis',
+          value: 'payement.price',
+        },
+        {
+          text: 'Bezahlt',
+          value: 'payement.paid',
+        },
+        {
+          text: 'Offen',
+          value: 'payement.open',
+        },
+        {
+          text: '',
+          value: 'mailButton',
+        },
+        {
+          text: '',
+          value: 'data-table-expand',
+        },
+      ];
+
+      if (this.eventData
+          && (this.eventData.singleRegistrationLevel.id === 6
+              || this.eventData.groupRegistrationLevel.id === 6)) {
+        heads.splice(
+          3,
+          0,
+          {
+            text: 'Stamm',
+            value: 'scoutOrganisation.stamm',
+          },
+        );
+      }
+
+      return heads;
+    },
   },
   methods: {
+    financial(x) {
+      return Number.parseFloat(x)
+        .toFixed(2);
+    },
     formatDate(item) {
       return moment(item)
         .format('DD.MM.YYYY');
@@ -302,7 +355,7 @@ export default {
       return item;
     },
     getPrice(item) {
-      return item ? `${item} €` : '0 €';
+      return this.financial(item) ? `${this.financial(item)} €` : '0.00 €';
     },
     rowClasses(item) {
       if (item.verbandName === 'DPV') {
@@ -315,9 +368,13 @@ export default {
     },
     getData(eventId) {
       this.loading = true;
-      this.getCashSummary(eventId)
+      Promise.all([
+        this.getCashSummary(eventId),
+        this.getEventOverviewById(eventId),
+      ])
         .then((responseObj) => {
-            this.data = responseObj.data[0]; // eslint-disable-line
+            this.data = responseObj[0].data[0]; // eslint-disable-line
+            this.eventData = responseObj[1].data; // eslint-disable-line
         })
         .finally(() => {
           this.loading = false;

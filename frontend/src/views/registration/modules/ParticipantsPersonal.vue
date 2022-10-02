@@ -297,6 +297,15 @@ export default {
             fieldType: 'refDropdown',
             default: '',
           },
+          {
+            name: 'Dauerhaft speichern',
+            techName: 'allow_permanently',
+            tooltip: 'Diesen Datensatz dauerhaft speichern.',
+            icon: 'mdi-data',
+            mandatory: true,
+            fieldType: 'checkbox',
+            default: '',
+          },
         ],
       };
     },

@@ -104,7 +104,8 @@ class RegistrationParticipantAdmin(admin.ModelAdmin):
         'scout_name',
         'generated',
         'deactivated',
-        'needs_confirmation'
+        'needs_confirmation',
+        'allow_permanently'
     )
     list_filter = ('registration__event__name', 'registration__scout_organisation__name')
     search_fields = ('scout_name', 'first_name', 'last_name', 'email')

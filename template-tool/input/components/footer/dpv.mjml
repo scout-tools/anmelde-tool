@@ -1,0 +1,11 @@
+<mj-section background-color="#00008A" padding-bottom="15px">
+  <mj-column>
+    <mj-text align="center" color="#FFFFFF" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
+      <p>Bei technischen Problemen, kannst du dich gerne an support@anmelde-tool.de wenden.</p>
+      <p>Deutscher Pfadfinderverband</p>
+      <p>Robert-Perthel-Str. 79</p>
+      <p>50739 Köln</p>
+      <p> www.dpvonline.de</p>
+    </mj-text>
+  </mj-column>
+</mj-section>

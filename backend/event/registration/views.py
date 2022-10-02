@@ -14,6 +14,7 @@ from basic import models as basic_models
 from basic import serializers as basic_serializers
 from event import api_exceptions as event_api_exceptions
 from event import models as event_models
+from authentication import models as auth_models
 from event import permissions as event_permissions
 from event.choices import choices as event_choices
 from event.helper import get_registration, custom_get_or_404
@@ -73,6 +74,23 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
             request.data['booking_option'] = registration.event.bookingoption_set.first().id
         if registration.event.registration_deadline < timezone.now():
             request.data['needs_confirmation'] = event_choices.ParticipantActionConfirmation.AddCompletyNew
+
+        if request.data['allow_permanently']:
+            print('allow_permanently')
+
+            person = auth_models.Person(first_name=request.data.get('first_name'),
+                                        scout_name=request.data.get('scout_name'),
+                                        last_name=request.data.get('last_name'),
+                                        address=request.data.get('address'),
+                                        address_supplement=request.data.get('address_supplement'),
+                                        scout_group=request.data.get('scout_group'),
+                                        phone_number='01231312',
+                                        email=request.data.get('email'),
+                                        gender=request.data.get('gender'),
+                                        leader=request.data.get('leader'),
+                                        scout_level='N'
+                                        )
+            person.save()
 
         return super().create(request, *args, **kwargs)
 

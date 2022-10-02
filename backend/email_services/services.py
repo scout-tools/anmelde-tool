@@ -2,7 +2,7 @@ from backend import settings
 from .choices import EmailType
 from .threads.registration import registration_confirmed_mail
 from .threads.payment_reminder import payment_reminder_mail
-
+from .threads.registration import EmailThreadRegistration
 url = getattr(settings, 'FRONT_URL', '')
 email_active = getattr(settings, 'SEND_MAIL', False)
 
@@ -16,3 +16,8 @@ def send_registration_created_mail(**kwargs):
 def send_payment_reminder_mail(event_id):
     if email_active:
         payment_reminder_mail.delay(event_id, EmailType.PaymentReminder)
+
+
+def send_custom_mail(event_id, data):
+    if email_active:
+        CustomEmail(event_id, data, EmailType.StandardEmail).start()

@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='workshop',
             name='type',
-            field=models.CharField(choices=[('w', 'Workshop'), ('e', 'Exkursion'), ('l', 'Vortrag'), ('p', 'Aufführung'), ('d', 'Diskussionsrunde'), ('r', 'Lesung')], default='w', max_length=1),
+            field=models.CharField(choices=[('w', 'Workshop'), ('e', 'Excursion'), ('l', 'Vortrag'), ('p', 'Aufführung'), ('d', 'Diskussionsrunde'), ('r', 'Lesung')], default='w', max_length=1),
         ),
         migrations.AlterField(
             model_name='workshop',

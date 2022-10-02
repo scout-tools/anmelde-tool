@@ -33,5 +33,6 @@ urlpatterns = [
     path('', include('event.summary.urls')),
     path('choices/', include('event.choices.urls')),
     path('cash/', include('event.cash.urls')),
-    path('', include('event.file_generator.urls'))
+    path('', include('event.file_generator.urls')),
+    path('', include('event.email.urls'))
 ]

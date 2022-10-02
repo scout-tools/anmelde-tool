@@ -95,7 +95,13 @@ class RegistrationParticipantPutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = event_models.RegistrationParticipant
-        exclude = ('deactivated', 'generated', 'registration', 'needs_confirmation')
+        exclude = (
+            'deactivated',
+            'generated',
+            'registration',
+            'needs_confirmation',
+            'allow_permanently'
+        )
 
 
 class RegistrationParticipantGroupSerializer(serializers.Serializer):
