@@ -1,5 +1,5 @@
-from django.db.models import QuerySet
 from dateutil.relativedelta import relativedelta
+from django.db.models import QuerySet
 
 from event import models as event_models
 
@@ -113,7 +113,9 @@ def get_participant_gender(participant: event_models.RegistrationParticipant) ->
 
 def get_participant_days(event: event_models.Event, participant: event_models.RegistrationParticipant) -> str:
     if participant.booking_option and participant.booking_option.start_date and participant.booking_option.end_date:
-        return str((participant.booking_option.end_date.date() - participant.booking_option.start_date.date()).days)
+        return str((participant.booking_option.end_date.date() - participant.booking_option.start_date.date()).days + 1)
+    elif event.start_date and event.end_date:
+        return str((event.end_date.date() - event.start_date.date()).days + 1)
     else:
         return ''
 

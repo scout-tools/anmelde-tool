@@ -68,6 +68,7 @@ class FileType(models.TextChoices):
     ParticipantList = 'P', _('Teilnehmerliste')
     AttributeList = 'A', _('Attributliste')
     TravelMatrix = 'T', _('Anreise Matrix')
+    KJR = 'j', _('KJR Liste')
 
 
 class FileExtension(models.TextChoices):
