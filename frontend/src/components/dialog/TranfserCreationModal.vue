@@ -15,10 +15,10 @@
         <v-row>
           <template v-for="(field, i) in dialogMeta.fields">
             <BaseField
-              :key="i"
-              :field="field"
-              v-model="data[field.techName]"
-              :valdiationObj="$v"
+                :key="i"
+                :field="field"
+                v-model="data[field.techName]"
+                :valdiationObj="$v"
             />
           </template>
         </v-row>
@@ -37,10 +37,7 @@ import BaseField from '@/components/common/BaseField.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 import {
-  required,
-  decimal,
-  minLength,
-  email,
+  decimal, email, minLength, required,
 } from 'vuelidate/lib/validators';
 
 export default {
@@ -69,14 +66,18 @@ export default {
       this.active = true;
       this.setDefaults();
     },
-    openEdit(data) {
-      this.registrationId = data.registration;
+    openEdit(data, itemId) {
+      this.registrationId = itemId;
       this.data = data;
       this.active = true;
       this.edit = true;
     },
     close() {
       this.active = false;
+      this.registrationId = null;
+      this.data = {};
+      this.edit = false;
+      this.$v.$reset();
     },
     onClickOkay() {
       this.validate();
@@ -85,7 +86,7 @@ export default {
       }
       const emit = this.edit ? 'editTransfer' : 'createTransfer';
       this.$emit(emit, this.data, this.registrationId);
-      this.active = false;
+      this.close();
     },
     setDefaults() {
       this.data.amount = this.openAmount;
@@ -143,8 +144,8 @@ export default {
             name: 'Verwendungszweck*',
             techName: 'transferSubject',
             tooltip:
-              'Wie lautet der Verwendungszweck der Überweisung?'
-              + ' (damit man diese später leichter wieder erkennen kann).',
+                'Wie lautet der Verwendungszweck der Überweisung?'
+                + ' (damit man diese später leichter wieder erkennen kann).',
             icon: 'mdi-home',
             mandatory: true,
             fieldType: 'textfield',
@@ -154,7 +155,7 @@ export default {
             name: 'Überweisungsdatum*',
             techName: 'transferDate',
             tooltip:
-              'Wann wurde die Überweisung getätigt?',
+                'Wann wurde die Überweisung getätigt?',
             icon: 'mdi-calendar-range',
             mandatory: true,
             fieldType: 'date',
@@ -175,16 +176,16 @@ export default {
             name: 'Referenz Id',
             techName: 'transferReferenceId',
             tooltip: 'Gibt es eine Referenz Id?'
-              + ' (damit man diese später leichter wieder erkennen kann).',
+                + ' (damit man diese später leichter wieder erkennen kann).',
             icon: 'mdi-account-circle',
             mandatory: false,
             fieldType: 'textfield',
             cols: 6,
           },
           {
-            name: 'Persöhnliche Anmerkung',
+            name: 'Persönliche Anmerkung',
             techName: 'description',
-            tooltip: 'Hier kannst du persöhnliche Anmerkungen eintragen.',
+            tooltip: 'Hier kannst du persönliche Anmerkungen eintragen.',
             icon: 'mdi-semantic-web',
             mandatory: false,
             fieldType: 'textarea',

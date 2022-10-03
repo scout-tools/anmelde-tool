@@ -44,10 +44,10 @@
         </template>
         <template v-slot:[`item.mailButton`]="{ item }">
           <v-btn
-            color="success"
-            dark
-            icon
-            @click="onNewClicked(item)">
+              color="success"
+              dark
+              icon
+              @click="onNewClicked(item)">
             <v-icon>
               mdi-cash-100
             </v-icon>
@@ -87,7 +87,7 @@
                                :key="i">
                     <v-list-item-content>
                       <v-list-item-title>
-                        {{ i+1 }}. Person:
+                        {{ i + 1 }}. Person:
                       </v-list-item-title>
                       <v-list-item-subtitle>
                         Fahrten Name: {{ pers.userextended.scoutName }}
@@ -131,7 +131,7 @@
                     <v-icon
                         small
                         class="mr-2"
-                        @click="onNewClicked(item)">
+                        @click="onEditClicked(item)">
                       mdi-pencil
                     </v-icon>
                     <v-icon
@@ -357,12 +357,6 @@ export default {
     getPrice(item) {
       return this.financial(item) ? `${this.financial(item)} €` : '0.00 €';
     },
-    rowClasses(item) {
-      if (item.verbandName === 'DPV') {
-        return 'dpv-blue';
-      }
-      return 'bdp-yellow';
-    },
     getNumberParticipant(item) {
       return `${item.numberParticipant || 0} (${item.numberHelper || 0})`;
     },
@@ -390,7 +384,7 @@ export default {
       this.getData(this.eventId);
     },
     onEditClicked(data) {
-      this.$refs.transerCreationModalRef.openEdit(data);
+      this.$refs.transerCreationModalRef.openEdit(data, data.id);
     },
     onNewClicked(data) {
       this.$refs.transerCreationModalRef.open(data, data.id);
@@ -425,7 +419,7 @@ export default {
           });
         });
     },
-    editTransfer(data, registrationId) {
+    editTransfer(data) {
       axios
         .patch(`${this.API_URL}/event/cash/income/${data.id}/`, {
           amount: data.amount,
@@ -434,7 +428,6 @@ export default {
           transferPerson: data.transferPerson,
           transferReferenceId: data.transferReferenceId,
           description: data.description,
-          registration: registrationId,
         })
         .then(() => {
           this.onRefresh();
