@@ -124,7 +124,12 @@ def get_participant_state(participant: event_models.RegistrationParticipant) -> 
 
 def get_participant_gender(participant: event_models.RegistrationParticipant) -> str:
     if participant.gender:
-        return participant.gender if participant.gender != 'N' else '/'
+        if participant.gender == 'N':
+            return '/'
+        elif participant.gender == 'F':
+            return 'W'
+        else:
+            return participant.gender
     else:
         return ''
 
