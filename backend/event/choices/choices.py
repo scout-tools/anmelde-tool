@@ -63,12 +63,13 @@ class FileGenerationStatus(models.TextChoices):
 
 
 class FileType(models.TextChoices):
-    Kjp = 'K', _('KJP Liste')
-    Invoice = 'I', _('Rechnungserstellung Felix')
-    ParticipantList = 'P', _('Teilnehmerliste')
-    AttributeList = 'A', _('Attributliste')
-    TravelMatrix = 'T', _('Anreise Matrix')
-    KJR = 'j', _('KJR Liste')
+    Kjp_complex = 'KJPC', _('KJP Liste Komplex')
+    Kjp_easy = 'KJPE', _('KJP Liste Einfach')
+    Invoice = 'IF', _('Rechnungserstellung Felix')
+    ParticipantList = 'PL', _('Teilnehmerliste')
+    AttributeList = 'AL', _('Attributliste')
+    TravelMatrix = 'TM', _('Anreise Matrix')
+    KJR = 'KJR', _('KJR Liste')
 
 
 class FileExtension(models.TextChoices):
