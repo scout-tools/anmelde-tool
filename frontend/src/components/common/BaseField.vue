@@ -274,7 +274,7 @@
         :loading="isLoading"
         :item-text="getItemText"
         :search-input.sync="search"
-        :no-data-text="responseablePersonDataText"
+        :no-data-text="responsiblePersonDataText"
         :error-messages="onErrorMessageChange(field.techName)"/>
 
     <v-select
@@ -452,6 +452,7 @@ import stepMixin from '@/mixins/stepMixin';
 import serviceMixin from '@/mixins/serviceMixin';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/de';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
   props: {
@@ -472,7 +473,7 @@ export default {
       default: null,
     },
   },
-  mixins: [stepMixin, serviceMixin],
+  mixins: [stepMixin, serviceMixin, apiCallsMixin],
   data() {
     return {
       itemsPerPage: 1000,
@@ -482,7 +483,7 @@ export default {
       isLoading: false,
       search: null,
       zipCodeNoDataText: 'Bitte PLZ oder Ort eingeben.',
-      responseablePersonDataText: 'E-Mail oder Pfadfindernamen eingeben.',
+      responsiblePersonDataText: 'E-Mail oder Pfadfindernamen eingeben.',
       ckeditor: {
         editor: ClassicEditor,
         editorData: '',
@@ -503,21 +504,22 @@ export default {
           searchString.length <= 2
       ) {
         this.zipCodeNoDataText = 'Bitte PLZ oder Ort eingeben.';
-        this.responseablePersonDataText = 'E-Mail oder Pfadfindernamen eingeben.';
+        this.responsiblePersonDataText = 'E-Mail oder Pfadfindernamen eingeben.';
         if (!this.localValue) this.lookupList = null;
         return;
       }
-
       this.isLoading = true;
       if (this.field.fieldType === 'zipField') {
-        this.getZipCodeMapping(searchString)
+        this.searchZipCode(searchString)
           .then((res) => {
-            this.lookupList = res;
+            this.lookupList = res.data;
             this.zipCodeNoDataText = 'Kein Treffer';
+            this.isLoading = false;
           })
           .catch((err) => {
             this.lookupList = null;
             this.zipCodeNoDataText = err.response.data.detail;
+            this.isLoading = false;
           })
           .finally(() => {
             this.loading = false;
@@ -527,11 +529,13 @@ export default {
         this.getResponsibles(searchString)
           .then((res) => {
             this.lookupList = res;
-            this.responseablePersonDataText = 'Kein Treffer';
+            this.responsiblePersonDataText = 'Kein Treffer';
+            this.isLoading = false;
           })
           .catch((err) => {
             this.lookupList = null;
-            this.responseablePersonDataText = err.response.data.detail;
+            this.responsiblePersonDataText = err.response.data.detail;
+            this.isLoading = false;
           })
           .finally(() => {
             this.isLoading = false;
@@ -596,7 +600,7 @@ export default {
           console.log(err);
           this.$root.globalSnackbar.show({
             message: 'Leider ist ein Problem beim runterladen der Daten aufgetreten, '
-                  + 'bitte probiere es später nocheinmal.',
+                  + 'bitte probiere es später noch einmal.',
             color: 'error',
           });
         })
