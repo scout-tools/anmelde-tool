@@ -75,7 +75,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         if registration.event.registration_deadline < timezone.now():
             request.data['needs_confirmation'] = event_choices.ParticipantActionConfirmation.AddCompletyNew
 
-        if request.data['allow_permanently']:
+        if request.data.get('allow_permanently', False):
             print('allow_permanently')
 
             person = auth_models.Person(first_name=request.data.get('first_name'),
@@ -483,14 +483,16 @@ class RegistrationViewSet(mixins.CreateModelMixin,
                 filter(scout_organisation=request.user.userextended.scout_organisation, single=False)
             group_registration = existing_group_registration.filter(responsible_persons__in=[request.user.id])
 
-            if ((single_registration.exists() and serializer.data['single']) and not event_permissions.IsEventSuperResponsiblePerson):
+            if ((single_registration.exists() and serializer.data[
+                'single']) and not event_permissions.IsEventSuperResponsiblePerson):
                 raise event_api_exceptions.SingleAlreadyRegistered()
             elif existing_group_registration.exists() and not group_registration.exists() \
                     and not serializer.data['single']:
                 raise event_api_exceptions.NotResponsible()
             elif existing_group_registration.exists() and not serializer.data['single']:
                 raise event_api_exceptions.GroupAlreadyRegistered
-            elif ((group_registration.exists() and serializer.data['single']) and not event_permissions.IsEventSuperResponsiblePerson):
+            elif ((group_registration.exists() and serializer.data[
+                'single']) and not event_permissions.IsEventSuperResponsiblePerson):
                 raise event_api_exceptions.SingleGroupNotAllowed
             elif event.group_registration == event_choices.RegistrationTypeGroup.Required and \
                     not group_registration.exists() and serializer.data['single']:

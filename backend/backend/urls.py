@@ -7,6 +7,5 @@ urlpatterns = [
     path('basic/', include('basic.urls')),
     path('auth/', include('authentication.urls')),
     path('event/', include('event.urls')),
-    path(r'ses/event-webhook/', SESEventWebhookView.as_view(), name='handle-event-webhook'),
 ]
 

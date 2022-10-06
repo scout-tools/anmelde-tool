@@ -81,10 +81,9 @@ export default {
       const path = `${this.API_URL}/basic/tags/?type__name=${type}`;
       return axios.get(path);
     },
-    async searchZipCode(searchKeyword) {
-      const path = `${this.API_URL}/basic/zip-code/?zip_city=${searchKeyword}`;
-      const response = await axios.get(path);
-      return response.data;
+    async searchZipCode(searchString) {
+      const path = `${process.env.VUE_APP_API}/basic/zip-code/?zip_city=${searchString}`;
+      return axios.get(path);
     },
     async getEventLocation() {
       const url = `${this.API_URL}/event/event-location/?&timestamp=${new Date().getTime()}`;
