@@ -24,7 +24,7 @@ def get_event_date(event: event_models.Event) -> str:
 
 def get_event_days(event: event_models.Event) -> str:
     if event.end_date and event.start_date:
-        return str((event.end_date.date() - event.start_date.date()).days)
+        return str((event.end_date.date() - event.start_date.date()).days + 1)
     else:
         return ''
 
@@ -98,8 +98,26 @@ def get_participant_adress(participant: event_models.RegistrationParticipant) ->
 
 
 def get_participant_state(participant: event_models.RegistrationParticipant) -> str:
+    states = {
+        'BW': 'Baden-Württemberg',
+        'BY': 'Bayern',
+        'BE': 'Berlin',
+        'BB': 'Brandenburg',
+        'HB': 'Bremen',
+        'HH': 'Hamburg',
+        'HE': 'Hessen',
+        'MV': 'Mecklenburg-Vorpommern',
+        'NI': 'Niedersachsen',
+        'NW': 'Nordrhein-Westfalen',
+        'RP': 'Rheinland-Pfalz',
+        'SL': 'Saarland',
+        'SN': 'Sachsen',
+        'ST': 'Sachsen-Anhalt',
+        'SH': 'Schleswig-Holstein',
+        'TH': 'Thüringen'
+    }
     if participant.zip_code and participant.zip_code.state:
-        return participant.zip_code.state
+        return states.get(participant.zip_code.state, '')
     else:
         return ''
 
