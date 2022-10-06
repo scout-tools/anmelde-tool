@@ -20,7 +20,6 @@ class KjpGeneratorEasy(AbstractGenerator):
         participants_count = participants.count()
         sheets_count = participants_count / 10
 
-
         sheet_index: int
         chunked_registration_indices: int
 
@@ -28,8 +27,8 @@ class KjpGeneratorEasy(AbstractGenerator):
             registration_chunk = participants[chunked_registration_indices:chunked_registration_indices + 10]
             sheet = wb.copy_worksheet(original)
             sheet.title = f'Blatt_{sheet_index + 1}'
-            sheet['AZ3'] = sheet_index
-            sheet['BB3'] = sheets_count
+            sheet['AZ3'] = sheet_index + 1
+            sheet['BB3'] = sheets_count + 1
             sheet['T11'] = event.name
             sheet['AH11'] = helper.get_event_location(event)
             sheet['AQ11'] = helper.get_event_date(event)
@@ -38,8 +37,7 @@ class KjpGeneratorEasy(AbstractGenerator):
             participant: event_models.RegistrationParticipant
             for participant_index, participant in enumerate(registration_chunk):
                 cell = participant_index + 19
-                participants_count += 1
-                sheet[f'A{cell}'] = participants_count
+                sheet[f'A{cell}'] = chunked_registration_indices + participant_index + 1
                 sheet[f'C{cell}'] = f'{helper.get_participant_full_name(participant)}' \
                                     f'\n{helper.get_participant_adress(participant)}'
                 sheet[f'T{cell}'] = helper.get_participant_gender(participant)
