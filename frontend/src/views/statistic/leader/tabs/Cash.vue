@@ -429,14 +429,14 @@ export default {
     editTransfer(data) {
       let email = null;
       console.log(typeof data.transferPerson);
-      if (typeof data.transferPerson === 'object') {
+      if (typeof data.transferPerson === 'object' && data.transferPerson && data.transferPerson.email) {
         email = data.transferPerson.email; // eslint-disable-line
-      } else if (typeof data.transferPerson === 'string') {
+      } else if (typeof data.transferPerson === 'string' && data.transferPerson) {
         email = data.transferPerson; // eslint-disable-line
       }
       debugger;
       axios
-        .patch(`${this.API_URL}/event/cash/income/${data.id}/`, {
+        .put(`${this.API_URL}/event/cash/income/${data.id}/`, {
           transferPerson: email,
           amount: data.amount,
           transferSubject: data.transferSubject,

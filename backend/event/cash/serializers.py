@@ -7,6 +7,7 @@ class CashIncomeSerializer(serializers.ModelSerializer):
     transfer_person = serializers.SlugRelatedField(
         many=False,
         required=False,
+        allow_null=True,
         read_only=False,
         slug_field='email',
         queryset=User.objects.all()

@@ -68,9 +68,9 @@ export default {
       this.setDefaults();
     },
     openEdit(data, itemId) {
+      this.paymentData = data;
       this.registrationId = itemId;
       this.data = data;
-      debugger;
       this.active = true;
       this.edit = true;
     },
@@ -91,6 +91,7 @@ export default {
       this.close();
     },
     setDefaults() {
+      debugger;
       this.data.amount = this.openAmount;
       this.data.transferSubject = this.paymentData.refId;
       this.data.transferDate = new Date();

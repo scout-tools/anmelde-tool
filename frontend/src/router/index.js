@@ -91,6 +91,7 @@ const routes = [
     },
     children: [
       {
+        name: 'settingsUser',
         path: 'user',
         component: SettingsUser,
       },
