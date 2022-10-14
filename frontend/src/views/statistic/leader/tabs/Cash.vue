@@ -434,7 +434,6 @@ export default {
       } else if (typeof data.transferPerson === 'string' && data.transferPerson) {
         email = data.transferPerson; // eslint-disable-line
       }
-      debugger;
       axios
         .put(`${this.API_URL}/event/cash/income/${data.id}/`, {
           transferPerson: email,

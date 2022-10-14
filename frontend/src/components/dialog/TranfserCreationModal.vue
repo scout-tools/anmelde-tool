@@ -91,7 +91,6 @@ export default {
       this.close();
     },
     setDefaults() {
-      debugger;
       this.data.amount = this.openAmount;
       this.data.transferSubject = this.paymentData.refId;
       this.data.transferDate = new Date();
