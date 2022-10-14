@@ -185,6 +185,8 @@ class EventLeaderTypesSummaryViewSet(EventFoodSummaryViewSet):
         )
 
         n = self.get_leder_type_count('N', all_participants)
+        buFue = self.get_leder_type_count('BuFue', all_participants)
+        rinFue = self.get_leder_type_count('RinFue', all_participants)
         staFue = self.get_leder_type_count('StaFue', all_participants)
         siFue = self.get_leder_type_count('SiFue', all_participants)
         roFue = self.get_leder_type_count('RoFue', all_participants)
@@ -192,6 +194,8 @@ class EventLeaderTypesSummaryViewSet(EventFoodSummaryViewSet):
 
         result = {
             'n': n,
+            'buFue': buFue,
+            'ringFue': rinFue,
             'staFue': staFue,
             'siFue': siFue,
             'roFue': roFue,

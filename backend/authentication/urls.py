@@ -8,6 +8,9 @@ router.register(r'responsables', views.ResponsablePersonViewSet, basename='respo
 router.register(r'personal-data', views.PersonalData, basename='personal-data')
 router.register(r'personal-data-check', views.PersonalDataCheck, basename='personal-data-check')
 router.register(r'groups', views.GroupViewSet, basename='groups')
+router.register(r'person', views.PersonsViewSet, basename='person')
+router.register(r'person-connect', views.PersonConnect, basename='person-connect')
+
 
 router.register(r'email-settings', views.EmailSettingsViewSet, basename='email-settings')
 router.register(r'email-notification-types', views.EmailNotificationTypeViewSet, basename='email-notification-types')

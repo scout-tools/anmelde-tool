@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.db import models
 
 from basic import models as basic_models
+from authentication import models as auth_models
 from email_services import models as email_services_model
 from event.choices import choices as event_choices
 
@@ -221,6 +222,7 @@ class RegistrationParticipant(basic_models.TimeStampMixin):
     email = models.EmailField(null=True, blank=True)
     birthday = models.DateTimeField(null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
+    person = models.ForeignKey(auth_models.Person, on_delete=models.PROTECT, null=True, blank=True)
     tags = models.ManyToManyField(basic_models.AbstractAttribute, blank=True)
     booking_option = models.ForeignKey(BookingOption, on_delete=models.SET_NULL, blank=True, null=True)
     gender = models.CharField(max_length=1, choices=event_choices.Gender.choices, default=event_choices.Gender.Nothing)

@@ -10,7 +10,7 @@
         :error-messages="onErrorMessageChange(field.techName)"
         :disabled="field.disabled"
         :readonly="field.readonly"
-        :filled="field.filled">
+        :filled="field.filled || field.readonly">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -35,7 +35,7 @@
         :error-messages="onErrorMessageChange(field.techName)"
         :disabled="field.disabled"
         :readonly="field.readonly"
-        :filled="field.filled">
+        :filled="field.filled || field.readonly">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -62,7 +62,7 @@
         :error-messages="onErrorMessageChange(field.techName)"
         :disabled="field.disabled"
         :readonly="field.readonly"
-        :filled="field.filled">
+        :filled="field.filled || field.readonly">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -88,7 +88,7 @@
         :error-messages="onErrorMessageChange(field.techName)"
         :disabled="field.disabled"
         :readonly="field.readonly"
-        :filled="field.filled">
+        :filled="field.filled || field.readonly">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -115,6 +115,7 @@
         @input="onInputChanged"
         item-value="id"
         :item-text="getItemText"
+        :readonly="field.readonly"
         :error-messages="onErrorMessageChange(field.techName)"
         :no-data-text="field.noDataText">
     </v-autocomplete>
@@ -129,7 +130,9 @@
         chips
         multiple
         deletable-chips
+        :readonly="field.readonly"
         @input="onComboInputChanged"
+        :filled="field.filled || field.readonly"
         item-value="name"
         :item-text="getItemText"
         :error-messages="onErrorMessageChange(field.techName)">
@@ -155,6 +158,7 @@
         required
         chips
         multiple
+        :readonly="field.readonly"
         deletable-chips
         @input="onComboInputChanged"
         :error-messages="onErrorMessageChange(field.techName)">
@@ -178,6 +182,7 @@
         :value="localValue"
         :prepend-icon="field.icon"
         required
+        :readonly="field.readonly"
         chips
         deletable-chips
         @input="onSingleComboInputChanged"
@@ -202,6 +207,8 @@
         :value="localValue"
         :items="lookupList"
         :prepend-icon="field.icon"
+        :readonly="field.readonly"
+        :filled="field.filled || field.readonly"
         required
         @input="onInputChanged"
         item-value="id"
@@ -228,7 +235,9 @@
         item-value="value"
         :items="convertEnum(this.lookupList)"
         :prepend-icon="field.icon"
+        :readonly="field.readonly"
         required
+        :filled="field.filled || field.readonly"
         @input="onInputChanged"
         :item-text="getItemText"
         :error-messages="onErrorMessageChange(field.techName)"
@@ -253,11 +262,13 @@
         :value="localValue"
         :items="lookupList"
         :prepend-icon="field.icon"
+        :readonly="field.readonly"
         required
         @input="onInputChanged"
         item-value="id"
         :loading="isLoading"
         :item-text="getItemText"
+        :filled="field.filled || field.readonly"
         :search-input.sync="search"
         :no-data-text="zipCodeNoDataText"
         :error-messages="onErrorMessageChange(field.techName)"/>
@@ -269,6 +280,7 @@
         :items="lookupList"
         :prepend-icon="field.icon"
         required
+        :readonly="field.readonly"
         @input="onInputChanged"
         item-value="email"
         :loading="isLoading"
@@ -283,6 +295,8 @@
         :value="localValue"
         :prepend-icon="field.icon"
         :items="field.referenceTable"
+        :readonly="field.readonly"
+        :filled="field.filled || field.readonly"
         required
         @input="onInputChanged"
         item-value="value"
@@ -293,6 +307,7 @@
         v-if="field.fieldType === 'checkbox'"
         :label="field.name"
         :input-value="localValue"
+        :readonly="field.readonly"
         @change="onInputChanged"
         :error-messages="onErrorMessageChange(field.techName)">
     </v-switch>
@@ -352,7 +367,7 @@
           :error-messages="onErrorMessageChange(field.techName)"
           :disabled="field.disabled"
           :readonly="field.readonly"
-          :filled="field.filled">
+          :filled="field.filled || field.readonly">
         <template slot="append">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -380,7 +395,7 @@
               :error-messages="onErrorMessageChange(field.techName)"
               :disabled="field.disabled"
               :readonly="field.readonly"
-              :filled="field.filled">
+              :filled="field.filled || field.readonly">
             <template slot="append">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
@@ -406,7 +421,7 @@
               :error-messages="onErrorMessageChange(field.techName)"
               :disabled="field.disabled"
               :readonly="field.readonly"
-              :filled="field.filled"
+              :filled="field.filled || field.readonly"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -497,7 +512,6 @@ export default {
   watch: {
     search(searchString) {
       // still loading
-      if (this.isLoading) return;
       if (
           !searchString || // eslint-disable-line
           searchString.indexOf(' ') >= 0 || // eslint-disable-line
@@ -611,10 +625,12 @@ export default {
     onInputChanged(value) {
       this.$emit('input', value);
       this.$forceUpdate();
+      this.loading = false;
     },
     onDateInputChanged(value) {
       const newDate = this.$moment(value, 'L', 'de');
       if (newDate.isValid() && value.length === 10) {
+        console.log(newDate.toDate());
         this.onInputChanged(newDate.toDate());
       }
       this.$forceUpdate();
@@ -703,11 +719,18 @@ export default {
         this.callSingleZipCode(this.localValue)
           .then((result) => {
             this.lookupList = result;
+            this.loading = false;
             this.$forceUpdate();
           });
       }
       if (this.field.fieldType === 'responsablesField') {
-        this.callSingleResponsible(this.localValue)
+        let email = '';
+        if (typeof this.localValue === 'object') {
+          email = this.localValue.email; // eslint-disable-line
+        } else {
+          email = this.localValue;
+        }
+        this.callSingleResponsible(email)
           .then((result) => {
             this.lookupList = result;
             this.$forceUpdate();

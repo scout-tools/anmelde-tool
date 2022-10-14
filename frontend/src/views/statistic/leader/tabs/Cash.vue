@@ -95,6 +95,9 @@
                       <v-list-item-subtitle>
                         Name: {{ pers.firstName }} {{ pers.lastName }}
                       </v-list-item-subtitle>
+                      <v-list-item-subtitle>
+                        Handy: {{ pers.userextended.mobileNumber }}
+                      </v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
                 </v-list>
@@ -396,12 +399,16 @@ export default {
       this.$refs.transferDeleteModalRef.open(data);
     },
     createTransfer(data, registrationId) {
+      let email = null;
+      if (data.transferPerson) {
+        email = data.transferPerson.email; // eslint-disable-line
+      }
       axios
         .post(`${this.API_URL}/event/cash/income/`, {
           amount: data.amount,
           transferSubject: data.transferSubject,
           transferDate: data.transferDate,
-          transferPerson: data.transferPerson,
+          transferPerson: email,
           transferReferenceId: data.transferReferenceId,
           description: data.description,
           registration: registrationId,
@@ -420,12 +427,20 @@ export default {
         });
     },
     editTransfer(data) {
+      let email = null;
+      console.log(typeof data.transferPerson);
+      if (typeof data.transferPerson === 'object') {
+        email = data.transferPerson.email; // eslint-disable-line
+      } else if (typeof data.transferPerson === 'string') {
+        email = data.transferPerson; // eslint-disable-line
+      }
+      debugger;
       axios
         .patch(`${this.API_URL}/event/cash/income/${data.id}/`, {
+          transferPerson: email,
           amount: data.amount,
           transferSubject: data.transferSubject,
           transferDate: data.transferDate,
-          transferPerson: data.transferPerson,
           transferReferenceId: data.transferReferenceId,
           description: data.description,
         })
