@@ -4,7 +4,7 @@
       v-if="dialogMeta.groupAdd"
       class="ma-2"
       @click="openGroupDialog">
-      <v-icon color="#008000" left> mdi-account-group</v-icon>
+      <v-icon color="success" left> mdi-account-group</v-icon>
       Mehere Einträge hinzufügen
     </v-btn>
     <v-btn class="ma-2" color="success" @click="newItem">
@@ -15,8 +15,16 @@
       v-if="dialogMeta.excelUpload"
       class="ma-2"
       @click="openExcelDialog">
-      <v-icon color="#008000" left> mdi-microsoft-excel</v-icon>
+      <v-icon color="success" left> mdi-microsoft-excel</v-icon>
       Excel Datei hochladen
+    </v-btn>
+    <v-btn
+      color="success"
+      v-if="dialogMeta.excelUpload"
+      class="ma-2"
+      @click="openStammesMember">
+      <v-icon left> mdi-account-details</v-icon>
+      Stammesmitglied anmelden
     </v-btn>
 
     <v-list v-show="!isLoading">
@@ -67,6 +75,10 @@
       :valdiationObj="valdiationObj"
       @validate="validate"
     />
+    <stammes-member
+      ref="stammesMember"
+      @openPerson="openPerson"
+    />
     <create-group-modal
       ref="groupDialog"
       :dialogMeta="dialogMeta"
@@ -97,6 +109,7 @@ import CreateModal from '@/components/dialog/ListWithDialog/CreateModal.vue';
 import CreateGroupModal from '@/components/dialog/ListWithDialog/CreateGroupModal.vue';
 import DeleteModal from '@/components/dialog/ListWithDialog/DeleteModal.vue';
 import UploadExcelFile from './ExcelImport.vue';
+import StammesMember from './StammesMember.vue';
 
 export default {
   mixins: [apiCallsMixin],
@@ -106,6 +119,7 @@ export default {
     UploadExcelFile,
     DeleteModal,
     Circual,
+    StammesMember,
   },
   data: () => ({
     API_URL: process.env.VUE_APP_API,
@@ -213,8 +227,14 @@ export default {
     onRefresh() {
       this.$emit('refresh');
     },
+    openPerson(item) {
+      this.$refs.createModal.openDialogEdit(item, true);
+    },
     openExcelDialog() {
       this.$refs.uploadExcelFile.openDialog();
+    },
+    openStammesMember() {
+      this.$refs.stammesMember.openDialog();
     },
     openGroupDialog() {
       this.$refs.groupDialog.openDialog();

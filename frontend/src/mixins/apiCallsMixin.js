@@ -81,10 +81,9 @@ export default {
       const path = `${this.API_URL}/basic/tags/?type__name=${type}`;
       return axios.get(path);
     },
-    async searchZipCode(searchKeyword) {
-      const path = `${this.API_URL}/basic/zip-code/?zip_city=${searchKeyword}`;
-      const response = await axios.get(path);
-      return response.data;
+    async searchZipCode(searchString) {
+      const path = `${process.env.VUE_APP_API}/basic/zip-code/?zip_city=${searchString}`;
+      return axios.get(path);
     },
     async getEventLocation() {
       const url = `${this.API_URL}/event/event-location/?&timestamp=${new Date().getTime()}`;
@@ -154,6 +153,10 @@ export default {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/age-groups/`;
       return axios.get(path, { params });
     },
+    async getEventAgeGroupsDetail(eventId, params) {
+      const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/age-groups-detail/`;
+      return axios.get(path, { params });
+    },
     async getAlcoholEventAgeGroups(eventId, params) {
       const path = `${process.env.VUE_APP_API}/event/event/${eventId}/summary/alcohol-groups/`;
       return axios.get(path, { params });
@@ -220,6 +223,10 @@ export default {
     },
     async getHierarchyMapping() {
       const path = `${process.env.VUE_APP_API}/basic/scout-hierarchy/`;
+      return axios.get(path);
+    },
+    async getPersons() {
+      const path = `${process.env.VUE_APP_API}/auth/person/`;
       return axios.get(path);
     },
   },

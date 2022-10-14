@@ -95,6 +95,7 @@ class TravelAttribute(AbstractAttribute):
     type_field = models.CharField(max_length=1, choices=TravelType.choices, null=True, blank=True)
     time_field = models.CharField(max_length=2, choices=TravelSlots.choices, null=True, blank=True)
 
+
 class TravelAttributeV2(AbstractAttribute):
     number_persons = models.IntegerField(default=0)
     type_field = models.CharField(max_length=1, choices=TravelType.choices, null=True, blank=True)

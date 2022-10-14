@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.db import models
 
 from basic import models as basic_models
+from authentication import models as auth_models
 from email_services import models as email_services_model
 from event.choices import choices as event_choices
 
@@ -221,6 +222,7 @@ class RegistrationParticipant(basic_models.TimeStampMixin):
     email = models.EmailField(null=True, blank=True)
     birthday = models.DateTimeField(null=True, blank=True)
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE, null=True, blank=True)
+    person = models.ForeignKey(auth_models.Person, on_delete=models.PROTECT, null=True, blank=True)
     tags = models.ManyToManyField(basic_models.AbstractAttribute, blank=True)
     booking_option = models.ForeignKey(BookingOption, on_delete=models.SET_NULL, blank=True, null=True)
     gender = models.CharField(max_length=1, choices=event_choices.Gender.choices, default=event_choices.Gender.Nothing)
@@ -233,6 +235,7 @@ class RegistrationParticipant(basic_models.TimeStampMixin):
                               default=event_choices.LeaderTypes.KeineFuehrung)
     scout_level = models.CharField(max_length=6, choices=event_choices.ScoutLevelTypes.choices,
                                    default=event_choices.ScoutLevelTypes.Unbekannt)
+    allow_permanently = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.registration}: {self.last_name}, {self.first_name}"

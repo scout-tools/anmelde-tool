@@ -44,6 +44,24 @@
                   <v-card flat max-width="500" class="mx-auto">
                     <v-list>
                       <v-list-item>
+                      <router-link
+                        :to="{
+                          name: 'statisticOverview',
+                          params: { id: item.id },
+                        }"
+                        class="ma-3"
+                        style="text-decoration: none">
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              v-bind="attrs"
+                              v-on="on">
+                              <v-icon color="primary"> mdi-chart-bar </v-icon>
+                            </v-btn>
+                          </template>
+                          <span>Fahrtenstatistik</span>
+                        </v-tooltip>
+                      </router-link>
                         <v-btn
                           class="ma-2"
                           color="info"

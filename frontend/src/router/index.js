@@ -10,6 +10,9 @@ import StatisticOverview from '@/views/statistic/overview/Main.vue';
 
 import SettingsOverview from '@/views/settings/Main.vue';
 import SettingsConfig from '@/views/settings/config/Main.vue';
+import SettingsPerson from '@/views/settings/person/Main.vue';
+import SettingsSso from '@/views/settings/sso/Main.vue';
+
 import LandingPage from '@/views/landingPage/Main.vue';
 import RedirectKeycloak from '@/views/landingPage/RedirectKeycloak.vue';
 import Impressum from '@/views/footer/Impressum.vue';
@@ -80,17 +83,31 @@ const routes = [
     ],
   },
   {
-    path: '/settings/overview',
+    path: '/settings',
     name: 'settingsOverview',
     component: SettingsOverview,
-  },
-  {
-    path: '/settings/user',
-    name: 'settingsUser',
-    component: SettingsUser,
     meta: {
       requiresAuth: true,
     },
+    children: [
+      {
+        name: 'settingsUser',
+        path: 'user',
+        component: SettingsUser,
+      },
+      {
+        path: 'person',
+        component: SettingsPerson,
+      },
+      {
+        path: 'config',
+        component: SettingsConfig,
+      },
+      {
+        path: 'sso',
+        component: SettingsSso,
+      },
+    ],
   },
   {
     path: '/registration/edit/:id',
@@ -109,11 +126,6 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
-  },
-  {
-    path: '/settings/config',
-    name: 'settingsConfig',
-    component: SettingsConfig,
   },
   {
     path: '/statistic/:id',

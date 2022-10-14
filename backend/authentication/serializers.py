@@ -1,8 +1,8 @@
 from django.contrib.auth.models import Group
 from rest_framework import serializers
 
-from basic.models import ScoutHierarchy
-from .models import UserExtended
+from basic.models import ScoutHierarchy, EatHabit
+from .models import UserExtended, Person
 
 
 class UserExtendedScoutHierarchySerializer(serializers.ModelSerializer):
@@ -80,11 +80,37 @@ class ResponsablePersonSerializer(serializers.ModelSerializer):
         return ''
 
 
+class PersonSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Person model. It includes all information of a natrual person
+    """
+    eat_habits = serializers.SlugRelatedField(
+        many=True,
+        read_only=False,
+        slug_field='name',
+        queryset=EatHabit.objects.all(),
+        required=False
+    )
+    class Meta:
+        model = Person
+        fields = '__all__'
+
+
+class PersonPostSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Person model. It includes all information of a natrual person
+    """
+    class Meta:
+        model = Person
+        fields = '__all__'
+
+
 class UserExtendedGetSerializer(serializers.ModelSerializer):
     """
     Serializer for the UserExtended model for Get/list/Retrieve requests
     """
     scout_organisation = UserExtendedScoutHierarchySerializer()
+    person = PersonSerializer()
 
     class Meta:
         model = UserExtended
@@ -93,7 +119,8 @@ class UserExtendedGetSerializer(serializers.ModelSerializer):
             'mobile_number',
             'scout_name',
             'scout_organisation',
-            'dsgvo_confirmed'
+            'dsgvo_confirmed',
+            'person'
         )
 
 

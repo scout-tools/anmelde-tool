@@ -1,11 +1,11 @@
 <template>
   <v-container class="mt-10">
     <v-row justify="center" class="mt-5">
-      <v-flex ma-3 lg9>
+      <v-flex ma-3>
         <v-layout column>
           <v-card>
             <v-tabs
-              v-model="tab"
+              v-model="activeTab"
               background-color="primary"
               grow
               centered
@@ -13,37 +13,12 @@
               icons-and-text
             >
               <v-tabs-slider></v-tabs-slider>
-
-              <v-tab
-                href="#tab-1"
-              >
-                Persönlich
-                <v-icon>mdi-clipboard-list</v-icon>
-              </v-tab>
-
-              <v-tab
-                href="#tab-2"
-              >
-                Einstellungen
-                <v-icon>mdi-counter</v-icon>
-              </v-tab>
-              <v-tab
-                href="#tab-3"
-              >
-                Single Sign On
-                <v-icon>mdi-key</v-icon>
+              <v-tab v-for="tab in tabs" :key="tab.id" :to="tab.route" exact>
+                {{ tab.name }}
+                <v-icon>{{ tab.icon }}</v-icon>
               </v-tab>
             </v-tabs>
-
-            <v-tabs-items v-model="tab">
-              <v-tab-item v-for="i in 6" :key="i" :value="'tab-' + i">
-                <v-card-text>
-                  <UserMain v-if="i === 1" />
-                  <ConfigMain v-if="i === 2" />
-                  <SsoMain v-if="i === 3" />
-                </v-card-text>
-              </v-tab-item>
-            </v-tabs-items>
+            <router-view></router-view>
           </v-card>
         </v-layout>
       </v-flex>
@@ -54,31 +29,42 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import ConfigMain from './config/Main.vue';
-import UserMain from './user/Main.vue';
-import SsoMain from './sso/Main.vue';
-
 export default {
-  components: {
-    ConfigMain,
-    UserMain,
-    SsoMain,
-
-  },
   computed: {
-    ...mapGetters([
-    ]),
-    eventId() {
-      return this.$route.params.id;
-    },
+    ...mapGetters([]),
   },
   data() {
     return {
-      tab: 1,
+      activeTab: '/settings/user',
+      tabs: [
+        {
+          id: 1,
+          name: 'User',
+          icon: 'mdi-clipboard-list',
+          route: '/settings/user',
+        },
+        {
+          id: 2,
+          name: 'Person',
+          icon: 'mdi-counter',
+          route: '/settings/person',
+        },
+        {
+          id: 3,
+          name: 'Config',
+          icon: 'mdi-card',
+          route: '/settings/config',
+        },
+        {
+          id: 4,
+          name: 'DPV SSO',
+          icon: 'mdi-key',
+          route: '/settings/sso',
+        },
+      ],
       eventOverview: [],
     };
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>

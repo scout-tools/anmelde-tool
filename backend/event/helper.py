@@ -87,6 +87,24 @@ def age_range(min_age, max_age, participants: QuerySet[event_models.Registration
     return participants.filter(birthday__date__range=[min_date, max_date]).count()
 
 
+def get_count_by_age_gender_leader(min_age, max_age, gender, leader, participants: QuerySet[event_models.RegistrationParticipant],
+              event: event_models.Event) -> int:
+    time = event.start_date
+    max_date = datetime(time.year - min_age, time.month, time.day,
+                        tzinfo=pytz.timezone('Europe/Berlin'))
+    min_date = datetime(time.year - max_age, time.month, time.day,
+                        tzinfo=pytz.timezone('Europe/Berlin'))
+
+    participants = participants.filter(birthday__date__range=[min_date, max_date]).filter(gender=gender)
+    print()
+    if leader == True:
+        participants = participants.exclude(leader="N")
+    else:
+        participants = participants.filter(leader="N")
+    
+    return participants.count()
+
+
 def filter_registrations_by_query_params(request,
                                          event_id: str,
                                          registrations: QuerySet[event_models.Registration]) \

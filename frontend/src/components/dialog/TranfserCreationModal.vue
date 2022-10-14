@@ -2,7 +2,7 @@
   <v-dialog v-model="active" transition="dialog-top-transition" max-width="800">
     <v-card>
       <v-toolbar dark color="primary">
-        <v-btn icon dark @click="active = false">
+        <v-btn icon dark @click="close">
           <v-icon>mdi-close</v-icon>
         </v-btn>
         <v-toolbar-title>Überweisung eintragen</v-toolbar-title>
@@ -15,10 +15,10 @@
         <v-row>
           <template v-for="(field, i) in dialogMeta.fields">
             <BaseField
-              :key="i"
-              :field="field"
-              v-model="data[field.techName]"
-              :valdiationObj="$v"
+                :key="i"
+                :field="field"
+                v-model="data[field.techName]"
+                :valdiationObj="$v"
             />
           </template>
         </v-row>
@@ -37,10 +37,7 @@ import BaseField from '@/components/common/BaseField.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 import {
-  required,
-  numeric,
-  minLength,
-  email,
+  minLength, required,
 } from 'vuelidate/lib/validators';
 
 export default {
@@ -60,6 +57,7 @@ export default {
   methods: {
     validate() {
       this.$v.$touch();
+      console.log(this.$v);
       this.valid = !this.$v.$anyError;
     },
     open(data, itemId) {
@@ -69,14 +67,19 @@ export default {
       this.active = true;
       this.setDefaults();
     },
-    openEdit(data) {
-      this.registrationId = data.registration;
+    openEdit(data, itemId) {
+      this.paymentData = data;
+      this.registrationId = itemId;
       this.data = data;
       this.active = true;
       this.edit = true;
     },
     close() {
       this.active = false;
+      this.registrationId = null;
+      this.data = {};
+      this.edit = false;
+      this.$v.$reset();
     },
     onClickOkay() {
       this.validate();
@@ -85,30 +88,23 @@ export default {
       }
       const emit = this.edit ? 'editTransfer' : 'createTransfer';
       this.$emit(emit, this.data, this.registrationId);
-      this.active = false;
+      this.close();
     },
     setDefaults() {
       this.data.amount = this.openAmount;
       this.data.transferSubject = this.paymentData.refId;
       this.data.transferDate = new Date();
-      this.data.transferPerson = this.paymentData.responsiblePersons[0];
+      this.data.transferPerson = this.paymentData.responsiblePersons[0].email;
     },
   },
   validations: {
     data: {
-      amount: {
-        required,
-        numeric,
-      },
       transferSubject: {
         required,
         minLength: minLength(1),
       },
       transferDate: {
         required,
-      },
-      transferPerson: {
-        email,
       },
     },
   },
@@ -143,8 +139,8 @@ export default {
             name: 'Verwendungszweck*',
             techName: 'transferSubject',
             tooltip:
-              'Wie lautet der Verwendungszweck der Überweisung?'
-              + ' (damit man diese später leichter wieder erkennen kann).',
+                'Wie lautet der Verwendungszweck der Überweisung?'
+                + ' (damit man diese später leichter wieder erkennen kann).',
             icon: 'mdi-home',
             mandatory: true,
             fieldType: 'textfield',
@@ -154,7 +150,7 @@ export default {
             name: 'Überweisungsdatum*',
             techName: 'transferDate',
             tooltip:
-              'Wann wurde die Überweisung getätigt?',
+                'Wann wurde die Überweisung getätigt?',
             icon: 'mdi-calendar-range',
             mandatory: true,
             fieldType: 'date',
@@ -166,7 +162,7 @@ export default {
             icon: 'mdi-account-circle',
             lookupPath: '/auth/responsables/',
             lookupListDisplay: ['scoutName', '$ - ', 'stamm', '$ -', 'email', '$'],
-            mandatory: true,
+            mandatory: false,
             fieldType: 'responsablesField',
             default: '',
             cols: 6,
@@ -175,16 +171,16 @@ export default {
             name: 'Referenz Id',
             techName: 'transferReferenceId',
             tooltip: 'Gibt es eine Referenz Id?'
-              + ' (damit man diese später leichter wieder erkennen kann).',
+                + ' (damit man diese später leichter wieder erkennen kann).',
             icon: 'mdi-account-circle',
             mandatory: false,
             fieldType: 'textfield',
             cols: 6,
           },
           {
-            name: 'Persöhnliche Anmerkung',
+            name: 'Persönliche Anmerkung',
             techName: 'description',
-            tooltip: 'Hier kannst du persöhnliche Anmerkungen eintragen.',
+            tooltip: 'Hier kannst du persönliche Anmerkungen eintragen.',
             icon: 'mdi-semantic-web',
             mandatory: false,
             fieldType: 'textarea',

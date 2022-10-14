@@ -1,9 +1,10 @@
-from django.db import models
 import uuid
+
+from django.db import models
+
+from backend.storage_backends import PublicMediaStorage, EmailAttachmentMediaStorage
 from basic import models as basic_models
 from email_services import choices as email_choices
-from backend.storage_backends import PrivateMediaStorage, PublicMediaStorage, EmailMediaStorage, \
-    EmailAttachmentMediaStorage
 
 
 class EmailAttachment(basic_models.TimeStampMixin):
@@ -51,16 +52,28 @@ class StandardEmailRegistrationSet(models.Model):
     name = models.CharField(max_length=60)
     registration_created = models.ForeignKey(Email, on_delete=models.PROTECT,
                                              limit_choices_to={'type': email_choices.EmailType.RegistrationCreated},
-                                             related_name='registration_created')
+                                             related_name='registration_created',
+                                             null=True, blank=True)
     registration_updated = models.ForeignKey(Email, on_delete=models.PROTECT,
                                              limit_choices_to={'type': email_choices.EmailType.RegistrationUpdated},
-                                             related_name='registration_updated')
+                                             related_name='registration_updated',
+                                             null=True, blank=True)
     registration_reminder = models.ForeignKey(Email, on_delete=models.PROTECT,
                                               limit_choices_to={'type': email_choices.EmailType.RegistrationReminder},
-                                              related_name='registration_reminder')
+                                              related_name='registration_reminder',
+                                              null=True, blank=True)
     registration_accepted = models.ForeignKey(Email, on_delete=models.PROTECT,
                                               limit_choices_to={'type': email_choices.EmailType.RegistrationAccepted},
-                                              related_name='registration_accepted')
+                                              related_name='registration_accepted',
+                                              null=True, blank=True)
+    payment_reminder = models.ForeignKey(Email, on_delete=models.PROTECT,
+                                         limit_choices_to={'type': email_choices.EmailType.PaymentReminder},
+                                         related_name='payment_reminder',
+                                         null=True, blank=True)
+    custom_mail = models.ForeignKey(Email, on_delete=models.PROTECT,
+                                    limit_choices_to={'type': email_choices.EmailType.StandardEmail},
+                                    related_name='custom_mail',
+                                    null=True, blank=True)
 
     def __str__(self):
         return self.name

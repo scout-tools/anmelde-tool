@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'event.cash',
     'event.file_generator',
     'stdimage',
+    'event.email'
 ]
 
 MIDDLEWARE = [

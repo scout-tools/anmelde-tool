@@ -10,3 +10,4 @@ class EmailType(models.TextChoices):
     RegistrationUpdated = 'RegistrationUpdated', _('Registrierung verändert'),
     RegistrationReminder = 'RegistrationReminder', _('Bestätigungs errinerung'),
     RegistrationAccepted = 'RegistrationAccepted', _('Registrierungsbestätigung'),
+    PaymentReminder = 'PaymentReminder', _('Bezahlungserrinnerung'),

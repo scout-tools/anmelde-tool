@@ -10,7 +10,7 @@
         :error-messages="onErrorMessageChange(field.techName)"
         :disabled="field.disabled"
         :readonly="field.readonly"
-        :filled="field.filled">
+        :filled="field.filled || field.readonly">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -35,7 +35,7 @@
         :error-messages="onErrorMessageChange(field.techName)"
         :disabled="field.disabled"
         :readonly="field.readonly"
-        :filled="field.filled">
+        :filled="field.filled || field.readonly">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -62,7 +62,7 @@
         :error-messages="onErrorMessageChange(field.techName)"
         :disabled="field.disabled"
         :readonly="field.readonly"
-        :filled="field.filled">
+        :filled="field.filled || field.readonly">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -88,7 +88,7 @@
         :error-messages="onErrorMessageChange(field.techName)"
         :disabled="field.disabled"
         :readonly="field.readonly"
-        :filled="field.filled">
+        :filled="field.filled || field.readonly">
       <template slot="append">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -115,6 +115,7 @@
         @input="onInputChanged"
         item-value="id"
         :item-text="getItemText"
+        :readonly="field.readonly"
         :error-messages="onErrorMessageChange(field.techName)"
         :no-data-text="field.noDataText">
     </v-autocomplete>
@@ -129,7 +130,9 @@
         chips
         multiple
         deletable-chips
+        :readonly="field.readonly"
         @input="onComboInputChanged"
+        :filled="field.filled || field.readonly"
         item-value="name"
         :item-text="getItemText"
         :error-messages="onErrorMessageChange(field.techName)">
@@ -155,6 +158,7 @@
         required
         chips
         multiple
+        :readonly="field.readonly"
         deletable-chips
         @input="onComboInputChanged"
         :error-messages="onErrorMessageChange(field.techName)">
@@ -178,6 +182,7 @@
         :value="localValue"
         :prepend-icon="field.icon"
         required
+        :readonly="field.readonly"
         chips
         deletable-chips
         @input="onSingleComboInputChanged"
@@ -202,6 +207,8 @@
         :value="localValue"
         :items="lookupList"
         :prepend-icon="field.icon"
+        :readonly="field.readonly"
+        :filled="field.filled || field.readonly"
         required
         @input="onInputChanged"
         item-value="id"
@@ -228,7 +235,9 @@
         item-value="value"
         :items="convertEnum(this.lookupList)"
         :prepend-icon="field.icon"
+        :readonly="field.readonly"
         required
+        :filled="field.filled || field.readonly"
         @input="onInputChanged"
         :item-text="getItemText"
         :error-messages="onErrorMessageChange(field.techName)"
@@ -253,11 +262,13 @@
         :value="localValue"
         :items="lookupList"
         :prepend-icon="field.icon"
+        :readonly="field.readonly"
         required
         @input="onInputChanged"
         item-value="id"
         :loading="isLoading"
         :item-text="getItemText"
+        :filled="field.filled || field.readonly"
         :search-input.sync="search"
         :no-data-text="zipCodeNoDataText"
         :error-messages="onErrorMessageChange(field.techName)"/>
@@ -269,12 +280,13 @@
         :items="lookupList"
         :prepend-icon="field.icon"
         required
+        :readonly="field.readonly"
         @input="onInputChanged"
         item-value="email"
         :loading="isLoading"
         :item-text="getItemText"
         :search-input.sync="search"
-        :no-data-text="responseablePersonDataText"
+        :no-data-text="responsiblePersonDataText"
         :error-messages="onErrorMessageChange(field.techName)"/>
 
     <v-select
@@ -283,6 +295,8 @@
         :value="localValue"
         :prepend-icon="field.icon"
         :items="field.referenceTable"
+        :readonly="field.readonly"
+        :filled="field.filled || field.readonly"
         required
         @input="onInputChanged"
         item-value="value"
@@ -293,6 +307,7 @@
         v-if="field.fieldType === 'checkbox'"
         :label="field.name"
         :input-value="localValue"
+        :readonly="field.readonly"
         @change="onInputChanged"
         :error-messages="onErrorMessageChange(field.techName)">
     </v-switch>
@@ -352,7 +367,7 @@
           :error-messages="onErrorMessageChange(field.techName)"
           :disabled="field.disabled"
           :readonly="field.readonly"
-          :filled="field.filled">
+          :filled="field.filled || field.readonly">
         <template slot="append">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -380,7 +395,7 @@
               :error-messages="onErrorMessageChange(field.techName)"
               :disabled="field.disabled"
               :readonly="field.readonly"
-              :filled="field.filled">
+              :filled="field.filled || field.readonly">
             <template slot="append">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
@@ -406,7 +421,7 @@
               :error-messages="onErrorMessageChange(field.techName)"
               :disabled="field.disabled"
               :readonly="field.readonly"
-              :filled="field.filled"
+              :filled="field.filled || field.readonly"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -452,6 +467,7 @@ import stepMixin from '@/mixins/stepMixin';
 import serviceMixin from '@/mixins/serviceMixin';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/de';
+import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 export default {
   props: {
@@ -472,7 +488,7 @@ export default {
       default: null,
     },
   },
-  mixins: [stepMixin, serviceMixin],
+  mixins: [stepMixin, serviceMixin, apiCallsMixin],
   data() {
     return {
       itemsPerPage: 1000,
@@ -482,7 +498,7 @@ export default {
       isLoading: false,
       search: null,
       zipCodeNoDataText: 'Bitte PLZ oder Ort eingeben.',
-      responseablePersonDataText: 'E-Mail oder Pfadfindernamen eingeben.',
+      responsiblePersonDataText: 'E-Mail oder Pfadfindernamen eingeben.',
       ckeditor: {
         editor: ClassicEditor,
         editorData: '',
@@ -496,28 +512,28 @@ export default {
   watch: {
     search(searchString) {
       // still loading
-      if (this.isLoading) return;
       if (
           !searchString || // eslint-disable-line
           searchString.indexOf(' ') >= 0 || // eslint-disable-line
           searchString.length <= 2
       ) {
         this.zipCodeNoDataText = 'Bitte PLZ oder Ort eingeben.';
-        this.responseablePersonDataText = 'E-Mail oder Pfadfindernamen eingeben.';
+        this.responsiblePersonDataText = 'E-Mail oder Pfadfindernamen eingeben.';
         if (!this.localValue) this.lookupList = null;
         return;
       }
-
       this.isLoading = true;
       if (this.field.fieldType === 'zipField') {
-        this.getZipCodeMapping(searchString)
+        this.searchZipCode(searchString)
           .then((res) => {
-            this.lookupList = res;
+            this.lookupList = res.data;
             this.zipCodeNoDataText = 'Kein Treffer';
+            this.isLoading = false;
           })
           .catch((err) => {
             this.lookupList = null;
             this.zipCodeNoDataText = err.response.data.detail;
+            this.isLoading = false;
           })
           .finally(() => {
             this.loading = false;
@@ -527,11 +543,13 @@ export default {
         this.getResponsibles(searchString)
           .then((res) => {
             this.lookupList = res;
-            this.responseablePersonDataText = 'Kein Treffer';
+            this.responsiblePersonDataText = 'Kein Treffer';
+            this.isLoading = false;
           })
           .catch((err) => {
             this.lookupList = null;
-            this.responseablePersonDataText = err.response.data.detail;
+            this.responsiblePersonDataText = err.response.data.detail;
+            this.isLoading = false;
           })
           .finally(() => {
             this.isLoading = false;
@@ -596,7 +614,7 @@ export default {
           console.log(err);
           this.$root.globalSnackbar.show({
             message: 'Leider ist ein Problem beim runterladen der Daten aufgetreten, '
-                  + 'bitte probiere es später nocheinmal.',
+                  + 'bitte probiere es später noch einmal.',
             color: 'error',
           });
         })
@@ -607,10 +625,12 @@ export default {
     onInputChanged(value) {
       this.$emit('input', value);
       this.$forceUpdate();
+      this.loading = false;
     },
     onDateInputChanged(value) {
       const newDate = this.$moment(value, 'L', 'de');
       if (newDate.isValid() && value.length === 10) {
+        console.log(newDate.toDate());
         this.onInputChanged(newDate.toDate());
       }
       this.$forceUpdate();
@@ -699,11 +719,18 @@ export default {
         this.callSingleZipCode(this.localValue)
           .then((result) => {
             this.lookupList = result;
+            this.loading = false;
             this.$forceUpdate();
           });
       }
       if (this.field.fieldType === 'responsablesField') {
-        this.callSingleResponsible(this.localValue)
+        let email = '';
+        if (typeof this.localValue === 'object') {
+          email = this.localValue.email; // eslint-disable-line
+        } else {
+          email = this.localValue;
+        }
+        this.callSingleResponsible(email)
           .then((result) => {
             this.lookupList = result;
             this.$forceUpdate();

@@ -7,12 +7,16 @@ from django.utils import timezone
 from django.core.files.base import File
 from tempfile import NamedTemporaryFile
 from backend import settings
+from event.file_generator.models import GeneratedFiles
 from event.choices.choices import FileGenerationStatus, FileType, FileExtension
 from event.file_generator.generators.abstract_generator import AbstractGenerator
-from event.file_generator.models import GeneratedFiles
-from event.file_generator.generators.kjp_generator import KjpGenerator
+from event.file_generator.generators.kjp_generator_easy import KjpGeneratorEasy
+from event.file_generator.generators.kjr_generator import KjrGenerator
+from event.file_generator.generators.travel_matrix_generator import TravelMatrixGenerator
+from event.file_generator.generators.kjp_generator_complex import KjpGeneratorComplex
 from event.file_generator.generators.invoice_generator import InvoiceGenerator
 from event.file_generator.generators.participant_generator import ParticipantGenerator
+from event.file_generator.generators.attribute_generator import AttributeGenerator
 
 timer = getattr(settings, 'FILE_GENERATOR_DEQEUE_TIME', 60)
 debug = getattr(settings, 'DEBUG', False)
@@ -54,10 +58,15 @@ class FileGeneratorThread(threading.Thread):
         self.generated_file.save()
         try:
             generator: AbstractGenerator = None
-            if self.generated_file.template.type == FileType.Kjp \
+            if self.generated_file.template.type == FileType.Kjp_complex \
                     and self.generated_file.extension == FileExtension.Excel \
                     and self.generated_file.template.version == 1:
-                generator = KjpGenerator(self.generated_file)
+                generator = KjpGeneratorComplex(self.generated_file)
+
+            elif self.generated_file.template.type == FileType.Kjp_easy \
+                    and self.generated_file.extension == FileExtension.Excel \
+                    and self.generated_file.template.version == 1:
+                generator = KjpGeneratorEasy(self.generated_file)
 
             elif self.generated_file.template.type == FileType.Invoice \
                     and self.generated_file.extension == FileExtension.Excel \
@@ -68,6 +77,21 @@ class FileGeneratorThread(threading.Thread):
                     and self.generated_file.extension == FileExtension.Excel \
                     and self.generated_file.template.version == 1:
                 generator = ParticipantGenerator(self.generated_file)
+
+            elif self.generated_file.template.type == FileType.AttributeList \
+                    and self.generated_file.extension == FileExtension.Excel \
+                    and self.generated_file.template.version == 1:
+                generator = AttributeGenerator(self.generated_file)
+
+            elif self.generated_file.template.type == FileType.TravelMatrix \
+                    and self.generated_file.extension == FileExtension.Excel \
+                    and self.generated_file.template.version == 1:
+                generator = TravelMatrixGenerator(self.generated_file)
+
+            elif self.generated_file.template.type == FileType.KJR \
+                    and self.generated_file.extension == FileExtension.Excel \
+                    and self.generated_file.template.version == 1:
+                generator = KjrGenerator(self.generated_file)
 
             if generator is not None:
                 wb = generator.generate()
@@ -80,7 +104,7 @@ class FileGeneratorThread(threading.Thread):
             self.generated_file.error_msg = traceback.format_exc()
             self.generated_file.status = FileGenerationStatus.FinishedFailed
         else:
-            self.generated_file.status = FileGenerationStatus.FinishedSuccessfull
+            self.generated_file.status = FileGenerationStatus.FinishedSuccessfully
         self.generated_file.save()
 
     def save_file_excel(self, wb):

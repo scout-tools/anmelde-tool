@@ -200,11 +200,7 @@ class EventAttributeSummarySerializer(serializers.ModelSerializer):
 
 
 class RegistrationCashSummarySerializer(serializers.ModelSerializer):
-    responsible_persons = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='email'
-    )
+    responsible_persons = registration_serializers.CurrentUserSerializer(many=True, read_only=True)
     participant_count = serializers.SerializerMethodField()
     payement = serializers.SerializerMethodField()
     scout_organisation = basic_serializers.ScoutHierarchyDetailedSerializer(many=False, read_only=True)
@@ -235,8 +231,8 @@ class RegistrationCashSummarySerializer(serializers.ModelSerializer):
         total_price = registration.registrationparticipant_set.aggregate(
             sum=Sum('booking_option__price'))['sum'] or 0
         paid = registration.cashincome_set.aggregate(sum=Sum('amount'))[
-                   'sum'] or 0
-        difference = total_price - paid
+                   'sum'] or 0.0
+        difference = float(total_price) - paid
 
         return {
             'price': total_price,

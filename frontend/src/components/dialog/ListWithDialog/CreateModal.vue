@@ -77,12 +77,20 @@ export default {
       this.$forceUpdate();
       this.isLoading = false;
     },
-    openDialogEdit(item) {
+    openDialogEdit(item, prefill) {
       this.active = true;
       this.isEditWindow = true;
-      if (item.id) {
+      if (item.id && !prefill) {
         this.data.id = item.id;
         this.getData(item.id);
+      } else if (prefill) {
+        this.isEditWindow = false;
+        this.data = item;
+        this.data.person = item.id;
+        this.data.eatHabit = item.eatHabits;
+        this.data.street = item.address;
+        this.data.allowPermanently = true;
+        this.isLoading = false;
       } else {
         this.setDefaults();
       }
