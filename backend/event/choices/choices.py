@@ -28,7 +28,7 @@ class RegistrationTypeSingle(models.TextChoices):
 
 class Gender(models.TextChoices):
     Male = 'M', _('Männlich')
-    Female = 'W', _('Weiblich')
+    Female = 'F', _('Weiblich')
     Divers = 'D', _('Divers')
     Nothing = 'N', _('Keine Angabe')
 
@@ -42,6 +42,8 @@ class ParticipantActionConfirmation(models.TextChoices):
 
 class LeaderTypes(models.TextChoices):
     KeineFuehrung = 'N', _('Kein Amt')
+    BundesFuehrung = 'BuFue', _('Bundesführung')
+    RingFuehrung = 'RinFue', _('Ringführung')
     StammesFuehrung = 'StaFue', _('Stammesführung')
     SippenFuehrung = 'SiFue', _('Sippenführung')
     RoverrundenFuehrung = 'RoFue', _('Roverrundenführung'),

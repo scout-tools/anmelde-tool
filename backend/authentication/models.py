@@ -7,7 +7,6 @@ from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
 from basic import models as basic_models
-from event import models as event_models
 
 from event.choices import choices as event_choices
 
@@ -55,7 +54,14 @@ class Person(TimeStampMixin):
                               default=event_choices.LeaderTypes.KeineFuehrung)
     scout_level = models.CharField(max_length=6, choices=event_choices.ScoutLevelTypes.choices,
                                    default=event_choices.ScoutLevelTypes.Unbekannt)
-    created_by = models.ManyToManyField(User, related_name='creator')
+    owned_by = models.ManyToManyField(User, related_name='owners')
+    created_by = models.ForeignKey(User, related_name='creator', on_delete=models.PROTECT, null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f'{self.first_name} - {self.last_name} (self.scout_name)'
+
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class EmailNotificationType(models.TextChoices):

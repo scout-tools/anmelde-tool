@@ -239,7 +239,6 @@ export default {
       this.getEventAgeGroupsDetail(this.eventId, params)
         .then((result) => {
           this.data = result.data; //eslint-disable-line
-          debugger;
         })
         .finally(() => {
           this.loading = false;

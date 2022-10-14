@@ -225,5 +225,9 @@ export default {
       const path = `${process.env.VUE_APP_API}/basic/scout-hierarchy/`;
       return axios.get(path);
     },
+    async getPersons() {
+      const path = `${process.env.VUE_APP_API}/auth/person/`;
+      return axios.get(path);
+    },
   },
 };

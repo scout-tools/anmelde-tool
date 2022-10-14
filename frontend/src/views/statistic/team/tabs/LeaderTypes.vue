@@ -51,6 +51,8 @@ export default {
     data: [],
     mapping: {
       'n': 'Kein Amt', // eslint-disable-line
+      'buFue': 'Bundesführung', // eslint-disable-line
+      'rinFue': 'Ringführung', // eslint-disable-line
       'staFue': 'Stammesführung', // eslint-disable-line
       'siFue': 'Sippenführung', // eslint-disable-line
       'meuFue': 'Meutenführung', // eslint-disable-line

@@ -1,84 +1,70 @@
 <template>
-  <GenericRegModul
-    :key="`module-${moduleId}`"
-    :loading="loading"
-    :saving="saving"
-    :position="position"
-    :maxPos="maxPos"
-    @prevStep="prevStep"
-    @nextStep="onNextStep"
-    @ignore="onIngoredClicked"
-    @saving="onSaving">
-    <template v-slot:header>
-      <p>
-        Ich melde folgende Teilnehmende an <br/>
-        <br/>
-        Die Erfassung erfolgt pro Person. <br/>
-        <br/>
-        <v-icon color="red"> mdi-alert-circle</v-icon>
-        Du musst dich selbst auch in die Liste eintragen.
-      </p>
-      <p v-if="!!dialogMeta.excelUpload">
-        Alternativ kannst du hier die Excelliste hochladen, wenn du die Daten
-        dort bereits erfasst hast.
-        <br/>
-        <a
-          v-if="dialogMeta.excelUpload"
-          target="_blank"
-          :href="cloudLink"
-          style="color: blue">
-          Link zur Beispiel Excel Datei
-        </a>
-      </p>
-    </template>
-
-    <template v-slot:main>
-      <ListWithDialogMain
-        :ref="`dialog-main-${moduleId}`"
-        :dialogMeta="dialogMeta"
-        :valdiationObj="$v"
-        :currentEvent="currentEvent"
-        @validate="validate"
-        @refresh="refresh"
-      />
-    </template>
-  </GenericRegModul>
+  <v-dialog
+    ref="deadlineDateDialog"
+    v-model="active"
+    transition="dialog-top-transition"
+    fullscreen
+  >
+    <v-card>
+      <v-toolbar dark color="primary">
+        <v-btn icon dark @click="active = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-toolbar-title>Eintrag</v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+      <v-container v-if="!isLoading">
+        <v-row>
+          <template v-for="(field, i) in dialogMeta.fields">
+            <BaseField
+              :key="i"
+              :field="field"
+              v-model="data[field.techName]"
+              :valdiationObj="$v"
+            />
+          </template>
+        </v-row>
+        <v-divider class="my-3" />
+        <v-btn color="success" @click="onClickOkay"> Speichern</v-btn>
+      </v-container>
+      <v-container v-else>
+        <Circual />
+      </v-container>
+      <v-divider class="my-4" />
+      <v-snackbar v-model="showError" color="error" y="top" :timeout="timeout">
+        {{ 'Fehler beim Hochladen' }}
+      </v-snackbar>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
+import apiCallsMixin from '@/mixins/apiCallsMixin';
+import BaseField from '@/components/common/BaseField.vue';
+import Circual from '@/components/loading/Circual.vue';
+
 import {
   required,
   minLength,
   maxLength,
   email,
 } from 'vuelidate/lib/validators';
-import { mapGetters } from 'vuex';
-import stepMixin from '@/mixins/stepMixin';
-import apiCallsMixin from '@/mixins/apiCallsMixin';
-import GenericRegModul from '@/views/registration/components/GenericRegModul.vue';
-import ListWithDialogMain from '@/components/dialog/ListWithDialog/Main.vue';
 
 export default {
-  name: 'StepConsent',
-  props: [
-    'position',
-    'maxPos',
-    'currentEvent',
-    'currentRegistration',
-    'currentModule',
-    'personalData',
-  ],
   components: {
-    GenericRegModul,
-    ListWithDialogMain,
+    BaseField,
+    Circual,
   },
-  mixins: [apiCallsMixin, stepMixin],
+  mixins: [apiCallsMixin],
   data: () => ({
+    API_URL: process.env.VUE_APP_API,
+    active: false,
     valid: true,
-    loading: true,
-    saving: false,
-    moduleData: [],
     data: {},
+    showError: false,
+    showSuccess: false,
+    timeout: 7000,
+    isLoading: true,
   }),
   validations: {
     data: {
@@ -109,10 +95,7 @@ export default {
       gender: {
         required,
       },
-      bookingOption: {
-        required,
-      },
-      street: {
+      address: {
         required,
         minLength: minLength(4),
         maxLength: maxLength(40),
@@ -124,35 +107,11 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['userinfo']),
-
-    loadingRead: {
-      get() {
-        return !!this.loading;
-      },
-      set() {
-      },
-    },
-    moduleId() {
-      return this.currentModule.module.id;
-    },
-    myStamm() {
-      return this.userinfo.stamm;
-    },
-    myBund() {
-      return this.userinfo.bund;
-    },
-    eventName() {
-      return this.currentEvent.name;
-    },
-    cloudLink() {
-      return this.currentEvent.cloudLink;
-    },
     dialogMeta() {
       return {
         title: 'Hallo',
         excelUpload: true,
-        path: `event/registration/${this.currentRegistration.id}/single-participant`,
+        path: 'auth/person',
         listDisplay: ['firstName', 'lastName'],
         orderBy: 'firstName',
         maxItems: null,
@@ -234,7 +193,7 @@ export default {
           },
           {
             name: 'Straße und Hausnummer*',
-            techName: 'street',
+            techName: 'address',
             tooltip: 'Trage bitte Straße und Hausnummer ein.',
             icon: 'mdi-home',
             mandatory: true,
@@ -264,7 +223,7 @@ export default {
           },
           {
             name: 'Essenbesonderheiten',
-            techName: 'eatHabit',
+            techName: 'eatHabits',
             tooltip: 'Weitere Besonderheiten können einfach eingetippt werden.',
             icon: 'mdi-food',
             mandatory: true,
@@ -286,56 +245,64 @@ export default {
             multiple: false,
             default: 'N',
           },
-          {
-            name: 'Buchungsoption*',
-            techName: 'bookingOption',
-            tooltip: 'Wie möchte diese Person an der Veranstaltung teilnehmen?',
-            icon: 'mdi-tent',
-            mandatory: true,
-            lookupPath: `/event/event/${this.currentEvent.id}/booking-options/`,
-            lookupListDisplay: ['name', 'price', '$ €'],
-            fieldType: 'refDropdown',
-            default: '',
-          },
-          {
-            name: 'Dauerhaft speichern',
-            techName: 'allowPermanently',
-            tooltip: 'Diesen Datensatz dauerhaft speichern.',
-            icon: 'mdi-data',
-            mandatory: true,
-            fieldType: 'checkbox',
-            default: '',
-          },
         ],
       };
     },
   },
   methods: {
-    validate(data) {
-      this.data = data;
-      this.$v.$touch();
+    openDialog(item) {
+      this.active = true;
+      this.isEditWindow = false;
+      if (item) {
+        this.data = item;
+      } else {
+        this.setDefaults();
+      }
+      this.$forceUpdate();
+      this.isLoading = false;
     },
-    beforeTabShow() {
-      this.refresh();
-    },
-    refresh() {
-      setTimeout(() => this.loadData(), 100);
-      if (this.$refs[`dialog-main-${this.moduleId}`]) {
-        this.$refs[`dialog-main-${this.moduleId}`].beforeTabShow();
+    openDialogEdit(item) {
+      this.active = true;
+      this.isEditWindow = true;
+      if (item.id) {
+        this.data.id = item.id;
+        this.getData(item.id);
+      } else {
+        this.setDefaults();
       }
     },
-    onNextStep() {
-      this.saving = true;
-      this.nextStep();
+    setDefaults() {
+      this.data = {};
     },
-    setDefaults() { },
-    loadData() {
-      this.saving = false;
-      this.loading = true;
-      Promise.all([this.getModule(this.moduleId, this.currentEvent.id)])
-        .then((values) => {
-          this.moduleData = values[0].data; //eslint-disable-line
-          this.setDefaults();
+    closeDialog() {
+      this.active = false;
+      this.$v.$reset();
+      Object.keys(this.data).forEach((key) => {
+        this.data[key] = '';
+      });
+      this.$emit('close');
+    },
+    validate() {
+      this.$v.$touch();
+      this.valid = !this.$v.$anyError;
+    },
+    onClickOkay() {
+      this.$forceUpdate();
+      this.validate();
+      if (this.valid) {
+        try {
+          this.callCreateService();
+        } catch (e) {
+          console.log(e);
+          this.showError = true;
+        }
+      }
+    },
+    getData(id) {
+      this.isLoading = true;
+      this.getServiceById(this.dialogMeta.path, id)
+        .then((response) => {
+          this.data = response.data;
         })
         .catch((error) => {
           this.$root.globalSnackbar.show({
@@ -344,8 +311,59 @@ export default {
           });
         })
         .finally(() => {
-          this.loading = false;
+          this.isLoading = false;
         });
+    },
+    async callCreateService() {
+      this.isLoading = true;
+      if (!this.isEditWindow) {
+        this.createServiceById(this.dialogMeta.path, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+            this.$root.globalSnackbar.show({
+              message: 'Neuer Eintrag angelegt',
+              color: 'success',
+            });
+          })
+          .catch((error) => {
+            let errorMessage = 'Es ist ein Fehler beim speichern aufgetreten.';
+            const errorData = error.response.data;
+            try {
+              const errorMessages = [];
+              const keys = Object.keys(errorData);
+              keys.forEach((key) => {
+                errorMessages.push(`Fehler bei ${key}: ${errorData[key]}`);
+              });
+              errorMessage = errorMessages.join(' - ');
+            } catch {
+              console.log('Fehler');
+            }
+            this.$root.globalSnackbar.show({
+              message: errorMessage,
+              color: 'error',
+            });
+          });
+      } else {
+        this.updateServiceById(this.dialogMeta.path, this.data)
+          .then(() => {
+            this.closeDialog();
+            this.$emit('refresh');
+          })
+          .catch((error) => {
+            let errorData = error.response;
+            if (error.response.data.detail) {
+              errorData = error.response.data.detail;
+            }
+            this.$root.globalSnackbar.show({
+              message: errorData,
+              color: 'error',
+            });
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+      }
     },
   },
 };

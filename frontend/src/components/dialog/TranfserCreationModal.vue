@@ -2,7 +2,7 @@
   <v-dialog v-model="active" transition="dialog-top-transition" max-width="800">
     <v-card>
       <v-toolbar dark color="primary">
-        <v-btn icon dark @click="active = false">
+        <v-btn icon dark @click="close">
           <v-icon>mdi-close</v-icon>
         </v-btn>
         <v-toolbar-title>Überweisung eintragen</v-toolbar-title>
@@ -37,7 +37,7 @@ import BaseField from '@/components/common/BaseField.vue';
 import apiCallsMixin from '@/mixins/apiCallsMixin';
 
 import {
-  decimal, email, minLength, required,
+  minLength, required,
 } from 'vuelidate/lib/validators';
 
 export default {
@@ -57,6 +57,7 @@ export default {
   methods: {
     validate() {
       this.$v.$touch();
+      console.log(this.$v);
       this.valid = !this.$v.$anyError;
     },
     open(data, itemId) {
@@ -67,6 +68,7 @@ export default {
       this.setDefaults();
     },
     openEdit(data, itemId) {
+      this.paymentData = data;
       this.registrationId = itemId;
       this.data = data;
       this.active = true;
@@ -92,24 +94,17 @@ export default {
       this.data.amount = this.openAmount;
       this.data.transferSubject = this.paymentData.refId;
       this.data.transferDate = new Date();
-      this.data.transferPerson = this.paymentData.responsiblePersons[0];
+      this.data.transferPerson = this.paymentData.responsiblePersons[0].email;
     },
   },
   validations: {
     data: {
-      amount: {
-        required,
-        decimal,
-      },
       transferSubject: {
         required,
         minLength: minLength(1),
       },
       transferDate: {
         required,
-      },
-      transferPerson: {
-        email,
       },
     },
   },
@@ -167,7 +162,7 @@ export default {
             icon: 'mdi-account-circle',
             lookupPath: '/auth/responsables/',
             lookupListDisplay: ['scoutName', '$ - ', 'stamm', '$ -', 'email', '$'],
-            mandatory: true,
+            mandatory: false,
             fieldType: 'responsablesField',
             default: '',
             cols: 6,

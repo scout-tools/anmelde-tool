@@ -15,7 +15,7 @@
     <v-row v-if="data" justify="center" class="overflow-y: auto">
       <v-data-table
           :loading="loading"
-          :items="getPersons"
+          :items="getPersonsList"
           must-sort
           :expanded.sync="expanded"
           :headers="headers"
@@ -143,7 +143,7 @@ export default {
     eventId() {
       return this.$route.params.id;
     },
-    getPersons() {
+    getPersonsList() {
       if (this.data) {
         return this.data;
       }
