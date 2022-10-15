@@ -21,19 +21,19 @@ const keycl = {
         }
       });
   },
-  setRefreshInterval(keycloak) {
-    setInterval(() => {
-      keycloak.updateToken(70) // 7 sec
-        .then((refreshed) => {
-          if (refreshed) {
-            console.log(`Token refreshed ${refreshed}`);
-          }
-        })
-        .catch(() => {
-          console.log('Failed to refresh token');
-        });
-    }, 6000); // 6 sec
-  },
+  // setRefreshInterval(keycloak) {
+  //   setInterval(() => {
+  //     keycloak.updateToken(70) // 7 sec
+  //       .then((refreshed) => {
+  //         if (refreshed) {
+  //           console.log(`Token refreshed ${refreshed}`);
+  //         }
+  //       })
+  //       .catch(() => {
+  //         console.log('Failed to refresh token');
+  //       });
+  //   }, 6000); // 6 sec
+  // },
 };
 
 export default keycl;
