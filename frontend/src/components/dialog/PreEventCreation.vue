@@ -127,8 +127,9 @@ export default {
           {
             name: 'Buchungsart',
             techName: 'bookingOption',
-            tooltip:
-              'Deadnamen/Tote-Vornamen müssen nicht benutzt werden.. Zweitnamen müssen nicht mit angegeben werden.',
+            tooltip: 'Hier kannst du festlegen, '
+                + 'ob duverschiedene Buch/Schlaf/Übernachtungs-Optionen und Preise angeben möchtest '
+                + 'oder ob es nur eine Option gibt',
             icon: 'mdi-home',
             mandatory: true,
             fieldType: 'localRefDropdown',
