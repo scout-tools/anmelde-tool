@@ -441,7 +441,6 @@ export default {
     },
     editTransfer(data) {
       let email = null;
-      console.log(typeof data.transferPerson);
       if (typeof data.transferPerson === 'object' && data.transferPerson && data.transferPerson.email) {
         email = data.transferPerson.email; // eslint-disable-line
       } else if (typeof data.transferPerson === 'string' && data.transferPerson) {
@@ -472,7 +471,6 @@ export default {
   },
   created() {
     this.getData(this.eventId);
-    console.log('test');
   },
 };
 </script>
