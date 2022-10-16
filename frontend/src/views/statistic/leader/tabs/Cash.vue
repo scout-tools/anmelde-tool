@@ -167,7 +167,7 @@
         </template>
         <template slot="body.append">
           <tr>
-            <th colspan="3">Summe</th>
+            <th :colspan="tableColSpan">Summe</th>
             <th>{{ getTotalStamm }}</th>
             <th>{{ getTotalPrice }}</th>
             <th>{{ getTotalPaid }}</th>
@@ -280,14 +280,29 @@ export default {
       return `${this.financial(price) || 0} €`;
     },
     getTotalStamm() {
+      let text = 'Stämme';
+      if (this.eventHasSingleRegistrationLevel) {
+        text = 'Sippen';
+      }
       const numberStamm = this.getItems.length;
-      return `Stämme ${numberStamm || 0}`;
+      return `${text} ${numberStamm || 0}`;
     },
     isTeam() {
       if (this.userinfo && this.userinfo.roles && this.userinfo.roles.length > 0) {
         return this.userinfo.roles.includes('anmelde_tool_team');
       }
       return 0;
+    },
+    eventHasSingleRegistrationLevel() {
+      return this.eventData
+          && (this.eventData.singleRegistrationLevel.id === 6
+              || this.eventData.groupRegistrationLevel.id === 6);
+    },
+    tableColSpan() {
+      if (this.eventHasSingleRegistrationLevel) {
+        return 4;
+      }
+      return 3;
     },
     headers() {
       const heads = [
@@ -329,9 +344,7 @@ export default {
         },
       ];
 
-      if (this.eventData
-          && (this.eventData.singleRegistrationLevel.id === 6
-              || this.eventData.groupRegistrationLevel.id === 6)) {
+      if (this.eventHasSingleRegistrationLevel) {
         heads.splice(
           3,
           0,
@@ -459,19 +472,12 @@ export default {
   },
   created() {
     this.getData(this.eventId);
+    console.log('test');
   },
 };
 </script>
 
 <style scoped>
-.dpv-blue {
-  background-color: rgba(56, 117, 238, 0.082);
-}
-
-.bdp-yellow {
-  background-color: #ffcc0227;
-}
-
 .open-position {
   color: red;
 }
