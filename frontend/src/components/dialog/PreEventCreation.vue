@@ -108,8 +108,7 @@ export default {
           {
             name: 'Authentifierungsoption',
             techName: 'authName',
-            tooltip:
-              'Vornamen eintragen. Zweitnamen müssen nicht mit angegeben werden.',
+            tooltip: 'Für eine Keycloakgruppe, wende dich bitte an die Administratoren',
             icon: 'mdi-home',
             mandatory: true,
             fieldType: 'localRefDropdown',
@@ -129,7 +128,7 @@ export default {
             name: 'Buchungsart',
             techName: 'bookingOption',
             tooltip:
-              'Vornamen eintragen. Zweitnamen müssen nicht mit angegeben werden.',
+              'Deadnamen/Tote-Vornamen müssen nicht benutzt werden.. Zweitnamen müssen nicht mit angegeben werden.',
             icon: 'mdi-home',
             mandatory: true,
             fieldType: 'localRefDropdown',

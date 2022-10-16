@@ -143,7 +143,7 @@ export default {
             name: 'Vorname*',
             techName: 'firstName',
             tooltip:
-              'Vornamen eintragen. Zweitnamen müssen nicht mit angegeben werden.',
+              'Deadnamen/Tote-Vornamen müssen nicht benutzt werden. Zweitnamen müssen nicht mit angegeben werden.',
             icon: 'mdi-card-account-details-outline',
             mandatory: true,
             fieldType: 'textfield',
