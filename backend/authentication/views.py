@@ -19,6 +19,7 @@ from .models import Person, UserExtended, EmailNotificationType
 from .serializers import UserExtendedGetSerializer, UserExtendedPostSerializer, GroupSerializer, \
     EmailSettingsSerializer, ResponsablePersonSerializer, PersonSerializer, PersonPostSerializer
 
+
 def create_missing_eat_habits(request) -> [str]:
     eat_habits = request.data.get('eat_habits', [])
     result = []
@@ -200,19 +201,10 @@ class PersonsViewSet(viewsets.ModelViewSet):
     serializer_class = PersonSerializer
 
     def get_queryset(self) -> QuerySet:
-        return Person.objects.all()
+        return Person.objects.filter(owned_by__in=[self.request.user.id])
 
     # pylint: disable=no-self-use
-    def create(self, request, *args, **kwargs) -> Response:
 
-        request.data['created_by'] = request.user.id
-        request.data['birthday'] = '2022-01-01'
-        print(request.data)
-
-        return super().create(request, *args, **kwargs)
-
-
-    # pylint: disable=no-self-use
     def create(self, request, *args, **kwargs) -> Response:
 
         birthday = datetime.strptime(request.data['birthday'][:10], '%Y-%m-%d')
@@ -225,8 +217,7 @@ class PersonsViewSet(viewsets.ModelViewSet):
         if eat_habits_formatted and len(eat_habits_formatted) > 0:
             request.data['eat_habits'] = eat_habits_formatted
 
-        return super().create(request, *args, **kwargs)#
-
+        return super().create(request, *args, **kwargs)
 
     # pylint: disable=no-self-use
     def update(self, request, *args, **kwargs) -> Response:
@@ -238,4 +229,4 @@ class PersonsViewSet(viewsets.ModelViewSet):
         if eat_habits_formatted and len(eat_habits_formatted) > 0:
             request.data['eat_habits'] = eat_habits_formatted
 
-        return super().update(request, *args, **kwargs)#
+        return super().update(request, *args, **kwargs)
