@@ -20,7 +20,7 @@
     </v-btn>
     <v-btn
       color="success"
-      v-if="dialogMeta.excelUpload"
+      v-if="false"
       class="ma-2"
       @click="openStammesMember">
       <v-icon left> mdi-account-details</v-icon>

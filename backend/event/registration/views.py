@@ -1,7 +1,9 @@
 import re
 from copy import deepcopy
-from datetime import timezone
+from datetime import timezone, datetime
 
+import dateutil
+from dateutil.parser import parser
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import User
 from django.db.models import QuerySet
@@ -55,6 +57,7 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
             registration=registration_id).order_by('age')
 
     def create(self, request, *args, **kwargs) -> Response:
+        print(request.data)
         eat_habits_formatted = create_missing_eat_habits(request)
 
         if eat_habits_formatted and len(eat_habits_formatted) > 0:
@@ -78,19 +81,37 @@ class RegistrationSingleParticipantViewSet(viewsets.ModelViewSet):
         if request.data.get('allow_permanently', False):
             print('allow_permanently')
 
-            person = auth_models.Person(first_name=request.data.get('first_name'),
-                                        scout_name=request.data.get('scout_name'),
-                                        last_name=request.data.get('last_name'),
-                                        address=request.data.get('address'),
-                                        address_supplement=request.data.get('address_supplement'),
-                                        scout_group=request.data.get('scout_group'),
-                                        phone_number='01231312',
-                                        email=request.data.get('email'),
-                                        gender=request.data.get('gender'),
-                                        leader=request.data.get('leader'),
-                                        scout_level='N'
-                                        )
+            if request.data.get('zip_code'):
+                zip_code = basic_models.ZipCode.objects.get(id=request.data.get('zip_code'))
+            else:
+                zip_code = basic_models.ZipCode.objects.none()
+
+            if request.data.get('birthday'):
+                birthday = dateutil.parser.isoparse(request.data.get('birthday')).date()
+            else:
+                birthday = datetime.today().date()
+
+            person = auth_models.Person(
+                first_name=request.data.get('first_name'),
+                scout_name=request.data.get('scout_name'),
+                last_name=request.data.get('last_name'),
+                address=request.data.get('street'),
+                address_supplement=request.data.get('address_supplement'),
+                scout_group=request.data.get('scout_group'),
+                phone_number=request.data.get('phone_number', '1234567'),
+                email=request.data.get('email'),
+                gender=request.data.get('gender'),
+                leader=request.data.get('leader'),
+                scout_level='N',
+                created_by=request.user,
+                birthday=birthday,
+                zip_code=zip_code
+            )
             person.save()
+            person.owned_by.add(request.user)
+            for habit in eat_habits_formatted:
+                habit_id = basic_models.EatHabit.objects.filter(name__exact=habit).first().id
+                person.eat_habits.add(habit_id)
 
         return super().create(request, *args, **kwargs)
 
