@@ -86,6 +86,7 @@ const routes = [
     path: '/settings',
     name: 'settingsOverview',
     component: SettingsOverview,
+    redirect: { name: 'settingsUser' },
     meta: {
       requiresAuth: true,
     },
