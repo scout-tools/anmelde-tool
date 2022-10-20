@@ -66,6 +66,10 @@ export default {
           text: 'DPBM',
           value: 'mosaik',
         },
+        {
+          text: 'Winkinger',
+          value: 'wikinger',
+        },
       ],
       smsOptionList: [
         {
