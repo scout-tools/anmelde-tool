@@ -45,7 +45,7 @@
         <v-icon>mdi-tools</v-icon>
       </v-tab>
       <v-spacer></v-spacer>
-      <v-tab :to="{ name: 'settingsOverview' }" v-if="isAuth">
+      <v-tab :to="{ name: 'settingsUser' }" v-if="isAuth">
         Mein Profil
         <v-icon>mdi-account-circle</v-icon>
       </v-tab>
