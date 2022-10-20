@@ -15,10 +15,10 @@
             :loading="loading"
             :items="personList"
             v-model="person"
-            label="Filter nach Buchoptionen"
+            label="Stammesmitglieder"
             :item-text="getPersonText"
             item-value="id"
-            no-data-text="Keine Buchoptionen gefunden."
+            no-data-text="Tippe den Names des Stammesmitgliedes ein."
           />
         </v-row>
         <v-row>
