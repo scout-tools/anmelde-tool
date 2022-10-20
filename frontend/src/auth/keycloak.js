@@ -9,14 +9,14 @@ const keycl = {
       .then((res) => {
         if (res.status === 426) {
           store.commit('setAccountIncomplete', true);
-          router.push({ name: 'settingsOverview' });
+          router.push({ name: 'settingsUser' });
         }
       })
       .catch((err) => {
         if (err.response.status === 426) {
           store.commit('setAccountIncomplete', true);
           if (router.history.current.meta.requiresAuth) {
-            router.push({ name: 'settingsOverview' });
+            router.push({ name: 'settingsUser' });
           }
         }
       });
