@@ -210,7 +210,8 @@ class PersonsViewSet(viewsets.ModelViewSet):
         birthday = datetime.strptime(request.data['birthday'][:10], '%Y-%m-%d')
         request.data['birthday'] = birthday.date() + timedelta(days=1)
 
-        request.data['created_by'] = request.user.id
+        request.data['created'] = request.user.id
+        request.data['owned_by'] = [request.user.id]
 
         eat_habits_formatted = create_missing_eat_habits(request)
 
