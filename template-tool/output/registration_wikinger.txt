@@ -1,0 +1,34 @@
+[https://stammwikinger.de/wp-content/uploads/2015/01/Stamm-Wikinger-Logo-RZ.png]
+
+{{ event_name }}
+
+Liebe_r {{ responsible_persons }}
+
+wir freuen uns, dass du dich von der Gruppe "{{ scout_organisation }}" für das/die {{ event_name }} angemeldet hast!
+
+Ihr habt {{ participant_count }} Personen angemeldet, euer Beitrag beläuft sich also ingesamt auf {{ sum }}€.
+
+Bitte überweise den Beitrag bis zum Anmeldeschluss auf das folgende Konto und verwendet bitte den angegebenen Verwendungszweck:
+
+Betrag: {{ sum }}€
+DPBM Stamm Wikinger
+IBAN: DE 22 3706 9520 0303 1000 32
+Verwendungszweck: dein Name + {{ event_name }}
+
+
+Bei technischen Problemen, kannst du dich gerne an mats@stammwikinger.de wenden.
+
+
+
+DPBM Stamm Wikinger
+
+Talstraße 27
+
+53859 Niederkassel
+
+stafue@stammwikinger.de
+
+www.stammwikinger.de
+
+Du möchtest diese E-Mails nicht mehr erhalten?
+Klicke hier [https://anmelde-tool.de/unsubscribe/{{unsubscribe}}] um dich abzumelden.

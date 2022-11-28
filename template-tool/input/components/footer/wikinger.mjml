@@ -1,0 +1,23 @@
+
+    <mj-section background-color="#FFF" padding-bottom="15px">
+      <mj-column>
+        <mj-text align="center" color="#333333" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px">
+          <p>Bei technischen Problemen, kannst du dich gerne an mats@stammwikinger.de wenden.</p>
+          <br></br>
+          <p>
+            DPBM Stamm Wikinger</p>
+          <p>
+            Talstraße 27</p>
+          <p>
+           53859 Niederkassel</p>
+          <p>
+            stafue@stammwikinger.de</p>
+          <p>
+            www.stammwikinger.de</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    
+
+
