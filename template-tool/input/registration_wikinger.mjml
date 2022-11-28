@@ -1,0 +1,29 @@
+<mjml>
+  <mj-body background-color="#ccd3e0">
+    <mj-include path="./input/components/header/wikinger.mjml" />
+    <mj-section background-color="#FFF" padding-bottom="0px" padding-top="0">
+      <mj-column width="100%">
+        <mj-text align="left" font-size="14px" color="#333333" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">
+          <p style="font-size:16px"><strong>Liebe_r {{ responsible_persons }}</strong></p>
+          <p>wir freuen uns, dass du dich von der Gruppe "{{ scout_organisation }}" für das/die {{ event_name }}
+            angemeldet hast! </p>
+
+          <p>Ihr habt {{ participant_count }} Personen angemeldet, euer Beitrag beläuft sich also ingesamt auf {{ sum }}€.
+
+            <p>
+              Bitte überweise den Beitrag bis zum Anmeldeschluss auf das folgende Konto und verwendet bitte den angegebenen Verwendungszweck: </p>
+            <p>
+              <b>
+                Betrag: {{ sum }}€<br />
+                DPBM Stamm Wikinger <br />
+                IBAN: DE 22 3706 9520 0303 1000 32<br />
+                Verwendungszweck: dein Name + {{ event_name }}<br />
+              </b>
+            </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-include path="./input/components/footer/wikinger.mjml" />
+    <mj-include path="./input/components/unsubscribe/wikinger.mjml" />
+  </mj-body>
+</mjml>
