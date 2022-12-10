@@ -1,0 +1,24 @@
+Liebe*r {{ responsible_persons }},
+
+wir freuen uns, dass du dich erfolgreich mit {{ participant_count }} Teilnehmern angemeldet hast.
+
+Der Teilnehmerbeitrag beträgt {{ sum }}€.
+
+Für die Fahrt hast du folgende Teilnehmer*innen angemeldet.
+
+{{ list_participants }}
+
+Viele Grüße und Gut Pfad
+
+Bei Fragen, kannst du dich gerne an verbandslager2024@dpvonline.de wenden.
+
+Deutscher Pfadfinderverband
+
+Robert-Perthel-Str. 79
+
+50739 Köln
+
+www.dpvonline.de
+
+Du möchtest diese E-Mails nicht mehr erhalten?
+Klicke hier [https://anmelde-tool.de/unsubscribe/{{unsubscribe}}] um dich abzumelden.
