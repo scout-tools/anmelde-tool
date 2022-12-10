@@ -4,7 +4,7 @@
     "pk": 2,
     "fields": {
       "created_at": null,
-      "updated_at": "2022-02-26T11:03:32.247Z",
+      "updated_at": "2022-04-11T10:07:59.617Z",
       "level": 3,
       "name": "DPBM",
       "zip_code": null,
@@ -576,11 +576,11 @@
     "pk": 363,
     "fields": {
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2022-04-08T10:18:08.683Z",
       "level": 5,
       "name": "Crismeke",
       "zip_code": 3300,
-      "parent": 22,
+      "parent": 20,
       "abbreviation": null
     }
   },
@@ -732,10 +732,10 @@
     "pk": 375,
     "fields": {
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2022-04-11T19:14:08.088Z",
       "level": 5,
       "name": "Sterk Helmes",
-      "zip_code": 11065,
+      "zip_code": 11841,
       "parent": 20,
       "abbreviation": null
     }
@@ -758,11 +758,11 @@
     "pk": 377,
     "fields": {
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2022-04-07T19:33:02.144Z",
       "level": 5,
       "name": "Monte Verita",
       "zip_code": 4,
-      "parent": 21,
+      "parent": 22,
       "abbreviation": null
     }
   },
@@ -836,10 +836,10 @@
     "pk": 383,
     "fields": {
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2022-04-04T09:40:33.881Z",
       "level": 5,
-      "name": "Salzig",
-      "zip_code": 2103,
+      "name": "SALZIG",
+      "zip_code": 10038,
       "parent": 25,
       "abbreviation": null
     }
@@ -1668,9 +1668,9 @@
     "pk": 447,
     "fields": {
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2022-06-25T18:24:07.049Z",
       "level": 5,
-      "name": "Ritter Herbord von Raven",
+      "name": "Eldunarí",
       "zip_code": 8049,
       "parent": 10,
       "abbreviation": null
@@ -2071,9 +2071,9 @@
     "pk": 478,
     "fields": {
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2022-04-18T10:38:18.978Z",
       "level": 5,
-      "name": "Roter Milan",
+      "name": "Roter Milan (PBW)",
       "zip_code": 10974,
       "parent": 12,
       "abbreviation": null
