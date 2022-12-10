@@ -5,7 +5,7 @@
     </v-card-title>
     <v-container>
       <v-row>
-        <v-btn color="secondary" dark @click="goToIdm">
+        <v-btn class="ma-5" color="secondary" dark @click="goToIdm">
           <v-icon left>mdi-open-in-new</v-icon>
           Zum DPV-Account
         </v-btn>

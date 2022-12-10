@@ -35,6 +35,16 @@ export default new Vuetify({
         backgroundGrey: '#fefefe',
         warning: '#f88C00',
       },
+      wikinger: {
+        primary: '#081d3f',
+        secondary: '#d30130',
+        info: '#4CAF50',
+        error: '#FF5252',
+        success: '#d30130',
+        accent: '#fefefe',
+        backgroundGrey: '#fefefe',
+        warning: '#f88C00',
+      },
     },
   },
 });
