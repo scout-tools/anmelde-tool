@@ -27,6 +27,7 @@ class EmailThreadRegistration(threading.Thread):
         technical_name = event.technical_name or 'info'
         sender = f'{event.name} <{technical_name}@{getattr(settings, "EMAIL_HOST_USER")}>'
         subject = f'Registrierungsbestätigung für: {event.name}'
+        header = f'Registrierungsbest&auml;tigung'
 
         template_html, template_plain = get_email(self.email_type, event)
 
@@ -50,6 +51,7 @@ class EmailThreadRegistration(threading.Thread):
 
             data = {
                 'event_name': event_name,
+                'header': header,
                 'event_pronoun': event_pronoun,
                 'responsible_persons': html.escape(person.userextended.scout_name) or '',
                 'unsubscribe': person.userextended.id,

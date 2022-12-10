@@ -1,0 +1,13 @@
+<mj-section background-color="#1976D2" padding-bottom="20px" padding-top="20px">
+    <mj-column width="25%" background-color="#1976D2">
+        <mj-image src="https://anmelde-tool-backend.s3.amazonaws.com/media/VIA24_schattiert.png" alt="" border="none"/>
+    </mj-column>
+    <mj-column background-color="#1976D2" width="75%">
+        <mj-text align="left" font-size="36px" color="#FFFFFF" font-family="Avenir">
+            {{ event_name }}
+        </mj-text>
+        <mj-text align="left" font-size="18px" color="#FFFFFF" font-family="Avenir">
+            {{ header }}
+        </mj-text>
+    </mj-column>
+</mj-section>

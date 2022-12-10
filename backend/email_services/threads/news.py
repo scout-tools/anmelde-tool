@@ -47,8 +47,6 @@ class CustomEmail(threading.Thread):
         confirmed: bool = self.data.get('send_confirmed', True)
         unconfirmed: bool = self.data.get('send_unconfirmed', True)
 
-        print(confirmed)
-        print(unconfirmed)
         registrations: QuerySet[event_models.Registration] = event_models.Registration.objects.none()
         all_registrations = event.registration_set.all()
 

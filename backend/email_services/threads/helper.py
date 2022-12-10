@@ -14,9 +14,6 @@ def get_email(email_type: EmailType, event: event_models.Event) -> [Template, Te
         return None, None
     email_type_mapping = {
         EmailType.RegistrationCreated: event.email_set.registration_created,
-        EmailType.RegistrationUpdated: event.email_set.registration_updated,
-        EmailType.RegistrationAccepted: event.email_set.registration_accepted,
-        EmailType.RegistrationReminder: event.email_set.registration_reminder,
         EmailType.PaymentReminder: event.email_set.payment_reminder,
         EmailType.StandardEmail: event.email_set.custom_mail
     }

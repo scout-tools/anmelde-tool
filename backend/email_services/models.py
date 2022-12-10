@@ -15,6 +15,13 @@ class EmailAttachment(basic_models.TimeStampMixin):
 class EmailPicture(basic_models.TimeStampMixin):
     id = models.UUIDField(auto_created=True, primary_key=True, default=uuid.uuid4, editable=False)
     file = models.ImageField(storage=PublicMediaStorage())
+    name = models.CharField(max_length=250, null=True, blank=True)
+
+    def __str__(self):
+        if self.name:
+            return self.name
+        else:
+            return self.file.name
 
 
 class Email(basic_models.TimeStampMixin):
@@ -54,18 +61,6 @@ class StandardEmailRegistrationSet(models.Model):
                                              limit_choices_to={'type': email_choices.EmailType.RegistrationCreated},
                                              related_name='registration_created',
                                              null=True, blank=True)
-    registration_updated = models.ForeignKey(Email, on_delete=models.PROTECT,
-                                             limit_choices_to={'type': email_choices.EmailType.RegistrationUpdated},
-                                             related_name='registration_updated',
-                                             null=True, blank=True)
-    registration_reminder = models.ForeignKey(Email, on_delete=models.PROTECT,
-                                              limit_choices_to={'type': email_choices.EmailType.RegistrationReminder},
-                                              related_name='registration_reminder',
-                                              null=True, blank=True)
-    registration_accepted = models.ForeignKey(Email, on_delete=models.PROTECT,
-                                              limit_choices_to={'type': email_choices.EmailType.RegistrationAccepted},
-                                              related_name='registration_accepted',
-                                              null=True, blank=True)
     payment_reminder = models.ForeignKey(Email, on_delete=models.PROTECT,
                                          limit_choices_to={'type': email_choices.EmailType.PaymentReminder},
                                          related_name='payment_reminder',
