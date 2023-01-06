@@ -75,7 +75,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates/emails/'),
+            os.path.join(BASE_DIR, 'templates/'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -186,6 +186,8 @@ SITE_ID = 1
 
 SEND_MAIL = env.bool('USE_SES', False)
 
+FRONT_URL = env.str('FRONT_URL')
+
 if SEND_MAIL:
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_ACCESS_KEY_ID = env('AWS_SES_ACCESS_KEY_ID')
@@ -193,7 +195,6 @@ if SEND_MAIL:
     AWS_SES_REGION_NAME = 'eu-central-1'
     AWS_SES_REGION_ENDPOINT = 'email.eu-central-1.amazonaws.com'
     EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-    FRONT_URL = env.str('FRONT_URL')
 
 REST_USE_JWT = True
 
