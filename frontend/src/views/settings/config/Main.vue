@@ -70,6 +70,10 @@ export default {
           text: 'Winkinger',
           value: 'wikinger',
         },
+        {
+          text: 'Silberfüchse',
+          value: 'silberfuechse',
+        },
       ],
       smsOptionList: [
         {

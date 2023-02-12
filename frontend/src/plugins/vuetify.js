@@ -45,6 +45,16 @@ export default new Vuetify({
         backgroundGrey: '#fefefe',
         warning: '#f88C00',
       },
+      silberfuechse: {
+        primary: '#202020',
+        secondary: '#8c1c21',
+        info: '#4CAF50',
+        error: '#FF5252',
+        success: '#8c1c21',
+        accent: '#fefefe',
+        backgroundGrey: '#fefefe',
+        warning: '#f88C00',
+      },
     },
   },
 });

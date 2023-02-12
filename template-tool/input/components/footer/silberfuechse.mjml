@@ -1,0 +1,13 @@
+<mj-section background-color="#FFF" padding-top="0px" padding-bottom="15px">
+  <mj-column>
+    <mj-text align="center" color="#333333" font-size="12px" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="0px">
+      <p>
+        Bei technischen Problemen kannst du dich gerne an webmaster@stamm-silberfuechse.de wenden.<br><br><br>
+        DPBM Stamm Silberfüchse<br>
+        91096 Möhrendorf<br>
+        <a href="mailto:stafue@stamm-silberfuechse.de" style="color:#333333; text-decoration:none;">stafue@stamm-silberfuechse.de<br>
+        <a href="https://www.stamm-silberfuechse.de" style="color:#333333; text-decoration:none;">www.stamm-silberfuechse.de<a>
+      </p>
+    </mj-text>
+  </mj-column>
+</mj-section>

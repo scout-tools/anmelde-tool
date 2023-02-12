@@ -1,0 +1,38 @@
+[https://stamm-silberfuechse.de/wp-content/uploads/2021/01/logo_weiss.svg]
+
+{{ event_name }}
+
+Liebe*r {{ responsible_persons }}
+
+wir freuen uns, dass du dich für das/die {{ event_name }} von der Gruppe "{{ scout_organisation }}" angemeldet hast!
+
+Du hast {{ participant_count }} Person(en) angemeldet, der Beitrag beläuft sich also ingesamt auf {{ sum }}€.
+
+Bitte überweise den Beitrag bis zum Anmeldeschluss auf das folgende Konto und verwende bitte den angegebenen Verwendungszweck:
+
+
+
+Betrag: {{ sum }}€
+DPBM Stamm Silberfüchse Erlangen
+IBAN: DE33 7635 0000 0060 1309 65
+Verwendungszweck: dein Name + {{ event_name }}
+
+
+
+
+
+Wir freuen uns auf dich!
+Dein Stamm Silberfüchse
+
+
+
+Bei technischen Problemen kannst du dich gerne an webmaster@stamm-silberfuechse.de wenden.
+
+
+DPBM Stamm Silberfüchse
+91096 Möhrendorf
+stafue@stamm-silberfuechse.de
+www.stamm-silberfuechse.de [https://www.stamm-silberfuechse.de] [stafue@stamm-silberfuechse.de]
+
+Du möchtest diese E-Mails nicht mehr erhalten?
+Klicke hier [https://anmelde-tool.de/unsubscribe/{{unsubscribe}}] um dich abzumelden.

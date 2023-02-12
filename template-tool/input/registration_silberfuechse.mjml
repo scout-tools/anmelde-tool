@@ -1,0 +1,38 @@
+<mjml>
+  <mj-body background-color="#ccd3e0">
+    <mj-include path="./input/components/header/silberfuechse.mjml" />
+    <mj-section background-color="#fff" padding-bottom="0px" padding-top="0px">
+      <mj-column width="100%">
+        <mj-text align="left" font-size="14px" color="#333333" font-family="Avenir" padding-left="25px" padding-right="25px" padding-bottom="10px" padding-top="20px">
+          <p style="font-size:16px">
+            <strong>
+              Liebe*r {{ responsible_persons }}
+            </strong>
+          </p>
+          <p>
+            wir freuen uns, dass du dich für das/die {{ event_name }} von der Gruppe "{{ scout_organisation }}" angemeldet hast!</p>
+          <p>
+            Du hast {{ participant_count }} Person(en) angemeldet, der Beitrag beläuft sich also ingesamt auf {{ sum }}€.
+          </P>
+              Bitte überweise den Beitrag bis zum Anmeldeschluss auf das folgende Konto und verwende bitte den angegebenen Verwendungszweck:
+          </p>
+          <p>
+            <b>
+              Betrag: {{ sum }}€<br />
+              DPBM Stamm Silberfüchse Erlangen<br />
+              IBAN: DE33 7635 0000 0060 1309 65<br />
+              Verwendungszweck: dein Name + {{ event_name }}<br />
+            </b>
+            <br>
+          </p>
+          </P>
+              Wir freuen uns auf dich!<br />
+              Dein Stamm Silberfüchse
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-include path="./input/components/footer/silberfuechse.mjml" />
+    <mj-include path="./input/components/unsubscribe/silberfuechse.mjml" />
+  </mj-body>
+</mjml>
