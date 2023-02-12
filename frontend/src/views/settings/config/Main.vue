@@ -72,7 +72,7 @@ export default {
         },
         {
           text: 'Silberfüchse',
-          value: 'silberfuechse',
+          value: 'silberfuchs',
         },
       ],
       smsOptionList: [

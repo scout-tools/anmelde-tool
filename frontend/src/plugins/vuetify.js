@@ -45,7 +45,7 @@ export default new Vuetify({
         backgroundGrey: '#fefefe',
         warning: '#f88C00',
       },
-      silberfuechse: {
+      silberfuchs: {
         primary: '#202020',
         secondary: '#8c1c21',
         info: '#4CAF50',
