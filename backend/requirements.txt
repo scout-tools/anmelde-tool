@@ -12,6 +12,7 @@ django-colorfield==0.7.2
 django-cors-headers==3.13.0
 django-ebhealthcheck==2.0.2
 django-environ==0.9.0
+django-stdimage==6.0.1
 django-extensions==3.2.1
 django-filter==22.1
 django-polymorphic==3.1.0
@@ -29,7 +30,7 @@ jmespath==1.0.1
 josepy==1.13.0
 mozilla-django-oidc==2.0.0
 openpyxl==3.0.10
-Pillow==9.2.0
+Pillow==9.1.1
 psycopg2==2.9.3
 psycopg2-binary==2.9.3
 pycparser==2.21
@@ -41,5 +42,5 @@ s3transfer==0.6.0
 six==1.16.0
 sqlparse==0.4.2
 tzdata==2022.1
-urllib3==1.26.11
+urllib3==1.26.9
 webencodings==0.5.1

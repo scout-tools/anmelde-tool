@@ -163,8 +163,7 @@ class MessageType(TimeStampMixin):
     name = models.CharField(max_length=30)
     is_comment = models.BooleanField(default=False)
     description = models.CharField(max_length=100, blank=True)
-    sorting = models.IntegerField(
-        blank=False, auto_created=True, unique=True, null=True)
+    sorting = models.IntegerField(blank=False, auto_created=True, unique=True, null=True)
 
     def __str__(self):
         return self.name

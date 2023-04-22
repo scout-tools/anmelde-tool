@@ -1,6 +1,7 @@
 import os
 from datetime import timedelta
 from pathlib import Path
+from django.conf.global_settings import DATETIME_INPUT_FORMATS
 
 import environ
 
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'basic',
     'authentication',
     'event',
+    'inspi',
     'email_services',
     'drf_api_logger',
     'event.summary',
@@ -53,6 +55,7 @@ INSTALLED_APPS = [
     'event.choices',
     'event.cash',
     'event.file_generator',
+    'stdimage',
     'event.email'
 ]
 
@@ -170,7 +173,28 @@ else:
     MEDIA_URL = '/mediafiles/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+if env.bool('USE_S3_INSPI'):
+    # aws settings
+    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID_INSPI')
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY_INSPI')
+    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME_INSPI')
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    # s3 static settings
+    STATIC_LOCATION = 'static'
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+    STATICFILES_STORAGE = 'backend.storage_backends.StaticStorage'
+    # s3 public media settings
+    PUBLIC_MEDIA_LOCATION = 'media'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
+    DEFAULT_FILE_STORAGE = 'backend.storage_backends.PublicMediaStorage'
+
+else:
+    STATIC_URL = '/staticfiles/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    MEDIA_URL = '/inspi/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'inspi/media')
 
 CORS_ORIGIN_WHITELIST = env.list("CORS_ORIGIN_WHITELIST")
 
@@ -239,3 +263,5 @@ GRAPHENE = {
 }
 
 FILE_GENERATOR_DEQEUE_TIME = 60
+
+DATETIME_INPUT_FORMATS += ('%Y-%m-%d %H:%M %p',)
